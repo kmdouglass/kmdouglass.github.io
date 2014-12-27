@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0"><channel><title>Kyle M. Douglass (biology)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link rel="self" href="http://kmdouglass.github.io/categories/biology.xml" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Sat, 27 Dec 2014 14:26:54 GMT</lastBuildDate><generator>http://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>The philosophy of -omics studies</title><link>http://kmdouglass.github.io/posts/omics.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;p&gt;
+As a physcist, I'm a relative newcomer to the biological
+sciences. As a result, many approaches to doing science within these
+fields are new and really interesting to me.
+&lt;/p&gt;
+
+&lt;p&gt;
+One such idea is the &lt;i&gt;-omics&lt;/i&gt; approach to science. Sonja Prohaska
+and Peter Stadler provide an insightful and sometimes amusing
+intrepetation of &lt;i&gt;-omics&lt;/i&gt; studies in an article in the book
+&lt;i&gt;Bioinformatics for Omics Data.&lt;/i&gt; (The PubMed link to the article is
+&lt;a href="http://www.ncbi.nlm.nih.gov/pubmed/21370084"&gt;here&lt;/a&gt;, but you can find a pdf by Googling "The use and abuse of
+-omes.") According to them, &lt;i&gt;-omics&lt;/i&gt; refers to the research field of
+digesting the pile of data coming from measurements of a particular
+&lt;i&gt;-ome&lt;/i&gt;, such as the "genome" or "transcriptome." The goal is to
+relate the collection of parts within the &lt;i&gt;-ome&lt;/i&gt; to biological
+function, or at least to determine function by comparing &lt;i&gt;-omes&lt;/i&gt; of
+two different organisms.
+&lt;/p&gt;
+
+&lt;p&gt;
+The authors explain that &lt;i&gt;-omics&lt;/i&gt; approaches have three components,
+which I quote from their article:
+&lt;/p&gt;
+
+&lt;ol class="org-ol"&gt;&lt;li&gt;A suite of (typically high-throughput) technologies address a
+well-defined collection of biological objects, the pertinent
+&lt;i&gt;-ome&lt;/i&gt;.
+&lt;/li&gt;
+&lt;li&gt;Both technologically and conceptually there is a cataloging
+effort to enumerate and characterize the individual
+objects–hopefully coupled with an initiative to make this
+catalog available as a database.
+&lt;/li&gt;
+&lt;li&gt;Beyond the enumeration of objects, one strives to cover the
+quantitative aspects of the &lt;i&gt;-ome&lt;/i&gt; at hand.
+&lt;/li&gt;
+&lt;/ol&gt;&lt;p&gt;
+While grand in scope, these approaches carry difficulties that to me
+appear unique. As stated above, &lt;i&gt;-omic&lt;/i&gt; information is acquired
+through high-throughput techniques, which means that they generate
+very large amounts of data. Of major concern is actually linking
+this data to biological function. In other words, scientists must
+answer whether the correlations in the data actually allow us to
+predict the behavior of a cell or tissue. As might be expected,
+generating a complex data set such as is found in &lt;i&gt;-omics&lt;/i&gt; studies
+can be quite impressive at first glance. But this complexity may
+hide the fact that no biologically relevant conclusions can be drawn
+from it.
+&lt;/p&gt;
+
+&lt;p&gt;
+The authors specifically enumerate four limitations that could
+adversely affect &lt;i&gt;-omics&lt;/i&gt; studies:
+&lt;/p&gt;
+
+&lt;ol class="org-ol"&gt;&lt;li&gt;Technical limitations
+&lt;/li&gt;
+&lt;li&gt;Limitations in the experimental design (such as heavy reliance on
+assumptions)
+&lt;/li&gt;
+&lt;li&gt;Conceptual limitations
+&lt;/li&gt;
+&lt;li&gt;Limitations in the analysis
+&lt;/li&gt;
+&lt;/ol&gt;&lt;p&gt;
+Particularly, the conceptual limitations struck me as
+intriguing. The authors offered the example of genomics studies in
+which the notion of a "gene" is not currently a well-defined
+concept. When the concepts underpinning an entire collection of
+measurements is unclear, we should question whether the measured
+data has the meaning that we think it does.
+&lt;/p&gt;
+
+&lt;p&gt;
+Overall, I found that this commentary provided an interesting and
+sobering view of one particular approach to studying biology. It's
+interesting because I suspect that many important biological
+questions in the near future will come from taking an integrated and
+systems perspective. This perspective will require high-throughput
+techniques that carry the same limitations that &lt;i&gt;-omics&lt;/i&gt; studies
+have.
+&lt;/p&gt;</description><category>biology</category><guid>http://kmdouglass.github.io/posts/omics.html</guid><pubDate>Mon, 31 Mar 2014 22:00:00 GMT</pubDate></item></channel></rss>
