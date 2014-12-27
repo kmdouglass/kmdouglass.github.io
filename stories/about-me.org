@@ -18,18 +18,19 @@
 * Brief Biography
   
   [[file:../images/me_for_web.jpg]]
-  
-  Born and raised in the American Midwestern state of Ohio, I am now a
-  post-doc in the [[http://leb.epfl.ch][Laboratory for Experimental Biophysics]] at [[http://www.epfl.ch][EPFL]] in
-  Lausanne, Switzerland. My work is in method development for
-  super-resolution fluorescence microscopies and their application to
-  the study of cellular systems. This involves utilizing my expertise
-  in a diverse range of topics, including optical design, statistical
-  modeling, and computer programming. The goal is to image single
-  molecules inside cells with resolution on the order of nanometers so
-  we can better understand their structure and function. In
-  particular, I have designed microscopes and/or analysis pipelines
-  for imaging [[http://en.wikipedia.org/wiki/Chromatin][chromatin]] and the [[http://en.wikipedia.org/wiki/Centrosome][centrosome]].
+
+  Born and raised in the American
+  Midwestern state of Ohio, I am now a post-doc in the [[http://leb.epfl.ch][Laboratory for
+  Experimental Biophysics]] at [[http://www.epfl.ch][EPFL]] in Lausanne, Switzerland. My work is
+  in method development for super-resolution fluorescence microscopies
+  and their application to the study of cellular systems. This
+  involves utilizing my expertise in a diverse range of topics,
+  including optical design, statistical modeling, and computer
+  programming. The goal is to image single molecules inside cells with
+  resolution on the order of nanometers so we can better understand
+  their structure and function. In particular, I have designed
+  microscopes and/or analysis pipelines for imaging [[http://en.wikipedia.org/wiki/Chromatin][chromatin]] and the
+  [[http://en.wikipedia.org/wiki/Centrosome][centrosome]].
 
   My education began at [[http://www.edon.k12.oh.us/][Edon Northwest Schools]] in the small
   agricultural town of Edon, Ohio. I attended college at [[http://www.rose-hulman.edu/][Rose-Hulman

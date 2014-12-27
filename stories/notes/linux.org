@@ -7,7 +7,6 @@
 .. description: Notes I've collected for doing things in Linux
 .. type: text
 #+END_COMMENT
-
 #+OPTIONS: toc:nil num:t ^:nil
 #+TOC: headlines 3
 

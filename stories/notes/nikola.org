@@ -7,8 +7,8 @@
 .. description: How to setup Nikola for making static websites
 .. type: text
 #+END_COMMENT
-
 #+OPTIONS: ^:nil
+#+TOC: headlines 3
 
 * First steps
 
@@ -117,6 +117,18 @@ nikola bootswatch_theme -n custom_theme -s darkly -p bootstrap3
    You can edit what navigation links appear by changing the
    NAVIGATION LINKS variable in conf.py. See this section of the
    handbook: http://getnikola.com/handbook.html#configuration
+
+-----
+
+** Teasers
+   To only include portions of posts on the index page, you have to
+   set the =INDEX_TEASERS= variable to =True=. By default, only the
+   RSS feed will include teasers.
+   
+   I'm not currently sure how to implemement this with the orgmode
+   Nikola plugin, however. I tried surrounding the reStructuredText
+   =.. TEASER_END= in #+BEGIN/END_COMMENT brackets, but this did not
+   work.
 
 -----
 
