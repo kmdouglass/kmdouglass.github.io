@@ -25,24 +25,6 @@ nikola init site_name
 
 -----
 
-** Set the theme to oldfashioned with a color scheme from bootswatch
-   First, install the olfashioned theme from the themes repository.
-
-   #+BEGIN_SRC sh
-nikola install_theme oldfashioned
-   #+END_SRC
-
-   Next, change the color scheme to slate from bootswatch.com.
-
-   #+BEGIN_SRC sh
-nikola bootswatch_theme -n custom_theme -s slate -p oldfashioned
-   #+END_SRC
-   
-   Finally, change the theme variable to =custom_theme= inside
-   conf.py.
-
------
-
 ** Install and configure the org-mode plugin
    Nikola can compile org-mode files using a custom
    plugin. Information on the plugin can be found here:
@@ -111,6 +93,25 @@ GITHUB_DEPLOY_BRANCH = 'master'
 -----
 
 * Customization
+
+** Set the theme to bootstrap3 with a color scheme from bootswatch
+   First, install the bootstrap3 theme from the themes repository. In
+   the end, I don't think this part is necessary.
+
+   #+BEGIN_SRC sh
+nikola install_theme bootstrap3
+   #+END_SRC
+
+   Next, change the color scheme to darkly from bootswatch.com.
+
+   #+BEGIN_SRC sh
+nikola bootswatch_theme -n custom_theme -s darkly -p bootstrap3
+   #+END_SRC
+   
+   Finally, change the theme variable to =custom_theme= inside
+   conf.py.
+   
+-----
 
 ** Navigation links
    You can edit what navigation links appear by changing the

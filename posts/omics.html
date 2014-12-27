@@ -2,7 +2,7 @@
 <html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The philosophy of -omics studies | Kyle M. Douglass</title>
 <link href="../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
 <link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml">
@@ -24,23 +24,65 @@ One such idea is the -omic">
 <meta property="article:published_time" content="2014-04-01T00:00:00+02:00">
 <meta property="article:tag" content="biology">
 </head>
-<body style="padding-top: 10px;">
-<div class="container-fluid" id="container" style="margin: 0 auto;">
-    <div class="row-fluid" id="titlerow">
-    <div class="span12" id="titlecolumn">
-    <!-- Banner-like substance -->
-        <div class="titlebox" style="text-align: right;">
-        <h1 id="blog-title" style="margin: 0; padding: 0;">
-            <a href="http://kmdouglass.github.io/" title="Kyle M. Douglass">Kyle M. Douglass</a>
-        </h1>
-        
-        
-        <hr>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Menubar -->
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation"><div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://kmdouglass.github.io/">
+
+                <span id="blog-title">Kyle M. Douglass</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+<li>
+<a href="../archive.html">Archive</a>
+                </li>
+<li>
+<a href="../categories/index.html">Tags</a>
+                </li>
+<li>
+<a href="../stories/notes-and-projects.html">Notes</a>
+                </li>
+<li>
+<a href="../stories/about-me.html">About</a>
+                </li>
+<li>
+<a href="../stories/contact.html">Contact</a>
+                </li>
+<li>
+<a href="../rss.xml">RSS feed</a>
+
+                
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+    <a href="omics.org" id="sourcelink">Source</a>
+    </li>
+
+                
+            </ul>
 </div>
-    <!-- End of banner-like substance !-->
-    <div class="row-fluid" id="contentrow">
-        <div class="span10" id="contentcolumn">
-            <!--Body content-->
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
             
 <article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="#" class="u-url">The philosophy of -omics studies</a></h1>
 
@@ -152,46 +194,17 @@ have.
             <li class="next">
                 <a href="half-wave%20plate.html" rel="next" title="An accidental half-wave plate">Next post</a>
             </li>
-        </ul></nav></aside></article><!--End of body content--><hr>
-<div class="footerbox">
-                Contents © 2014         <a href="mailto:kyle.douglass@epfl.ch">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
-                
-            </div>
-        </div>
-        <div class="span2" id="sidebar">
-            <!--Sidebar content-->
-            <ul class="unstyled">
-<li>
-            
-                <li>
-<a href="../archive.html">Archive</a>
-                </li>
-<li>
-<a href="../categories/index.html">Tags</a>
-                </li>
-<li>
-<a href="../stories/notes-and-projects.html">Notes</a>
-                </li>
-<li>
-<a href="../stories/about-me.html">About</a>
-                </li>
-<li>
-<a href="../stories/contact.html">Contact</a>
-                </li>
-<li>
-<a href="../rss.xml">RSS feed</a>
+        </ul></nav></aside></article>
+</div>
+        <!--End of body content-->
 
-            </li>
-<li>
+        <footer>
+            Contents © 2014         <a href="mailto:kyle.douglass@epfl.ch">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
             
-            
-            </ul>
-<!--End of sidebar content-->
+        </footer>
 </div>
-    </div>
-    </div>
-    </div>
 </div>
+
 
             <script src="../assets/js/all-nocdn.js"></script><!-- Social buttons --><div id="addthisbox" class="addthis_toolbox addthis_peekaboo_style addthis_default_style addthis_label_style addthis_32x32_style">
 <a class="addthis_button_more">Share</a>
@@ -210,6 +223,9 @@ have.
 </li>
 </ul>
 </div>
-<script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script><!-- End of social buttons --><script>jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script>
+<script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script><!-- End of social buttons --><script>jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+    moment.locale("");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates -->
 </body>
 </html>
