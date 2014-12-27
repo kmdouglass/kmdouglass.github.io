@@ -4,12 +4,12 @@ UNDEFINED = runtime.UNDEFINED
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1419700152.2706218
+_modified_time = 1419700231.8737032
 _enable_loop = True
 _template_filename = '/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/annotation_helper.tmpl'
 _template_uri = 'annotation_helper.tmpl'
 _source_encoding = 'ascii'
-_exports = ['css', 'code']
+_exports = ['code', 'css']
 
 
 def render_body(context,**pageargs):
@@ -19,16 +19,6 @@ def render_body(context,**pageargs):
         __M_writer = context.writer()
         __M_writer('\n\n')
         __M_writer('\n')
-        return ''
-    finally:
-        context.caller_stack._pop_frame()
-
-
-def render_css(context):
-    __M_caller = context.caller_stack._push_frame()
-    try:
-        __M_writer = context.writer()
-        __M_writer('\n    <link rel="stylesheet" href="http://assets.annotateit.org/annotator/v1.2.5/annotator.min.css">\n')
         return ''
     finally:
         context.caller_stack._pop_frame()
@@ -44,8 +34,18 @@ def render_code(context):
         context.caller_stack._pop_frame()
 
 
+def render_css(context):
+    __M_caller = context.caller_stack._push_frame()
+    try:
+        __M_writer = context.writer()
+        __M_writer('\n    <link rel="stylesheet" href="http://assets.annotateit.org/annotator/v1.2.5/annotator.min.css">\n')
+        return ''
+    finally:
+        context.caller_stack._pop_frame()
+
+
 """
 __M_BEGIN_METADATA
-{"filename": "/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/annotation_helper.tmpl", "line_map": {"20": 3, "21": 16, "15": 0, "41": 5, "27": 1, "37": 5, "47": 41, "31": 1}, "uri": "annotation_helper.tmpl", "source_encoding": "ascii"}
+{"uri": "annotation_helper.tmpl", "filename": "/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/annotation_helper.tmpl", "line_map": {"20": 3, "21": 16, "15": 0, "41": 1, "27": 5, "37": 1, "47": 41, "31": 5}, "source_encoding": "ascii"}
 __M_END_METADATA
 """

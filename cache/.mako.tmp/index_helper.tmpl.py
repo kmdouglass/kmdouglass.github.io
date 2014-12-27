@@ -4,7 +4,7 @@ UNDEFINED = runtime.UNDEFINED
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1419700152.417342
+_modified_time = 1419700232.018631
 _enable_loop = True
 _template_filename = '/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/index_helper.tmpl'
 _template_uri = 'index_helper.tmpl'
@@ -27,9 +27,9 @@ def render_body(context,**pageargs):
 def render_html_pager(context):
     __M_caller = context.caller_stack._push_frame()
     try:
+        messages = context.get('messages', UNDEFINED)
         prevlink = context.get('prevlink', UNDEFINED)
         nextlink = context.get('nextlink', UNDEFINED)
-        messages = context.get('messages', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n')
         if prevlink or nextlink:
@@ -67,6 +67,6 @@ def render_mathjax_script(context,posts):
 
 """
 __M_BEGIN_METADATA
-{"filename": "/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/index_helper.tmpl", "line_map": {"68": 62, "15": 0, "20": 19, "21": 27, "27": 2, "34": 2, "35": 3, "36": 4, "37": 6, "38": 7, "39": 8, "40": 8, "41": 8, "42": 8, "43": 11, "44": 12, "45": 13, "46": 13, "47": 13, "48": 13, "49": 16, "55": 21, "60": 21, "61": 22, "62": 23}, "uri": "index_helper.tmpl", "source_encoding": "utf-8"}
+{"uri": "index_helper.tmpl", "filename": "/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/index_helper.tmpl", "line_map": {"68": 62, "15": 0, "20": 19, "21": 27, "27": 2, "34": 2, "35": 3, "36": 4, "37": 6, "38": 7, "39": 8, "40": 8, "41": 8, "42": 8, "43": 11, "44": 12, "45": 13, "46": 13, "47": 13, "48": 13, "49": 16, "55": 21, "60": 21, "61": 22, "62": 23}, "source_encoding": "utf-8"}
 __M_END_METADATA
 """
