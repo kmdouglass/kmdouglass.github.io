@@ -4,12 +4,12 @@ UNDEFINED = runtime.UNDEFINED
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1419693714.1749883
+_modified_time = 1419694420.5122275
 _enable_loop = True
 _template_filename = '/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/post_helper.tmpl'
 _template_uri = 'post_helper.tmpl'
 _source_encoding = 'utf-8'
-_exports = ['html_tags', 'twitter_card_information', 'html_pager', 'mathjax_script', 'meta_translations', 'open_graph_metadata']
+_exports = ['mathjax_script', 'meta_translations', 'twitter_card_information', 'html_tags', 'html_pager', 'open_graph_metadata']
 
 
 def render_body(context,**pageargs):
@@ -29,21 +29,34 @@ def render_body(context,**pageargs):
         context.caller_stack._pop_frame()
 
 
-def render_html_tags(context,post):
+def render_mathjax_script(context,post):
     __M_caller = context.caller_stack._push_frame()
     try:
-        _link = context.get('_link', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n')
-        if post.tags:
-            __M_writer('        <ul itemprop="keywords" class="tags">\n')
-            for tag in post.tags:
-                __M_writer('           <li><a class="tag p-category" href="')
-                __M_writer(str(_link('tag', tag)))
-                __M_writer('" rel="tag">')
-                __M_writer(str(tag))
-                __M_writer('</a></li>\n')
-            __M_writer('        </ul>\n')
+        if post.is_mathjax:
+            __M_writer('        <script type="text/x-mathjax-config">\n        MathJax.Hub.Config({tex2jax: {inlineMath: [[\'$latex \',\'$\'], [\'\\\\(\',\'\\\\)\']]}});</script>\n        <script src="/assets/js/mathjax.js"></script>\n')
+        return ''
+    finally:
+        context.caller_stack._pop_frame()
+
+
+def render_meta_translations(context,post):
+    __M_caller = context.caller_stack._push_frame()
+    try:
+        translations = context.get('translations', UNDEFINED)
+        lang = context.get('lang', UNDEFINED)
+        len = context.get('len', UNDEFINED)
+        __M_writer = context.writer()
+        __M_writer('\n')
+        if len(translations) > 1:
+            for langname in translations.keys():
+                if langname != lang and post.is_translation_available(langname):
+                    __M_writer('                <link rel="alternate" hreflang="')
+                    __M_writer(str(langname))
+                    __M_writer('" href="')
+                    __M_writer(str(post.permalink(langname)))
+                    __M_writer('">\n')
         return ''
     finally:
         context.caller_stack._pop_frame()
@@ -80,6 +93,26 @@ def render_twitter_card_information(context,post):
         context.caller_stack._pop_frame()
 
 
+def render_html_tags(context,post):
+    __M_caller = context.caller_stack._push_frame()
+    try:
+        _link = context.get('_link', UNDEFINED)
+        __M_writer = context.writer()
+        __M_writer('\n')
+        if post.tags:
+            __M_writer('        <ul itemprop="keywords" class="tags">\n')
+            for tag in post.tags:
+                __M_writer('           <li><a class="tag p-category" href="')
+                __M_writer(str(_link('tag', tag)))
+                __M_writer('" rel="tag">')
+                __M_writer(str(tag))
+                __M_writer('</a></li>\n')
+            __M_writer('        </ul>\n')
+        return ''
+    finally:
+        context.caller_stack._pop_frame()
+
+
 def render_html_pager(context,post):
     __M_caller = context.caller_stack._push_frame()
     try:
@@ -110,47 +143,14 @@ def render_html_pager(context,post):
         context.caller_stack._pop_frame()
 
 
-def render_mathjax_script(context,post):
-    __M_caller = context.caller_stack._push_frame()
-    try:
-        __M_writer = context.writer()
-        __M_writer('\n')
-        if post.is_mathjax:
-            __M_writer('        <script type="text/x-mathjax-config">\n        MathJax.Hub.Config({tex2jax: {inlineMath: [[\'$latex \',\'$\'], [\'\\\\(\',\'\\\\)\']]}});</script>\n        <script src="/assets/js/mathjax.js"></script>\n')
-        return ''
-    finally:
-        context.caller_stack._pop_frame()
-
-
-def render_meta_translations(context,post):
-    __M_caller = context.caller_stack._push_frame()
-    try:
-        len = context.get('len', UNDEFINED)
-        translations = context.get('translations', UNDEFINED)
-        lang = context.get('lang', UNDEFINED)
-        __M_writer = context.writer()
-        __M_writer('\n')
-        if len(translations) > 1:
-            for langname in translations.keys():
-                if langname != lang and post.is_translation_available(langname):
-                    __M_writer('                <link rel="alternate" hreflang="')
-                    __M_writer(str(langname))
-                    __M_writer('" href="')
-                    __M_writer(str(post.permalink(langname)))
-                    __M_writer('">\n')
-        return ''
-    finally:
-        context.caller_stack._pop_frame()
-
-
 def render_open_graph_metadata(context,post):
     __M_caller = context.caller_stack._push_frame()
     try:
-        use_open_graph = context.get('use_open_graph', UNDEFINED)
-        striphtml = context.get('striphtml', UNDEFINED)
         permalink = context.get('permalink', UNDEFINED)
-        abs_link = context.get('abs_link', UNDEFINED)
+        use_open_graph = context.get('use_open_graph', UNDEFINED)
         blog_title = context.get('blog_title', UNDEFINED)
+        abs_link = context.get('abs_link', UNDEFINED)
+        striphtml = context.get('striphtml', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n')
         if use_open_graph:
@@ -190,6 +190,6 @@ def render_open_graph_metadata(context,post):
 
 """
 __M_BEGIN_METADATA
-{"source_encoding": "utf-8", "uri": "post_helper.tmpl", "filename": "/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/post_helper.tmpl", "line_map": {"15": 0, "20": 2, "21": 11, "22": 21, "23": 38, "24": 67, "25": 83, "26": 91, "32": 13, "37": 13, "38": 14, "39": 15, "40": 16, "41": 17, "42": 17, "43": 17, "44": 17, "45": 17, "46": 19, "52": 69, "57": 69, "58": 70, "59": 71, "60": 71, "61": 71, "62": 72, "63": 73, "64": 73, "65": 73, "66": 74, "67": 75, "68": 75, "69": 75, "70": 77, "71": 78, "72": 78, "73": 78, "74": 79, "75": 80, "76": 80, "77": 80, "83": 23, "88": 23, "89": 24, "90": 25, "91": 26, "92": 27, "93": 28, "94": 28, "95": 28, "96": 28, "97": 28, "98": 28, "99": 31, "100": 32, "101": 33, "102": 33, "103": 33, "104": 33, "105": 33, "106": 33, "107": 36, "113": 85, "117": 85, "118": 86, "119": 87, "125": 3, "132": 3, "133": 4, "134": 5, "135": 6, "136": 7, "137": 7, "138": 7, "139": 7, "140": 7, "146": 40, "155": 40, "156": 41, "157": 42, "158": 42, "159": 42, "160": 43, "161": 43, "162": 44, "163": 44, "164": 45, "165": 46, "166": 46, "167": 46, "168": 47, "169": 48, "170": 48, "171": 48, "172": 50, "173": 51, "174": 51, "175": 51, "176": 53, "177": 58, "178": 59, "179": 59, "180": 59, "181": 61, "182": 62, "183": 63, "184": 63, "185": 63, "191": 185}}
+{"line_map": {"15": 0, "20": 2, "21": 11, "22": 21, "23": 38, "24": 67, "25": 83, "26": 91, "32": 85, "36": 85, "37": 86, "38": 87, "44": 3, "51": 3, "52": 4, "53": 5, "54": 6, "55": 7, "56": 7, "57": 7, "58": 7, "59": 7, "65": 69, "70": 69, "71": 70, "72": 71, "73": 71, "74": 71, "75": 72, "76": 73, "77": 73, "78": 73, "79": 74, "80": 75, "81": 75, "82": 75, "83": 77, "84": 78, "85": 78, "86": 78, "87": 79, "88": 80, "89": 80, "90": 80, "96": 13, "101": 13, "102": 14, "103": 15, "104": 16, "105": 17, "106": 17, "107": 17, "108": 17, "109": 17, "110": 19, "116": 23, "121": 23, "122": 24, "123": 25, "124": 26, "125": 27, "126": 28, "127": 28, "128": 28, "129": 28, "130": 28, "131": 28, "132": 31, "133": 32, "134": 33, "135": 33, "136": 33, "137": 33, "138": 33, "139": 33, "140": 36, "146": 40, "155": 40, "156": 41, "157": 42, "158": 42, "159": 42, "160": 43, "161": 43, "162": 44, "163": 44, "164": 45, "165": 46, "166": 46, "167": 46, "168": 47, "169": 48, "170": 48, "171": 48, "172": 50, "173": 51, "174": 51, "175": 51, "176": 53, "177": 58, "178": 59, "179": 59, "180": 59, "181": 61, "182": 62, "183": 63, "184": 63, "185": 63, "191": 185}, "filename": "/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/post_helper.tmpl", "source_encoding": "utf-8", "uri": "post_helper.tmpl"}
 __M_END_METADATA
 """

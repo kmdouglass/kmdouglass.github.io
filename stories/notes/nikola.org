@@ -117,5 +117,26 @@ GITHUB_DEPLOY_BRANCH = 'master'
    NAVIGATION LINKS variable in conf.py. See this section of the
    handbook: http://getnikola.com/handbook.html#configuration
 
+-----
+
+* Errors
+
+** Duplicated definition of render_listings
+   Shortly after switching my GitHub user page from Jekyll to Nikola,
+   I received the following error while running the command =nikola
+   github_deploy=:
+
+   #+BEGIN_SRC sh
+ERROR: Task generation 'render_site' has duplicated definition of 'render_listings:output/listings/index.html'
+[2014-12-27T15:09:48Z] ERROR: github_deploy: Build failed, not deploying to GitHub
+   #+END_SRC
+
+   I deleted the cache and __pycache__ directories and the doit
+   database files after reading around the internet, but this didn't
+   fix the problem. Ultimately, I deleted the listings folder which
+   fixed it, though I'm not sure how good of a fix this is, since I
+   may want to use the feature enabled by listings in the future. I
+   believe that this feature is easy insertion of formatted code into
+   webpages.
    
 
