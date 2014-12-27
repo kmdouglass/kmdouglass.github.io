@@ -4,7 +4,7 @@ UNDEFINED = runtime.UNDEFINED
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1419697166.0015087
+_modified_time = 1419697769.1571567
 _enable_loop = True
 _template_filename = '/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/comments_helper_disqus.tmpl'
 _template_uri = 'comments_helper_disqus.tmpl'
@@ -95,6 +95,6 @@ def render_comment_form(context,url,title,identifier):
 
 """
 __M_BEGIN_METADATA
-{"uri": "comments_helper_disqus.tmpl", "source_encoding": "utf-8", "filename": "/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/comments_helper_disqus.tmpl", "line_map": {"15": 3, "17": 0, "22": 2, "23": 3, "24": 31, "25": 37, "26": 44, "32": 33, "37": 33, "38": 34, "39": 35, "40": 35, "41": 35, "42": 35, "43": 35, "49": 40, "54": 40, "55": 41, "56": 42, "57": 42, "58": 42, "64": 5, "70": 5, "71": 6, "72": 7, "73": 9, "74": 9, "75": 10, "76": 11, "77": 11, "78": 11, "79": 13, "80": 13, "81": 13, "82": 14, "83": 14, "84": 16, "85": 17, "86": 18, "87": 19, "88": 19, "89": 19, "90": 21, "96": 90}}
+{"filename": "/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/comments_helper_disqus.tmpl", "uri": "comments_helper_disqus.tmpl", "source_encoding": "utf-8", "line_map": {"15": 3, "17": 0, "22": 2, "23": 3, "24": 31, "25": 37, "26": 44, "32": 33, "37": 33, "38": 34, "39": 35, "40": 35, "41": 35, "42": 35, "43": 35, "49": 40, "54": 40, "55": 41, "56": 42, "57": 42, "58": 42, "64": 5, "70": 5, "71": 6, "72": 7, "73": 9, "74": 9, "75": 10, "76": 11, "77": 11, "78": 11, "79": 13, "80": 13, "81": 13, "82": 14, "83": 14, "84": 16, "85": 17, "86": 18, "87": 19, "88": 19, "89": 19, "90": 21, "96": 90}}
 __M_END_METADATA
 """

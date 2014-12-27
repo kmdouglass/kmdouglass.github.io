@@ -1,0 +1,389 @@
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Notes on Windows</a></li>
+<li><a href="#sec-2">2. Bash prompt in Windows</a>
+<ul>
+<li><a href="#sec-2-1">2.1. Terminal emulators in emacs</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3. Python in Windows</a>
+<ul>
+<li><a href="#sec-3-1">3.1. Python shell and IPython in Emacs + Windows</a></li>
+<li><a href="#sec-3-2">3.2. Installing pymacs in Windows with Emacs 24.3.1</a></li>
+<li><a href="#sec-3-3">3.3. Installing python-mode.el 6.1.3 in Windows with Emacs 24.3.1</a></li>
+<li><a href="#sec-3-4">3.4. Setup pip to use the gcc compiler</a></li>
+<li><a href="#sec-3-5">3.5. Installing numpy, scipy, matplotlib, etc&#x2026;</a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4. Disabling CheckDisk (CHKDSK) on startup</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Notes on Windows</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+This page serves as a collection of notes I've made while using
+Windows. It's meant to be a resource to help others and myself when
+performing common tasks in Windows.
+</p>
+
+<hr  />
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Bash prompt in Windows</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<i>Information sources</i>
+</p>
+<ol class="org-ol">
+<li><a href="http://www3.ntu.edu.sg/home/ehchua/programming/howto/cygwin_Howto.html">http://www3.ntu.edu.sg/home/ehchua/programming/howto/cygwin_Howto.html</a>
+</li>
+</ol>
+
+<p>
+I really wanted a bash shell in Windows. I knew that Git for
+Windows implemented one, and I found that it's part of MSYS, a
+collection of packages for MinGw, <a href="http://www.mingw.org/">the Minimalist GNU for Windows
+package</a>.
+</p>
+
+<p>
+I downloaded the MinGW installer from SourceForge, which is linked
+to from the MinGw site. This downloads a GUI based system for
+installing various packages to <code>C:\MinGw</code>. I installed the
+following packages, found under the <code>Basic Setup</code> menu accessed in
+the left-most pane of the MinGW Installation Manager:
+</p>
+
+<ol class="org-ol">
+<li>mingw32-base (includes the gcc compiler)
+</li>
+<li>mingw32-gcc-g++
+</li>
+<li>msys-base (includes the bash shell)
+</li>
+</ol>
+
+<p>
+After installing these packages, I added the following directories
+to my system PATH environment variable:
+</p>
+
+<div class="highlight"><pre>C:\MinGW\bin;C:\MinGW\msys\1.0\bin
+</pre></div>
+
+<p>
+If you don't do this, bash can't find the other associated
+programs, like <code>ls</code> and <code>date</code>.
+</p>
+
+<hr  />
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Terminal emulators in emacs</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+<i>Sources</i>
+</p>
+<ol class="org-ol">
+<li><a href="http://stackoverflow.com/questions/20263012/m-x-term-with-emacs-on-ms-windows-error-spawning-child-process-invalid-argum">http://stackoverflow.com/questions/20263012/m-x-term-with-emacs-on-ms-windows-error-spawning-child-process-invalid-argum</a>
+</li>
+<li><a href="http://www.masteringemacs.org/articles/2010/11/01/running-shells-in-emacs-overview/">http://www.masteringemacs.org/articles/2010/11/01/running-shells-in-emacs-overview/</a>
+</li>
+<li><a href="http://ergoemacs.org/emacs/emacs_unix.html">http://ergoemacs.org/emacs/emacs_unix.html</a>
+</li>
+</ol>
+
+
+<p>
+Once I had the shell working, I wanted to <i>also</i> use it in Emacs on
+Windows through a terminal emulator. Unfortunately, I don't think
+that this is possible, based on the StackOverflow discussion linked
+to above. However, I can run bash.exe in Emacs' shell mode.
+</p>
+
+<p>
+To do this, I added the following lines to my <b>init.el</b> file:
+</p>
+
+<div class="highlight"><pre><span class="p">(</span><span class="nf">setq</span> <span class="nv">explicit-shell-file-name</span> <span class="s">&quot;C:/MinGW/msys/1.0/bin/bash.exe&quot;</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">setq</span> <span class="nv">shell-file-name</span> <span class="s">&quot;bash&quot;</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">setenv</span> <span class="s">&quot;SHELL&quot;</span> <span class="nv">shell-file-name</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">add-hook</span> <span class="ss">&#39;comint-output-filter-functions</span> <span class="ss">&#39;comint-strip-ctrl-m</span><span class="p">)</span>
+</pre></div>
+
+<p>
+This allowed me to use bash as the default shell. 
+</p>
+
+<hr  />
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Python in Windows</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Python shell and IPython in Emacs + Windows</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+<i>Sources</i>
+</p>
+<ol class="org-ol">
+<li><a href="http://stackoverflow.com/questions/8865867/python-shell-in-emacs-24">http://stackoverflow.com/questions/8865867/python-shell-in-emacs-24</a>
+</li>
+<li><a href="http://www.emacswiki.org/emacs/PythonProgrammingInEmacs">http://www.emacswiki.org/emacs/PythonProgrammingInEmacs</a>
+</li>
+<li><a href="http://ipython.org/pyreadline">http://ipython.org/pyreadline</a>
+</li>
+<li><a href="https://bugs.launchpad.net/python-mode/+bug/1103588">https://bugs.launchpad.net/python-mode/+bug/1103588</a>
+</li>
+</ol>
+
+
+<p>
+I can get a basic Python shell within Emacs on Windows by adding the
+following line to my <b>init.el</b> file:
+</p>
+
+<div class="highlight"><pre><span class="p">(</span><span class="nf">setq</span> <span class="nv">python-shell-interpreter</span> <span class="s">&quot;C:/Python34/python.exe&quot;</span><span class="p">)</span>
+</pre></div>
+
+<p>
+However, I can't print graphs through matplotlib from within this
+shell.
+</p>
+
+<p>
+After installing IPython, I could in fact print graphs using
+<b>plt.show()</b> and changing <b>python-shell-interpreter</b> and
+<b>python-shell-interpreter-args</b> as follows:
+</p>
+
+<div class="highlight"><pre><span class="p">(</span><span class="nf">setq</span>
+  <span class="nv">python-shell-interpreter</span> <span class="s">&quot;C:\\Python34\\python.exe&quot;</span>
+  <span class="nv">python-shell-interpreter-args</span>
+    <span class="s">&quot;-i C:\\Python34\\Scripts\\ipython-script.py console --matplotlib&quot;</span>
+  <span class="nv">python-shell-prompt-regexp</span> <span class="s">&quot;In \\[[0-9]+\\]: &quot;</span>
+  <span class="nv">python-shell-prompt-output-regexp</span> <span class="s">&quot;Out\\[[0-9]+\\]: &quot;</span>
+  <span class="nv">python-shell-completion-setup-code</span>
+    <span class="s">&quot;from IPython.core.completerlib import module_completion&quot;</span>
+  <span class="nv">python-shell-completion-module-string-code</span>
+    <span class="s">&quot;&#39;;&#39;.join(module_completion(&#39;&#39;&#39;%s&#39;&#39;&#39;))\n&quot;</span>
+  <span class="nv">python-shell-completion-string-code</span>
+    <span class="s">&quot;&#39;;&#39;.join(get_ipython().Completer.all_completions(&#39;&#39;&#39;%s&#39;&#39;&#39;))\n&quot;</span><span class="p">)</span>
+</pre></div>
+
+<p>
+Note that this configuration is specific to Windows and configures
+python.el, which is built into Emacs 24.2+. I also made slight
+modifications to the variable <b>python-shell-interpreter-args</b> to
+include the argument <b>console &#x2013;matplotlib</b> (see source 4
+above). Finally, I installed the package <b>pyzmq</b> using pip. These
+steps were crucial to get interactive plotting to work in an emacs
+python shell.
+</p>
+
+<p>
+To get colors working in IPython on Windows, simply use pip to
+install PyReadline.
+</p>
+
+<hr  />
+</div>
+</div>
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Installing pymacs in Windows with Emacs 24.3.1</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+<i>Sources</i>
+</p>
+<ol class="org-ol">
+<li><a href="http://pymacs.progiciels-bpi.ca/pymacs.html#installation">http://pymacs.progiciels-bpi.ca/pymacs.html#installation</a>
+</li>
+<li><a href="https://bbs.archlinux.org/viewtopic.php?id=142260">https://bbs.archlinux.org/viewtopic.php?id=142260</a>
+</li>
+</ol>
+
+<p>
+Pymacs is easily installed on Windows. I first cloned the
+repository in a GitShell(version 0.25 on May 8, 2014)
+</p>
+
+<div class="highlight"><pre>git clone git://github.com/pinard/Pymacs
+</pre></div>
+
+<p>
+Following this, I ran the command <b>make check</b> in the folder
+containing the cloned repository. I could run <b>make</b> on Windows
+because I use MinGW and these binaries were on my system PATH
+environment variable. My system passed 166 tests but failed 1. It
+didn't seem to matter in the end though; the failure was a Python
+assertion error related to the version of Pymacs I downloaded.
+</p>
+
+<p>
+<b>Note:</b> The directories that contained my emacs and Python binaries
+were on my system PATH environment variable. If they are not, the
+<b>make check</b> utility may not locate the binaries.
+</p>
+
+<p>
+I next ran <b>make install</b> and then ran <b>python setup.py
+install</b>. Both ran without any problems. However, I could not
+import Pymacs into Python. I changed line 299 of Pymacs.py from
+<b>except ProtocolError, exception:</b> to <b>except ProtocolError as
+exception:</b> and then I could import the file.
+</p>
+
+<p>
+Finally, I copied pymacs.el into my <b>~/.emacs.d/my-packages/</b>
+directory and added the following lines to <b>init.el</b>:
+</p>
+
+<div class="highlight"><pre><span class="c1">;;; Pymacs</span>
+<span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">&#39;load-path</span> <span class="s">&quot;~/.emacs.d/my-packages/pymacs-0.25&quot;</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">autoload</span> <span class="ss">&#39;pymacs-apply</span> <span class="s">&quot;pymacs&quot;</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">autoload</span> <span class="ss">&#39;pymacs-call</span> <span class="s">&quot;pymacs&quot;</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">autoload</span> <span class="ss">&#39;pymacs-eval</span> <span class="s">&quot;pymacs&quot;</span> <span class="nv">nil</span> <span class="nv">t</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">autoload</span> <span class="ss">&#39;pymacs-exec</span> <span class="s">&quot;pymacs&quot;</span> <span class="nv">nil</span> <span class="nv">t</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">autoload</span> <span class="ss">&#39;pymacs-load</span> <span class="s">&quot;pymacs&quot;</span> <span class="nv">nil</span> <span class="nv">t</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">autoload</span> <span class="ss">&#39;pymacs-autoload</span> <span class="s">&quot;pymacs&quot;</span><span class="p">)</span>
+<span class="c1">;;(eval-after-load &quot;pymacs&quot;</span>
+<span class="c1">;;  &#39;(add-to-list &#39;pymacs-load-path YOUR-PYMACS-DIRECTORY&quot;))</span>
+</pre></div>
+
+<p>
+The last two lines are commented out and are only needed if I have
+pymacs code in a directory that should be searched first in the
+Python import search path.
+</p>
+
+<hr  />
+</div>
+</div>
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Installing python-mode.el 6.1.3 in Windows with Emacs 24.3.1</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+python-mode.el has a few things that I like over python.el, which
+is included in Emacs 24.2+.
+</p>
+
+<p>
+python-mode.el is very easily installed. I downloaded version 6.1.3
+from <a href="https://launchpad.net/python-mode">https://launchpad.net/python-mode</a> and unpackaged the .tar.gz
+file into <b>~/.emacs.d/my-packages/python-mode.el-6.1.3</b>.
+</p>
+
+<p>
+Then, I added the following lines to my <b>init.el</b> file:
+</p>
+
+<div class="highlight"><pre><span class="c1">;;; python-mode.el</span>
+<span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">&#39;load-path</span> <span class="s">&quot;~/.emacs.d/my-packages/python-mode.el-6.1.3&quot;</span><span class="p">)</span> 
+<span class="p">(</span><span class="nf">setq</span> <span class="nv">py-install-directory</span> <span class="s">&quot;~/.emacs.d/my-packages/python-mode.el-6.1.3&quot;</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;python-mode</span><span class="p">)</span>
+</pre></div>
+
+<p>
+Python-mode does some insane things with Window splitting in emacs
+on Windows when executing code. I just stopped window splitting
+altogether by adding <b>(setq py-split-windows-on-execute-p nil)</b>
+after the <b>(require 'python-mode)</b> line.
+</p>
+
+<hr  />
+</div>
+</div>
+
+<div id="outline-container-sec-3-4" class="outline-3">
+<h3 id="sec-3-4"><span class="section-number-3">3.4</span> Setup pip to use the gcc compiler</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+<i>Information sources</i>
+</p>
+<ol class="org-ol">
+<li><a href="http://blog.markstahler.ca/2010/08/python-development-on-windows-setuptools-pip-configuration/">http://blog.markstahler.ca/2010/08/python-development-on-windows-setuptools-pip-configuration/</a>
+</li>
+</ol>
+
+<p>
+The Python package repository, pip, will typically try to use
+Visual Studio as its compiler on Windows. I've run into a lot of
+errors and tedious customizations to get Visual Studio working with
+pip however.
+</p>
+
+<p>
+Instead, I configured pip to use the gcc compiler in MinGw. After
+installing MingGw, I created a text file called <b>pydistutils.cfg</b>
+in <b>C:\Users\douglass</b> that contained the following lines:
+</p>
+
+<div class="highlight"><pre>[build]
+compiler = mingw32
+</pre></div>
+
+<hr  />
+</div>
+</div>
+<div id="outline-container-sec-3-5" class="outline-3">
+<h3 id="sec-3-5"><span class="section-number-3">3.5</span> Installing numpy, scipy, matplotlib, etc&#x2026;</h3>
+<div class="outline-text-3" id="text-3-5">
+<p>
+<i>Sources</i>
+</p>
+<ol class="org-ol">
+<li><a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/">http://www.lfd.uci.edu/~gohlke/pythonlibs/</a>
+</li>
+</ol>
+
+<p>
+I have found that pip is not very good at resolving package
+dependencies. For example, I ran into issues installing numpy using
+pip because I didn't have BLAS already installed. I've read that
+<b>conda</b> is pretty good with resolving dependencies, but I really
+didn't want to download/install another package manager.
+</p>
+
+<p>
+Many 64-bit binaries can be found at the website above. I
+downloaded the 64 bit binaries matching my Python version (3.4) for
+numpy, scipy, and matplotlib here. Next, I moved the binaries to
+<b>C:\Python34\Scripts</b> and installed each with <b>easy_install.exe</b>:
+</p>
+
+<div class="highlight"><pre>easy_install numpy-MKL-1.8.1.win-amd64-py3.4.exe
+easy_install scipy-0.14.0.win-amd64-py3.4.exe
+easy_install matplotlib-1.3.1.win-amd64-py3.4.exe
+</pre></div>
+
+<p>
+I had no troubles installing Pillow (for image processing) with
+pip3.
+</p>
+
+<hr  />
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Disabling CheckDisk (CHKDSK) on startup</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Windows check disk causes me all sorts of pain at work. I can
+disable it for certain drives by adding <b>/k:&lt;drive letter&gt;</b> before
+the asterisk in the <b>BootExecute</b> Windows registry key at
+<b>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session
+Manager\</b>. I disabled the F:\ and M:\ drives by adding /k:M and /k:F
+before the *.
+</p>
+</div>
+</div>
