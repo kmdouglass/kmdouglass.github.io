@@ -94,6 +94,12 @@ GITHUB_DEPLOY_BRANCH = 'master'
 
 * Customization
 
+** Customization and Mako tutorial
+   There is a great tutorial for customizing Nikola pages and using
+   Mako at [[http://www.shisaa.jp/postset/nikola-web.html][http://www.shisaa.jp]].
+
+-----
+
 ** Set the theme to bootstrap3 with a color scheme from bootswatch
    First, install the bootstrap3 theme from the themes repository. In
    the end, I don't think this part is necessary.
