@@ -113,6 +113,24 @@ nikola bootswatch_theme -n custom_theme -s darkly -p bootstrap3
    
 -----
 
+** Changing bootswatch navbar elements
+   I am using the [[http://bootswatch.com/darkly/][Darkly]] swatch in Nikola's bootstrap3 theme. This
+   swatch has two menu bars; one is blue and the other green. When I
+   installed this swatch, the default was set to green, but I wanted
+   the blue one.
+
+   To change this, I had to change the =base.tmpl= file in
+   =themes/bootstrap3/templates/base.tmpl=. In the Menubar section, I
+   found the tag 
+
+   #+BEGIN_SRC html
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+   #+END_SRC html
+
+   and changed navbar-inverse to navbar-default, the name of the
+   swatch element.
+-----
+
 ** Navigation links
    You can edit what navigation links appear by changing the
    NAVIGATION LINKS variable in conf.py. See this section of the
