@@ -1,0 +1,63 @@
+#+BEGIN_COMMENT
+.. title: About Me
+.. slug: about-me
+.. date: 12-26-2014
+.. tags: 
+.. link:
+.. description: My brief biography
+.. type: text
+#+END_COMMENT
+
+* Brief Biography
+  
+  [[file:../images/me_for_web.jpg]]
+  
+  Born and raised in the American Midwestern state of Ohio, I am now a
+  post-doc in the [[http://leb.epfl.ch][Laboratory for Experimental Biophysics]] at [[http://www.epfl.ch][EPFL]] in
+  Lausanne, Switzerland. My work is in method development for
+  super-resolution fluorescence microscopies and their application to
+  the study of cellular systems. This involves utilizing my expertise
+  in a diverse range of topics, including optical design, statistical
+  modeling, and computer programming. The goal is to image single
+  molecules inside cells with resolution on the order of nanometers so
+  we can better understand their structure and function. In
+  particular, I have designed microscopes and/or analysis pipelines
+  for imaging [[http://en.wikipedia.org/wiki/Chromatin][chromatin]] and the [[http://en.wikipedia.org/wiki/Centrosome][centrosome]].
+
+  My education began at [[http://www.edon.k12.oh.us/][Edon Northwest Schools]] in the small
+  agricultural town of Edon, Ohio. I attended college at [[http://www.rose-hulman.edu/][Rose-Hulman
+  Institute of Technology]], obtaining the B.S. degree in Engineering
+  Physics in 2007. In 2011, I obtained the M.S. in Optics from [[http://www.creol.ucf.edu/][CREOL]]
+  and the PhD in Optics in 2013.
+
+  I have been fortunate enough to work on research projects in a
+  number of very interesting fields. In my doctoral thesis, I worked
+  with Prof. Aristide Dogariu and studied the effects of
+  electromagnetic propagation through disordered systems, such as
+  colloids, photonic crystals, and biological tissue. This led, for
+  example, to a new understanding of how to [[http://www.nature.com/nphoton/journal/v6/n12/abs/nphoton.2012.278.html][control colloidal
+  particles]] using multiple light scattering and a new [[http://pubs.rsc.org/en/content/articlelanding/2015/ra/c4ra11627e#!divAbstract][fiber
+  optic-based sensor]] for investigating microscopic strucutral
+  relaxation times in complex fluids.
+
+  In the summer of 2006, I worked with Prof. Margaret Murnane and
+  Prof. Henry Kapteyn as an undergraduate researcher at the University
+  of Colorado, Boulder developing an optical spectrometer for
+  Ti:Sapphire beam characterization in a vacuum chamber. While at
+  Rose-Hulman, I developed the software interface to photon counters
+  and developed a microfluidic platform for transporting oocytes on a
+  chip in the semiconductor device fabrication clean room.
+
+  I love rock climbing, hiking, bicycling, and the great outdoors. I
+  also love to travel and learn about different cultures. Most of my
+  free time is spent learning French, learning about computer
+  programming, and with my beautiful wife Kirsten, for whom I am
+  incredibly lucky to have in my life.
+
+-----
+
+* Professional
+  + [[http://kmdouglass.github.io/about/kmdouglass_cv.pdf][CV]]
+  + [[http://orcid.org/0000-0003-4694-0922][Open Researcher and Contributor ID: 0000-0003-4694-0922]]
+  + [[https://www.researchgate.net/profile/Kyle_Douglass][Research Gate]]
+

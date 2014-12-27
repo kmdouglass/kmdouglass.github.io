@@ -1,0 +1,350 @@
+#+OPTIONS: toc:nil num:t ^:nil
+#+BEGIN_HTML
+---
+layout: default
+title: Notes on Windows | Notes & Projects
+---
+#+END_HTML
+#+TOC: headlines 3
+
+* Notes on Windows
+  This page serves as a collection of notes I've made while using
+  Windows. It's meant to be a resource to help others and myself when
+  performing common tasks in Windows.
+
+-----  
+
+* Bash prompt in Windows
+
+   /Information sources/
+   1. http://www3.ntu.edu.sg/home/ehchua/programming/howto/cygwin_Howto.html
+   
+   I really wanted a bash shell in Windows. I knew that Git for
+   Windows implemented one, and I found that it's part of MSYS, a
+   collection of packages for MinGw, [[http://www.mingw.org/][the Minimalist GNU for Windows
+   package]].
+
+   I downloaded the MinGW installer from SourceForge, which is linked
+   to from the MinGw site. This downloads a GUI based system for
+   installing various packages to =C:\MinGw=. I installed the
+   following packages, found under the =Basic Setup= menu accessed in
+   the left-most pane of the MinGW Installation Manager:
+
+   1. mingw32-base (includes the gcc compiler)
+   2. mingw32-gcc-g++
+   3. msys-base (includes the bash shell)
+
+   After installing these packages, I added the following directories
+   to my system PATH environment variable:
+
+   #+BEGIN_HTML
+   <div id="code-block">
+   #+END_HTML
+   
+   #+BEGIN_SRC
+C:\MinGW\bin;C:\MinGW\msys\1.0\bin
+   #+END_SRC
+   
+   #+BEGIN_HTML
+   </div>
+   #+END_HTML
+
+   If you don't do this, bash can't find the other associated
+   programs, like =ls= and =date=.
+   
+-----
+
+** Terminal emulators in emacs
+
+   /Sources/
+   1. http://stackoverflow.com/questions/20263012/m-x-term-with-emacs-on-ms-windows-error-spawning-child-process-invalid-argum
+   2. http://www.masteringemacs.org/articles/2010/11/01/running-shells-in-emacs-overview/
+   3. http://ergoemacs.org/emacs/emacs_unix.html
+
+
+   Once I had the shell working, I wanted to /also/ use it in Emacs on
+   Windows through a terminal emulator. Unfortunately, I don't think
+   that this is possible, based on the StackOverflow discussion linked
+   to above. However, I can run bash.exe in Emacs' shell mode.
+
+   To do this, I added the following lines to my *init.el* file:
+
+   #+BEGIN_HTML
+   <div id="code-block">
+   #+END_HTML
+   
+   #+BEGIN_SRC
+(setq explicit-shell-file-name "C:/MinGW/msys/1.0/bin/bash.exe")
+(setq shell-file-name "bash")
+(setenv "SHELL" shell-file-name)
+(add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m)
+   #+END_SRC
+   
+   #+BEGIN_HTML
+   </div>
+   #+END_HTML
+
+   This allowed me to use bash as the default shell. 
+
+-----
+
+* Python in Windows
+
+** Python shell and IPython in Emacs + Windows
+  
+   /Sources/
+   1. http://stackoverflow.com/questions/8865867/python-shell-in-emacs-24
+   2. http://www.emacswiki.org/emacs/PythonProgrammingInEmacs
+   3. http://ipython.org/pyreadline
+   4. https://bugs.launchpad.net/python-mode/+bug/1103588
+
+
+   I can get a basic Python shell within Emacs on Windows by adding the
+   following line to my *init.el* file:
+
+   #+BEGIN_HTML
+   <div id="code-block">
+   #+END_HTML
+   
+   #+BEGIN_SRC
+(setq python-shell-interpreter "C:/Python34/python.exe")
+   #+END_SRC
+   
+   #+BEGIN_HTML
+   </div>
+   #+END_HTML
+
+   However, I can't print graphs through matplotlib from within this
+   shell.
+
+   After installing IPython, I could in fact print graphs using
+   *plt.show()* and changing *python-shell-interpreter* and
+   *python-shell-interpreter-args* as follows:
+
+   #+BEGIN_HTML
+   <div id="code-block">
+   #+END_HTML
+   
+   #+BEGIN_SRC
+(setq
+  python-shell-interpreter "C:\\Python34\\python.exe"
+  python-shell-interpreter-args
+    "-i C:\\Python34\\Scripts\\ipython-script.py console --matplotlib"
+  python-shell-prompt-regexp "In \\[[0-9]+\\]: "
+  python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
+  python-shell-completion-setup-code
+    "from IPython.core.completerlib import module_completion"
+  python-shell-completion-module-string-code
+    "';'.join(module_completion('''%s'''))\n"
+  python-shell-completion-string-code
+    "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
+   #+END_SRC
+   
+   #+BEGIN_HTML
+   </div>
+   #+END_HTML
+
+   Note that this configuration is specific to Windows and configures
+   python.el, which is built into Emacs 24.2+. I also made slight
+   modifications to the variable *python-shell-interpreter-args* to
+   include the argument *console --matplotlib* (see source 4
+   above). Finally, I installed the package *pyzmq* using pip. These
+   steps were crucial to get interactive plotting to work in an emacs
+   python shell.
+
+   To get colors working in IPython on Windows, simply use pip to
+   install PyReadline.
+
+-----
+
+** Installing pymacs in Windows with Emacs 24.3.1
+
+   /Sources/
+   1. http://pymacs.progiciels-bpi.ca/pymacs.html#installation
+   2. https://bbs.archlinux.org/viewtopic.php?id=142260
+
+   Pymacs is easily installed on Windows. I first cloned the
+   repository in a GitShell(version 0.25 on May 8, 2014)
+
+   #+BEGIN_HTML
+   <div id="code-block">
+   #+END_HTML
+   
+   #+BEGIN_SRC
+git clone git://github.com/pinard/Pymacs
+   #+END_SRC
+   
+   #+BEGIN_HTML
+   </div>
+   #+END_HTML
+
+   Following this, I ran the command *make check* in the folder
+   containing the cloned repository. I could run *make* on Windows
+   because I use MinGW and these binaries were on my system PATH
+   environment variable. My system passed 166 tests but failed 1. It
+   didn't seem to matter in the end though; the failure was a Python
+   assertion error related to the version of Pymacs I downloaded.
+
+   *Note:* The directories that contained my emacs and Python binaries
+   were on my system PATH environment variable. If they are not, the
+   *make check* utility may not locate the binaries.
+
+   I next ran *make install* and then ran *python setup.py
+   install*. Both ran without any problems. However, I could not
+   import Pymacs into Python. I changed line 299 of Pymacs.py from
+   *except ProtocolError, exception:* to *except ProtocolError as
+   exception:* and then I could import the file.
+
+   Finally, I copied pymacs.el into my *~/.emacs.d/my-packages/*
+   directory and added the following lines to *init.el*:
+
+   #+BEGIN_HTML
+   <div id="code-block">
+   #+END_HTML
+   
+   #+BEGIN_SRC
+;;; Pymacs
+(add-to-list 'load-path "~/.emacs.d/my-packages/pymacs-0.25")
+(autoload 'pymacs-apply "pymacs")
+(autoload 'pymacs-call "pymacs")
+(autoload 'pymacs-eval "pymacs" nil t)
+(autoload 'pymacs-exec "pymacs" nil t)
+(autoload 'pymacs-load "pymacs" nil t)
+(autoload 'pymacs-autoload "pymacs")
+;;(eval-after-load "pymacs"
+;;  '(add-to-list 'pymacs-load-path YOUR-PYMACS-DIRECTORY"))
+   #+END_SRC
+   
+   #+BEGIN_HTML
+   </div>
+   #+END_HTML
+
+   The last two lines are commented out and are only needed if I have
+   pymacs code in a directory that should be searched first in the
+   Python import search path.
+
+-----
+
+** Installing python-mode.el 6.1.3 in Windows with Emacs 24.3.1
+   
+   python-mode.el has a few things that I like over python.el, which
+   is included in Emacs 24.2+.
+
+   python-mode.el is very easily installed. I downloaded version 6.1.3
+   from https://launchpad.net/python-mode and unpackaged the .tar.gz
+   file into *~/.emacs.d/my-packages/python-mode.el-6.1.3*.
+
+   Then, I added the following lines to my *init.el* file:
+
+      #+BEGIN_HTML
+   <div id="code-block">
+   #+END_HTML
+   
+   #+BEGIN_SRC
+;;; python-mode.el
+(add-to-list 'load-path "~/.emacs.d/my-packages/python-mode.el-6.1.3") 
+(setq py-install-directory "~/.emacs.d/my-packages/python-mode.el-6.1.3")
+(require 'python-mode)
+   #+END_SRC
+   
+   #+BEGIN_HTML
+   </div>
+   #+END_HTML
+
+   Python-mode does some insane things with Window splitting in emacs
+   on Windows when executing code. I just stopped window splitting
+   altogether by adding *(setq py-split-windows-on-execute-p nil)*
+   after the *(require 'python-mode)* line.
+
+-----
+** Setup pip to use the gcc compiler
+
+   /Information sources/
+   1. http://blog.markstahler.ca/2010/08/python-development-on-windows-setuptools-pip-configuration/
+     
+   The Python package repository, pip, will typically try to use
+   Visual Studio as its compiler on Windows. I've run into a lot of
+   errors and tedious customizations to get Visual Studio working with
+   pip however.
+  
+   Instead, I configured pip to use the gcc compiler in MinGw. After
+   installing MingGw, I created a text file called *pydistutils.cfg*
+   in *C:\Users\douglass* that contained the following lines:
+  
+   #+BEGIN_HTML
+   <div id="code-block">
+   #+END_HTML
+  
+   #+BEGIN_SRC
+[build]
+compiler = mingw32
+   #+END_SRC
+  
+   #+BEGIN_HTML
+   </div>
+   #+END_HTML
+
+-----
+
+** Installing numpy, scipy, matplotlib, etc...
+
+   /Sources/
+   1. http://www.lfd.uci.edu/~gohlke/pythonlibs/
+
+   I have found that pip is not very good at resolving package
+   dependencies. For example, I ran into issues installing numpy using
+   pip because I didn't have BLAS already installed. I've read that
+   *conda* is pretty good with resolving dependencies, but I really
+   didn't want to download/install another package manager.
+
+   Many 64-bit binaries can be found at the website above. I
+   downloaded the 64 bit binaries matching my Python version (3.4) for
+   numpy, scipy, and matplotlib here. Next, I moved the binaries to
+   *C:\Python34\Scripts* and installed each with *easy_install.exe*:
+
+    #+BEGIN_HTML
+    <div id="code-block">
+    #+END_HTML
+   
+    #+BEGIN_SRC
+easy_install numpy-MKL-1.8.1.win-amd64-py3.4.exe
+easy_install scipy-0.14.0.win-amd64-py3.4.exe
+easy_install matplotlib-1.3.1.win-amd64-py3.4.exe
+    #+END_SRC
+   
+    #+BEGIN_HTML
+    </div>
+    #+END_HTML
+
+   I had no troubles installing Pillow (for image processing) with
+   pip3.
+
+-----
+  
+* Disabling CheckDisk (CHKDSK) on startup
+  Windows check disk causes me all sorts of pain at work. I can
+  disable it for certain drives by adding */k:<drive letter>* before
+  the asterisk in the *BootExecute* Windows registry key at
+  *HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session
+  Manager\*. I disabled the F:\ and M:\ drives by adding /k:M and /k:F
+  before the *.
+
+-----
+
+#+BEGIN_HTML
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+  var disqus_shortname = 'kmdouglass'; // required: replace example with your forum shortname
+
+  /* * * DON'T EDIT BELOW THIS LINE * * */
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+#+END_HTML
+

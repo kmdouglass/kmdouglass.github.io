@@ -1,0 +1,3 @@
+* Useful keybindings
+  + C-h b :: List all keybindings
+  + C-h f :: Describe an emacs/elisp function
