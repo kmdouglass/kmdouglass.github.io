@@ -4,7 +4,7 @@ UNDEFINED = runtime.UNDEFINED
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1419693365.1473053
+_modified_time = 1419693714.6252496
 _enable_loop = True
 _template_filename = '/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/list.tmpl'
 _template_uri = 'list.tmpl'
@@ -27,8 +27,8 @@ def render_body(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
         __M_locals = __M_dict_builtin(pageargs=pageargs)
-        title = context.get('title', UNDEFINED)
         messages = context.get('messages', UNDEFINED)
+        title = context.get('title', UNDEFINED)
         items = context.get('items', UNDEFINED)
         def content():
             return render_content(context._locals(__M_locals))
@@ -47,8 +47,8 @@ def render_body(context,**pageargs):
 def render_content(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
-        title = context.get('title', UNDEFINED)
         messages = context.get('messages', UNDEFINED)
+        title = context.get('title', UNDEFINED)
         items = context.get('items', UNDEFINED)
         def content():
             return render_content(context)
@@ -77,6 +77,6 @@ def render_content(context,**pageargs):
 
 """
 __M_BEGIN_METADATA
-{"line_map": {"64": 12, "65": 12, "66": 12, "67": 14, "68": 15, "69": 16, "70": 16, "71": 16, "72": 18, "78": 72, "26": 0, "36": 2, "41": 19, "47": 4, "56": 4, "57": 7, "58": 7, "59": 9, "60": 10, "61": 11, "62": 12, "63": 12}, "source_encoding": "utf-8", "uri": "list.tmpl", "filename": "/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/list.tmpl"}
+{"source_encoding": "utf-8", "uri": "list.tmpl", "filename": "/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/list.tmpl", "line_map": {"64": 12, "65": 12, "66": 12, "67": 14, "68": 15, "69": 16, "70": 16, "71": 16, "72": 18, "78": 72, "26": 0, "36": 2, "41": 19, "47": 4, "56": 4, "57": 7, "58": 7, "59": 9, "60": 10, "61": 11, "62": 12, "63": 12}}
 __M_END_METADATA
 """

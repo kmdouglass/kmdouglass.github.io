@@ -8,6 +8,8 @@
 .. type: text
 #+END_COMMENT
 
+#+OPTIONS: ^:nil
+
 * First steps
 
 ** Initialize the site
@@ -36,7 +38,7 @@ nikola install_theme oldfashioned
 nikola bootswatch_theme -n custom_theme -s slate -p oldfashioned
    #+END_SRC
    
-   Finally, change the theme variable to /custom_theme/ inside
+   Finally, change the theme variable to =custom_theme= inside
    conf.py.
 
 -----
@@ -91,7 +93,7 @@ PAGES = PAGES + (("stories/*.org", "posts", "post.tmpl"),)
 
 -----
 
-** Setting the github\_deploy variables
+** Setting the github_deploy variables
 
    When publishing a project website on GitHub, you push the website
    files to a branch called *gh-pages*. However, when publishing a
@@ -100,7 +102,7 @@ PAGES = PAGES + (("stories/*.org", "posts", "post.tmpl"),)
    By default, Nikola is configured to push to gh-pages. For my
    personal website, I need to change the deploy branch to master. I
    can do this in the conf.py file by uncommenting and modifying the
-   line for the GITHUB\_DEPLOY\_BRANCH variable:
+   line for the =GITHUB_DEPLOY_BRANCH= variable:
 
    #+BEGIN_SRC python
 GITHUB_DEPLOY_BRANCH = 'master'
