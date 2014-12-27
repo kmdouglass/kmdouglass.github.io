@@ -89,6 +89,19 @@ PAGES = PAGES + (("stories/*.org", "posts", "post.tmpl"),)
 #+END_COMMENT
    #+END_SRC
 
+-----
+
+** Setting the github_deploy variables
+
+   When publishing a project website on GitHub, you push the website
+   files to a branch called *gh-pages*. However, when publishing a
+   GitHub user page, the files are pushed to the *master* branch.
+
+   By default, Nikola is configured to push to gh-pages. For my
+   personal website, I need to change the deploy branch to master. I
+   can do this in the conf.py file by uncommenting and modifying the
+   line for the GITHUB_DEPLOY_BRANCH variable: =GITHUB_DEPLOY_BRANCH =
+   'master'=.
 
 -----
 
