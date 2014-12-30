@@ -4,12 +4,12 @@ UNDEFINED = runtime.UNDEFINED
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1419976928.5883543
+_modified_time = 1419977094.3447459
 _enable_loop = True
 _template_filename = '/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/comments_helper_livefyre.tmpl'
 _template_uri = 'comments_helper_livefyre.tmpl'
 _source_encoding = 'utf-8'
-_exports = ['comment_link', 'comment_link_script', 'comment_form']
+_exports = ['comment_link_script', 'comment_link', 'comment_form']
 
 
 def render_body(context,**pageargs):
@@ -20,6 +20,16 @@ def render_body(context,**pageargs):
         __M_writer('\n\n')
         __M_writer('\n\n\n')
         __M_writer('\n')
+        return ''
+    finally:
+        context.caller_stack._pop_frame()
+
+
+def render_comment_link_script(context):
+    __M_caller = context.caller_stack._push_frame()
+    try:
+        __M_writer = context.writer()
+        __M_writer('\n<script src="http://zor.livefyre.com/wjs/v1.0/javascripts/CommentCount.js"></script>\n')
         return ''
     finally:
         context.caller_stack._pop_frame()
@@ -42,16 +52,6 @@ def render_comment_link(context,link,identifier):
         context.caller_stack._pop_frame()
 
 
-def render_comment_link_script(context):
-    __M_caller = context.caller_stack._push_frame()
-    try:
-        __M_writer = context.writer()
-        __M_writer('\n<script src="http://zor.livefyre.com/wjs/v1.0/javascripts/CommentCount.js"></script>\n')
-        return ''
-    finally:
-        context.caller_stack._pop_frame()
-
-
 def render_comment_form(context,url,title,identifier):
     __M_caller = context.caller_stack._push_frame()
     try:
@@ -69,6 +69,6 @@ def render_comment_form(context,url,title,identifier):
 
 """
 __M_BEGIN_METADATA
-{"filename": "/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/comments_helper_livefyre.tmpl", "source_encoding": "utf-8", "uri": "comments_helper_livefyre.tmpl", "line_map": {"64": 11, "33": 23, "34": 24, "35": 24, "36": 25, "37": 25, "38": 25, "39": 25, "60": 2, "70": 64, "45": 31, "15": 0, "49": 31, "20": 21, "21": 28, "22": 33, "55": 2, "28": 23, "61": 7, "62": 7, "63": 11}}
+{"filename": "/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/comments_helper_livefyre.tmpl", "uri": "comments_helper_livefyre.tmpl", "source_encoding": "utf-8", "line_map": {"32": 31, "64": 11, "70": 64, "38": 23, "60": 2, "43": 23, "44": 24, "45": 24, "46": 25, "15": 0, "48": 25, "49": 25, "20": 21, "21": 28, "22": 33, "55": 2, "47": 25, "28": 31, "61": 7, "62": 7, "63": 11}}
 __M_END_METADATA
 """
