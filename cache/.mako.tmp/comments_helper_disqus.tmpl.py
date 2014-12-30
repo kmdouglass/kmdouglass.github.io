@@ -4,12 +4,12 @@ UNDEFINED = runtime.UNDEFINED
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1419975684.8177195
+_modified_time = 1419975904.3436587
 _enable_loop = True
 _template_filename = '/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/comments_helper_disqus.tmpl'
 _template_uri = 'comments_helper_disqus.tmpl'
 _source_encoding = 'utf-8'
-_exports = ['comment_link_script', 'comment_link', 'comment_form']
+_exports = ['comment_link_script', 'comment_form', 'comment_link']
 
 
 import json 
@@ -39,23 +39,6 @@ def render_comment_link_script(context):
             __M_writer('       <script>var disqus_shortname="')
             __M_writer(str(comment_system_id))
             __M_writer('";(function(){var a=document.createElement("script");a.async=true;a.src="//"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>\n')
-        return ''
-    finally:
-        context.caller_stack._pop_frame()
-
-
-def render_comment_link(context,link,identifier):
-    __M_caller = context.caller_stack._push_frame()
-    try:
-        comment_system_id = context.get('comment_system_id', UNDEFINED)
-        __M_writer = context.writer()
-        __M_writer('\n')
-        if comment_system_id:
-            __M_writer('    <a href="')
-            __M_writer(str(link))
-            __M_writer('#disqus_thread" data-disqus-identifier="')
-            __M_writer(str(identifier))
-            __M_writer('">Comments</a>\n')
         return ''
     finally:
         context.caller_stack._pop_frame()
@@ -93,8 +76,25 @@ def render_comment_form(context,url,title,identifier):
         context.caller_stack._pop_frame()
 
 
+def render_comment_link(context,link,identifier):
+    __M_caller = context.caller_stack._push_frame()
+    try:
+        comment_system_id = context.get('comment_system_id', UNDEFINED)
+        __M_writer = context.writer()
+        __M_writer('\n')
+        if comment_system_id:
+            __M_writer('    <a href="')
+            __M_writer(str(link))
+            __M_writer('#disqus_thread" data-disqus-identifier="')
+            __M_writer(str(identifier))
+            __M_writer('">Comments</a>\n')
+        return ''
+    finally:
+        context.caller_stack._pop_frame()
+
+
 """
 __M_BEGIN_METADATA
-{"uri": "comments_helper_disqus.tmpl", "source_encoding": "utf-8", "line_map": {"15": 3, "17": 0, "22": 2, "23": 3, "24": 31, "25": 37, "26": 44, "32": 40, "37": 40, "38": 41, "39": 42, "40": 42, "41": 42, "47": 33, "52": 33, "53": 34, "54": 35, "55": 35, "56": 35, "57": 35, "58": 35, "64": 5, "70": 5, "71": 6, "72": 7, "73": 9, "74": 9, "75": 10, "76": 11, "77": 11, "78": 11, "79": 13, "80": 13, "81": 13, "82": 14, "83": 14, "84": 16, "85": 17, "86": 18, "87": 19, "88": 19, "89": 19, "90": 21, "96": 90}, "filename": "/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/comments_helper_disqus.tmpl"}
+{"filename": "/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/comments_helper_disqus.tmpl", "line_map": {"15": 3, "17": 0, "22": 2, "23": 3, "24": 31, "25": 37, "26": 44, "32": 40, "37": 40, "38": 41, "39": 42, "40": 42, "41": 42, "47": 5, "53": 5, "54": 6, "55": 7, "56": 9, "57": 9, "58": 10, "59": 11, "60": 11, "61": 11, "62": 13, "63": 13, "64": 13, "65": 14, "66": 14, "67": 16, "68": 17, "69": 18, "70": 19, "71": 19, "72": 19, "73": 21, "79": 33, "84": 33, "85": 34, "86": 35, "87": 35, "88": 35, "89": 35, "90": 35, "96": 90}, "source_encoding": "utf-8", "uri": "comments_helper_disqus.tmpl"}
 __M_END_METADATA
 """
