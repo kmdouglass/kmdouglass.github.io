@@ -159,6 +159,8 @@ COMMENT_SYSTEM_ID = "MY_SHORT_NAME"
    The shortname for the Disqus site can be found using [[https://help.disqus.com/customer/portal/articles/466208-what-s-a-shortname-][these
    instructions]].
 
+-----
+
 ** Teasers
    To only include portions of posts on the index page, you have to
    set the =INDEX_TEASERS= variable to =True=. By default, only the
