@@ -144,6 +144,21 @@ nikola bootswatch_theme -n custom_theme -s darkly -p bootstrap3
 
 -----
 
+** Adding Disqus comments
+   I already had a Disqus account for my old site. Adding
+   functionality for Disqus comments to my new Nikola-based site was
+   incredibly simple.
+
+   In *conf.py*, I set the following two variables:
+
+   #+BEGIN_SRC python
+COMMENT_SYSTEM = "disqus"
+COMMENT_SYSTEM_ID = "MY_SHORT_NAME"
+   #+END_SRC
+   
+   The shortname for the Disqus site can be found using [[https://help.disqus.com/customer/portal/articles/466208-what-s-a-shortname-][these
+   instructions]].
+
 ** Teasers
    To only include portions of posts on the index page, you have to
    set the =INDEX_TEASERS= variable to =True=. By default, only the
