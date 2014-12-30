@@ -209,7 +209,7 @@ swatch element.
 <div class="outline-text-3" id="text-2-4">
 <p>
 You can edit what navigation links appear by changing the
-NAVIGATION LINKS variable in conf.py. See this section of the
+NAVIGATION_LINKS variable in conf.py. See this section of the
 handbook: <a href="http://getnikola.com/handbook.html#configuration">http://getnikola.com/handbook.html#configuration</a>
 </p>
 

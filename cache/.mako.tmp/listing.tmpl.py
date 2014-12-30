@@ -4,7 +4,7 @@ UNDEFINED = runtime.UNDEFINED
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1419700232.0351527
+_modified_time = 1419975685.14306
 _enable_loop = True
 _template_filename = 'themes/bootstrap3/templates/listing.tmpl'
 _template_uri = 'listing.tmpl'
@@ -32,15 +32,15 @@ def render_body(context,**pageargs):
         _import_ns = {}
         _mako_get_namespace(context, 'ui')._populate(_import_ns, ['bar'])
         files = _import_ns.get('files', context.get('files', UNDEFINED))
+        def content():
+            return render_content(context._locals(__M_locals))
+        crumbs = _import_ns.get('crumbs', context.get('crumbs', UNDEFINED))
+        ui = _mako_get_namespace(context, 'ui')
+        folders = _import_ns.get('folders', context.get('folders', UNDEFINED))
         source_link = _import_ns.get('source_link', context.get('source_link', UNDEFINED))
         def sourcelink():
             return render_sourcelink(context._locals(__M_locals))
-        ui = _mako_get_namespace(context, 'ui')
-        def content():
-            return render_content(context._locals(__M_locals))
         code = _import_ns.get('code', context.get('code', UNDEFINED))
-        folders = _import_ns.get('folders', context.get('folders', UNDEFINED))
-        crumbs = _import_ns.get('crumbs', context.get('crumbs', UNDEFINED))
         messages = _import_ns.get('messages', context.get('messages', UNDEFINED))
         __M_writer = context.writer()
         __M_writer('\n')
@@ -66,12 +66,12 @@ def render_content(context,**pageargs):
         _import_ns = {}
         _mako_get_namespace(context, 'ui')._populate(_import_ns, ['bar'])
         files = _import_ns.get('files', context.get('files', UNDEFINED))
-        ui = _mako_get_namespace(context, 'ui')
         def content():
             return render_content(context)
-        code = _import_ns.get('code', context.get('code', UNDEFINED))
-        folders = _import_ns.get('folders', context.get('folders', UNDEFINED))
         crumbs = _import_ns.get('crumbs', context.get('crumbs', UNDEFINED))
+        ui = _mako_get_namespace(context, 'ui')
+        folders = _import_ns.get('folders', context.get('folders', UNDEFINED))
+        code = _import_ns.get('code', context.get('code', UNDEFINED))
         __M_writer = context.writer()
         __M_writer('\n')
         __M_writer(str(ui.bar(crumbs)))
@@ -105,10 +105,10 @@ def render_sourcelink(context,**pageargs):
     try:
         _import_ns = {}
         _mako_get_namespace(context, 'ui')._populate(_import_ns, ['bar'])
+        messages = _import_ns.get('messages', context.get('messages', UNDEFINED))
         source_link = _import_ns.get('source_link', context.get('source_link', UNDEFINED))
         def sourcelink():
             return render_sourcelink(context)
-        messages = _import_ns.get('messages', context.get('messages', UNDEFINED))
         __M_writer = context.writer()
         __M_writer('\n')
         if source_link:
@@ -124,6 +124,6 @@ def render_sourcelink(context,**pageargs):
 
 """
 __M_BEGIN_METADATA
-{"uri": "listing.tmpl", "filename": "themes/bootstrap3/templates/listing.tmpl", "line_map": {"22": 3, "76": 5, "77": 6, "78": 6, "79": 7, "80": 8, "81": 9, "82": 10, "83": 10, "84": 10, "85": 10, "86": 10, "87": 12, "88": 13, "89": 13, "90": 13, "91": 13, "28": 0, "93": 15, "94": 17, "95": 18, "96": 18, "97": 18, "116": 25, "103": 22, "92": 13, "46": 2, "47": 3, "113": 22, "114": 23, "115": 24, "52": 20, "117": 25, "118": 25, "119": 25, "57": 28, "125": 119, "63": 5}, "source_encoding": "utf-8"}
+{"uri": "listing.tmpl", "source_encoding": "utf-8", "line_map": {"22": 3, "76": 5, "77": 6, "78": 6, "79": 7, "80": 8, "81": 9, "82": 10, "83": 10, "84": 10, "85": 10, "86": 10, "87": 12, "88": 13, "89": 13, "90": 13, "91": 13, "28": 0, "93": 15, "94": 17, "95": 18, "96": 18, "97": 18, "116": 25, "103": 22, "92": 13, "46": 2, "47": 3, "113": 22, "114": 23, "115": 24, "52": 20, "117": 25, "118": 25, "119": 25, "57": 28, "125": 119, "63": 5}, "filename": "themes/bootstrap3/templates/listing.tmpl"}
 __M_END_METADATA
 """
