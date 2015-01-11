@@ -523,7 +523,9 @@ env EDITOR=emacs crontab -e
    Note before compiling: the *libssl-dev* package should be installed
    for pip to work, and *libsqlite3-dev* should be installed for
    IPython History. *tk8.5* and *tk8.5-dev* should be installed if you
-   later want to use Tk in matplotlib.
+   later want to use Tk in matplotlib. Finally, *libbz2-dev* should
+   already be installed to ensure that Python has access to the bz2
+   headers.
 
    I installed Python 3.4 with the following commands:
 
