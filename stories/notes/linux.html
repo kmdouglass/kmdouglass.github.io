@@ -129,6 +129,7 @@
 <li><a href="linux.html#sec-4-10">4.10. Activating the Firefox Java Plugin</a></li>
 <li><a href="linux.html#sec-4-11">4.11. Latex installation</a></li>
 <li><a href="linux.html#sec-4-12">4.12. Automatic Backups with rsync and cron</a></li>
+<li><a href="linux.html#sec-4-13">4.13. Install Microsoft Core Fonts</a></li>
 </ul>
 </li>
 <li>
@@ -194,6 +195,7 @@ if it helps you in any way!
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-2" class="outline-2">
 <h2 id="sec-2">
 <span class="section-number-2">2</span> Why install Debian?</h2>
@@ -225,6 +227,7 @@ paradigm. Furthermore, Debian is actively developed and very mature.
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-3" class="outline-2">
 <h2 id="sec-3">
 <span class="section-number-2">3</span> Debian installation from a live USB stick</h2>
@@ -254,6 +257,7 @@ it reduces load on their servers.
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-3-2" class="outline-3">
 <h3 id="sec-3-2">
 <span class="section-number-3">3.2</span> Copy the .iso file to a USB stick</h3>
@@ -279,7 +283,7 @@ stick as the latest message. On my machine, it is labeled as
 <code>/dev/sdb/</code>.
 </p>
 
-<div class="highlight"><pre>sudo cp Downloads/debian-live-7.4-amd64-xfce-desktop.iso /dev/sdb<span class="p">;</span> sync
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">cp</span> <span class="n">Downloads</span><span class="o">/</span><span class="n">debian</span><span class="o">-</span><span class="n">live</span><span class="o">-</span>7<span class="p">.</span>4<span class="o">-</span><span class="n">amd64</span><span class="o">-</span><span class="n">xfce</span><span class="o">-</span><span class="n">desktop</span><span class="p">.</span><span class="n">iso</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sdb</span><span class="p">;</span> <span class="n">sync</span>
 </pre></div>
 
 <p>
@@ -314,6 +318,7 @@ this.
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-3-3" class="outline-3">
 <h3 id="sec-3-3">
 <span class="section-number-3">3.3</span> Installing Debian</h3>
@@ -348,6 +353,7 @@ allowed me to boot into Debian or Windows 7.
 </div>
 </div>
 </div>
+
 <div id="outline-container-sec-4" class="outline-2">
 <h2 id="sec-4">
 <span class="section-number-2">4</span> Initial Debian Configuration</h2>
@@ -389,6 +395,7 @@ installed after any fresh OS installation.
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-4-2" class="outline-3">
 <h3 id="sec-4-2">
 <span class="section-number-3">4.2</span> WiFi</h3>
@@ -427,6 +434,7 @@ include the primary packages. These should be left in place.
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-4-2-2" class="outline-4">
 <h4 id="sec-4-2-2">
 <span class="section-number-4">4.2.2</span> Installing non-free wireless drivers</h4>
@@ -449,6 +457,7 @@ really need both.
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-4-2-3" class="outline-4">
 <h4 id="sec-4-2-3">
 <span class="section-number-4">4.2.3</span> Configuring WiFi</h4>
@@ -504,10 +513,10 @@ connect to automatically. In this file, add the following lines to
 add a network:
 </p>
 
-<div class="highlight"><pre>auto wlan0
-iface wlan0 inet dhcp
-wpa-ssid mynetwork
-wpa-psk password
+<div class="highlight"><pre><span class="n">auto</span> <span class="n">wlan0</span>
+<span class="n">iface</span> <span class="n">wlan0</span> <span class="n">inet</span> <span class="n">dhcp</span>
+<span class="n">wpa</span><span class="o">-</span><span class="n">ssid</span> <span class="n">mynetwork</span>
+<span class="n">wpa</span><span class="o">-</span><span class="n">psk</span> <span class="n">password</span>
 </pre></div>
 
 <p>
@@ -520,6 +529,7 @@ Function-F&lt;num&gt; key combination to activate the WiFi as well.
 </div>
 </div>
 </div>
+
 <div id="outline-container-sec-4-3" class="outline-3">
 <h3 id="sec-4-3">
 <span class="section-number-3">4.3</span> Installing emacs on Debian</h3>
@@ -537,7 +547,7 @@ I can get the latest emacs source files from the emacs git
 repository. Use the command
 </p>
 
-<div class="highlight"><pre>git clone --depth <span class="m">1</span> git://git.sv.gnu.org/emacs.git
+<div class="highlight"><pre><span class="n">git</span> <span class="n">clone</span> <span class="o">--</span><span class="n">depth</span> 1 <span class="n">git</span><span class="p">:</span><span class="o">//</span><span class="n">git</span><span class="p">.</span><span class="n">sv</span><span class="p">.</span><span class="n">gnu</span><span class="p">.</span><span class="n">org</span><span class="o">/</span><span class="n">emacs</span><span class="p">.</span><span class="n">git</span>
 </pre></div>
 
 <p>
@@ -584,6 +594,7 @@ they're not, type <i>M-x auto-mode-complete</i> to get it working.
 </div>
 </div>
 </div>
+
 <div id="outline-container-sec-4-4" class="outline-3">
 <h3 id="sec-4-4">
 <span class="section-number-3">4.4</span> Setting the keyboard layout to international</h3>
@@ -608,6 +619,7 @@ the original keyboard layout after adding the international one.
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-4-5" class="outline-3">
 <h3 id="sec-4-5">
 <span class="section-number-3">4.5</span> Changing the Caps Lock key to function as Control</h3>
@@ -655,6 +667,7 @@ In the prompt, enter the following information:
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-4-6" class="outline-3">
 <h3 id="sec-4-6">
 <span class="section-number-3">4.6</span> Running Dropbox on startup</h3>
@@ -667,7 +680,7 @@ In the prompt, enter the following information:
 <a href="http://www.ghacks.net/2009/04/04/get-to-know-linux-the-etcinitd-directory/">http://www.ghacks.net/2009/04/04/get-to-know-linux-the-etcinitd-directory/</a>
 </li>
 <li>
-<a href="http://pixeldust.wikidot.com/linode-setup%3adropbox">http://pixeldust.wikidot.com/linode-setup%3adropbox</a>
+<a href="http://pixeldust.wikidot.com/linode-setup:dropbox">http://pixeldust.wikidot.com/linode-setup:dropbox</a>
 </li>
 <li>
 <a href="http://help.directadmin.com/item.php?id=379">http://help.directadmin.com/item.php?id=379</a>
@@ -681,85 +694,85 @@ the sources above. I needed to add the recommended special tags to
 avoid an insserv error. The script looks like this:
 </p>
 
-<div class="highlight"><pre>### BEGIN INIT INFO
-# Provides:          dropbox
-# Required-Start:    $local_fs $network
-# Required-Stop:     $local_fs
-# Default-Start:     2 3 4 5
-# Default-Stop:      0 1 6
-# Short-Description: Dropbox
-# Description:       Dropbox daemon
-### END INIT INFO
+<div class="highlight"><pre><span class="c">### BEGIN INIT INFO</span>
+<span class="c"># Provides:          dropbox</span>
+<span class="c"># Required-Start:    $local_fs $network</span>
+<span class="c"># Required-Stop:     $local_fs</span>
+<span class="c"># Default-Start:     2 3 4 5</span>
+<span class="c"># Default-Stop:      0 1 6</span>
+<span class="c"># Short-Description: Dropbox</span>
+<span class="c"># Description:       Dropbox daemon</span>
+<span class="c">### END INIT INFO</span>
 
-# dropbox service
-DROPBOX_USERS="kmdouglass"
+<span class="c"># dropbox service</span>
+<span class="n">DROPBOX_USERS</span><span class="p">=</span><span class="s">"kmdouglass"</span>
 
-DAEMON=.dropbox-dist/dropbox
+<span class="n">DAEMON</span><span class="p">=.</span><span class="n">dropbox</span><span class="o">-</span><span class="n">dist</span><span class="o">/</span><span class="n">dropbox</span>
 
-start() {
-    echo "Starting dropbox..."
-    for dbuser in $DROPBOX_USERS; do
-        HOMEDIR=`getent passwd $dbuser | cut -d: -f6`
-        if [ -x $HOMEDIR/$DAEMON ]; then
-            HOME="$HOMEDIR" start-stop-daemon -b -o -c $dbuser -S -u $dbuser -x $HOMEDIR/$DAEMON
-        fi
-    done
-}
+<span class="n">start</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">echo</span> <span class="s">"Starting dropbox..."</span>
+    <span class="k">for</span> <span class="n">dbuser</span> <span class="n">in</span> $<span class="n">DROPBOX_USERS</span><span class="p">;</span> <span class="k">do</span>
+        <span class="n">HOMEDIR</span><span class="p">=</span>`<span class="n">getent</span> <span class="n">passwd</span> $<span class="n">dbuser</span> <span class="o">|</span> <span class="nb">cut</span> <span class="o">-</span><span class="n">d</span><span class="p">:</span> <span class="o">-</span><span class="n">f6</span>`
+        <span class="k">if</span> <span class="p">[</span> <span class="o">-</span><span class="n">x</span> $<span class="n">HOMEDIR</span><span class="o">/</span>$<span class="n">DAEMON</span> <span class="p">];</span> <span class="n">then</span>
+            <span class="n">HOME</span><span class="p">=</span><span class="s">"$HOMEDIR"</span> <span class="n">start</span><span class="o">-</span><span class="n">stop</span><span class="o">-</span><span class="n">daemon</span> <span class="o">-</span><span class="n">b</span> <span class="o">-</span><span class="n">o</span> <span class="o">-</span><span class="n">c</span> $<span class="n">dbuser</span> <span class="o">-</span><span class="n">S</span> <span class="o">-</span><span class="n">u</span> $<span class="n">dbuser</span> <span class="o">-</span><span class="n">x</span> $<span class="n">HOMEDIR</span><span class="o">/</span>$<span class="n">DAEMON</span>
+        <span class="n">fi</span>
+    <span class="n">done</span>
+<span class="p">}</span>
 
-stop() {
-    echo "Stopping dropbox..."
-    for dbuser in $DROPBOX_USERS; do
-        HOMEDIR=`getent passwd $dbuser | cut -d: -f6`
-        if [ -x $HOMEDIR/$DAEMON ]; then
-            start-stop-daemon -o -c $dbuser -K -u $dbuser -x $HOMEDIR/$DAEMON
-        fi
-    done
-}
+<span class="n">stop</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">echo</span> <span class="s">"Stopping dropbox..."</span>
+    <span class="k">for</span> <span class="n">dbuser</span> <span class="n">in</span> $<span class="n">DROPBOX_USERS</span><span class="p">;</span> <span class="k">do</span>
+        <span class="n">HOMEDIR</span><span class="p">=</span>`<span class="n">getent</span> <span class="n">passwd</span> $<span class="n">dbuser</span> <span class="o">|</span> <span class="nb">cut</span> <span class="o">-</span><span class="n">d</span><span class="p">:</span> <span class="o">-</span><span class="n">f6</span>`
+        <span class="k">if</span> <span class="p">[</span> <span class="o">-</span><span class="n">x</span> $<span class="n">HOMEDIR</span><span class="o">/</span>$<span class="n">DAEMON</span> <span class="p">];</span> <span class="n">then</span>
+            <span class="n">start</span><span class="o">-</span><span class="n">stop</span><span class="o">-</span><span class="n">daemon</span> <span class="o">-</span><span class="n">o</span> <span class="o">-</span><span class="n">c</span> $<span class="n">dbuser</span> <span class="o">-</span><span class="n">K</span> <span class="o">-</span><span class="n">u</span> $<span class="n">dbuser</span> <span class="o">-</span><span class="n">x</span> $<span class="n">HOMEDIR</span><span class="o">/</span>$<span class="n">DAEMON</span>
+        <span class="n">fi</span>
+    <span class="n">done</span>
+<span class="p">}</span>
 
-status() {
-    for dbuser in $DROPBOX_USERS; do
-        dbpid=`pgrep -u $dbuser dropbox`
-        if [ -z $dbpid ] ; then
-            echo "dropboxd for USER $dbuser: not running."
-        else
-            echo "dropboxd for USER $dbuser: running (pid $dbpid)"
-        fi
-    done
-}
+<span class="n">status</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">dbuser</span> <span class="n">in</span> $<span class="n">DROPBOX_USERS</span><span class="p">;</span> <span class="k">do</span>
+        <span class="n">dbpid</span><span class="p">=</span>`<span class="n">pgrep</span> <span class="o">-</span><span class="n">u</span> $<span class="n">dbuser</span> <span class="n">dropbox</span>`
+        <span class="k">if</span> <span class="p">[</span> <span class="o">-</span><span class="n">z</span> $<span class="n">dbpid</span> <span class="p">]</span> <span class="p">;</span> <span class="n">then</span>
+            <span class="n">echo</span> <span class="s">"dropboxd for USER $dbuser: not running."</span>
+        <span class="k">else</span>
+            <span class="n">echo</span> <span class="s">"dropboxd for USER $dbuser: running (pid $dbpid)"</span>
+        <span class="n">fi</span>
+    <span class="n">done</span>
+<span class="p">}</span>
 
-case "$1" in
-  start)
-    start
-    ;;
+<span class="k">case</span> <span class="s">"$1"</span> <span class="n">in</span>
+  <span class="n">start</span><span class="p">)</span>
+    <span class="n">start</span>
+    <span class="p">;;</span>
 
-  stop)
-    stop
-    ;;
+  <span class="n">stop</span><span class="p">)</span>
+    <span class="n">stop</span>
+    <span class="p">;;</span>
 
-  restart|reload|force-reload)
-    stop
-    start
-    ;;
+  <span class="n">restart</span><span class="o">|</span><span class="n">reload</span><span class="o">|</span><span class="n">force</span><span class="o">-</span><span class="n">reload</span><span class="p">)</span>
+    <span class="n">stop</span>
+    <span class="n">start</span>
+    <span class="p">;;</span>
 
-  status)
-    status
-    ;;
+  <span class="n">status</span><span class="p">)</span>
+    <span class="n">status</span>
+    <span class="p">;;</span>
 
-  *)
-    echo "Usage: /etc/init.d/dropbox {start|stop|reload|force-reload|restart|status}"
-    exit 1
+  <span class="o">*</span><span class="p">)</span>
+    <span class="n">echo</span> <span class="s">"Usage: /etc/init.d/dropbox {start|stop|reload|force-reload|restart|status}"</span>
+    <span class="nb">exit</span> 1
 
-esac
+<span class="n">esac</span>
 
-exit 0
+<span class="nb">exit</span> 0
 </pre></div>
 
 <p>
 Next, I ran the following commands:
 </p>
 
-<div class="highlight"><pre>sudo chmod +x /etc/init.d/dropbox 
-sudo update-rc.d dropbox defaults
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">dropbox</span> 
+<span class="n">sudo</span> <span class="n">update</span><span class="o">-</span><span class="n">rc</span><span class="p">.</span><span class="n">d</span> <span class="n">dropbox</span> <span class="n">defaults</span>
 </pre></div>
 
 <p>
@@ -771,6 +784,7 @@ appropriate run-level folders inside <b><i>etc</i></b>.
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-4-7" class="outline-3">
 <h3 id="sec-4-7">
 <span class="section-number-3">4.7</span> Remove the XFCE bottom panel</h3>
@@ -786,7 +800,6 @@ if I really wanted to remove the lower panel.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-4-8" class="outline-3">
 <h3 id="sec-4-8">
 <span class="section-number-3">4.8</span> Installing Flash</h3>
@@ -804,8 +817,8 @@ I installed Adobe Flash by adding "contrib" to the list of primary
 repositories in <code>/etc/apt/sources.list</code>. Then I ran the commands
 </p>
 
-<div class="highlight"><pre>sudo apt-get update
-sudo apt-get install flashplugin-nonfree
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">flashplugin</span><span class="o">-</span><span class="n">nonfree</span>
 </pre></div>
 
 <p>
@@ -815,6 +828,7 @@ After a browser restart, I could see Flash videos on webpages.
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-4-9" class="outline-3">
 <h3 id="sec-4-9">
 <span class="section-number-3">4.9</span> Playing DVD's in VLC</h3>
@@ -827,7 +841,6 @@ in VLC on Linux. This package is called <b>libdvdcss2</b> in Debian.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-4-10" class="outline-3">
 <h3 id="sec-4-10">
 <span class="section-number-3">4.10</span> Activating the Firefox Java Plugin</h3>
@@ -865,7 +878,6 @@ would run.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-4-11" class="outline-3">
 <h3 id="sec-4-11">
 <span class="section-number-3">4.11</span> Latex installation</h3>
@@ -889,7 +901,6 @@ Latex is easily installed with <b>sudo apt-get install texlive</b> and
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-4-12" class="outline-3">
 <h3 id="sec-4-12">
 <span class="section-number-3">4.12</span> Automatic Backups with rsync and cron</h3>
@@ -912,7 +923,7 @@ creators make no guarantees as to how well it will work.)
 I can backup my important data using the following command:
 </p>
 
-<div class="highlight"><pre>rsync -av --delete /Directory1/ /Directory2/
+<div class="highlight"><pre><span class="n">rsync</span> <span class="o">-</span><span class="n">av</span> <span class="o">--</span><span class="n">delete</span> <span class="o">/</span><span class="n">Directory1</span><span class="o">/</span> <span class="o">/</span><span class="n">Directory2</span><span class="o">/</span>
 </pre></div>
 
 <p>
@@ -928,7 +939,7 @@ I setup daily backups with the Linux job scheduler cron. To use
 emacs to edit the cron file, I used the command
 </p>
 
-<div class="highlight"><pre>env <span class="nv">EDITOR</span><span class="o">=</span>emacs crontab -e
+<div class="highlight"><pre><span class="n">env</span> <span class="n">EDITOR</span><span class="p">=</span><span class="n">emacs</span> <span class="n">crontab</span> <span class="o">-</span><span class="n">e</span>
 </pre></div>
 
 <p>
@@ -942,14 +953,27 @@ my backup everyday at 1:00 PM when I'm normally at lunch:
 </p>
 
 
-<div class="highlight"><pre>0 13 * * * rsync -av --delete /Directory1/ /Directory2
+<div class="highlight"><pre>0 13 <span class="o">*</span> <span class="o">*</span> <span class="o">*</span> <span class="n">rsync</span> <span class="o">-</span><span class="n">av</span> <span class="o">--</span><span class="n">delete</span> <span class="o">/</span><span class="n">Directory1</span><span class="o">/</span> <span class="o">/</span><span class="n">Directory2</span>
+</pre></div>
+
+<hr>
+</div>
+</div>
+<div id="outline-container-sec-4-13" class="outline-3">
+<h3 id="sec-4-13">
+<span class="section-number-3">4.13</span> Install Microsoft Core Fonts</h3>
+<div class="outline-text-3" id="text-4-13">
+<p>
+These fonts are located in the package <b>ttf-mscorefonts-installer</b>.
+</p>
+
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">ttf</span><span class="o">-</span><span class="n">mscorefonts</span><span class="o">-</span><span class="n">installer</span>
 </pre></div>
 
 <hr>
 </div>
 </div>
 </div>
-
 <div id="outline-container-sec-5" class="outline-2">
 <h2 id="sec-5">
 <span class="section-number-2">5</span> Monitor settings</h2>
@@ -979,7 +1003,7 @@ to enable the setting in which one monitor was continuation of
 another.
 </p>
 
-<div class="highlight"><pre>xrandr --output MONITOR1 --left-of MONITOR2
+<div class="highlight"><pre><span class="n">xrandr</span> <span class="o">--</span><span class="n">output</span> <span class="n">MONITOR1</span> <span class="o">--</span><span class="n">left</span><span class="o">-</span><span class="n">of</span> <span class="n">MONITOR2</span>
 </pre></div>
 
 <p>
@@ -995,7 +1019,6 @@ Settings -&gt; Session and Startup</i>.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-5-2" class="outline-3">
 <h3 id="sec-5-2">
 <span class="section-number-3">5.2</span> Screen brightness</h3>
@@ -1019,6 +1042,7 @@ labels, simply type <i>xrandr</i>.
 </div>
 </div>
 </div>
+
 <div id="outline-container-sec-6" class="outline-2">
 <h2 id="sec-6">
 <span class="section-number-2">6</span> Python setup</h2>
@@ -1052,17 +1076,17 @@ headers.
 I installed Python 3.4 with the following commands:
 </p>
 
-<div class="highlight"><pre><span class="nv">CXX</span><span class="o">=</span><span class="s2">"/usr/bin/g++"</span> <span class="se">\.</span>/configure --prefix<span class="o">=</span>/usr --enable-shared --with-system-expat --with-system-ffi --with-ensurepip<span class="o">=</span>install
-make
+<div class="highlight"><pre><span class="n">CXX</span><span class="p">=</span>"<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">g</span><span class="o">++</span>" <span class="o">\./</span><span class="n">configure</span> <span class="o">--</span><span class="n">prefix</span><span class="p">=</span><span class="o">/</span><span class="n">usr</span> <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="n">shared</span> <span class="o">--</span><span class="n">with</span><span class="o">-</span><span class="n">system</span><span class="o">-</span><span class="n">expat</span> <span class="o">--</span><span class="n">with</span><span class="o">-</span><span class="n">system</span><span class="o">-</span><span class="n">ffi</span> <span class="o">--</span><span class="n">with</span><span class="o">-</span><span class="n">ensurepip</span><span class="p">=</span><span class="n">install</span>
+<span class="n">make</span>
 </pre></div>
 
 <p>
 Next, run the following commands as root:
 </p>
 
-<div class="highlight"><pre>make install
-chmod -v <span class="m">755</span> /usr/lib/libpython3.4m.so
-chmod -v <span class="m">755</span> /usr/lib/libpython3.so
+<div class="highlight"><pre><span class="n">make</span> <span class="n">install</span>
+<span class="n">chmod</span> <span class="o">-</span><span class="n">v</span> 755 <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libpython3</span><span class="p">.</span>4<span class="n">m</span><span class="p">.</span><span class="n">so</span>
+<span class="n">chmod</span> <span class="o">-</span><span class="n">v</span> 755 <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libpython3</span><span class="p">.</span><span class="n">so</span>
 </pre></div>
 
 <p>
@@ -1070,8 +1094,8 @@ For the doc files, download the Python HTML documentation from
 here: <a href="https://docs.python.org/3.4/download.html">https://docs.python.org/3.4/download.html</a>. Install it using:
 </p>
 
-<div class="highlight"><pre>install -v -dm755 /usr/share/doc/python-3.4.0/html
-tar --strip-components<span class="o">=</span><span class="m">1</span> --no-same-owner --no-same-permissions -C /usr/share/doc/python-3.4.0/html -xvf ../python-3.4.0-docs-html.tar.bz2
+<div class="highlight"><pre><span class="n">install</span> <span class="o">-</span><span class="n">v</span> <span class="o">-</span><span class="n">dm755</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">python</span><span class="o">-</span>3<span class="p">.</span>4<span class="p">.</span>0<span class="o">/</span><span class="n">html</span>
+<span class="n">tar</span> <span class="o">--</span><span class="n">strip</span><span class="o">-</span><span class="n">components</span><span class="p">=</span>1 <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">same</span><span class="o">-</span><span class="n">owner</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">same</span><span class="o">-</span><span class="n">permissions</span> <span class="o">-</span><span class="n">C</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">python</span><span class="o">-</span>3<span class="p">.</span>4<span class="p">.</span>0<span class="o">/</span><span class="n">html</span> <span class="o">-</span><span class="n">xvf</span> <span class="p">.</span><span class="o">./</span><span class="n">python</span><span class="o">-</span>3<span class="p">.</span>4<span class="p">.</span>0<span class="o">-</span><span class="n">docs</span><span class="o">-</span><span class="n">html</span><span class="p">.</span><span class="n">tar</span><span class="p">.</span><span class="n">bz2</span>
 </pre></div>
 
 <p>
@@ -1086,13 +1110,14 @@ Finally, I removed <b>/usr/bin/python</b> and created a symbolic link to
 Python3.4 so that it would run as the default:
 </p>
 
-<div class="highlight"><pre>sudo rm /usr/bin/python
-sudo ln -s /usr/bin/python3.4 /usr/bin/python
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">rm</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">python</span>
+<span class="n">sudo</span> <span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">python3</span><span class="p">.</span>4 <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">python</span>
 </pre></div>
 
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-6-2" class="outline-3">
 <h3 id="sec-6-2">
 <span class="section-number-3">6.2</span> Installing IPython 2.0</h3>
@@ -1114,7 +1139,7 @@ Python3 is actually <b>pip3</b>. Use the <b>[notebook]</b> option if you also
 want to install the <a href="http://ipython.org/notebook.html">IPython notebook</a> as well.
 </p>
 
-<div class="highlight"><pre>sudo pip3 install ipython<span class="o">[</span>notebook<span class="o">]</span>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">pip3</span> <span class="n">install</span> <span class="n">ipython</span><span class="p">[</span><span class="n">notebook</span><span class="p">]</span>
 </pre></div>
 
 <p>
@@ -1122,9 +1147,9 @@ When I ran IPython the first time, I received the following
 messages:
 </p>
 
-<div class="highlight"><pre>WARNING: IPython History requires SQLite, your history will not be saved
-WARNING: Readline services not available or not loaded.
-WARNING: The auto-indent feature requires the readline library
+<div class="highlight"><pre><span class="n">WARNING</span><span class="o">:</span> <span class="n">IPython</span> <span class="n">History</span> <span class="n">requires</span> <span class="n">SQLite</span><span class="o">,</span> <span class="n">your</span> <span class="n">history</span> <span class="n">will</span> <span class="n">not</span> <span class="n">be</span> <span class="n">saved</span>
+<span class="n">WARNING</span><span class="o">:</span> <span class="n">Readline</span> <span class="n">services</span> <span class="n">not</span> <span class="n">available</span> <span class="n">or</span> <span class="n">not</span> <span class="n">loaded</span><span class="o">.</span>
+<span class="n">WARNING</span><span class="o">:</span> <span class="n">The</span> <span class="n">auto</span><span class="o">-</span><span class="n">indent</span> <span class="n">feature</span> <span class="n">requires</span> <span class="n">the</span> <span class="n">readline</span> <span class="n">library</span>
 </pre></div>
 
 <p>
@@ -1147,6 +1172,7 @@ and <b>pyzmq</b> with pip3.
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-6-2-2" class="outline-4">
 <h4 id="sec-6-2-2">
 <span class="section-number-4">6.2.2</span> Fixing indentation errors</h4>
@@ -1166,7 +1192,7 @@ this, I first created the default IPython configuration files by
 running
 </p>
 
-<div class="highlight"><pre>ipython profile create
+<div class="highlight"><pre><span class="n">ipython</span> <span class="n">profile</span> <span class="n">create</span>
 </pre></div>
 
 <p>
@@ -1180,6 +1206,7 @@ the indentation errors.
 </div>
 </div>
 </div>
+
 <div id="outline-container-sec-6-3" class="outline-3">
 <h3 id="sec-6-3">
 <span class="section-number-3">6.3</span> Installing Numpy 1.8.1, matplotlib 1.3.1, scipy 0.14, and Pillow 2.4.0</h3>
@@ -1199,6 +1226,7 @@ system, such as <b>gfortran</b>.
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-6-4" class="outline-3">
 <h3 id="sec-6-4">
 <span class="section-number-3">6.4</span> Multiple IPython prompts at startup</h3>
@@ -1211,6 +1239,7 @@ in emacs is given <a href="http://lists.gnu.org/archive/html/help-gnu-emacs/2014
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-6-5" class="outline-3">
 <h3 id="sec-6-5">
 <span class="section-number-3">6.5</span> Getting Tk and Latex support in Python</h3>
@@ -1230,6 +1259,7 @@ if I want Latex support.
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-6-6" class="outline-3">
 <h3 id="sec-6-6">
 <span class="section-number-3">6.6</span> Installing Jedi</h3>
@@ -1276,18 +1306,18 @@ the Marmalade repo using package.el, the repository version was
 el-get, I added the following lines to init.el:
 </p>
 
-<div class="highlight"><pre><span class="c1">; Standard el-get setup</span>
-<span class="c1">; (See also: https://github.com/dimitri/el-get#basic-setup)</span>
-<span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">'load-path</span> <span class="s">"~/.emacs.d/el-get/el-get"</span><span class="p">)</span>
+<div class="highlight"><pre><span class="p">;</span> <span class="n">Standard</span> <span class="n">el</span><span class="o">-</span><span class="n">get</span> <span class="n">setup</span>
+<span class="p">;</span> <span class="p">(</span><span class="n">See</span> <span class="n">also</span><span class="p">:</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">dimitri</span><span class="o">/</span><span class="n">el</span><span class="o">-</span><span class="n">get</span>#<span class="n">basic</span><span class="o">-</span><span class="n">setup</span><span class="p">)</span>
+<span class="p">(</span><span class="n">add</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">list</span> <span class="s">'load-path "~/.emacs.d/el-get/el-get")</span>
 
-<span class="p">(</span><span class="nf">unless</span> <span class="p">(</span><span class="nf">require</span> <span class="ss">'el-get</span> <span class="nv">nil</span> <span class="ss">'noerror</span><span class="p">)</span>
-  <span class="p">(</span><span class="nf">with-current-buffer</span>
-      <span class="p">(</span><span class="nf">url-retrieve-synchronously</span>
-       <span class="s">"https://raw.github.com/dimitri/el-get/master/el-get-install.el"</span><span class="p">)</span>
-    <span class="p">(</span><span class="nf">goto-char</span> <span class="p">(</span><span class="nf">point-max</span><span class="p">))</span>
-    <span class="p">(</span><span class="nf">eval-print-last-sexp</span><span class="p">)))</span>
+<span class="s">(unless (require '</span><span class="n">el</span><span class="o">-</span><span class="n">get</span> <span class="n">nil</span> <span class="s">'noerror)</span>
+<span class="s">  (with-current-buffer</span>
+<span class="s">      (url-retrieve-synchronously</span>
+<span class="s">       "https://raw.github.com/dimitri/el-get/master/el-get-install.el")</span>
+<span class="s">    (goto-char (point-max))</span>
+<span class="s">    (eval-print-last-sexp)))</span>
 
-<span class="p">(</span><span class="nf">el-get</span> <span class="ss">'sync</span><span class="p">)</span>
+<span class="s">(el-get '</span><span class="n">sync</span><span class="p">)</span>
 </pre></div>
 
 <p>
@@ -1305,15 +1335,16 @@ Finally, I added the following lines to init.el, restarted emacs,
 and had a working jedi install.
 </p>
 
-<div class="highlight"><pre><span class="c1">;; Standard Jedi.el setting</span>
-<span class="p">(</span><span class="nf">add-hook</span> <span class="ss">'python-mode-hook</span> <span class="ss">'jedi:setup</span><span class="p">)</span>
-<span class="p">(</span><span class="nf">setq</span> <span class="nv">jedi:complete-on-dot</span> <span class="nv">t</span><span class="p">)</span>
+<div class="highlight"><pre><span class="p">;;</span> <span class="n">Standard</span> <span class="n">Jedi</span><span class="p">.</span><span class="n">el</span> <span class="n">setting</span>
+<span class="p">(</span><span class="n">add</span><span class="o">-</span><span class="n">hook</span> <span class="s">'python-mode-hook '</span><span class="n">jedi</span><span class="p">:</span><span class="n">setup</span><span class="p">)</span>
+<span class="p">(</span><span class="n">setq</span> <span class="n">jedi</span><span class="p">:</span><span class="n">complete</span><span class="o">-</span><span class="n">on</span><span class="o">-</span><span class="nb">dot</span> <span class="n">t</span><span class="p">)</span>
 </pre></div>
 
 <hr>
 </div>
 </div>
 </div>
+
 <div id="outline-container-sec-7" class="outline-2">
 <h2 id="sec-7">
 <span class="section-number-2">7</span> Org-mode configuration</h2>
@@ -1345,22 +1376,22 @@ minimal example from the Stack Exchange link and modified it
 slightly:
 </p>
 
-<div class="highlight"><pre>#+LATEX_HEADER: \usepackage{fullpage}
-#+LATEX_HEADER: \usepackage[backend=bibtex,sorting=none]{biblatex}
-#+LATEX_HEADER: \usepackage{hyperref}
-#+LATEX_HEADER: \addbibresource{telomeres.bib}
+<div class="highlight"><pre><span class="c">#+LATEX_HEADER: \usepackage{fullpage}</span>
+<span class="c">#+LATEX_HEADER: \usepackage[backend=bibtex,sorting=none]{biblatex}</span>
+<span class="c">#+LATEX_HEADER: \usepackage{hyperref}</span>
+<span class="c">#+LATEX_HEADER: \addbibresource{telomeres.bib}</span>
 
-#+TITLE: Telomere Master Notes
-#+AUTHOR: Kyle M. Douglass
-#+DATE: \today
+<span class="c">#+TITLE: Telomere Master Notes</span>
+<span class="c">#+AUTHOR: Kyle M. Douglass</span>
+<span class="c">#+DATE: \today</span>
 
-Telomeres consist of DNA tandem repeat sequences, their associated
-binding proteins, and a non-coding RNA transcript. They are located at
-the end of chromosomes and address two important problems in
-eukaryotes: the end-replication problem and the end-protection
-problem. A nice summary is provided in \cite{sfeir-jcellsci-2012}.
+<span class="n">Telomeres</span> <span class="n">consist</span> <span class="n">of</span> <span class="n">DNA</span> <span class="n">tandem</span> <span class="n">repeat</span> <span class="n">sequences</span><span class="p">,</span> <span class="n">their</span> <span class="n">associated</span>
+<span class="n">binding</span> <span class="n">proteins</span><span class="p">,</span> <span class="nb">and</span> <span class="n">a</span> <span class="n">non</span><span class="o">-</span><span class="n">coding</span> <span class="n">RNA</span> <span class="n">transcript</span><span class="p">.</span> <span class="n">They</span> <span class="n">are</span> <span class="n">located</span> <span class="n">at</span>
+<span class="n">the</span> <span class="k">end</span> <span class="n">of</span> <span class="n">chromosomes</span> <span class="nb">and</span> <span class="n">address</span> <span class="n">two</span> <span class="n">important</span> <span class="n">problems</span> <span class="n">in</span>
+<span class="n">eukaryotes</span><span class="p">:</span> <span class="n">the</span> <span class="k">end</span><span class="o">-</span><span class="n">replication</span> <span class="n">problem</span> <span class="nb">and</span> <span class="n">the</span> <span class="k">end</span><span class="o">-</span><span class="n">protection</span>
+<span class="n">problem</span><span class="p">.</span> <span class="n">A</span> <span class="n">nice</span> <span class="n">summary</span> <span class="n">is</span> <span class="n">provided</span> <span class="n">in</span> <span class="o">\</span><span class="n">cite</span><span class="p">{</span><span class="n">sfeir</span><span class="o">-</span><span class="n">jcellsci</span><span class="o">-</span>2012<span class="p">}.</span>
 
-\printbibliography
+<span class="o">\</span><span class="n">printbibliography</span>
 </pre></div>
 
 <p>
@@ -1368,18 +1399,18 @@ Finally, I changed my original init.el file by modifying
 <b>org-latex-pdf-process</b> to the following:
 </p>
 
-<div class="highlight"><pre><span class="p">(</span><span class="nf">setq</span> <span class="nv">org-latex-pdf-process</span>
-  <span class="o">'</span><span class="p">(</span><span class="s">"latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -bibtex -f %f"</span><span class="p">))</span>
+<div class="highlight"><pre><span class="p">(</span><span class="n">setq</span> <span class="n">org</span><span class="o">-</span><span class="n">latex</span><span class="o">-</span><span class="n">pdf</span><span class="o">-</span><span class="n">process</span>
+  <span class="s">'("latexmk -pdflatex='</span><span class="n">pdflatex</span> <span class="o">-</span><span class="n">interaction</span> <span class="n">nonstopmode</span><span class="o">'</span> <span class="o">-</span><span class="n">pdf</span> <span class="o">-</span><span class="n">bibtex</span> <span class="o">-</span><span class="n">f</span> <span class="c">%f"))</span>
 </pre></div>
 
 <p>
 This was changed from what I had used in the past:
 </p>
 
-<div class="highlight"><pre><span class="p">(</span><span class="nf">setq</span> <span class="nv">org-latex-to-pdf-process</span> <span class="o">'</span><span class="p">(</span><span class="s">"pdflatex -interaction nonstopmode %b"</span>
-				 <span class="s">"/usr/bin/bibtex %b"</span>
-				 <span class="s">"pdflatex -interaction nonstopmode %b"</span>
-				 <span class="s">"pdflatex -interaction nonstopmode %b"</span><span class="p">))</span>
+<div class="highlight"><pre><span class="p">(</span><span class="n">setq</span> <span class="n">org</span><span class="o">-</span><span class="n">latex</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">pdf</span><span class="o">-</span><span class="n">process</span> <span class="s">'</span><span class="err">("pdflatex -interaction nonstopmode %b"</span>
+				 "<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">bibtex</span> <span class="c">%b"</span>
+				 "<span class="n">pdflatex</span> <span class="o">-</span><span class="n">interaction</span> <span class="n">nonstopmode</span> <span class="c">%b"</span>
+				 "<span class="n">pdflatex</span> <span class="o">-</span><span class="n">interaction</span> <span class="n">nonstopmode</span> <span class="c">%b"))</span>
 </pre></div>
 
 <p>
@@ -1390,6 +1421,7 @@ well.
 </div>
 </div>
 </div>
+
 <div id="outline-container-sec-8" class="outline-2">
 <h2 id="sec-8">
 <span class="section-number-2">8</span> CIFS</h2>
@@ -1410,6 +1442,7 @@ It's easy. <i>sudo apt-get install cifs-utils</i>
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-8-2" class="outline-3">
 <h3 id="sec-8-2">
 <span class="section-number-3">8.2</span> Accessing Windows shares remotely</h3>
@@ -1427,8 +1460,8 @@ First, I created a credentials file with my Windows username and
 password called <b>~/.smbcredentials</b>. It contained the lines
 </p>
 
-<div class="highlight"><pre><span class="nv">username</span><span class="o">=</span>USERNAME
-<span class="nv">password</span><span class="o">=</span>PASSWORD
+<div class="highlight"><pre><span class="n">username</span><span class="p">=</span><span class="n">USERNAME</span>
+<span class="n">password</span><span class="p">=</span><span class="n">PASSWORD</span>
 </pre></div>
 
 <p>
@@ -1441,7 +1474,7 @@ Next, I created a mount point for the network share at
 <b>/mnt/LEB-Z</b>. I then added the following line to <b>/etc/fstab</b>
 </p>
 
-<div class="highlight"><pre>//SERVERIP/LEB /mnt/LEB-Z cifs <span class="nv">credentials</span><span class="o">=</span>/home/kmdouglass/.smbcredentials,iocharset<span class="o">=</span>utf8,sec<span class="o">=</span>ntlm,noauto <span class="m">0</span> 0
+<div class="highlight"><pre><span class="c1">//SERVERIP/LEB /mnt/LEB-Z cifs credentials=/home/kmdouglass/.smbcredentials,iocharset=utf8,sec=ntlm,noauto 0 0</span>
 </pre></div>
 
 <p>
@@ -1453,6 +1486,7 @@ enter the command <b>sudo mount /mnt/LEB-Z</b>.
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-8-3" class="outline-3">
 <h3 id="sec-8-3">
 <span class="section-number-3">8.3</span> fstab options for mounting shares as a user</h3>
@@ -1467,7 +1501,7 @@ directories.
 To get around this, I modified the fstab line as such:
 </p>
 
-<div class="highlight"><pre>//SERVERIP/LEB /mnt/LEB-Z cifs <span class="nv">credentials</span><span class="o">=</span>/home/kmdouglass/.smbcredentials,iocharset<span class="o">=</span>utf8,sec<span class="o">=</span>ntlm,uid<span class="o">=</span>1000,gid<span class="o">=</span>1000,noauto <span class="m">0</span> 0
+<div class="highlight"><pre><span class="c1">//SERVERIP/LEB /mnt/LEB-Z cifs credentials=/home/kmdouglass/.smbcredentials,iocharset=utf8,sec=ntlm,uid=1000,gid=1000,noauto 0 0</span>
 </pre></div>
 
 <p>
@@ -1481,7 +1515,7 @@ After mounting the share, the ownership still needs to be
 changed. This is done with the command
 </p>
 
-<div class="highlight"><pre>sudo chown -R user:user /mnt/LEB-Z
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">chown</span> <span class="o">-</span><span class="n">R</span> <span class="n">user</span><span class="p">:</span><span class="n">user</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">LEB</span><span class="o">-</span><span class="n">Z</span>
 </pre></div>
 
 <p>
@@ -1492,7 +1526,6 @@ where user is the username that belongs to the UID.
 </div>
 </div>
 </div>
-
 <div id="outline-container-sec-9" class="outline-2">
 <h2 id="sec-9">
 <span class="section-number-2">9</span> Booting from a bootloader on a USB stick</h2>
@@ -1557,7 +1590,7 @@ Next, I installed GRUB to the MBR of this USB stick by typing this
 important command:
 </p>
 
-<div class="highlight"><pre>grub-install --force --no-floppy --boot-directory<span class="o">=</span>/mnt/USB/boot /dev/sdX
+<div class="highlight"><pre><span class="n">grub</span><span class="o">-</span><span class="n">install</span> <span class="o">--</span><span class="n">force</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">floppy</span> <span class="o">--</span><span class="n">boot</span><span class="o">-</span><span class="n">directory</span><span class="p">=</span><span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">USB</span><span class="o">/</span><span class="n">boot</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sdX</span>
 </pre></div>
 
 <p>
@@ -1570,6 +1603,7 @@ stranded Linux install.
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-9-2" class="outline-3">
 <h3 id="sec-9-2">
 <span class="section-number-3">9.2</span> Configuring GRUB on the USB stick to work with your machine</h3>
@@ -1595,9 +1629,9 @@ partition to /mnt/linux. Next, I loaded some necessary directories
 from the running live instances into the newly mounted partition.
 </p>
 
-<div class="highlight"><pre>sudo mount --bind /dev /mnt/linux/dev
-sudo mount --bind /sys /mnt/linux/sys
-sudo mount --bind /proc /mnt/linux/proc
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">mount</span> <span class="o">--</span><span class="n">bind</span> <span class="o">/</span><span class="n">dev</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">dev</span>
+<span class="n">sudo</span> <span class="n">mount</span> <span class="o">--</span><span class="n">bind</span> <span class="o">/</span><span class="n">sys</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">sys</span>
+<span class="n">sudo</span> <span class="n">mount</span> <span class="o">--</span><span class="n">bind</span> <span class="o">/</span><span class="n">proc</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">proc</span>
 </pre></div>
 
 <p>
@@ -1605,7 +1639,7 @@ Next I <b>chroot</b>'ed into the partition with <b>sudo chroot
 /mnt/linux</b>. I next ran
 </p>
 
-<div class="highlight"><pre>sudo update-grub
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">update</span><span class="o">-</span><span class="n">grub</span>
 </pre></div>
 
 <p>

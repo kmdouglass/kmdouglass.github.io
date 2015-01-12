@@ -473,11 +473,19 @@ env EDITOR=emacs crontab -e
    my backup everyday at 1:00 PM when I'm normally at lunch:
 
 
-  #+BEGIN_SRC
+  #+BEGIN_SRC sh
 0 13 * * * rsync -av --delete /Directory1/ /Directory2
   #+END_SRC
 
    -----
+** Install Microsoft Core Fonts
+   These fonts are located in the package *ttf-mscorefonts-installer*.
+
+   #+BEGIN_SRC sh
+sudo apt-get install ttf-mscorefonts-installer
+   #+END_SRC
+
+-----
 * Monitor settings
 ** Dual monitors
    /Sources/
