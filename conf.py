@@ -308,7 +308,7 @@ COMPILERS = {
 # relative URL.
 #
 # If you don't need any of these, just set to []
-REDIRECTIONS = []
+REDIRECTIONS = [("notes/pgFocus.html", "/stories/notes/pgFocus.html")]
 
 # Presets of commands to execute to deploy. Can be anything, for
 # example, you may use rsync:
