@@ -161,6 +161,19 @@ COMMENT_SYSTEM_ID = "MY_SHORT_NAME"
 
 -----
 
+** Redirects
+   One of my old pages was linked to by another website. For this
+   reason, I wanted to preserve this URL so that the other site's
+   owner didn't have to update the link himself.
+
+   Nikola makes it easy to setup a redirect in *conf.py*. I changed
+   the *REDIRECTIONS* variable to the following:
+
+   #+BEGIN_SRC python
+REDIRECTIONS = [("notes/pgFocus.html", "/stories/notes/pgFocus.html")]
+   #+END_SRC
+
+-----
 ** Teasers
    To only include portions of posts on the index page, you have to
    set the =INDEX_TEASERS= variable to =True=. By default, only the
