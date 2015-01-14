@@ -4,7 +4,7 @@ UNDEFINED = runtime.UNDEFINED
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1421076462.1775908
+_modified_time = 1421221926.2403698
 _enable_loop = True
 _template_filename = '/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/story.tmpl'
 _template_uri = 'story.tmpl'
@@ -35,14 +35,14 @@ def render_body(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
         __M_locals = __M_dict_builtin(pageargs=pageargs)
-        messages = context.get('messages', UNDEFINED)
         pheader = _mako_get_namespace(context, 'pheader')
-        site_has_comments = context.get('site_has_comments', UNDEFINED)
-        enable_comments = context.get('enable_comments', UNDEFINED)
-        helper = _mako_get_namespace(context, 'helper')
+        messages = context.get('messages', UNDEFINED)
+        comments = _mako_get_namespace(context, 'comments')
         def content():
             return render_content(context._locals(__M_locals))
-        comments = _mako_get_namespace(context, 'comments')
+        enable_comments = context.get('enable_comments', UNDEFINED)
+        helper = _mako_get_namespace(context, 'helper')
+        site_has_comments = context.get('site_has_comments', UNDEFINED)
         post = context.get('post', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n')
@@ -62,14 +62,14 @@ def render_body(context,**pageargs):
 def render_content(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
-        messages = context.get('messages', UNDEFINED)
         pheader = _mako_get_namespace(context, 'pheader')
-        site_has_comments = context.get('site_has_comments', UNDEFINED)
-        enable_comments = context.get('enable_comments', UNDEFINED)
-        helper = _mako_get_namespace(context, 'helper')
+        messages = context.get('messages', UNDEFINED)
+        comments = _mako_get_namespace(context, 'comments')
         def content():
             return render_content(context)
-        comments = _mako_get_namespace(context, 'comments')
+        enable_comments = context.get('enable_comments', UNDEFINED)
+        helper = _mako_get_namespace(context, 'helper')
+        site_has_comments = context.get('site_has_comments', UNDEFINED)
         post = context.get('post', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n<article class="storypage" itemscope="itemscope" itemtype="http://schema.org/Article">\n    <header>\n        ')
@@ -95,6 +95,6 @@ def render_content(context,**pageargs):
 
 """
 __M_BEGIN_METADATA
-{"line_map": {"86": 19, "75": 7, "76": 10, "77": 10, "78": 11, "79": 11, "80": 14, "81": 14, "82": 16, "83": 17, "84": 18, "85": 18, "22": 2, "87": 19, "88": 22, "25": 3, "90": 22, "28": 4, "96": 90, "34": 0, "48": 2, "49": 3, "50": 4, "51": 5, "89": 22, "56": 24, "62": 7}, "filename": "/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/story.tmpl", "source_encoding": "utf-8", "uri": "story.tmpl"}
+{"uri": "story.tmpl", "filename": "/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/story.tmpl", "line_map": {"86": 19, "75": 7, "76": 10, "77": 10, "78": 11, "79": 11, "80": 14, "81": 14, "82": 16, "83": 17, "84": 18, "85": 18, "22": 2, "87": 19, "88": 22, "25": 3, "90": 22, "28": 4, "96": 90, "34": 0, "48": 2, "49": 3, "50": 4, "51": 5, "89": 22, "56": 24, "62": 7}, "source_encoding": "utf-8"}
 __M_END_METADATA
 """

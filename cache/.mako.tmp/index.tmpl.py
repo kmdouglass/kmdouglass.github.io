@@ -4,7 +4,7 @@ UNDEFINED = runtime.UNDEFINED
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1421076461.9352276
+_modified_time = 1421221926.0003288
 _enable_loop = True
 _template_filename = '/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/index.tmpl'
 _template_uri = 'index.tmpl'
@@ -32,14 +32,14 @@ def render_body(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
         __M_locals = __M_dict_builtin(pageargs=pageargs)
-        site_has_comments = context.get('site_has_comments', UNDEFINED)
+        posts = context.get('posts', UNDEFINED)
         date_format = context.get('date_format', UNDEFINED)
-        helper = _mako_get_namespace(context, 'helper')
         index_teasers = context.get('index_teasers', UNDEFINED)
         comments = _mako_get_namespace(context, 'comments')
         def content():
             return render_content(context._locals(__M_locals))
-        posts = context.get('posts', UNDEFINED)
+        helper = _mako_get_namespace(context, 'helper')
+        site_has_comments = context.get('site_has_comments', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n')
         __M_writer('\n')
@@ -57,14 +57,14 @@ def render_body(context,**pageargs):
 def render_content(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
-        site_has_comments = context.get('site_has_comments', UNDEFINED)
+        posts = context.get('posts', UNDEFINED)
         date_format = context.get('date_format', UNDEFINED)
-        helper = _mako_get_namespace(context, 'helper')
         index_teasers = context.get('index_teasers', UNDEFINED)
         comments = _mako_get_namespace(context, 'comments')
         def content():
             return render_content(context)
-        posts = context.get('posts', UNDEFINED)
+        helper = _mako_get_namespace(context, 'helper')
+        site_has_comments = context.get('site_has_comments', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n<div class="postindex">\n')
         for post in posts:
@@ -113,6 +113,6 @@ def render_content(context,**pageargs):
 
 """
 __M_BEGIN_METADATA
-{"line_map": {"22": 2, "25": 3, "31": 0, "44": 2, "45": 3, "46": 4, "51": 34, "57": 6, "69": 6, "70": 8, "71": 9, "72": 9, "73": 9, "74": 11, "75": 11, "76": 11, "77": 11, "78": 13, "79": 13, "80": 14, "81": 14, "82": 14, "83": 14, "84": 14, "85": 14, "86": 14, "87": 14, "88": 15, "89": 16, "90": 16, "91": 16, "92": 18, "93": 20, "94": 21, "95": 22, "96": 22, "97": 23, "98": 24, "99": 25, "100": 25, "101": 27, "102": 30, "103": 31, "104": 31, "105": 32, "106": 32, "107": 33, "108": 33, "114": 108}, "filename": "/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/index.tmpl", "source_encoding": "utf-8", "uri": "index.tmpl"}
+{"uri": "index.tmpl", "filename": "/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/index.tmpl", "line_map": {"22": 2, "25": 3, "31": 0, "44": 2, "45": 3, "46": 4, "51": 34, "57": 6, "69": 6, "70": 8, "71": 9, "72": 9, "73": 9, "74": 11, "75": 11, "76": 11, "77": 11, "78": 13, "79": 13, "80": 14, "81": 14, "82": 14, "83": 14, "84": 14, "85": 14, "86": 14, "87": 14, "88": 15, "89": 16, "90": 16, "91": 16, "92": 18, "93": 20, "94": 21, "95": 22, "96": 22, "97": 23, "98": 24, "99": 25, "100": 25, "101": 27, "102": 30, "103": 31, "104": 31, "105": 32, "106": 32, "107": 33, "108": 33, "114": 108}, "source_encoding": "utf-8"}
 __M_END_METADATA
 """
