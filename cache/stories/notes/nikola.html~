@@ -296,11 +296,11 @@ command:
 After choosing a style, I generated the custom css with
 </p>
 
-<div class="highlight"><pre>pygmentize -S default -a .highlight -f html <span class="se">\&amp;</span>gt<span class="p">;</span><span class="se">\&amp;</span>gt<span class="p">;</span> custom.css
+<div class="highlight"><pre>pygmentize -S default -a .highlight -f html
 </pre></div>
 
 <p>
-I placed this css file in
+and placed the output in <b>custom.css</b>. I placed this css file in
 <b>&lt;NIKOLA_ROOT&gt;/themes/custom_theme/assests/css/</b>. After this,
 highlighting worked on my site.
 </p>

@@ -32,10 +32,11 @@
   -----
 
 * Computer notes
-  These are all the notes I've collected so far on working in Linux,
-  specifically Ubuntu and Debian, and Windows as well.
+  These are all the notes I've collected so far for getting things
+  done on computers. I hope they can help you as well.
 
   + [[file:notes/linux.org][Notes on Linux]]
-  + [[file:notes/windows.org][Notes on Windows]]
+  + [[file:notes/scipy.org][Python for Scientific Applications]]
   + [[file:notes/git.org][Git]]
   + [[file:notes/nikola.org][Nikola]]
+  + [[file:notes/windows.org][Notes on Windows]]

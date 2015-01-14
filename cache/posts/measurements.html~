@@ -16,10 +16,6 @@ get the original structure.
 </p>
 
 <p>
-<code>.. TEASER_END</code>
-</p>
-
-<p>
 Of course, our dataset may only capture some limited aspects of the
 original structure, so we may only be able to make probabilistic
 statements about what the original structure was.

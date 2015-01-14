@@ -1,0 +1,74 @@
+#+BEGIN_COMMENT
+.. title: Scientific Python Notes
+.. slug: scipy
+.. date: 1/14/2015
+.. tags: python
+.. link:
+.. description: Notes on using Python tools for scientific applications.
+.. type: text
+#+END_COMMENT
+#+OPTIONS: toc:nil num:t ^:nil
+#+TOC: headlines 3
+
+* matplotlib
+
+** Tight layout (fixing clipped axes titles)
+   For small figures like those which may go in publications, the axes
+   titles and labels may fall outside of the figure boundary and
+   therefore appear clipped.
+
+   To fix this, matplotlib provides a function called *tight_layout()*
+   which automatically moves a subplot to fix the plot within the
+   figure. It also fixes overlapping axis titles in figures with
+   multiple subplots.
+
+   *tight_layouts()* is provided as a method instance of a Figure
+   object, or through *pyplot*.
+
+   #+BEGIN_SRC python
+plt.tight_layout()
+   #+END_SRC
+
+   Sometimes, the default settings of *tight_layout* still do not fix
+   the clipping. In this case, I can adjust its pad, w_pad, or h_pad
+   arguments to adjust the amount of padding introduced by the method.
+-----
+
+** Changing matplotlib font families and size
+   The fonts in figures can be changed with a little help with
+   matplotlib's *font_manager*.
+
+   The following snippet changes the font family to Arial and the size
+   to 12pt using the font_manager to find the proper name of the
+   font. (Using font_manager isn't necessary if you know the name
+   already.)
+
+   #+BEGIN_SRC python
+import matplotlib.font_manager as font_manager
+from matplotlib import rcParams
+
+fontpath = '/usr/share/fonts/truetype/msttcorefonts/Arial.ttf'
+prop = font_manager.FontProperties(fname = fontpath)
+rcParams['font.family'] = prop.get_name()
+rcParams.update({'font.size' : 12})
+   #+END_SRC
+
+-----   
+
+*** Clear the matplotlib font cache
+    It is very important to clear the matplotlib font list cache after
+    adding new fonts to the system. Otherwise, matplotlib will not be
+    able to find your font.
+
+    Many forums suggest that this cache is named *fontList.cache* and
+    is located at *~/.config/matplotlib/*. However, this /is not/ the
+    location where my cache file is stored, nor is it the name of the
+    file.
+
+    After adding new fonts, I should run the commands
+
+    #+BEGIN_SRC sh
+rm -i ~/.cache/matplotlib/fontList.py3k.cache
+rm -ri ~/.cache/matplotlib/tex.cache
+    #+END_SRC
+

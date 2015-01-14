@@ -179,7 +179,9 @@ your specific problem.
 <p>
 I'll now give a simplified example of how this solution to the
 parameter sweep can be implemented using Python's multiprocessing
-module.
+module. I won't use objects like in my real code, but will first
+demonstrate an example where <b>Pool.map()</b> is applied to a list of
+numbers.
 </p>
 
 <div class="highlight"><pre><span class="kn">import</span> <span class="nn">multiprocessing</span>

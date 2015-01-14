@@ -1,0 +1,108 @@
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. matplotlib</a>
+<ul>
+<li><a href="#sec-1-1">1.1. Tight layout (fixing clipped axes titles)</a></li>
+<li><a href="#sec-1-2">1.2. Changing matplotlib font families and size</a>
+<ul>
+<li><a href="#sec-1-2-1">1.2.1. Clear the matplotlib font cache</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> matplotlib</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Tight layout (fixing clipped axes titles)</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+For small figures like those which may go in publications, the axes
+titles and labels may fall outside of the figure boundary and
+therefore appear clipped.
+</p>
+
+<p>
+To fix this, matplotlib provides a function called <b>tight_layout()</b>
+which automatically moves a subplot to fix the plot within the
+figure. It also fixes overlapping axis titles in figures with
+multiple subplots.
+</p>
+
+<p>
+<b>tight_layouts()</b> is provided as a method instance of a Figure
+object, or through <b>pyplot</b>.
+</p>
+
+<div class="highlight"><pre><span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+
+<p>
+Sometimes, the default settings of <b>tight_layout</b> still do not fix
+the clipping. In this case, I can adjust its pad, w_pad, or h_pad
+arguments to adjust the amount of padding introduced by the method.
+</p>
+<hr  />
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Changing matplotlib font families and size</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+The fonts in figures can be changed with a little help with
+matplotlib's <b>font_manager</b>.
+</p>
+
+<p>
+The following snippet changes the font family to Arial and the size
+to 12pt using the font_manager to find the proper name of the
+font. (Using font_manager isn't necessary if you know the name
+already.)
+</p>
+
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">matplotlib.font_manager</span> <span class="kn">as</span> <span class="nn">font_manager</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">rcParams</span>
+
+<span class="n">fontpath</span> <span class="o">=</span> <span class="s">&#39;/usr/share/fonts/truetype/msttcorefonts/Arial.ttf&#39;</span>
+<span class="n">prop</span> <span class="o">=</span> <span class="n">font_manager</span><span class="o">.</span><span class="n">FontProperties</span><span class="p">(</span><span class="n">fname</span> <span class="o">=</span> <span class="n">fontpath</span><span class="p">)</span>
+<span class="n">rcParams</span><span class="p">[</span><span class="s">&#39;font.family&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">prop</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span>
+<span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s">&#39;font.size&#39;</span> <span class="p">:</span> <span class="mi">12</span><span class="p">})</span>
+</pre></div>
+
+<hr  />
+</div>
+
+<div id="outline-container-sec-1-2-1" class="outline-4">
+<h4 id="sec-1-2-1"><span class="section-number-4">1.2.1</span> Clear the matplotlib font cache</h4>
+<div class="outline-text-4" id="text-1-2-1">
+<p>
+It is very important to clear the matplotlib font list cache after
+adding new fonts to the system. Otherwise, matplotlib will not be
+able to find your font.
+</p>
+
+<p>
+Many forums suggest that this cache is named <b>fontList.cache</b> and
+is located at <b>~/.config/matplotlib/</b>. However, this <i>is not</i> the
+location where my cache file is stored, nor is it the name of the
+file.
+</p>
+
+<p>
+After adding new fonts, I should run the commands
+</p>
+
+<div class="highlight"><pre>rm -i ~/.cache/matplotlib/fontList.py3k.cache
+rm -ri ~/.cache/matplotlib/tex.cache
+</pre></div>
+</div>
+</div>
+</div>
+</div>
