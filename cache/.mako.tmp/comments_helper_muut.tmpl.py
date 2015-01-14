@@ -4,12 +4,12 @@ UNDEFINED = runtime.UNDEFINED
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1421221926.0699604
+_modified_time = 1421223072.5942986
 _enable_loop = True
 _template_filename = '/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/comments_helper_muut.tmpl'
 _template_uri = 'comments_helper_muut.tmpl'
 _source_encoding = 'utf-8'
-_exports = ['comment_link', 'comment_link_script', 'comment_form']
+_exports = ['comment_form', 'comment_link_script', 'comment_link']
 
 
 def render_body(context,**pageargs):
@@ -21,26 +21,6 @@ def render_body(context,**pageargs):
         __M_writer('\n\n')
         __M_writer('\n\n\n')
         __M_writer('\n')
-        return ''
-    finally:
-        context.caller_stack._pop_frame()
-
-
-def render_comment_link(context,link,identifier):
-    __M_caller = context.caller_stack._push_frame()
-    try:
-        __M_writer = context.writer()
-        __M_writer('\n')
-        return ''
-    finally:
-        context.caller_stack._pop_frame()
-
-
-def render_comment_link_script(context):
-    __M_caller = context.caller_stack._push_frame()
-    try:
-        __M_writer = context.writer()
-        __M_writer('\n<script src="//cdn.muut.com/1/moot.min.js"></script>\n')
         return ''
     finally:
         context.caller_stack._pop_frame()
@@ -63,8 +43,28 @@ def render_comment_form(context,url,title,identifier):
         context.caller_stack._pop_frame()
 
 
+def render_comment_link_script(context):
+    __M_caller = context.caller_stack._push_frame()
+    try:
+        __M_writer = context.writer()
+        __M_writer('\n<script src="//cdn.muut.com/1/moot.min.js"></script>\n')
+        return ''
+    finally:
+        context.caller_stack._pop_frame()
+
+
+def render_comment_link(context,link,identifier):
+    __M_caller = context.caller_stack._push_frame()
+    try:
+        __M_writer = context.writer()
+        __M_writer('\n')
+        return ''
+    finally:
+        context.caller_stack._pop_frame()
+
+
 """
 __M_BEGIN_METADATA
-{"uri": "comments_helper_muut.tmpl", "filename": "/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/comments_helper_muut.tmpl", "line_map": {"33": 7, "66": 60, "54": 3, "39": 11, "57": 4, "43": 11, "15": 0, "49": 3, "20": 2, "21": 5, "22": 8, "23": 13, "56": 4, "55": 4, "58": 4, "59": 4, "60": 4, "29": 7}, "source_encoding": "utf-8"}
+{"filename": "/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/comments_helper_muut.tmpl", "uri": "comments_helper_muut.tmpl", "source_encoding": "utf-8", "line_map": {"34": 3, "35": 4, "36": 4, "37": 4, "38": 4, "39": 4, "40": 4, "66": 60, "46": 11, "15": 0, "50": 11, "20": 2, "21": 5, "22": 8, "23": 13, "56": 7, "60": 7, "29": 3}}
 __M_END_METADATA
 """

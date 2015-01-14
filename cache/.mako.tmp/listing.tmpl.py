@@ -4,7 +4,7 @@ UNDEFINED = runtime.UNDEFINED
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1421221926.186515
+_modified_time = 1421223072.7113795
 _enable_loop = True
 _template_filename = 'themes/bootstrap3/templates/listing.tmpl'
 _template_uri = 'listing.tmpl'
@@ -32,16 +32,16 @@ def render_body(context,**pageargs):
         _import_ns = {}
         _mako_get_namespace(context, 'ui')._populate(_import_ns, ['bar'])
         crumbs = _import_ns.get('crumbs', context.get('crumbs', UNDEFINED))
-        source_link = _import_ns.get('source_link', context.get('source_link', UNDEFINED))
         def sourcelink():
             return render_sourcelink(context._locals(__M_locals))
-        folders = _import_ns.get('folders', context.get('folders', UNDEFINED))
-        messages = _import_ns.get('messages', context.get('messages', UNDEFINED))
-        ui = _mako_get_namespace(context, 'ui')
         def content():
             return render_content(context._locals(__M_locals))
-        code = _import_ns.get('code', context.get('code', UNDEFINED))
         files = _import_ns.get('files', context.get('files', UNDEFINED))
+        code = _import_ns.get('code', context.get('code', UNDEFINED))
+        messages = _import_ns.get('messages', context.get('messages', UNDEFINED))
+        source_link = _import_ns.get('source_link', context.get('source_link', UNDEFINED))
+        folders = _import_ns.get('folders', context.get('folders', UNDEFINED))
+        ui = _mako_get_namespace(context, 'ui')
         __M_writer = context.writer()
         __M_writer('\n')
         __M_writer('\n\n')
@@ -67,8 +67,8 @@ def render_sourcelink(context,**pageargs):
         _mako_get_namespace(context, 'ui')._populate(_import_ns, ['bar'])
         def sourcelink():
             return render_sourcelink(context)
-        source_link = _import_ns.get('source_link', context.get('source_link', UNDEFINED))
         messages = _import_ns.get('messages', context.get('messages', UNDEFINED))
+        source_link = _import_ns.get('source_link', context.get('source_link', UNDEFINED))
         __M_writer = context.writer()
         __M_writer('\n')
         if source_link:
@@ -88,12 +88,12 @@ def render_content(context,**pageargs):
         _import_ns = {}
         _mako_get_namespace(context, 'ui')._populate(_import_ns, ['bar'])
         crumbs = _import_ns.get('crumbs', context.get('crumbs', UNDEFINED))
-        folders = _import_ns.get('folders', context.get('folders', UNDEFINED))
-        ui = _mako_get_namespace(context, 'ui')
         def content():
             return render_content(context)
-        code = _import_ns.get('code', context.get('code', UNDEFINED))
         files = _import_ns.get('files', context.get('files', UNDEFINED))
+        code = _import_ns.get('code', context.get('code', UNDEFINED))
+        folders = _import_ns.get('folders', context.get('folders', UNDEFINED))
+        ui = _mako_get_namespace(context, 'ui')
         __M_writer = context.writer()
         __M_writer('\n')
         __M_writer(str(ui.bar(crumbs)))
@@ -124,6 +124,6 @@ def render_content(context,**pageargs):
 
 """
 __M_BEGIN_METADATA
-{"uri": "listing.tmpl", "filename": "themes/bootstrap3/templates/listing.tmpl", "line_map": {"73": 22, "74": 23, "75": 24, "76": 25, "77": 25, "78": 25, "79": 25, "85": 5, "22": 3, "110": 13, "111": 13, "28": 0, "116": 17, "98": 5, "99": 6, "100": 6, "101": 7, "102": 8, "103": 9, "104": 10, "105": 10, "106": 10, "107": 10, "108": 10, "109": 12, "46": 2, "47": 3, "112": 13, "113": 13, "114": 13, "115": 15, "52": 20, "117": 18, "118": 18, "119": 18, "57": 28, "125": 119, "63": 22}, "source_encoding": "utf-8"}
+{"filename": "themes/bootstrap3/templates/listing.tmpl", "uri": "listing.tmpl", "source_encoding": "utf-8", "line_map": {"73": 22, "74": 23, "75": 24, "76": 25, "77": 25, "78": 25, "79": 25, "85": 5, "22": 3, "110": 13, "111": 13, "28": 0, "116": 17, "98": 5, "99": 6, "100": 6, "101": 7, "102": 8, "103": 9, "104": 10, "105": 10, "106": 10, "107": 10, "108": 10, "109": 12, "46": 2, "47": 3, "112": 13, "113": 13, "114": 13, "115": 15, "52": 20, "117": 18, "118": 18, "119": 18, "57": 28, "125": 119, "63": 22}}
 __M_END_METADATA
 """
