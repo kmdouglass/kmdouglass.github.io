@@ -31,7 +31,11 @@ plt.tight_layout()
 
    Sometimes, the default settings of *tight_layout* still do not fix
    the clipping. In this case, I can adjust its pad, w_pad, or h_pad
-   arguments to adjust the amount of padding introduced by the method.
+   arguments to adjust the amount of padding introduced by the
+   method. The numeric amounts are fractions of the font size. *pad*
+   adds padding to the subplots and the figure border, whereas *w_pad*
+   and *h_pad* add padding between individual subplots.
+
 -----
 
 ** Changing matplotlib font families and size

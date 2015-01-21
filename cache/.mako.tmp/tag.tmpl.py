@@ -4,7 +4,7 @@ UNDEFINED = runtime.UNDEFINED
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1421246129.806501
+_modified_time = 1421827171.6197643
 _enable_loop = True
 _template_filename = '/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/tag.tmpl'
 _template_uri = 'tag.tmpl'
@@ -29,18 +29,18 @@ def render_body(context,**pageargs):
         __M_locals = __M_dict_builtin(pageargs=pageargs)
         def extra_head():
             return render_extra_head(context._locals(__M_locals))
+        posts = context.get('posts', UNDEFINED)
         generate_rss = context.get('generate_rss', UNDEFINED)
-        kind = context.get('kind', UNDEFINED)
-        messages = context.get('messages', UNDEFINED)
+        tag = context.get('tag', UNDEFINED)
         translations = context.get('translations', UNDEFINED)
-        len = context.get('len', UNDEFINED)
         _link = context.get('_link', UNDEFINED)
-        parent = context.get('parent', UNDEFINED)
+        len = context.get('len', UNDEFINED)
         def content():
             return render_content(context._locals(__M_locals))
-        posts = context.get('posts', UNDEFINED)
-        tag = context.get('tag', UNDEFINED)
         title = context.get('title', UNDEFINED)
+        messages = context.get('messages', UNDEFINED)
+        parent = context.get('parent', UNDEFINED)
+        kind = context.get('kind', UNDEFINED)
         date_format = context.get('date_format', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n\n')
@@ -65,12 +65,12 @@ def render_extra_head(context,**pageargs):
         def extra_head():
             return render_extra_head(context)
         generate_rss = context.get('generate_rss', UNDEFINED)
-        kind = context.get('kind', UNDEFINED)
-        translations = context.get('translations', UNDEFINED)
-        len = context.get('len', UNDEFINED)
-        _link = context.get('_link', UNDEFINED)
-        parent = context.get('parent', UNDEFINED)
         tag = context.get('tag', UNDEFINED)
+        translations = context.get('translations', UNDEFINED)
+        _link = context.get('_link', UNDEFINED)
+        len = context.get('len', UNDEFINED)
+        parent = context.get('parent', UNDEFINED)
+        kind = context.get('kind', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n    ')
         __M_writer(str(parent.extra_head()))
@@ -102,17 +102,17 @@ def render_extra_head(context,**pageargs):
 def render_content(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
-        kind = context.get('kind', UNDEFINED)
+        posts = context.get('posts', UNDEFINED)
         generate_rss = context.get('generate_rss', UNDEFINED)
-        messages = context.get('messages', UNDEFINED)
+        tag = context.get('tag', UNDEFINED)
         translations = context.get('translations', UNDEFINED)
-        len = context.get('len', UNDEFINED)
         _link = context.get('_link', UNDEFINED)
+        title = context.get('title', UNDEFINED)
         def content():
             return render_content(context)
-        posts = context.get('posts', UNDEFINED)
-        tag = context.get('tag', UNDEFINED)
-        title = context.get('title', UNDEFINED)
+        len = context.get('len', UNDEFINED)
+        messages = context.get('messages', UNDEFINED)
+        kind = context.get('kind', UNDEFINED)
         date_format = context.get('date_format', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n<article class="tagpage">\n    <header>\n        <h1>')
@@ -159,6 +159,6 @@ def render_content(context,**pageargs):
 
 """
 __M_BEGIN_METADATA
-{"filename": "/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/tag.tmpl", "line_map": {"128": 24, "129": 24, "130": 24, "131": 24, "132": 27, "133": 28, "134": 28, "135": 28, "136": 28, "137": 28, "138": 30, "139": 32, "140": 33, "141": 34, "142": 35, "143": 35, "144": 35, "145": 35, "146": 35, "147": 35, "148": 35, "149": 35, "150": 35, "151": 35, "152": 35, "153": 37, "26": 0, "154": 39, "160": 154, "46": 2, "51": 13, "56": 40, "62": 4, "75": 4, "76": 5, "77": 5, "78": 6, "79": 7, "80": 8, "81": 8, "82": 8, "83": 8, "84": 8, "85": 8, "86": 8, "87": 8, "88": 8, "89": 10, "90": 11, "91": 11, "92": 11, "93": 11, "94": 11, "95": 11, "96": 11, "102": 16, "118": 16, "119": 19, "120": 19, "121": 21, "122": 22, "123": 23, "124": 24, "125": 24, "126": 24, "127": 24}, "source_encoding": "utf-8", "uri": "tag.tmpl"}
+{"line_map": {"128": 24, "129": 24, "130": 24, "131": 24, "132": 27, "133": 28, "134": 28, "135": 28, "136": 28, "137": 28, "138": 30, "139": 32, "140": 33, "141": 34, "142": 35, "143": 35, "144": 35, "145": 35, "146": 35, "147": 35, "148": 35, "149": 35, "150": 35, "151": 35, "152": 35, "153": 37, "26": 0, "154": 39, "160": 154, "46": 2, "51": 13, "56": 40, "62": 4, "75": 4, "76": 5, "77": 5, "78": 6, "79": 7, "80": 8, "81": 8, "82": 8, "83": 8, "84": 8, "85": 8, "86": 8, "87": 8, "88": 8, "89": 10, "90": 11, "91": 11, "92": 11, "93": 11, "94": 11, "95": 11, "96": 11, "102": 16, "118": 16, "119": 19, "120": 19, "121": 21, "122": 22, "123": 23, "124": 24, "125": 24, "126": 24, "127": 24}, "uri": "tag.tmpl", "filename": "/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/tag.tmpl", "source_encoding": "utf-8"}
 __M_END_METADATA
 """

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="Complexity is the largest barrier to physical biology models.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Overcoming complexity in biology | Kyle M. Douglass</title>
+<link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="../assets/css/rst.css" rel="stylesheet" type="text/css">
+<link href="../assets/css/code.css" rel="stylesheet" type="text/css">
+<link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css">
+<link href="../assets/css/theme.css" rel="stylesheet" type="text/css">
+<link href="../assets/css/custom.css" rel="stylesheet" type="text/css">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml">
+<link rel="canonical" href="http://kmdouglass.github.io/posts/overcoming-complexity-in-biology.html">
+<!--[if lt IE 9]><script src="../assets/js/html5.js"></script><![endif]--><meta name="description" itemprop="description" content="Complexity is the largest barrier to physical biology models.">
+<meta name="author" content="Kyle M. Douglass">
+<link rel="prev" href="learning-pythons-multiprocessing-module.html" title="Learning Python's Multiprocessing Module" type="text/html">
+<meta property="og:site_name" content="Kyle M. Douglass">
+<meta property="og:title" content="Overcoming complexity in biology">
+<meta property="og:url" content="http://kmdouglass.github.io/posts/overcoming-complexity-in-biology.html">
+<meta property="og:description" content="Complexity is the largest barrier to physical biology models.">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2015-01-21T08:16:04+01:00">
+<meta property="article:tag" content="biology">
+<meta property="article:tag" content="biophysics">
+<meta property="article:tag" content="complexity">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Menubar -->
+
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation"><div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://kmdouglass.github.io/">
+
+                <span id="blog-title">Kyle M. Douglass</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+<li>
+<a href="../archive.html">Archive</a>
+                </li>
+<li>
+<a href="../categories/index.html">Tags</a>
+                </li>
+<li>
+<a href="../stories/notes-and-projects.html">Notes</a>
+                </li>
+<li>
+<a href="../stories/about-me.html">About</a>
+                </li>
+<li>
+<a href="../stories/contact.html">Contact</a>
+                </li>
+<li>
+<a href="../rss.xml">RSS feed</a>
+
+                
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+    <a href="overcoming-complexity-in-biology.org" id="sourcelink">Source</a>
+    </li>
+
+                
+            </ul>
+</div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="#" class="u-url">Overcoming complexity in biology</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">Kyle M. Douglass</span></p>
+            <p class="dateline"><a href="#" rel="bookmark"><time class="published dt-published" datetime="2015-01-21T08:16:04+01:00" itemprop="datePublished" title="2015-01-21 08:16">2015-01-21 08:16</time></a></p>
+                <p class="commentline">
+        
+    <a href="overcoming-complexity-in-biology.html#disqus_thread" data-disqus-identifier="cache/posts/overcoming-complexity-in-biology.html">Comments</a>
+
+
+            
+        </p>
+<p class="sourceline"><a href="overcoming-complexity-in-biology.org" id="sourcelink">Source</a></p>
+
+                <meta name="description" itemprop="description" content="Complexity is the largest barrier to physical biology models.">
+</div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <p>
+I've been sitting in on a short lecture series presented by <a href="http://markolab.bmbcb.northwestern.edu/marko/">Prof. John
+Marko</a> here at the EPFL. The topic is on the biophysics of DNA and
+covers what is probably at least a 25 year span of research that has
+emerged on its mechanical and biochemical properties.
+</p>
+
+<p>
+DNA amazes me in two different ways: relatively simple physical
+theories can explain <i>in vitro</i> experiments, but establishing a
+complete understanding of the behavior of DNA and its associated
+proteins (collectively known as chromatin) <i>in vivo</i> seems at this
+point almost hopeless.
+</p>
+
+<p>
+So why do I think it's so difficult to establish a complete physical
+theory of the nucleus?
+</p>
+
+<p>
+Certainly a lot of recent research has helped us to understand parts
+of what happens inside the nucleus. Take for example recent
+experiments that look at <a href="http://en.wikipedia.org/wiki/Transcription_factor#Accessibility_of_DNA-binding_site">transcription factor</a> (TF) binding and the
+nuclear architecture. TF binding experiments have helped us understand
+the mechanism of how a single transcription factor ``searches'' for a
+target site on a chromosome. It undergoes diffusion in the crowded
+nuclear environment, occasionally binding to the DNA non-specifically
+and sliding along it. We now know that this combined diffusion/sliding
+mechanism produces an optimum search strategy.
+</p>
+
+<p>
+Studies of nuclear architecture attempt to understand how the long DNA
+polymer, which is on the order of <i>one meter</i> long, is packaged into
+the nucleus, which is only about <i>five micrometers</i> in diameter. This
+is nearly six orders of magnitude of compaction. Some current theories
+treat the DNA as a hierarchically packaged polymer or a fractal
+structure. Interestingly, the fractal model can <a href="http://www.ncbi.nlm.nih.gov/pubmed/24380602">explain why TF's may
+diffuse optimally</a> and when crowding can hinder their search.
+</p>
+
+<p>
+Both of these examples represent a generalization of one particular
+phenomenon that occurs inside the nucleus. And even given the enormity
+of these works, I think this generalization can be dubious because it
+may not apply to all cell types and there may be differences between
+cultured cells and those found in an actual organism.
+</p>
+
+<p>
+The problem in capturing complete physical models of the nucleus seems
+to lie with the philosophy of physics itself: find the most essential
+parts of the system and include those in your model, discarding all
+irrelevant details. Unfortunately, <i>in vitro</i> experiments suggest that
+every detail seems to matter inside the nucleus. Local salt
+concentrations effect electrostatic interactions and entropic binding
+between proteins and DNA, the global nuclear architecture has an
+effect on single TF's diffusing inside the nucleus, there are a huge
+number of proteins that associate with DNA and control the
+conformation in <a href="http://www.ncbi.nlm.nih.gov/pubmed/22495300">toplogically associating domains</a>. The list goes on and
+on.
+</p>
+
+<p>
+A common theme to this list that I have described above is that
+phenomena at one length scale tend to have a direct impact on those at
+another, like the global nuclear architecture affecting a single TF
+trajectory. These are hallmarks of complexity: a dependence on the
+details of a system and multiscale behavior.
+</p>
+
+<p>
+I am currently of the opinion that a complete model of the nucleus,
+and probably of other biological systems, must therefore necessarily
+abandon one important part of physical theories: reduction to the
+simplest possible set of parameters to describe a system. We need to
+incorporate all the details across all length scales to reproduce what
+exactly is going on.
+</p>
+
+<p>
+And if classical physics falls short of this goal, what other
+approaches do we then require?
+</p>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../categories/biology.html" rel="tag">biology</a></li>
+           <li><a class="tag p-category" href="../categories/biophysics.html" rel="tag">biophysics</a></li>
+           <li><a class="tag p-category" href="../categories/complexity.html" rel="tag">complexity</a></li>
+        </ul>
+<ul class="pager">
+<li class="previous">
+                <a href="learning-pythons-multiprocessing-module.html" rel="prev" title="Learning Python's Multiprocessing Module">Previous post</a>
+            </li>
+        </ul></nav></aside><section class="comments"><h2>Comments</h2>
+        
+        
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="kmdouglass",
+            disqus_url="http://kmdouglass.github.io/posts/overcoming-complexity-in-biology.html",
+        disqus_title="Overcoming complexity in biology",
+        disqus_identifier="cache/posts/overcoming-complexity-in-biology.html",
+        disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="//disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+        </section></article><script>var disqus_shortname="kmdouglass";(function(){var a=document.createElement("script");a.async=true;a.src="//"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+</div>
+        <!--End of body content-->
+
+        <footer>
+            Contents © 2015         <a href="mailto:kyle.douglass@epfl.ch">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
+            
+        </footer>
+</div>
+</div>
+
+
+            <script src="../assets/js/jquery.min.js"></script><script src="../assets/js/bootstrap.min.js"></script><script src="../assets/js/moment-with-locales.min.js"></script><script src="../assets/js/fancydates.js"></script><script src="../assets/js/jquery.colorbox-min.js"></script><!-- Social buttons --><div id="addthisbox" class="addthis_toolbox addthis_peekaboo_style addthis_default_style addthis_label_style addthis_32x32_style">
+<a class="addthis_button_more">Share</a>
+<ul>
+<li>
+<a class="addthis_button_facebook"></a>
+</li>
+<li>
+<a class="addthis_button_google_plusone_share"></a>
+</li>
+<li>
+<a class="addthis_button_linkedin"></a>
+</li>
+<li>
+<a class="addthis_button_twitter"></a>
+</li>
+</ul>
+</div>
+<script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script><!-- End of social buttons --><script>jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+    moment.locale("");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates -->
+</body>
+</html>
