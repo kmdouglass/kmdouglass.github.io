@@ -2,8 +2,8 @@
 .. title: Linux Notes
 .. slug: linux
 .. date: 12/26/2014
-.. tags: linux, debian
-.. link:
+.. tags: 
+.. link: linux, debian
 .. description: Notes I've collected for doing things in Linux
 .. type: text
 #+END_COMMENT

@@ -37,6 +37,7 @@
 
   + [[file:notes/linux.org][Notes on Linux]]
   + [[file:notes/scipy.org][Python for Scientific Applications]]
+  + [[file:notes/emacs.org][Emacs]]
   + [[file:notes/git.org][Git]]
   + [[file:notes/nikola.org][Nikola]]
   + [[file:notes/windows.org][Notes on Windows]]
