@@ -5,12 +5,7 @@
 <meta name="description" content="Biophysics, optics, and programming.">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kyle M. Douglass | Kyle M. Douglass</title>
-<link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-<link href="assets/css/rst.css" rel="stylesheet" type="text/css">
-<link href="assets/css/code.css" rel="stylesheet" type="text/css">
-<link href="assets/css/colorbox.css" rel="stylesheet" type="text/css">
-<link href="assets/css/theme.css" rel="stylesheet" type="text/css">
-<link href="assets/css/custom.css" rel="stylesheet" type="text/css">
+<link href="assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
 <link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml">
 <link rel="canonical" href="http://kmdouglass.github.io/index.html">
 <!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]-->
@@ -70,7 +65,112 @@
             
             
 <div class="postindex">
-    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/overcoming-complexity-in-biology.html" class="u-url">Overcoming complexity in biology</a></h1>
+    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/sending-arguments-to-python-decorators.html" class="u-url">Sending arguments to Python decorators</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">Kyle M. Douglass</span></p>
+            <p class="dateline"><a href="posts/sending-arguments-to-python-decorators.html" rel="bookmark"><time class="published dt-published" datetime="2015-01-24T08:45:38+01:00" itemprop="datePublished" title="2015-01-24 08:45">2015-01-24 08:45</time></a></p>
+                <p class="commentline">
+        
+    <a href="posts/sending-arguments-to-python-decorators.html#disqus_thread" data-disqus-identifier="cache/posts/sending-arguments-to-python-decorators.html">Comments</a>
+
+
+        </p>
+</div>
+    </header><div class="p-summary entry-summary">
+    <p>
+<a href="http://simeonfranklin.com/blog/2012/jul/1/python-decorators-in-12-steps/">Python's decorators</a> are tools for changing the behavior of a function
+without completely recoding it. When we apply a decorator to a
+function, we say that the function has been decorated. Strictly
+speaking, when we decorate a function, we send it to a wrapper that
+returns another function. It's as simple as that.
+</p>
+
+<p>
+I was having trouble understanding exactly to which function, the
+original or the decorated one, the arguments are sent in a Python
+decorated function call. I wrote the following script to better
+understand this process (I use Python 3.4):
+</p>
+
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">inFunction</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">outFunction</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+	<span class="k">print</span><span class="p">(</span><span class="s">'The input arguments were:'</span><span class="p">)</span>
+	<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+	    <span class="k">print</span><span class="p">(</span><span class="s">'</span><span class="si">%r</span><span class="s"> : </span><span class="si">%r</span><span class="s">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+
+	<span class="c"># Return the original function</span>
+	<span class="k">return</span> <span class="n">inFunction</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">outFunction</span>
+
+<span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+</pre></div>
+
+<p>
+<code>wrapper(inFunction)</code> is a function that accepts another function as
+an argument. It returns a function that simply prints the keyword
+arguments of <i>inFunction()</i>, and calls <i>inFunction()</i> like normal.
+</p>
+
+<p>
+To decorate the function <i>add(x = 1, y = 2)</i> so that its arguments are
+printed without recoding it, we normally would place <code>@wrapper</code> before
+its definition. However, let's make the decorator in a way that's
+closer to how <i>@</i> works under the hood:
+</p>
+
+<div class="highlight"><pre>In [22]: decoratedAdd = wrapper(add)
+In [23]: decoratedAdd(x = 1, y = 24)
+The input arguments were:
+'y' : 24
+'x' : 1
+Out[23]: 25
+</pre></div>
+
+<p>
+When we call <i>decoratedAdd(x = 1, y = 24)</i>, the arguments are printed
+to the screen and we still get the same functionality of <i>add()</i>. What
+I wanted to know was this: are the keyword arguments x = 1, y = 24
+bound in the namespace of <i>wrapper()</i> or in the namespace of
+<i>outFunction()</i>? <b>In otherwords, does <i>wrapper()</i> at any point know
+what the arguments are that I send to the decorated function?</b>
+</p>
+
+<p>
+The answer, as it turns out, is no in this case. This is because the
+<i>wrapper()</i> function first returns the decorated function, and then
+the arguments are passed into the decorated function. If this order of
+operations were flipped, <i>wrapper()</i> should know that I set x to 1 and
+y to 24, but really it doesn't know these details at all.
+</p>
+
+<div class="highlight"><pre>In [24]: wrapper(add)(x = 1, y = 24)
+The input arguments were:
+'y' : 24
+'x' : 1
+Out[24]: 25
+</pre></div>
+
+<p>
+So, when I call <i>wrapper(add)(x = 1, y = 24)</i>, first <i>wrapper(add)</i> is
+called, which returns <i>outFunction()</i>, and then these arguments are
+passed to <i>outFunction()</i>.
+</p>
+
+<p>
+Now what happens when I call <code>wrapper(add(x = 1, y = 24))</code>? When I try
+this, the arguments are first passed into add, but then <i>outFunction</i>
+is returned without any arguments applied to it.
+</p>
+
+<p>
+This example can give us an idea about the working order of operations
+in Python. Here, this example reveals that function calls in Python
+are left-associative.
+</p>
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/overcoming-complexity-in-biology.html" class="u-url">Overcoming complexity in biology</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">Kyle M. Douglass</span></p>
             <p class="dateline"><a href="posts/overcoming-complexity-in-biology.html" rel="bookmark"><time class="published dt-published" datetime="2015-01-21T08:16:04+01:00" itemprop="datePublished" title="2015-01-21 08:16">2015-01-21 08:16</time></a></p>
@@ -1135,7 +1235,7 @@ means to get to know me better as a scientist.
 </div>
 
 
-            <script src="assets/js/jquery.min.js"></script><script src="assets/js/bootstrap.min.js"></script><script src="assets/js/moment-with-locales.min.js"></script><script src="assets/js/fancydates.js"></script><script src="assets/js/jquery.colorbox-min.js"></script><!-- Social buttons --><div id="addthisbox" class="addthis_toolbox addthis_peekaboo_style addthis_default_style addthis_label_style addthis_32x32_style">
+            <script src="assets/js/all-nocdn.js"></script><!-- Social buttons --><div id="addthisbox" class="addthis_toolbox addthis_peekaboo_style addthis_default_style addthis_label_style addthis_32x32_style">
 <a class="addthis_button_more">Share</a>
 <ul>
 <li>

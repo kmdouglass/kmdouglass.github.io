@@ -4,7 +4,7 @@ UNDEFINED = runtime.UNDEFINED
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1421827171.4790823
+_modified_time = 1422090313.9809344
 _enable_loop = True
 _template_filename = '/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/comments_helper_facebook.tmpl'
 _template_uri = 'comments_helper_facebook.tmpl'
@@ -67,6 +67,6 @@ def render_comment_link(context,link,identifier):
 
 """
 __M_BEGIN_METADATA
-{"line_map": {"33": 32, "34": 46, "35": 46, "68": 62, "41": 2, "60": 28, "46": 2, "47": 8, "48": 8, "49": 25, "50": 25, "20": 26, "21": 30, "22": 62, "56": 28, "15": 0, "28": 32, "61": 29, "62": 29}, "uri": "comments_helper_facebook.tmpl", "filename": "/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/comments_helper_facebook.tmpl", "source_encoding": "utf-8"}
+{"line_map": {"33": 32, "34": 46, "35": 46, "68": 62, "41": 2, "60": 28, "46": 2, "47": 8, "48": 8, "49": 25, "50": 25, "20": 26, "21": 30, "22": 62, "56": 28, "15": 0, "28": 32, "61": 29, "62": 29}, "uri": "comments_helper_facebook.tmpl", "source_encoding": "utf-8", "filename": "/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/comments_helper_facebook.tmpl"}
 __M_END_METADATA
 """

@@ -4,7 +4,7 @@ UNDEFINED = runtime.UNDEFINED
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1421827171.5950122
+_modified_time = 1422090314.2121396
 _enable_loop = True
 _template_filename = '/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/crumbs.tmpl'
 _template_uri = 'crumbs.tmpl'
@@ -45,6 +45,6 @@ def render_bar(context,crumbs):
 
 """
 __M_BEGIN_METADATA
-{"line_map": {"32": 4, "33": 5, "34": 7, "35": 8, "36": 8, "37": 8, "38": 8, "39": 8, "40": 10, "46": 40, "15": 0, "20": 2, "21": 13, "27": 3, "31": 3}, "uri": "crumbs.tmpl", "filename": "/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/crumbs.tmpl", "source_encoding": "utf-8"}
+{"line_map": {"32": 4, "33": 5, "34": 7, "35": 8, "36": 8, "37": 8, "38": 8, "39": 8, "40": 10, "46": 40, "15": 0, "20": 2, "21": 13, "27": 3, "31": 3}, "uri": "crumbs.tmpl", "source_encoding": "utf-8", "filename": "/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/crumbs.tmpl"}
 __M_END_METADATA
 """

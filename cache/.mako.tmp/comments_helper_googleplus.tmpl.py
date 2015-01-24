@@ -4,7 +4,7 @@ UNDEFINED = runtime.UNDEFINED
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1421827171.474033
+_modified_time = 1422090313.9739847
 _enable_loop = True
 _template_filename = '/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/comments_helper_googleplus.tmpl'
 _template_uri = 'comments_helper_googleplus.tmpl'
@@ -61,6 +61,6 @@ def render_comment_link(context,link,identifier):
 
 """
 __M_BEGIN_METADATA
-{"line_map": {"32": 16, "54": 11, "38": 2, "42": 2, "43": 5, "44": 5, "15": 0, "50": 11, "20": 9, "21": 14, "22": 17, "55": 12, "56": 12, "28": 16, "62": 56}, "uri": "comments_helper_googleplus.tmpl", "filename": "/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/comments_helper_googleplus.tmpl", "source_encoding": "utf-8"}
+{"line_map": {"32": 16, "54": 11, "38": 2, "42": 2, "43": 5, "44": 5, "15": 0, "50": 11, "20": 9, "21": 14, "22": 17, "55": 12, "56": 12, "28": 16, "62": 56}, "uri": "comments_helper_googleplus.tmpl", "source_encoding": "utf-8", "filename": "/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/comments_helper_googleplus.tmpl"}
 __M_END_METADATA
 """

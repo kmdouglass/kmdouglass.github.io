@@ -4,7 +4,7 @@ UNDEFINED = runtime.UNDEFINED
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1421827171.5862997
+_modified_time = 1422090314.268413
 _enable_loop = True
 _template_filename = 'themes/bootstrap3/templates/listing.tmpl'
 _template_uri = 'listing.tmpl'
@@ -31,17 +31,17 @@ def render_body(context,**pageargs):
         __M_locals = __M_dict_builtin(pageargs=pageargs)
         _import_ns = {}
         _mako_get_namespace(context, 'ui')._populate(_import_ns, ['bar'])
+        crumbs = _import_ns.get('crumbs', context.get('crumbs', UNDEFINED))
         folders = _import_ns.get('folders', context.get('folders', UNDEFINED))
-        code = _import_ns.get('code', context.get('code', UNDEFINED))
-        files = _import_ns.get('files', context.get('files', UNDEFINED))
+        source_link = _import_ns.get('source_link', context.get('source_link', UNDEFINED))
+        messages = _import_ns.get('messages', context.get('messages', UNDEFINED))
         def content():
             return render_content(context._locals(__M_locals))
-        messages = _import_ns.get('messages', context.get('messages', UNDEFINED))
-        source_link = _import_ns.get('source_link', context.get('source_link', UNDEFINED))
+        files = _import_ns.get('files', context.get('files', UNDEFINED))
+        ui = _mako_get_namespace(context, 'ui')
+        code = _import_ns.get('code', context.get('code', UNDEFINED))
         def sourcelink():
             return render_sourcelink(context._locals(__M_locals))
-        crumbs = _import_ns.get('crumbs', context.get('crumbs', UNDEFINED))
-        ui = _mako_get_namespace(context, 'ui')
         __M_writer = context.writer()
         __M_writer('\n')
         __M_writer('\n\n')
@@ -87,13 +87,13 @@ def render_content(context,**pageargs):
     try:
         _import_ns = {}
         _mako_get_namespace(context, 'ui')._populate(_import_ns, ['bar'])
+        crumbs = _import_ns.get('crumbs', context.get('crumbs', UNDEFINED))
         folders = _import_ns.get('folders', context.get('folders', UNDEFINED))
-        code = _import_ns.get('code', context.get('code', UNDEFINED))
-        files = _import_ns.get('files', context.get('files', UNDEFINED))
         def content():
             return render_content(context)
-        crumbs = _import_ns.get('crumbs', context.get('crumbs', UNDEFINED))
+        files = _import_ns.get('files', context.get('files', UNDEFINED))
         ui = _mako_get_namespace(context, 'ui')
+        code = _import_ns.get('code', context.get('code', UNDEFINED))
         __M_writer = context.writer()
         __M_writer('\n')
         __M_writer(str(ui.bar(crumbs)))
@@ -124,6 +124,6 @@ def render_content(context,**pageargs):
 
 """
 __M_BEGIN_METADATA
-{"line_map": {"73": 22, "74": 23, "75": 24, "76": 25, "77": 25, "78": 25, "79": 25, "85": 5, "22": 3, "110": 13, "111": 13, "28": 0, "116": 17, "98": 5, "99": 6, "100": 6, "101": 7, "102": 8, "103": 9, "104": 10, "105": 10, "106": 10, "107": 10, "108": 10, "109": 12, "46": 2, "47": 3, "112": 13, "113": 13, "114": 13, "115": 15, "52": 20, "117": 18, "118": 18, "119": 18, "57": 28, "125": 119, "63": 22}, "uri": "listing.tmpl", "filename": "themes/bootstrap3/templates/listing.tmpl", "source_encoding": "utf-8"}
+{"line_map": {"73": 22, "74": 23, "75": 24, "76": 25, "77": 25, "78": 25, "79": 25, "85": 5, "22": 3, "110": 13, "111": 13, "28": 0, "116": 17, "98": 5, "99": 6, "100": 6, "101": 7, "102": 8, "103": 9, "104": 10, "105": 10, "106": 10, "107": 10, "108": 10, "109": 12, "46": 2, "47": 3, "112": 13, "113": 13, "114": 13, "115": 15, "52": 20, "117": 18, "118": 18, "119": 18, "57": 28, "125": 119, "63": 22}, "uri": "listing.tmpl", "source_encoding": "utf-8", "filename": "themes/bootstrap3/templates/listing.tmpl"}
 __M_END_METADATA
 """

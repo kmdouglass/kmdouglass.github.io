@@ -4,7 +4,7 @@ UNDEFINED = runtime.UNDEFINED
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1421827171.568937
+_modified_time = 1422090314.1659276
 _enable_loop = True
 _template_filename = '/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/list_post.tmpl'
 _template_uri = 'list_post.tmpl'
@@ -28,11 +28,11 @@ def render_body(context,**pageargs):
     try:
         __M_locals = __M_dict_builtin(pageargs=pageargs)
         title = context.get('title', UNDEFINED)
+        messages = context.get('messages', UNDEFINED)
         def content():
             return render_content(context._locals(__M_locals))
-        posts = context.get('posts', UNDEFINED)
         date_format = context.get('date_format', UNDEFINED)
-        messages = context.get('messages', UNDEFINED)
+        posts = context.get('posts', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n\n')
         if 'parent' not in context._data or not hasattr(context._data['parent'], 'content'):
@@ -49,11 +49,11 @@ def render_content(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
         title = context.get('title', UNDEFINED)
+        messages = context.get('messages', UNDEFINED)
         def content():
             return render_content(context)
-        posts = context.get('posts', UNDEFINED)
         date_format = context.get('date_format', UNDEFINED)
-        messages = context.get('messages', UNDEFINED)
+        posts = context.get('posts', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n<article class="listpage">\n    <header>\n        <h1>')
         __M_writer(str(title))
@@ -85,6 +85,6 @@ def render_content(context,**pageargs):
 
 """
 __M_BEGIN_METADATA
-{"line_map": {"64": 12, "65": 12, "66": 12, "67": 12, "68": 12, "69": 12, "70": 12, "71": 12, "72": 12, "73": 12, "74": 12, "75": 14, "76": 15, "77": 16, "78": 16, "79": 16, "80": 18, "86": 80, "26": 0, "37": 2, "42": 19, "48": 4, "58": 4, "59": 7, "60": 7, "61": 9, "62": 10, "63": 11}, "uri": "list_post.tmpl", "filename": "/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/list_post.tmpl", "source_encoding": "utf-8"}
+{"line_map": {"64": 12, "65": 12, "66": 12, "67": 12, "68": 12, "69": 12, "70": 12, "71": 12, "72": 12, "73": 12, "74": 12, "75": 14, "76": 15, "77": 16, "78": 16, "79": 16, "80": 18, "86": 80, "26": 0, "37": 2, "42": 19, "48": 4, "58": 4, "59": 7, "60": 7, "61": 9, "62": 10, "63": 11}, "uri": "list_post.tmpl", "source_encoding": "utf-8", "filename": "/usr/lib/python3.4/site-packages/nikola/data/themes/base/templates/list_post.tmpl"}
 __M_END_METADATA
 """
