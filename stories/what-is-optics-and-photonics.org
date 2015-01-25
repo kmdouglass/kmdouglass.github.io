@@ -1,0 +1,56 @@
+#+BEGIN_COMMENT
+.. title: What is optics and photonics?
+.. slug: what-is-optics-and-photonics
+.. date: 2015-01-25 18:49:18 UTC+01:00
+.. tags: optics, photonics
+.. category: optics education
+.. link: 
+.. description: What exactly is the field known as optics and photonics?
+.. type: text
+#+END_COMMENT
+
+If you have come to this page, then you are probably interested in
+learning about optics. If this is true, then you have found a very
+good place. You see, I have been formally learning and working with
+optics since I was 18 years old when I studied the topic in my high
+school physics class. I've worked in optics labs continuously since
+that time, earning a bachelor of science degree in engineering and a
+PhD in optics along the way.
+
+However, my formal training and the degrees I have earned are not
+really why you have found a good place to learn. There are many people
+in this world who have more credentials than I do, who have worked
+more years than I have, and who generally know more than I do about
+optics.
+
+The real reason for why I think that this is a good place to learn is
+because I know firsthand what makes optics a difficult topic and I
+have thought *a lot* about why this is and how it can be
+fixed. Largely, the theories and tools we use to understand optical
+phenomena are presented as subunits of other disciplines, like
+electromagnetism or microscopy. For this reason, students are rarely
+encouraged to form a fully self-consistent understanding of light and
+its interaction with matter. Engineers and scientists who rely on
+optics technologies but who have not learned to appreciate their
+subtleties are therefore putting themselves at risk of failure in
+their career.
+
+Beyond the utility that exists in learning about optics, I also think
+that developing a better understanding of it can be exciting. Optics
+and photonics enable so much of the technology in our modern world
+that it would be a shame for someone to not understand even a little
+bit about how it all works at a fundamental level.
+
+For these reasons, I decided to create a set of tutorials that would
+provide those who were interested with a different way of thinking
+about the theory and application of light. In them I want to show how
+optics theories can be presented as a coherent body of knowledge in
+its own right and to address its common misunderstandings. My target
+audience is primarily students from high school through graduate
+school, but I also hope to stimulate interest in those in the general
+public who are curious about science.
+
+
+
+Let's begin this series of tutorials by considering the most obvious
+question that one can ask: what exactly is ``optics and photonics?''
