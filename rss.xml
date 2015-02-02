@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Kyle M. Douglass</title><link>http://kmdouglass.github.io/</link><description>Biophysics, optics, and programming.</description><atom:link type="application/rss+xml" href="http://kmdouglass.github.io/rss.xml" rel="self"></atom:link><language>en</language><lastBuildDate>Sun, 25 Jan 2015 20:43:33 GMT</lastBuildDate><generator>http://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Sending arguments to Python decorators</title><link>http://kmdouglass.github.io/posts/sending-arguments-to-python-decorators.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;p&gt;
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0"><channel><title>Kyle M. Douglass</title><link>http://kmdouglass.github.io/</link><description>Biophysics, optics, and programming.</description><atom:link rel="self" type="application/rss+xml" href="http://kmdouglass.github.io/rss.xml"></atom:link><language>en</language><lastBuildDate>Wed, 28 Jan 2015 08:08:48 GMT</lastBuildDate><generator>http://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Sending arguments to Python decorators</title><link>http://kmdouglass.github.io/posts/sending-arguments-to-python-decorators.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;p&gt;
 &lt;a href="http://simeonfranklin.com/blog/2012/jul/1/python-decorators-in-12-steps/"&gt;Python's decorators&lt;/a&gt; are tools for changing the behavior of a function
 without completely recoding it. When we apply a decorator to a
 function, we say that the function has been decorated. Strictly
@@ -220,6 +220,7 @@ each loop iteration.
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+
 &lt;div id="outline-container-sec-2" class="outline-2"&gt;
 &lt;h2 id="sec-2"&gt;A brief glance at Python's multiprocessing module&lt;/h2&gt;
 &lt;div class="outline-text-2" id="text-2"&gt;
@@ -309,6 +310,7 @@ integers to &lt;b&gt;Pool.map()&lt;/b&gt;. The code looks like this:
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+
 &lt;div id="outline-container-sec-3" class="outline-2"&gt;
 &lt;h2 id="sec-3"&gt;Design the solution to the problem&lt;/h2&gt;
 &lt;div class="outline-text-2" id="text-3"&gt;
@@ -346,6 +348,7 @@ your specific problem.
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+
 &lt;div id="outline-container-sec-4" class="outline-2"&gt;
 &lt;h2 id="sec-4"&gt;Implementation of the solution&lt;/h2&gt;
 &lt;div class="outline-text-2" id="text-4"&gt;
@@ -415,6 +418,7 @@ the parameter iterable. This means that the first element in the
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+
 &lt;div id="outline-container-sec-5" class="outline-2"&gt;
 &lt;h2 id="sec-5"&gt;Iterables over arbitrary objects&lt;/h2&gt;
 &lt;div class="outline-text-2" id="text-5"&gt;
@@ -474,6 +478,7 @@ the pool. More details can be found &lt;a href="http://stackoverflow.com/questio
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+
 &lt;div id="outline-container-sec-6" class="outline-2"&gt;
 &lt;h2 id="sec-6"&gt;Comparing computation times&lt;/h2&gt;
 &lt;div class="outline-text-2" id="text-6"&gt;
@@ -530,6 +535,7 @@ time using the &lt;b&gt;time.time()&lt;/b&gt; function is not wholly accurate.
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+
 &lt;div id="outline-container-sec-7" class="outline-2"&gt;
 &lt;h2 id="sec-7"&gt;Important points&lt;/h2&gt;
 &lt;div class="outline-text-2" id="text-7"&gt;
@@ -547,6 +553,7 @@ the task affinity in our code:
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+
 &lt;div id="outline-container-sec-8" class="outline-2"&gt;
 &lt;h2 id="sec-8"&gt;Conclusions&lt;/h2&gt;
 &lt;div class="outline-text-2" id="text-8"&gt;

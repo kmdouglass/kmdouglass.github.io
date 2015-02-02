@@ -388,19 +388,33 @@ sudo update-rc.d dropbox defaults
    if I really wanted to remove the lower panel.
 
 -----
-** Installing Flash
-   /Information sources/
-   1. https://wiki.debian.org/FlashPlayer
+** Adobe Flash
+*** Installing the Flash plugin
+   /Sources/
+    1. https://wiki.debian.org/FlashPlayer
 
-   I installed Adobe Flash by adding "contrib" to the list of primary
-   repositories in =/etc/apt/sources.list=. Then I ran the commands
+    I installed Adobe Flash by adding "contrib" to the list of primary
+    repositories in =/etc/apt/sources.list=. Then I ran the commands
 
-  #+BEGIN_SRC sh
+   #+BEGIN_SRC sh
 sudo apt-get update
 sudo apt-get install flashplugin-nonfree
-  #+END_SRC
+   #+END_SRC
 
-   After a browser restart, I could see Flash videos on webpages.
+    After a browser restart, I could see Flash videos on webpages.
+
+-----
+*** Updating Flash
+    /Sources/
+    1. https://wiki.debian.org/FlashPlayer
+
+    To update the Flash plugin, I've found that a simple =sudo apt-get
+    update && apt-get upgrade= doesn't work. Instead, I run the
+    following command:
+
+    #+BEGIN_SRC
+sudo update-flashplugin-nonfree --install
+    #+END_SRC
 
 -----
 
@@ -410,25 +424,8 @@ sudo apt-get install flashplugin-nonfree
 
 -----
 ** Activating the Firefox Java Plugin
-   /Sources/
-   1. http://www.oracle.com/technetwork/java/javase/manual-plugin-install-linux-136395.html
-
-   To enable Java in Firefox, I first installed the runtime
-   environment by downloading it from Oracle's website. (I downloaded
-   the 64 bit Java SE 8u20 tar file.) After unpacking the file, I
-   created a symbolic link from
-   *~/src/jre1.8.0_11/lib/amd64/libnpjp2.so* to
-   *~/.mozilla/plugins/libnpjp2.so*.
-
-   Next, I restarted Iceweaseal (Debian's Firefox) and navigated to
-   /Tools->Add-ons->Plugins/ to ensure that the Java plugin appeared
-   and was set to "Always Activate."
-
-   One final step was to decrease the security level of the JRE. This
-   was accomplished with the Java Control Panel, which is located in
-   ~/src/jre1.8.0_11/bin/. Had I not done this, pratically no applet
-   would run.
-
+   I installed the package called /icedtea-7-plugin/ and it worked. Be
+   sure to allow applets to run in your browser.
 -----
 ** Latex installation
    /Sources/
@@ -909,24 +906,4 @@ sudo update-grub
    copied this to /boot/grub in my USB stick, rebooted the computer,
    and successfully loaded the stranded partition from the bootloader
    on the USB stick.
-
------
-
-* Debian security
-  
-** Updating Debian
-   /Sources/
-   1. https://www.debian.org/security/
-
-   Debian can be kept up-to-date by ensuring first that we have the
-   following line in /etc/apt/sources.list :
-
-   #+BEGIN_SRC
-deb http://security.debian.org/ wheezy/updates main contrib non-free
-   #+END_SRC
-
-   So long as we have access to these repositories, frequent =apt-get
-   update && apt-get upgrade= commands will download and install
-   pending security updates.
-
 
