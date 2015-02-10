@@ -8,6 +8,7 @@
 <link href="assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
 <link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml">
 <link rel="canonical" href="http://kmdouglass.github.io/index.html">
+<link rel="next" href="index-1.html" type="text/html">
 <!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]-->
 </head>
 <body>
@@ -65,7 +66,175 @@
             
             
 <div class="postindex">
-    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/sending-arguments-to-python-decorators.html" class="u-url">Sending arguments to Python decorators</a></h1>
+    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/the-basics-of-virtualenv.html" class="u-url">The basics of virtualenv</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">Kyle M. Douglass</span></p>
+            <p class="dateline"><a href="posts/the-basics-of-virtualenv.html" rel="bookmark"><time class="published dt-published" datetime="2015-02-10T07:47:50+01:00" title="2015-02-10 07:47">2015-02-10 07:47</time></a></p>
+                <p class="commentline">
+        
+    <a href="posts/the-basics-of-virtualenv.html#disqus_thread" data-disqus-identifier="cache/posts/the-basics-of-virtualenv.html">Comments</a>
+
+
+        </p>
+</div>
+    </header><div class="p-summary entry-summary">
+    <p>
+I use Python 3.4 in most of my data analyses and in some
+simulations. I like a lot of its features, like its implementation of
+generators, maps, and filters. However, much of the software on my
+Debian Wheezy system depends on Python 2.7 to run, such as
+<a href="http://www.mendeley.com/">Mendeley</a>. (It used to run just fine with Python 3.4, until I ran an
+automatic update and that was the end of that.)
+</p>
+
+<p>
+To run some Python 2.7 programs, I used to do the following:
+</p>
+
+<div class="highlight"><pre>sudo rm /usr/bin/python 
+sudo ln -s /usr/bin/python2.7 /usr/bin/python
+</pre></div>
+
+<p>
+I know. Ouch. Every single time I needed to run a program that
+depended on python2.7, I would delete the symlink in /usr/bin, make a
+new link to python2.7, and then run my program. When I needed to give
+various programs convenient access to python3.4, I would delete the
+symlink and create a new one to the newer version.
+</p>
+
+<p>
+This was dumb, because there is a convenient Python-based tool that
+can fix the problem of needing multiple versions of Python (and
+libraries!) on the same system. The solution to this problem is called
+<a href="https://virtualenv.pypa.io/en/latest/">virtualenv</a>.
+</p>
+
+<p>
+There are a lot of descriptions about what virtualenv is on the
+internet, so I won't bother going into details here. Instead, I will
+focus on just the very basics of its setup and use so that I can have
+a handy future reference for when I forget how something works and so
+that others can profit from what I have learned. Most everything I've
+done came from <a href="http://docs.python-guide.org/en/latest/">python-guide.org</a>, so I'm more-or-less putting <a href="http://docs.python-guide.org/en/latest/dev/virtualenvs/">what they
+have already said</a> into my own words.
+</p>
+
+<p>
+To start, I already have Python 2.7 and 3.4 installed on my system. In
+principle, you do not need them installed at the system level, but I
+already have done this so I will start from there. I first installed
+pip for Python 2.7 since I only had pip3 on my system to start. I did
+this because I want to keep Python 2.7 as my system's default Python
+environment.
+</p>
+
+<div class="highlight"><pre>sudo apt-get update
+sudo apt-get install python-pip
+</pre></div>
+
+<p>
+Once installed, I used it to install virtualenv and
+<a href="https://virtualenvwrapper.readthedocs.org/en/latest/">virtualenvwrapper</a>. The latter provides some nice features for working
+with virtualenv.
+</p>
+
+<div class="highlight"><pre>sudo pip install virtualenv
+sudo pip install virtualenvwrapper
+</pre></div>
+
+<p>
+Now, virtualenvwrapper requires an environment variable to tell it
+where to store the folders for each virtual environment. This
+environment variable is called WORKON_HOME. First, I created the
+folder it will point to:
+</p>
+
+<div class="highlight"><pre>mkdir ~/Envs
+</pre></div>
+
+<p>
+Next, I edited my ~/.bashrc and added the following line:
+</p>
+
+<div class="highlight"><pre><span class="nb">export </span><span class="nv">WORKON_HOME</span><span class="o">=</span>~/Envs
+</pre></div>
+
+<p>
+All of my virtual environment files (except for the Python
+intepreters) will be stored in this folder. Finally, I restarted my
+terminal window so that the environment variable was assigned. You can
+check this by typing <code>echo $WORKON_HOME</code> in your new terminal
+window. If it returns the path to your new environments folder, then
+you should be fine.
+</p>
+
+<p>
+Next, I ran the virtualwrapper setup script. Note that I did not need
+sudo (in fact, sudo could not find a command called ``source'') and
+that no output is returned when the script is run.
+</p>
+
+<div class="highlight"><pre><span class="nb">source</span> /usr/local/bin/virtualenvwrapper.sh
+</pre></div>
+
+<p>
+Now virtualenvwrapper should be installed, so let's make a virtual
+environment. We can do this using the <code>mkvirtualenv</code> command, followed
+by a name for the environment. I will use the name ``venv'' in this
+example, like Kenneth Reitz did in his guide that I linked above.
+</p>
+
+<div class="highlight"><pre>mkvirtualenv venv
+</pre></div>
+
+<p>
+To start the new virtual environment, type <code>workon venv</code> and note that
+change in the prompt, indicating which environment you are in. You now
+have a fresh Python environment to which you can add any library you
+wish. To leave the environment, type <code>deactivate</code> into your terminal.
+</p>
+
+<p>
+One simple test that you can do to see whether your Python environment
+really is clean is to run the Python interpreter from inside your
+environment and try importing a module that you know is in your
+system-wide site packages but not in your virtual environment. For
+example, inside venv I type <code>python</code> at the terminal prompt and tried
+importing numpy, which I had not yet installed in venv:
+</p>
+
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span>
+</pre></div>
+
+<p>
+This returned an <b>ImportError: No module named numpy</b>. Since I do have
+numpy installed on my system but not in this environment, it tells me
+that the environment is likely clean.
+</p>
+
+<p>
+To install new libraries, simply use pip or install them to the folder
+that was created for this environment in ~/Env. To delete a virtual
+environment entirely, use <code>rmvirtual env</code>.
+</p>
+
+<p>
+Now, how can I specify that I want the virtual environment to use the
+python3.4 interpreter in a virtual environment named
+``python3-general''? Doing so would solve my original problem. Simply
+make a new virtual environment like so:
+</p>
+
+<div class="highlight"><pre><span class="n">mkvirtualenv</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python3</span><span class="o">.</span><span class="mi">4</span> <span class="n">python3</span><span class="o">-</span><span class="n">general</span>
+</pre></div>
+
+<p>
+Voilà. C'est tout. I hope this helps you get up and running with this
+great tool!
+</p>
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/sending-arguments-to-python-decorators.html" class="u-url">Sending arguments to Python decorators</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">Kyle M. Douglass</span></p>
             <p class="dateline"><a href="posts/sending-arguments-to-python-decorators.html" rel="bookmark"><time class="published dt-published" datetime="2015-01-24T08:45:38+01:00" title="2015-01-24 08:45">2015-01-24 08:45</time></a></p>
@@ -1175,55 +1344,14 @@ future realignments.
 </li>
 </ol>
 </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/hello-world.html" class="u-url">Hello, world!</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">Kyle M. Douglass</span></p>
-            <p class="dateline"><a href="posts/hello-world.html" rel="bookmark"><time class="published dt-published" datetime="2013-12-21T00:00:00+01:00" title="2013-12-21 00:00">2013-12-21 00:00</time></a></p>
-                <p class="commentline">
-        
-    <a href="posts/hello-world.html#disqus_thread" data-disqus-identifier="cache/posts/hello-world.html">Comments</a>
-
-
-        </p>
-</div>
-    </header><div class="p-summary entry-summary">
-    <p>
-Well, I've finally got this site off the ground… more or less.
-</p>
-
-<p>
-This website is the continuation of my blog, <a href="http://quadrule.blogspot.com">My Quad-Ruled Life</a>. On
-that site, I explored a number of topics as a graduate student in
-optics, while improving my writing as well. As the site progressed
-and I matured academically, I found that I was blogging less often,
-but still used the blog as a means of exploring ideas. Additionally,
-I desired a place to present notes and code to the public in an
-easily accessible and open manner.
-</p>
-
-<p>
-So, after discovering <a href="http://getnikola.com/">Nikola</a> and <a href="http://pages.github.com/">GitHub Pages</a>, I quickly hashed
-together a fully homemade site that allowed me to keep writing blog
-posts and to present some of the fruits of my research freely on the
-internet.
-</p>
-
-<p>
-I hope you'll find this site useful as a learning resource and as a
-means to get to know me better as a scientist.
-</p>
-
-<p>
--Kyle
-</p>
-    </div>
     </article>
 </div>
 
-
-
-        
-       <script>var disqus_shortname="kmdouglass";(function(){var a=document.createElement("script");a.async=true;a.src="//"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+        <nav class="postindexpager"><ul class="pager">
+<li class="next">
+                <a href="index-1.html" rel="next">Older posts</a>
+            </li>
+        </ul></nav><script>var disqus_shortname="kmdouglass";(function(){var a=document.createElement("script");a.async=true;a.src="//"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
 </div>
         <!--End of body content-->
 

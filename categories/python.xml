@@ -1,5 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0"><channel><title>Kyle M. Douglass (python)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link rel="self" type="application/rss+xml" href="http://kmdouglass.github.io/categories/python.xml"></atom:link><language>en</language><lastBuildDate>Wed, 28 Jan 2015 08:08:48 GMT</lastBuildDate><generator>http://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Sending arguments to Python decorators</title><link>http://kmdouglass.github.io/posts/sending-arguments-to-python-decorators.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;p&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Kyle M. Douglass (python)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link type="application/rss+xml" rel="self" href="http://kmdouglass.github.io/categories/python.xml"></atom:link><language>en</language><lastBuildDate>Tue, 10 Feb 2015 08:40:18 GMT</lastBuildDate><generator>http://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>The basics of virtualenv</title><link>http://kmdouglass.github.io/posts/the-basics-of-virtualenv.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;p&gt;
+I use Python 3.4 in most of my data analyses and in some
+simulations. I like a lot of its features, like its implementation of
+generators, maps, and filters. However, much of the software on my
+Debian Wheezy system depends on Python 2.7 to run, such as
+&lt;a href="http://www.mendeley.com/"&gt;Mendeley&lt;/a&gt;. (It used to run just fine with Python 3.4, until I ran an
+automatic update and that was the end of that.)
+&lt;/p&gt;
+
+&lt;p&gt;
+To run some Python 2.7 programs, I used to do the following:
+&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;sudo rm /usr/bin/python 
+sudo ln -s /usr/bin/python2.7 /usr/bin/python
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;
+I know. Ouch. Every single time I needed to run a program that
+depended on python2.7, I would delete the symlink in /usr/bin, make a
+new link to python2.7, and then run my program. When I needed to give
+various programs convenient access to python3.4, I would delete the
+symlink and create a new one to the newer version.
+&lt;/p&gt;
+
+&lt;p&gt;
+This was dumb, because there is a convenient Python-based tool that
+can fix the problem of needing multiple versions of Python (and
+libraries!) on the same system. The solution to this problem is called
+&lt;a href="https://virtualenv.pypa.io/en/latest/"&gt;virtualenv&lt;/a&gt;.
+&lt;/p&gt;
+
+&lt;p&gt;
+There are a lot of descriptions about what virtualenv is on the
+internet, so I won't bother going into details here. Instead, I will
+focus on just the very basics of its setup and use so that I can have
+a handy future reference for when I forget how something works and so
+that others can profit from what I have learned. Most everything I've
+done came from &lt;a href="http://docs.python-guide.org/en/latest/"&gt;python-guide.org&lt;/a&gt;, so I'm more-or-less putting &lt;a href="http://docs.python-guide.org/en/latest/dev/virtualenvs/"&gt;what they
+have already said&lt;/a&gt; into my own words.
+&lt;/p&gt;
+
+&lt;p&gt;
+To start, I already have Python 2.7 and 3.4 installed on my system. In
+principle, you do not need them installed at the system level, but I
+already have done this so I will start from there. I first installed
+pip for Python 2.7 since I only had pip3 on my system to start. I did
+this because I want to keep Python 2.7 as my system's default Python
+environment.
+&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;sudo apt-get update
+sudo apt-get install python-pip
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;
+Once installed, I used it to install virtualenv and
+&lt;a href="https://virtualenvwrapper.readthedocs.org/en/latest/"&gt;virtualenvwrapper&lt;/a&gt;. The latter provides some nice features for working
+with virtualenv.
+&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;sudo pip install virtualenv
+sudo pip install virtualenvwrapper
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;
+Now, virtualenvwrapper requires an environment variable to tell it
+where to store the folders for each virtual environment. This
+environment variable is called WORKON_HOME. First, I created the
+folder it will point to:
+&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;mkdir ~/Envs
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;
+Next, I edited my ~/.bashrc and added the following line:
+&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;WORKON_HOME&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;~/Envs
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;
+All of my virtual environment files (except for the Python
+intepreters) will be stored in this folder. Finally, I restarted my
+terminal window so that the environment variable was assigned. You can
+check this by typing &lt;code&gt;echo $WORKON_HOME&lt;/code&gt; in your new terminal
+window. If it returns the path to your new environments folder, then
+you should be fine.
+&lt;/p&gt;
+
+&lt;p&gt;
+Next, I ran the virtualwrapper setup script. Note that I did not need
+sudo (in fact, sudo could not find a command called ``source'') and
+that no output is returned when the script is run.
+&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;source&lt;/span&gt; /usr/local/bin/virtualenvwrapper.sh
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;
+Now virtualenvwrapper should be installed, so let's make a virtual
+environment. We can do this using the &lt;code&gt;mkvirtualenv&lt;/code&gt; command, followed
+by a name for the environment. I will use the name ``venv'' in this
+example, like Kenneth Reitz did in his guide that I linked above.
+&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;mkvirtualenv venv
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;
+To start the new virtual environment, type &lt;code&gt;workon venv&lt;/code&gt; and note that
+change in the prompt, indicating which environment you are in. You now
+have a fresh Python environment to which you can add any library you
+wish. To leave the environment, type &lt;code&gt;deactivate&lt;/code&gt; into your terminal.
+&lt;/p&gt;
+
+&lt;p&gt;
+One simple test that you can do to see whether your Python environment
+really is clean is to run the Python interpreter from inside your
+environment and try importing a module that you know is in your
+system-wide site packages but not in your virtual environment. For
+example, inside venv I type &lt;code&gt;python&lt;/code&gt; at the terminal prompt and tried
+importing numpy, which I had not yet installed in venv:
+&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;numpy&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;
+This returned an &lt;b&gt;ImportError: No module named numpy&lt;/b&gt;. Since I do have
+numpy installed on my system but not in this environment, it tells me
+that the environment is likely clean.
+&lt;/p&gt;
+
+&lt;p&gt;
+To install new libraries, simply use pip or install them to the folder
+that was created for this environment in ~/Env. To delete a virtual
+environment entirely, use &lt;code&gt;rmvirtual env&lt;/code&gt;.
+&lt;/p&gt;
+
+&lt;p&gt;
+Now, how can I specify that I want the virtual environment to use the
+python3.4 interpreter in a virtual environment named
+``python3-general''? Doing so would solve my original problem. Simply
+make a new virtual environment like so:
+&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;mkvirtualenv&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nb"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;python3&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt; &lt;span class="n"&gt;python3&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;general&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;
+Voilà. C'est tout. I hope this helps you get up and running with this
+great tool!
+&lt;/p&gt;</description><category>python</category><guid>http://kmdouglass.github.io/posts/the-basics-of-virtualenv.html</guid><pubDate>Tue, 10 Feb 2015 06:47:50 GMT</pubDate></item><item><title>Sending arguments to Python decorators</title><link>http://kmdouglass.github.io/posts/sending-arguments-to-python-decorators.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;p&gt;
 &lt;a href="http://simeonfranklin.com/blog/2012/jul/1/python-decorators-in-12-steps/"&gt;Python's decorators&lt;/a&gt; are tools for changing the behavior of a function
 without completely recoding it. When we apply a decorator to a
 function, we say that the function has been decorated. Strictly
