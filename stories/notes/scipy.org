@@ -12,6 +12,37 @@
 
 * matplotlib
 
+** Removing parts of the frame
+   Some journals disallow having the right and top lines outlining a
+   plot. For these situations, you can remove them by using methods
+   associated to the /spines/ field of your axis object.
+
+   #+BEGIN_SRC python
+ax.spines['top'].set_visible(False)
+ax.spines['right'].set_visible(False)
+   #+END_SRC
+
+-----
+
+** Changing the frame linewidth
+   Changing the frame linewidth is achieved by the /set_linewidth/
+   method of an axes /spine/ field.
+
+   #+BEGIN_SRC python
+ax.spines['left'].set_linewidth(0.5)
+ax.spines['bottom'].set_linewidth(0.5)
+   #+END_SRC
+
+-----
+
+** Remove the legend frame
+   #+BEGIN_SRC python
+import matplotlib.pyplot as plt
+leg = plt.legend()
+leg.draw_frame(False)
+   #+END_SRC
+
+-----
 ** Tight layout (fixing clipped axes titles)
    For small figures like those which may go in publications, the axes
    titles and labels may fall outside of the figure boundary and

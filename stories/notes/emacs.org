@@ -44,6 +44,29 @@ alias sudo 'eshell/sudo $*'
 
 -----
 
+* The Virtualenv package
+
+** Installation
+   To install this package, simply use emacs's package manager: =M-x
+   list-packages=. The package to install is called ``virtualenv''. I
+   installed version 1.2 from the Marmelade repo on 2015-02-10.
+
+-----
+** The default environments directory
+   This package treats ~/.virtualenvs as the default directory. It can
+   probably be changed, but it was just easier for me to install my
+   virtualenvs to this directory. (Don't forget to set the environment
+   variable WORKON_HOME to this directory as well).
+
+-----
+
+** Switch virtual environments
+   Most emacs commands for this package start with
+   ``virtualenv-''. For example, work on a specific environment, use
+   =virtualenv-workon=. You can replace ``workon'' with ``deactivate''
+   to turn off a given virtual environment.
+
+-----
 * Useful keybindings
   + C-h b :: List all keybindings
   + C-h f :: Describe an emacs/elisp function
