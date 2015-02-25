@@ -10,6 +10,18 @@
 #+OPTIONS: toc:nil num:t ^:nil
 #+TOC: headlines 3
 
+* Org-mode
+
+** LaTeX Export
+
+*** Move table captions below tables
+    This was tested with Org-mode version 8.2.6 and emacs 24.4.50.
+
+    #+BEGIN_SRC elisp
+M-x customize-variable RET org-latex-table-caption-above RET nil
+    #+END_SRC
+
+-----
 * eshell
 
 ** Changing the timeout on sudo
