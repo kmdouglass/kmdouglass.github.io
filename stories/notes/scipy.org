@@ -22,6 +22,13 @@ ax.spines['top'].set_visible(False)
 ax.spines['right'].set_visible(False)
    #+END_SRC
 
+   To remove the tick marks, use
+
+   #+BEGIN_SRC
+ax.xaxis.set_ticks_position('bottom')
+ax.yaxis.set_ticks_position('left')
+   #+END_SRC
+
 -----
 
 ** Changing the frame linewidth
@@ -66,6 +73,35 @@ plt.tight_layout()
    method. The numeric amounts are fractions of the font size. *pad*
    adds padding to the subplots and the figure border, whereas *w_pad*
    and *h_pad* add padding between individual subplots.
+
+-----
+** Tight layout (setting subplot bounding box)
+   I once created a figure with a single legend but four subplots
+   arranged in a two-by-two manner. I wanted the legend to sit above
+   all the plots but not cover any of their content.
+
+   The way I did this was to set the legend location relative to the
+   figure bounding box and then squeeze the subplots into a smaller
+   bounding box below the legend so that everything fit inside the
+   figure.
+
+   #+BEGIN_SRC python
+# Place legend above subplots
+plt.legend(bbox_to_anchor=(0.65, 1),
+           bbox_transform=plt.gcf().transFigure)
+
+# Squeeze subplots into a smaller bounding box, relative to the figure
+plt.tight_layout(rect = [0, 0, 1, 0.9])
+   #+END_SRC
+
+   All units here are in normalized figure units. I placed the legend
+   at the top center(ish) of the bounding box with the parameter
+   *bbox_to_anchor=(0.65,1)*.
+
+   Next,the whole bounding box was resized using *tight_layout*. By
+   default, the *rect* parameter is set to *[0, 0, 1, 1]*, which means
+   it extends from (0,0) in the bottom left corner of the figure to
+   (1,1) in the upper right corner.
 
 -----
 
