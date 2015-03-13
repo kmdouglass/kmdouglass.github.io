@@ -143,3 +143,33 @@ rm -i ~/.cache/matplotlib/fontList.py3k.cache
 rm -ri ~/.cache/matplotlib/tex.cache
     #+END_SRC
 
+-----
+
+* IPython
+
+** Creating different Notebook profiles
+   I sometimes make publication figures using the [[http://ipython.org/notebook.html][IPython Notebook]]. At
+   other times, I use it simply as a means of doing data
+   analyses. Regardless, I have different purposes for using it, and
+   this means I often want it to behave differently depending on its
+   current purpose.
+
+   An easy way to set IPython's configuration settings and have it
+   remember specific ones is to make different profiles for it to use.
+
+   To make a new profile, run this command in the terminal:
+
+   #+BEGIN_SRC sh
+ipython profile create myProfile
+   #+END_SRC
+   
+   This will create a profile called myProfile. The configuration
+   settings are stored in ~/.ipython/profile_myProfile/. Importantly,
+   to change the Notebook's behavior, change the settings in
+   *ipython_notebook_config.py*.
+
+   To use this profile, start the notebook with the command
+
+   #+BEGIN_SRC sh
+ipython notebook --profile=myProfile
+   #+END_SRC
