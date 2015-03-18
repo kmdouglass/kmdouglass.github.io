@@ -25,6 +25,10 @@
   <lastmod>2015-01-28</lastmod>
  </sitemap>
  <sitemap>
+  <loc>http://kmdouglass.github.io/categories/micro-manager.xml</loc>
+  <lastmod>2015-03-18</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>http://kmdouglass.github.io/categories/microscopy.xml</loc>
   <lastmod>2015-01-28</lastmod>
  </sitemap>
@@ -34,7 +38,7 @@
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/python.xml</loc>
-  <lastmod>2015-02-10</lastmod>
+  <lastmod>2015-03-18</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/sensing.xml</loc>
@@ -54,10 +58,10 @@
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/rss.xml</loc>
-  <lastmod>2015-02-10</lastmod>
+  <lastmod>2015-03-18</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/sitemap.xml</loc>
-  <lastmod>2015-03-13</lastmod>
+  <lastmod>2015-03-18</lastmod>
  </sitemap>
 </sitemapindex>

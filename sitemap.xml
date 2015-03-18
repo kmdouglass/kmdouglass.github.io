@@ -14,7 +14,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/2015/index.html</loc>
-  <lastmod>2015-02-10</lastmod>
+  <lastmod>2015-03-18</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/archive.html</loc>
@@ -42,7 +42,11 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/index.html</loc>
-  <lastmod>2015-01-28</lastmod>
+  <lastmod>2015-03-18</lastmod>
+ </url>
+ <url>
+  <loc>http://kmdouglass.github.io/categories/micro-manager.html</loc>
+  <lastmod>2015-03-18</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/microscopy.html</loc>
@@ -54,7 +58,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/python.html</loc>
-  <lastmod>2015-02-10</lastmod>
+  <lastmod>2015-03-18</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/sensing.html</loc>
@@ -74,11 +78,11 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/index-1.html</loc>
-  <lastmod>2015-02-10</lastmod>
+  <lastmod>2015-03-18</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/index.html</loc>
-  <lastmod>2015-02-10</lastmod>
+  <lastmod>2015-03-18</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/notes/pgFocus.html</loc>
@@ -117,12 +121,16 @@
   <lastmod>2015-01-28</lastmod>
  </url>
  <url>
+  <loc>http://kmdouglass.github.io/posts/reading-select-lines-from-a-text-file.html</loc>
+  <lastmod>2015-03-18</lastmod>
+ </url>
+ <url>
   <loc>http://kmdouglass.github.io/posts/sending-arguments-to-python-decorators.html</loc>
   <lastmod>2015-02-10</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/the-basics-of-virtualenv.html</loc>
-  <lastmod>2015-02-10</lastmod>
+  <lastmod>2015-03-18</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/wikibooks.html</loc>

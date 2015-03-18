@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Kyle M. Douglass (micro-manager)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link type="application/rss+xml" rel="self" href="http://kmdouglass.github.io/categories/micro-manager.xml"></atom:link><language>en</language><lastBuildDate>Wed, 18 Mar 2015 08:54:05 GMT</lastBuildDate><generator>http://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Reading select lines from a text file</title><link>http://kmdouglass.github.io/posts/reading-select-lines-from-a-text-file.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;p&gt;
+&lt;a href="https://gist.github.com/kmdouglass/507717d339bc82f850ce"&gt;I just created a Python Gist&lt;/a&gt; for reading select lines from a text file
+into memory. I came up with this Gist when I needed to parse the core
+log from our &lt;a href="https://www.micro-manager.org/"&gt;microscope control software (Micro-Manager)&lt;/a&gt;. One of our
+devices was continously sending its statistics to the computer, which
+would then be recorded to the log. I wanted to find only lines that
+contained the statistics by searching for the &lt;b&gt;STATS&lt;/b&gt; identifier,
+which was unique to these lines.
+&lt;/p&gt;
+
+&lt;p&gt;
+The problem was a bit more difficult than reading just the lines
+containing this string because I wanted the statistics only for times
+when the software was acquiring a time series of images. Luckily, the
+core log also contains lines with unique strings indicating when a
+time series was initiated and stopped. All lines in the log are
+time-stamped.
+&lt;/p&gt;
+
+&lt;p&gt;
+Below is the Gist I used to solve this problem. The lines that will be
+retained in memory will contain the strings in the list lineFilters. I
+then define a function named stringIsIn that will return a list of
+bool indicating whether each string is present in the line.
+&lt;/p&gt;
+
+&lt;p&gt;
+At the bottom of the Gist, I use a list comprehension to loop over
+each line in the file. The line is appended to a growing list called
+outputLines if the line contains &lt;i&gt;any&lt;/i&gt; of the strings I defined. Note
+that it's not necessary to use a separate definition for stringIsIn;
+the list comprehension over lineFilters could have been placed inline
+with the primary list comprension over lines in the file. I do think
+it is more readable the way it is presented below, however.
+&lt;/p&gt;
+
+&lt;p&gt;
+I welcome any comments or suggestions, especially on the &lt;a href="https://gist.github.com/kmdouglass/507717d339bc82f850ce"&gt;Gist website&lt;/a&gt;
+where others may be more likely to find it.
+&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;filename&lt;/span&gt;    &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;'myFile.txt'&lt;/span&gt;
+&lt;span class="n"&gt;outputLines&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+
+&lt;span class="c"&gt;# Keep all lines containing ANY of the following list of strings.&lt;/span&gt;
+&lt;span class="n"&gt;lineFilters&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;'line 1'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+	       &lt;span class="s"&gt;'line 2'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+	       &lt;span class="s"&gt;'line 3'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;stringIsIn&lt;/span&gt;  &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;filter&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="nb"&gt;filter&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;lineFilters&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+
+&lt;span class="c"&gt;# Read only lines containing one of the strings into memory.&lt;/span&gt;
+&lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'r'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nb"&gt;file&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;outputLines&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;file&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;any&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stringIsIn&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="p"&gt;))]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><category>micro-manager</category><category>python</category><guid>http://kmdouglass.github.io/posts/reading-select-lines-from-a-text-file.html</guid><pubDate>Wed, 18 Mar 2015 07:27:50 GMT</pubDate></item></channel></rss>
