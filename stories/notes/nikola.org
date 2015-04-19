@@ -135,6 +135,11 @@ nikola bootswatch_theme -n custom_theme -s darkly -p bootstrap3
 
    and changed navbar-inverse to navbar-default, the name of the
    swatch element.
+
+   *NOTE:* In recent versions of Nikola (at least 7.3.1), the
+   bootstrap3 css files were moved. In my nikola virtualenv, I now
+   find them in
+   ~/envs/nikola/lib/python3.4/site-packages/nikola/data/themes.
 -----
 
 ** Navigation links

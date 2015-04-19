@@ -107,3 +107,42 @@ rm -i ~/.cache/matplotlib/fontList.py3k.cache
 rm -ri ~/.cache/matplotlib/tex.cache
     #+END_SRC
 
+-----
+
+* Installing and working with multiple versions of Python
+I sometimes run into problems if I install multiple versions of Python
+on the same system. This is largely because my operating system
+depends on a specific version of Python and its libraries, and these
+can be corrupted if other versions are installed. In addition, I often
+want different packages and versions for different projects.
+
+To avoid these issues, I started building Python from source and
+installing the binaries in a separate folder. I then use a virtualenv
+that points to these binaries. This keeps all my Python packages and
+binaries completely separate from the system-level Python install.
+
+-----
+
+** Building Python and installing binaries to a non-default location
+   It's easy to install the Python binaries to a custom directory by
+   setting the --prefix and --exec-prefix flags when running the
+   configure script:
+
+   #+BEGIN_SRC sh
+./configure --prefix=~/src/Python3.4.2 --exec-prefix=~/src/Python3.4.2
+   #+END_SRC
+
+   After running this command, make, and make install, the binaries
+   and libraries will be placed in these directories instead.
+
+-----
+
+** Setting the interpreter in a virtualenv
+   After setting up virtualenv and virtualenv wrapper, I can create a
+   new virtual environment that use these binaries with the /-p/ flag
+   in the mkvirtualenv command:
+
+   #+BEGIN_SRC sh
+mkvirtualenv -p ~/Python3.4.2/bin/python3.4 MY_VENV_NAME
+   #+END_SRC
+
