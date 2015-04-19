@@ -73,7 +73,7 @@
 <!-- /.navbar-collapse -->
     </div>
 <!-- /.container -->
-</nav><!-- End of Menubar --><div class="container" id="content">
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
     <div class="body-content">
         <!--Body content-->
         <div class="row">
@@ -211,7 +211,6 @@ OMERO server.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-2" class="outline-2">
 <h2 id="sec-2">
 <span class="section-number-2">2</span> OMERO Virtual Appliance</h2>
@@ -253,7 +252,6 @@ Appliance.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-2-1-2" class="outline-4">
 <h4 id="sec-2-1-2">
 <span class="section-number-4">2.1.2</span> Directions for Installing the OMERO Virtual Appliance</h4>
@@ -285,7 +283,6 @@ that Port Forwarding was setup as required. It was.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-2-1-3" class="outline-4">
 <h4 id="sec-2-1-3">
 <span class="section-number-4">2.1.3</span> Problem: Loading and booting the virtual appliance</h4>
@@ -327,7 +324,6 @@ OMERO.insight client.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-2-1-4" class="outline-4">
 <h4 id="sec-2-1-4">
 <span class="section-number-4">2.1.4</span> Solution: Enabled Virtualization Support in the BIOS</h4>
@@ -364,7 +360,6 @@ Appliance should now run in VirtualBox.
 </div>
 </div>
 </div>
-
 <div id="outline-container-sec-2-2" class="outline-3">
 <h3 id="sec-2-2">
 <span class="section-number-3">2.2</span> Setup 2</h3>
@@ -403,7 +398,6 @@ Virtual Box.
 </div>
 </div>
 </div>
-
 <div id="outline-container-sec-3" class="outline-2">
 <h2 id="sec-3">
 <span class="section-number-2">3</span> OMERO Test Server Installation</h2>
@@ -437,7 +431,6 @@ appliance on.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-3-2" class="outline-3">
 <h3 id="sec-3-2">
 <span class="section-number-3">3.2</span> Software prequisites</h3>
@@ -504,7 +497,6 @@ I accepted all default options, including installing it to
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-3-2-2" class="outline-4">
 <h4 id="sec-3-2-2">
 <span class="section-number-4">3.2.2</span> Python 2.6.6</h4>
@@ -531,7 +523,6 @@ I downloaded and installed <i>pywin32-218.5.win-amd64-py2.6.exe</i> from
 <hr>
 </div>
 </li>
-
 <li>Edit the environment variables<br><div class="outline-text-5" id="text-3-2-2-2">
 <p>
 At this point, I edited my <b>System</b> Path environment variable. I
@@ -550,7 +541,6 @@ variable.
 <hr>
 </div>
 </li>
-
 <li>pip 1.5.4<br><div class="outline-text-5" id="text-3-2-2-3">
 <p>
 I nexted installed pip 1.5.4, the Python package index. (Pillow
@@ -568,7 +558,6 @@ get-pip.py</i>
 <hr>
 </div>
 </li>
-
 <li>(OLD) Fixing non-ascii encoding errors in Python 2.7<br><div class="outline-text-5" id="text-3-2-2-4">
 <p>
 <b><b><b>NOTE</b></b></b> I performed this step only during my first
@@ -590,7 +579,7 @@ I work in
 
 <ol class="org-ol">
 <li>Install GnuWin Patch 2.5.9 from here
-<a href="http://gnuwin32.sourceforge.net/packages/patch.htm">http://gnuwin32.sourceforge.net/packages/patch.htm</a>.
+        <a href="http://gnuwin32.sourceforge.net/packages/patch.htm">http://gnuwin32.sourceforge.net/packages/patch.htm</a>.
 </li>
 <li>Download the <i>mimetypes.patch</i> file from the Python bug report
 mentioned above. Place it in the same directory as
@@ -599,7 +588,7 @@ mentioned above. Place it in the same directory as
 <li>Move the patch file into the same directory as <i>mimetypes.py</i>.
 </li>
 <li>In a command prompt with root privileges, run the command
-<i>patch &lt; mimetypes.patch</i>.
+        <i>patch &lt; mimetypes.patch</i>.
 <ol class="org-ol">
 <li>Note that I needed to add the directory containing the
 patch binary file to my environment variables. This was
@@ -617,7 +606,6 @@ line 272 (not 270!) from <i>except UnicodeEncodeError:</i> to
 <hr>
 </div>
 </li>
-
 <li>Pillow 2.3.1<br><div class="outline-text-5" id="text-3-2-2-5">
 <p>
 <i>Pillow-2.3.1.zip</i> from <a href="https://pypi.python.org/pypi/Pillow/2.3.1">https://pypi.python.org/pypi/Pillow/2.3.1</a>
@@ -671,7 +659,6 @@ Pillow succesfully installed after this.
 <hr>
 </div>
 </li>
-
 <li>Numpy1.8.0, Scipy-0.14.0b1, and matplotlib 1.3.1<br><div class="outline-text-5" id="text-3-2-2-6">
 <p>
 Because I installed 64 bit Python, I needed to download and
@@ -698,7 +685,6 @@ order.
 <hr>
 </div>
 </li>
-
 <li>numexpr 2.1, Cython 0.20.1, HDF4 1.8.12, and PyTables 3.1<br><div class="outline-text-5" id="text-3-2-2-7">
 <p>
 I attempted to install PyTables 3.1 using pip via the command
@@ -769,7 +755,6 @@ working copy of PyTables.
 </li>
 </ol>
 </div>
-
 <div id="outline-container-sec-3-2-3" class="outline-4">
 <h4 id="sec-3-2-3">
 <span class="section-number-4">3.2.3</span> Coffee</h4>
@@ -781,7 +766,6 @@ At this point I went to get coffee.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-3-2-4" class="outline-4">
 <h4 id="sec-3-2-4">
 <span class="section-number-4">3.2.4</span> Ice 3.4.2</h4>
@@ -796,7 +780,6 @@ downloaded and installed Ice 3.4.2 from
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-3-2-5" class="outline-4">
 <h4 id="sec-3-2-5">
 <span class="section-number-4">3.2.5</span> PostgreSQL 9.3.3</h4>
@@ -816,7 +799,6 @@ French-speaking Switzerland.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-3-2-6" class="outline-4">
 <h4 id="sec-3-2-6">
 <span class="section-number-4">3.2.6</span> Setting up the environment variables</h4>
@@ -843,7 +825,6 @@ programs!
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-3-2-7" class="outline-4">
 <h4 id="sec-3-2-7">
 <span class="section-number-4">3.2.7</span> Computer restart</h4>
@@ -856,7 +837,6 @@ restarted the computer.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-3-2-8" class="outline-4">
 <h4 id="sec-3-2-8">
 <span class="section-number-4">3.2.8</span> Database creation</h4>
@@ -870,7 +850,6 @@ create a database using postgre's pgAdmin III program.
 </div>
 </div>
 </div>
-
 <div id="outline-container-sec-3-3" class="outline-3">
 <h3 id="sec-3-3">
 <span class="section-number-3">3.3</span> OMERO.server software installation</h3>
@@ -944,7 +923,6 @@ installation.
 </div>
 </li></ol>
 </div>
-
 <div id="outline-container-sec-3-3-2" class="outline-4">
 <h4 id="sec-3-3-2">
 <span class="section-number-4">3.3.2</span> Second install attempt with Python 2.6</h4>
@@ -976,7 +954,6 @@ with Python 2.7 installed.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-3-3-3" class="outline-4">
 <h4 id="sec-3-3-3">
 <span class="section-number-4">3.3.3</span> Fixing issues with Java and PostgreSQL not being on your path</h4>
@@ -1127,7 +1104,6 @@ Log files:  Total size                     0.00 MB
 </pre></div>
 </div>
 </div>
-
 <div id="outline-container-sec-3-3-4" class="outline-4">
 <h4 id="sec-3-3-4">
 <span class="section-number-4">3.3.4</span> Generating the SQL initialization script</h4>
@@ -1148,7 +1124,6 @@ Saving to C:\OMERO.server\OMERO5.0__0.sql
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-3-3-5" class="outline-4">
 <h4 id="sec-3-3-5">
 <span class="section-number-4">3.3.5</span> Database initialization</h4>
@@ -1162,7 +1137,6 @@ enter the username for the user that you created in pgAdmin III,
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-3-3-6" class="outline-4">
 <h4 id="sec-3-3-6">
 <span class="section-number-4">3.3.6</span> Error when starting the server and solution</h4>
@@ -1214,7 +1188,6 @@ started the server after that.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-3-3-7" class="outline-4">
 <h4 id="sec-3-3-7">
 <span class="section-number-4">3.3.7</span> Logging in for the first time</h4>
@@ -1247,7 +1220,6 @@ post here:
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-3-3-8" class="outline-4">
 <h4 id="sec-3-3-8">
 <span class="section-number-4">3.3.8</span> Increasing the Java Virtual Machine memory</h4>
@@ -1285,7 +1257,6 @@ documentation.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-3-3-9" class="outline-4">
 <h4 id="sec-3-3-9">
 <span class="section-number-4">3.3.9</span> OMERO.web and administration</h4>
@@ -1353,7 +1324,6 @@ root or any other user you may have created.
 </div>
 </div>
 </div>
-
 <div id="outline-container-sec-3-4" class="outline-3">
 <h3 id="sec-3-4">
 <span class="section-number-3">3.4</span> Summary of software installation</h3>
@@ -1388,7 +1358,6 @@ list. Don't be afraid to use them!
 </div>
 </div>
 </div>
-
 <div id="outline-container-sec-4" class="outline-2">
 <h2 id="sec-4">
 <span class="section-number-2">4</span> OMERO Test Server Maintenance</h2>
@@ -1409,7 +1378,7 @@ foreground/background in Windows
 <li>Set up routine backups in Windows
 </li>
 <li>Read up on the system security page found here:
-<a href="http://www.openmicroscopy.org/site/support/omero5/sysadmins/server-security.html">http://www.openmicroscopy.org/site/support/omero5/sysadmins/server-security.html</a>
+     <a href="http://www.openmicroscopy.org/site/support/omero5/sysadmins/server-security.html">http://www.openmicroscopy.org/site/support/omero5/sysadmins/server-security.html</a>
 </li>
 <li>Set up OMERO.dropbox
 </li>
@@ -1466,7 +1435,7 @@ Scheduler</i>.
 <li>In the right-most pane, select <i>Create Basic Task…</i>.
 </li>
 <li>Type in a name and description for the task. I named mine
-<i>OMERO.start</i>. Click the Next button.
+      <i>OMERO.start</i>. Click the Next button.
 </li>
 <li>Select the <i>When the computer starts</i> radio button to run the
 OMERO batch script when the computer boots. Click the Next
@@ -1518,7 +1487,6 @@ PostgreSQL runs in the background after a full reboot.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-4-2" class="outline-3">
 <h3 id="sec-4-2">
 <span class="section-number-3">4.2</span> Deploying OMERO.web on IIS</h3>
@@ -1699,7 +1667,6 @@ should lead to a working OMERO server.
 </div>
 </div>
 </div>
-
 <div id="outline-container-sec-4-3" class="outline-3">
 <h3 id="sec-4-3">
 <span class="section-number-3">4.3</span> Setting up routine backups</h3>
@@ -1796,7 +1763,6 @@ I scheduled this batch file to run daily as well.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-4-4" class="outline-3">
 <h3 id="sec-4-4">
 <span class="section-number-3">4.4</span> Notes on security</h3>
@@ -1849,7 +1815,7 @@ to your server:
 <a href="http://ipset.netfilter.org/iptables.man.html">http://ipset.netfilter.org/iptables.man.html</a>
 </li>
 <li>
-<a href="http://technet.microsoft.com/en-us/library/cc732746(v=ws.10).aspx">http://technet.microsoft.com/en-us/library/cc732746(v=ws.10).aspx</a>
+<a href="http://technet.microsoft.com/en-us/library/cc732746%28v=ws.10%29.aspx">http://technet.microsoft.com/en-us/library/cc732746%28v=ws.10%29.aspx</a>
 </li>
 </ol>
 <p>
@@ -1870,7 +1836,6 @@ OMERO security docs on the page mentioned above.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-4-5" class="outline-3">
 <h3 id="sec-4-5">
 <span class="section-number-3">4.5</span> DropBox</h3>
@@ -1890,7 +1855,6 @@ server.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-4-6" class="outline-3">
 <h3 id="sec-4-6">
 <span class="section-number-3">4.6</span> Summary of Test Server Maintenance</h3>
@@ -1911,7 +1875,6 @@ simple, but still very important.
 </div>
 </div>
 </div>
-
 <div id="outline-container-sec-5" class="outline-2">
 <h2 id="sec-5">
 <span class="section-number-2">5</span> OMERO Server Installation</h2>
@@ -1953,7 +1916,6 @@ Windows 2012 Server, not Windows 2008 Server.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-5-2" class="outline-3">
 <h3 id="sec-5-2">
 <span class="section-number-3">5.2</span> Pre-installation</h3>
@@ -1997,7 +1959,6 @@ for more information.
 </div>
 </div>
 </div>
-
 <div id="outline-container-sec-5-3" class="outline-3">
 <h3 id="sec-5-3">
 <span class="section-number-3">5.3</span> Software</h3>
@@ -2044,7 +2005,6 @@ the order listed below.
 </ul>
 </div>
 </div>
-
 <div id="outline-container-sec-5-4" class="outline-3">
 <h3 id="sec-5-4">
 <span class="section-number-3">5.4</span> Differences from test server installation</h3>
@@ -2112,7 +2072,6 @@ rdiff-backups slight after the SQL dump.
 </div>
 </div>
 </div>
-
 <div id="outline-container-sec-6" class="outline-2">
 <h2 id="sec-6">
 <span class="section-number-2">6</span> OMERO Server Administration</h2>
@@ -2146,7 +2105,6 @@ and "Read-annotate" quite easily.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-6-2" class="outline-3">
 <h3 id="sec-6-2">
 <span class="section-number-3">6.2</span> Requirements for OMERO.movie</h3>
@@ -2182,24 +2140,7 @@ run the OMERO.movie script.
 </div>
 
 
-            <script src="../../assets/js/all-nocdn.js"></script><!-- Social buttons --><div id="addthisbox" class="addthis_toolbox addthis_peekaboo_style addthis_default_style addthis_label_style addthis_32x32_style">
-<a class="addthis_button_more">Share</a>
-<ul>
-<li>
-<a class="addthis_button_facebook"></a>
-</li>
-<li>
-<a class="addthis_button_google_plusone_share"></a>
-</li>
-<li>
-<a class="addthis_button_linkedin"></a>
-</li>
-<li>
-<a class="addthis_button_twitter"></a>
-</li>
-</ul>
-</div>
-<script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script><!-- End of social buttons --><script>jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+            <script src="../../assets/js/all-nocdn.js"></script><script>$('a.image-reference:not(.islink)').colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
     moment.locale("");
     fancydates(0, "YYYY-MM-DD HH:mm");
     </script><!-- end fancy dates -->

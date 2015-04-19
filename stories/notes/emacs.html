@@ -72,7 +72,7 @@
 <!-- /.navbar-collapse -->
     </div>
 <!-- /.container -->
-</nav><!-- End of Menubar --><div class="container" id="content">
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
     <div class="body-content">
         <!--Body content-->
         <div class="row">
@@ -88,70 +88,33 @@
 <div id="text-table-of-contents">
 <ul>
 <li>
-<a href="emacs.html#sec-1">1. Org-mode</a>
+<a href="emacs.html#sec-1">1. eshell</a>
 <ul>
-<li>
-<a href="emacs.html#sec-1-1">1.1. LaTeX Export</a>
-<ul>
-<li><a href="emacs.html#sec-1-1-1">1.1.1. Move table captions below tables</a></li>
-</ul>
-</li>
+<li><a href="emacs.html#sec-1-1">1.1. Changing the timeout on sudo</a></li>
 </ul>
 </li>
 <li>
-<a href="emacs.html#sec-2">2. eshell</a>
+<a href="emacs.html#sec-2">2. The Virtualenv package</a>
 <ul>
-<li><a href="emacs.html#sec-2-1">2.1. Changing the timeout on sudo</a></li>
+<li><a href="emacs.html#sec-2-1">2.1. Installation</a></li>
+<li><a href="emacs.html#sec-2-2">2.2. The default environments directory</a></li>
+<li><a href="emacs.html#sec-2-3">2.3. Switch virtual environments</a></li>
 </ul>
 </li>
-<li>
-<a href="emacs.html#sec-3">3. The Virtualenv package</a>
-<ul>
-<li><a href="emacs.html#sec-3-1">3.1. Installation</a></li>
-<li><a href="emacs.html#sec-3-2">3.2. The default environments directory</a></li>
-<li><a href="emacs.html#sec-3-3">3.3. Switch virtual environments</a></li>
-</ul>
-</li>
-<li><a href="emacs.html#sec-4">4. Useful keybindings</a></li>
+<li><a href="emacs.html#sec-3">3. Useful keybindings</a></li>
 </ul>
 </div>
 </div>
 
 <div id="outline-container-sec-1" class="outline-2">
 <h2 id="sec-1">
-<span class="section-number-2">1</span> Org-mode</h2>
+<span class="section-number-2">1</span> eshell</h2>
 <div class="outline-text-2" id="text-1">
 </div>
 <div id="outline-container-sec-1-1" class="outline-3">
 <h3 id="sec-1-1">
-<span class="section-number-3">1.1</span> LaTeX Export</h3>
+<span class="section-number-3">1.1</span> Changing the timeout on sudo</h3>
 <div class="outline-text-3" id="text-1-1">
-</div>
-<div id="outline-container-sec-1-1-1" class="outline-4">
-<h4 id="sec-1-1-1">
-<span class="section-number-4">1.1.1</span> Move table captions below tables</h4>
-<div class="outline-text-4" id="text-1-1-1">
-<p>
-This was tested with Org-mode version 8.2.6 and emacs 24.4.50.
-</p>
-
-<div class="highlight"><pre>M-x customize-variable RET org-latex-table-caption-above RET nil
-</pre></div>
-
-<hr>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2">
-<span class="section-number-2">2</span> eshell</h2>
-<div class="outline-text-2" id="text-2">
-</div>
-<div id="outline-container-sec-2-1" class="outline-3">
-<h3 id="sec-2-1">
-<span class="section-number-3">2.1</span> Changing the timeout on sudo</h3>
-<div class="outline-text-3" id="text-2-1">
 <p>
 By default in the eshell, you have to enter your password for sudo
 everytime I sudo something. This gets a bit annoying since I often
@@ -192,16 +155,15 @@ After reloading emacs, I found that the password can now be cached.
 </div>
 </div>
 </div>
-
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3">
-<span class="section-number-2">3</span> The Virtualenv package</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2">
+<span class="section-number-2">2</span> The Virtualenv package</h2>
+<div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-sec-3-1" class="outline-3">
-<h3 id="sec-3-1">
-<span class="section-number-3">3.1</span> Installation</h3>
-<div class="outline-text-3" id="text-3-1">
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1">
+<span class="section-number-3">2.1</span> Installation</h3>
+<div class="outline-text-3" id="text-2-1">
 <p>
 To install this package, simply use emacs's package manager: <code>M-x
    list-packages</code>. The package to install is called ``virtualenv''. I
@@ -211,10 +173,11 @@ installed version 1.2 from the Marmelade repo on 2015-02-10.
 <hr>
 </div>
 </div>
-<div id="outline-container-sec-3-2" class="outline-3">
-<h3 id="sec-3-2">
-<span class="section-number-3">3.2</span> The default environments directory</h3>
-<div class="outline-text-3" id="text-3-2">
+
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2">
+<span class="section-number-3">2.2</span> The default environments directory</h3>
+<div class="outline-text-3" id="text-2-2">
 <p>
 This package treats ~/.virtualenvs as the default directory. It can
 probably be changed, but it was just easier for me to install my
@@ -225,11 +188,10 @@ variable WORKON_HOME to this directory as well).
 <hr>
 </div>
 </div>
-
-<div id="outline-container-sec-3-3" class="outline-3">
-<h3 id="sec-3-3">
-<span class="section-number-3">3.3</span> Switch virtual environments</h3>
-<div class="outline-text-3" id="text-3-3">
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3">
+<span class="section-number-3">2.3</span> Switch virtual environments</h3>
+<div class="outline-text-3" id="text-2-3">
 <p>
 Most emacs commands for this package start with
 ``virtualenv-''. For example, work on a specific environment, use
@@ -241,10 +203,11 @@ to turn off a given virtual environment.
 </div>
 </div>
 </div>
-<div id="outline-container-sec-4" class="outline-2">
-<h2 id="sec-4">
-<span class="section-number-2">4</span> Useful keybindings</h2>
-<div class="outline-text-2" id="text-4">
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3">
+<span class="section-number-2">3</span> Useful keybindings</h2>
+<div class="outline-text-2" id="text-3">
 <dl class="org-dl">
 <dt> C-h b </dt>
 <dd>List all keybindings
@@ -270,24 +233,7 @@ to turn off a given virtual environment.
 </div>
 
 
-            <script src="../../assets/js/all-nocdn.js"></script><!-- Social buttons --><div id="addthisbox" class="addthis_toolbox addthis_peekaboo_style addthis_default_style addthis_label_style addthis_32x32_style">
-<a class="addthis_button_more">Share</a>
-<ul>
-<li>
-<a class="addthis_button_facebook"></a>
-</li>
-<li>
-<a class="addthis_button_google_plusone_share"></a>
-</li>
-<li>
-<a class="addthis_button_linkedin"></a>
-</li>
-<li>
-<a class="addthis_button_twitter"></a>
-</li>
-</ul>
-</div>
-<script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script><!-- End of social buttons --><script>jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+            <script src="../../assets/js/all-nocdn.js"></script><script>$('a.image-reference:not(.islink)').colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
     moment.locale("");
     fancydates(0, "YYYY-MM-DD HH:mm");
     </script><!-- end fancy dates -->

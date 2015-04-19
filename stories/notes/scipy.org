@@ -22,13 +22,6 @@ ax.spines['top'].set_visible(False)
 ax.spines['right'].set_visible(False)
    #+END_SRC
 
-   To remove the tick marks, use
-
-   #+BEGIN_SRC
-ax.xaxis.set_ticks_position('bottom')
-ax.yaxis.set_ticks_position('left')
-   #+END_SRC
-
 -----
 
 ** Changing the frame linewidth
@@ -75,35 +68,6 @@ plt.tight_layout()
    and *h_pad* add padding between individual subplots.
 
 -----
-** Tight layout (setting subplot bounding box)
-   I once created a figure with a single legend but four subplots
-   arranged in a two-by-two manner. I wanted the legend to sit above
-   all the plots but not cover any of their content.
-
-   The way I did this was to set the legend location relative to the
-   figure bounding box and then squeeze the subplots into a smaller
-   bounding box below the legend so that everything fit inside the
-   figure.
-
-   #+BEGIN_SRC python
-# Place legend above subplots
-plt.legend(bbox_to_anchor=(0.65, 1),
-           bbox_transform=plt.gcf().transFigure)
-
-# Squeeze subplots into a smaller bounding box, relative to the figure
-plt.tight_layout(rect = [0, 0, 1, 0.9])
-   #+END_SRC
-
-   All units here are in normalized figure units. I placed the legend
-   at the top center(ish) of the bounding box with the parameter
-   *bbox_to_anchor=(0.65,1)*.
-
-   Next,the whole bounding box was resized using *tight_layout*. By
-   default, the *rect* parameter is set to *[0, 0, 1, 1]*, which means
-   it extends from (0,0) in the bottom left corner of the figure to
-   (1,1) in the upper right corner.
-
------
 
 ** Changing matplotlib font families and size
    The fonts in figures can be changed with a little help with
@@ -143,71 +107,3 @@ rm -i ~/.cache/matplotlib/fontList.py3k.cache
 rm -ri ~/.cache/matplotlib/tex.cache
     #+END_SRC
 
------
-
-* IPython
-
-** Creating different Notebook profiles
-   I sometimes make publication figures using the [[http://ipython.org/notebook.html][IPython Notebook]]. At
-   other times, I use it simply as a means of doing data
-   analyses. Regardless, I have different purposes for using it, and
-   this means I often want it to behave differently depending on its
-   current purpose.
-
-   An easy way to set IPython's configuration settings and have it
-   remember specific ones is to make different profiles for it to use.
-
-   To make a new profile, run this command in the terminal:
-
-   #+BEGIN_SRC sh
-ipython profile create myProfile
-   #+END_SRC
-   
-   This will create a profile called myProfile. The configuration
-   settings are stored in ~/.ipython/profile_myProfile/. Importantly,
-   to change the Notebook's behavior, change the settings in
-   *ipython_notebook_config.py*.
-
-   To use this profile, start the notebook with the command
-
-   #+BEGIN_SRC sh
-ipython notebook --profile=myProfile
-   #+END_SRC
-
------
-
-** Running Python code at startup
-   Another nice thing about the IPython Notebook is that any Python or
-   IPython script can be executed when the Notebook is started. This
-   is useful, for example, if you have default font families, font
-   sizes, line widths, etc. that you want to apply when making figures
-   for different purposes.
-
-   To run a Python script at startup of a Notebook, place it in the
-   ~/.ipython/profile_myProfile/startup/ directory.
-
------
-
-** Changing matplotlib settings at Notebook startup
-   I use the following script to change matplotlib's settings
-   dictionary (called *rcParams*) at startup. The script is placed in
-   the startup directory of my IPython profile for making publication
-   figures.
-
-   #+BEGIN_SRC python
-"""This script sets matploblib plot parameters automatically when
-IPython is started. The parameters are useful for making
-publication-quality plots.
-
-"""
-
-import matplotlib.font_manager as font_manager
-from matplotlib import rcParams
-
-fontpath = '/usr/share/fonts/truetype/msttcorefonts/Arial.ttf'
-prop = font_manager.FontProperties(fname = fontpath)
-rcParams['font.family'] = prop.get_name()
-rcParams.update({'font.size' : 7})
-rcParams.update({'legend.fontsize' : 7})
-rcParams.update({'axes.titlesize' : 7})
-   #+END_SRC

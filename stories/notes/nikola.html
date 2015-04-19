@@ -72,7 +72,7 @@
 <!-- /.navbar-collapse -->
     </div>
 <!-- /.container -->
-</nav><!-- End of Menubar --><div class="container" id="content">
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
     <div class="body-content">
         <!--Body content-->
         <div class="row">
@@ -141,7 +141,6 @@ URL ends in '/'.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-1-2" class="outline-3">
 <h3 id="sec-1-2">Install and configure the org-mode plugin</h3>
 <div class="outline-text-3" id="text-1-2">
@@ -203,7 +202,6 @@ at the top of the org-file in a comments section:
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-1-3" class="outline-3">
 <h3 id="sec-1-3">Setting the github_deploy variables</h3>
 <div class="outline-text-3" id="text-1-3">
@@ -227,7 +225,6 @@ line for the <code>GITHUB_DEPLOY_BRANCH</code> variable:
 </div>
 </div>
 </div>
-
 <div id="outline-container-sec-2" class="outline-2">
 <h2 id="sec-2">Customization</h2>
 <div class="outline-text-2" id="text-2">
@@ -243,7 +240,6 @@ Mako at <a href="http://www.shisaa.jp/postset/nikola-web.html"></a><a href="http
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-2-2" class="outline-3">
 <h3 id="sec-2-2">Set the theme to bootstrap3 with a color scheme from bootswatch</h3>
 <div class="outline-text-3" id="text-2-2">
@@ -270,7 +266,6 @@ conf.py.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-2-3" class="outline-3">
 <h3 id="sec-2-3">Changing bootswatch navbar elements</h3>
 <div class="outline-text-3" id="text-2-3">
@@ -302,7 +297,6 @@ swatch element.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-2-4" class="outline-3">
 <h3 id="sec-2-4">Navigation links</h3>
 <div class="outline-text-3" id="text-2-4">
@@ -315,7 +309,6 @@ handbook: <a href="http://getnikola.com/handbook.html#configuration">http://getn
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-2-5" class="outline-3">
 <h3 id="sec-2-5">Adding Disqus comments</h3>
 <div class="outline-text-3" id="text-2-5">
@@ -341,7 +334,6 @@ instructions</a>.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-2-6" class="outline-3">
 <h3 id="sec-2-6">Redirects</h3>
 <div class="outline-text-3" id="text-2-6">
@@ -362,7 +354,6 @@ the <b>REDIRECTIONS</b> variable to the following:
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-2-7" class="outline-3">
 <h3 id="sec-2-7">Code syntax highlighting and the orgmode plugin</h3>
 <div class="outline-text-3" id="text-2-7">
@@ -398,6 +389,7 @@ highlighting worked on my site.
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-2-8" class="outline-3">
 <h3 id="sec-2-8">Teasers</h3>
 <div class="outline-text-3" id="text-2-8">
@@ -418,7 +410,6 @@ work.
 </div>
 </div>
 </div>
-
 <div id="outline-container-sec-3" class="outline-2">
 <h2 id="sec-3">Errors</h2>
 <div class="outline-text-2" id="text-3">
@@ -463,24 +454,7 @@ webpages.
 </div>
 
 
-            <script src="../../assets/js/all-nocdn.js"></script><!-- Social buttons --><div id="addthisbox" class="addthis_toolbox addthis_peekaboo_style addthis_default_style addthis_label_style addthis_32x32_style">
-<a class="addthis_button_more">Share</a>
-<ul>
-<li>
-<a class="addthis_button_facebook"></a>
-</li>
-<li>
-<a class="addthis_button_google_plusone_share"></a>
-</li>
-<li>
-<a class="addthis_button_linkedin"></a>
-</li>
-<li>
-<a class="addthis_button_twitter"></a>
-</li>
-</ul>
-</div>
-<script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script><!-- End of social buttons --><script>jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+            <script src="../../assets/js/all-nocdn.js"></script><script>$('a.image-reference:not(.islink)').colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
     moment.locale("");
     fancydates(0, "YYYY-MM-DD HH:mm");
     </script><!-- end fancy dates -->

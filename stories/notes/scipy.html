@@ -72,7 +72,7 @@
 <!-- /.navbar-collapse -->
     </div>
 <!-- /.container -->
-</nav><!-- End of Menubar --><div class="container" id="content">
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
     <div class="body-content">
         <!--Body content-->
         <div class="row">
@@ -94,21 +94,12 @@
 <li><a href="scipy.html#sec-1-2">1.2. Changing the frame linewidth</a></li>
 <li><a href="scipy.html#sec-1-3">1.3. Remove the legend frame</a></li>
 <li><a href="scipy.html#sec-1-4">1.4. Tight layout (fixing clipped axes titles)</a></li>
-<li><a href="scipy.html#sec-1-5">1.5. Tight layout (setting subplot bounding box)</a></li>
 <li>
-<a href="scipy.html#sec-1-6">1.6. Changing matplotlib font families and size</a>
+<a href="scipy.html#sec-1-5">1.5. Changing matplotlib font families and size</a>
 <ul>
-<li><a href="scipy.html#sec-1-6-1">1.6.1. Clear the matplotlib font cache</a></li>
+<li><a href="scipy.html#sec-1-5-1">1.5.1. Clear the matplotlib font cache</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li>
-<a href="scipy.html#sec-2">2. IPython</a>
-<ul>
-<li><a href="scipy.html#sec-2-1">2.1. Creating different Notebook profiles</a></li>
-<li><a href="scipy.html#sec-2-2">2.2. Running Python code at startup</a></li>
-<li><a href="scipy.html#sec-2-3">2.3. Changing matplotlib settings at Notebook startup</a></li>
 </ul>
 </li>
 </ul>
@@ -134,18 +125,9 @@ associated to the <i>spines</i> field of your axis object.
 <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s">'right'</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
 </pre></div>
 
-<p>
-To remove the tick marks, use
-</p>
-
-<div class="highlight"><pre>ax.xaxis.set_ticks_position('bottom')
-ax.yaxis.set_ticks_position('left')
-</pre></div>
-
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-1-2" class="outline-3">
 <h3 id="sec-1-2">
 <span class="section-number-3">1.2</span> Changing the frame linewidth</h3>
@@ -162,7 +144,6 @@ method of an axes <i>spine</i> field.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-1-3" class="outline-3">
 <h3 id="sec-1-3">
 <span class="section-number-3">1.3</span> Remove the legend frame</h3>
@@ -175,6 +156,7 @@ method of an axes <i>spine</i> field.
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-1-4" class="outline-3">
 <h3 id="sec-1-4">
 <span class="section-number-3">1.4</span> Tight layout (fixing clipped axes titles)</h3>
@@ -214,50 +196,8 @@ and <b>h_pad</b> add padding between individual subplots.
 </div>
 <div id="outline-container-sec-1-5" class="outline-3">
 <h3 id="sec-1-5">
-<span class="section-number-3">1.5</span> Tight layout (setting subplot bounding box)</h3>
+<span class="section-number-3">1.5</span> Changing matplotlib font families and size</h3>
 <div class="outline-text-3" id="text-1-5">
-<p>
-I once created a figure with a single legend but four subplots
-arranged in a two-by-two manner. I wanted the legend to sit above
-all the plots but not cover any of their content.
-</p>
-
-<p>
-The way I did this was to set the legend location relative to the
-figure bounding box and then squeeze the subplots into a smaller
-bounding box below the legend so that everything fit inside the
-figure.
-</p>
-
-<div class="highlight"><pre><span class="c"># Place legend above subplots</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">0.65</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-	   <span class="n">bbox_transform</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">transFigure</span><span class="p">)</span>
-
-<span class="c"># Squeeze subplots into a smaller bounding box, relative to the figure</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">(</span><span class="n">rect</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">])</span>
-</pre></div>
-
-<p>
-All units here are in normalized figure units. I placed the legend
-at the top center(ish) of the bounding box with the parameter
-<b>bbox_to_anchor=(0.65,1)</b>.
-</p>
-
-<p>
-Next,the whole bounding box was resized using <b>tight_layout</b>. By
-default, the <b>rect</b> parameter is set to <b>[0, 0, 1, 1]</b>, which means
-it extends from (0,0) in the bottom left corner of the figure to
-(1,1) in the upper right corner.
-</p>
-
-<hr>
-</div>
-</div>
-
-<div id="outline-container-sec-1-6" class="outline-3">
-<h3 id="sec-1-6">
-<span class="section-number-3">1.6</span> Changing matplotlib font families and size</h3>
-<div class="outline-text-3" id="text-1-6">
 <p>
 The fonts in figures can be changed with a little help with
 matplotlib's <b>font_manager</b>.
@@ -282,10 +222,10 @@ already.)
 <hr>
 </div>
 
-<div id="outline-container-sec-1-6-1" class="outline-4">
-<h4 id="sec-1-6-1">
-<span class="section-number-4">1.6.1</span> Clear the matplotlib font cache</h4>
-<div class="outline-text-4" id="text-1-6-1">
+<div id="outline-container-sec-1-5-1" class="outline-4">
+<h4 id="sec-1-5-1">
+<span class="section-number-4">1.5.1</span> Clear the matplotlib font cache</h4>
+<div class="outline-text-4" id="text-1-5-1">
 <p>
 It is very important to clear the matplotlib font list cache after
 adding new fonts to the system. Otherwise, matplotlib will not be
@@ -306,108 +246,7 @@ After adding new fonts, I should run the commands
 <div class="highlight"><pre>rm -i ~/.cache/matplotlib/fontList.py3k.cache
 rm -ri ~/.cache/matplotlib/tex.cache
 </pre></div>
-
-<hr>
 </div>
-</div>
-</div>
-</div>
-
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2">
-<span class="section-number-2">2</span> IPython</h2>
-<div class="outline-text-2" id="text-2">
-</div>
-<div id="outline-container-sec-2-1" class="outline-3">
-<h3 id="sec-2-1">
-<span class="section-number-3">2.1</span> Creating different Notebook profiles</h3>
-<div class="outline-text-3" id="text-2-1">
-<p>
-I sometimes make publication figures using the <a href="http://ipython.org/notebook.html">IPython Notebook</a>. At
-other times, I use it simply as a means of doing data
-analyses. Regardless, I have different purposes for using it, and
-this means I often want it to behave differently depending on its
-current purpose.
-</p>
-
-<p>
-An easy way to set IPython's configuration settings and have it
-remember specific ones is to make different profiles for it to use.
-</p>
-
-<p>
-To make a new profile, run this command in the terminal:
-</p>
-
-<div class="highlight"><pre>ipython profile create myProfile
-</pre></div>
-
-<p>
-This will create a profile called myProfile. The configuration
-settings are stored in ~/.ipython/profile_myProfile/. Importantly,
-to change the Notebook's behavior, change the settings in
-<b>ipython_notebook_config.py</b>.
-</p>
-
-<p>
-To use this profile, start the notebook with the command
-</p>
-
-<div class="highlight"><pre>ipython notebook --profile<span class="o">=</span>myProfile
-</pre></div>
-
-<hr>
-</div>
-</div>
-
-<div id="outline-container-sec-2-2" class="outline-3">
-<h3 id="sec-2-2">
-<span class="section-number-3">2.2</span> Running Python code at startup</h3>
-<div class="outline-text-3" id="text-2-2">
-<p>
-Another nice thing about the IPython Notebook is that any Python or
-IPython script can be executed when the Notebook is started. This
-is useful, for example, if you have default font families, font
-sizes, line widths, etc. that you want to apply when making figures
-for different purposes.
-</p>
-
-<p>
-To run a Python script at startup of a Notebook, place it in the
-~/.ipython/profile_myProfile/startup/ directory.
-</p>
-
-<hr>
-</div>
-</div>
-
-<div id="outline-container-sec-2-3" class="outline-3">
-<h3 id="sec-2-3">
-<span class="section-number-3">2.3</span> Changing matplotlib settings at Notebook startup</h3>
-<div class="outline-text-3" id="text-2-3">
-<p>
-I use the following script to change matplotlib's settings
-dictionary (called <b>rcParams</b>) at startup. The script is placed in
-the startup directory of my IPython profile for making publication
-figures.
-</p>
-
-<div class="highlight"><pre><span class="sd">"""This script sets matploblib plot parameters automatically when</span>
-<span class="sd">IPython is started. The parameters are useful for making</span>
-<span class="sd">publication-quality plots.</span>
-
-<span class="sd">"""</span>
-
-<span class="kn">import</span> <span class="nn">matplotlib.font_manager</span> <span class="kn">as</span> <span class="nn">font_manager</span>
-<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">rcParams</span>
-
-<span class="n">fontpath</span> <span class="o">=</span> <span class="s">'/usr/share/fonts/truetype/msttcorefonts/Arial.ttf'</span>
-<span class="n">prop</span> <span class="o">=</span> <span class="n">font_manager</span><span class="o">.</span><span class="n">FontProperties</span><span class="p">(</span><span class="n">fname</span> <span class="o">=</span> <span class="n">fontpath</span><span class="p">)</span>
-<span class="n">rcParams</span><span class="p">[</span><span class="s">'font.family'</span><span class="p">]</span> <span class="o">=</span> <span class="n">prop</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span>
-<span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s">'font.size'</span> <span class="p">:</span> <span class="mi">7</span><span class="p">})</span>
-<span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s">'legend.fontsize'</span> <span class="p">:</span> <span class="mi">7</span><span class="p">})</span>
-<span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s">'axes.titlesize'</span> <span class="p">:</span> <span class="mi">7</span><span class="p">})</span>
-</pre></div>
 </div>
 </div>
 </div>
@@ -426,24 +265,7 @@ figures.
 </div>
 
 
-            <script src="../../assets/js/all-nocdn.js"></script><!-- Social buttons --><div id="addthisbox" class="addthis_toolbox addthis_peekaboo_style addthis_default_style addthis_label_style addthis_32x32_style">
-<a class="addthis_button_more">Share</a>
-<ul>
-<li>
-<a class="addthis_button_facebook"></a>
-</li>
-<li>
-<a class="addthis_button_google_plusone_share"></a>
-</li>
-<li>
-<a class="addthis_button_linkedin"></a>
-</li>
-<li>
-<a class="addthis_button_twitter"></a>
-</li>
-</ul>
-</div>
-<script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script><!-- End of social buttons --><script>jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+            <script src="../../assets/js/all-nocdn.js"></script><script>$('a.image-reference:not(.islink)').colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
     moment.locale("");
     fancydates(0, "YYYY-MM-DD HH:mm");
     </script><!-- end fancy dates -->
