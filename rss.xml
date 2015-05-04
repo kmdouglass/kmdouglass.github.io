@@ -1,5 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Kyle M. Douglass</title><link>http://kmdouglass.github.io/</link><description>Biophysics, optics, and programming.</description><atom:link href="http://kmdouglass.github.io/rss.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Sun, 19 Apr 2015 10:08:11 GMT</lastBuildDate><generator>http://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Relearning paraxial optics</title><link>http://kmdouglass.github.io/posts/relearning-paraxial-optics.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;p&gt;
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Kyle M. Douglass</title><link>http://kmdouglass.github.io/</link><description>Biophysics, optics, and programming.</description><atom:link href="http://kmdouglass.github.io/rss.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Mon, 04 May 2015 07:45:11 GMT</lastBuildDate><generator>http://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Can my laser beam be collimated?</title><link>http://kmdouglass.github.io/posts/can-my-beam-be-collimated.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;p&gt;
+The fluorescence microscopy setup in my lab requires quite a bit of
+power. The minimum irradiance requirement is greater than 1 kW per
+square centimeter, and this must cover an area spanning a few tens of
+microns across after focusing through the objective. When I was
+designing the setup, the highest priority was placed on finding a
+cheap laser with as much power as possible at a wavelength of 647 nm;
+I considered all other qualities of the laser of secondary importance.
+&lt;/p&gt;
+
+&lt;p&gt;
+Just like everything else in science, I have learned a very good
+lesson from this experience. The laser I decided to purchase is a &lt;a href="http://www.omicron-laser.de/english/lasers/diode-lasers/brixx-lasers/brixx-diode-lasers.html"&gt;800
+mW BrixX laser from Omicron&lt;/a&gt;. The cost is under $10,000, which I
+consider to be a pretty good deal for the amount of power it puts
+out. There is no fiber-coupled version, but all of our lasers are free
+space anyway so I did not consider this to be a big problem. The beam
+is astigmatic, which is to be expected from a high power laser diode.
+&lt;/p&gt;
+
+&lt;p&gt;
+The astigmatism is not necessarily a big problem for me, though. What
+is surprising to me is how difficult it is to keep the beam &lt;a href="http://en.wikipedia.org/wiki/Collimated_light"&gt;collimated&lt;/a&gt;
+over large distances, that is, to keep it roughly the same size as it
+propagates. My application requires a fairly small beam size since the
+exit pupil of the objective is only 6 millimeters in diameter. With
+&lt;a href="http://en.wikipedia.org/wiki/M_squared"&gt;M-squared&lt;/a&gt; values direct from the laser of 12 and 25, it is quite
+difficult to keep the beam collimated for a long enough distance to
+steer the beam through all the optics and to keep it small enough to
+prevent overfilling the objective's exit pupil and losing power.
+&lt;/p&gt;
+
+&lt;p&gt;
+What I have learned from this is that free-space diode lasers, and
+more generally multimode laser beams, require extra consideration to
+ensure that they will stay collimated in long setups.
+&lt;/p&gt;
+
+&lt;p&gt;
+So, how can I predict the distance over which my beam can stay
+collimated to better judge how well it will work for my setup? The
+first thing to realize is that no beam can stay collimated
+forever. Real laser beams experience diffraction, which causes them to
+spread as they propagate. This means that the first thing I should do
+is to consider the distances spanned by the beam paths. In a
+microscopy setup, this path will probably not be longer than a couple
+meters. In mine, it's roughly two meters since I am combining a number
+of laser beams together and need the extra space.
+&lt;/p&gt;
+
+&lt;p&gt;
+Once I identify the length scale over which the beam should stay
+collimated, I need to examine the beam parameter that is best
+associated with collimation. For a pure Gaussian beam, this parameter
+is the &lt;a href="http://en.wikipedia.org/wiki/Rayleigh_length"&gt;Rayleigh range&lt;/a&gt;. The Rayleigh range is the distance between the
+beam waist and the point where the cross-sectional area of the beam
+has doubled, or, equivalently, to the point where the radius of the
+beam has increased over the waist radius by a factor of the
+\(\sqrt{2}\). For a pure Gaussian beam with a waist radius of \(w_0\) and
+a wavelength of \(\lambda\), the Rayleigh range is given by the equation
+&lt;/p&gt;
+
+
+\begin{equation*}
+z_R = \frac{\pi w_0^2}{\lambda}
+\end{equation*}
+
+&lt;p&gt;
+It is represented by the symbol &lt;i&gt;z&lt;sub&gt;R&lt;/sub&gt;&lt;/i&gt; in the figure below from
+Wikipedia. The total distance over which the beam will stay collimated
+is represented by &lt;i&gt;b&lt;/i&gt; and is just twice the Rayleigh range.
+&lt;/p&gt;
+
+&lt;div align="center"&gt;
+
+
+&lt;div class="figure"&gt;
+&lt;p&gt;&lt;img src="http://kmdouglass.github.io/GaussianBeamWaist.png" alt="GaussianBeamWaist.png"&gt;&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;p&gt;
+The Rayleigh range of a Gaussian laser beam should therefore be larger
+than the characteristic distance of my setup that I identified in the
+previous step. But what about multimode beams like the one from my
+laser diode? This is where the concept of an "embedded Gaussian" comes
+into play. (For more information about this idea, see &lt;a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.177.3400&amp;amp;rep=rep1&amp;amp;type=pdf"&gt;this tutorial by
+Tony Siegman&lt;/a&gt;.) I can predict the collimated distance by computing the
+Rayleigh range of an ideal Gaussian beam, and then divide it by the
+M&lt;sup&gt;2&lt;/sup&gt; parameter for the beam.
+&lt;/p&gt;
+
+&lt;p&gt;
+Let's take an example using numbers from my own laser. I will first
+pretend there are no collimating optics in the laser, which is not
+true but will serve as a good example as to why diode lasers without
+collimating optics are not good for free space setups. From the
+laser's spec sheet, I know that the M&lt;sup&gt;2&lt;/sup&gt; value in the ``bad'' direction
+is 25 and that its waist size, which is probably half the size of the
+diode in one principle direction, is 107 microns. Using the above
+equation, I get a value of 56 centimeters, which means that an ideal
+Gaussian beam with these specs will stay collimated over about half a
+meter.
+&lt;/p&gt;
+
+&lt;p&gt;
+However, my real multimode beam will have a Rayleigh range that is
+smaller than this value by a factor of 25, which is only about 2
+centimeters. For this reason, diode laser beams almost always have
+collimating optics; the beam from the diode itself is highly
+divergent.
+&lt;/p&gt;
+
+&lt;p&gt;
+Returning to my own setup, if I resize the beam using a telescope to
+have a waist radius of 2 millimeters so it almost entirely fits inside
+the objective's exit pupil, the Rayleigh range of the embedded
+Gaussian beam will be almost &lt;i&gt;20 meters&lt;/i&gt;, which is pretty long. The
+real beam, however, will have a Rayleigh range of about 780
+millimeters meters due to the high M&lt;sup&gt;2&lt;/sup&gt; value. &lt;b&gt;Practically, this means
+I have about one meter of collimated laser beam&lt;/b&gt; with which to work
+since I have double the Rayleigh range of collimated distance, but
+really I want the beam to travel less distance than this.
+&lt;/p&gt;
+
+&lt;p&gt;
+Fortunately I can shrink the beam path enough that this should not be
+a problem, but it does serve as a very good lesson when looking for
+lasers for a microscopy application.
+&lt;/p&gt;</description><category>microscopy</category><category>optics</category><guid>http://kmdouglass.github.io/posts/can-my-beam-be-collimated.html</guid><pubDate>Mon, 04 May 2015 07:44:42 GMT</pubDate></item><item><title>Relearning paraxial optics</title><link>http://kmdouglass.github.io/posts/relearning-paraxial-optics.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;p&gt;
 As a microscopist who designs and builds custom microscopes, I often
 find that first order ray tracing is one of the most useful tools I
 have. It is most useful to me when I am starting a design or for
@@ -480,6 +610,7 @@ each loop iteration.
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+
 &lt;div id="outline-container-sec-2" class="outline-2"&gt;
 &lt;h2 id="sec-2"&gt;A brief glance at Python's multiprocessing module&lt;/h2&gt;
 &lt;div class="outline-text-2" id="text-2"&gt;
@@ -569,6 +700,7 @@ integers to &lt;b&gt;Pool.map()&lt;/b&gt;. The code looks like this:
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+
 &lt;div id="outline-container-sec-3" class="outline-2"&gt;
 &lt;h2 id="sec-3"&gt;Design the solution to the problem&lt;/h2&gt;
 &lt;div class="outline-text-2" id="text-3"&gt;
@@ -606,6 +738,7 @@ your specific problem.
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+
 &lt;div id="outline-container-sec-4" class="outline-2"&gt;
 &lt;h2 id="sec-4"&gt;Implementation of the solution&lt;/h2&gt;
 &lt;div class="outline-text-2" id="text-4"&gt;
@@ -675,6 +808,7 @@ the parameter iterable. This means that the first element in the
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+
 &lt;div id="outline-container-sec-5" class="outline-2"&gt;
 &lt;h2 id="sec-5"&gt;Iterables over arbitrary objects&lt;/h2&gt;
 &lt;div class="outline-text-2" id="text-5"&gt;
@@ -734,6 +868,7 @@ the pool. More details can be found &lt;a href="http://stackoverflow.com/questio
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+
 &lt;div id="outline-container-sec-6" class="outline-2"&gt;
 &lt;h2 id="sec-6"&gt;Comparing computation times&lt;/h2&gt;
 &lt;div class="outline-text-2" id="text-6"&gt;
@@ -790,6 +925,7 @@ time using the &lt;b&gt;time.time()&lt;/b&gt; function is not wholly accurate.
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+
 &lt;div id="outline-container-sec-7" class="outline-2"&gt;
 &lt;h2 id="sec-7"&gt;Important points&lt;/h2&gt;
 &lt;div class="outline-text-2" id="text-7"&gt;
@@ -807,6 +943,7 @@ the task affinity in our code:
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+
 &lt;div id="outline-container-sec-8" class="outline-2"&gt;
 &lt;h2 id="sec-8"&gt;Conclusions&lt;/h2&gt;
 &lt;div class="outline-text-2" id="text-8"&gt;
@@ -1042,86 +1179,4 @@ beam trajectory is in the direction pointing &lt;i&gt;into&lt;/i&gt; the screen.
 
 &lt;div class="figure"&gt;
 &lt;p&gt;&lt;img src="http://kmdouglass.github.io/images/polarization_rotator.png" alt="polarization_rotator.png"&gt;&lt;/p&gt;
-&lt;/div&gt;</description><category>optics</category><guid>http://kmdouglass.github.io/posts/half-wave plate.html</guid><pubDate>Tue, 05 Aug 2014 22:00:00 GMT</pubDate></item><item><title>The philosophy of -omics studies</title><link>http://kmdouglass.github.io/posts/omics.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;p&gt;
-As a physcist, I'm a relative newcomer to the biological
-sciences. As a result, many approaches to doing science within these
-fields are new and really interesting to me.
-&lt;/p&gt;
-
-&lt;p&gt;
-One such idea is the &lt;i&gt;-omics&lt;/i&gt; approach to science. Sonja Prohaska
-and Peter Stadler provide an insightful and sometimes amusing
-intrepetation of &lt;i&gt;-omics&lt;/i&gt; studies in an article in the book
-&lt;i&gt;Bioinformatics for Omics Data.&lt;/i&gt; (The PubMed link to the article is
-&lt;a href="http://www.ncbi.nlm.nih.gov/pubmed/21370084"&gt;here&lt;/a&gt;, but you can find a pdf by Googling "The use and abuse of
--omes.") According to them, &lt;i&gt;-omics&lt;/i&gt; refers to the research field of
-digesting the pile of data coming from measurements of a particular
-&lt;i&gt;-ome&lt;/i&gt;, such as the "genome" or "transcriptome." The goal is to
-relate the collection of parts within the &lt;i&gt;-ome&lt;/i&gt; to biological
-function, or at least to determine function by comparing &lt;i&gt;-omes&lt;/i&gt; of
-two different organisms.
-&lt;/p&gt;
-
-&lt;p&gt;
-The authors explain that &lt;i&gt;-omics&lt;/i&gt; approaches have three components,
-which I quote from their article:
-&lt;/p&gt;
-
-&lt;ol class="org-ol"&gt;&lt;li&gt;A suite of (typically high-throughput) technologies address a
-well-defined collection of biological objects, the pertinent
-&lt;i&gt;-ome&lt;/i&gt;.
-&lt;/li&gt;
-&lt;li&gt;Both technologically and conceptually there is a cataloging
-effort to enumerate and characterize the individual
-objects–hopefully coupled with an initiative to make this
-catalog available as a database.
-&lt;/li&gt;
-&lt;li&gt;Beyond the enumeration of objects, one strives to cover the
-quantitative aspects of the &lt;i&gt;-ome&lt;/i&gt; at hand.
-&lt;/li&gt;
-&lt;/ol&gt;&lt;p&gt;
-While grand in scope, these approaches carry difficulties that to me
-appear unique. As stated above, &lt;i&gt;-omic&lt;/i&gt; information is acquired
-through high-throughput techniques, which means that they generate
-very large amounts of data. Of major concern is actually linking
-this data to biological function. In other words, scientists must
-answer whether the correlations in the data actually allow us to
-predict the behavior of a cell or tissue. As might be expected,
-generating a complex data set such as is found in &lt;i&gt;-omics&lt;/i&gt; studies
-can be quite impressive at first glance. But this complexity may
-hide the fact that no biologically relevant conclusions can be drawn
-from it.
-&lt;/p&gt;
-
-&lt;p&gt;
-The authors specifically enumerate four limitations that could
-adversely affect &lt;i&gt;-omics&lt;/i&gt; studies:
-&lt;/p&gt;
-
-&lt;ol class="org-ol"&gt;&lt;li&gt;Technical limitations
-&lt;/li&gt;
-&lt;li&gt;Limitations in the experimental design (such as heavy reliance on
-assumptions)
-&lt;/li&gt;
-&lt;li&gt;Conceptual limitations
-&lt;/li&gt;
-&lt;li&gt;Limitations in the analysis
-&lt;/li&gt;
-&lt;/ol&gt;&lt;p&gt;
-Particularly, the conceptual limitations struck me as
-intriguing. The authors offered the example of genomics studies in
-which the notion of a "gene" is not currently a well-defined
-concept. When the concepts underpinning an entire collection of
-measurements is unclear, we should question whether the measured
-data has the meaning that we think it does.
-&lt;/p&gt;
-
-&lt;p&gt;
-Overall, I found that this commentary provided an interesting and
-sobering view of one particular approach to studying biology. It's
-interesting because I suspect that many important biological
-questions in the near future will come from taking an integrated and
-systems perspective. This perspective will require high-throughput
-techniques that carry the same limitations that &lt;i&gt;-omics&lt;/i&gt; studies
-have.
-&lt;/p&gt;</description><category>biology</category><guid>http://kmdouglass.github.io/posts/omics.html</guid><pubDate>Mon, 31 Mar 2014 22:00:00 GMT</pubDate></item></channel></rss>
+&lt;/div&gt;</description><category>optics</category><guid>http://kmdouglass.github.io/posts/half-wave plate.html</guid><pubDate>Tue, 05 Aug 2014 22:00:00 GMT</pubDate></item></channel></rss>

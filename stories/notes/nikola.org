@@ -217,6 +217,25 @@ pygmentize -S default -a .highlight -f html
 
 -----
 
+** Adding MathJax support to all pages
+   Adding MathJax suppport involves inserting a link to the global
+   MathJax server through script tags in the head tags of every page.
+
+   I can add this link by editing the following variable in my
+   *conf.py* file:
+
+   #+BEGIN_SRC python
+EXTRA_HEAD_DATA = '''<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>'''
+   #+END_SRC
+
+   (Note that you will have to replace any occurence of &lt; and &gt;
+   to less-than and greater-than symbols above. For whatever reason
+   org-mode will ALWAYS try to render these into HTML and I haven't
+   figure out how to prevent this). After doing this, MathJax will
+   automatically used to render LaTeX equations into math. Very nice
+   and simple!
+-----
+
 * Errors
 
 ** Duplicated definition of render_listings
