@@ -11,7 +11,11 @@
 #+OPTIONS: ^:nil
 #+TOC: headlines 3
 
-* Accessing MMCore Java wrappers in Matlab
+* Matlab control of Micro-Manager
+
+-----
+
+** Accessing MMCore Java wrappers in Matlab
   I want to access the Java wrappers to easily read image file stack
   metadata in Matlab. Unfortunately, it appears like the Micro-Manager
   documentation on this is not too clear. The documentation I am
@@ -20,7 +24,7 @@
 
 -----
 
-** Location of the .jar files
+*** Location of the .jar files
    I used the Matlab script for identifying all the .jar files in the
    MM directory that is mentioned [[https://micro-manager.org/wiki/Matlab_Configuration][at this link]] and included below:
 
@@ -67,7 +71,7 @@ end
 
 -----
 
-** Test that Matlab can access the MM .jar files
+*** Test that Matlab can access the MM .jar files
    Once the static class path has been updated and Matlab restarted,
    test that Matlab can see the .jar files using this code:
 
@@ -82,25 +86,40 @@ mmc.loadSystemConfiguration ('/usr/local/ImageJ/MMConfig_Demo.cfg');
 
 -----
 
-** Don't use ~ to reference the home directory
+*** Don't use ~ to reference the home directory
    I discovered after a while that directories in javaclasspath.txt
    won't work if you use the tilde (~) to reference your home
    directory. Use the full path instead in directory names instead.
 
 -----
 
-#+BEGIN_HTML
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'Kyle M. Douglass'; // Required - Replace '<example>' with your forum shortname
+** Opening a Micro-Manager tagged image
+   Micro-Manager inserts two kinds of metadata into the images it
+   saves; one follows the [[https://www.openmicroscopy.org/site/support/ome-model/ome-tiff/][OME-TIFF]] specification and the other
+   includes metadata about the aquisition. I often want the
+   Micro-Manager specific metadata, which is saved in JSON format.
 
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-#+END_HTML
+   Since there are already Micro-Manager Java classes that facilitate
+   reading this information, I will use these within Matlab to read
+   the metadata.
+
+   First, ensure that Matlab's /javaclasspath/ can find the
+   Micro-Manager and ImageJ jar files as detailed above. Once this is
+   done, you can easily create instances of classes defined in the jar
+   files with Matlab's javaObjectEDT() command. The key here is to
+   ensure that you pass Java datatypes as arguments into class
+   constructors. For translating between Matlab and Java datatypes,
+   see the documentation here:
+   http://www.mathworks.com/help/matlab/matlab_external/passing-data-to-a-java-method.html.
+
+   To open an image stack, you will need to create a class instance of
+   org.micromanager.acquisition.TaggedImageStorageMultipageTiff. If
+   the image stacks are located in a directory called /data_dir/, we
+   would type:
+
+   #+BEGIN_SRC matlab
+img = javaObjectEDT('org.micromanager.acquisition.TaggedImageStorageMultipageTiff', 'data_dir/', false, [], false, false, false)
+   #+END_SRC
+
+   Note that Matlab's empty array =[]= is the same as a NULL return in
+   Java.
