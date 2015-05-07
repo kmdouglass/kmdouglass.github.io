@@ -31,6 +31,15 @@
   
   -----
 
+* Micro-Manager
+  Using and customizing Micro-Manager takes a while to learn. Here are
+  the notes I have collected along the way.
+
+  + [[file:notes/micro-manager.org][Micro-Manager notes]]
+  + [[https://www.micro-manager.org/][The Micro-Manager website]]
+
+  -----
+
 * Computer notes
   These are all the notes I've collected so far for getting things
   done on computers. I hope they can help you as well.

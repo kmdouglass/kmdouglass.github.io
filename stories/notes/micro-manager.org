@@ -1,0 +1,106 @@
+#+BEGIN_COMMENT
+.. title: Micro-Manager
+.. slug: micro-manager
+.. date: 2015-05-07 09:29:44 UTC+02:00
+.. tags: 
+.. category: 
+.. link: 
+.. description: Notes on using Micro-Manager
+.. type: text
+#+END_COMMENT
+#+OPTIONS: ^:nil
+#+TOC: headlines 3
+
+* Accessing MMCore Java wrappers in Matlab
+  I want to access the Java wrappers to easily read image file stack
+  metadata in Matlab. Unfortunately, it appears like the Micro-Manager
+  documentation on this is not too clear. The documentation I am
+  currently looking at on May 7, 2015 is here:
+  https://www.micro-manager.org/wiki/Micro-Manager_File_Formats
+
+-----
+
+** Location of the .jar files
+   I used the Matlab script for identifying all the .jar files in the
+   MM directory that is mentioned [[https://micro-manager.org/wiki/Matlab_Configuration][at this link]] and included below:
+
+   #+BEGIN_SRC matlab
+function [] = MMsetup_javaclasspath(path2MM)
+fileList = getAllFiles(path2MM);
+fileListJarBool = regexp(fileList,'.jar$','end');
+fileListJarBool = cellfun(@isempty,fileListJarBool);
+fileListJar = fileList(~fileListJarBool);
+fid = fopen(fullfile(prefdir,'MMjavaclasspath.txt'),'w');
+fprintf(fid,'<before>\r\n');
+cellfun(@(x) fprintf(fid,'%s\r\n',x), fileListJar);
+fclose(fid);
+%% nested directory listing ala gnovice from stackoverflow
+% inputs and outputs are self-explanatory
+function fileList = getAllFiles(dirName)
+dirData = dir(dirName);      % Get the data for the current directory
+dirIndex = [dirData.isdir];  % Find the index for directories
+fileList = {dirData(~dirIndex).name}';  % Get a list of the files
+if ~isempty(fileList)
+    fileList = cellfun(@(x) fullfile(dirName,x),fileList,'UniformOutput',false);
+end
+subDirs = {dirData(dirIndex).name};  % Get a list of the subdirectories
+validIndex = ~ismember(subDirs,{'.','..'});  % Find index of subdirectories
+%   that are not '.' or '..'
+for iDir = find(validIndex)                  % Loop over valid subdirectories
+    nextDir = fullfile(dirName,subDirs{iDir});    % Get the subdirectory path
+    fileList = vertcat(fileList, getAllFiles(nextDir));  % Recursively call getAllFiles
+end
+   #+END_SRC
+
+   This .m file should be run as a function whose argument is a string of
+   the Micro-Manager install directory. *On my Debian Linux system, the
+   install directory is /usr/local/ImageJ/plugins/Micro-Manager/*, NOT
+   the directory containing the source code. The function will create a
+   .txt file in Matlab's /prefdir/ directory (which is ~/.matlab/R2014a/
+   on my system) called /MMjavaclasspath.txt/. I copied all the lines
+   except for the first one, which was the word `before' in angle
+   brackets, into the file /javaclasspath.txt/. I also inserted
+   =/usr/local/ImageJ/ij.jar= into this file as the first line.
+
+   Next, I restarted Matlab since it [[http://www.mathworks.com/help/matlab/matlab_external/bringing-java-classes-and-methods-into-matlab-workspace.html][requires a restart to access .jar
+   files added to the static class path]].
+
+-----
+
+** Test that Matlab can access the MM .jar files
+   Once the static class path has been updated and Matlab restarted,
+   test that Matlab can see the .jar files using this code:
+
+   #+BEGIN_SRC matlab
+import mmcorej.*
+mmc = CMMCore;
+mmc.loadSystemConfiguration ('/usr/local/ImageJ/MMConfig_Demo.cfg');
+   #+END_SRC
+
+   Note that you may need to download MMConfig_Demo.cfg from
+   https://micro-manager.org/wiki/File:MMConfig_Demo.cfg.
+
+-----
+
+** Don't use ~ to reference the home directory
+   I discovered after a while that directories in javaclasspath.txt
+   won't work if you use the tilde (~) to reference your home
+   directory. Use the full path instead in directory names instead.
+
+-----
+
+#+BEGIN_HTML
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'Kyle M. Douglass'; // Required - Replace '<example>' with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+#+END_HTML
