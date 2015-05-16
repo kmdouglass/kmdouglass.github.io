@@ -11,6 +11,94 @@
 #+OPTIONS: ^:nil
 #+TOC: headlines 3
 
+* MMCoreJ: The Micro-Manager Java wrapper
+  Most of the support one finds for Micro-Manager is for the Java
+  wrapper around the MMCore class (which is written in C++). Because
+  of this, it is useful to try to understand how Micro-Manager works
+  in Java, rather than in Python or C++. Once a particular aspect of
+  MM is understood in Java, I have found that it is easier to use it
+  in another language.
+
+-----
+
+** Compiling against the MMCoreJ.jar library
+   For some unknown reason, specifying the location of MMCoreJ.jar in
+   bash's CLASSPATH environment variable just does not work for me. To
+   ensure that a Java program can find the Java wrappers, I pass the
+   full directory and name of the MMCoreJ.jar file to the compiler
+   with the =-cp= flag:
+
+   #+BEGIN_SRC sh
+javac -cp "/home/kmdouglass/mm/micro-manager1.4/MMCoreJ_wrap/MMCoreJ.jar" TestMM.java
+   #+END_SRC
+
+   (Note that TestMM.java is the file containing the code that I wish
+   to compile.) Doing this successfully allows Java to find the
+   libraries in the .jar when the =import mmcorej.CMMCore;= line is
+   encountered.
+
+-----
+
+** Specifying the mmcorej.library.path
+   In my opinion, the [[https://www.micro-manager.org/wiki/Search_Paths#MMCoreJ_wrap_Search_Paths][MM documentation on search paths]] is not very
+   clear. Much of the confusion comes from the fact that the proper
+   library required by the JVM linker is named and located differently
+   on Windows, Linux, and Mac. To get around this, the documentation
+   uses *MMCoreJ_wrap* to refer to this library independently of the
+   system, which is unfortunate since there is also a folder named
+   MMCoreJ_wrap. 
+
+   Once a .java file has been compiled with the appropriate classpath
+   flag described above, executing the java class file needs both a
+   classpath and information on where the generic MMCoreJ_wrap library
+   is located.
+
+   First, on Linux, the MMCoreJ_wrap library is actually inside a
+   hidden directory. (This fact alone caused me a good deal of
+   grief). On my system it's in =(MM SOURCE
+   DIR)/micro-manager1.4/MMCoreJ_wrap/.libs=, where =(MM SOURCE DIR)=
+   is the location of the MM source files. The appropriate library in
+   this folder seems to be *libMMCoreJ_wrap.so*. In Windows, I think
+   you will need a .dll file instead.
+
+   I specify the location of this library to the JVM using the
+   =-Dmmcorej.library.path= flag. Finally, note that I have to include
+   the current directory containing the .class file /in addition/ to
+   the directory of the MMCoreJ.jar file. (This is what the =.:= is
+   doing in the argument of the =-cp= flag below.) The full command
+   line argument to run a class file named TestMM.class that utilizes
+   mmcorej.CMMCore is
+
+   #+BEGIN_SRC sh
+java -cp ".:/home/kmdouglass/mm/micro-manager1.4/MMCoreJ_wrap/MMCoreJ.jar" -Dmmcorej.library.path=/home/kmdouglass/mm/micro-manager1.4/MMCoreJ_wrap/.libs TestMM
+   #+END_SRC
+
+   Say that three times fast.
+-----
+
+** Testing the Java environment
+   I can test that I have specified the classpath and library path
+   correctly by compiling and running the following simple Java
+   program that creates a CMMCore instance and prints the version to
+   the terminal window.
+
+   #+BEGIN_SRC java
+import mmcorej.CMMCore;
+
+public class TestMM {
+
+    public static void main(String[] args) {
+
+	CMMCore core = new CMMCore();
+	String info = core.getVersionInfo();
+	System.out.println(info);
+    }
+}
+   #+END_SRC
+
+-----
+
+
 * Matlab control of Micro-Manager
 
 -----
