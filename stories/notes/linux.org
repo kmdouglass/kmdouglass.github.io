@@ -483,8 +483,8 @@ sudo apt-get install ttf-mscorefonts-installer
    #+END_SRC
 
 -----
-* Monitor settings
-** Dual monitors
+** Monitor settings
+*** Dual monitors
    /Sources/
    1. http://askubuntu.com/questions/62681/how-do-i-setup-dual-monitors-in-xfce
 
@@ -507,7 +507,7 @@ sudo apt-get install ttf-mscorefonts-installer
    Settings -> Session and Startup/.
 
 -----
-** Screen brightness
+*** Screen brightness
    /Sources/
    1. http://askubuntu.com/questions/149054/how-to-change-lcd-brightness-from-command-line-or-via-script
 
@@ -515,6 +515,25 @@ sudo apt-get install ttf-mscorefonts-installer
    the command /xrandr --output DP-2 --brightness 0.7/ to set the
    brightness to 70% of the monitor labeled DP-2. To find the monitor
    labels, simply type /xrandr/.
+
+-----
+* Choosing software version alternatives
+  Sometimes you may have multiple versions of a software package
+  installed. I ran into this issue once when trying to write a simple
+  Java program. Apparently, I compiled the source into bytecode with
+  the openjdk-7 compiler, but was attempting to run the code with the
+  openjdk-6 environment (guess what? it didn't work).
+
+  To fix this, you can run the following from the command line:
+
+  #+BEGIN_SRC sh
+sudo update-alternatives --config java
+  #+END_SRC
+
+  This will allow you to select the version you want from a list of
+  installed versions. Choosing the Java environment from the openjdk-7
+  package fixed my compile-time errors about unsupported major.minor
+  versions.
 
 -----
 
