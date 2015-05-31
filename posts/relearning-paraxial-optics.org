@@ -2,7 +2,7 @@
 .. title: Relearning paraxial optics
 .. slug: relearning-paraxial-optics
 .. date: 2015-04-19 11:05:21 UTC+02:00
-.. tags: optics
+.. tags: optics, tutorials
 .. category: 
 .. link: 
 .. description: After working in optics for twelve years, I want to think about what exactly paraxial optics means and whether its teaching can be improved upon.

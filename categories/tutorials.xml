@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0"><channel><title>Kyle M. Douglass (tutorials)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link href="http://kmdouglass.github.io/categories/tutorials.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Sun, 31 May 2015 13:51:53 GMT</lastBuildDate><generator>http://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Paraxial Optics (2): What problem does it solve?</title><link>http://kmdouglass.github.io/posts/paraxial-optics-2-what-problem-does-it-solve.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div id="outline-container-sec-1" class="outline-2"&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Kyle M. Douglass (tutorials)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link type="application/rss+xml" rel="self" href="http://kmdouglass.github.io/categories/tutorials.xml"></atom:link><language>en</language><lastBuildDate>Sun, 31 May 2015 13:52:43 GMT</lastBuildDate><generator>http://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Paraxial Optics (2): What problem does it solve?</title><link>http://kmdouglass.github.io/posts/paraxial-optics-2-what-problem-does-it-solve.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div id="outline-container-sec-1" class="outline-2"&gt;
 &lt;h2 id="sec-1"&gt;Summary&lt;/h2&gt;
 &lt;div class="outline-text-2" id="text-1"&gt;
 &lt;ol class="org-ol"&gt;&lt;li&gt;Paraxial optics is a tool to aid in building optical systems.
@@ -252,4 +252,56 @@ geometrical optics theory.
 
 
 &lt;/div&gt;
-&lt;/div&gt;</description><category>optics</category><category>tutorials</category><guid>http://kmdouglass.github.io/posts/paraxial-optics-2-what-problem-does-it-solve.html</guid><pubDate>Sun, 31 May 2015 13:37:13 GMT</pubDate></item></channel></rss>
+&lt;/div&gt;</description><category>optics</category><category>tutorials</category><guid>http://kmdouglass.github.io/posts/paraxial-optics-2-what-problem-does-it-solve.html</guid><pubDate>Sun, 31 May 2015 13:37:13 GMT</pubDate></item><item><title>Relearning paraxial optics</title><link>http://kmdouglass.github.io/posts/relearning-paraxial-optics.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;p&gt;
+As a microscopist who designs and builds custom microscopes, I often
+find that first order ray tracing is one of the most useful tools I
+have. It is most useful to me when I am starting a design or for
+checking that I have not made any serious logical blunders when
+working at the bench. I also find it to be a good teaching tool and
+excellent for communicating my designs to others.
+&lt;/p&gt;
+
+&lt;p&gt;
+Since I have recently made a lot of back-of-the-envelope ray trace
+designs for a microscope I am building at work, I have begun to
+critically think about why ray tracing works so well and how it fits
+inside the structure of the physical theories of optics.
+&lt;/p&gt;
+
+&lt;p&gt;
+Ray tracing is a technique derived from &lt;b&gt;paraxial geometrical optics&lt;/b&gt;
+and really is just a consequence of the axioms and assumptions in the
+development of the theory. When I think back to when I first learned
+about paraxial optics, however, I am reminded of severe assumptions
+that place limits on the scope of its validity. So how can a theory
+that makes such an enormous simplification by treating the
+electromagnetic waves described by Maxwell's equations as lines
+obeying the rules of geometry still be so useful?
+&lt;/p&gt;
+
+&lt;p&gt;
+In this next series of blog posts, I want to explore this question and
+take the time to relearn paraxial optics with the benefit of
+hindsight. Physicists typically learn paraxial optics as their first
+theory of optics because it is relatively easy as compared to
+electromagnetism and quantum optics. I am curious what aspects of the
+theory I can appreciate now that I am familiar with the more advanced
+optical theories.
+&lt;/p&gt;
+
+&lt;p&gt;
+The picture below might also provide a bit of motivation for why this
+interests me: we physicists learn about optics theories in a direction
+of increasing complexity during our education. However, this approach
+also means that we learn the most general theories last, so it is not
+obvious why assumptions and approximations are made in the theories we
+learn first. The result, I think, leads to a bit of logical
+discordance in our minds that can prevent a clear understanding of the
+subject. With this series of posts I hope to remove this cognitive
+dissonance and improve my understanding of the field I work in.
+&lt;/p&gt;
+
+
+&lt;div class="figure"&gt;
+&lt;p&gt;&lt;img src="http://kmdouglass.github.io/order_of_optics_theories.png" alt="order_of_optics_theories.png"&gt;&lt;/p&gt;
+&lt;/div&gt;</description><category>optics</category><category>tutorials</category><guid>http://kmdouglass.github.io/posts/relearning-paraxial-optics.html</guid><pubDate>Sun, 19 Apr 2015 09:05:21 GMT</pubDate></item></channel></rss>
