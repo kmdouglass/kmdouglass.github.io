@@ -14,7 +14,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/2015/index.html</loc>
-  <lastmod>2015-05-16</lastmod>
+  <lastmod>2015-05-31</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/archive.html</loc>
@@ -42,7 +42,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/index.html</loc>
-  <lastmod>2015-05-16</lastmod>
+  <lastmod>2015-05-31</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/micro-manager.html</loc>
@@ -54,7 +54,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/optics.html</loc>
-  <lastmod>2015-05-16</lastmod>
+  <lastmod>2015-05-31</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/python.html</loc>
@@ -69,6 +69,10 @@
   <lastmod>2015-05-16</lastmod>
  </url>
  <url>
+  <loc>http://kmdouglass.github.io/categories/tutorials.html</loc>
+  <lastmod>2015-05-31</lastmod>
+ </url>
+ <url>
   <loc>http://kmdouglass.github.io/categories/wikipedia.html</loc>
   <lastmod>2015-05-16</lastmod>
  </url>
@@ -78,11 +82,11 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/index-1.html</loc>
-  <lastmod>2015-05-16</lastmod>
+  <lastmod>2015-05-31</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/index.html</loc>
-  <lastmod>2015-05-16</lastmod>
+  <lastmod>2015-05-31</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/notes/pgFocus.html</loc>
@@ -94,7 +98,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/can-my-beam-be-collimated.html</loc>
-  <lastmod>2015-05-16</lastmod>
+  <lastmod>2015-05-31</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/confocal-by-scattering.html</loc>
@@ -123,6 +127,10 @@
  <url>
   <loc>http://kmdouglass.github.io/posts/overcoming-complexity-in-biology.html</loc>
   <lastmod>2015-05-16</lastmod>
+ </url>
+ <url>
+  <loc>http://kmdouglass.github.io/posts/paraxial-optics-2-what-problem-does-it-solve.html</loc>
+  <lastmod>2015-05-31</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/reading-select-lines-from-a-text-file.html</loc>

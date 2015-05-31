@@ -66,7 +66,73 @@
             
             
 <div class="postindex">
-    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/omics.html" class="u-url">The philosophy of -omics studies</a></h1>
+    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/half-wave%20plate.html" class="u-url">An accidental half-wave plate</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">Kyle M. Douglass</span></p>
+            <p class="dateline"><a href="posts/half-wave%20plate.html" rel="bookmark"><time class="published dt-published" datetime="2014-08-06T00:00:00+02:00" title="2014-08-06 00:00">2014-08-06 00:00</time></a></p>
+                <p class="commentline">
+        
+    <a href="posts/half-wave%20plate.html#disqus_thread" data-disqus-identifier="cache/posts/half-wave plate.html">Comments</a>
+
+
+        </p>
+</div>
+    </header><div class="p-summary entry-summary">
+    <p>
+Recently in the lab we made a seemingly minor change to one of our
+microscopes that led to a minor problem that lasted for about a
+week. Briefly, we introduced a mirror following a periscope that
+raises the plane that the laser beams travel in parallel to the
+table. The periscope is necessary to bringthe beams out of the plane
+containing the beam-combining optics and into the TIRF module port
+on our Zeiss inverted microscope for epi-illumination.
+</p>
+
+<p>
+We had introduced the mirror to give us one more degree of freedom
+for steering the beam, but to do so we had to move the periscope and
+turn one of the mirrors by 90 degrees. Unfortunately, after doing
+this we found that the optical power leaving the microscope
+objective had dropped by a factor of 10, which was insufficient to
+do STORM imaging.
+</p>
+
+<p>
+We eventually determined that the Zeiss TIRF module contained a
+polarizing beam splitter that combined the laser beams with white
+light from another port at 90 degrees to the beam path. In the
+newsetup, we placed a broadband halfwave plate before the TIRF
+module, rotated it while watching a power meter, and were finally
+able to get even more power leaving the objective than with the old
+setup.
+</p>
+
+<p>
+So what had happened to cause the decrease in power by adding
+another mirror, and why did introducing the halfwave plate fix the
+problem? As it turns out, you can rotate the polarization by 90
+degrees using only a pair of mirrors to redirect the beam into a
+plane parallel to its original plane of travel but into a direction
+perpendicular to its original one. This was what we were doing
+before we introduced the mirror. After the new mirror was put in
+place, we rotated a mirror of the periscope, which effectively
+rotated the laser beam's polarization back into its original
+orientation. And, since there was a polarizing beam splitter inside
+the TIRF module, the new beam polarization was transmitted through
+the module instead of being reflected towards the objective.
+</p>
+
+<p>
+The picture below describes how this can happen. Note that the final
+beam trajectory is in the direction pointing <i>into</i> the screen.
+</p>
+
+
+<div class="figure">
+<p><img src="images/polarization_rotator.png" alt="polarization_rotator.png"></p>
+</div>
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/omics.html" class="u-url">The philosophy of -omics studies</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">Kyle M. Douglass</span></p>
             <p class="dateline"><a href="posts/omics.html" rel="bookmark"><time class="published dt-published" datetime="2014-04-01T00:00:00+02:00" title="2014-04-01 00:00">2014-04-01 00:00</time></a></p>
