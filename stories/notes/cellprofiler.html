@@ -90,20 +90,22 @@
 <li>
 <a href="cellprofiler.html#sec-1">1. CellProfiler</a>
 <ul>
+<li><a href="cellprofiler.html#sec-1-1">1.1. Warning</a></li>
 <li>
-<a href="cellprofiler.html#sec-1-1">1.1. Installation</a>
+<a href="cellprofiler.html#sec-1-2">1.2. Installation</a>
 <ul>
-<li><a href="cellprofiler.html#sec-1-1-1">1.1.1. Download required repositories</a></li>
-<li><a href="cellprofiler.html#sec-1-1-2">1.1.2. Set the Java environment variables</a></li>
-<li><a href="cellprofiler.html#sec-1-1-3">1.1.3. Change the HOSTTYPE environment variable</a></li>
-<li><a href="cellprofiler.html#sec-1-1-4">1.1.4. Copy the Open GL library files</a></li>
-<li><a href="cellprofiler.html#sec-1-1-5">1.1.5. Run the Makefile from inside a virtualenv</a></li>
-<li><a href="cellprofiler.html#sec-1-1-6">1.1.6. Adding wx libraries to the virtualenv</a></li>
-<li><a href="cellprofiler.html#sec-1-1-7">1.1.7. Install CellH5</a></li>
-<li><a href="cellprofiler.html#sec-1-1-8">1.1.8. Install vigra</a></li>
-<li><a href="cellprofiler.html#sec-1-1-9">1.1.9. Install ilastik dependencies</a></li>
-<li><a href="cellprofiler.html#sec-1-1-10">1.1.10. Getting ilastik to run with Cell Profiler</a></li>
-<li><a href="cellprofiler.html#sec-1-1-11">1.1.11. List of installed Python packages</a></li>
+<li><a href="cellprofiler.html#sec-1-2-1">1.2.1. Download required repositories</a></li>
+<li><a href="cellprofiler.html#sec-1-2-2">1.2.2. Set the Java environment variables</a></li>
+<li><a href="cellprofiler.html#sec-1-2-3">1.2.3. Change the HOSTTYPE environment variable</a></li>
+<li><a href="cellprofiler.html#sec-1-2-4">1.2.4. Copy the Open GL library files</a></li>
+<li><a href="cellprofiler.html#sec-1-2-5">1.2.5. Run the Makefile from inside a virtualenv</a></li>
+<li><a href="cellprofiler.html#sec-1-2-6">1.2.6. Adding wx libraries to the virtualenv</a></li>
+<li><a href="cellprofiler.html#sec-1-2-7">1.2.7. Install CellH5</a></li>
+<li><a href="cellprofiler.html#sec-1-2-8">1.2.8. Install vigra</a></li>
+<li><a href="cellprofiler.html#sec-1-2-9">1.2.9. Install ilastik dependencies</a></li>
+<li><a href="cellprofiler.html#sec-1-2-10">1.2.10. Getting ilastik to run with Cell Profiler</a></li>
+<li><a href="cellprofiler.html#sec-1-2-11">1.2.11. List of installed Python packages</a></li>
+<li><a href="cellprofiler.html#sec-1-2-12">1.2.12. Revisiting the Makefile.CP2 approach</a></li>
 </ul>
 </li>
 </ul>
@@ -119,8 +121,20 @@
 </div>
 <div id="outline-container-sec-1-1" class="outline-3">
 <h3 id="sec-1-1">
-<span class="section-number-3">1.1</span> Installation</h3>
+<span class="section-number-3">1.1</span> Warning</h3>
 <div class="outline-text-3" id="text-1-1">
+<p>
+If you decide to upgrade libc6-dev from Debian's testing repo, be
+advised that it can be VERY difficult to downgrade it later. There a
+few problems with old libraries compiling on the latest libc6-dev
+library, so do this with caution.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2">
+<span class="section-number-3">1.2</span> Installation</h3>
+<div class="outline-text-3" id="text-1-2">
 <p>
 These are my notes on installing <a href="http://www.cellprofiler.org/">CellProfiler</a> on a Debian Wheezy
 system. I cloned the GitHub repo on June 20, 2015. The CellProfiler
@@ -128,19 +142,29 @@ version is 2.1.1.
 </p>
 
 <p>
-Ultimately, I abandonded the Makefile.CP2 approach and focused instead
+Orginially, I abandonded the Makefile.CP2 approach and focused instead
 on installing the required packages to get CellProfiler.py to run
-without any errors. The full history of my attempts is left here in
-case anyone would find the notes useful.
+without any errors. Though I managed to get CellProfiler running, I
+eventually ran into problems when using it because I could not find a
+way incorporate the ilastik Python wrappers. For this reason–at least
+I think for this reason–Cell Profiler would crash every time I ran an
+analysis.
+</p>
+
+<p>
+I then decided to revisit the Makefile.CP2 approach. Though I made
+more progress, I am still unable to get Cell Profiler fully
+operational. The full history of my effort is left here in case anyone
+would find the notes useful.
 </p>
 
 <hr>
 </div>
 
-<div id="outline-container-sec-1-1-1" class="outline-4">
-<h4 id="sec-1-1-1">
-<span class="section-number-4">1.1.1</span> Download required repositories</h4>
-<div class="outline-text-4" id="text-1-1-1">
+<div id="outline-container-sec-1-2-1" class="outline-4">
+<h4 id="sec-1-2-1">
+<span class="section-number-4">1.2.1</span> Download required repositories</h4>
+<div class="outline-text-4" id="text-1-2-1">
 <div class="highlight"><pre>sudo apt-get install cmake libglu1-mesa-dev libhdf5-dev libmysqlclient-dev libvigraimpex3
 </pre></div>
 
@@ -158,10 +182,10 @@ running. I found information on VIGRA <a href="http://ukoethe.github.io/vigra/">
 <hr>
 </div>
 </div>
-<div id="outline-container-sec-1-1-2" class="outline-4">
-<h4 id="sec-1-1-2">
-<span class="section-number-4">1.1.2</span> Set the Java environment variables</h4>
-<div class="outline-text-4" id="text-1-1-2">
+<div id="outline-container-sec-1-2-2" class="outline-4">
+<h4 id="sec-1-2-2">
+<span class="section-number-4">1.2.2</span> Set the Java environment variables</h4>
+<div class="outline-text-4" id="text-1-2-2">
 <p>
 I added the following lines to my .bashrc so the Makefile could find the Java library files.
 </p>
@@ -174,10 +198,10 @@ I added the following lines to my .bashrc so the Makefile could find the Java li
 <hr>
 </div>
 </div>
-<div id="outline-container-sec-1-1-3" class="outline-4">
-<h4 id="sec-1-1-3">
-<span class="section-number-4">1.1.3</span> Change the HOSTTYPE environment variable</h4>
-<div class="outline-text-4" id="text-1-1-3">
+<div id="outline-container-sec-1-2-3" class="outline-4">
+<h4 id="sec-1-2-3">
+<span class="section-number-4">1.2.3</span> Change the HOSTTYPE environment variable</h4>
+<div class="outline-text-4" id="text-1-2-3">
 <p>
 At first, the Makefile complained that the HOSTTYPE environment
 variable wasn't set, which was not true. The real problem was that it
@@ -195,10 +219,10 @@ I fixed this by overwriting the HOSTTYPE variable as
 <hr>
 </div>
 </div>
-<div id="outline-container-sec-1-1-4" class="outline-4">
-<h4 id="sec-1-1-4">
-<span class="section-number-4">1.1.4</span> Copy the Open GL library files</h4>
-<div class="outline-text-4" id="text-1-1-4">
+<div id="outline-container-sec-1-2-4" class="outline-4">
+<h4 id="sec-1-2-4">
+<span class="section-number-4">1.2.4</span> Copy the Open GL library files</h4>
+<div class="outline-text-4" id="text-1-2-4">
 <p>
 I already had the Mesa development libraries for Debian installed, so
 you may need to install these first.
@@ -242,10 +266,10 @@ For more information, see
 </div>
 </div>
 
-<div id="outline-container-sec-1-1-5" class="outline-4">
-<h4 id="sec-1-1-5">
-<span class="section-number-4">1.1.5</span> Run the Makefile from inside a virtualenv</h4>
-<div class="outline-text-4" id="text-1-1-5">
+<div id="outline-container-sec-1-2-5" class="outline-4">
+<h4 id="sec-1-2-5">
+<span class="section-number-4">1.2.5</span> Run the Makefile from inside a virtualenv</h4>
+<div class="outline-text-4" id="text-1-2-5">
 <p>
 I created a clean Python 2.7 virtualenv named CellProfiler and
 activated it.
@@ -276,13 +300,44 @@ attempthing this approach. At this point I gave up on the Makefile and
 attempted instead to run CellProfiler.py directly as a Python script.
 </p>
 
+<p>
+<b>UPDATE</b>
+</p>
+
+<p>
+I fixed the BLAS and LAPACK errors by finding the library locations
+and creating three environment variables that are required by SciPy
+for compilation, <a href="http://www.scipy.org/scipylib/building/linux.html">as detailed here</a>:
+</p>
+
+<div class="highlight"><pre><span class="nb">export </span><span class="nv">BLAS</span><span class="o">=</span><span class="s2">"/usr/lib/libblas.so"</span>
+<span class="nb">export </span><span class="nv">LAPACK</span><span class="o">=</span><span class="s2">"/usr/lib/liblapack.so"</span>
+<span class="nb">export </span><span class="nv">ATLAS</span><span class="o">=</span><span class="s2">"/usr/lib/libatlas.so"</span>
+</pre></div>
+
+<p>
+I believe that the BLAS and LAPACK libraries are provided by the
+libblas-dev and liblapack-dev Debian packages, so if you have problems
+you should check that they are installed. I do not know what package
+provides the ATLAS library, but it was present on my system when I
+looked for it.
+</p>
+
+<p>
+These files might be stored elsewhere on your system. To find them,
+try searching for them using <code>find</code>:
+</p>
+
+<div class="highlight"><pre>sudo find / -name libblas.so
+</pre></div>
+
 <hr>
 </div>
 </div>
-<div id="outline-container-sec-1-1-6" class="outline-4">
-<h4 id="sec-1-1-6">
-<span class="section-number-4">1.1.6</span> Adding wx libraries to the virtualenv</h4>
-<div class="outline-text-4" id="text-1-1-6">
+<div id="outline-container-sec-1-2-6" class="outline-4">
+<h4 id="sec-1-2-6">
+<span class="section-number-4">1.2.6</span> Adding wx libraries to the virtualenv</h4>
+<div class="outline-text-4" id="text-1-2-6">
 <p>
 I use virtualenv's to keep my system Python environment
 clean. Unfortunately, wx does not play well with virtualenvs.
@@ -307,10 +362,10 @@ made for CellProfiler.
 <hr>
 </div>
 </div>
-<div id="outline-container-sec-1-1-7" class="outline-4">
-<h4 id="sec-1-1-7">
-<span class="section-number-4">1.1.7</span> Install CellH5</h4>
-<div class="outline-text-4" id="text-1-1-7">
+<div id="outline-container-sec-1-2-7" class="outline-4">
+<h4 id="sec-1-2-7">
+<span class="section-number-4">1.2.7</span> Install CellH5</h4>
+<div class="outline-text-4" id="text-1-2-7">
 <p>
 I was receiving an error stating that no module named cellh5 could be
 found shortly after I managed to get CellProfiler running. Since
@@ -332,10 +387,10 @@ ensure that cellh5 was installed locally to only that virtualenv.
 </div>
 </div>
 
-<div id="outline-container-sec-1-1-8" class="outline-4">
-<h4 id="sec-1-1-8">
-<span class="section-number-4">1.1.8</span> Install vigra</h4>
-<div class="outline-text-4" id="text-1-1-8">
+<div id="outline-container-sec-1-2-8" class="outline-4">
+<h4 id="sec-1-2-8">
+<span class="section-number-4">1.2.8</span> Install vigra</h4>
+<div class="outline-text-4" id="text-1-2-8">
 <p>
 I ran into some minor problems installing the Python VIGRA wrappers
 since I could not get them from PyPi. (I think the server that they're
@@ -363,10 +418,10 @@ this if you want to keep it clean, though I have not tried this.
 </div>
 </div>
 
-<div id="outline-container-sec-1-1-9" class="outline-4">
-<h4 id="sec-1-1-9">
-<span class="section-number-4">1.1.9</span> Install ilastik dependencies</h4>
-<div class="outline-text-4" id="text-1-1-9">
+<div id="outline-container-sec-1-2-9" class="outline-4">
+<h4 id="sec-1-2-9">
+<span class="section-number-4">1.2.9</span> Install ilastik dependencies</h4>
+<div class="outline-text-4" id="text-1-2-9">
 <p>
 If you're using Debian Wheezy, chances are you have an old version of
 glibc and libc6-dev. This is because the newer versions of these
@@ -504,10 +559,10 @@ Following this, ilastik ran without any glibc errors.
 <hr>
 </div>
 </div>
-<div id="outline-container-sec-1-1-10" class="outline-4">
-<h4 id="sec-1-1-10">
-<span class="section-number-4">1.1.10</span> Getting ilastik to run with Cell Profiler</h4>
-<div class="outline-text-4" id="text-1-1-10">
+<div id="outline-container-sec-1-2-10" class="outline-4">
+<h4 id="sec-1-2-10">
+<span class="section-number-4">1.2.10</span> Getting ilastik to run with Cell Profiler</h4>
+<div class="outline-text-4" id="text-1-2-10">
 <p>
 At this point I still don't know how to stop getting the following
 error when I run CellProfiler.py:
@@ -545,10 +600,10 @@ integrated into the Linux code without major problems.
 <hr>
 </div>
 </div>
-<div id="outline-container-sec-1-1-11" class="outline-4">
-<h4 id="sec-1-1-11">
-<span class="section-number-4">1.1.11</span> List of installed Python packages</h4>
-<div class="outline-text-4" id="text-1-1-11">
+<div id="outline-container-sec-1-2-11" class="outline-4">
+<h4 id="sec-1-2-11">
+<span class="section-number-4">1.2.11</span> List of installed Python packages</h4>
+<div class="outline-text-4" id="text-1-2-11">
 <p>
 This is the list of Python packages installed in my CellProfiler
 virtualenv.
@@ -580,6 +635,68 @@ scikit-learn<span class="o">==</span>0.16.1
 <span class="nv">wxPython</span><span class="o">==</span>2.8.12.1
 wxPython-common<span class="o">==</span>2.8.12.1
 </pre></div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2-12" class="outline-4">
+<h4 id="sec-1-2-12">
+<span class="section-number-4">1.2.12</span> Revisiting the Makefile.CP2 approach</h4>
+<div class="outline-text-4" id="text-1-2-12">
+<p>
+After encountering the ilastik problems above, I decided to revist the
+Makefile.CP2 installation approach. I fixed the issues with the BLAS
+environment variables when compiling SciPy (which I already mentioned
+above) with the lines
+</p>
+
+<div class="highlight"><pre><span class="nb">export </span><span class="nv">BLAS</span><span class="o">=</span><span class="s2">"/usr/lib/libblas.so"</span>
+<span class="nb">export </span><span class="nv">LAPACK</span><span class="o">=</span><span class="s2">"/usr/lib/liblapack.so"</span>
+<span class="nb">export </span><span class="nv">ATLAS</span><span class="o">=</span><span class="s2">"/usr/lib/libatlas.so"</span>
+</pre></div>
+
+<p>
+Unfortunately, my updating of libc6-dev from Debian stable 2.13 to a
+Debian testing 2.19 as detailed above led to some more serious errors:
+compiling the downloaded vigra library requires modification of the
+source code. (See <a href="https://gcc.gnu.org/gcc-4.6/porting_to.html">this link for more information.</a>) Downgrading
+libc6-dev carries significant risks of breaking your whole install, so
+I am going to avoid that.
+</p>
+
+<p>
+The first errors I encountered during the build related to a <code>error:
+'ptrdiff_t' does not name a type</code>. I fixed these by going to my
+CellProfiler install directory and unzipping the
+<code>src/vigra-1.7.1-src.tar.gz</code> tarball. Inside this folder, I found the
+the files named <code>/include/vigra/random_forest_hdf5_impex.hxx</code> and
+<code>/include/vigra/random_forest.hxx</code>. Near the top of these files I
+added the line <code>#include &lt;cstddef&gt;</code> <a href="https://forum.qt.io/topic/16531/error-ptrdiff_t-does-not-name-a-type/2">as mentioned here</a>. Then I rebuilt
+the .tar.gz file with these changes. Doing this allowed me to
+successfully pass this step of vigra's build.
+</p>
+
+<p>
+Next, at the 30% build mark, I got an error relating to
+zlib.h. Specifically, it was <code>error: `z_const' does not name a
+type</code>. I fixed this by first making a backup of my
+<code>/usr/include/zlib.h</code>, then copying CellProfiler's zlib.h from my
+install directory to /usr/include.
+</p>
+
+<div class="highlight"><pre>sudo cp ~/cp2/include/zlib.h /usr/include
+</pre></div>
+
+<p>
+Next I had to add a <code>#include &lt;cstddef&gt;</code> to
+<code>~/cp2/include/vigra/sifImport.hxx</code> as before the random_forest header
+files.
+</p>
+
+<p>
+This got me to 51% compilation before the next compile-time
+error. Unfortunately I can not make any sense of the next error, so
+I'm leaving it the problem here for the moment.
+</p>
 </div>
 </div>
 </div>

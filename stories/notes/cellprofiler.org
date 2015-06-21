@@ -12,16 +12,30 @@
 
 * CellProfiler
 
+** Warning 
+If you decide to upgrade libc6-dev from Debian's testing repo, be
+advised that it can be VERY difficult to downgrade it later. There a
+few problems with old libraries compiling on the latest libc6-dev
+library, so do this with caution.
+
 ** Installation
 
 These are my notes on installing [[http://www.cellprofiler.org/][CellProfiler]] on a Debian Wheezy
 system. I cloned the GitHub repo on June 20, 2015. The CellProfiler
 version is 2.1.1.
 
-Ultimately, I abandonded the Makefile.CP2 approach and focused instead
+Orginially, I abandonded the Makefile.CP2 approach and focused instead
 on installing the required packages to get CellProfiler.py to run
-without any errors. The full history of my attempts is left here in
-case anyone would find the notes useful.
+without any errors. Though I managed to get CellProfiler running, I
+eventually ran into problems when using it because I could not find a
+way incorporate the ilastik Python wrappers. For this reason--at least
+I think for this reason--Cell Profiler would crash every time I ran an
+analysis.
+
+I then decided to revisit the Makefile.CP2 approach. Though I made
+more progress, I am still unable to get Cell Profiler fully
+operational. The full history of my effort is left here in case anyone
+would find the notes useful.
 
 -----
 
@@ -118,6 +132,31 @@ problem where numpy compilation could not find my BLAS and LAPACK
 library files. This is probably fixable, but I was tired of
 attempthing this approach. At this point I gave up on the Makefile and
 attempted instead to run CellProfiler.py directly as a Python script.
+
+*UPDATE*
+
+I fixed the BLAS and LAPACK errors by finding the library locations
+and creating three environment variables that are required by SciPy
+for compilation, [[http://www.scipy.org/scipylib/building/linux.html][as detailed here]]:
+
+#+BEGIN_SRC sh
+export BLAS="/usr/lib/libblas.so"
+export LAPACK="/usr/lib/liblapack.so"
+export ATLAS="/usr/lib/libatlas.so"
+#+END_SRC
+
+I believe that the BLAS and LAPACK libraries are provided by the
+libblas-dev and liblapack-dev Debian packages, so if you have problems
+you should check that they are installed. I do not know what package
+provides the ATLAS library, but it was present on my system when I
+looked for it.
+
+These files might be stored elsewhere on your system. To find them,
+try searching for them using =find=:
+
+#+BEGIN_SRC
+sudo find / -name libblas.so
+#+END_SRC
 
 -----
 
@@ -355,3 +394,49 @@ verlib==0.1
 wxPython==2.8.12.1
 wxPython-common==2.8.12.1
 #+END_SRC
+*** Revisiting the Makefile.CP2 approach
+After encountering the ilastik problems above, I decided to revist the
+Makefile.CP2 installation approach. I fixed the issues with the BLAS
+environment variables when compiling SciPy (which I already mentioned
+above) with the lines
+
+#+BEGIN_SRC sh
+export BLAS="/usr/lib/libblas.so"
+export LAPACK="/usr/lib/liblapack.so"
+export ATLAS="/usr/lib/libatlas.so"
+#+END_SRC
+
+Unfortunately, my updating of libc6-dev from Debian stable 2.13 to a
+Debian testing 2.19 as detailed above led to some more serious errors:
+compiling the downloaded vigra library requires modification of the
+source code. (See [[https://gcc.gnu.org/gcc-4.6/porting_to.html][this link for more information.]]) Downgrading
+libc6-dev carries significant risks of breaking your whole install, so
+I am going to avoid that.
+
+The first errors I encountered during the build related to a =error:
+'ptrdiff_t' does not name a type=. I fixed these by going to my
+CellProfiler install directory and unzipping the
+=src/vigra-1.7.1-src.tar.gz= tarball. Inside this folder, I found the
+the files named =/include/vigra/random_forest_hdf5_impex.hxx= and
+=/include/vigra/random_forest.hxx=. Near the top of these files I
+added the line =#include <cstddef>= [[https://forum.qt.io/topic/16531/error-ptrdiff_t-does-not-name-a-type/2][as mentioned here]]. Then I rebuilt
+the .tar.gz file with these changes. Doing this allowed me to
+successfully pass this step of vigra's build.
+
+Next, at the 30% build mark, I got an error relating to
+zlib.h. Specifically, it was =error: `z_const' does not name a
+type=. I fixed this by first making a backup of my
+=/usr/include/zlib.h=, then copying CellProfiler's zlib.h from my
+install directory to /usr/include.
+
+#+BEGIN_SRC
+sudo cp ~/cp2/include/zlib.h /usr/include
+#+END_SRC
+
+Next I had to add a =#include <cstddef>= to
+=~/cp2/include/vigra/sifImport.hxx= as before the random_forest header
+files.
+
+This got me to 51% compilation before the next compile-time
+error. Unfortunately I can not make any sense of the next error, so
+I'm leaving it the problem here for the moment.
