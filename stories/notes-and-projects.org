@@ -40,6 +40,12 @@
 
   -----
 
+* CellProfiler
+
+  + [[file:notes/cellprofiler.org][CellProfiler notes]]
+
+-----
+
 * Computer notes
   These are all the notes I've collected so far for getting things
   done on computers. I hope they can help you as well.

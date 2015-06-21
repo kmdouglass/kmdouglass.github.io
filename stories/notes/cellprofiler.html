@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="How to use CellProfiler">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CellProfiler notes | Kyle M. Douglass</title>
+<link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
+<link rel="canonical" href="http://kmdouglass.github.io/stories/notes/cellprofiler.html">
+<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><meta name="description" itemprop="description" content="How to use CellProfiler">
+<meta name="author" content="Kyle M. Douglass">
+<meta property="og:site_name" content="Kyle M. Douglass">
+<meta property="og:title" content="CellProfiler notes">
+<meta property="og:url" content="http://kmdouglass.github.io/stories/notes/cellprofiler.html">
+<meta property="og:description" content="How to use CellProfiler">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2015-06-20T00:00:00+02:00">
+<meta property="article:tag" content="emacs">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Menubar -->
+
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation"><div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://kmdouglass.github.io/">
+
+                <span id="blog-title">Kyle M. Douglass</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+<li>
+<a href="../../archive.html">Archive</a>
+                </li>
+<li>
+<a href="../../categories/index.html">Tags</a>
+                </li>
+<li>
+<a href="../notes-and-projects.html">Notes</a>
+                </li>
+<li>
+<a href="../about-me.html">About</a>
+                </li>
+<li>
+<a href="../contact.html">Contact</a>
+                </li>
+<li>
+<a href="../../rss.xml">RSS feed</a>
+
+                
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+    <a href="cellprofiler.org" id="sourcelink">Source</a>
+    </li>
+
+                
+            </ul>
+</div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+            
+<article class="storypage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="#" class="u-url">CellProfiler notes</a></h1>
+
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li>
+<a href="cellprofiler.html#sec-1">1. CellProfiler</a>
+<ul>
+<li>
+<a href="cellprofiler.html#sec-1-1">1.1. Installation</a>
+<ul>
+<li><a href="cellprofiler.html#sec-1-1-1">1.1.1. Download required repositories</a></li>
+<li><a href="cellprofiler.html#sec-1-1-2">1.1.2. Set the Java environment variables</a></li>
+<li><a href="cellprofiler.html#sec-1-1-3">1.1.3. Change the HOSTTYPE environment variable</a></li>
+<li><a href="cellprofiler.html#sec-1-1-4">1.1.4. Copy the Open GL library files</a></li>
+<li><a href="cellprofiler.html#sec-1-1-5">1.1.5. Run the Makefile from inside a virtualenv</a></li>
+<li><a href="cellprofiler.html#sec-1-1-6">1.1.6. Adding wx libraries to the virtualenv</a></li>
+<li><a href="cellprofiler.html#sec-1-1-7">1.1.7. Install CellH5</a></li>
+<li><a href="cellprofiler.html#sec-1-1-8">1.1.8. Install vigra</a></li>
+<li><a href="cellprofiler.html#sec-1-1-9">1.1.9. Install ilastik dependencies</a></li>
+<li><a href="cellprofiler.html#sec-1-1-10">1.1.10. Getting ilastik to run with Cell Profiler</a></li>
+<li><a href="cellprofiler.html#sec-1-1-11">1.1.11. List of installed Python packages</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">
+<span class="section-number-2">1</span> CellProfiler</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1">
+<span class="section-number-3">1.1</span> Installation</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+These are my notes on installing <a href="http://www.cellprofiler.org/">CellProfiler</a> on a Debian Wheezy
+system. I cloned the GitHub repo on June 20, 2015. The CellProfiler
+version is 2.1.1.
+</p>
+
+<p>
+Ultimately, I abandonded the Makefile.CP2 approach and focused instead
+on installing the required packages to get CellProfiler.py to run
+without any errors. The full history of my attempts is left here in
+case anyone would find the notes useful.
+</p>
+
+<hr>
+</div>
+
+<div id="outline-container-sec-1-1-1" class="outline-4">
+<h4 id="sec-1-1-1">
+<span class="section-number-4">1.1.1</span> Download required repositories</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<div class="highlight"><pre>sudo apt-get install cmake libglu1-mesa-dev libhdf5-dev libmysqlclient-dev libvigraimpex3
+</pre></div>
+
+<p>
+<code>libmysqlclient-dev</code> is required to install the PyPi package
+<code>mysql-python</code>. If the Debian package is not present on your system,
+you will see a mysql_config error when trying to install it via pip.
+</p>
+
+<p>
+<code>libvigraimpex3</code> may or may not be required, but its Python wrappers
+definitely are to avoid a vigra import error while CellProfiler is
+running. I found information on VIGRA <a href="http://ukoethe.github.io/vigra/">here</a>.
+</p>
+<hr>
+</div>
+</div>
+<div id="outline-container-sec-1-1-2" class="outline-4">
+<h4 id="sec-1-1-2">
+<span class="section-number-4">1.1.2</span> Set the Java environment variables</h4>
+<div class="outline-text-4" id="text-1-1-2">
+<p>
+I added the following lines to my .bashrc so the Makefile could find the Java library files.
+</p>
+
+<div class="highlight"><pre><span class="c"># Setup the Java environment for Cell profiler</span>
+<span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span>/usr/lib/jvm/java-7-openjdk-amd64
+<span class="nb">export </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span>/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/amd64/server:/usr/lib/jvm/java-7-openjdk-amd64:/usr/lib/jvm/java-7-openjdk-amd64/include
+</pre></div>
+
+<hr>
+</div>
+</div>
+<div id="outline-container-sec-1-1-3" class="outline-4">
+<h4 id="sec-1-1-3">
+<span class="section-number-4">1.1.3</span> Change the HOSTTYPE environment variable</h4>
+<div class="outline-text-4" id="text-1-1-3">
+<p>
+At first, the Makefile complained that the HOSTTYPE environment
+variable wasn't set, which was not true. The real problem was that it
+was set to <code>x86_64</code>, but the Makefile expects <code>amd64</code> for 64 bit Intel
+architectures.
+</p>
+
+<p>
+I fixed this by overwriting the HOSTTYPE variable as
+</p>
+
+<div class="highlight"><pre><span class="nb">export </span><span class="nv">HOSTTYPE</span><span class="o">=</span><span class="s2">"amd64"</span>
+</pre></div>
+
+<hr>
+</div>
+</div>
+<div id="outline-container-sec-1-1-4" class="outline-4">
+<h4 id="sec-1-1-4">
+<span class="section-number-4">1.1.4</span> Copy the Open GL library files</h4>
+<div class="outline-text-4" id="text-1-1-4">
+<p>
+I already had the Mesa development libraries for Debian installed, so
+you may need to install these first.
+</p>
+
+<p>
+Once installed, I found that there is a bug in the Make configure
+script for the version of wx that comes with CellProfiler. This bug
+causes compile-time errors when searching for the OpenGL libraries on
+Debian Wheezy because the configure script is not set to search the
+directory in which they're located. Links with more information are at
+the bottom of this section.
+</p>
+
+<p>
+I eventually solved this problem (albeit in a dirty way) by making
+symlinks to the .so library files in the directory where wx would
+search for them.
+</p>
+
+<div class="highlight"><pre><span class="nb">cd</span> /usr/lib
+sudo ln -s x86_64-linux-gnu/libGL.so libGL.so
+sudo ln -s x86_64-linux-gnu/libGL.so.1 libGL.so.1
+sudo ln -s x86_64-linux-gnu/libGLU.a libGLU.a
+sudo ln -s x86_64-linux-gnu/libGLU.so.1 libGLU.so.1
+sudo ln -s x86_64-linux-gnu/libGLU.so.1.3.08005 libGLU.so.1.3.08005
+</pre></div>
+
+<p>
+For more information, see
+</p>
+<ol class="org-ol">
+<li>
+<a href="http://trac.wxwidgets.org/ticket/13375#no1">http://trac.wxwidgets.org/ticket/13375#no1</a>
+</li>
+<li>
+<a href="http://stackoverflow.com/questions/8179139/failed-to-compile-wxwidgets-2-9-2-on-kubuntu11-1064bit-with-with-opengl-fl">http://stackoverflow.com/questions/8179139/failed-to-compile-wxwidgets-2-9-2-on-kubuntu11-1064bit-with-with-opengl-fl</a>
+</li>
+</ol>
+<hr>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-5" class="outline-4">
+<h4 id="sec-1-1-5">
+<span class="section-number-4">1.1.5</span> Run the Makefile from inside a virtualenv</h4>
+<div class="outline-text-4" id="text-1-1-5">
+<p>
+I created a clean Python 2.7 virtualenv named CellProfiler and
+activated it.
+</p>
+
+<div class="highlight"><pre>mkvirtualenv CellProfiler
+workon CellProfiler
+</pre></div>
+
+<p>
+The <code>workon</code> command is only necessary if you are not automatically
+switched into the new virtual environment. In any case, be sure you
+activate the environment you just created.
+</p>
+
+<p>
+Next, run the Makefile with the CellProfiler virtualenv active:
+</p>
+
+<div class="highlight"><pre>make -f Makefile.CP2 <span class="nv">PREFIX</span><span class="o">=</span><span class="s2">"</span><span class="si">${</span><span class="nv">PREFIX</span><span class="si">}</span><span class="s2">"</span>
+</pre></div>
+
+<p>
+Unfortunately, after fixing a few previous errors, I ran into a
+problem where numpy compilation could not find my BLAS and LAPACK
+library files. This is probably fixable, but I was tired of
+attempthing this approach. At this point I gave up on the Makefile and
+attempted instead to run CellProfiler.py directly as a Python script.
+</p>
+
+<hr>
+</div>
+</div>
+<div id="outline-container-sec-1-1-6" class="outline-4">
+<h4 id="sec-1-1-6">
+<span class="section-number-4">1.1.6</span> Adding wx libraries to the virtualenv</h4>
+<div class="outline-text-4" id="text-1-1-6">
+<p>
+I use virtualenv's to keep my system Python environment
+clean. Unfortunately, wx does not play well with virtualenvs.
+</p>
+
+<p>
+I fixed this problem by creating symlinks to the site-package files
+inside the virtualenv as suggested <a href="http://www.dangtrinh.com/2013/10/how-to-install-wxpython-inside.html">here</a>. It requires that Debian's
+python-wxgtk2.8 package is installed.
+</p>
+
+<div class="highlight"><pre>ln -s /usr/lib/python2.7/dist-packages/wx* /home/envs/CellProfiler/lib/python2.7/site-packages/
+</pre></div>
+
+<p>
+Note that dist-packages might all be called site-packages inside your
+particular /usr/lib/python2.7 folder. <code>envs</code> is my virtual
+environments folder, and <code>CellProfiler</code> is the virtual environment I
+made for CellProfiler.
+</p>
+
+<hr>
+</div>
+</div>
+<div id="outline-container-sec-1-1-7" class="outline-4">
+<h4 id="sec-1-1-7">
+<span class="section-number-4">1.1.7</span> Install CellH5</h4>
+<div class="outline-text-4" id="text-1-1-7">
+<p>
+I was receiving an error stating that no module named cellh5 could be
+found shortly after I managed to get CellProfiler running. Since
+<a href="https://github.com/CellH5/cellh5">CellH5</a> is not in PyPi, I manually installed it to my virtualenv.
+</p>
+
+<div class="highlight"><pre>pip install pandas scikit-learn lxml
+git clone https://github.com/CellH5/cellh5.git
+<span class="nb">cd </span>cellh5
+~/envs/CellProfiler/bin/python setup.py install
+</pre></div>
+
+<p>
+The last step used the python binary in my CellProfiler virtualenv to
+ensure that cellh5 was installed locally to only that virtualenv.
+</p>
+
+<hr>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-8" class="outline-4">
+<h4 id="sec-1-1-8">
+<span class="section-number-4">1.1.8</span> Install vigra</h4>
+<div class="outline-text-4" id="text-1-1-8">
+<p>
+I ran into some minor problems installing the Python VIGRA wrappers
+since I could not get them from PyPi. (I think the server that they're
+hosted on at the ETH in Zürich no longer hosts the software.)
+</p>
+
+<p>
+Fortunately, there are wrappers in the Debian package index. I
+installed them to my system's site-packages with Synaptic, then copied
+them to my virtual env like so:
+</p>
+
+<div class="highlight"><pre>sudo apt-get install python-vigra
+cp /usr/lib/pymodules/python2.7/vigra/ ~/envs/CellProfiler/lib/python2.7/site-packages/
+</pre></div>
+
+<p>
+As always, you will want to change the <code>envs</code> folder and
+<code>CellProfiler</code> virtualenv name to match your system. I believe you can
+uninstall the VIGRA wrappers from your site installation after doing
+this if you want to keep it clean, though I have not tried this.
+</p>
+
+<hr>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-9" class="outline-4">
+<h4 id="sec-1-1-9">
+<span class="section-number-4">1.1.9</span> Install ilastik dependencies</h4>
+<div class="outline-text-4" id="text-1-1-9">
+<p>
+If you're using Debian Wheezy, chances are you have an old version of
+glibc and libc6-dev. This is because the newer versions of these
+libraries are in the testing repository, not the stable one.
+</p>
+
+<p>
+In particular, I needed an up-to-date version of libc6-dev before
+ilastik would run. To get the testing version of this package, I first
+setup my pinning preferences <a href="http://www.binarytides.com/enable-testing-repo-debian/">to ensure that the security and stable
+repositories had the highest priority</a>. This prevents automatically
+installing the new versions of <b>everything that's in the testing
+repo</b>. Based on the information found <a href="http://serverfault.com/questions/22414/how-can-i-run-debian-stable-but-install-some-packages-from-testing">here</a>, I did this by creating
+files named <code>security.pref</code>, <code>stable.pref</code>, <code>testing.pref</code>,
+<code>unstable.pref</code>, and <code>experimental.pref</code> inside the
+<i>etc/apt/preferences.d</i> directory.
+</p>
+
+<p>
+Inside these files, I added:
+</p>
+
+<p>
+<b>security.pref</b>
+</p>
+<div class="highlight"><pre>Package: *
+Pin: release l=Debian-Security
+Pin-Priority: 1000
+</pre></div>
+
+<p>
+<b>stable.pref</b>
+</p>
+<div class="highlight"><pre>Package: *
+Pin: release a=stable
+Pin-Priority: 995
+</pre></div>
+
+<p>
+<b>testing.pref</b>
+</p>
+<div class="highlight"><pre>Package: *
+Pin: release a=testing
+Pin-Priority: 750
+</pre></div>
+
+<p>
+<b>unstable.pref</b>
+</p>
+<div class="highlight"><pre>Package: *
+Pin: release a=unstable
+Pin-Priority: 50
+</pre></div>
+
+<p>
+<b>experimental.pref</b>
+</p>
+<div class="highlight"><pre>Package: *
+Pin: release a=experimental
+Pin-Priority: 1
+</pre></div>
+
+<p>
+To be safe, I also added all the lines above to one file called
+preferences inside the <code>/etc/apt</code> directory since I'm not sure if
+preferences or preferences.d is, well, preferable. <a href="https://wiki.debian.org/AptPreferences">The Debian Wiki</a>
+suggests that apt uses <code>/etc/apt/preferences</code>, but a <code>preferences.d</code>
+folder was already present on my system. You can also set the pins for
+explicit packages by changing the asteriks above to specific package
+names and setting their pin-priority slightly above stable. To check
+whether the pin-priorities were set, type
+</p>
+
+<div class="highlight"><pre>sudo apt-cache policy libc6-dev
+</pre></div>
+
+<p>
+You should see the pin-priority numbers you set next to the various
+versions of the packages available at the different repos. On my
+system, there is also a set of three asteriks next to the one that
+will be installed when using <code>apt-get install</code>.
+</p>
+
+<p>
+(And if you don't want to worry at all about future upgrades to
+packages, just remove the sources that are mentioned below from
+sources.list after you install libc6-dev.)
+</p>
+
+<p>
+Next, I added the following lines to the end my
+<code>/etc/apt/sources.list</code> file:
+</p>
+
+<div class="highlight"><pre># Testing repository - main, contrib and non-free branches
+deb http://debian.ethz.ch/debian/ testing main non-free contrib
+deb-src http://debian.ethz.ch/debian/ testing main non-free contrib
+
+
+
+# Testing security updates repository
+deb http://security.debian.org/ testing/updates main contrib non-free
+deb-src http://security.debian.org/ testing/updates main contrib non-free
+
+
+
+# Unstable repo main, contrib and non-free branches, no security updates here
+deb http://debian.ethz.ch/debian/ unstable main non-free contrib
+deb-src http://debian.ethz.ch/debian/ unstable main non-free contrib
+</pre></div>
+
+<p>
+I am in Switzerland so I am using the ETH mirror at
+<a href="http://debian.ethz.ch">http://debian.ethz.ch</a>; you will want to change this to your local
+mirror. (Note that the testing security updates use a different mirror
+above.)
+</p>
+
+<p>
+Next, I updated my package information via the usual <code>sudo apt-get
+update</code>. If you don't update the information, aptitude will not find
+the versions you request to install.
+</p>
+
+<p>
+Finally, I installed the testing version of libc6-dev with
+</p>
+
+<div class="highlight"><pre>sudo apt-get -t testing install libc6-dev
+</pre></div>
+
+<p>
+Following this, ilastik ran without any glibc errors.
+</p>
+
+<hr>
+</div>
+</div>
+<div id="outline-container-sec-1-1-10" class="outline-4">
+<h4 id="sec-1-1-10">
+<span class="section-number-4">1.1.10</span> Getting ilastik to run with Cell Profiler</h4>
+<div class="outline-text-4" id="text-1-1-10">
+<p>
+At this point I still don't know how to stop getting the following
+error when I run CellProfiler.py:
+</p>
+
+<div class="highlight"><pre>ilastik import: failed to import the ilastik. Please follow the instructions on 
+    <span class="s2">"http://www.ilastik.org"</span> to install ilastik
+Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
+  File <span class="s2">"/home/kmdouglass/src/CellProfiler/cellprofiler/modules/classifypixels.py"</span>, line 82, in <span class="p">&amp;</span>lt<span class="p">;</span>module<span class="p">&amp;</span>gt<span class="p">;</span>
+    from ilastik.core.dataMgr import DataMgr, DataItemImage
+ImportError: No module named ilastik.core.dataMgr
+ilastik import: failed to import the ilastik. Please follow the instructions on 
+			  <span class="s2">"http://www.ilastik.org"</span> to install ilastik
+Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
+  File <span class="s2">"/home/kmdouglass/src/CellProfiler/cellprofiler/modules/ilastik_pixel_classification.py"</span>, line 81, in <span class="p">&amp;</span>lt<span class="p">;</span>module<span class="p">&amp;</span>gt<span class="p">;</span>
+    import ilastik_main
+ImportError: No module named ilastik_main
+Version: 2015-06-20T18:37:10 cfb4b61 / 20150620183710
+Exiting the pipeline validation thread
+Failed to stop Ilastik
+</pre></div>
+
+<p>
+It's clear that the file ilastik_pixel_classification.py is trying to
+import a module named ilastik_main, but I don't know where in the
+ilastik Linux files the Python wrappers are located.
+</p>
+
+<p>
+<a href="http://cellprofiler.org/forum/viewtopic.php?f=14&amp;t=3797&amp;hilit=debian">I learned from this thread</a> that ilastik in CellProfiler is currently
+only supported on Windows, so it may be that I can wait until it's
+integrated into the Linux code without major problems.
+</p>
+
+<hr>
+</div>
+</div>
+<div id="outline-container-sec-1-1-11" class="outline-4">
+<h4 id="sec-1-1-11">
+<span class="section-number-4">1.1.11</span> List of installed Python packages</h4>
+<div class="outline-text-4" id="text-1-1-11">
+<p>
+This is the list of Python packages installed in my CellProfiler
+virtualenv.
+</p>
+
+<div class="highlight"><pre><span class="o">(</span>CellProfiler<span class="o">)</span>kmdouglass@kmd-laptop1:~/src/CellProfiler<span class="nv">$ </span>pip freeze
+<span class="nv">cellh5</span><span class="o">==</span>1.2.0
+<span class="nv">Cython</span><span class="o">==</span>0.22.1
+<span class="nv">h5py</span><span class="o">==</span>2.5.0
+<span class="nv">javabridge</span><span class="o">==</span>1.0.11
+<span class="nv">libtiff</span><span class="o">==</span>0.4.0
+<span class="nv">lxml</span><span class="o">==</span>3.4.4
+<span class="nv">matplotlib</span><span class="o">==</span>1.4.3
+<span class="nv">mock</span><span class="o">==</span>1.0.1
+MySQL-python<span class="o">==</span>1.2.5
+<span class="nv">nose</span><span class="o">==</span>1.3.7
+<span class="nv">numpy</span><span class="o">==</span>1.9.2
+<span class="nv">pandas</span><span class="o">==</span>0.16.2
+<span class="nv">Pillow</span><span class="o">==</span>2.8.2
+<span class="nv">pyparsing</span><span class="o">==</span>2.0.3
+python-bioformats<span class="o">==</span>1.0.5
+python-dateutil<span class="o">==</span>2.4.2
+<span class="nv">pytz</span><span class="o">==</span>2015.4
+<span class="nv">pyzmq</span><span class="o">==</span>14.7.0
+scikit-learn<span class="o">==</span>0.16.1
+<span class="nv">scipy</span><span class="o">==</span>0.15.1
+<span class="nv">six</span><span class="o">==</span>1.9.0
+<span class="nv">verlib</span><span class="o">==</span>0.1
+<span class="nv">wxPython</span><span class="o">==</span>2.8.12.1
+wxPython-common<span class="o">==</span>2.8.12.1
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+    </div>
+    
+
+</article>
+</div>
+        <!--End of body content-->
+
+        <footer>
+            Contents © 2015         <a href="mailto:kyle.douglass@epfl.ch">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
+            
+        </footer>
+</div>
+</div>
+
+
+            <script src="../../assets/js/all-nocdn.js"></script><script>$('a.image-reference:not(.islink)').colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+    moment.locale("");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates -->
+</body>
+</html>

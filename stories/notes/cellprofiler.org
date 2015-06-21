@@ -1,0 +1,358 @@
+#+BEGIN_COMMENT
+.. title: CellProfiler notes
+.. slug: cellprofiler
+.. date: 06/20/2015
+.. tags: emacs
+.. link:
+.. description: How to use CellProfiler
+.. type: text
+#+END_COMMENT
+#+OPTIONS: toc:nil num:t ^:nil
+#+TOC: headlines 3
+
+* CellProfiler
+
+** Installation
+
+These are my notes on installing [[http://www.cellprofiler.org/][CellProfiler]] on a Debian Wheezy
+system. I cloned the GitHub repo on June 20, 2015. The CellProfiler
+version is 2.1.1.
+
+Ultimately, I abandonded the Makefile.CP2 approach and focused instead
+on installing the required packages to get CellProfiler.py to run
+without any errors. The full history of my attempts is left here in
+case anyone would find the notes useful.
+
+-----
+
+*** Download required repositories
+
+#+BEGIN_SRC
+sudo apt-get install cmake libglu1-mesa-dev libhdf5-dev libmysqlclient-dev libvigraimpex3
+#+END_SRC
+
+=libmysqlclient-dev= is required to install the PyPi package
+=mysql-python=. If the Debian package is not present on your system,
+you will see a mysql_config error when trying to install it via pip.
+
+=libvigraimpex3= may or may not be required, but its Python wrappers
+definitely are to avoid a vigra import error while CellProfiler is
+running. I found information on VIGRA [[http://ukoethe.github.io/vigra/][here]].
+-----
+
+*** Set the Java environment variables
+I added the following lines to my .bashrc so the Makefile could find the Java library files.
+
+#+BEGIN_SRC sh
+# Setup the Java environment for Cell profiler
+export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
+export LD_LIBRARY_PATH=/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/amd64/server:/usr/lib/jvm/java-7-openjdk-amd64:/usr/lib/jvm/java-7-openjdk-amd64/include
+#+END_SRC
+
+-----
+
+*** Change the HOSTTYPE environment variable
+At first, the Makefile complained that the HOSTTYPE environment
+variable wasn't set, which was not true. The real problem was that it
+was set to =x86_64=, but the Makefile expects =amd64= for 64 bit Intel
+architectures.
+
+I fixed this by overwriting the HOSTTYPE variable as
+
+#+BEGIN_SRC sh
+export HOSTTYPE="amd64"
+#+END_SRC
+
+-----
+
+*** Copy the Open GL library files
+
+I already had the Mesa development libraries for Debian installed, so
+you may need to install these first.
+
+Once installed, I found that there is a bug in the Make configure
+script for the version of wx that comes with CellProfiler. This bug
+causes compile-time errors when searching for the OpenGL libraries on
+Debian Wheezy because the configure script is not set to search the
+directory in which they're located. Links with more information are at
+the bottom of this section.
+
+I eventually solved this problem (albeit in a dirty way) by making
+symlinks to the .so library files in the directory where wx would
+search for them.
+
+#+BEGIN_SRC sh
+cd /usr/lib
+sudo ln -s x86_64-linux-gnu/libGL.so libGL.so
+sudo ln -s x86_64-linux-gnu/libGL.so.1 libGL.so.1
+sudo ln -s x86_64-linux-gnu/libGLU.a libGLU.a
+sudo ln -s x86_64-linux-gnu/libGLU.so.1 libGLU.so.1
+sudo ln -s x86_64-linux-gnu/libGLU.so.1.3.08005 libGLU.so.1.3.08005
+#+END_SRC
+
+For more information, see
+1. http://trac.wxwidgets.org/ticket/13375#no1
+2. http://stackoverflow.com/questions/8179139/failed-to-compile-wxwidgets-2-9-2-on-kubuntu11-1064bit-with-with-opengl-fl
+-----
+*** Run the Makefile from inside a virtualenv
+I created a clean Python 2.7 virtualenv named CellProfiler and
+activated it.
+
+#+BEGIN_SRC sh
+mkvirtualenv CellProfiler
+workon CellProfiler
+#+END_SRC
+
+The =workon= command is only necessary if you are not automatically
+switched into the new virtual environment. In any case, be sure you
+activate the environment you just created.
+
+Next, run the Makefile with the CellProfiler virtualenv active:
+
+#+BEGIN_SRC sh
+make -f Makefile.CP2 PREFIX="${PREFIX}"
+#+END_SRC
+
+Unfortunately, after fixing a few previous errors, I ran into a
+problem where numpy compilation could not find my BLAS and LAPACK
+library files. This is probably fixable, but I was tired of
+attempthing this approach. At this point I gave up on the Makefile and
+attempted instead to run CellProfiler.py directly as a Python script.
+
+-----
+
+*** Adding wx libraries to the virtualenv
+I use virtualenv's to keep my system Python environment
+clean. Unfortunately, wx does not play well with virtualenvs.
+
+I fixed this problem by creating symlinks to the site-package files
+inside the virtualenv as suggested [[http://www.dangtrinh.com/2013/10/how-to-install-wxpython-inside.html][here]]. It requires that Debian's
+python-wxgtk2.8 package is installed.
+
+#+BEGIN_SRC sh
+ln -s /usr/lib/python2.7/dist-packages/wx* /home/envs/CellProfiler/lib/python2.7/site-packages/
+#+END_SRC
+
+Note that dist-packages might all be called site-packages inside your
+particular /usr/lib/python2.7 folder. =envs= is my virtual
+environments folder, and =CellProfiler= is the virtual environment I
+made for CellProfiler.
+
+-----
+
+*** Install CellH5
+
+I was receiving an error stating that no module named cellh5 could be
+found shortly after I managed to get CellProfiler running. Since
+[[https://github.com/CellH5/cellh5][CellH5]] is not in PyPi, I manually installed it to my virtualenv.
+
+#+BEGIN_SRC sh
+pip install pandas scikit-learn lxml
+git clone https://github.com/CellH5/cellh5.git
+cd cellh5
+~/envs/CellProfiler/bin/python setup.py install
+#+END_SRC
+
+The last step used the python binary in my CellProfiler virtualenv to
+ensure that cellh5 was installed locally to only that virtualenv.
+
+-----
+*** Install vigra
+I ran into some minor problems installing the Python VIGRA wrappers
+since I could not get them from PyPi. (I think the server that they're
+hosted on at the ETH in Zürich no longer hosts the software.)
+
+Fortunately, there are wrappers in the Debian package index. I
+installed them to my system's site-packages with Synaptic, then copied
+them to my virtual env like so:
+
+#+BEGIN_SRC
+sudo apt-get install python-vigra
+cp /usr/lib/pymodules/python2.7/vigra/ ~/envs/CellProfiler/lib/python2.7/site-packages/
+#+END_SRC
+
+As always, you will want to change the =envs= folder and
+=CellProfiler= virtualenv name to match your system. I believe you can
+uninstall the VIGRA wrappers from your site installation after doing
+this if you want to keep it clean, though I have not tried this.
+
+-----
+*** Install ilastik dependencies
+
+If you're using Debian Wheezy, chances are you have an old version of
+glibc and libc6-dev. This is because the newer versions of these
+libraries are in the testing repository, not the stable one.
+
+In particular, I needed an up-to-date version of libc6-dev before
+ilastik would run. To get the testing version of this package, I first
+setup my pinning preferences [[http://www.binarytides.com/enable-testing-repo-debian/][to ensure that the security and stable
+repositories had the highest priority]]. This prevents automatically
+installing the new versions of *everything that's in the testing
+repo*. Based on the information found [[http://serverfault.com/questions/22414/how-can-i-run-debian-stable-but-install-some-packages-from-testing][here]], I did this by creating
+files named =security.pref=, =stable.pref=, =testing.pref=,
+=unstable.pref=, and =experimental.pref= inside the
+/etc/apt/preferences.d/ directory.
+
+Inside these files, I added:
+
+*security.pref*
+#+BEGIN_SRC
+Package: *
+Pin: release l=Debian-Security
+Pin-Priority: 1000
+#+END_SRC
+
+*stable.pref*
+#+BEGIN_SRC
+Package: *
+Pin: release a=stable
+Pin-Priority: 995
+#+END_SRC
+
+*testing.pref*
+#+BEGIN_SRC
+Package: *
+Pin: release a=testing
+Pin-Priority: 750
+#+END_SRC
+
+*unstable.pref*
+#+BEGIN_SRC
+Package: *
+Pin: release a=unstable
+Pin-Priority: 50
+#+END_SRC
+
+*experimental.pref*
+#+BEGIN_SRC
+Package: *
+Pin: release a=experimental
+Pin-Priority: 1
+#+END_SRC
+
+To be safe, I also added all the lines above to one file called
+preferences inside the =/etc/apt= directory since I'm not sure if
+preferences or preferences.d is, well, preferable. [[https://wiki.debian.org/AptPreferences][The Debian Wiki]]
+suggests that apt uses =/etc/apt/preferences=, but a =preferences.d=
+folder was already present on my system. You can also set the pins for
+explicit packages by changing the asteriks above to specific package
+names and setting their pin-priority slightly above stable. To check
+whether the pin-priorities were set, type
+
+#+BEGIN_SRC
+sudo apt-cache policy libc6-dev
+#+END_SRC
+
+You should see the pin-priority numbers you set next to the various
+versions of the packages available at the different repos. On my
+system, there is also a set of three asteriks next to the one that
+will be installed when using =apt-get install=.
+
+(And if you don't want to worry at all about future upgrades to
+packages, just remove the sources that are mentioned below from
+sources.list after you install libc6-dev.)
+
+Next, I added the following lines to the end my
+=/etc/apt/sources.list= file:
+
+#+BEGIN_SRC
+# Testing repository - main, contrib and non-free branches
+deb http://debian.ethz.ch/debian/ testing main non-free contrib
+deb-src http://debian.ethz.ch/debian/ testing main non-free contrib
+
+
+
+# Testing security updates repository
+deb http://security.debian.org/ testing/updates main contrib non-free
+deb-src http://security.debian.org/ testing/updates main contrib non-free
+
+
+
+# Unstable repo main, contrib and non-free branches, no security updates here
+deb http://debian.ethz.ch/debian/ unstable main non-free contrib
+deb-src http://debian.ethz.ch/debian/ unstable main non-free contrib
+#+END_SRC
+
+I am in Switzerland so I am using the ETH mirror at
+http://debian.ethz.ch; you will want to change this to your local
+mirror. (Note that the testing security updates use a different mirror
+above.)
+
+Next, I updated my package information via the usual =sudo apt-get
+update=. If you don't update the information, aptitude will not find
+the versions you request to install.
+
+Finally, I installed the testing version of libc6-dev with
+
+#+BEGIN_SRC sh
+sudo apt-get -t testing install libc6-dev
+#+END_SRC
+
+Following this, ilastik ran without any glibc errors.
+
+-----
+
+*** Getting ilastik to run with Cell Profiler
+At this point I still don't know how to stop getting the following
+error when I run CellProfiler.py:
+
+#+BEGIN_SRC sh
+ilastik import: failed to import the ilastik. Please follow the instructions on 
+    "http://www.ilastik.org" to install ilastik
+Traceback (most recent call last):
+  File "/home/kmdouglass/src/CellProfiler/cellprofiler/modules/classifypixels.py", line 82, in <module>
+    from ilastik.core.dataMgr import DataMgr, DataItemImage
+ImportError: No module named ilastik.core.dataMgr
+ilastik import: failed to import the ilastik. Please follow the instructions on 
+                          "http://www.ilastik.org" to install ilastik
+Traceback (most recent call last):
+  File "/home/kmdouglass/src/CellProfiler/cellprofiler/modules/ilastik_pixel_classification.py", line 81, in <module>
+    import ilastik_main
+ImportError: No module named ilastik_main
+Version: 2015-06-20T18:37:10 cfb4b61 / 20150620183710
+Exiting the pipeline validation thread
+Failed to stop Ilastik
+#+END_SRC
+
+It's clear that the file ilastik_pixel_classification.py is trying to
+import a module named ilastik_main, but I don't know where in the
+ilastik Linux files the Python wrappers are located.
+
+[[http://cellprofiler.org/forum/viewtopic.php?f=14&t=3797&hilit=debian][I learned from this thread]] that ilastik in CellProfiler is currently
+only supported on Windows, so it may be that I can wait until it's
+integrated into the Linux code without major problems.
+
+-----
+
+*** List of installed Python packages
+
+This is the list of Python packages installed in my CellProfiler
+virtualenv.
+
+#+BEGIN_SRC sh
+(CellProfiler)kmdouglass@kmd-laptop1:~/src/CellProfiler$ pip freeze
+cellh5==1.2.0
+Cython==0.22.1
+h5py==2.5.0
+javabridge==1.0.11
+libtiff==0.4.0
+lxml==3.4.4
+matplotlib==1.4.3
+mock==1.0.1
+MySQL-python==1.2.5
+nose==1.3.7
+numpy==1.9.2
+pandas==0.16.2
+Pillow==2.8.2
+pyparsing==2.0.3
+python-bioformats==1.0.5
+python-dateutil==2.4.2
+pytz==2015.4
+pyzmq==14.7.0
+scikit-learn==0.16.1
+scipy==0.15.1
+six==1.9.0
+verlib==0.1
+wxPython==2.8.12.1
+wxPython-common==2.8.12.1
+#+END_SRC
