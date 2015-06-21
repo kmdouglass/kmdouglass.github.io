@@ -436,18 +436,7 @@ preferences or preferences.d is, well, preferable. <a href="https://wiki.debian.
 suggests that apt uses <code>/etc/apt/preferences</code>, but a <code>preferences.d</code>
 folder was already present on my system. You can also set the pins for
 explicit packages by changing the asteriks above to specific package
-names and setting their pin-priority slightly above stable. To check
-whether the pin-priorities were set, type
-</p>
-
-<div class="highlight"><pre>sudo apt-cache policy libc6-dev
-</pre></div>
-
-<p>
-You should see the pin-priority numbers you set next to the various
-versions of the packages available at the different repos. On my
-system, there is also a set of three asteriks next to the one that
-will be installed when using <code>apt-get install</code>.
+names and setting their pin-priority slightly above stable.
 </p>
 
 <p>
@@ -486,9 +475,19 @@ above.)
 </p>
 
 <p>
-Next, I updated my package information via the usual <code>sudo apt-get
-update</code>. If you don't update the information, aptitude will not find
-the versions you request to install.
+At this point, to check whether the pin-priorities were set, type
+</p>
+
+<div class="highlight"><pre>sudo apt-get update
+sudo apt-cache policy libc6-dev
+</pre></div>
+
+<p>
+You should see the pin-priority numbers you set next to the various
+versions of the packages available at the different repos (be sure you
+update apt-get first). On my system, there is also a set of three
+asteriks next to the one that will be installed when using <code>apt-get
+install</code>.
 </p>
 
 <p>

@@ -236,17 +236,7 @@ preferences or preferences.d is, well, preferable. [[https://wiki.debian.org/Apt
 suggests that apt uses =/etc/apt/preferences=, but a =preferences.d=
 folder was already present on my system. You can also set the pins for
 explicit packages by changing the asteriks above to specific package
-names and setting their pin-priority slightly above stable. To check
-whether the pin-priorities were set, type
-
-#+BEGIN_SRC
-sudo apt-cache policy libc6-dev
-#+END_SRC
-
-You should see the pin-priority numbers you set next to the various
-versions of the packages available at the different repos. On my
-system, there is also a set of three asteriks next to the one that
-will be installed when using =apt-get install=.
+names and setting their pin-priority slightly above stable.
 
 (And if you don't want to worry at all about future upgrades to
 packages, just remove the sources that are mentioned below from
@@ -278,9 +268,18 @@ http://debian.ethz.ch; you will want to change this to your local
 mirror. (Note that the testing security updates use a different mirror
 above.)
 
-Next, I updated my package information via the usual =sudo apt-get
-update=. If you don't update the information, aptitude will not find
-the versions you request to install.
+At this point, to check whether the pin-priorities were set, type
+
+#+BEGIN_SRC
+sudo apt-get update
+sudo apt-cache policy libc6-dev
+#+END_SRC
+
+You should see the pin-priority numbers you set next to the various
+versions of the packages available at the different repos (be sure you
+update apt-get first). On my system, there is also a set of three
+asteriks next to the one that will be installed when using =apt-get
+install=.
 
 Finally, I installed the testing version of libc6-dev with
 
