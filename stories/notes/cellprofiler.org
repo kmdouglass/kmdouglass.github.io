@@ -14,12 +14,13 @@
 
 ** Warning 
 If you decide to upgrade libc6-dev from Debian's testing repo, be
-advised that it can be VERY difficult to downgrade it later. There a
-few problems with old libraries compiling on the latest libc6-dev
+advised that it can be VERY difficult to downgrade it later. There may
+be a few problems with old libraries compiling on the latest libc6-dev
 library, so do this with caution.
 
-** Installation
+-----
 
+** Installation
 These are my notes on installing [[http://www.cellprofiler.org/][CellProfiler]] on a Debian Wheezy
 system. I cloned the GitHub repo on June 20, 2015. The CellProfiler
 version is 2.1.1.
@@ -124,6 +125,11 @@ activate the environment you just created.
 Next, run the Makefile with the CellProfiler virtualenv active:
 
 #+BEGIN_SRC sh
+export PREFIX="${HOME}/usr/cp2"
+export GITHOME=$PREFIX/src/CellProfiler
+mkdir -p $PREFIX/src
+git clone https://github.com/CellProfiler/CellProfiler $GITHOME
+cd $GITHOME
 make -f Makefile.CP2 PREFIX="${PREFIX}"
 #+END_SRC
 
@@ -131,7 +137,9 @@ Unfortunately, after fixing a few previous errors, I ran into a
 problem where numpy compilation could not find my BLAS and LAPACK
 library files. This is probably fixable, but I was tired of
 attempthing this approach. At this point I gave up on the Makefile and
-attempted instead to run CellProfiler.py directly as a Python script.
+attempted instead to run CellProfiler.py directly as a Python
+script. This involves switching from [[https://github.com/CellProfiler/CellProfiler/wiki/CellProfiler-Developer%27s-version-installation-for-Linux][Cell Profiler's install option 1
+to install option 2]].
 
 *UPDATE*
 
@@ -362,6 +370,15 @@ integrated into the Linux code without major problems.
 
 -----
 
+*** CellProfiler crashes during an Analysis
+Unfortunately, CellProfiler always crashes during an analysis shortly
+after starting all the workers with a frame error. (I am not at home
+now where I did most of this work and don't have the full error
+report).
+
+For this reason, I decided to revisit the Makefile.CP2 approach.
+
+-----
 *** List of installed Python packages
 
 This is the list of Python packages installed in my CellProfiler
@@ -394,11 +411,13 @@ verlib==0.1
 wxPython==2.8.12.1
 wxPython-common==2.8.12.1
 #+END_SRC
+
+-----
 *** Revisiting the Makefile.CP2 approach
-After encountering the ilastik problems above, I decided to revist the
-Makefile.CP2 installation approach. I fixed the issues with the BLAS
-environment variables when compiling SciPy (which I already mentioned
-above) with the lines
+After encountering the ilastik and worker problems mentioned above, I
+decided to revist the Makefile.CP2 installation approach. I fixed the
+issues with the BLAS environment variables when compiling SciPy (which
+I already mentioned above) with the lines
 
 #+BEGIN_SRC sh
 export BLAS="/usr/lib/libblas.so"
@@ -406,37 +425,26 @@ export LAPACK="/usr/lib/liblapack.so"
 export ATLAS="/usr/lib/libatlas.so"
 #+END_SRC
 
-Unfortunately, my updating of libc6-dev from Debian stable 2.13 to a
-Debian testing 2.19 as detailed above led to some more serious errors:
-compiling the downloaded vigra library requires modification of the
-source code. (See [[https://gcc.gnu.org/gcc-4.6/porting_to.html][this link for more information.]]) Downgrading
-libc6-dev carries significant risks of breaking your whole install, so
-I am going to avoid that.
+Unfortunately, the vigra library shipped with Cell Profiler (version
+1.7.1) does not compile on Debian Wheezy due to a ptr_diff_t
+error. (See [[https://gcc.gnu.org/gcc-4.6/porting_to.html][this link for more information.]]) I tried manually fixing
+the afflicted files by adding a =#include <cstddef> line, but this
+required an enormous amount of work and ultimately led to an error
+that I just could not fix.
 
-The first errors I encountered during the build related to a =error:
-'ptrdiff_t' does not name a type=. I fixed these by going to my
-CellProfiler install directory and unzipping the
-=src/vigra-1.7.1-src.tar.gz= tarball. Inside this folder, I found the
-the files named =/include/vigra/random_forest_hdf5_impex.hxx= and
-=/include/vigra/random_forest.hxx=. Near the top of these files I
-added the line =#include <cstddef>= [[https://forum.qt.io/topic/16531/error-ptrdiff_t-does-not-name-a-type/2][as mentioned here]]. Then I rebuilt
-the .tar.gz file with these changes. Doing this allowed me to
-successfully pass this step of vigra's build.
+To circumvent this, [[http://ukoethe.github.io/vigra/][I downloaded vigra 1.10.0]] from their website,
+unzipped the tarball, renamed the folder inside it to vigra-1.7.1,
+then rezipped it with the name =vigra-1.7.1-src.tar.gz= (the same as
+the old tarball). This tricked the Makefile into thinking it was
+installing version 1.7.1 when in fact it installed vigra 1.10.0. I
+also deleted lines 935 and 936 from =Makefile.CP2= to prevent patching
+the impex.hxx file. Following these steps, vigra compiled.
 
-Next, at the 30% build mark, I got an error relating to
-zlib.h. Specifically, it was =error: `z_const' does not name a
-type=. I fixed this by first making a backup of my
-=/usr/include/zlib.h=, then copying CellProfiler's zlib.h from my
-install directory to /usr/include.
-
-#+BEGIN_SRC
-sudo cp ~/cp2/include/zlib.h /usr/include
-#+END_SRC
-
-Next I had to add a =#include <cstddef>= to
-=~/cp2/include/vigra/sifImport.hxx= as before the random_forest header
-files.
-
-This got me to 51% compilation before the next compile-time
-error. Unfortunately I can not make any sense of the next error, so
-I'm leaving it the problem here for the moment.
+The Wheezy stable version of libxml2-dev is too old to work with
+CellProfiler, which needs at least 2.9. Fortunately, 2.9 is in Jesse,
+but it requires an upgraded libc6-dev (see the section on ilastik
+dependencies about how to ugprade this, **but also see my warning
+about difficulties in downgrading libc6). I am stopping working on
+this at the moment, but it appears like most of the software that
+needs to be compiled in the Option 1: Makefile.CP2 approach has
+successfully compiled.

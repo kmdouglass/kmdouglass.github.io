@@ -104,8 +104,9 @@
 <li><a href="cellprofiler.html#sec-1-2-8">1.2.8. Install vigra</a></li>
 <li><a href="cellprofiler.html#sec-1-2-9">1.2.9. Install ilastik dependencies</a></li>
 <li><a href="cellprofiler.html#sec-1-2-10">1.2.10. Getting ilastik to run with Cell Profiler</a></li>
-<li><a href="cellprofiler.html#sec-1-2-11">1.2.11. List of installed Python packages</a></li>
-<li><a href="cellprofiler.html#sec-1-2-12">1.2.12. Revisiting the Makefile.CP2 approach</a></li>
+<li><a href="cellprofiler.html#sec-1-2-11">1.2.11. CellProfiler crashes during an Analysis</a></li>
+<li><a href="cellprofiler.html#sec-1-2-12">1.2.12. List of installed Python packages</a></li>
+<li><a href="cellprofiler.html#sec-1-2-13">1.2.13. Revisiting the Makefile.CP2 approach</a></li>
 </ul>
 </li>
 </ul>
@@ -125,12 +126,15 @@
 <div class="outline-text-3" id="text-1-1">
 <p>
 If you decide to upgrade libc6-dev from Debian's testing repo, be
-advised that it can be VERY difficult to downgrade it later. There a
-few problems with old libraries compiling on the latest libc6-dev
+advised that it can be VERY difficult to downgrade it later. There may
+be a few problems with old libraries compiling on the latest libc6-dev
 library, so do this with caution.
 </p>
+
+<hr>
 </div>
 </div>
+
 <div id="outline-container-sec-1-2" class="outline-3">
 <h3 id="sec-1-2">
 <span class="section-number-3">1.2</span> Installation</h3>
@@ -182,6 +186,7 @@ running. I found information on VIGRA <a href="http://ukoethe.github.io/vigra/">
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-1-2-2" class="outline-4">
 <h4 id="sec-1-2-2">
 <span class="section-number-4">1.2.2</span> Set the Java environment variables</h4>
@@ -198,6 +203,7 @@ I added the following lines to my .bashrc so the Makefile could find the Java li
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-1-2-3" class="outline-4">
 <h4 id="sec-1-2-3">
 <span class="section-number-4">1.2.3</span> Change the HOSTTYPE environment variable</h4>
@@ -219,6 +225,7 @@ I fixed this by overwriting the HOSTTYPE variable as
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-1-2-4" class="outline-4">
 <h4 id="sec-1-2-4">
 <span class="section-number-4">1.2.4</span> Copy the Open GL library files</h4>
@@ -265,7 +272,6 @@ For more information, see
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-1-2-5" class="outline-4">
 <h4 id="sec-1-2-5">
 <span class="section-number-4">1.2.5</span> Run the Makefile from inside a virtualenv</h4>
@@ -289,7 +295,12 @@ activate the environment you just created.
 Next, run the Makefile with the CellProfiler virtualenv active:
 </p>
 
-<div class="highlight"><pre>make -f Makefile.CP2 <span class="nv">PREFIX</span><span class="o">=</span><span class="s2">"</span><span class="si">${</span><span class="nv">PREFIX</span><span class="si">}</span><span class="s2">"</span>
+<div class="highlight"><pre><span class="nb">export </span><span class="nv">PREFIX</span><span class="o">=</span><span class="s2">"</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span><span class="s2">/usr/cp2"</span>
+<span class="nb">export </span><span class="nv">GITHOME</span><span class="o">=</span><span class="nv">$PREFIX</span>/src/CellProfiler
+mkdir -p <span class="nv">$PREFIX</span>/src
+git clone https://github.com/CellProfiler/CellProfiler <span class="nv">$GITHOME</span>
+<span class="nb">cd</span> <span class="nv">$GITHOME</span>
+make -f Makefile.CP2 <span class="nv">PREFIX</span><span class="o">=</span><span class="s2">"</span><span class="si">${</span><span class="nv">PREFIX</span><span class="si">}</span><span class="s2">"</span>
 </pre></div>
 
 <p>
@@ -297,7 +308,9 @@ Unfortunately, after fixing a few previous errors, I ran into a
 problem where numpy compilation could not find my BLAS and LAPACK
 library files. This is probably fixable, but I was tired of
 attempthing this approach. At this point I gave up on the Makefile and
-attempted instead to run CellProfiler.py directly as a Python script.
+attempted instead to run CellProfiler.py directly as a Python
+script. This involves switching from <a href="https://github.com/CellProfiler/CellProfiler/wiki/CellProfiler-Developer's-version-installation-for-Linux">Cell Profiler's install option 1
+to install option 2</a>.
 </p>
 
 <p>
@@ -334,6 +347,7 @@ try searching for them using <code>find</code>:
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-1-2-6" class="outline-4">
 <h4 id="sec-1-2-6">
 <span class="section-number-4">1.2.6</span> Adding wx libraries to the virtualenv</h4>
@@ -362,6 +376,7 @@ made for CellProfiler.
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-1-2-7" class="outline-4">
 <h4 id="sec-1-2-7">
 <span class="section-number-4">1.2.7</span> Install CellH5</h4>
@@ -386,7 +401,6 @@ ensure that cellh5 was installed locally to only that virtualenv.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-1-2-8" class="outline-4">
 <h4 id="sec-1-2-8">
 <span class="section-number-4">1.2.8</span> Install vigra</h4>
@@ -417,7 +431,6 @@ this if you want to keep it clean, though I have not tried this.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-1-2-9" class="outline-4">
 <h4 id="sec-1-2-9">
 <span class="section-number-4">1.2.9</span> Install ilastik dependencies</h4>
@@ -559,6 +572,7 @@ Following this, ilastik ran without any glibc errors.
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-1-2-10" class="outline-4">
 <h4 id="sec-1-2-10">
 <span class="section-number-4">1.2.10</span> Getting ilastik to run with Cell Profiler</h4>
@@ -600,10 +614,29 @@ integrated into the Linux code without major problems.
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-1-2-11" class="outline-4">
 <h4 id="sec-1-2-11">
-<span class="section-number-4">1.2.11</span> List of installed Python packages</h4>
+<span class="section-number-4">1.2.11</span> CellProfiler crashes during an Analysis</h4>
 <div class="outline-text-4" id="text-1-2-11">
+<p>
+Unfortunately, CellProfiler always crashes during an analysis shortly
+after starting all the workers with a frame error. (I am not at home
+now where I did most of this work and don't have the full error
+report).
+</p>
+
+<p>
+For this reason, I decided to revisit the Makefile.CP2 approach.
+</p>
+
+<hr>
+</div>
+</div>
+<div id="outline-container-sec-1-2-12" class="outline-4">
+<h4 id="sec-1-2-12">
+<span class="section-number-4">1.2.12</span> List of installed Python packages</h4>
+<div class="outline-text-4" id="text-1-2-12">
 <p>
 This is the list of Python packages installed in my CellProfiler
 virtualenv.
@@ -635,18 +668,19 @@ scikit-learn<span class="o">==</span>0.16.1
 <span class="nv">wxPython</span><span class="o">==</span>2.8.12.1
 wxPython-common<span class="o">==</span>2.8.12.1
 </pre></div>
-</div>
-</div>
 
-<div id="outline-container-sec-1-2-12" class="outline-4">
-<h4 id="sec-1-2-12">
-<span class="section-number-4">1.2.12</span> Revisiting the Makefile.CP2 approach</h4>
-<div class="outline-text-4" id="text-1-2-12">
+<hr>
+</div>
+</div>
+<div id="outline-container-sec-1-2-13" class="outline-4">
+<h4 id="sec-1-2-13">
+<span class="section-number-4">1.2.13</span> Revisiting the Makefile.CP2 approach</h4>
+<div class="outline-text-4" id="text-1-2-13">
 <p>
-After encountering the ilastik problems above, I decided to revist the
-Makefile.CP2 installation approach. I fixed the issues with the BLAS
-environment variables when compiling SciPy (which I already mentioned
-above) with the lines
+After encountering the ilastik and worker problems mentioned above, I
+decided to revist the Makefile.CP2 installation approach. I fixed the
+issues with the BLAS environment variables when compiling SciPy (which
+I already mentioned above) with the lines
 </p>
 
 <div class="highlight"><pre><span class="nb">export </span><span class="nv">BLAS</span><span class="o">=</span><span class="s2">"/usr/lib/libblas.so"</span>
@@ -655,47 +689,33 @@ above) with the lines
 </pre></div>
 
 <p>
-Unfortunately, my updating of libc6-dev from Debian stable 2.13 to a
-Debian testing 2.19 as detailed above led to some more serious errors:
-compiling the downloaded vigra library requires modification of the
-source code. (See <a href="https://gcc.gnu.org/gcc-4.6/porting_to.html">this link for more information.</a>) Downgrading
-libc6-dev carries significant risks of breaking your whole install, so
-I am going to avoid that.
+Unfortunately, the vigra library shipped with Cell Profiler (version
+1.7.1) does not compile on Debian Wheezy due to a ptr_diff_t
+error. (See <a href="https://gcc.gnu.org/gcc-4.6/porting_to.html">this link for more information.</a>) I tried manually fixing
+the afflicted files by adding a =#include &lt;cstddef&gt; line, but this
+required an enormous amount of work and ultimately led to an error
+that I just could not fix.
 </p>
 
 <p>
-The first errors I encountered during the build related to a <code>error:
-'ptrdiff_t' does not name a type</code>. I fixed these by going to my
-CellProfiler install directory and unzipping the
-<code>src/vigra-1.7.1-src.tar.gz</code> tarball. Inside this folder, I found the
-the files named <code>/include/vigra/random_forest_hdf5_impex.hxx</code> and
-<code>/include/vigra/random_forest.hxx</code>. Near the top of these files I
-added the line <code>#include &lt;cstddef&gt;</code> <a href="https://forum.qt.io/topic/16531/error-ptrdiff_t-does-not-name-a-type/2">as mentioned here</a>. Then I rebuilt
-the .tar.gz file with these changes. Doing this allowed me to
-successfully pass this step of vigra's build.
+To circumvent this, <a href="http://ukoethe.github.io/vigra/">I downloaded vigra 1.10.0</a> from their website,
+unzipped the tarball, renamed the folder inside it to vigra-1.7.1,
+then rezipped it with the name <code>vigra-1.7.1-src.tar.gz</code> (the same as
+the old tarball). This tricked the Makefile into thinking it was
+installing version 1.7.1 when in fact it installed vigra 1.10.0. I
+also deleted lines 935 and 936 from <code>Makefile.CP2</code> to prevent patching
+the impex.hxx file. Following these steps, vigra compiled.
 </p>
 
 <p>
-Next, at the 30% build mark, I got an error relating to
-zlib.h. Specifically, it was <code>error: `z_const' does not name a
-type</code>. I fixed this by first making a backup of my
-<code>/usr/include/zlib.h</code>, then copying CellProfiler's zlib.h from my
-install directory to /usr/include.
-</p>
-
-<div class="highlight"><pre>sudo cp ~/cp2/include/zlib.h /usr/include
-</pre></div>
-
-<p>
-Next I had to add a <code>#include &lt;cstddef&gt;</code> to
-<code>~/cp2/include/vigra/sifImport.hxx</code> as before the random_forest header
-files.
-</p>
-
-<p>
-This got me to 51% compilation before the next compile-time
-error. Unfortunately I can not make any sense of the next error, so
-I'm leaving it the problem here for the moment.
+The Wheezy stable version of libxml2-dev is too old to work with
+CellProfiler, which needs at least 2.9. Fortunately, 2.9 is in Jesse,
+but it requires an upgraded libc6-dev (see the section on ilastik
+dependencies about how to ugprade this, **but also see my warning
+about difficulties in downgrading libc6). I am stopping working on
+this at the moment, but it appears like most of the software that
+needs to be compiled in the Option 1: Makefile.CP2 approach has
+successfully compiled.
 </p>
 </div>
 </div>
