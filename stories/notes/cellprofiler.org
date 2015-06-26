@@ -10,9 +10,7 @@
 #+OPTIONS: toc:nil num:t ^:nil
 #+TOC: headlines 3
 
-* CellProfiler
-
-** Warning 
+* Warning 
 If you decide to upgrade libc6-dev from Debian's testing repo, be
 advised that it can be VERY difficult to downgrade it later. There may
 be a few problems with old libraries compiling on the latest libc6-dev
@@ -20,24 +18,28 @@ library, so do this with caution.
 
 -----
 
-** Installation
+* Installation
 These are my notes on installing [[http://www.cellprofiler.org/][CellProfiler]] on a Debian Wheezy
 system. I cloned the GitHub repo on June 20, 2015. The CellProfiler
-version is 2.1.1.
+version is 2.1.2, rev cfb4b61.
 
-Orginially, I abandonded the Makefile.CP2 approach and focused instead
-on installing the required packages to get CellProfiler.py to run
-without any errors. Though I managed to get CellProfiler running, I
-eventually ran into problems when using it because I could not find a
-way incorporate the ilastik Python wrappers. For this reason--at least
-I think for this reason--Cell Profiler would crash every time I ran an
+At first, I tried but abandoned the Makefile.CP2 approach and focused
+instead on installing the required packages to get CellProfiler.py to
+run without any errors. Though I managed to get CellProfiler running,
+I eventually ran into problems when using it because of an error that
+occurred when initializing the workers. For this reason--at least I
+think for this reason--Cell Profiler would crash every time I ran an
 analysis.
 
-I then decided to revisit the Makefile.CP2 approach. Though I made
-more progress, I am still unable to get Cell Profiler fully
-operational. The full history of my effort is left here in case anyone
-would find the notes useful.
+I then decided to revisit the Makefile.CP2 approach. I successfully
+got this working on June 26, though there are still some bugs that
+need to be smoothed over.
 
+-----
+
+** Option 1: Makefile.CP2
+This is the installation option that has worked the best for me,
+though it does require a good deal of time and effort.
 -----
 
 *** Download required repositories
@@ -63,7 +65,6 @@ I added the following lines to my .bashrc so the Makefile could find the Java li
 export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
 export LD_LIBRARY_PATH=/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/amd64/server:/usr/lib/jvm/java-7-openjdk-amd64:/usr/lib/jvm/java-7-openjdk-amd64/include
 #+END_SRC
-
 -----
 
 *** Change the HOSTTYPE environment variable
@@ -77,7 +78,6 @@ I fixed this by overwriting the HOSTTYPE variable as
 #+BEGIN_SRC sh
 export HOSTTYPE="amd64"
 #+END_SRC
-
 -----
 
 *** Copy the Open GL library files
@@ -109,43 +109,11 @@ For more information, see
 1. http://trac.wxwidgets.org/ticket/13375#no1
 2. http://stackoverflow.com/questions/8179139/failed-to-compile-wxwidgets-2-9-2-on-kubuntu11-1064bit-with-with-opengl-fl
 -----
-*** Run the Makefile from inside a virtualenv
-I created a clean Python 2.7 virtualenv named CellProfiler and
-activated it.
 
-#+BEGIN_SRC sh
-mkvirtualenv CellProfiler
-workon CellProfiler
-#+END_SRC
-
-The =workon= command is only necessary if you are not automatically
-switched into the new virtual environment. In any case, be sure you
-activate the environment you just created.
-
-Next, run the Makefile with the CellProfiler virtualenv active:
-
-#+BEGIN_SRC sh
-export PREFIX="${HOME}/usr/cp2"
-export GITHOME=$PREFIX/src/CellProfiler
-mkdir -p $PREFIX/src
-git clone https://github.com/CellProfiler/CellProfiler $GITHOME
-cd $GITHOME
-make -f Makefile.CP2 PREFIX="${PREFIX}"
-#+END_SRC
-
-Unfortunately, after fixing a few previous errors, I ran into a
-problem where numpy compilation could not find my BLAS and LAPACK
-library files. This is probably fixable, but I was tired of
-attempthing this approach. At this point I gave up on the Makefile and
-attempted instead to run CellProfiler.py directly as a Python
-script. This involves switching from [[https://github.com/CellProfiler/CellProfiler/wiki/CellProfiler-Developer%27s-version-installation-for-Linux][Cell Profiler's install option 1
-to install option 2]].
-
-*UPDATE*
-
-I fixed the BLAS and LAPACK errors by finding the library locations
-and creating three environment variables that are required by SciPy
-for compilation, [[http://www.scipy.org/scipylib/building/linux.html][as detailed here]]:
+*** Setup the BLAS, LAPACK, and ATLAS environments
+When compiling SciPy, I ran into errors stating that my system could
+not find the BLAS library. These were fixed by setting the following
+environment variables [[http://www.scipy.org/scipylib/building/linux.html][as detailed here]]:
 
 #+BEGIN_SRC sh
 export BLAS="/usr/lib/libblas.so"
@@ -165,80 +133,72 @@ try searching for them using =find=:
 #+BEGIN_SRC
 sudo find / -name libblas.so
 #+END_SRC
-
 -----
 
-*** Adding wx libraries to the virtualenv
-I use virtualenv's to keep my system Python environment
-clean. Unfortunately, wx does not play well with virtualenvs.
+*** Set the correct LAPACK and ATLAS .so files
+A major error I encountered using the Makefile approach
+occurred during the installation of cellh5:
 
-I fixed this problem by creating symlinks to the site-package files
-inside the virtualenv as suggested [[http://www.dangtrinh.com/2013/10/how-to-install-wxpython-inside.html][here]]. It requires that Debian's
-python-wxgtk2.8 package is installed.
-
-#+BEGIN_SRC sh
-ln -s /usr/lib/python2.7/dist-packages/wx* /home/envs/CellProfiler/lib/python2.7/site-packages/
+#+BEGIN_SRC python
+ImportError: scipy/linalg/clapack.so: undefined symbol: clapack_sgesv
 #+END_SRC
 
-Note that dist-packages might all be called site-packages inside your
-particular /usr/lib/python2.7 folder. =envs= is my virtual
-environments folder, and =CellProfiler= is the virtual environment I
-made for CellProfiler.
-
------
-
-*** Install CellH5
-
-I was receiving an error stating that no module named cellh5 could be
-found shortly after I managed to get CellProfiler running. Since
-[[https://github.com/CellH5/cellh5][CellH5]] is not in PyPi, I manually installed it to my virtualenv.
-
-#+BEGIN_SRC sh
-pip install pandas scikit-learn lxml
-git clone https://github.com/CellH5/cellh5.git
-cd cellh5
-~/envs/CellProfiler/bin/python setup.py install
-#+END_SRC
-
-The last step used the python binary in my CellProfiler virtualenv to
-ensure that cellh5 was installed locally to only that virtualenv.
-
------
-*** Install vigra
-I ran into some minor problems installing the Python VIGRA wrappers
-since I could not get them from PyPi. (I think the server that they're
-hosted on at the ETH in Zürich no longer hosts the software.)
-
-Fortunately, there are wrappers in the Debian package index. I
-installed them to my system's site-packages with Synaptic, then copied
-them to my virtual env like so:
+This error occurs when your Debian system is not using the right .so
+library file for either ATLAS, LAPACK, or both. This error was fixed
+for me by following [[http://danielnouri.org/notes/2012/12/19/libblas-and-liblapack-issues-and-speed,-with-scipy-and-ubuntu/][these instructions]]; in particular, I had to change
+the .so file my Debian system was using for =liblapack.so.3=.
 
 #+BEGIN_SRC
-sudo apt-get install python-vigra
-cp /usr/lib/pymodules/python2.7/vigra/ ~/envs/CellProfiler/lib/python2.7/site-packages/
+sudo update-alternatives --config libblas.so.3
+sudo update-alternatives --config liblapack.so.3
 #+END_SRC
 
-As always, you will want to change the =envs= folder and
-=CellProfiler= virtualenv name to match your system. I believe you can
-uninstall the VIGRA wrappers from your site installation after doing
-this if you want to keep it clean, though I have not tried this.
+Both of these files need to come from =/usr/lib/atlas-base/atlas/= (I
+only needed to change the second). If you don't have this option, be
+sure that the Debian package =libatlas3-base= is installed.
 
+Following this, the Makefile.CP2 approach successfully finished.
 -----
-*** Install ilastik dependencies
 
-If you're using Debian Wheezy, chances are you have an old version of
-glibc and libc6-dev. This is because the newer versions of these
-libraries are in the testing repository, not the stable one.
+*** Change the src version of VIGRA to 1.10.0
+Unfortunately, the vigra library shipped with Cell Profiler (version
+1.7.1) does not compile on Debian Wheezy due to a ptr_diff_t
+error. (See [[https://gcc.gnu.org/gcc-4.6/porting_to.html][this link for more information.]]) I tried manually fixing
+the afflicted files by adding a =#include <cstddef> line, but this
+required an enormous amount of work and ultimately led to an error
+that I just could not fix.
 
-In particular, I needed an up-to-date version of libc6-dev before
-ilastik would run. To get the testing version of this package, I first
-setup my pinning preferences [[http://www.binarytides.com/enable-testing-repo-debian/][to ensure that the security and stable
-repositories had the highest priority]]. This prevents automatically
-installing the new versions of *everything that's in the testing
-repo*. Based on the information found [[http://serverfault.com/questions/22414/how-can-i-run-debian-stable-but-install-some-packages-from-testing][here]], I did this by creating
-files named =security.pref=, =stable.pref=, =testing.pref=,
-=unstable.pref=, and =experimental.pref= inside the
-/etc/apt/preferences.d/ directory.
+To circumvent this, [[http://ukoethe.github.io/vigra/][I downloaded vigra 1.10.0]] from their website,
+unzipped the tarball, renamed the folder inside it to vigra-1.7.1,
+then rezipped it with the name =vigra-1.7.1-src.tar.gz= (the same as
+the old tarball). This tricked the Makefile into thinking it was
+installing version 1.7.1 when in fact it installed vigra 1.10.0. I
+also deleted lines 935 and 936 from =Makefile.CP2= to prevent patching
+the impex.hxx file. Following these steps, vigra compiled.
+
+Note that this requires that you have already reached the point in the
+Makefile where vigra 1.7.1 was downloaded but failed to compile. When
+you receive the error, do the steps above and rerun the Makefile.
+-----
+
+*** Upgrade libc6 and libxml2-dev
+*WARNING: Some suggest that upgrading libc6 or glibc carries some risk
+of breaking your system, though I did not encounter any problems.*
+*Downgrading these is very, very difficult, so only continue if you
+feel comfortable with this option. You could also just upgrade*
+*entirely to Debian Jesse*.
+
+The Wheezy stable version of libxml2-dev is too old to work with
+CellProfiler, which needs at least 2.9. Fortunately, 2.9 is in
+Debian's testing repo and Jesse, but it requires an upgraded libc6-dev
+
+To get the testing version of libc6-dev, I first setup my pinning
+preferences [[http://www.binarytides.com/enable-testing-repo-debian/][to ensure that the security and stable repositories had
+the highest priority]]. This prevents automatically installing the new
+versions of *everything that's in the testing repo*. Based on the
+information found [[http://serverfault.com/questions/22414/how-can-i-run-debian-stable-but-install-some-packages-from-testing][here]], I did this by creating files named
+=security.pref=, =stable.pref=, =testing.pref=, =unstable.pref=, and
+=experimental.pref= inside the /etc/apt/preferences.d/ directory.
 
 Inside these files, I added:
 
@@ -334,49 +294,92 @@ Finally, I installed the testing version of libc6-dev with
 sudo apt-get -t testing install libc6-dev
 #+END_SRC
 
-Following this, ilastik ran without any glibc errors.
-
+Following this, I could install libxml2-dev version 2.9 from one of
+the Debian non-stable repos.
 -----
 
-*** Getting ilastik to run with Cell Profiler
-At this point I still don't know how to stop getting the following
-error when I run CellProfiler.py:
+*** Run the Makefile
 
 #+BEGIN_SRC sh
-ilastik import: failed to import the ilastik. Please follow the instructions on 
-    "http://www.ilastik.org" to install ilastik
-Traceback (most recent call last):
-  File "/home/kmdouglass/src/CellProfiler/cellprofiler/modules/classifypixels.py", line 82, in <module>
-    from ilastik.core.dataMgr import DataMgr, DataItemImage
-ImportError: No module named ilastik.core.dataMgr
-ilastik import: failed to import the ilastik. Please follow the instructions on 
-                          "http://www.ilastik.org" to install ilastik
-Traceback (most recent call last):
-  File "/home/kmdouglass/src/CellProfiler/cellprofiler/modules/ilastik_pixel_classification.py", line 81, in <module>
-    import ilastik_main
-ImportError: No module named ilastik_main
-Version: 2015-06-20T18:37:10 cfb4b61 / 20150620183710
-Exiting the pipeline validation thread
-Failed to stop Ilastik
+export PREFIX="${HOME}/cp2"
+export GITHOME=$PREFIX/src/CellProfiler
+mkdir -p $PREFIX/src
+git clone https://github.com/CellProfiler/CellProfiler $GITHOME
+cd $GITHOME
+make -f Makefile.CP2 PREFIX="${PREFIX}"
+#+END_SRC
+-----
+
+*** Misc. problems
+Don't forget that you will have to run the Makefile and let it go to
+the point where VIGRA's installation fails before following the steps
+above to fix it.
+
+If you get an error related to zlib.h, simply back up your local copy
+at =/usr/include/zlib.h=, and then copy the CellProfiler source zlib.h
+from =~/cp2/include= to =/usr/include=.
+-----
+
+** Option 2: Install dependences yourself
+I found this option easier than the Makefile approach, but it always
+results in CellProfiler crashing during an analysis, so I can not
+recommend it.
+-----
+
+*** Adding wx libraries to the virtualenv
+I use virtualenv's to keep my system Python environment
+clean. Unfortunately, wx does not play well with virtualenvs.
+
+I fixed this problem by creating symlinks to the site-package files
+inside the virtualenv as suggested [[http://www.dangtrinh.com/2013/10/how-to-install-wxpython-inside.html][here]]. It requires that Debian's
+python-wxgtk2.8 package is installed.
+
+#+BEGIN_SRC sh
+ln -s /usr/lib/python2.7/dist-packages/wx* /home/envs/CellProfiler/lib/python2.7/site-packages/
 #+END_SRC
 
-It's clear that the file ilastik_pixel_classification.py is trying to
-import a module named ilastik_main, but I don't know where in the
-ilastik Linux files the Python wrappers are located.
-
-[[http://cellprofiler.org/forum/viewtopic.php?f=14&t=3797&hilit=debian][I learned from this thread]] that ilastik in CellProfiler is currently
-only supported on Windows, so it may be that I can wait until it's
-integrated into the Linux code without major problems.
+Note that dist-packages might all be called site-packages inside your
+particular /usr/lib/python2.7 folder. =envs= is my virtual
+environments folder, and =CellProfiler= is the virtual environment I
+made for CellProfiler.
 
 -----
 
-*** CellProfiler crashes during an Analysis
-Unfortunately, CellProfiler always crashes during an analysis shortly
-after starting all the workers with a frame error. (I am not at home
-now where I did most of this work and don't have the full error
-report).
+*** Install CellH5
 
-For this reason, I decided to revisit the Makefile.CP2 approach.
+I was receiving an error stating that no module named cellh5 could be
+found shortly after I managed to get CellProfiler running. Since
+[[https://github.com/CellH5/cellh5][CellH5]] is not in PyPi, I manually installed it to my virtualenv.
+
+#+BEGIN_SRC sh
+pip install pandas scikit-learn lxml
+git clone https://github.com/CellH5/cellh5.git
+cd cellh5
+~/envs/CellProfiler/bin/python setup.py install
+#+END_SRC
+
+The last step used the python binary in my CellProfiler virtualenv to
+ensure that cellh5 was installed locally to only that virtualenv.
+
+-----
+*** Install vigra
+I ran into some minor problems installing the Python VIGRA wrappers
+since I could not get them from PyPi. (I think the server that they're
+hosted on at the ETH in Zürich no longer hosts the software.)
+
+Fortunately, there are wrappers in the Debian package index. I
+installed them to my system's site-packages with Synaptic, then copied
+them to my virtual env like so:
+
+#+BEGIN_SRC
+sudo apt-get install python-vigra
+cp /usr/lib/pymodules/python2.7/vigra/ ~/envs/CellProfiler/lib/python2.7/site-packages/
+#+END_SRC
+
+As always, you will want to change the =envs= folder and
+=CellProfiler= virtualenv name to match your system. I believe you can
+uninstall the VIGRA wrappers from your site installation after doing
+this if you want to keep it clean, though I have not tried this.
 
 -----
 *** List of installed Python packages
@@ -413,38 +416,35 @@ wxPython-common==2.8.12.1
 #+END_SRC
 
 -----
-*** Revisiting the Makefile.CP2 approach
-After encountering the ilastik and worker problems mentioned above, I
-decided to revist the Makefile.CP2 installation approach. I fixed the
-issues with the BLAS environment variables when compiling SciPy (which
-I already mentioned above) with the lines
 
-#+BEGIN_SRC sh
-export BLAS="/usr/lib/libblas.so"
-export LAPACK="/usr/lib/liblapack.so"
-export ATLAS="/usr/lib/libatlas.so"
+*** CellProfiler crashes during an Analysis
+Unfortunately, CellProfiler always crashes during an analysis shortly
+after starting all the workers with a frame error. (I am not at home
+now where I did most of this work and don't have the full error
+report).
+-----
+
+* Errors while running
+** Worker 0: ImportError: No module named readline
+When starting my first pipeline (the example
+http://www.cellprofiler.org/examples.shtml#HumanCells) the Worker hung
+because it could not find a specific Python module called readlines.
+
+#+BEGIN_SRC
+Progress Counter({u'Unprocessed': 1})
+Starting workers on address tcp://127.0.0.1:62445
+Worker 0: Traceback (most recent call last):
+Worker 0:   File "/home/kmdouglass/cp2/src/CellProfiler/cellprofiler/analysis_wo
+rker.py", line 149, in <module>                                                
+Worker 0:     from cellprofiler.utilities.rpdb import Rpdb
+Worker 0:   File "/home/kmdouglass/cp2/src/CellProfiler/cellprofiler/utilities/r
+pdb.py", line 22, in <module>                                                  
+Worker 0:     import readline  # otherwise, pdb.Pdb.__init__ hangs
+Worker 0: ImportError: No module named readline
 #+END_SRC
 
-Unfortunately, the vigra library shipped with Cell Profiler (version
-1.7.1) does not compile on Debian Wheezy due to a ptr_diff_t
-error. (See [[https://gcc.gnu.org/gcc-4.6/porting_to.html][this link for more information.]]) I tried manually fixing
-the afflicted files by adding a =#include <cstddef> line, but this
-required an enormous amount of work and ultimately led to an error
-that I just could not fix.
-
-To circumvent this, [[http://ukoethe.github.io/vigra/][I downloaded vigra 1.10.0]] from their website,
-unzipped the tarball, renamed the folder inside it to vigra-1.7.1,
-then rezipped it with the name =vigra-1.7.1-src.tar.gz= (the same as
-the old tarball). This tricked the Makefile into thinking it was
-installing version 1.7.1 when in fact it installed vigra 1.10.0. I
-also deleted lines 935 and 936 from =Makefile.CP2= to prevent patching
-the impex.hxx file. Following these steps, vigra compiled.
-
-The Wheezy stable version of libxml2-dev is too old to work with
-CellProfiler, which needs at least 2.9. Fortunately, 2.9 is in Jesse,
-but it requires an upgraded libc6-dev (see the section on ilastik
-dependencies about how to ugprade this, **but also see my warning
-about difficulties in downgrading libc6). I am stopping working on
-this at the moment, but it appears like most of the software that
-needs to be compiled in the Option 1: Makefile.CP2 approach has
-successfully compiled.
+I attempted to fix this by installing libreadline-dev: =sudo apt-get
+install libreadline-dev=. However, the real problem is that the
+Makefile did not install a local copy of Python's readline module. [[http://www.cellprofiler.org/forum/viewtopic.php?f=16&t=4408][I
+posted a bug report]] to their forum and am waiting on a response as of
+June 26, 2015.

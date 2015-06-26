@@ -1,30 +1,56 @@
 <!DOCTYPE html>
 <html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="description" content="How to setup OMERO on a Windows Server">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>OMERO Notes | Kyle M. Douglass</title>
-<link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
-<link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
-<link rel="canonical" href="http://kmdouglass.github.io/stories/notes/omero.html">
-<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><meta name="description" itemprop="description" content="How to setup OMERO on a Windows Server">
-<meta name="author" content="Kyle M. Douglass">
-<meta property="og:site_name" content="Kyle M. Douglass">
-<meta property="og:title" content="OMERO Notes">
-<meta property="og:url" content="http://kmdouglass.github.io/stories/notes/omero.html">
-<meta property="og:description" content="How to setup OMERO on a Windows Server">
-<meta property="og:type" content="article">
-<meta property="article:published_time" content="2014-12-26T00:00:00+01:00">
-<meta property="article:tag" content="OMERO">
-<meta property="article:tag" content="windows">
+    <head>
+    <meta charset="utf-8">
+    <meta name="description" content="How to setup OMERO on a Windows Server">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OMERO Notes | Kyle M. Douglass</title>
+
+    
+            <link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+
+    
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
+
+      <link rel="canonical" href="http://kmdouglass.github.io/stories/notes/omero.html">
+
+
+
+
+    
+        <!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]-->
+
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+    
+
+    <meta name="description" itemprop="description" content="How to setup OMERO on a Windows Server">
+    <meta name="author" content="Kyle M. Douglass">
+    
+    <meta property="og:site_name" content="Kyle M. Douglass">
+    <meta property="og:title" content="OMERO Notes">
+    <meta property="og:url" content="http://kmdouglass.github.io/stories/notes/omero.html">
+    <meta property="og:description" content="How to setup OMERO on a Windows Server">
+    <meta property="og:type" content="article">
+    <meta property="article:published_time" content="2014-12-26T00:00:00+01:00">
+           <meta property="article:tag" content="OMERO">
+           <meta property="article:tag" content="windows">
+
+    
+
+    
+
+
+
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
 
 <!-- Menubar -->
 
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation"><div class="container">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
 <!-- This keeps the margins nice -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -41,7 +67,8 @@
 <!-- /.navbar-header -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
-<li>
+                
+                <li>
 <a href="../../archive.html">Archive</a>
                 </li>
 <li>
@@ -62,28 +89,40 @@
                 
             </li>
 </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
+
+            <ul class="nav navbar-nav navbar-right">
+                
+                
+                    
+    <li>
     <a href="omero.org" id="sourcelink">Source</a>
     </li>
 
                 
             </ul>
-</div>
+        </div>
 <!-- /.navbar-collapse -->
     </div>
 <!-- /.container -->
-</nav><!-- End of Menubar --><div class="container" id="content" role="main">
+</nav>
+
+<!-- End of Menubar -->
+
+<div class="container" id="content" role="main">
     <div class="body-content">
         <!--Body content-->
         <div class="row">
             
             
-<article class="storypage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="#" class="u-url">OMERO Notes</a></h1>
+<article class="storypage" itemscope="itemscope" itemtype="http://schema.org/Article">
+    <header>
+        
+    <h1 class="p-name entry-title" itemprop="headline name"><a href="#" class="u-url">OMERO Notes</a></h1>
 
         
 
-    </header><div class="e-content entry-content" itemprop="articleBody text">
+    </header>
+    <div class="e-content entry-content" itemprop="articleBody text">
     <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
@@ -250,6 +289,7 @@ Appliance.
 <li>48.0 GB RAM
 </li>
 </ul>
+
 <hr>
 </div>
 </div>
@@ -273,6 +313,7 @@ I followed the directions on OMERO's webpage for this process
 (OMERO.vm-5.0.0-b19.ova)
 </li>
 </ul>
+
 <p>
 During the VirtualBox install I accepted all the defaults. This
 caused no problems.
@@ -309,6 +350,7 @@ Linux 3.2.0-4-amd64'" at top. The lines "Loading Linux
 after this sequentially.
 </li>
 </ol>
+
 <p>
 Unfortunately, at this point, the virtual machine screen goes
 black with only a non-blinking cursor. I let the machine sit for
@@ -319,10 +361,12 @@ OMERO.insight client.
 
 
 <div class="figure">
-<p><img src="../../images/ome/setup1-vbScreen.jpg" alt="setup1-vbScreen.jpg"></p>
+<p><img src="../../images/ome/setup1-vbScreen.jpg" alt="setup1-vbScreen.jpg">
+</p>
 </div>
 <a href="../../img/ome/setup1-vbScreen.jpg">
-  <img class="standard-img" src="../../img/ome/setup1-vbScreen.jpg" alt="The VirtualBox screen immediately before it goes blank in Setup 1."></a>
+  <img class="standard-img" src="../../img/ome/setup1-vbScreen.jpg" alt="The VirtualBox screen immediately before it goes blank in Setup 1.">
+</a>
 
 <hr>
 </div>
@@ -355,6 +399,7 @@ the screen.
 <li>Check "Enable Intel VT for Direct I/O."
 </li>
 </ol>
+
 <p>
 Save the settings and restart the computer. The OMERO Virtual
 Appliance should now run in VirtualBox.
@@ -482,6 +527,7 @@ install.
 <span class="underline">PostgreSQL</span> 8.4 (or later)
 </li>
 </ol>
+
 <hr>
 </div>
 
@@ -614,6 +660,7 @@ line 272 (not 270!) from <i>except UnicodeEncodeError:</i> to
 </ol>
 </li>
 </ol>
+
 <hr>
 </div>
 </li>
@@ -690,6 +737,7 @@ at the links below.
 <i>matplotlib-1.3.1.win-amd64-py2.6.exe</i> from <a href="http://matplotlib.org/downloads.html">http://matplotlib.org/downloads.html</a>
 </li>
 </ul>
+
 <p>
 I installed the packages in the above list in top-to-bottom
 order.
@@ -835,6 +883,7 @@ set its value to "C:\Program Files
 (x86)\ZeroC\Ice-3.4.2\python\x64".
 </li>
 </ul>
+
 <p>
 Be sure to use the "x64" folders if you've been installing 64 bit
 programs!
@@ -1384,6 +1433,7 @@ PATH system environment variable. You should add them manually.
 list. Don't be afraid to use them!
 </li>
 </ul>
+
 <hr>
 </div>
 </div>
@@ -1414,6 +1464,7 @@ foreground/background in Windows
 <li>Set up OMERO.dropbox
 </li>
 </ol>
+
 <p>
 I will explore these items and post my notes as I do so. Once I feel
 comfortable with them, I'll go ahead with the production server
@@ -1456,11 +1507,15 @@ parantheses. Under this level select <i>Configuration -&gt; Task
 Scheduler</i>.
 </li>
 </ol>
+
+
 <div class="figure">
-<p><img src="../../images/ome/omero_taskScheduler_1.JPG" alt="omero_taskScheduler_1.JPG"></p>
+<p><img src="../../images/ome/omero_taskScheduler_1.JPG" alt="omero_taskScheduler_1.JPG">
+</p>
 </div>
 <a href="../../img/ome/omero_taskScheduler_1.JPG">
-  <img class="standard-img" src="../../img/ome/omero_taskScheduler_1.JPG" alt="The Windows Task Scheduler screen."></a>
+  <img class="standard-img" src="../../img/ome/omero_taskScheduler_1.JPG" alt="The Windows Task Scheduler screen.">
+</a>
 
 <ol class="org-ol">
 <li>In the right-most pane, select <i>Create Basic Task…</i>.
@@ -1480,11 +1535,15 @@ file, <i>C:\OMERO.server\bin\omero.bat</i>. In the <i>Add arguments
 (optional)</i> text box, enter <i>C:\OMERO.server\bin</i>. Click next.
 </li>
 </ol>
+
+
 <div class="figure">
-<p><img src="../../images/ome/omero_taskScheduler_2.JPG" alt="omero_taskScheduler_2.JPG"></p>
+<p><img src="../../images/ome/omero_taskScheduler_2.JPG" alt="omero_taskScheduler_2.JPG">
+</p>
 </div>
 <a href="../../img/ome/omero_taskScheduler_2.JPG">
-  <img class="standard-img" src="../../img/ome/omero_taskScheduler_2.JPG" alt="Settings for selecting the OMERO batch script."></a>
+  <img class="standard-img" src="../../img/ome/omero_taskScheduler_2.JPG" alt="Settings for selecting the OMERO batch script.">
+</a>
 
 <ol class="org-ol">
 <li>In the final pane, check the <i>Open the Properties dialog for
@@ -1495,6 +1554,7 @@ whether user is logged on or not</i> radio button and check <i>Run
 with highest privileges</i>.
 </li>
 </ol>
+
 <p>
 You can now click the OK button and the OMERO server should startup
 at run time.
@@ -1549,10 +1609,12 @@ Extensions and ISAPI Filters are already installed.
 
 
 <div class="figure">
-<p><img src="../../images/ome/omero_webServer.JPG" alt="omero_webServer.JPG"></p>
+<p><img src="../../images/ome/omero_webServer.JPG" alt="omero_webServer.JPG">
+</p>
 </div>
 <a href="../../img/ome/omero_webServer.JPG">
-  <img class="standard-img" src="../../img/ome/omero_webServer.JPG" alt="Screenshot of the Server Manager screen showing installed ISAPI Extensions and Filters."></a>
+  <img class="standard-img" src="../../img/ome/omero_webServer.JPG" alt="Screenshot of the Server Manager screen showing installed ISAPI Extensions and Filters.">
+</a>
 
 <p>
 Continuing through the steps in the documentation, I next navigated
@@ -1590,10 +1652,12 @@ Settings…</i>. Then, I set the <i>Enable 32-Bit Applications</i> flag to
 
 
 <div class="figure">
-<p><img src="../../images/ome/omero_webServer_2.JPG" alt="omero_webServer_2.JPG"></p>
+<p><img src="../../images/ome/omero_webServer_2.JPG" alt="omero_webServer_2.JPG">
+</p>
 </div>
 <a href="../../img/ome/omero_webServer_2.JPG">
-  <img class="standard-img" src="../../img/ome/omero_webServer_2.JPG" alt="Screenshot showing where you can enable 32-bit applications in IIS."></a>
+  <img class="standard-img" src="../../img/ome/omero_webServer_2.JPG" alt="Screenshot showing where you can enable 32-bit applications in IIS.">
+</a>
 
 <p>
 Finally, I entered the final three commands recommended in the
@@ -1644,6 +1708,7 @@ below:
 <a href="http://lists.openmicroscopy.org.uk/pipermail/ome-users/2014-April/004322.html">http://lists.openmicroscopy.org.uk/pipermail/ome-users/2014-April/004322.html</a>
 </li>
 </ol>
+
 <p>
 The solution to the problem has two parts: clearing the troublesome
 config variables and disabling 32 bit support in IIS. First, I
@@ -1832,6 +1897,7 @@ respecitvely:
 <a href="http://www.gracion.com/server/whatldap.html">http://www.gracion.com/server/whatldap.html</a>
 </li>
 </ol>
+
 <p>
 In addition, I read up on packet filtering. Below, I've provided
 links to useful resources. The first is an introductory explanation
@@ -1852,6 +1918,7 @@ to your server:
 <a href="http://technet.microsoft.com/en-us/library/cc732746(v=ws.10).aspx">http://technet.microsoft.com/en-us/library/cc732746(v=ws.10).aspx</a>
 </li>
 </ol>
+
 <p>
 On the Windows doc page, it recommends using either static packet
 filters or Windows Firewall, but not both. I discovered that I can
@@ -1945,6 +2012,8 @@ I'm now ready to install the software onto our full-time server.
 <li>Windows 2012 R2 Server 64 bit
 </li>
 </ul>
+
+
 <p>
 The biggest difference with this machine is that it will be running
 Windows 2012 Server, not Windows 2008 Server.
@@ -2108,6 +2177,7 @@ may not back up the latest file. You'll want to schedule
 rdiff-backups slight after the SQL dump.
 </li>
 </ol>
+
 <hr>
 </div>
 </div>
@@ -2171,20 +2241,30 @@ run the OMERO.movie script.
     
 
 </article>
-</div>
+
+        </div>
         <!--End of body content-->
 
         <footer>
             Contents © 2015         <a href="mailto:kyle.douglass@epfl.ch">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
             
         </footer>
-</div>
+    </div>
 </div>
 
 
-            <script src="../../assets/js/all-nocdn.js"></script><script>$('a.image-reference:not(.islink)').colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+            <script src="../../assets/js/all-nocdn.js"></script>
+    
+
+    <script>$('a.image-reference:not(.islink)').colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script>
+    <!-- fancy dates -->
+    <script>
     moment.locale("");
     fancydates(0, "YYYY-MM-DD HH:mm");
-    </script><!-- end fancy dates -->
+    </script>
+    <!-- end fancy dates -->
+    
+
+
 </body>
 </html>
