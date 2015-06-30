@@ -320,6 +320,28 @@ at =/usr/include/zlib.h=, and then copy the CellProfiler source zlib.h
 from =~/cp2/include= to =/usr/include=.
 -----
 
+*** Running CellProfiler
+To run CellProfiler, I created a bash script containing the following
+lines:
+
+#+BEGIN_SRC sh
+#!/bin/bash
+
+export PATH="$HOME/cp2/bin:${PATH}"
+export LD_LIBRARY_PATH="$HOME/cp2/lib:$HOME/cp2/lib/mysql:$HOME/cp2/lib64:${LD_LIBRARY_PATH}"
+export JAVA_HOME="/usr/lib/jvm/java-7-openjdk-amd64"
+export PATH="$JAVA_HOME/bin:${PATH}"
+export LD_LIBRARY_PATH="${JAVA_HOME}/jre/lib/amd64:${JAVA_HOME}/jre/lib/amd64/server:${LD_LIBRARY_PATH}"
+
+cd "$HOME/cp2/src/CellProfiler/"
+python CellProfiler.py --do-not-build --do-not-fetch
+
+#+END_SRC
+
+I used =chmod a+x my_script.sh= to make the script executable and I
+run this script whenever I want to run CellProfiler.
+-----
+
 ** Option 2: Install dependences yourself
 I found this option easier than the Makefile approach, but it always
 results in CellProfiler crashing during an analysis, so I can not
@@ -426,6 +448,7 @@ report).
 
 * Errors while running
 ** Worker 0: ImportError: No module named readline
+*** Description
 When starting my first pipeline (the example
 http://www.cellprofiler.org/examples.shtml#HumanCells) the Worker hung
 because it could not find a specific Python module called readlines.
@@ -448,3 +471,13 @@ install libreadline-dev=. However, the real problem is that the
 Makefile did not install a local copy of Python's readline module. [[http://www.cellprofiler.org/forum/viewtopic.php?f=16&t=4408][I
 posted a bug report]] to their forum and am waiting on a response as of
 June 26, 2015.
+-----
+
+*** Solution
+I used pip to force an install of readline to the site-packages
+directory used by CellProfiler's Python install.
+
+#+BEGIN_SRC
+export READLINE="/home/kmdouglass/cp2/lib/python2.7/site-packages"
+pip install --target=$READLINE readline
+#+END_SRC
