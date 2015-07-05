@@ -1,55 +1,29 @@
 <!DOCTYPE html>
 <html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
-    <head>
-    <meta charset="utf-8">
-    <meta name="description" content="Notes on using Python tools for scientific applications.">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Scientific Python Notes | Kyle M. Douglass</title>
-
-    
-            <link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
-
-    
-            <link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
-
-      <link rel="canonical" href="http://kmdouglass.github.io/stories/notes/scipy.html">
-
-
-
-
-    
-        <!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]-->
-
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-
-    
-
-    <meta name="description" itemprop="description" content="Notes on using Python tools for scientific applications.">
-    <meta name="author" content="Kyle M. Douglass">
-    
-    <meta property="og:site_name" content="Kyle M. Douglass">
-    <meta property="og:title" content="Scientific Python Notes">
-    <meta property="og:url" content="http://kmdouglass.github.io/stories/notes/scipy.html">
-    <meta property="og:description" content="Notes on using Python tools for scientific applications.">
-    <meta property="og:type" content="article">
-    <meta property="article:published_time" content="2015-01-14T00:00:00+01:00">
-           <meta property="article:tag" content="python">
-
-    
-
-    
-
-
-
+<head>
+<meta charset="utf-8">
+<meta name="description" content="Notes on using Python tools for scientific applications.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scientific Python Notes | Kyle M. Douglass</title>
+<link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
+<link rel="canonical" href="http://kmdouglass.github.io/stories/notes/scipy.html">
+<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><meta name="description" itemprop="description" content="Notes on using Python tools for scientific applications.">
+<meta name="author" content="Kyle M. Douglass">
+<meta property="og:site_name" content="Kyle M. Douglass">
+<meta property="og:title" content="Scientific Python Notes">
+<meta property="og:url" content="http://kmdouglass.github.io/stories/notes/scipy.html">
+<meta property="og:description" content="Notes on using Python tools for scientific applications.">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2015-01-14T00:00:00+01:00">
+<meta property="article:tag" content="python">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
 
 <!-- Menubar -->
 
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="container">
+<nav class="navbar navbar-default navbar-static-top" role="navigation"><div class="container">
 <!-- This keeps the margins nice -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -66,8 +40,7 @@
 <!-- /.navbar-header -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
-                
-                <li>
+<li>
 <a href="../../archive.html">Archive</a>
                 </li>
 <li>
@@ -88,40 +61,28 @@
                 
             </li>
 </ul>
-
-            <ul class="nav navbar-nav navbar-right">
-                
-                
-                    
-    <li>
+<ul class="nav navbar-nav navbar-right">
+<li>
     <a href="scipy.org" id="sourcelink">Source</a>
     </li>
 
                 
             </ul>
-        </div>
+</div>
 <!-- /.navbar-collapse -->
     </div>
 <!-- /.container -->
-</nav>
-
-<!-- End of Menubar -->
-
-<div class="container" id="content" role="main">
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
     <div class="body-content">
         <!--Body content-->
         <div class="row">
             
             
-<article class="storypage" itemscope="itemscope" itemtype="http://schema.org/Article">
-    <header>
-        
-    <h1 class="p-name entry-title" itemprop="headline name"><a href="#" class="u-url">Scientific Python Notes</a></h1>
+<article class="storypage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="#" class="u-url">Scientific Python Notes</a></h1>
 
         
 
-    </header>
-    <div class="e-content entry-content" itemprop="articleBody text">
+    </header><div class="e-content entry-content" itemprop="articleBody text">
     <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
@@ -146,6 +107,13 @@
 <ul>
 <li><a href="scipy.html#sec-2-1">2.1. Building Python and installing binaries to a non-default location</a></li>
 <li><a href="scipy.html#sec-2-2">2.2. Setting the interpreter in a virtualenv</a></li>
+</ul>
+</li>
+<li>
+<a href="scipy.html#sec-3">3. Installing Spyder inside a virtuanlenv</a>
+<ul>
+<li><a href="scipy.html#sec-3-1">3.1. Install SIP and PyQt4 inside the virtualenv</a></li>
+<li><a href="scipy.html#sec-3-2">3.2. Install Spyder</a></li>
 </ul>
 </li>
 </ul>
@@ -174,7 +142,6 @@ associated to the <i>spines</i> field of your axis object.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-1-2" class="outline-3">
 <h3 id="sec-1-2">
 <span class="section-number-3">1.2</span> Changing the frame linewidth</h3>
@@ -191,7 +158,6 @@ method of an axes <i>spine</i> field.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-1-3" class="outline-3">
 <h3 id="sec-1-3">
 <span class="section-number-3">1.3</span> Remove the legend frame</h3>
@@ -204,6 +170,7 @@ method of an axes <i>spine</i> field.
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-1-4" class="outline-3">
 <h3 id="sec-1-4">
 <span class="section-number-3">1.4</span> Tight layout (fixing clipped axes titles)</h3>
@@ -241,7 +208,6 @@ and <b>h_pad</b> add padding between individual subplots.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-1-5" class="outline-3">
 <h3 id="sec-1-5">
 <span class="section-number-3">1.5</span> Changing matplotlib font families and size</h3>
@@ -300,7 +266,6 @@ rm -ri ~/.cache/matplotlib/tex.cache
 </div>
 </div>
 </div>
-
 <div id="outline-container-sec-2" class="outline-2">
 <h2 id="sec-2">
 <span class="section-number-2">2</span> Installing and working with multiple versions of Python</h2>
@@ -344,7 +309,6 @@ and libraries will be placed in these directories instead.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-2-2" class="outline-3">
 <h3 id="sec-2-2">
 <span class="section-number-3">2.2</span> Setting the interpreter in a virtualenv</h3>
@@ -357,6 +321,88 @@ in the mkvirtualenv command:
 
 <div class="highlight"><pre>mkvirtualenv -p ~/Python3.4.2/bin/python3.4 MY_VENV_NAME
 </pre></div>
+<hr>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3">
+<span class="section-number-2">3</span> Installing Spyder inside a virtuanlenv</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Spyder is a pretty good Python IDE for scientific applications. It
+mimics Matlab's IDE functionality, which, to be honest, is really
+great even considering the annoying things about the Matlab language.
+</p>
+
+<p>
+Unfortunately, Spyder takes little bit of effort to work with
+virtualenvs.
+</p>
+<hr>
+</div>
+
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1">
+<span class="section-number-3">3.1</span> Install SIP and PyQt4 inside the virtualenv</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+The primary difficulty with installing Spyder in a virtualenv is not
+Spyder itself, but two of its prerequisites: SIP and PyQt4.
+</p>
+
+<p>
+<a href="http://amyboyle.ninja/Python-Qt-and-virtualenv-in-linux/">Fortunately, there is a relatively painless way</a> to build SIP and PyQt4
+for every virtualenv that you want to use Spyder with.
+</p>
+
+<p>
+First, make sure you have the required libraries installed:
+</p>
+
+<div class="highlight"><pre>sudo apt-get install python2.7-dev libxext-dev qt4-dev-tools build-essential
+</pre></div>
+
+<p>
+Next, download the SIP and PyQt4 Linux source tarballs and unzip them
+into separate directories. <b>Enable your virtualenv using</b> <code>workon
+MY_VIRTUALENV</code>, enter the SIP directory, and type <code>python
+config.py</code>. When it's done you should see that SIP will be installed
+to your virtualenv's directory, not your site directory. Finish the
+SIP installation with <code>make</code> and <code>sudo make install</code>.
+</p>
+
+<p>
+After this, move inside the PyQt4 source directory. Configure the Make
+file with
+</p>
+
+<div class="highlight"><pre>python configure-ng.py -q /usr/bin/qmake-qt4
+</pre></div>
+
+<p>
+Follow this with another <code>make</code> and <code>sudo make install</code>.
+</p>
+<hr>
+</div>
+</div>
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2">
+<span class="section-number-3">3.2</span> Install Spyder</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+Once SIP and PyQt4 are installed, it's really easy to install Spyder:
+</p>
+
+<div class="highlight"><pre>pip install spyder
+</pre></div>
+
+<p>
+Its executable is stored in
+/venv_directories/my_virtualenv/bin/spyder3 (if you're using
+Python3). Note that you need to build PyQt4 every time you want to
+install Spyder inside a different virtualenv.
+</p>
 </div>
 </div>
 </div>
@@ -364,30 +410,20 @@ in the mkvirtualenv command:
     
 
 </article>
-
-        </div>
+</div>
         <!--End of body content-->
 
-        <footer>
+        <footer id="footer">
             Contents © 2015         <a href="mailto:kyle.douglass@epfl.ch">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
             
         </footer>
-    </div>
+</div>
 </div>
 
 
-            <script src="../../assets/js/all-nocdn.js"></script>
-    
-
-    <script>$('a.image-reference:not(.islink)').colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script>
-    <!-- fancy dates -->
-    <script>
+            <script src="../../assets/js/all-nocdn.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
     moment.locale("");
     fancydates(0, "YYYY-MM-DD HH:mm");
-    </script>
-    <!-- end fancy dates -->
-    
-
-
+    </script><!-- end fancy dates -->
 </body>
 </html>

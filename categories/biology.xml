@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Kyle M. Douglass (biology)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link href="http://kmdouglass.github.io/categories/biology.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Sun, 19 Apr 2015 10:03:38 GMT</lastBuildDate><generator>http://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Overcoming complexity in biology</title><link>http://kmdouglass.github.io/posts/overcoming-complexity-in-biology.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;p&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0"><channel><title>Kyle M. Douglass (biology)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link href="http://kmdouglass.github.io/categories/biology.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Sun, 05 Jul 2015 08:54:36 GMT</lastBuildDate><generator>http://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Overcoming complexity in biology</title><link>http://kmdouglass.github.io/posts/overcoming-complexity-in-biology.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;p&gt;
 I've been sitting in on a short lecture series presented by &lt;a href="http://markolab.bmbcb.northwestern.edu/marko/"&gt;Prof. John
 Marko&lt;/a&gt; here at the EPFL. The topic is on the biophysics of DNA and
 covers what is probably at least a 25 year span of research that has
@@ -108,7 +108,8 @@ The authors explain that &lt;i&gt;-omics&lt;/i&gt; approaches have three compone
 which I quote from their article:
 &lt;/p&gt;
 
-&lt;ol class="org-ol"&gt;&lt;li&gt;A suite of (typically high-throughput) technologies address a
+&lt;ol class="org-ol"&gt;
+&lt;li&gt;A suite of (typically high-throughput) technologies address a
 well-defined collection of biological objects, the pertinent
 &lt;i&gt;-ome&lt;/i&gt;.
 &lt;/li&gt;
@@ -120,7 +121,9 @@ catalog available as a database.
 &lt;li&gt;Beyond the enumeration of objects, one strives to cover the
 quantitative aspects of the &lt;i&gt;-ome&lt;/i&gt; at hand.
 &lt;/li&gt;
-&lt;/ol&gt;&lt;p&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;
 While grand in scope, these approaches carry difficulties that to me
 appear unique. As stated above, &lt;i&gt;-omic&lt;/i&gt; information is acquired
 through high-throughput techniques, which means that they generate
@@ -139,7 +142,8 @@ The authors specifically enumerate four limitations that could
 adversely affect &lt;i&gt;-omics&lt;/i&gt; studies:
 &lt;/p&gt;
 
-&lt;ol class="org-ol"&gt;&lt;li&gt;Technical limitations
+&lt;ol class="org-ol"&gt;
+&lt;li&gt;Technical limitations
 &lt;/li&gt;
 &lt;li&gt;Limitations in the experimental design (such as heavy reliance on
 assumptions)
@@ -148,7 +152,9 @@ assumptions)
 &lt;/li&gt;
 &lt;li&gt;Limitations in the analysis
 &lt;/li&gt;
-&lt;/ol&gt;&lt;p&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;
 Particularly, the conceptual limitations struck me as
 intriguing. The authors offered the example of genomics studies in
 which the notion of a "gene" is not currently a well-defined

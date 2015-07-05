@@ -1,55 +1,29 @@
 <!DOCTYPE html>
 <html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
-    <head>
-    <meta charset="utf-8">
-    <meta name="description" content="How to setup Nikola for making static websites">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Nikola | Kyle M. Douglass</title>
-
-    
-            <link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
-
-    
-            <link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
-
-      <link rel="canonical" href="http://kmdouglass.github.io/stories/notes/nikola.html">
-
-
-
-
-    
-        <!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]-->
-
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-
-    
-
-    <meta name="description" itemprop="description" content="How to setup Nikola for making static websites">
-    <meta name="author" content="Kyle M. Douglass">
-    
-    <meta property="og:site_name" content="Kyle M. Douglass">
-    <meta property="og:title" content="Nikola">
-    <meta property="og:url" content="http://kmdouglass.github.io/stories/notes/nikola.html">
-    <meta property="og:description" content="How to setup Nikola for making static websites">
-    <meta property="og:type" content="article">
-    <meta property="article:published_time" content="2014-12-26T00:00:00+01:00">
-           <meta property="article:tag" content="nikola">
-
-    
-
-    
-
-
-
+<head>
+<meta charset="utf-8">
+<meta name="description" content="How to setup Nikola for making static websites">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nikola | Kyle M. Douglass</title>
+<link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
+<link rel="canonical" href="http://kmdouglass.github.io/stories/notes/nikola.html">
+<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><meta name="description" itemprop="description" content="How to setup Nikola for making static websites">
+<meta name="author" content="Kyle M. Douglass">
+<meta property="og:site_name" content="Kyle M. Douglass">
+<meta property="og:title" content="Nikola">
+<meta property="og:url" content="http://kmdouglass.github.io/stories/notes/nikola.html">
+<meta property="og:description" content="How to setup Nikola for making static websites">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2014-12-26T00:00:00+01:00">
+<meta property="article:tag" content="nikola">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
 
 <!-- Menubar -->
 
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="container">
+<nav class="navbar navbar-default navbar-static-top" role="navigation"><div class="container">
 <!-- This keeps the margins nice -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -66,8 +40,7 @@
 <!-- /.navbar-header -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
-                
-                <li>
+<li>
 <a href="../../archive.html">Archive</a>
                 </li>
 <li>
@@ -88,40 +61,28 @@
                 
             </li>
 </ul>
-
-            <ul class="nav navbar-nav navbar-right">
-                
-                
-                    
-    <li>
+<ul class="nav navbar-nav navbar-right">
+<li>
     <a href="nikola.org" id="sourcelink">Source</a>
     </li>
 
                 
             </ul>
-        </div>
+</div>
 <!-- /.navbar-collapse -->
     </div>
 <!-- /.container -->
-</nav>
-
-<!-- End of Menubar -->
-
-<div class="container" id="content" role="main">
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
     <div class="body-content">
         <!--Body content-->
         <div class="row">
             
             
-<article class="storypage" itemscope="itemscope" itemtype="http://schema.org/Article">
-    <header>
-        
-    <h1 class="p-name entry-title" itemprop="headline name"><a href="#" class="u-url">Nikola</a></h1>
+<article class="storypage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="#" class="u-url">Nikola</a></h1>
 
         
 
-    </header>
-    <div class="e-content entry-content" itemprop="articleBody text">
+    </header><div class="e-content entry-content" itemprop="articleBody text">
     <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
@@ -181,7 +142,6 @@ URL ends in '/'.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-1-2" class="outline-3">
 <h3 id="sec-1-2">Install and configure the org-mode plugin</h3>
 <div class="outline-text-3" id="text-1-2">
@@ -243,7 +203,6 @@ at the top of the org-file in a comments section:
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-1-3" class="outline-3">
 <h3 id="sec-1-3">Setting the github_deploy variables</h3>
 <div class="outline-text-3" id="text-1-3">
@@ -267,7 +226,6 @@ line for the <code>GITHUB_DEPLOY_BRANCH</code> variable:
 </div>
 </div>
 </div>
-
 <div id="outline-container-sec-2" class="outline-2">
 <h2 id="sec-2">Customization</h2>
 <div class="outline-text-2" id="text-2">
@@ -283,7 +241,6 @@ Mako at <a href="http://www.shisaa.jp/postset/nikola-web.html"></a><a href="http
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-2-2" class="outline-3">
 <h3 id="sec-2-2">Set the theme to bootstrap3 with a color scheme from bootswatch</h3>
 <div class="outline-text-3" id="text-2-2">
@@ -310,7 +267,6 @@ conf.py.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-2-3" class="outline-3">
 <h3 id="sec-2-3">Changing bootswatch navbar elements</h3>
 <div class="outline-text-3" id="text-2-3">
@@ -323,17 +279,14 @@ the blue one.
 
 <p>
 To change this, I had to change the <code>base.tmpl</code> file in
-<code>themes/bootstrap3/templates/base.tmpl</code>. In the Menubar section, I
-found the tag 
+<code>themes/bootstrap3/templates/base.tmpl</code>. (If you're using a
+virtualenv, you will find these inside the nikola site-packages
+data folder; see the end of this section.) In the Menubar section,
+I found the tag
 </p>
 
-<p>
-   #+BEGIN_SRC html
-&lt;nav class="navbar navbar-inverse navbar-fixed-top" role="navigation"&gt;
-</p>
-<p>
-#+END_SRC html
-</p>
+<div class="highlight"><pre>&amp;lt;nav class="navbar navbar-inverse navbar-fixed-top" role="navigation"&amp;gt;
+</pre></div>
 
 <p>
 and changed navbar-inverse to navbar-default, the name of the
@@ -349,7 +302,6 @@ find them in
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-2-4" class="outline-3">
 <h3 id="sec-2-4">Navigation links</h3>
 <div class="outline-text-3" id="text-2-4">
@@ -362,7 +314,6 @@ handbook: <a href="http://getnikola.com/handbook.html#configuration">http://getn
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-2-5" class="outline-3">
 <h3 id="sec-2-5">Adding Disqus comments</h3>
 <div class="outline-text-3" id="text-2-5">
@@ -388,7 +339,6 @@ instructions</a>.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-2-6" class="outline-3">
 <h3 id="sec-2-6">Redirects</h3>
 <div class="outline-text-3" id="text-2-6">
@@ -409,7 +359,6 @@ the <b>REDIRECTIONS</b> variable to the following:
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-2-7" class="outline-3">
 <h3 id="sec-2-7">Code syntax highlighting and the orgmode plugin</h3>
 <div class="outline-text-3" id="text-2-7">
@@ -445,6 +394,7 @@ highlighting worked on my site.
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-2-8" class="outline-3">
 <h3 id="sec-2-8">Teasers</h3>
 <div class="outline-text-3" id="text-2-8">
@@ -464,7 +414,6 @@ work.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-2-9" class="outline-3">
 <h3 id="sec-2-9">Adding MathJax support to all pages</h3>
 <div class="outline-text-3" id="text-2-9">
@@ -493,7 +442,6 @@ and simple!
 </div>
 </div>
 </div>
-
 <div id="outline-container-sec-3" class="outline-2">
 <h2 id="sec-3">Errors</h2>
 <div class="outline-text-2" id="text-3">
@@ -527,30 +475,20 @@ webpages.
     
 
 </article>
-
-        </div>
+</div>
         <!--End of body content-->
 
-        <footer>
+        <footer id="footer">
             Contents © 2015         <a href="mailto:kyle.douglass@epfl.ch">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
             
         </footer>
-    </div>
+</div>
 </div>
 
 
-            <script src="../../assets/js/all-nocdn.js"></script>
-    
-
-    <script>$('a.image-reference:not(.islink)').colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script>
-    <!-- fancy dates -->
-    <script>
+            <script src="../../assets/js/all-nocdn.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
     moment.locale("");
     fancydates(0, "YYYY-MM-DD HH:mm");
-    </script>
-    <!-- end fancy dates -->
-    
-
-
+    </script><!-- end fancy dates -->
 </body>
 </html>

@@ -126,12 +126,14 @@ nikola bootswatch_theme -n custom_theme -s darkly -p bootstrap3
    the blue one.
 
    To change this, I had to change the =base.tmpl= file in
-   =themes/bootstrap3/templates/base.tmpl=. In the Menubar section, I
-   found the tag 
+   =themes/bootstrap3/templates/base.tmpl=. (If you're using a
+   virtualenv, you will find these inside the nikola site-packages
+   data folder; see the end of this section.) In the Menubar section,
+   I found the tag
 
-   #+BEGIN_SRC html
+   #+BEGIN_SRC
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-   #+END_SRC html
+   #+END_SRC
 
    and changed navbar-inverse to navbar-default, the name of the
    swatch element.

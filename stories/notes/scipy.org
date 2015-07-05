@@ -145,4 +145,55 @@ binaries completely separate from the system-level Python install.
    #+BEGIN_SRC sh
 mkvirtualenv -p ~/Python3.4.2/bin/python3.4 MY_VENV_NAME
    #+END_SRC
+-----
 
+* Installing Spyder inside a virtuanlenv
+Spyder is a pretty good Python IDE for scientific applications. It
+mimics Matlab's IDE functionality, which, to be honest, is really
+great even considering the annoying things about the Matlab language.
+
+Unfortunately, Spyder takes little bit of effort to work with
+virtualenvs.
+-----
+
+** Install SIP and PyQt4 inside the virtualenv
+The primary difficulty with installing Spyder in a virtualenv is not
+Spyder itself, but two of its prerequisites: SIP and PyQt4.
+
+[[http://amyboyle.ninja/Python-Qt-and-virtualenv-in-linux/][Fortunately, there is a relatively painless way]] to build SIP and PyQt4
+for every virtualenv that you want to use Spyder with.
+
+First, make sure you have the required libraries installed:
+
+#+BEGIN_SRC sh
+sudo apt-get install python2.7-dev libxext-dev qt4-dev-tools build-essential
+#+END_SRC
+
+Next, download the SIP and PyQt4 Linux source tarballs and unzip them
+into separate directories. *Enable your virtualenv using* =workon
+MY_VIRTUALENV=, enter the SIP directory, and type =python
+config.py=. When it's done you should see that SIP will be installed
+to your virtualenv's directory, not your site directory. Finish the
+SIP installation with =make= and =sudo make install=.
+
+After this, move inside the PyQt4 source directory. Configure the Make
+file with
+
+#+BEGIN_SRC sh
+python configure-ng.py -q /usr/bin/qmake-qt4
+#+END_SRC
+
+Follow this with another =make= and =sudo make install=.
+-----
+
+** Install Spyder
+Once SIP and PyQt4 are installed, it's really easy to install Spyder:
+
+#+BEGIN_SRC
+pip install spyder
+#+END_SRC
+
+Its executable is stored in
+/venv_directories/my_virtualenv/bin/spyder3 (if you're using
+Python3). Note that you need to build PyQt4 every time you want to
+install Spyder inside a different virtualenv.
