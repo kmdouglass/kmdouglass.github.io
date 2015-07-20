@@ -926,3 +926,27 @@ sudo update-grub
    and successfully loaded the stranded partition from the bootloader
    on the USB stick.
 
+-----
+
+** GRUB troubleshooting
+
+*** GRUB installation hangs when making device.map
+    When I recently upgraded from Debian Wheezy to Jessie, I
+    encountered a lot of difficulty with GRUB hanging during its
+    installation. This forced me to rescure my partition with a
+    LiveCD, which wasn't easy because even during rescue the GRUB
+    installation would fail.
+
+    Typically, it would hang just after setting up
+    memtest86-multiboot. The problem, I discovered, lay with probing
+    other hard drives for different operating systems. Since I no
+    longer needed my Windows installation (I used a virtual machine
+    instead), I disabled the OS prober by adding the following line to
+    the top of =/etc/default/grub=:
+
+    #+BEGIN_SRC
+GRUB_DISABLE_OS_PROBER=true
+    #+END_SRC
+
+    I then killed all GRUB processes and ran =sudo update-grub= to
+    configure GRUB on my system without the Windows partitions.
