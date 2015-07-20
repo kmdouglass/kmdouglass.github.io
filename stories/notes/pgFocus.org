@@ -11,6 +11,15 @@
 #+OPTIONS: toc:nil num:t
 #+TOC: headlines 3
 
+* Important Note
+  Parts of this page are now out-of-date. I do plan to update this
+  page, but if you want more information now on how to setup and use
+  pgFocus, please e-mail me directly at [[mailto:kyle.m.douglass@gmail.com][kyle.m.douglass@gmail.com]] or
+  join the pgFocus discussion forum at
+  [[https://groups.google.com/forum/?hl=en&fromgroups#!forum/pgfocus]].
+
+-----
+
 * ESImaging DAC (Analog Source) Setup
   I used an [[http://www.esimagingsolutions.com/esio-controllers/esio-12-bit-dac-controller][ESImaging DAC controller]] as the analog voltage source that
   drives our piezo objective scanner. This has to be configured to
