@@ -17,6 +17,51 @@
   performing common tasks in Windows.
 
 -----  
+  
+* Manual deletion of drivers with PnPUtil
+  
+  In the past I have had trouble with FTDI USB chips and needed to
+  completely wipe the Windows driver store of these drivers. It is not
+  recommended to manually delete the files from the driver store
+  (besides, overriding the permissions is a big pain in the
+  butt). Instead, Microsoft recommends using the tool PnPUtil.
+
+  To print a list of installed drivers, enter the following command
+  from a command prompt:
+
+  #+BEGIN_SRC
+pnputil -e > C:\drivers.txt
+  #+END_SRC
+
+  This will print information about all the installed drivers to
+  C:\drivers.txt.
+
+  To delete a specific driver, you can look inside the file, find the
+  associated oemXX.inf (where XX is a specific number for each driver)
+  and issue the following command:
+
+  #+BEGIN_SRC
+pnputil -d oemXX.inf
+  #+END_SRC
+
+You may also need to issue a -f flag to force a deletion if the device
+is still in use:
+
+  #+BEGIN_SRC
+pnputil -f -d oemXX.inf
+  #+END_SRC
+
+-----
+
+* Disabling CheckDisk (CHKDSK) on startup
+  Windows check disk causes me all sorts of pain at work. I can
+  disable it for certain drives by adding */k:<drive letter>* before
+  the asterisk in the *BootExecute* Windows registry key at
+  *HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session
+  Manager\*. I disabled the F:\ and M:\ drives by adding /k:M and /k:F
+  before the *.
+
+-----
 
 * Bash prompt in Windows
 
@@ -75,7 +120,6 @@ C:\MinGW\bin;C:\MinGW\msys\1.0\bin
    This allowed me to use bash as the default shell. 
 
 -----
-
 * Python in Windows
 
 ** Python shell and IPython in Emacs + Windows
@@ -252,11 +296,3 @@ easy_install matplotlib-1.3.1.win-amd64-py3.4.exe
    pip3.
 
 -----
-  
-* Disabling CheckDisk (CHKDSK) on startup
-  Windows check disk causes me all sorts of pain at work. I can
-  disable it for certain drives by adding */k:<drive letter>* before
-  the asterisk in the *BootExecute* Windows registry key at
-  *HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session
-  Manager\*. I disabled the F:\ and M:\ drives by adding /k:M and /k:F
-  before the *.
