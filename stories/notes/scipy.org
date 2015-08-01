@@ -147,6 +147,13 @@ mkvirtualenv -p ~/Python3.4.2/bin/python3.4 MY_VENV_NAME
    #+END_SRC
 -----
 
+** Required system packages for optional Python features
+   The following Debian system packages (I am using Jessie now) are
+   required to build Python with some of its optional features:
+   + Tkinter :: tk-dev and possibly python3-tk
+   + dbm :: libgdbm-dev
+-----
+
 * Installing Spyder inside a virtuanlenv
 Spyder is a pretty good Python IDE for scientific applications. It
 mimics Matlab's IDE functionality, which, to be honest, is really
