@@ -1,5 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kyle M. Douglass</title><link>http://kmdouglass.github.io/</link><description>Biophysics, optics, and programming.</description><atom:link type="application/rss+xml" rel="self" href="http://kmdouglass.github.io/rss.xml"></atom:link><language>en</language><lastBuildDate>Fri, 26 Jun 2015 09:02:56 GMT</lastBuildDate><generator>http://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Paraxial Optics (2): What problem does it solve?</title><link>http://kmdouglass.github.io/posts/paraxial-optics-2-what-problem-does-it-solve.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div id="outline-container-sec-1" class="outline-2"&gt;
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Kyle M. Douglass</title><link>http://kmdouglass.github.io/</link><description>Biophysics, optics, and programming.</description><atom:link href="http://kmdouglass.github.io/rss.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Wed, 26 Aug 2015 07:31:12 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>What's the difference between a back focal plane and pupil plane?</title><link>http://kmdouglass.github.io/posts/whats-the-difference-between-a-back-focal-plane-and-pupil-plane.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;p&gt;
+Yesterday in the lab I asked one of my colleagues whether she knew
+what the pupil plane of a microscope objective was. Her answer was
+no. I then unknowingly proceeded to give her a description which I now
+realize was false. I said that the pupil plane is the plane near the
+backside of the objective where the light intensity is proportional to
+the Fourier transform of the image. Later that evening, I realized
+that this explanation was, in fact, wrong. I had described to her what
+is, in fact, the &lt;i&gt;back focal plane&lt;/i&gt; for an infinity-corrected objective.
+&lt;/p&gt;
+
+&lt;p&gt;
+Don't worry, I will correct myself when I see her later
+today. However, this experience does raise one important question that
+I have never seriously considered in optics: what is the meaningful
+difference between the pupil plane of an optical system and its back
+focal plane?
+&lt;/p&gt;
+
+&lt;p&gt;
+First, I should point out that there is no difference between a &lt;i&gt;back&lt;/i&gt;
+focal plane and one of the two focal planes of an objective; these are
+merely semantics that reflect the fact that we think of the sample as
+being in front of the objective. The back focal plane is therefore the
+focal plane of the objective located on the side opposite the
+sample. Now, everyone who has taken a Fourier optics class probably
+learned the following mantra:
+&lt;/p&gt;
+
+&lt;div align="center"&gt;
+
+&lt;p&gt;
+&lt;b&gt;The focal plane of a lens contains the Fourier transform of the
+sample.&lt;/b&gt;
+&lt;/p&gt;
+
+&lt;/div&gt;
+
+&lt;p&gt;
+Of course, this statement is usually what we remember, but in fact it
+should look more like this:
+&lt;/p&gt;
+
+&lt;div align="center"&gt;
+
+
+&lt;p&gt;
+&lt;b&gt;The focal plane of a lens contains the Fourier transform of the
+sample, except for every other detail we ignore in the math.&lt;/b&gt;
+&lt;/p&gt;
+
+&lt;/div&gt;
+
+
+&lt;p&gt;
+While it's true that the light intensity here reflects the sample's
+two-dimensional Fourier transform, the general case often contains
+additional phase factors and expressions to account for the pupil size
+and apodization (see &lt;a href="https://books.google.ch/books?id=ow5xs_Rtt9AC&amp;amp;printsec=frontcover&amp;amp;dq=goodman+fourier+optics&amp;amp;hl=en&amp;amp;sa=X&amp;amp;ved=0CB0Q6AEwAGoVChMI-5vjt5jGxwIVCMUUCh37ogzP#v=onepage&amp;amp;q=goodman%20fourier%20optics&amp;amp;f=false"&gt;Goodman&lt;/a&gt;, section 5.2). Regardless, it is in the
+back focal plane where the light intensity contains information on the
+angular spectrum that makes up the object.
+&lt;/p&gt;
+
+&lt;p&gt;
+The pupil plane, however, contains either the image of the objective's
+aperture stop or the physical stop itself, depending on what sets the
+limit on the numerical aperture of the objective in the infinity space
+(again, see &lt;a href="https://books.google.ch/books?id=ow5xs_Rtt9AC&amp;amp;printsec=frontcover&amp;amp;dq=goodman+fourier+optics&amp;amp;hl=en&amp;amp;sa=X&amp;amp;ved=0CB0Q6AEwAGoVChMI-5vjt5jGxwIVCMUUCh37ogzP#v=onepage&amp;amp;q=goodman%20fourier%20optics&amp;amp;f=false"&gt;Goodman&lt;/a&gt;, appendix B). But the important thing for
+microscopists is that the pupil plane helps determine not only the
+numerical apeture, but is also used as the reference plane for
+quantifying the objective's aberrations. This is because, for a
+diffraction-limited system, the wavefront in the pupil plane will be a
+spherical wave converging towards the image and truncated by the
+aperture stop (&lt;a href="https://books.google.ch/books?id=ow5xs_Rtt9AC&amp;amp;printsec=frontcover&amp;amp;dq=goodman+fourier+optics&amp;amp;hl=en&amp;amp;sa=X&amp;amp;ved=0CB0Q6AEwAGoVChMI-5vjt5jGxwIVCMUUCh37ogzP#v=onepage&amp;amp;q=goodman%20fourier%20optics&amp;amp;f=false"&gt;Goodman&lt;/a&gt; again discusses this in section
+6.1). Deviations from the spherical reference wave serve as the means
+to quantify the aberrations in a system.
+&lt;/p&gt;
+
+&lt;p&gt;
+The back focal plane is additionally interesting because it is used in
+Fourier microscopy, for which many setups have been devised to image
+it, rather than the sample (see Figure 1 in &lt;a href="http://arxiv.org/abs/1507.04037"&gt;this excellent arXiv
+submission&lt;/a&gt;.) What I really am wondering now is how one would go about
+imaging the pupil plane as a means of exploring an objective's
+aberrations, and whether this is at all feasible.
+&lt;/p&gt;</description><category>optics</category><guid>http://kmdouglass.github.io/posts/whats-the-difference-between-a-back-focal-plane-and-pupil-plane.html</guid><pubDate>Wed, 26 Aug 2015 06:49:13 GMT</pubDate></item><item><title>Paraxial Optics (2): What problem does it solve?</title><link>http://kmdouglass.github.io/posts/paraxial-optics-2-what-problem-does-it-solve.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div id="outline-container-sec-1" class="outline-2"&gt;
 &lt;h2 id="sec-1"&gt;Summary&lt;/h2&gt;
 &lt;div class="outline-text-2" id="text-1"&gt;
 &lt;ol class="org-ol"&gt;
@@ -1294,102 +1379,4 @@ noise. To understand what the original structure was, we have to
 I think it's interesting to note that everytime a random change to
 the original molecule positions occurred, we lose some information
 about the structure.
-&lt;/p&gt;</description><category>sensing</category><category>super-resolution</category><guid>http://kmdouglass.github.io/posts/measurements.html</guid><pubDate>Thu, 18 Dec 2014 23:00:00 GMT</pubDate></item><item><title>Parallelized confocal microscopy with multiply scattered light</title><link>http://kmdouglass.github.io/posts/confocal-by-scattering.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;p&gt;
-My PhD work dealt with the topic of sensing and imaging using light
-that had been transmitted through a random medium. This topic is
-often applied to practical problems such as imaging through a
-turbulent atmosphere or detecting objects, like a tumor, buried
-beneath an opaque substance, like skin and muscle tissue. Though I
-don't necessarily work in this field anymore, I still follow its
-developments occasionally.
-&lt;/p&gt;
-
-&lt;p&gt;
-A few articles appeared within the last week in journals like &lt;a href="http://www.nature.com/nphoton/journal/v8/n10/full/nphoton.2014.189.html"&gt;Nature&lt;/a&gt;
-Photonics]] about the problem of imaging through walls. This problem
-has been studied since the late 1980's in a number of papers,
-including the notable &lt;a href="http://journals.aps.org/prl/abstract/10.1103/PhysRevLett.61.834"&gt;Feng, Kane, Lee, and Stone&lt;/a&gt; paper and &lt;a href="http://www.sciencedirect.com/science/article/pii/037596019090615U#"&gt;Freund's
-discussion&lt;/a&gt; of using cross-correlating two speckle patterns, one of
-which is a reference wave, to do a sort of holographic imaging. The
-recent work continues from these original ideas and applies them to
-microscopy.
-&lt;/p&gt;
-
-&lt;p&gt;
-One article appeared on the arXiv and is from the &lt;a href="http://arxiv.org/abs/1410.2079"&gt;Mosk and Lagendijk&lt;/a&gt;
-camp. In this article, they exploit the optical memory effect,
-whereby a speckle pattern generated by the multiple scattering of a
-plane wave by a random slab is simply translated as the angle of
-incidence of the plane wave is varied. If a thin fluorescent target
-is placed directly on the opposite face of the scattering slab, it
-will be excited by the speckle pattern and emit a fluorescence
-signal that can be captured by an objective. Changing the angle of
-incidence of the plane wave then allows for multiple points to scan
-the sample in parallel. Ultimately, a number of images are taken
-with the sample illuminated by several transversally shifted speckle
-patterns and the resulting 4D data cube (corresponding to the
-sample's x-y dimensions and the two tilt angles of the incident
-plane wave) is used to render an image with improved resolution.
-&lt;/p&gt;
-
-&lt;p&gt;
-As stated in the article's title, the resolution improvement is
-relative to that of a widefield microscope. They obtain an effective
-point spread function of about 140 nm and a field of view of 10
-microns by 10 microns.
-&lt;/p&gt;
-
-&lt;p&gt;
-So how does the technique work? My first thought was that the memory
-effect is simply another way of saying that the speckle pattern acts
-as a number of confocal-like point sources, which essentially means
-this is something of a parallelized confocal microscope. However,
-I'm not sure this is correct for two reasons: 1) there is no
-detection pin hole, and 2) the angle of incidence of the plane wave
-is scanned over a small angular range so that the speckle pattern is
-simply translated. If the angle of incidence is so great that the
-linear change in phase of the plane wave is greater than roughly the
-size of the scattering slab, the speckle pattern is no longer simply
-translated but changes completely.
-&lt;/p&gt;
-
-&lt;p&gt;
-In reality, the ultimate resolution of this technique is the average
-speckle grain size, which can't be less than about half the
-wavelength. This suggests that the angular spectrum of the speckle
-pattern is what determines the resolution improvement.
-&lt;/p&gt;
-
-&lt;p&gt;
-The speckle pattern in a region bounded by the maximum extent of the
-memory effect has a fixed angular spectrum and translating the
-speckle pattern only changes the phase of the spectrum. So, scanning
-a target with a speckle pattern produces beat patterns containing
-high spatial frequency information that can propgate on the low
-spatial frequency waves that reach the objective. Translating the
-speckle pattern then performs a sort of phase-shifting
-interferometry that allows for both intensity and phase retrieval of
-the object.
-&lt;/p&gt;
-
-&lt;p&gt;
-Importantly, if the speckle pattern is scanned outside the range of
-the memory effect, the speckle's angular spectrum within the region
-changes completely so that the original reference wave is lost. The
-fact that the object is fluorescent and not simply scattering the
-light shouldn't matter if the fluorescence intensity is linear with
-the excitation light intensity. However, if the fluorescence has
-saturated at the average intensity of the speckle pattern, then I'm
-not exactly sure that this technique will work (though maybe some
-sort of nonlinear structured illumination microscopy could be
-achieved).
-&lt;/p&gt;
-
-&lt;p&gt;
-Overall it's a neat demonstration and worth the exercise to
-understand it, though I'm doubtful that at this point it would be
-useful for applications in the life sciences. This is because the
-resolution isn't that much better than a spinning disk confocal
-microscope, which has a larger field of view and would arguably be
-easier to use by biologists.
-&lt;/p&gt;</description><category>microscopy</category><category>optics</category><guid>http://kmdouglass.github.io/posts/confocal-by-scattering.html</guid><pubDate>Wed, 08 Oct 2014 22:00:00 GMT</pubDate></item></channel></rss>
+&lt;/p&gt;</description><category>sensing</category><category>super-resolution</category><guid>http://kmdouglass.github.io/posts/measurements.html</guid><pubDate>Thu, 18 Dec 2014 23:00:00 GMT</pubDate></item></channel></rss>
