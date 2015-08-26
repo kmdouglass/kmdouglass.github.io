@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Kyle M. Douglass</title><link>http://kmdouglass.github.io/</link><description>Biophysics, optics, and programming.</description><atom:link href="http://kmdouglass.github.io/rss.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Wed, 26 Aug 2015 07:31:12 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>What's the difference between a back focal plane and pupil plane?</title><link>http://kmdouglass.github.io/posts/whats-the-difference-between-a-back-focal-plane-and-pupil-plane.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;p&gt;
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Kyle M. Douglass</title><link>http://kmdouglass.github.io/</link><description>Biophysics, optics, and programming.</description><atom:link rel="self" href="http://kmdouglass.github.io/rss.xml" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Wed, 26 Aug 2015 10:03:45 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>What's the difference between a back focal plane and pupil plane?</title><link>http://kmdouglass.github.io/posts/whats-the-difference-between-a-back-focal-plane-and-pupil-plane.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;p&gt;
 Yesterday in the lab I asked one of my colleagues whether she knew
 what the pupil plane of a microscope objective was. Her answer was
 no. I then unknowingly proceeded to give her a description which I now
@@ -7,7 +7,7 @@ realize was false. I said that the pupil plane is the plane near the
 backside of the objective where the light intensity is proportional to
 the Fourier transform of the image. Later that evening, I realized
 that this explanation was, in fact, wrong. I had described to her what
-is, in fact, the &lt;i&gt;back focal plane&lt;/i&gt; for an infinity-corrected objective.
+is the &lt;i&gt;back focal plane&lt;/i&gt; for an infinity-corrected objective.
 &lt;/p&gt;
 
 &lt;p&gt;
@@ -24,15 +24,15 @@ focal plane and one of the two focal planes of an objective; these are
 merely semantics that reflect the fact that we think of the sample as
 being in front of the objective. The back focal plane is therefore the
 focal plane of the objective located on the side opposite the
-sample. Now, everyone who has taken a Fourier optics class probably
-learned the following mantra:
+sample. Now, everyone who has taken a Fourier optics class has
+probably learned the following mantra:
 &lt;/p&gt;
 
 &lt;div align="center"&gt;
 
 &lt;p&gt;
 &lt;b&gt;The focal plane of a lens contains the Fourier transform of the
-sample.&lt;/b&gt;
+object.&lt;/b&gt;
 &lt;/p&gt;
 
 &lt;/div&gt;
@@ -47,7 +47,7 @@ should look more like this:
 
 &lt;p&gt;
 &lt;b&gt;The focal plane of a lens contains the Fourier transform of the
-sample, except for every other detail we ignore in the math.&lt;/b&gt;
+object, except for every other detail we ignore in the math.&lt;/b&gt;
 &lt;/p&gt;
 
 &lt;/div&gt;
@@ -78,11 +78,11 @@ to quantify the aberrations in a system.
 &lt;/p&gt;
 
 &lt;p&gt;
-The back focal plane is additionally interesting because it is used in
-Fourier microscopy, for which many setups have been devised to image
-it, rather than the sample (see Figure 1 in &lt;a href="http://arxiv.org/abs/1507.04037"&gt;this excellent arXiv
-submission&lt;/a&gt;.) What I really am wondering now is how one would go about
-imaging the pupil plane as a means of exploring an objective's
+From an experimental point of view, the back focal plane is
+interesting because it is used in Fourier microscopy, for which many
+setups have been devised to image it (see Figure 1 in &lt;a href="http://arxiv.org/abs/1507.04037"&gt;this excellent
+arXiv submission&lt;/a&gt;.) What I really am wondering now is how one would go
+about imaging the pupil plane as a means of exploring an objective's
 aberrations, and whether this is at all feasible.
 &lt;/p&gt;</description><category>optics</category><guid>http://kmdouglass.github.io/posts/whats-the-difference-between-a-back-focal-plane-and-pupil-plane.html</guid><pubDate>Wed, 26 Aug 2015 06:49:13 GMT</pubDate></item><item><title>Paraxial Optics (2): What problem does it solve?</title><link>http://kmdouglass.github.io/posts/paraxial-optics-2-what-problem-does-it-solve.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div id="outline-container-sec-1" class="outline-2"&gt;
 &lt;h2 id="sec-1"&gt;Summary&lt;/h2&gt;

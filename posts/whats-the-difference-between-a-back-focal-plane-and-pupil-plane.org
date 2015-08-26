@@ -18,7 +18,7 @@ realize was false. I said that the pupil plane is the plane near the
 backside of the objective where the light intensity is proportional to
 the Fourier transform of the image. Later that evening, I realized
 that this explanation was, in fact, wrong. I had described to her what
-is, in fact, the /back focal plane/ for an infinity-corrected objective.
+is the /back focal plane/ for an infinity-corrected objective.
 
 Don't worry, I will correct myself when I see her later
 today. However, this experience does raise one important question that
@@ -31,15 +31,15 @@ focal plane and one of the two focal planes of an objective; these are
 merely semantics that reflect the fact that we think of the sample as
 being in front of the objective. The back focal plane is therefore the
 focal plane of the objective located on the side opposite the
-sample. Now, everyone who has taken a Fourier optics class probably
-learned the following mantra:
+sample. Now, everyone who has taken a Fourier optics class has
+probably learned the following mantra:
 
 #+BEGIN_HTML
 <div align="center">
 #+END_HTML
 
 *The focal plane of a lens contains the Fourier transform of the
-sample.*
+object.*
 
 #+BEGIN_HTML
 </div>
@@ -54,7 +54,7 @@ should look more like this:
 
 
 *The focal plane of a lens contains the Fourier transform of the
-sample, except for every other detail we ignore in the math.*
+object, except for every other detail we ignore in the math.*
 
 #+BEGIN_HTML
 </div>
@@ -81,9 +81,9 @@ aperture stop ([[https://books.google.ch/books?id=ow5xs_Rtt9AC&printsec=frontcov
 6.1). Deviations from the spherical reference wave serve as the means
 to quantify the aberrations in a system.
 
-The back focal plane is additionally interesting because it is used in
-Fourier microscopy, for which many setups have been devised to image
-it, rather than the sample (see Figure 1 in [[http://arxiv.org/abs/1507.04037][this excellent arXiv
-submission]].) What I really am wondering now is how one would go about
-imaging the pupil plane as a means of exploring an objective's
+From an experimental point of view, the back focal plane is
+interesting because it is used in Fourier microscopy, for which many
+setups have been devised to image it (see Figure 1 in [[http://arxiv.org/abs/1507.04037][this excellent
+arXiv submission]].) What I really am wondering now is how one would go
+about imaging the pupil plane as a means of exploring an objective's
 aberrations, and whether this is at all feasible.
