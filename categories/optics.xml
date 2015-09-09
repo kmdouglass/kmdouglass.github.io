@@ -1,5 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kyle M. Douglass (optics)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link rel="self" href="http://kmdouglass.github.io/categories/optics.xml" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Wed, 26 Aug 2015 10:09:34 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>What's the difference between a back focal plane and pupil plane?</title><link>http://kmdouglass.github.io/posts/whats-the-difference-between-a-back-focal-plane-and-pupil-plane.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;p&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Kyle M. Douglass (optics)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link rel="self" href="http://kmdouglass.github.io/categories/optics.xml" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Wed, 09 Sep 2015 17:41:58 GMT</lastBuildDate><generator>http://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Beware the paraxial approximation in microscopy</title><link>http://kmdouglass.github.io/posts/beware-the-paraxial-approximation-in-microscopy.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;p&gt;
+I have had a difficult time resolving what originally seemed to be an
+inconsistency between a 2004 research article about estimating
+microscope pupil functions and the body of knowledge concerning the
+theory of aberrations in optical systems.
+&lt;/p&gt;
+
+&lt;p&gt;
+In the article by Hanser, et al.&lt;sup&gt;&lt;a id="fnr.1" name="fnr.1" class="footref" href="http://kmdouglass.github.io/posts/beware-the-paraxial-approximation-in-microscopy.html#fn.1"&gt;1&lt;/a&gt;&lt;/sup&gt;, the authors utilize an imaging model
+for calculating the amplitude point-spread function of an optical
+system that incorporates defocus as an exponential term inside the
+Fourier transform integral:
+&lt;/p&gt;
+
+\begin{equation*}
+\text{PSF}_{\text{A}} \left( x, y, z \right) = \iint_{pupil} P \left( k_x, k_y \right) e^{i k_z z} e^{i \left( k_{x}x + k_{y}y \right)} dk_x dk_y
+\end{equation*}
+
+&lt;p&gt;
+where \(k_z = \sqrt{\left( 2 \pi n / \lambda \right)^2 - \left( k_x^2 +
+k_y^2 \right)}\). (I changed the notation of some variables used in the
+text because the authors confusingly use \(k\) to represent spatial
+frequency in units of &lt;i&gt;cycles per distance&lt;/i&gt; instead of the much more
+common &lt;i&gt;radians per distance&lt;/i&gt;.) In the image plane at \(z = 0\), there
+is no defocus and we get the amplitude point spread function (PSF) as
+the Fourier transform of the pupil function \(P \left( k_x, k_y
+\right)\) just like we would expect (see Goodman&lt;sup&gt;&lt;a id="fnr.2" name="fnr.2" class="footref" href="http://kmdouglass.github.io/posts/beware-the-paraxial-approximation-in-microscopy.html#fn.2"&gt;2&lt;/a&gt;&lt;/sup&gt;, Chapter 6,
+pp. 129-131).
+&lt;/p&gt;
+
+&lt;p&gt;
+The problem arises when I try to verify this model when \(z\) is not
+equal to zero by computing the defocused PSF using the wavefront error
+for defocus. From the scalar diffraction theory of aberrations, the
+defocused PSF is the Fourier transform of the pupil function
+multiplied by a phase factor whose phase angle is proportional to the
+wavefront error \(W \left( k_x, k_y \right)\)
+&lt;/p&gt;
+
+\begin{equation*}
+\text{PSF}_{\text{A}} \left( x, y, z \right) = \iint_{pupil} P \left( k_x, k_y \right) e^{i k W \left( k_x, k_y \right)} e^{i \left( k_{x}x + k_{y}y \right)} dk_x dk_y
+\end{equation*}
+
+&lt;p&gt;
+Any textbook discussing Seidel aberrations will tell you that the
+defocused wavefront error \(W\) is quadratic in the pupil plane
+coordinates, i.e. \(W \sim k_x^2 + k_y^2\). Goodman even states this
+with little justification later in Chapter 6 on p. 149 when discussing
+defocus &lt;sup&gt;&lt;a id="fnr.2.100" name="fnr.2.100" class="footref" href="http://kmdouglass.github.io/posts/beware-the-paraxial-approximation-in-microscopy.html#fn.2"&gt;2&lt;/a&gt;&lt;/sup&gt;. So how can I reconcile the first equation in which the
+defocus goes as the square root of a constant minus the squared pupil
+coordinates with the second equation that is quadratic in pupil
+coordinates?
+&lt;/p&gt;
+
+&lt;p&gt;
+The answer, as you might have guessed from the title of this post, is
+that &lt;i&gt;the Seidel polynomial term for defocus is a result of applying
+the paraxial approximation when computing the wavefront error&lt;/i&gt;. You
+can see this by calculating the phase of a spherical wave in the pupil
+plane that is centered on the axis in the image plane; Goodman states
+it is quadratic without justification, but this is only true near the
+axis. Mahajan offers a geometrical interpretation of \(W\) on p. 148,
+where he notes that the path length difference for defocus "is
+approximately equal to the difference of &lt;a href="http://liutaiomottola.com/formulae/sag.htm"&gt;sags&lt;/a&gt; of the reference sphere
+and the wavefront.&lt;sup&gt;&lt;a id="fnr.3" name="fnr.3" class="footref" href="http://kmdouglass.github.io/posts/beware-the-paraxial-approximation-in-microscopy.html#fn.3"&gt;3&lt;/a&gt;&lt;/sup&gt;" He then goes on to derive the same expression
+for \(W\) that Goodman gets; he states the approximation that he uses,
+whereas Goodman implicitly assumes a quadratic phase front in the
+pupil. Hanser et al., on the other hand, are essentially propagating
+the plane wave angular spectrum from the image plane to nearby planes
+to model defocus. I think that this should be rigorously correct since
+no approximation is applied. For me, it is unfortunate that this was
+not made clear in their paper because I spent quite a bit of time
+trying to reconcile the two results.
+&lt;/p&gt;
+
+&lt;p&gt;
+The lesson of this story is to be sure you know about the
+approximations that go into a "standard" result found in textbooks. I
+falsely assumed that the Seidel aberrations were exact and that
+Hanser, et al. were suspect when in fact it was the other way
+around. Because the paraxial approximation is so widespread in optics
+theory, it can often lie hidden behind an equation and its effects can
+easily be taken for granted. This is a problem for the large NA
+systems used in microscopy where the results of the paraxial
+approximation are not often valid.
+&lt;/p&gt;
+&lt;div id="footnotes"&gt;
+&lt;h2 class="footnotes"&gt;Footnotes: &lt;/h2&gt;
+&lt;div id="text-footnotes"&gt;
+
+&lt;div class="footdef"&gt;&lt;sup&gt;&lt;a id="fn.1" name="fn.1" class="footnum" href="http://kmdouglass.github.io/posts/beware-the-paraxial-approximation-in-microscopy.html#fnr.1"&gt;1&lt;/a&gt;&lt;/sup&gt; &lt;p class="footpara"&gt;
+&lt;a href="http://onlinelibrary.wiley.com/doi/10.1111/j.0022-2720.2004.01393.x/abstract;jsessionid=946CF30FA7FA65F1DB4C638D0C4DF00F.f02t04"&gt;http://onlinelibrary.wiley.com/doi/10.1111/j.0022-2720.2004.01393.x/abstract;jsessionid=946CF30FA7FA65F1DB4C638D0C4DF00F.f02t04&lt;/a&gt;
+&lt;/p&gt;&lt;/div&gt;
+
+&lt;div class="footdef"&gt;&lt;sup&gt;&lt;a id="fn.2" name="fn.2" class="footnum" href="http://kmdouglass.github.io/posts/beware-the-paraxial-approximation-in-microscopy.html#fnr.2"&gt;2&lt;/a&gt;&lt;/sup&gt; &lt;p class="footpara"&gt;
+&lt;a href="https://books.google.ch/books/about/Introduction_to_Fourier_optics.html?id=ow5xs_Rtt9AC&amp;amp;redir_esc=y"&gt;https://books.google.ch/books/about/Introduction_to_Fourier_optics.html?id=ow5xs_Rtt9AC&amp;amp;redir_esc=y&lt;/a&gt;
+&lt;/p&gt;&lt;/div&gt;
+
+&lt;div class="footdef"&gt;&lt;sup&gt;&lt;a id="fn.3" name="fn.3" class="footnum" href="http://kmdouglass.github.io/posts/beware-the-paraxial-approximation-in-microscopy.html#fnr.3"&gt;3&lt;/a&gt;&lt;/sup&gt; &lt;p class="footpara"&gt;
+&lt;a href="https://books.google.ch/books/about/Optical_Imaging_and_Aberrations_Ray_geom.html?id=I_1AAQAAIAAJ&amp;amp;redir_esc=y"&gt;https://books.google.ch/books/about/Optical_Imaging_and_Aberrations_Ray_geom.html?id=I_1AAQAAIAAJ&amp;amp;redir_esc=y&lt;/a&gt;
+&lt;/p&gt;&lt;/div&gt;
+
+
+&lt;/div&gt;
+&lt;/div&gt;</description><category>microscopy</category><category>optics</category><guid>http://kmdouglass.github.io/posts/beware-the-paraxial-approximation-in-microscopy.html</guid><pubDate>Wed, 09 Sep 2015 17:40:00 GMT</pubDate></item><item><title>What's the difference between a back focal plane and pupil plane?</title><link>http://kmdouglass.github.io/posts/whats-the-difference-between-a-back-focal-plane-and-pupil-plane.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;p&gt;
 Yesterday in the lab I asked one of my colleagues whether she knew
 what the pupil plane of a microscope objective was. Her answer was
 no. I then unknowingly proceeded to give her a description which I now

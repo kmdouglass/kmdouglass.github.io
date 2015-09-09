@@ -9,7 +9,7 @@
 <link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml">
 <link rel="canonical" href="http://kmdouglass.github.io/index.html">
 <link rel="next" href="index-1.html" type="text/html">
-<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><link rel="prefetch" href="posts/whats-the-difference-between-a-back-focal-plane-and-pupil-plane.html" type="text/html">
+<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><link rel="prefetch" href="posts/beware-the-paraxial-approximation-in-microscopy.html" type="text/html">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -19,7 +19,7 @@
 <nav class="navbar navbar-default navbar-static-top" role="navigation"><div class="container">
 <!-- This keeps the margins nice -->
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -31,7 +31,7 @@
             </a>
         </div>
 <!-- /.navbar-header -->
-        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
 <li>
 <a href="archive.html">Archive</a>
@@ -67,7 +67,131 @@
             
 
 <div class="postindex">
-    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/whats-the-difference-between-a-back-focal-plane-and-pupil-plane.html" class="u-url">What's the difference between a back focal plane and pupil plane?</a></h1>
+    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/beware-the-paraxial-approximation-in-microscopy.html" class="u-url">Beware the paraxial approximation in microscopy</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">Kyle M. Douglass</span></p>
+            <p class="dateline"><a href="posts/beware-the-paraxial-approximation-in-microscopy.html" rel="bookmark"><time class="published dt-published" datetime="2015-09-09T19:40:00+02:00" title="2015-09-09 19:40">2015-09-09 19:40</time></a></p>
+                <p class="commentline">
+        
+    <a href="posts/beware-the-paraxial-approximation-in-microscopy.html#disqus_thread" data-disqus-identifier="cache/posts/beware-the-paraxial-approximation-in-microscopy.html">Comments</a>
+
+
+        </p>
+</div>
+    </header><div class="p-summary entry-summary">
+    <p>
+I have had a difficult time resolving what originally seemed to be an
+inconsistency between a 2004 research article about estimating
+microscope pupil functions and the body of knowledge concerning the
+theory of aberrations in optical systems.
+</p>
+
+<p>
+In the article by Hanser, et al.<sup><a id="fnr.1" name="fnr.1" class="footref" href="posts/beware-the-paraxial-approximation-in-microscopy.html#fn.1">1</a></sup>, the authors utilize an imaging model
+for calculating the amplitude point-spread function of an optical
+system that incorporates defocus as an exponential term inside the
+Fourier transform integral:
+</p>
+
+\begin{equation*}
+\text{PSF}_{\text{A}} \left( x, y, z \right) = \iint_{pupil} P \left( k_x, k_y \right) e^{i k_z z} e^{i \left( k_{x}x + k_{y}y \right)} dk_x dk_y
+\end{equation*}
+
+<p>
+where \(k_z = \sqrt{\left( 2 \pi n / \lambda \right)^2 - \left( k_x^2 +
+k_y^2 \right)}\). (I changed the notation of some variables used in the
+text because the authors confusingly use \(k\) to represent spatial
+frequency in units of <i>cycles per distance</i> instead of the much more
+common <i>radians per distance</i>.) In the image plane at \(z = 0\), there
+is no defocus and we get the amplitude point spread function (PSF) as
+the Fourier transform of the pupil function \(P \left( k_x, k_y
+\right)\) just like we would expect (see Goodman<sup><a id="fnr.2" name="fnr.2" class="footref" href="posts/beware-the-paraxial-approximation-in-microscopy.html#fn.2">2</a></sup>, Chapter 6,
+pp. 129-131).
+</p>
+
+<p>
+The problem arises when I try to verify this model when \(z\) is not
+equal to zero by computing the defocused PSF using the wavefront error
+for defocus. From the scalar diffraction theory of aberrations, the
+defocused PSF is the Fourier transform of the pupil function
+multiplied by a phase factor whose phase angle is proportional to the
+wavefront error \(W \left( k_x, k_y \right)\)
+</p>
+
+\begin{equation*}
+\text{PSF}_{\text{A}} \left( x, y, z \right) = \iint_{pupil} P \left( k_x, k_y \right) e^{i k W \left( k_x, k_y \right)} e^{i \left( k_{x}x + k_{y}y \right)} dk_x dk_y
+\end{equation*}
+
+<p>
+Any textbook discussing Seidel aberrations will tell you that the
+defocused wavefront error \(W\) is quadratic in the pupil plane
+coordinates, i.e. \(W \sim k_x^2 + k_y^2\). Goodman even states this
+with little justification later in Chapter 6 on p. 149 when discussing
+defocus <sup><a id="fnr.2.100" name="fnr.2.100" class="footref" href="posts/beware-the-paraxial-approximation-in-microscopy.html#fn.2">2</a></sup>. So how can I reconcile the first equation in which the
+defocus goes as the square root of a constant minus the squared pupil
+coordinates with the second equation that is quadratic in pupil
+coordinates?
+</p>
+
+<p>
+The answer, as you might have guessed from the title of this post, is
+that <i>the Seidel polynomial term for defocus is a result of applying
+the paraxial approximation when computing the wavefront error</i>. You
+can see this by calculating the phase of a spherical wave in the pupil
+plane that is centered on the axis in the image plane; Goodman states
+it is quadratic without justification, but this is only true near the
+axis. Mahajan offers a geometrical interpretation of \(W\) on p. 148,
+where he notes that the path length difference for defocus "is
+approximately equal to the difference of <a href="http://liutaiomottola.com/formulae/sag.htm">sags</a> of the reference sphere
+and the wavefront.<sup><a id="fnr.3" name="fnr.3" class="footref" href="posts/beware-the-paraxial-approximation-in-microscopy.html#fn.3">3</a></sup>" He then goes on to derive the same expression
+for \(W\) that Goodman gets; he states the approximation that he uses,
+whereas Goodman implicitly assumes a quadratic phase front in the
+pupil. Hanser et al., on the other hand, are essentially propagating
+the plane wave angular spectrum from the image plane to nearby planes
+to model defocus. I think that this should be rigorously correct since
+no approximation is applied. For me, it is unfortunate that this was
+not made clear in their paper because I spent quite a bit of time
+trying to reconcile the two results.
+</p>
+
+<p>
+The lesson of this story is to be sure you know about the
+approximations that go into a "standard" result found in textbooks. I
+falsely assumed that the Seidel aberrations were exact and that
+Hanser, et al. were suspect when in fact it was the other way
+around. Because the paraxial approximation is so widespread in optics
+theory, it can often lie hidden behind an equation and its effects can
+easily be taken for granted. This is a problem for the large NA
+systems used in microscopy where the results of the paraxial
+approximation are not often valid.
+</p>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef">
+<sup><a id="fn.1" name="fn.1" class="footnum" href="posts/beware-the-paraxial-approximation-in-microscopy.html#fnr.1">1</a></sup><p class="footpara">
+<a href="http://onlinelibrary.wiley.com/doi/10.1111/j.0022-2720.2004.01393.x/abstract;jsessionid=946CF30FA7FA65F1DB4C638D0C4DF00F.f02t04">http://onlinelibrary.wiley.com/doi/10.1111/j.0022-2720.2004.01393.x/abstract;jsessionid=946CF30FA7FA65F1DB4C638D0C4DF00F.f02t04</a>
+</p>
+</div>
+
+<div class="footdef">
+<sup><a id="fn.2" name="fn.2" class="footnum" href="posts/beware-the-paraxial-approximation-in-microscopy.html#fnr.2">2</a></sup><p class="footpara">
+<a href="https://books.google.ch/books/about/Introduction_to_Fourier_optics.html?id=ow5xs_Rtt9AC&amp;redir_esc=y">https://books.google.ch/books/about/Introduction_to_Fourier_optics.html?id=ow5xs_Rtt9AC&amp;redir_esc=y</a>
+</p>
+</div>
+
+<div class="footdef">
+<sup><a id="fn.3" name="fn.3" class="footnum" href="posts/beware-the-paraxial-approximation-in-microscopy.html#fnr.3">3</a></sup><p class="footpara">
+<a href="https://books.google.ch/books/about/Optical_Imaging_and_Aberrations_Ray_geom.html?id=I_1AAQAAIAAJ&amp;redir_esc=y">https://books.google.ch/books/about/Optical_Imaging_and_Aberrations_Ray_geom.html?id=I_1AAQAAIAAJ&amp;redir_esc=y</a>
+</p>
+</div>
+
+
+</div>
+</div>
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/whats-the-difference-between-a-back-focal-plane-and-pupil-plane.html" class="u-url">What's the difference between a back focal plane and pupil plane?</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">Kyle M. Douglass</span></p>
             <p class="dateline"><a href="posts/whats-the-difference-between-a-back-focal-plane-and-pupil-plane.html" rel="bookmark"><time class="published dt-published" datetime="2015-08-26T08:49:13+02:00" title="2015-08-26 08:49">2015-08-26 08:49</time></a></p>
@@ -1512,85 +1636,6 @@ or pay for Matlab's <a href="http://www.mathworks.com/products/parallel-computin
 </p>
 </div>
 </div>
-    </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/measurements.html" class="u-url">Measurements as processes</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">Kyle M. Douglass</span></p>
-            <p class="dateline"><a href="posts/measurements.html" rel="bookmark"><time class="published dt-published" datetime="2014-12-19T00:00:00+01:00" title="2014-12-19 00:00">2014-12-19 00:00</time></a></p>
-                <p class="commentline">
-        
-    <a href="posts/measurements.html#disqus_thread" data-disqus-identifier="cache/posts/measurements.html">Comments</a>
-
-
-        </p>
-</div>
-    </header><div class="p-summary entry-summary">
-    <p>
-I work in microscopy, which is one form of optical sensing. In the
-sensing field, we are often concerned with making measurements on
-some structure so as to learn what it is. Often, I think the word
-measurement refers to the dataset that's produced.
-</p>
-
-<p>
-I think it can be more effective to think of a measurement as a
-process that transforms the structure into the dataset. Why is this
-so? Well, to understand what the original structure was, we have to
-look at our data and make an inference. If we understand the steps
-in the process that took the original structure and turned it into
-data, we can apply the inverse of those steps in reverse order to
-get the original structure.
-</p>
-
-<p>
-Of course, our dataset may only capture some limited aspects of the
-original structure, so we may only be able to make probabilistic
-statements about what the original structure was.
-</p>
-
-<p>
-Take, for example, super-resolution microscopy experiments (SR). In
-SR, some feature of a cell is labeled with a discrete number of
-fluorescent molecules, then these molecules are localized to a high
-precision. The centroids of all the molecules are then convolved
-with a Gaussian function (or something similar) with a width equal
-to the localization precision to produce a rendered, super-resolved
-image of the structure. The measurement process can be thought of
-like this:
-</p>
-
-<ol class="org-ol">
-<li>Attach fluorescent molecules to every macromolecule (or randomly
-to a subset of macromolecules) in the structure of interest.
-</li>
-<li>For every molecule that emits photons during the time of
-acqusition by one camera frame, record its true coordinate
-positions and the number of detected photons. This can create
-multiple localizations that correspond to the same molecule in
-multiple camera frames.
-</li>
-<li>Remove molecules from the lis that emitted less than some
-threshold number of photons. These correspond to molecules with a
-signal-to-noise ratio that is too low to be detected.
-</li>
-<li>Randomly bump the molecule positions according to a Gaussian
-distribution with width equal to the localization precision in
-each direction.
-</li>
-</ol>
-<p>
-This process results in a list of molecule positions that originally
-were located on the structure of interest, but were eventually
-displaced randomly and filtered out due to various sources of
-noise. To understand what the original structure was, we have to
-"undo" each of these steps to the best of our abilities.
-</p>
-
-<p>
-I think it's interesting to note that everytime a random change to
-the original molecule positions occurred, we lose some information
-about the structure.
-</p>
     </div>
     </article>
 </div>

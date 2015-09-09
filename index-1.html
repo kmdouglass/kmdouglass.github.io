@@ -19,7 +19,7 @@
 <nav class="navbar navbar-default navbar-static-top" role="navigation"><div class="container">
 <!-- This keeps the margins nice -->
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -31,7 +31,7 @@
             </a>
         </div>
 <!-- /.navbar-header -->
-        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
 <li>
 <a href="archive.html">Archive</a>
@@ -67,7 +67,86 @@
             
 
 <div class="postindex">
-    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/confocal-by-scattering.html" class="u-url">Parallelized confocal microscopy with multiply scattered light</a></h1>
+    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/measurements.html" class="u-url">Measurements as processes</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">Kyle M. Douglass</span></p>
+            <p class="dateline"><a href="posts/measurements.html" rel="bookmark"><time class="published dt-published" datetime="2014-12-19T00:00:00+01:00" title="2014-12-19 00:00">2014-12-19 00:00</time></a></p>
+                <p class="commentline">
+        
+    <a href="posts/measurements.html#disqus_thread" data-disqus-identifier="cache/posts/measurements.html">Comments</a>
+
+
+        </p>
+</div>
+    </header><div class="p-summary entry-summary">
+    <p>
+I work in microscopy, which is one form of optical sensing. In the
+sensing field, we are often concerned with making measurements on
+some structure so as to learn what it is. Often, I think the word
+measurement refers to the dataset that's produced.
+</p>
+
+<p>
+I think it can be more effective to think of a measurement as a
+process that transforms the structure into the dataset. Why is this
+so? Well, to understand what the original structure was, we have to
+look at our data and make an inference. If we understand the steps
+in the process that took the original structure and turned it into
+data, we can apply the inverse of those steps in reverse order to
+get the original structure.
+</p>
+
+<p>
+Of course, our dataset may only capture some limited aspects of the
+original structure, so we may only be able to make probabilistic
+statements about what the original structure was.
+</p>
+
+<p>
+Take, for example, super-resolution microscopy experiments (SR). In
+SR, some feature of a cell is labeled with a discrete number of
+fluorescent molecules, then these molecules are localized to a high
+precision. The centroids of all the molecules are then convolved
+with a Gaussian function (or something similar) with a width equal
+to the localization precision to produce a rendered, super-resolved
+image of the structure. The measurement process can be thought of
+like this:
+</p>
+
+<ol class="org-ol">
+<li>Attach fluorescent molecules to every macromolecule (or randomly
+to a subset of macromolecules) in the structure of interest.
+</li>
+<li>For every molecule that emits photons during the time of
+acqusition by one camera frame, record its true coordinate
+positions and the number of detected photons. This can create
+multiple localizations that correspond to the same molecule in
+multiple camera frames.
+</li>
+<li>Remove molecules from the lis that emitted less than some
+threshold number of photons. These correspond to molecules with a
+signal-to-noise ratio that is too low to be detected.
+</li>
+<li>Randomly bump the molecule positions according to a Gaussian
+distribution with width equal to the localization precision in
+each direction.
+</li>
+</ol>
+<p>
+This process results in a list of molecule positions that originally
+were located on the structure of interest, but were eventually
+displaced randomly and filtered out due to various sources of
+noise. To understand what the original structure was, we have to
+"undo" each of these steps to the best of our abilities.
+</p>
+
+<p>
+I think it's interesting to note that everytime a random change to
+the original molecule positions occurred, we lose some information
+about the structure.
+</p>
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/confocal-by-scattering.html" class="u-url">Parallelized confocal microscopy with multiply scattered light</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">Kyle M. Douglass</span></p>
             <p class="dateline"><a href="posts/confocal-by-scattering.html" rel="bookmark"><time class="published dt-published" datetime="2014-10-09T00:00:00+02:00" title="2014-10-09 00:00">2014-10-09 00:00</time></a></p>
