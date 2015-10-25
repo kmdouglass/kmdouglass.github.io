@@ -517,6 +517,27 @@ sudo apt-get install ttf-mscorefonts-installer
    labels, simply type /xrandr/.
 
 -----
+
+** Time updates with ntpdate
+   /Sources/
+   1. http://ubuntuforums.org/showthread.php?t=2193509
+
+   When daylight savings time ended in Europe in 2015, I noticed that
+   my clock did not update automatically. In fact, using the *zdump*
+   command, I found that all daylight savings time information on my
+   system ended in 2014.
+
+   To fix this, I first installed the *ntpdate* program, and then used
+   it to sync to the Debian server:
+
+   #+BEGIN_SRC
+sudo apt-get install ntpdate
+sudo ntpdate-debian
+   #+END_SRC
+
+   This fixed my clock rather easily.
+-----
+
 * Choosing software version alternatives
   Sometimes you may have multiple versions of a software package
   installed. I ran into this issue once when trying to write a simple
