@@ -1,0 +1,58 @@
+#+BEGIN_COMMENT
+.. title: CUDA Notes
+.. slug: cuda
+.. date: 11/01/2014
+.. tags: 
+.. link: linux, cuda, parallel processing
+.. description: Notes on NVIDIA's CUDA
+.. type: text
+#+END_COMMENT
+#+OPTIONS: toc:nil num:t ^:nil
+#+TOC: headlines 3
+
+* Pre-installation of CUDA software
+
+** Check for a CUDA-enabled card
+   /Sources/
+   1. http://docs.nvidia.com/cuda/cuda-getting-started-guide-for-linux/#axzz3qFKp3T3Z
+   2. https://developer.nvidia.com/cuda-gpus
+
+   To check for a CUDA card in Linux, use the command:
+
+   #+BEGIN_SRC sh
+lspci | grep -i nvidia
+   #+END_SRC
+
+   On my laptop, I get the following output:
+
+   #+BEGIN_SRC sh
+01:00.0 VGA compatible controller: NVIDIA Corporation GF108M [GeForce GT 555M] (rev a1)
+   #+END_SRC
+
+   I checked that the GeForce GT 555m was CUDA-capable at NVIDIA's
+   website listing all CUDA GPU's (see link above). While it's
+   certainly not a new GPU card, it is CUDA-enabled with Compute
+   Capability 2.1.
+
+-----
+
+* Installation of the CUDA Development Kit on Debian
+
+** Installation via apt-get
+   /Sources/
+   1. https://packages.debian.org/jessie/devel/nvidia-cuda-toolkit
+   The installation of the CUDA Development Kit on Debian Jessie is
+   easy if you opt to use the Debian-specific package.
+
+   #+BEGIN_SRC sh
+sudo apt-get install nvidia-cuda-toolkit
+   #+END_SRC
+
+-----
+
+** Installation using a stand-alone install
+   /Sources/
+   1. https://www.quantstart.com/articles/Installing-Nvidia-cuda-on-Ubuntu-14-04-for-Linux-GPU-Computing
+
+   I have not yet tried the stand-alone install, though I did find
+   rather good notes on doing it in Ubuntu 14.04 at the link above.

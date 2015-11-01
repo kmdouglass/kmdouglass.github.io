@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="Notes on NVIDIA's CUDA">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CUDA Notes | Kyle M. Douglass</title>
+<link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
+<link rel="canonical" href="http://kmdouglass.github.io/stories/notes/cuda.html">
+<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><meta name="description" itemprop="description" content="Notes on NVIDIA's CUDA">
+<meta name="author" content="Kyle M. Douglass">
+<meta property="og:site_name" content="Kyle M. Douglass">
+<meta property="og:title" content="CUDA Notes">
+<meta property="og:url" content="http://kmdouglass.github.io/stories/notes/cuda.html">
+<meta property="og:description" content="Notes on NVIDIA's CUDA">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2014-11-01T00:00:00+01:00">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Menubar -->
+
+<nav class="navbar navbar-default navbar-static-top" role="navigation"><div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://kmdouglass.github.io/">
+
+                <span id="blog-title">Kyle M. Douglass</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+<li>
+<a href="../../archive.html">Archive</a>
+                </li>
+<li>
+<a href="../../categories/index.html">Tags</a>
+                </li>
+<li>
+<a href="../notes-and-projects.html">Notes</a>
+                </li>
+<li>
+<a href="../about-me.html">About</a>
+                </li>
+<li>
+<a href="../contact.html">Contact</a>
+                </li>
+<li>
+<a href="../../rss.xml">RSS feed</a>
+
+                
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+    <a href="cuda.org" id="sourcelink">Source</a>
+    </li>
+
+                
+            </ul>
+</div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+            
+<article class="storypage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="#" class="u-url">CUDA Notes</a></h1>
+
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li>
+<a href="cuda.html#sec-1">1. Pre-installation of CUDA software</a>
+<ul>
+<li><a href="cuda.html#sec-1-1">1.1. Check for a CUDA-enabled card</a></li>
+</ul>
+</li>
+<li>
+<a href="cuda.html#sec-2">2. Installation of the CUDA Development Kit on Debian</a>
+<ul>
+<li><a href="cuda.html#sec-2-1">2.1. Installation via apt-get</a></li>
+<li><a href="cuda.html#sec-2-2">2.2. Installation using a stand-alone install</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">
+<span class="section-number-2">1</span> Pre-installation of CUDA software</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1">
+<span class="section-number-3">1.1</span> Check for a CUDA-enabled card</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+<i>Sources</i>
+</p>
+<ol class="org-ol">
+<li>
+<a href="http://docs.nvidia.com/cuda/cuda-getting-started-guide-for-linux/#axzz3qFKp3T3Z">http://docs.nvidia.com/cuda/cuda-getting-started-guide-for-linux/#axzz3qFKp3T3Z</a>
+</li>
+<li>
+<a href="https://developer.nvidia.com/cuda-gpus">https://developer.nvidia.com/cuda-gpus</a>
+</li>
+</ol>
+<p>
+To check for a CUDA card in Linux, use the command:
+</p>
+
+<div class="highlight"><pre>lspci <span class="p">|</span> grep -i nvidia
+</pre></div>
+
+<p>
+On my laptop, I get the following output:
+</p>
+
+<div class="highlight"><pre>01:00.0 VGA compatible controller: NVIDIA Corporation GF108M <span class="o">[</span>GeForce GT 555M<span class="o">]</span> <span class="o">(</span>rev a1<span class="o">)</span>
+</pre></div>
+
+<p>
+I checked that the GeForce GT 555m was CUDA-capable at NVIDIA's
+website listing all CUDA GPU's (see link above). While it's
+certainly not a new GPU card, it is CUDA-enabled with Compute
+Capability 2.1.
+</p>
+
+<hr>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2">
+<span class="section-number-2">2</span> Installation of the CUDA Development Kit on Debian</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1">
+<span class="section-number-3">2.1</span> Installation via apt-get</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+<i>Sources</i>
+</p>
+<ol class="org-ol">
+<li>
+<a href="https://packages.debian.org/jessie/devel/nvidia-cuda-toolkit">https://packages.debian.org/jessie/devel/nvidia-cuda-toolkit</a>
+</li>
+</ol>
+<p>
+The installation of the CUDA Development Kit on Debian Jessie is
+easy if you opt to use the Debian-specific package.
+</p>
+
+<div class="highlight"><pre>sudo apt-get install nvidia-cuda-toolkit
+</pre></div>
+
+<hr>
+</div>
+</div>
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2">
+<span class="section-number-3">2.2</span> Installation using a stand-alone install</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+<i>Sources</i>
+</p>
+<ol class="org-ol">
+<li>
+<a href="https://www.quantstart.com/articles/Installing-Nvidia-cuda-on-Ubuntu-14-04-for-Linux-GPU-Computing">https://www.quantstart.com/articles/Installing-Nvidia-cuda-on-Ubuntu-14-04-for-Linux-GPU-Computing</a>
+</li>
+</ol>
+<p>
+I have not yet tried the stand-alone install, though I did find
+rather good notes on doing it in Ubuntu 14.04 at the link above.
+</p>
+</div>
+</div>
+</div>
+    </div>
+    
+
+</article>
+</div>
+        <!--End of body content-->
+
+        <footer id="footer">
+            Contents © 2015         <a href="mailto:kyle.douglass@epfl.ch">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
+            
+        </footer>
+</div>
+</div>
+
+
+            <script src="../../assets/js/all-nocdn.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+    moment.locale("");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates -->
+</body>
+</html>
