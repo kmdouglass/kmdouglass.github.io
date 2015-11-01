@@ -38,15 +38,13 @@ lspci | grep -i nvidia
 
 * Installation of the CUDA Development Kit on Debian
 
-** Installation via apt-get
+** Installation via Debian packages
    /Sources/
-   1. https://packages.debian.org/jessie/devel/nvidia-cuda-toolkit
-   The installation of the CUDA Development Kit on Debian Jessie is
-   easy if you opt to use the Debian-specific package.
+   1. https://wiki.debian.org/NvidiaGraphicsDrivers
+   2. https://packages.debian.org/jessie/devel/nvidia-cuda-toolkit
 
-   #+BEGIN_SRC sh
-sudo apt-get install nvidia-cuda-toolkit
-   #+END_SRC
+   The installation of the CUDA Development Kit on Debian Jessie is
+   described at the above links.
 
 -----
 
