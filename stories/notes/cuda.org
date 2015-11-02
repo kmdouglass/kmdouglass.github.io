@@ -42,7 +42,8 @@ lspci | grep -i nvidia
    /Sources/
    1. https://wiki.debian.org/NvidiaGraphicsDrivers
    2. https://wiki.debian.org/NvidiaGraphicsDrivers#configure
-   3. https://packages.debian.org/jessie/devel/nvidia-cuda-toolkit
+   3. http://linuxconfig.org/nvidia-geforce-driver-installation-on-debian-jessie-linux-8-64bit
+   4. https://packages.debian.org/jessie/devel/nvidia-cuda-toolkit
 
    I mostly followed the directions at the first link above. I
    noticed, however, that the main lines did nothing on my system,
@@ -70,8 +71,12 @@ sudo dpkg --configure -a
    correctly at this point. I suppose the moral of the story is to
    keep trying until *nvidia-driver* installs.
 
-   Next, I need to create the Xorg configuration file, but this is for
-   another time.
+   Next, I needed to create the Xorg configuration file. This is
+   easily done using *nvidia-xconfig*. Simply type *sudo
+   nvidia-xconfig* and the configuration file is generated in
+   =/etc/X11/xorg.conf=. Restart the computer and run
+   *nvidia-settings* to verify whether you have the Nvidia driver
+   working.
 
 -----
 

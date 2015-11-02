@@ -168,6 +168,9 @@ Capability 2.1.
 <a href="https://wiki.debian.org/NvidiaGraphicsDrivers#configure">https://wiki.debian.org/NvidiaGraphicsDrivers#configure</a>
 </li>
 <li>
+<a href="http://linuxconfig.org/nvidia-geforce-driver-installation-on-debian-jessie-linux-8-64bit">http://linuxconfig.org/nvidia-geforce-driver-installation-on-debian-jessie-linux-8-64bit</a>
+</li>
+<li>
 <a href="https://packages.debian.org/jessie/devel/nvidia-cuda-toolkit">https://packages.debian.org/jessie/devel/nvidia-cuda-toolkit</a>
 </li>
 </ol>
@@ -204,8 +207,12 @@ keep trying until <b>nvidia-driver</b> installs.
 </p>
 
 <p>
-Next, I need to create the Xorg configuration file, but this is for
-another time.
+Next, I needed to create the Xorg configuration file. This is
+easily done using <b>nvidia-xconfig</b>. Simply type <b>sudo
+nvidia-xconfig</b> and the configuration file is generated in
+<code>/etc/X11/xorg.conf</code>. Restart the computer and run
+<b>nvidia-settings</b> to verify whether you have the Nvidia driver
+working.
 </p>
 
 <hr>
