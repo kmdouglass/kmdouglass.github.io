@@ -95,7 +95,7 @@
 <li>
 <a href="cuda.html#sec-2">2. Installation of the CUDA Development Kit on Debian</a>
 <ul>
-<li><a href="cuda.html#sec-2-1">2.1. Installation via Debian packages</a></li>
+<li><a href="cuda.html#sec-2-1">2.1. Installation of the CUDA driver</a></li>
 <li><a href="cuda.html#sec-2-2">2.2. Installation using a stand-alone install</a></li>
 </ul>
 </li>
@@ -155,7 +155,7 @@ Capability 2.1.
 </div>
 <div id="outline-container-sec-2-1" class="outline-3">
 <h3 id="sec-2-1">
-<span class="section-number-3">2.1</span> Installation via Debian packages</h3>
+<span class="section-number-3">2.1</span> Installation of the CUDA driver</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 <i>Sources</i>
@@ -165,12 +165,47 @@ Capability 2.1.
 <a href="https://wiki.debian.org/NvidiaGraphicsDrivers">https://wiki.debian.org/NvidiaGraphicsDrivers</a>
 </li>
 <li>
+<a href="https://wiki.debian.org/NvidiaGraphicsDrivers#configure">https://wiki.debian.org/NvidiaGraphicsDrivers#configure</a>
+</li>
+<li>
 <a href="https://packages.debian.org/jessie/devel/nvidia-cuda-toolkit">https://packages.debian.org/jessie/devel/nvidia-cuda-toolkit</a>
 </li>
 </ol>
 <p>
-The installation of the CUDA Development Kit on Debian Jessie is
-described at the above links.
+I mostly followed the directions at the first link above. I
+noticed, however, that the main lines did nothing on my system,
+even when I had sources.list properly configured:
+</p>
+
+<div class="highlight"><pre>aptitude update
+aptitude -r install linux-headers-<span class="k">$(</span>uname -r<span class="p">|</span>sed <span class="s1">'s,[^-]*-[^-]*-,,'</span><span class="k">)</span> nvidia-kernel-dkms
+</pre></div>
+
+<p>
+I tried next to install the package <b>nvidia-driver</b> through
+apt-get, but unmet dependencies raised a few errors during its
+installation, many concerning Xorg. So, I thought perhaps the
+<b>nvidia-xconfig</b> package was first required (see the second link
+above). I tried installing it using <b>sudo apt-get install
+nvidia-xconfig</b>, but the installation hung.
+</p>
+
+<p>
+I next rebooted my computer and fixed apt-get by running
+</p>
+
+<div class="highlight"><pre>sudo dpkg --configure -a
+</pre></div>
+
+<p>
+Fortunately, <b>nvidia-driver</b> and everything else installed
+correctly at this point. I suppose the moral of the story is to
+keep trying until <b>nvidia-driver</b> installs.
+</p>
+
+<p>
+Next, I need to create the Xorg configuration file, but this is for
+another time.
 </p>
 
 <hr>

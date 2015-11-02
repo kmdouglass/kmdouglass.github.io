@@ -38,13 +38,40 @@ lspci | grep -i nvidia
 
 * Installation of the CUDA Development Kit on Debian
 
-** Installation via Debian packages
+** Installation of the CUDA driver
    /Sources/
    1. https://wiki.debian.org/NvidiaGraphicsDrivers
-   2. https://packages.debian.org/jessie/devel/nvidia-cuda-toolkit
+   2. https://wiki.debian.org/NvidiaGraphicsDrivers#configure
+   3. https://packages.debian.org/jessie/devel/nvidia-cuda-toolkit
 
-   The installation of the CUDA Development Kit on Debian Jessie is
-   described at the above links.
+   I mostly followed the directions at the first link above. I
+   noticed, however, that the main lines did nothing on my system,
+   even when I had sources.list properly configured:
+
+#+BEGIN_SRC sh
+aptitude update
+aptitude -r install linux-headers-$(uname -r|sed 's,[^-]*-[^-]*-,,') nvidia-kernel-dkms
+#+END_SRC
+
+   I tried next to install the package *nvidia-driver* through
+   apt-get, but unmet dependencies raised a few errors during its
+   installation, many concerning Xorg. So, I thought perhaps the
+   *nvidia-xconfig* package was first required (see the second link
+   above). I tried installing it using *sudo apt-get install
+   nvidia-xconfig*, but the installation hung.
+
+   I next rebooted my computer and fixed apt-get by running
+
+#+BEGIN_SRC sh
+sudo dpkg --configure -a
+#+END_SRC
+
+   Fortunately, *nvidia-driver* and everything else installed
+   correctly at this point. I suppose the moral of the story is to
+   keep trying until *nvidia-driver* installs.
+
+   Next, I need to create the Xorg configuration file, but this is for
+   another time.
 
 -----
 
