@@ -165,7 +165,7 @@ Capability 2.1.
 <a href="https://wiki.debian.org/NvidiaGraphicsDrivers">https://wiki.debian.org/NvidiaGraphicsDrivers</a>
 </li>
 <li>
-<a href="https://wiki.debian.org/NvidiaGraphicsDrivers#configure">https://wiki.debian.org/NvidiaGraphicsDrivers#configure</a>
+<a href="https://wiki.debian.org/Bumblebee">https://wiki.debian.org/Bumblebee</a>
 </li>
 <li>
 <a href="http://linuxconfig.org/nvidia-geforce-driver-installation-on-debian-jessie-linux-8-64bit">http://linuxconfig.org/nvidia-geforce-driver-installation-on-debian-jessie-linux-8-64bit</a>
@@ -175,44 +175,60 @@ Capability 2.1.
 </li>
 </ol>
 <p>
-I mostly followed the directions at the first link above. I
-noticed, however, that the main lines did nothing on my system,
-even when I had sources.list properly configured:
+I mostly followed the directions at the first link above. However,
+it took me a few days of failure to realize that the Nvidia card on
+my laptop was using Nvidia Optimus, and thus required a specialized
+set of drivers known as bumblebee. Before I realized this, I would
+install the nvidia-driver package and boot to a black screen with a
+single, blinking cursor. This is the result of creating an
+xorg.conf file inside <code>/etc/X11/</code>, as cautioned on the Debian Wiki.
 </p>
 
-<div class="highlight"><pre>aptitude update
-aptitude -r install linux-headers-<span class="k">$(</span>uname -r<span class="p">|</span>sed <span class="s1">'s,[^-]*-[^-]*-,,'</span><span class="k">)</span> nvidia-kernel-dkms
+<p>
+Luckily, the installation of the proper Nvidia drivers proceeded
+smoothly in Debian Jessie once I realized that everything is passed
+through my Intel video card and therefore requires bumblebee.
+</p>
+
+<p>
+The first indication that you might require bumblbee comes from probing for VGA devices using PCI buses.
+</p>
+
+<div class="highlight"><pre>lspci <span class="p">|</span> grep VGA
 </pre></div>
 
 <p>
-I tried next to install the package <b>nvidia-driver</b> through
-apt-get, but unmet dependencies raised a few errors during its
-installation, many concerning Xorg. So, I thought perhaps the
-<b>nvidia-xconfig</b> package was first required (see the second link
-above). I tried installing it using <b>sudo apt-get install
-nvidia-xconfig</b>, but the installation hung.
+I get the following result:
 </p>
 
-<p>
-I next rebooted my computer and fixed apt-get by running
-</p>
-
-<div class="highlight"><pre>sudo dpkg --configure -a
+<div class="highlight"><pre>00:02.0 VGA compatible controller: Intel Corporation 2nd Generation Core Processor Family Integrated Graphics Controller <span class="o">(</span>rev 09<span class="o">)</span>
+01:00.0 VGA compatible controller: NVIDIA Corporation GF108M <span class="o">[</span>GeForce GT 555M<span class="o">]</span> <span class="o">(</span>rev ff<span class="o">)</span>
 </pre></div>
 
 <p>
-Fortunately, <b>nvidia-driver</b> and everything else installed
-correctly at this point. I suppose the moral of the story is to
-keep trying until <b>nvidia-driver</b> installs.
+The result on the top line suggests that I need bumblebee because
+there is an Intel integrated graphics card in my laptop.
 </p>
 
 <p>
-Next, I needed to create the Xorg configuration file. This is
-easily done using <b>nvidia-xconfig</b>. Simply type <b>sudo
-nvidia-xconfig</b> and the configuration file is generated in
-<code>/etc/X11/xorg.conf</code>. Restart the computer and run
-<b>nvidia-settings</b> to verify whether you have the Nvidia driver
-working.
+Next, I installed bumblebee using
+</p>
+
+<div class="highlight"><pre>sudo apt-get install bumblebee-nvidia primus
+</pre></div>
+
+<p>
+After a system restart, I tested that the driver installed
+correctly using the glxgears example:
+</p>
+
+<div class="highlight"><pre>sudo optirun glxgears -info
+</pre></div>
+
+<p>
+This opens a window of three gears, green, blue and red, that are
+turning, which I believe indicates that the Nvidia card is doing
+the work in rendering them.
 </p>
 
 <hr>
