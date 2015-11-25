@@ -26,7 +26,7 @@
 <nav class="navbar navbar-default navbar-static-top" role="navigation"><div class="container">
 <!-- This keeps the margins nice -->
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -38,7 +38,7 @@
             </a>
         </div>
 <!-- /.navbar-header -->
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
             <ul class="nav navbar-nav">
 <li>
 <a href="../../archive.html">Archive</a>
@@ -149,6 +149,7 @@ library, so do this with caution.
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-2" class="outline-2">
 <h2 id="sec-2">
 <span class="section-number-2">2</span> Installation</h2>
@@ -210,6 +211,7 @@ running. I found information on VIGRA <a href="http://ukoethe.github.io/vigra/">
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-2-1-2" class="outline-4">
 <h4 id="sec-2-1-2">
 <span class="section-number-4">2.1.2</span> Set the Java environment variables</h4>
@@ -225,6 +227,7 @@ I added the following lines to my .bashrc so the Makefile could find the Java li
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-2-1-3" class="outline-4">
 <h4 id="sec-2-1-3">
 <span class="section-number-4">2.1.3</span> Change the HOSTTYPE environment variable</h4>
@@ -245,6 +248,7 @@ I fixed this by overwriting the HOSTTYPE variable as
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-2-1-4" class="outline-4">
 <h4 id="sec-2-1-4">
 <span class="section-number-4">2.1.4</span> Copy the Open GL library files</h4>
@@ -291,6 +295,7 @@ For more information, see
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-2-1-5" class="outline-4">
 <h4 id="sec-2-1-5">
 <span class="section-number-4">2.1.5</span> Setup the BLAS, LAPACK, and ATLAS environments</h4>
@@ -324,6 +329,7 @@ try searching for them using <code>find</code>:
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-2-1-6" class="outline-4">
 <h4 id="sec-2-1-6">
 <span class="section-number-4">2.1.6</span> Set the correct LAPACK and ATLAS .so files</h4>
@@ -359,6 +365,7 @@ Following this, the Makefile.CP2 approach successfully finished.
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-2-1-7" class="outline-4">
 <h4 id="sec-2-1-7">
 <span class="section-number-4">2.1.7</span> Change the src version of VIGRA to 1.10.0</h4>
@@ -390,6 +397,7 @@ you receive the error, do the steps above and rerun the Makefile.
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-2-1-8" class="outline-4">
 <h4 id="sec-2-1-8">
 <span class="section-number-4">2.1.8</span> Upgrade libc6 and libxml2-dev</h4>
@@ -537,6 +545,7 @@ the Debian non-stable repos.
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-2-1-9" class="outline-4">
 <h4 id="sec-2-1-9">
 <span class="section-number-4">2.1.9</span> Run the Makefile</h4>
@@ -551,6 +560,7 @@ make -f Makefile.CP2 <span class="nv">PREFIX</span><span class="o">=</span><span
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-2-1-10" class="outline-4">
 <h4 id="sec-2-1-10">
 <span class="section-number-4">2.1.10</span> Misc. problems</h4>
@@ -569,6 +579,7 @@ from <code>~/cp2/include</code> to <code>/usr/include</code>.
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-2-1-11" class="outline-4">
 <h4 id="sec-2-1-11">
 <span class="section-number-4">2.1.11</span> Running CellProfiler</h4>
@@ -598,6 +609,7 @@ run this script whenever I want to run CellProfiler.
 </div>
 </div>
 </div>
+
 <div id="outline-container-sec-2-2" class="outline-3">
 <h3 id="sec-2-2">
 <span class="section-number-3">2.2</span> Option 2: Install dependences yourself</h3>
@@ -638,6 +650,7 @@ made for CellProfiler.
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-2-2-2" class="outline-4">
 <h4 id="sec-2-2-2">
 <span class="section-number-4">2.2.2</span> Install CellH5</h4>
@@ -662,7 +675,6 @@ ensure that cellh5 was installed locally to only that virtualenv.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-2-2-3" class="outline-4">
 <h4 id="sec-2-2-3">
 <span class="section-number-4">2.2.3</span> Install vigra</h4>
@@ -693,7 +705,6 @@ this if you want to keep it clean, though I have not tried this.
 <hr>
 </div>
 </div>
-
 <div id="outline-container-sec-2-2-4" class="outline-4">
 <h4 id="sec-2-2-4">
 <span class="section-number-4">2.2.4</span> List of installed Python packages</h4>
@@ -733,6 +744,7 @@ wxPython-common<span class="o">==</span>2.8.12.1
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-2-2-5" class="outline-4">
 <h4 id="sec-2-2-5">
 <span class="section-number-4">2.2.5</span> CellProfiler crashes during an Analysis</h4>
@@ -748,6 +760,7 @@ report).
 </div>
 </div>
 </div>
+
 <div id="outline-container-sec-3" class="outline-2">
 <h2 id="sec-3">
 <span class="section-number-2">3</span> Errors while running</h2>
@@ -790,6 +803,7 @@ June 26, 2015.
 <hr>
 </div>
 </div>
+
 <div id="outline-container-sec-3-1-2" class="outline-4">
 <h4 id="sec-3-1-2">
 <span class="section-number-4">3.1.2</span> Solution</h4>
