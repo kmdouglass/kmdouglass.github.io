@@ -22,6 +22,13 @@ ax.spines['top'].set_visible(False)
 ax.spines['right'].set_visible(False)
    #+END_SRC
 
+   Removing the ticks is done like so:
+
+   #+BEGIN_SRC python
+ax.yaxis.set_ticks_position('left')
+ax.xaxis.set_ticks_position('bottom')
+   #+END_SRC
+
 -----
 
 ** Changing the frame linewidth
