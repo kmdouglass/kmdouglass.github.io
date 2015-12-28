@@ -3,15 +3,21 @@
 <head>
 <meta charset="utf-8">
 <base href="http://kmdouglass.github.io/index.html">
-<meta name="description" content="Biophysics, optics, and programming.">
+<meta name="description" content="Kyle M. Douglass's home on the web.">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kyle M. Douglass</title>
+<title>Home | Kyle M. Douglass</title>
 <link href="assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
 <meta content="#5670d4" name="theme-color">
 <link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml">
 <link rel="canonical" href="http://kmdouglass.github.io/index.html">
-<link rel="next" href="index-1.html" type="text/html">
-<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><link rel="prefetch" href="posts/beware-the-paraxial-approximation-in-microscopy.html" type="text/html">
+<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><meta name="description" itemprop="description" content="Kyle M. Douglass's home on the web.">
+<meta name="author" content="Kyle M. Douglass">
+<meta property="og:site_name" content="Kyle M. Douglass">
+<meta property="og:title" content="Home">
+<meta property="og:url" content="http://kmdouglass.github.io/index.html">
+<meta property="og:description" content="Kyle M. Douglass's home on the web.">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2015-12-28T20:42:16+01:00">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -36,12 +42,6 @@
         <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
             <ul class="nav navbar-nav">
 <li>
-<a href="archive.html">Archive</a>
-                </li>
-<li>
-<a href="categories/index.html">Tags</a>
-                </li>
-<li>
 <a href="stories/notes-and-projects.html">Notes</a>
                 </li>
 <li>
@@ -51,12 +51,24 @@
 <a href="stories/contact.html">Contact</a>
                 </li>
 <li>
-<a href="rss.xml">RSS feed</a>
+<a href="posts/index.html">Blog</a>
+                </li>
+<li>
+<a href="categories/index.html">Tags</a>
+                </li>
+<li>
+<a href="archive.html">Archive</a>
 
                 
             </li>
 </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+    <a href="index.md" id="sourcelink">Source</a>
+    </li>
+
+                
+            </ul>
 </div>
 <!-- /.navbar-collapse -->
     </div>
@@ -67,1609 +79,132 @@
         <div class="row">
             
             
+<article class="storypage" itemscope="itemscope" itemtype="http://schema.org/Article"><header></header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<div class="jumbotron">
 
-<div class="postindex">
-    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/beware-the-paraxial-approximation-in-microscopy.html" class="u-url">Beware the paraxial approximation in microscopy</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">
-                Kyle M. Douglass
-            </span></p>
-            <p class="dateline"><a href="posts/beware-the-paraxial-approximation-in-microscopy.html" rel="bookmark"><time class="published dt-published" datetime="2015-09-09T19:40:00+02:00" title="2015-09-09 19:40">2015-09-09 19:40</time></a></p>
-                <p class="commentline">
-        
-    <a href="posts/beware-the-paraxial-approximation-in-microscopy.html#disqus_thread" data-disqus-identifier="cache/posts/beware-the-paraxial-approximation-in-microscopy.html">Comments</a>
+    <p>Dr. Kyle M. Douglass is a researcher specializing in optical
+    sensing, microscopy, and statistical data analysis with
+    applications in soft matter and fundamental cell
+    biology. Currently, he is working at the EPFL where he is
+    developing high-throughput, super-resolution fluoresence
+    microscopy technologies for investigating the structural biology
+    of genes and organelles. He is financially supported by a
+    <a href="http://www.systemsx.ch/projects/transition-postdoc-fellowships/tpdf-projects-2014/">SystemsX.ch
+    Transition Post-doc Fellowship</a>.</p>
 
+     <div align="center">
+       <a href="stories/about-me.html" class="btn btn-primary btn-lg">Learn more</a>
+     </div>
 
-        </p>
-</div>
-    </header><div class="p-summary entry-summary">
-    <p>
-I have had a difficult time resolving what originally seemed to be an
-inconsistency between a 2004 research article about estimating
-microscope pupil functions and the body of knowledge concerning the
-theory of aberrations in optical systems.
-</p>
-
-<p>
-In the article by Hanser, et al.<sup><a id="fnr.1" name="fnr.1" class="footref" href="posts/beware-the-paraxial-approximation-in-microscopy.html#fn.1">1</a></sup>, the authors utilize an imaging model
-for calculating the amplitude point-spread function of an optical
-system that incorporates defocus as an exponential term inside the
-Fourier transform integral:
-</p>
-
-\begin{equation*}
-\text{PSF}_{\text{A}} \left( x, y, z \right) = \iint_{pupil} P \left( k_x, k_y \right) e^{i k_z z} e^{i \left( k_{x}x + k_{y}y \right)} dk_x dk_y
-\end{equation*}
-
-<p>
-where \(k_z = \sqrt{\left( 2 \pi n / \lambda \right)^2 - \left( k_x^2 +
-k_y^2 \right)}\). (I changed the notation of some variables used in the
-text because the authors confusingly use \(k\) to represent spatial
-frequency in units of <i>cycles per distance</i> instead of the much more
-common <i>radians per distance</i>.) In the image plane at \(z = 0\), there
-is no defocus and we get the amplitude point spread function (PSF) as
-the Fourier transform of the pupil function \(P \left( k_x, k_y
-\right)\) just like we would expect (see Goodman<sup><a id="fnr.2" name="fnr.2" class="footref" href="posts/beware-the-paraxial-approximation-in-microscopy.html#fn.2">2</a></sup>, Chapter 6,
-pp. 129-131).
-</p>
-
-<p>
-The problem arises when I try to verify this model when \(z\) is not
-equal to zero by computing the defocused PSF using the wavefront error
-for defocus. From the scalar diffraction theory of aberrations, the
-defocused PSF is the Fourier transform of the pupil function
-multiplied by a phase factor whose phase angle is proportional to the
-wavefront error \(W \left( k_x, k_y \right)\)
-</p>
-
-\begin{equation*}
-\text{PSF}_{\text{A}} \left( x, y, z \right) = \iint_{pupil} P \left( k_x, k_y \right) e^{i k W \left( k_x, k_y \right)} e^{i \left( k_{x}x + k_{y}y \right)} dk_x dk_y
-\end{equation*}
-
-<p>
-Any textbook discussing Seidel aberrations will tell you that the
-defocused wavefront error \(W\) is quadratic in the pupil plane
-coordinates, i.e. \(W \sim k_x^2 + k_y^2\). Goodman even states this
-with little justification later in Chapter 6 on p. 149 when discussing
-defocus <sup><a id="fnr.2.100" name="fnr.2.100" class="footref" href="posts/beware-the-paraxial-approximation-in-microscopy.html#fn.2">2</a></sup>. So how can I reconcile the first equation in which the
-defocus goes as the square root of a constant minus the squared pupil
-coordinates with the second equation that is quadratic in pupil
-coordinates?
-</p>
-
-<p>
-The answer, as you might have guessed from the title of this post, is
-that <i>the Seidel polynomial term for defocus is a result of applying
-the paraxial approximation when computing the wavefront error</i>. You
-can see this by calculating the phase of a spherical wave in the pupil
-plane that is centered on the axis in the image plane; Goodman states
-it is quadratic without justification, but this is only true near the
-axis. Mahajan offers a geometrical interpretation of \(W\) on p. 148,
-where he notes that the path length difference for defocus "is
-approximately equal to the difference of <a href="http://liutaiomottola.com/formulae/sag.htm">sags</a> of the reference sphere
-and the wavefront.<sup><a id="fnr.3" name="fnr.3" class="footref" href="posts/beware-the-paraxial-approximation-in-microscopy.html#fn.3">3</a></sup>" He then goes on to derive the same expression
-for \(W\) that Goodman gets; he states the approximation that he uses,
-whereas Goodman implicitly assumes a quadratic phase front in the
-pupil. Hanser et al., on the other hand, are essentially propagating
-the plane wave angular spectrum from the image plane to nearby planes
-to model defocus. I think that this should be rigorously correct since
-no approximation is applied. For me, it is unfortunate that this was
-not made clear in their paper because I spent quite a bit of time
-trying to reconcile the two results.
-</p>
-
-<p>
-The lesson of this story is to be sure you know about the
-approximations that go into a "standard" result found in textbooks. I
-falsely assumed that the Seidel aberrations were exact and that
-Hanser, et al. were suspect when in fact it was the other way
-around. Because the paraxial approximation is so widespread in optics
-theory, it can often lie hidden behind an equation and its effects can
-easily be taken for granted. This is a problem for the large NA
-systems used in microscopy where the results of the paraxial
-approximation are not often valid.
-</p>
-<div id="footnotes">
-<h2 class="footnotes">Footnotes: </h2>
-<div id="text-footnotes">
-
-<div class="footdef">
-<sup><a id="fn.1" name="fn.1" class="footnum" href="posts/beware-the-paraxial-approximation-in-microscopy.html#fnr.1">1</a></sup><p class="footpara">
-<a href="http://onlinelibrary.wiley.com/doi/10.1111/j.0022-2720.2004.01393.x/abstract;jsessionid=946CF30FA7FA65F1DB4C638D0C4DF00F.f02t04">http://onlinelibrary.wiley.com/doi/10.1111/j.0022-2720.2004.01393.x/abstract;jsessionid=946CF30FA7FA65F1DB4C638D0C4DF00F.f02t04</a>
-</p>
 </div>
 
-<div class="footdef">
-<sup><a id="fn.2" name="fn.2" class="footnum" href="posts/beware-the-paraxial-approximation-in-microscopy.html#fnr.2">2</a></sup><p class="footpara">
-<a href="https://books.google.ch/books/about/Introduction_to_Fourier_optics.html?id=ow5xs_Rtt9AC&amp;redir_esc=y">https://books.google.ch/books/about/Introduction_to_Fourier_optics.html?id=ow5xs_Rtt9AC&amp;redir_esc=y</a>
-</p>
+<div class="panel panel-danger">
+  <div class="panel-heading">
+    <h4 class="panel-title">News</h4>
+  </div>
+  <div class="panel-body">
+    <h4>December 28, 2015</h4>
+
+    <p>Kyle will present recent work on polymer modeling and
+    statistical inference of human telomere structure at the <a href="http://www.quantitativebioimaging.com/">Quantitative
+    Bioimaging Conference</a> in Delft, the Netherlands on January
+    13, 2016. The abstract may be found <a href="http://qiftp.tudelft.nl/media/QBI/abstracts/Polymer%20Modeling%20And%20Super-resolution%20Microscopy%20Determine%20The%20Compaction%20Of%20Human%20Telomeres.pdf">here</a>.</p>
+<p>
+
+  </p>
 </div>
 
-<div class="footdef">
-<sup><a id="fn.3" name="fn.3" class="footnum" href="posts/beware-the-paraxial-approximation-in-microscopy.html#fnr.3">3</a></sup><p class="footpara">
-<a href="https://books.google.ch/books/about/Optical_Imaging_and_Aberrations_Ray_geom.html?id=I_1AAQAAIAAJ&amp;redir_esc=y">https://books.google.ch/books/about/Optical_Imaging_and_Aberrations_Ray_geom.html?id=I_1AAQAAIAAJ&amp;redir_esc=y</a>
-</p>
 </div>
 
+<div class="row">
+  <div class="col-sm-6">
+    <div class="panel panel-success">
+      <div class="panel-heading">
+        <h4 class="panel-title">Recent Publications</h4>
+      </div>
+      <div class="panel-body">
 
+<a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0142949">Correction
+of a Depth-Dependent Lateral Distortion in 3D Super-resolution
+Imaging</a>
+
+<p>In this paper, my co-authors and I investigated the source of a
+common aberration in 3D localization microscopy. We found that it is
+caused by aberrations in the microscope's pupil function that lack
+rotational symmetry and provide open-source software to correct this
+aberration.</p>
+
+<hr>
+<a href="http://pubs.rsc.org/en/content/articlelanding/2015/ra/c4ra11627e#!divAbstract">
+Passive Optical Mapping of Structural Evolution in Complex Fluids</a>
+
+<p>This paper is the result of many years of work during my PhD. We
+detailed the development of a low-coherence, fiber optic-based system
+for measuring the structural dynamics of complex polymer
+solutions. Furthermore, we demonstrated the capabilities of this
+system in an industrial triblock copolymer solution by measuring
+relaxation times spanning several orders of magnitude and scattering
+regimes from single scattering to heavy multiple scattering, which is
+a significant improvement over traditional dynamic light scattering
+methods.</p>
+
+<hr>
+<a href="https://www.osapublishing.org/ol/abstract.cfm?uri=ol-38-14-2385">Dipole–dipole interaction in random electromagnetic fields</a>
+
+<p>This is a theortical paper in which my co-authors and I predict an
+optical binding force between two induced dipoles in a random speckle
+field. This counter-intuitive result is related to the Casimir effect
+and was experimentally demonstrated <a href="http://www.nature.com/ncomms/2015/150622/ncomms8460/full/ncomms8460.html">here</a>.</p>
+
+</div>
+
+<p></p>
+</div>
+  </div>
+  <div class="col-sm-6">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h4 class="panel-title">Contact Information</h4>
+      </div>
+      <div class="panel-body">
+<p>If you wish to contact me for more information, consulting work, or
+possible research endeavors, please do not hesitate to reach me
+through the following means:</p>
+<div class="list-group">
+  <a href="mailto:kyle.douglass@epfl.ch" class="list-group-item">
+    <h5 class="list-group-item-heading">E-mail (work)</h5>
+    <p class="list-group-item-text">kyle.douglass at epfl.ch</p>
+  </a>
+  <a href="mailto:kyle.m.douglass@gmail.com" class="list-group-item">
+    <h5 class="list-group-item-heading">E-mail (personal)</h5>
+    <p class="list-group-item-text">kyle.m.douglass at gmail.com</p>
+  </a>
+  <a href="https://twitter.com/kmdouglass" class="list-group-item">
+    <h5 class="list-group-item-heading">Twitter</h5>
+    <p class="list-group-item-text">kmdouglass</p>
+  </a>
+  <a href="https://ch.linkedin.com/in/kylemdouglass" class="list-group-item">
+    <h5 class="list-group-item-heading">LinkedIn</h5>
+    <p class="list-group-item-text">kylemdouglass</p>
+  </a>
+  <a href="http://orcid.org/0000-0003-4694-0922" class="list-group-item">
+    <h5 class="list-group-item-heading">ORCID</h5>
+    <p class="list-group-item-text">0000-0003-4694-0922</p>
+  </a>
+
+</div>
+
+<p></p>
+</div>
+</div>
+</div>
 </div>
 </div>
     </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/whats-the-difference-between-a-back-focal-plane-and-pupil-plane.html" class="u-url">What's the difference between a back focal plane and pupil plane?</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">
-                Kyle M. Douglass
-            </span></p>
-            <p class="dateline"><a href="posts/whats-the-difference-between-a-back-focal-plane-and-pupil-plane.html" rel="bookmark"><time class="published dt-published" datetime="2015-08-26T08:49:13+02:00" title="2015-08-26 08:49">2015-08-26 08:49</time></a></p>
-                <p class="commentline">
-        
-    <a href="posts/whats-the-difference-between-a-back-focal-plane-and-pupil-plane.html#disqus_thread" data-disqus-identifier="cache/posts/whats-the-difference-between-a-back-focal-plane-and-pupil-plane.html">Comments</a>
+    
 
-
-        </p>
-</div>
-    </header><div class="p-summary entry-summary">
-    <p>
-Yesterday in the lab I asked one of my colleagues whether she knew
-what the pupil plane of a microscope objective was. Her answer was
-no. I then unknowingly proceeded to give her a description which I now
-realize was false. I said that the pupil plane is the plane near the
-backside of the objective where the light intensity is proportional to
-the Fourier transform of the image. Later that evening, I realized
-that this explanation was, in fact, wrong. I had described to her what
-is the <i>back focal plane</i> for an infinity-corrected objective.
-</p>
-
-<p>
-Don't worry, I will correct myself when I see her later
-today. However, this experience does raise one important question that
-I have never seriously considered in optics: what is the meaningful
-difference between the pupil plane of an optical system and its back
-focal plane?
-</p>
-
-<p>
-First, I should point out that there is no difference between a <i>back</i>
-focal plane and one of the two focal planes of an objective; these are
-merely semantics that reflect the fact that we think of the sample as
-being in front of the objective. The back focal plane is therefore the
-focal plane of the objective located on the side opposite the
-sample. Now, everyone who has taken a Fourier optics class has
-probably learned the following mantra:
-</p>
-
-<div align="center">
-
-<p>
-<b>The focal plane of a lens contains the Fourier transform of the
-object.</b>
-</p>
-
-</div>
-
-<p>
-Of course, this statement is usually what we remember, but in fact it
-should look more like this:
-</p>
-
-<div align="center">
-
-
-<p>
-<b>The focal plane of a lens contains the Fourier transform of the
-object, except for every other detail we ignore in the math.</b>
-</p>
-
-</div>
-
-
-<p>
-While it's true that the light intensity here reflects the sample's
-two-dimensional Fourier transform, the general case often contains
-additional phase factors and expressions to account for the pupil size
-and apodization (see <a href="https://books.google.ch/books?id=ow5xs_Rtt9AC&amp;printsec=frontcover&amp;dq=goodman+fourier+optics&amp;hl=en&amp;sa=X&amp;ved=0CB0Q6AEwAGoVChMI-5vjt5jGxwIVCMUUCh37ogzP#v=onepage&amp;q=goodman%20fourier%20optics&amp;f=false">Goodman</a>, section 5.2). Regardless, it is in the
-back focal plane where the light intensity contains information on the
-angular spectrum that makes up the object.
-</p>
-
-<p>
-In contrast, the pupil plane contains either the image of the
-objective's aperture stop or the physical stop itself, depending on
-what sets the limit on the numerical aperture of the objective in the
-infinity space (again, see <a href="https://books.google.ch/books?id=ow5xs_Rtt9AC&amp;printsec=frontcover&amp;dq=goodman+fourier+optics&amp;hl=en&amp;sa=X&amp;ved=0CB0Q6AEwAGoVChMI-5vjt5jGxwIVCMUUCh37ogzP#v=onepage&amp;q=goodman%20fourier%20optics&amp;f=false">Goodman</a>, appendix B). Moreover, the pupil
-plane is also used as the reference plane for quantifying the
-objective's aberrations. This is because, for a diffraction-limited
-system, the wavefront in the (exit) pupil plane will be a spherical
-wave converging towards the image of a point source and truncated by
-the aperture stop (<a href="https://books.google.ch/books?id=ow5xs_Rtt9AC&amp;printsec=frontcover&amp;dq=goodman+fourier+optics&amp;hl=en&amp;sa=X&amp;ved=0CB0Q6AEwAGoVChMI-5vjt5jGxwIVCMUUCh37ogzP#v=onepage&amp;q=goodman%20fourier%20optics&amp;f=false">Goodman</a> again discusses this in section
-6.1). Deviations from the spherical reference wave serve as the means
-to quantify the aberrations in a system.
-</p>
-
-<p>
-From an experimental point of view, the back focal plane is
-interesting because it is used in Fourier microscopy, for which many
-setups have been devised to image it (see Figure 1 in <a href="http://arxiv.org/abs/1507.04037">this excellent
-arXiv submission</a>.) What I really am wondering now is how one would go
-about imaging the pupil plane as a means of exploring an objective's
-aberrations, and whether this is at all feasible.
-</p>
-    </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/paraxial-optics-2-what-problem-does-it-solve.html" class="u-url">Paraxial Optics (2): What problem does it solve?</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">
-                Kyle M. Douglass
-            </span></p>
-            <p class="dateline"><a href="posts/paraxial-optics-2-what-problem-does-it-solve.html" rel="bookmark"><time class="published dt-published" datetime="2015-05-31T15:37:13+02:00" title="2015-05-31 15:37">2015-05-31 15:37</time></a></p>
-                <p class="commentline">
-        
-    <a href="posts/paraxial-optics-2-what-problem-does-it-solve.html#disqus_thread" data-disqus-identifier="cache/posts/paraxial-optics-2-what-problem-does-it-solve.html">Comments</a>
-
-
-        </p>
-</div>
-    </header><div class="p-summary entry-summary">
-    <div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1">Summary</h2>
-<div class="outline-text-2" id="text-1">
-<ol class="org-ol">
-<li>Paraxial optics is a tool to aid in building optical systems.
-</li>
-<li>Paraxial optics solves the imaging problem.
-</li>
-<li>The imaging problem concerns finding the location, size, and
-orientation of an image given an object and an optical system.
-</li>
-<li>An optical system is a collection of objects like lenses, mirrors,
-prisms, cameras, etc. that collects the light emitted or scattered
-by an object and delivers it to another location where it can be
-detected and processed for information.
-</li>
-<li>The rules of paraxial optics allow for a perfect imaging system,
-i.e. a system that creates a one-to-one correspondance between
-points in an object plane and an image plane.
-</li>
-</ol>
-</div>
-</div>
-
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2">Paraxial optics solves the imaging problem</h2>
-<div class="outline-text-2" id="text-2">
-<p>
-<i>In this post I will use paraxial optics to mean paraxial geometrical
-optics. This is important since the paraxial approximation can also</i>
-<i>apply to the wave theory of light.</i>
-</p>
-
-<p>
-When learning a new theory, I often find it most useful to first
-identify the problem that the theory was developed to solve. This
-approach is particularly pertinent for learning paraxial optics, since
-the theory is largely used as a tool to aid in the construction of
-optical systems. Unfortunately, the fact that paraxial optics can help
-solve problems often becomes lost on people because they never
-actually build anything for the purpose of imaging. And even if a
-someone never builds a camera or microscope, I think it is difficult
-for them to see what paraxial optics concepts–such as principle
-planes and aperture stops–can do for helping them troubleshoot their
-hardware when it is not working as expected.
-</p>
-
-<p>
-So, with this in mind, I will use this part in a series of blog posts
-to answer the following question: what is the problem that paraxial
-optics solves?
-</p>
-
-<p>
-Paraxial optics solves the imaging problem <sup><a id="fnr.1" name="fnr.1" class="footref" href="posts/paraxial-optics-2-what-problem-does-it-solve.html#fn.1">1</a></sup>. The imaging problem as
-I see it is simply this: <b>given an optical system, how can one arrange
-its components to form the image of an object at a desired</b> <b>position
-and with a predictable size and orientation?</b> This question has been
-asked by scientists, engineers, philosophers, and others since
-antiquity because we place enormous value in pictures.
-</p>
-
-<p>
-To better understand this problem, I am going to step through the
-parts of this statement and explain what I mean by each. First, I
-mention that the imaging problem involves the use of an <b>optical
-system</b>. I have to admit that I use this term partly because it is
-part of the jargon of the optical sciences, but I also think that the
-word "system" nicely captures the essence of what I would like to
-say. An optical system is a collection of components such as lenses,
-mirrors, and prisms taken together with their mechanical supports and
-arranged in a meaningful way to capture and channel light as it
-travels from one place to another. Below is one example of an optical
-system that most people know pretty well.
-</p>
-
-<div align="center">
-
-
-<div class="figure">
-<p><img src="eye.jpg" alt="eye.jpg"></p>
-</div>
-
-  A human eye is an optical system! From <a href="http://en.wikipedia.org/wiki/Eye#/media/File:Eye_iris.jpg">
-  Peter Nóvak, Wikipedia</a>.
-</div>
-
-<p>
-I have already mentioned that the components of an optical system can
-include things we commonly associate with optics, such as lenses and
-mirrors, but really no one such component is necessary to build an
-optical system so long as it captures and does something with
-light. For example, <a href="http://en.wikipedia.org/wiki/Pinhole_camera">the pinhole camera</a> uses nothing but a very small
-hole to form images; no lens is required! Still, we usually find some
-components like lenses much more frequently in optical systems than
-others, and the choice of which components to use really just depends
-on the specific type of imaging problem you are trying to solve.
-</p>
-
-<p>
-Next in the statement of the imaging problem I say that we will be
-forming an image by arranging the components of our optical system in
-a clever way. Though the intuitive notion of an image is quite clear,
-I think it is actually extremely difficult to formally define it. For
-the purpose of this tutorial, I think it is best at this point to rely
-on the intuitive idea of an image until I have developed enough
-concepts to define it in terms of optical theory <sup><a id="fnr.2" name="fnr.2" class="footref" href="posts/paraxial-optics-2-what-problem-does-it-solve.html#fn.2">2</a></sup>.
-</p>
-
-<p>
-Finally, the imaging problem involves determining the location, size,
-and orientation of an image formed by the system. This means that
-rearrangement of our system's components is going to change these
-features of the image. Things such as the size of a CCD chip or the
-weight of a lens are going to place constraints on the values these
-properties can take.
-</p>
-</div>
-</div>
-
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3">Perfect imaging systems</h2>
-<div class="outline-text-2" id="text-3">
-<p>
-At this point I should stress that paraxial optics is not the only
-theoretical tool for solving the imaging problem. We clearly can use
-non-paraxial geometrical optics or wave optics to determine the
-properties of an image formed by an optical system. However, what is
-interesting is that paraxial optics is one of very few theoretical
-frameworks in which a perfect image can be realized <sup><a id="fnr.3" name="fnr.3" class="footref" href="posts/paraxial-optics-2-what-problem-does-it-solve.html#fn.3">3</a></sup>.
-</p>
-
-<div align="center">
-
-
-<div class="figure">
-<p><img src="im_perfectOpticalSystems.png" alt="im_perfectOpticalSystems.png"></p>
-</div>
-
-</div>
-
-<p>
-The above figure, which is called a <a href="http://www.edmundoptics.com/TechSupport/resource_center/downloads/Anchor-Optics/GraphicalRayTracing.pdf">ray-trace diagram</a>, illustrates
-what I mean by a perfect imaging system. The system is represented as
-a "black box" that collects light coming from a two-dimensional plane
-(known as the object plane) and relays the light to another plane
-known as the image plane. The whole system is considered to be
-rotationally symmetric about a line called the optics axis so that I
-can represent it as a two-dimensional sketch instead of requiring a
-full, three-dimensional model. Finally, light is modeled as lines with
-arrows denoting the direction of propagation <sup><a id="fnr.4" name="fnr.4" class="footref" href="posts/paraxial-optics-2-what-problem-does-it-solve.html#fn.4">4</a></sup>.
-</p>
-
-<p>
-Now comes the important point. Within the framework of paraxial optics
-theory, it is possible to show that, given an object plane and an
-image plane, one can construct an optical system consisting of
-components that redirect the light rays in such a way that all the
-rays leaving a point in the object plane are brought back together at
-a corresponding point in the image plane. <b>This means that the perfect
-optical system performs a one-to-one mapping of points in the object</b>
-<b>plane to points in the image plane</b>. What's more, the distance
-between every point in the image plane and the optics axis is
-proportional to the distance between their corresponding points and
-the axis in the object plane by a constant factor. This factor is
-known as the <b>magnification</b> of the system.
-</p>
-
-<p>
-The way this perfect imaging system is realized within the context of
-the theory is in the way the components redirect the rays coming from
-the object <sup><a id="fnr.5" name="fnr.5" class="footref" href="posts/paraxial-optics-2-what-problem-does-it-solve.html#fn.5">5</a></sup>. What differentiates <i>paraxial</i> geometrical optics from
-plain old geometrical optics is the rules dictating how the
-redirection occurs.
-</p>
-
-<p>
-One other important point is to consider what happens in imperfect
-imaging systems. Once we violate the assumptions of paraxial optics so
-that we no longer have a system operating within its range of
-validity, we cannot perform a true, one-to-one mapping of points from
-the object plane to the image plane. Instead, we find that rays coming
-from a single point in the object plane cannot all be brought back
-together in any image plane <sup><a id="fnr.6" name="fnr.6" class="footref" href="posts/paraxial-optics-2-what-problem-does-it-solve.html#fn.6">6</a></sup>. We could say that the image plane is
-a concept that does not exist outside paraxial optics. And if the
-image plane does not exist, how are we to strictly define an image
-size and location?
-</p>
-
-<p>
-Of course, we can find planes in non-paraxial systems in which there
-are pretty good images, and these usually correspond to the image
-planes we find by applying the equations and simplifications of
-paraxial optics. So paraxial optics is often our first tool for
-modeling an imaging system. It tells us roughly where our images will
-be formed and how big they are, but it will not tell us about image
-quality.
-</p>
-</div>
-</div>
-
-<div id="outline-container-sec-4" class="outline-2">
-<h2 id="sec-4">Conclusion</h2>
-<div class="outline-text-2" id="text-4">
-<p>
-With this tutorial I hope to have provided you with a conceptual basis
-for understanding paraxial geometrical optics without including too
-many of its details. I think a conceptual basis such as this is much
-better than diving right into ray-trace diagrams with lenses and
-mirros. I think new students to optics often wonder what the
-importance is of paraxial optics and why it is needed when more
-complete optical descriptions exist. I hope that the discussion of the
-perfect imaging system and its existence only within the framework of
-paraxial geometrical optics helped to clarify its importance.
-</p>
-</div>
-</div>
-<div id="footnotes">
-<h2 class="footnotes">Footnotes: </h2>
-<div id="text-footnotes">
-
-<div class="footdef">
-<sup><a id="fn.1" name="fn.1" class="footnum" href="posts/paraxial-optics-2-what-problem-does-it-solve.html#fnr.1">1</a></sup><p class="footpara">
-You didn't expect me to give you the answer right away, did
-you? :)
-</p>
-</div>
-
-<div class="footdef">
-<sup><a id="fn.2" name="fn.2" class="footnum" href="posts/paraxial-optics-2-what-problem-does-it-solve.html#fnr.2">2</a></sup><p class="footpara">
-<a href="http://en.wikipedia.org/wiki/Image">Even the Wikipedia entry on the concept of an Image</a> is a bit vague
-and philosophical.
-</p>
-</div>
-
-<div class="footdef">
-<sup><a id="fn.3" name="fn.3" class="footnum" href="posts/paraxial-optics-2-what-problem-does-it-solve.html#fnr.3">3</a></sup><p class="footpara">
-Maxwell's Fisheye lens is another, but it is a good deal more
-complicated and, to my knowledge, has not been demonstrated at optical
-wavelengths.
-</p>
-</div>
-
-<div class="footdef">
-<sup><a id="fn.4" name="fn.4" class="footnum" href="posts/paraxial-optics-2-what-problem-does-it-solve.html#fnr.4">4</a></sup><p class="footpara">
-It's important to realize that we are modeling the propagation of
-light as a ray; we are not saying that light <i>is</i> a ray. If light
-really was a ray and not an electromagnetic wave, then we would not
-need the wave theory of optics to explain phenomena like
-diffraction. Within the framework of the axioms of geometrical optics,
-a ray adequately describes how light propagates.
-</p>
-</div>
-
-<div class="footdef">
-<sup><a id="fn.5" name="fn.5" class="footnum" href="posts/paraxial-optics-2-what-problem-does-it-solve.html#fnr.5">5</a></sup><p class="footpara">
-More specifically, it lies in the linearization of Snell's law,
-but I won't get into that yet.
-</p>
-</div>
-
-<div class="footdef">
-<sup><a id="fn.6" name="fn.6" class="footnum" href="posts/paraxial-optics-2-what-problem-does-it-solve.html#fnr.6">6</a></sup><p class="footpara">
-This phenomenon is precisely what an optical aberration is within
-geometrical optics theory.
-</p>
-</div>
-
-
-</div>
-</div>
-    </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/can-my-beam-be-collimated.html" class="u-url">Can my laser beam be collimated?</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">
-                Kyle M. Douglass
-            </span></p>
-            <p class="dateline"><a href="posts/can-my-beam-be-collimated.html" rel="bookmark"><time class="published dt-published" datetime="2015-05-04T09:44:42+02:00" title="2015-05-04 09:44">2015-05-04 09:44</time></a></p>
-                <p class="commentline">
-        
-    <a href="posts/can-my-beam-be-collimated.html#disqus_thread" data-disqus-identifier="cache/posts/can-my-beam-be-collimated.html">Comments</a>
-
-
-        </p>
-</div>
-    </header><div class="p-summary entry-summary">
-    <p>
-The fluorescence microscopy setup in my lab requires quite a bit of
-power. The minimum irradiance requirement is greater than 1 kW per
-square centimeter, and this must cover an area spanning a few tens of
-microns across after focusing through the objective. When I was
-designing the setup, the highest priority was placed on finding a
-cheap laser with as much power as possible at a wavelength of 647 nm;
-I considered all other qualities of the laser of secondary importance.
-</p>
-
-<p>
-Just like everything else in science, I have learned a very good
-lesson from this experience. The laser I decided to purchase is a <a href="http://www.omicron-laser.de/english/lasers/diode-lasers/brixx-lasers/brixx-diode-lasers.html">800
-mW BrixX laser from Omicron</a>. The cost is under $10,000, which I
-consider to be a pretty good deal for the amount of power it puts
-out. There is no fiber-coupled version, but all of our lasers are free
-space anyway so I did not consider this to be a big problem. The beam
-is astigmatic, which is to be expected from a high power laser diode.
-</p>
-
-<p>
-The astigmatism is not necessarily a big problem for me, though. What
-is surprising to me is how difficult it is to keep the beam <a href="http://en.wikipedia.org/wiki/Collimated_light">collimated</a>
-over large distances, that is, to keep it roughly the same size as it
-propagates. My application requires a fairly small beam size since the
-exit pupil of the objective is only 6 millimeters in diameter. With
-<a href="http://en.wikipedia.org/wiki/M_squared">M-squared</a> values direct from the laser of 12 and 25, it is quite
-difficult to keep the beam collimated for a long enough distance to
-steer the beam through all the optics and to keep it small enough to
-prevent overfilling the objective's exit pupil and losing power.
-</p>
-
-<p>
-What I have learned from this is that free-space diode lasers, and
-more generally multimode laser beams, require extra consideration to
-ensure that they will stay collimated in long setups.
-</p>
-
-<p>
-So, how can I predict the distance over which my beam can stay
-collimated to better judge how well it will work for my setup? The
-first thing to realize is that no beam can stay collimated
-forever. Real laser beams experience diffraction, which causes them to
-spread as they propagate. This means that the first thing I should do
-is to consider the distances spanned by the beam paths. In a
-microscopy setup, this path will probably not be longer than a couple
-meters. In mine, it's roughly two meters since I am combining a number
-of laser beams together and need the extra space.
-</p>
-
-<p>
-Once I identify the length scale over which the beam should stay
-collimated, I need to examine the beam parameter that is best
-associated with collimation. For a pure Gaussian beam, this parameter
-is the <a href="http://en.wikipedia.org/wiki/Rayleigh_length">Rayleigh range</a>. The Rayleigh range is the distance between the
-beam waist and the point where the cross-sectional area of the beam
-has doubled, or, equivalently, to the point where the radius of the
-beam has increased over the waist radius by a factor of the
-\(\sqrt{2}\). For a pure Gaussian beam with a waist radius of \(w_0\) and
-a wavelength of \(\lambda\), the Rayleigh range is given by the equation
-</p>
-
-
-\begin{equation*}
-z_R = \frac{\pi w_0^2}{\lambda}
-\end{equation*}
-
-<p>
-It is represented by the symbol <i>z<sub>R</sub></i> in the figure below from
-Wikipedia. The total distance over which the beam will stay collimated
-is represented by <i>b</i> and is just twice the Rayleigh range.
-</p>
-
-<div align="center">
-
-
-<div class="figure">
-<p><img src="GaussianBeamWaist.png" alt="GaussianBeamWaist.png"></p>
-</div>
-
-</div>
-
-<p>
-The Rayleigh range of a Gaussian laser beam should therefore be larger
-than the characteristic distance of my setup that I identified in the
-previous step. But what about multimode beams like the one from my
-laser diode? This is where the concept of an "embedded Gaussian" comes
-into play. (For more information about this idea, see <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.177.3400&amp;rep=rep1&amp;type=pdf">this tutorial by
-Tony Siegman</a>.) I can predict the collimated distance by computing the
-Rayleigh range of an ideal Gaussian beam, and then divide it by the
-M<sup>2</sup> parameter for the beam.
-</p>
-
-<p>
-Let's take an example using numbers from my own laser. I will first
-pretend there are no collimating optics in the laser, which is not
-true but will serve as a good example as to why diode lasers without
-collimating optics are not good for free space setups. From the
-laser's spec sheet, I know that the M<sup>2</sup> value in the ``bad'' direction
-is 25 and that its waist size, which is probably half the size of the
-diode in one principle direction, is 107 microns. Using the above
-equation, I get a value of 56 centimeters, which means that an ideal
-Gaussian beam with these specs will stay collimated over about half a
-meter.
-</p>
-
-<p>
-However, my real multimode beam will have a Rayleigh range that is
-smaller than this value by a factor of 25, which is only about 2
-centimeters. For this reason, diode laser beams almost always have
-collimating optics; the beam from the diode itself is highly
-divergent.
-</p>
-
-<p>
-Returning to my own setup, if I resize the beam using a telescope to
-have a waist radius of 2 millimeters so it almost entirely fits inside
-the objective's exit pupil, the Rayleigh range of the embedded
-Gaussian beam will be almost <i>20 meters</i>, which is pretty long. The
-real beam, however, will have a Rayleigh range of about 780
-millimeters meters due to the high M<sup>2</sup> value. <b>Practically, this means
-I have about one meter of collimated laser beam</b> with which to work
-since I have double the Rayleigh range of collimated distance, but
-really I want the beam to travel less distance than this.
-</p>
-
-<p>
-Fortunately I can shrink the beam path enough that this should not be
-a problem, but it does serve as a very good lesson when looking for
-lasers for a microscopy application.
-</p>
-    </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/relearning-paraxial-optics.html" class="u-url">Relearning paraxial optics</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">
-                Kyle M. Douglass
-            </span></p>
-            <p class="dateline"><a href="posts/relearning-paraxial-optics.html" rel="bookmark"><time class="published dt-published" datetime="2015-04-19T11:05:21+02:00" title="2015-04-19 11:05">2015-04-19 11:05</time></a></p>
-                <p class="commentline">
-        
-    <a href="posts/relearning-paraxial-optics.html#disqus_thread" data-disqus-identifier="cache/posts/relearning-paraxial-optics.html">Comments</a>
-
-
-        </p>
-</div>
-    </header><div class="p-summary entry-summary">
-    <p>
-As a microscopist who designs and builds custom microscopes, I often
-find that first order ray tracing is one of the most useful tools I
-have. It is most useful to me when I am starting a design or for
-checking that I have not made any serious logical blunders when
-working at the bench. I also find it to be a good teaching tool and
-excellent for communicating my designs to others.
-</p>
-
-<p>
-Since I have recently made a lot of back-of-the-envelope ray trace
-designs for a microscope I am building at work, I have begun to
-critically think about why ray tracing works so well and how it fits
-inside the structure of the physical theories of optics.
-</p>
-
-<p>
-Ray tracing is a technique derived from <b>paraxial geometrical optics</b>
-and really is just a consequence of the axioms and assumptions in the
-development of the theory. When I think back to when I first learned
-about paraxial optics, however, I am reminded of severe assumptions
-that place limits on the scope of its validity. So how can a theory
-that makes such an enormous simplification by treating the
-electromagnetic waves described by Maxwell's equations as lines
-obeying the rules of geometry still be so useful?
-</p>
-
-<p>
-In this next series of blog posts, I want to explore this question and
-take the time to relearn paraxial optics with the benefit of
-hindsight. Physicists typically learn paraxial optics as their first
-theory of optics because it is relatively easy as compared to
-electromagnetism and quantum optics. I am curious what aspects of the
-theory I can appreciate now that I am familiar with the more advanced
-optical theories.
-</p>
-
-<p>
-The picture below might also provide a bit of motivation for why this
-interests me: we physicists learn about optics theories in a direction
-of increasing complexity during our education. However, this approach
-also means that we learn the most general theories last, so it is not
-obvious why assumptions and approximations are made in the theories we
-learn first. The result, I think, leads to a bit of logical
-discordance in our minds that can prevent a clear understanding of the
-subject. With this series of posts I hope to remove this cognitive
-dissonance and improve my understanding of the field I work in.
-</p>
-
-
-<div class="figure">
-<p><img src="order_of_optics_theories.png" alt="order_of_optics_theories.png"></p>
-</div>
-    </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/reading-select-lines-from-a-text-file.html" class="u-url">Reading select lines from a text file</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">
-                Kyle M. Douglass
-            </span></p>
-            <p class="dateline"><a href="posts/reading-select-lines-from-a-text-file.html" rel="bookmark"><time class="published dt-published" datetime="2015-03-18T08:27:50+01:00" title="2015-03-18 08:27">2015-03-18 08:27</time></a></p>
-                <p class="commentline">
-        
-    <a href="posts/reading-select-lines-from-a-text-file.html#disqus_thread" data-disqus-identifier="cache/posts/reading-select-lines-from-a-text-file.html">Comments</a>
-
-
-        </p>
-</div>
-    </header><div class="p-summary entry-summary">
-    <p>
-<a href="https://gist.github.com/kmdouglass/507717d339bc82f850ce">I just created a Python Gist</a> for reading select lines from a text file
-into memory. I came up with this Gist when I needed to parse the core
-log from our <a href="https://www.micro-manager.org/">microscope control software (Micro-Manager)</a>. One of our
-devices was continously sending its statistics to the computer, which
-would then be recorded to the log. I wanted to find only lines that
-contained the statistics by searching for the <b>STATS</b> identifier,
-which was unique to these lines.
-</p>
-
-<p>
-The problem was a bit more difficult than reading just the lines
-containing this string because I wanted the statistics only for times
-when the software was acquiring a time series of images. Luckily, the
-core log also contains lines with unique strings indicating when a
-time series was initiated and stopped. All lines in the log are
-time-stamped.
-</p>
-
-<p>
-Below is the Gist I used to solve this problem. The lines that will be
-retained in memory will contain the strings in the list lineFilters. I
-then define a function named stringIsIn that will return a list of
-bool indicating whether each string is present in the line.
-</p>
-
-<p>
-At the bottom of the Gist, I use a list comprehension to loop over
-each line in the file. The line is appended to a growing list called
-outputLines if the line contains <i>any</i> of the strings I defined. Note
-that it's not necessary to use a separate definition for stringIsIn;
-the list comprehension over lineFilters could have been placed inline
-with the primary list comprension over lines in the file. I do think
-it is more readable the way it is presented below, however.
-</p>
-
-<p>
-I welcome any comments or suggestions, especially on the <a href="https://gist.github.com/kmdouglass/507717d339bc82f850ce">Gist website</a>
-where others may be more likely to find it.
-</p>
-
-<div class="highlight"><pre><span class="n">filename</span>    <span class="o">=</span> <span class="s">'myFile.txt'</span>
-<span class="n">outputLines</span> <span class="o">=</span> <span class="p">[]</span>
-
-<span class="c"># Keep all lines containing ANY of the following list of strings.</span>
-<span class="n">lineFilters</span> <span class="o">=</span> <span class="p">[</span><span class="s">'line 1'</span><span class="p">,</span>
-	       <span class="s">'line 2'</span><span class="p">,</span>
-	       <span class="s">'line 3'</span><span class="p">]</span>
-<span class="n">stringIsIn</span>  <span class="o">=</span> <span class="k">lambda</span> <span class="n">line</span><span class="p">:</span> <span class="p">[</span><span class="nb">filter</span> <span class="ow">in</span> <span class="n">line</span> <span class="k">for</span> <span class="nb">filter</span> <span class="ow">in</span> <span class="n">lineFilters</span><span class="p">]</span>
-
-
-<span class="c"># Read only lines containing one of the strings into memory.</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">file</span><span class="p">:</span>
-    <span class="p">[</span><span class="n">outputLines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">file</span> <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">stringIsIn</span><span class="p">(</span><span class="n">line</span><span class="p">))]</span>
-</pre></div>
-    </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/the-basics-of-virtualenv.html" class="u-url">The basics of virtualenv</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">
-                Kyle M. Douglass
-            </span></p>
-            <p class="dateline"><a href="posts/the-basics-of-virtualenv.html" rel="bookmark"><time class="published dt-published" datetime="2015-02-10T07:47:50+01:00" title="2015-02-10 07:47">2015-02-10 07:47</time></a></p>
-                <p class="commentline">
-        
-    <a href="posts/the-basics-of-virtualenv.html#disqus_thread" data-disqus-identifier="cache/posts/the-basics-of-virtualenv.html">Comments</a>
-
-
-        </p>
-</div>
-    </header><div class="p-summary entry-summary">
-    <p>
-I use Python 3.4 in most of my data analyses and in some
-simulations. I like a lot of its features, like its implementation of
-generators, maps, and filters. However, much of the software on my
-Debian Wheezy system depends on Python 2.7 to run, such as
-<a href="http://www.mendeley.com/">Mendeley</a>. (It used to run just fine with Python 3.4, until I ran an
-automatic update and that was the end of that.)
-</p>
-
-<p>
-To run some Python 2.7 programs, I used to do the following:
-</p>
-
-<div class="highlight"><pre>sudo rm /usr/bin/python 
-sudo ln -s /usr/bin/python2.7 /usr/bin/python
-</pre></div>
-
-<p>
-I know. Ouch. Every single time I needed to run a program that
-depended on python2.7, I would delete the symlink in /usr/bin, make a
-new link to python2.7, and then run my program. When I needed to give
-various programs convenient access to python3.4, I would delete the
-symlink and create a new one to the newer version.
-</p>
-
-<p>
-This was dumb, because there is a convenient Python-based tool that
-can fix the problem of needing multiple versions of Python (and
-libraries!) on the same system. The solution to this problem is called
-<a href="https://virtualenv.pypa.io/en/latest/">virtualenv</a>.
-</p>
-
-<p>
-There are a lot of descriptions about what virtualenv is on the
-internet, so I won't bother going into details here. Instead, I will
-focus on just the very basics of its setup and use so that I can have
-a handy future reference for when I forget how something works and so
-that others can profit from what I have learned. Most everything I've
-done came from <a href="http://docs.python-guide.org/en/latest/">python-guide.org</a>, so I'm more-or-less putting <a href="http://docs.python-guide.org/en/latest/dev/virtualenvs/">what they
-have already said</a> into my own words.
-</p>
-
-<p>
-To start, I already have Python 2.7 and 3.4 installed on my system. In
-principle, you do not need them installed at the system level, but I
-already have done this so I will start from there. I first installed
-pip for Python 2.7 since I only had pip3 on my system to start. I did
-this because I want to keep Python 2.7 as my system's default Python
-environment.
-</p>
-
-<div class="highlight"><pre>sudo apt-get update
-sudo apt-get install python-pip
-</pre></div>
-
-<p>
-Once installed, I used it to install virtualenv and
-<a href="https://virtualenvwrapper.readthedocs.org/en/latest/">virtualenvwrapper</a>. The latter provides some nice features for working
-with virtualenv.
-</p>
-
-<div class="highlight"><pre>sudo pip install virtualenv
-sudo pip install virtualenvwrapper
-</pre></div>
-
-<p>
-Now, virtualenvwrapper requires an environment variable to tell it
-where to store the folders for each virtual environment. This
-environment variable is called WORKON_HOME. First, I created the
-folder it will point to:
-</p>
-
-<div class="highlight"><pre>mkdir ~/Envs
-</pre></div>
-
-<p>
-Next, I edited my ~/.bashrc and added the following line:
-</p>
-
-<div class="highlight"><pre><span class="nb">export </span><span class="nv">WORKON_HOME</span><span class="o">=</span>~/Envs
-</pre></div>
-
-<p>
-All of my virtual environment files (except for the Python
-intepreters) will be stored in this folder. Finally, I restarted my
-terminal window so that the environment variable was assigned. You can
-check this by typing <code>echo $WORKON_HOME</code> in your new terminal
-window. If it returns the path to your new environments folder, then
-you should be fine.
-</p>
-
-<p>
-Next, I ran the virtualwrapper setup script. Note that I did not need
-sudo (in fact, sudo could not find a command called ``source'') and
-that no output is returned when the script is run.
-</p>
-
-<div class="highlight"><pre><span class="nb">source</span> /usr/local/bin/virtualenvwrapper.sh
-</pre></div>
-
-<p>
-Now virtualenvwrapper should be installed, so let's make a virtual
-environment. We can do this using the <code>mkvirtualenv</code> command, followed
-by a name for the environment. I will use the name ``venv'' in this
-example, like Kenneth Reitz did in his guide that I linked above.
-</p>
-
-<div class="highlight"><pre>mkvirtualenv venv
-</pre></div>
-
-<p>
-To start the new virtual environment, type <code>workon venv</code> and note that
-change in the prompt, indicating which environment you are in. You now
-have a fresh Python environment to which you can add any library you
-wish. To leave the environment, type <code>deactivate</code> into your terminal.
-</p>
-
-<p>
-One simple test that you can do to see whether your Python environment
-really is clean is to run the Python interpreter from inside your
-environment and try importing a module that you know is in your
-system-wide site packages but not in your virtual environment. For
-example, inside venv I type <code>python</code> at the terminal prompt and tried
-importing numpy, which I had not yet installed in venv:
-</p>
-
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span>
-</pre></div>
-
-<p>
-This returned an <b>ImportError: No module named numpy</b>. Since I do have
-numpy installed on my system but not in this environment, it tells me
-that the environment is likely clean.
-</p>
-
-<p>
-To install new libraries, simply use pip or install them to the folder
-that was created for this environment in ~/Env. To delete a virtual
-environment entirely, use <code>rmvirtual env</code>.
-</p>
-
-<p>
-Now, how can I specify that I want the virtual environment to use the
-python3.4 interpreter in a virtual environment named
-``python3-general''? Doing so would solve my original problem. Simply
-make a new virtual environment like so:
-</p>
-
-<div class="highlight"><pre><span class="n">mkvirtualenv</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python3</span><span class="o">.</span><span class="mi">4</span> <span class="n">python3</span><span class="o">-</span><span class="n">general</span>
-</pre></div>
-
-<p>
-Voilà. C'est tout. I hope this helps you get up and running with this
-great tool!
-</p>
-    </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/sending-arguments-to-python-decorators.html" class="u-url">Sending arguments to Python decorators</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">
-                Kyle M. Douglass
-            </span></p>
-            <p class="dateline"><a href="posts/sending-arguments-to-python-decorators.html" rel="bookmark"><time class="published dt-published" datetime="2015-01-24T08:45:38+01:00" title="2015-01-24 08:45">2015-01-24 08:45</time></a></p>
-                <p class="commentline">
-        
-    <a href="posts/sending-arguments-to-python-decorators.html#disqus_thread" data-disqus-identifier="cache/posts/sending-arguments-to-python-decorators.html">Comments</a>
-
-
-        </p>
-</div>
-    </header><div class="p-summary entry-summary">
-    <p>
-<a href="http://simeonfranklin.com/blog/2012/jul/1/python-decorators-in-12-steps/">Python's decorators</a> are tools for changing the behavior of a function
-without completely recoding it. When we apply a decorator to a
-function, we say that the function has been decorated. Strictly
-speaking, when we decorate a function, we send it to a wrapper that
-returns another function. It's as simple as that.
-</p>
-
-<p>
-I was having trouble understanding exactly to which function, the
-original or the decorated one, the arguments are sent in a Python
-decorated function call. I wrote the following script to better
-understand this process (I use Python 3.4):
-</p>
-
-<div class="highlight"><pre><span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">inFunction</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">outFunction</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-	<span class="k">print</span><span class="p">(</span><span class="s">'The input arguments were:'</span><span class="p">)</span>
-	<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-	    <span class="k">print</span><span class="p">(</span><span class="s">'</span><span class="si">%r</span><span class="s"> : </span><span class="si">%r</span><span class="s">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
-
-	<span class="c"># Return the original function</span>
-	<span class="k">return</span> <span class="n">inFunction</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">outFunction</span>
-
-<span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
-</pre></div>
-
-<p>
-<code>wrapper(inFunction)</code> is a function that accepts another function as
-an argument. It returns a function that simply prints the keyword
-arguments of <i>inFunction()</i>, and calls <i>inFunction()</i> like normal.
-</p>
-
-<p>
-To decorate the function <i>add(x = 1, y = 2)</i> so that its arguments are
-printed without recoding it, we normally would place <code>@wrapper</code> before
-its definition. However, let's make the decorator in a way that's
-closer to how <i>@</i> works under the hood:
-</p>
-
-<div class="highlight"><pre>In [22]: decoratedAdd = wrapper(add)
-In [23]: decoratedAdd(x = 1, y = 24)
-The input arguments were:
-'y' : 24
-'x' : 1
-Out[23]: 25
-</pre></div>
-
-<p>
-When we call <i>decoratedAdd(x = 1, y = 24)</i>, the arguments are printed
-to the screen and we still get the same functionality of <i>add()</i>. What
-I wanted to know was this: are the keyword arguments x = 1, y = 24
-bound in the namespace of <i>wrapper()</i> or in the namespace of
-<i>outFunction()</i>? <b>In otherwords, does <i>wrapper()</i> at any point know
-what the arguments are that I send to the decorated function?</b>
-</p>
-
-<p>
-The answer, as it turns out, is no in this case. This is because the
-<i>wrapper()</i> function first returns the decorated function, and then
-the arguments are passed into the decorated function. If this order of
-operations were flipped, <i>wrapper()</i> should know that I set x to 1 and
-y to 24, but really it doesn't know these details at all.
-</p>
-
-<div class="highlight"><pre>In [24]: wrapper(add)(x = 1, y = 24)
-The input arguments were:
-'y' : 24
-'x' : 1
-Out[24]: 25
-</pre></div>
-
-<p>
-So, when I call <i>wrapper(add)(x = 1, y = 24)</i>, first <i>wrapper(add)</i> is
-called, which returns <i>outFunction()</i>, and then these arguments are
-passed to <i>outFunction()</i>.
-</p>
-
-<p>
-Now what happens when I call <code>wrapper(add(x = 1, y = 24))</code>? When I try
-this, the arguments are first passed into add, but then <i>outFunction</i>
-is returned without any arguments applied to it.
-</p>
-
-<p>
-This example can give us an idea about the working order of operations
-in Python. Here, this example reveals that function calls in Python
-are left-associative.
-</p>
-    </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/overcoming-complexity-in-biology.html" class="u-url">Overcoming complexity in biology</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">
-                Kyle M. Douglass
-            </span></p>
-            <p class="dateline"><a href="posts/overcoming-complexity-in-biology.html" rel="bookmark"><time class="published dt-published" datetime="2015-01-21T08:16:04+01:00" title="2015-01-21 08:16">2015-01-21 08:16</time></a></p>
-                <p class="commentline">
-        
-    <a href="posts/overcoming-complexity-in-biology.html#disqus_thread" data-disqus-identifier="cache/posts/overcoming-complexity-in-biology.html">Comments</a>
-
-
-        </p>
-</div>
-    </header><div class="p-summary entry-summary">
-    <p>
-I've been sitting in on a short lecture series presented by <a href="http://markolab.bmbcb.northwestern.edu/marko/">Prof. John
-Marko</a> here at the EPFL. The topic is on the biophysics of DNA and
-covers what is probably at least a 25 year span of research that has
-emerged on its mechanical and biochemical properties.
-</p>
-
-<p>
-DNA amazes me in two different ways: relatively simple physical
-theories can explain <i>in vitro</i> experiments, but establishing a
-complete understanding of the behavior of DNA and its associated
-proteins (collectively known as chromatin) <i>in vivo</i> seems at this
-point almost hopeless.
-</p>
-
-<p>
-So why do I think it's so difficult to establish a complete physical
-theory of the nucleus?
-</p>
-
-<p>
-Certainly a lot of recent research has helped us to understand parts
-of what happens inside the nucleus. Take for example recent
-experiments that look at <a href="http://en.wikipedia.org/wiki/Transcription_factor#Accessibility_of_DNA-binding_site">transcription factor</a> (TF) binding and the
-nuclear architecture. TF binding experiments have helped us understand
-the mechanism of how a single transcription factor ``searches'' for a
-target site on a chromosome. It undergoes diffusion in the crowded
-nuclear environment, occasionally binding to the DNA non-specifically
-and sliding along it. We now know that this combined diffusion/sliding
-mechanism produces an optimum search strategy.
-</p>
-
-<p>
-Studies of nuclear architecture attempt to understand how the long DNA
-polymer, which is on the order of <i>one meter</i> long, is packaged into
-the nucleus, which is only about <i>five micrometers</i> in diameter. This
-is nearly six orders of magnitude of compaction. Some current theories
-treat the DNA as a hierarchically packaged polymer or a fractal
-structure. Interestingly, the fractal model can <a href="http://www.ncbi.nlm.nih.gov/pubmed/24380602">explain why TF's may
-diffuse optimally</a> and when crowding can hinder their search.
-</p>
-
-<p>
-Both of these examples represent a generalization of one particular
-phenomenon that occurs inside the nucleus. And even given the enormity
-of these works, I think this generalization can be dubious because it
-may not apply to all cell types and there may be differences between
-cultured cells and those found in an actual organism.
-</p>
-
-<p>
-The problem in capturing complete physical models of the nucleus seems
-to lie with the philosophy of physics itself: find the most essential
-parts of the system and include those in your model, discarding all
-irrelevant details. Unfortunately, <i>in vitro</i> experiments suggest that
-every detail seems to matter inside the nucleus. Local salt
-concentrations effect electrostatic interactions and entropic binding
-between proteins and DNA, the global nuclear architecture has an
-effect on single TF's diffusing inside the nucleus, there are a huge
-number of proteins that associate with DNA and control the
-conformation in <a href="http://www.ncbi.nlm.nih.gov/pubmed/22495300">toplogically associating domains</a>. The list goes on and
-on.
-</p>
-
-<p>
-A common theme to this list that I have described above is that
-phenomena at one length scale tend to have a direct impact on those at
-another, like the global nuclear architecture affecting a single TF
-trajectory. These are hallmarks of complexity: a dependence on the
-details of a system and multiscale behavior.
-</p>
-
-<p>
-I am currently of the opinion that a complete model of the nucleus,
-and probably of other biological systems, must therefore necessarily
-abandon one important part of physical theories: reduction to the
-simplest possible set of parameters to describe a system. We need to
-incorporate all the details across all length scales to reproduce what
-exactly is going on.
-</p>
-
-<p>
-And if classical physics falls short of this goal, what other
-approaches do we then require?
-</p>
-    </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/learning-pythons-multiprocessing-module.html" class="u-url">Learning Python's Multiprocessing Module</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">
-                Kyle M. Douglass
-            </span></p>
-            <p class="dateline"><a href="posts/learning-pythons-multiprocessing-module.html" rel="bookmark"><time class="published dt-published" datetime="2014-12-29T18:42:23+01:00" title="2014-12-29 18:42">2014-12-29 18:42</time></a></p>
-                <p class="commentline">
-        
-    <a href="posts/learning-pythons-multiprocessing-module.html#disqus_thread" data-disqus-identifier="cache/posts/learning-pythons-multiprocessing-module.html">Comments</a>
-
-
-        </p>
-</div>
-    </header><div class="p-summary entry-summary">
-    <p>
-I've been doing a bit of programming work lately that would greatly
-benefit from a speed boost using parallel/concurrent processing
-tools. Essentially, I'm doing a <a href="http://www.mathworks.com/help/simulink/examples/parallel-simulations-using-parfor-parameter-sweep-in-normal-mode.html">parameter sweep</a> where the values for
-two different simulation parameters are input into the simulation and
-allowed to run with the results being recorded to disk at the end. The
-point is to find out how the simulation results vary with the
-parameter values.
-</p>
-
-<p>
-In my current code, a new simulation is initialized with each pair of
-parameter values inside one iteration of a for loop; each iteration of
-the loop is independent of the others. Spreading these iterations over
-the 12 cores on my workstation should result in about a 12x decrease
-in the amount of time the simulation takes to run.
-</p>
-
-<p>
-I've had good success using the <code>parfor</code> loop construct in Matlab in
-the past, but my simulation was written in Python and I want to learn
-more about Python's multiprocessing tools, so this post will explore
-that module in the context of performing parameter sweeps.
-</p>
-
-<div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1">Profile the code first to identify bottlenecks</h2>
-<div class="outline-text-2" id="text-1">
-<p>
-First, I profiled my code to identify where any slowdowns might be
-occurring in the serial program. I used a great tutorial at the <a href="https://zapier.com/engineering/profiling-python-boss/">Zapier
-Engineering</a> blog to write a decorator for profiling the main instance
-method of my class that was doing most of the work. Surprisingly, I
-found that a few numpy methods were taking the most time, namely
-<b>norm()</b> and <b>cross()</b>. To address this, I directly imported the
-Fortran BLAS <b>nrm2()</b> function using scipy's <b>get_blas_funcs()</b>
-function and hard-coded the cross product in pure Python inside the
-method; these two steps alone resulted in a 4x decrease in simulation
-time. I suspect the reason for this was because the overhead of
-calling functions on small arrays outweighs the increase in speed
-using Numpy's optimized C code. I was normalizing single vectors and
-taking cross products between two vectors at a time many times during
-each loop iteration.
-</p>
-</div>
-</div>
-
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2">A brief glance at Python's multiprocessing module</h2>
-<div class="outline-text-2" id="text-2">
-<p>
-<a href="http://pymotw.com/2/multiprocessing/basics.html">PyMOTW</a> has a good, minimal description of the main aspects of the
-multiprocessing module. They state that the simplest way to create
-tasks on different cores of a machine is to create new <b>Process</b>
-objects with target functions. Each object is then set to execute by
-calling its <b>start()</b> method.
-</p>
-
-<p>
-The basic example from their site looks like this:
-</p>
-
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">multiprocessing</span>
-
-<span class="k">def</span> <span class="nf">worker</span><span class="p">():</span>
-    <span class="sd">"""worker function"""</span>
-    <span class="k">print</span> <span class="s">'Worker'</span>
-    <span class="k">return</span>
-
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
-    <span class="n">jobs</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
-	<span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">worker</span><span class="p">)</span>
-	<span class="n">jobs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-	<span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-</pre></div>
-
-<p>
-In this example, it's important to create the Process instances inside
-the
-</p>
-
-<div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
-</pre></div>
-
-<p>
-section of the script because child processes import the script where
-the target function is contained. Placing the object instantiation in
-this section prevents an infinite, recursive string of such
-instantiations. A workaround to this is to define the function in a
-different script and import it into the namespace.
-</p>
-
-<p>
-To send arguments to the function (<b>worker()</b> in the example above),
-we can use the <b>args</b> keyword in the Process object instantiation like
-</p>
-
-<div class="highlight"><pre>p = multiprocessing.Process(target=worker, args=(i,))
-</pre></div>
-
-<p>
-A very important thing to note is that the arguments must be objects
-that can be pickled using Python's pickle module. If an argument is a
-class instance, this means that every attritube of that class must be
-pickleable.
-</p>
-
-<p>
-An important class in the multiprocessing module is a <b>Pool</b>. A <a href="https://docs.python.org/3.4/library/multiprocessing.html#multiprocessing.pool.Pool">Pool</a>
-object controls a pool of worker processes. Jobs can be submitted to
-the Pool, which then sends the jobs to the individual workers.
-</p>
-
-<p>
-The <b>Pool.map()</b> achieves the same functionality as Matlab's <b>parfor</b>
-construct. This method essentially applies a function to each element
-in an iterable and returns the results. For example, if I wanted to
-square each number in a list of integers between 0 and 9 and perform
-the square operation on multiple processors, I would write a function
-for squaring an argument, and supply this function and the list of
-integers to <b>Pool.map()</b>. The code looks like this:
-</p>
-
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">multiprocessing</span>
-
-<span class="k">def</span> <span class="nf">funSquare</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">num</span> <span class="o">**</span> <span class="mi">2</span>
-
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
-    <span class="n">pool</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Pool</span><span class="p">()</span>
-    <span class="n">results</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">funSquare</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3">Design the solution to the problem</h2>
-<div class="outline-text-2" id="text-3">
-<p>
-In my parameter sweep, I have two classes: one is an object that I'm
-simulating and the other acts as a controller that sends parameters to
-the structure and collects the results of the simulation. Everything
-was written in a serial fashion and I want to change it so the bulk of
-the work is performed in parallel.
-</p>
-
-<p>
-After the bottlenecks were identified in the serial code, I began
-thinking about how the the problem of parameter sweeps could be
-addressed using the multiprocessing module.
-</p>
-
-<p>
-The solution requirements I identified for my parameter sweep are as
-follows:
-</p>
-
-<ol class="org-ol">
-<li>Accept two values (one for each parameter) from the range of values
-to test as inputs to the simulation.
-</li>
-<li>For each pair of values, run the simulation as an independent
-process.
-</li>
-<li>Return the results of the simulation as as a list or Numpy array.
-</li>
-</ol>
-<p>
-I often choose to return the results as Numpy arrays since I can
-easily pickle them when saving to a disk. This may change depending on
-your specific problem.
-</p>
-</div>
-</div>
-
-<div id="outline-container-sec-4" class="outline-2">
-<h2 id="sec-4">Implementation of the solution</h2>
-<div class="outline-text-2" id="text-4">
-<p>
-I'll now give a simplified example of how this solution to the
-parameter sweep can be implemented using Python's multiprocessing
-module. I won't use objects like in my real code, but will first
-demonstrate an example where <b>Pool.map()</b> is applied to a list of
-numbers.
-</p>
-
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">multiprocessing</span>
-
-<span class="k">def</span> <span class="nf">runSimulation</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
-    <span class="sd">"""This is the main processing function. It will contain whatever</span>
-<span class="sd">    code should be run on multiple processors.</span>
-
-<span class="sd">    """</span>
-    <span class="n">param1</span><span class="p">,</span> <span class="n">param2</span> <span class="o">=</span> <span class="n">params</span>
-    <span class="c"># Example computation</span>
-    <span class="n">processedData</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">ctr</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000000</span><span class="p">):</span>
-	<span class="n">processedData</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">param1</span> <span class="o">*</span> <span class="n">ctr</span> <span class="o">-</span> <span class="n">param2</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">processedData</span>
-
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
-    <span class="c"># Define the parameters to test</span>
-    <span class="n">param1</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
-    <span class="n">param2</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">202</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-
-    <span class="c"># Zip the parameters because pool.map() takes only one iterable</span>
-    <span class="n">params</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">param1</span><span class="p">,</span> <span class="n">param2</span><span class="p">)</span>
-
-    <span class="n">pool</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Pool</span><span class="p">()</span>
-    <span class="n">results</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">runSimulation</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
-</pre></div>
-
-<p>
-This is a rather silly example of a simulation, but I think it
-illustrates the point nicely. In the <b><span class="underline"><span class="underline">main</span></span></b> portion of the code, I
-first define two lists for each parameter value that I want to
-'simulate.' These parameters are zipped together in this example
-because <b>Pool.map()</b> takes only one iterable as its argument. The pool
-is opened using with <b>multiprocessing.Pool()</b>.
-</p>
-
-<p>
-Most of the work is performed in the function
-<b>runSimulation(params)</b>. It takes a tuple of two parameters which are
-unpacked. Then, these parameters are used in the for loop to build a
-list of simulated values which is eventually returned.
-</p>
-
-<p>
-Returning to the <b><span class="underline"><span class="underline">main</span></span></b> section, each simulation is run on a
-different core of my machine using the <b>Pool.map()</b> function. This
-applies the function called <b>runSimulation()</b> to the values in the
-<b>params</b> iterable. In other words, it calls the code described in
-<b>runSimulation()</b> with a different pair of values in params.
-</p>
-
-<p>
-All the results are eventually returned in a list in the same order as
-the parameter iterable. This means that the first element in the
-<b>results</b> list corresponds to parameters of 0 and 2 in this example.
-</p>
-</div>
-</div>
-
-<div id="outline-container-sec-5" class="outline-2">
-<h2 id="sec-5">Iterables over arbitrary objects</h2>
-<div class="outline-text-2" id="text-5">
-<p>
-In my real simulation code, I use a class to encapsulate a number of
-structural parameters and methods for simulating a polymer model. So
-long as instances of this class can be <a href="https://docs.python.org/3/library/pickle.html">pickled</a>, I can use them as the
-iterable in <b>Pool.map()</b>, not just lists of floating point numbers.
-</p>
-
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">multiprocessing</span>
-
-<span class="k">class</span> <span class="nc">simObject</span><span class="p">():</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
-	<span class="bp">self</span><span class="o">.</span><span class="n">param1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">param2</span> <span class="o">=</span> <span class="n">params</span>
-
-<span class="k">def</span> <span class="nf">runSimulation</span><span class="p">(</span><span class="n">objInstance</span><span class="p">):</span>
-    <span class="sd">"""This is the main processing function. It will contain whatever</span>
-<span class="sd">    code should be run on multiple processors.</span>
-
-<span class="sd">    """</span>
-    <span class="n">param1</span><span class="p">,</span> <span class="n">param2</span> <span class="o">=</span> <span class="n">objInstance</span><span class="o">.</span><span class="n">param1</span><span class="p">,</span> <span class="n">objInstance</span><span class="o">.</span><span class="n">param2</span>
-    <span class="c"># Example computation</span>
-    <span class="n">processedData</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">ctr</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000000</span><span class="p">):</span>
-	<span class="n">processedData</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">param1</span> <span class="o">*</span> <span class="n">ctr</span> <span class="o">-</span> <span class="n">param2</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">processedData</span>
-
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
-    <span class="c"># Define the parameters to test</span>
-    <span class="n">param1</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
-    <span class="n">param2</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">202</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-
-    <span class="n">objList</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="c"># Create a list of objects to feed into pool.map()</span>
-    <span class="k">for</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">param1</span><span class="p">,</span> <span class="n">param2</span><span class="p">):</span>
-	<span class="n">objList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">simObject</span><span class="p">((</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">)))</span>
-
-    <span class="n">pool</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Pool</span><span class="p">()</span>
-    <span class="n">results</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">runSimulation</span><span class="p">,</span> <span class="n">objList</span><span class="p">)</span>
-</pre></div>
-
-<p>
-Again, this is a silly example, but it demonstrates that lists of
-objects can be used in the parameter sweep, allowing for easy
-parallelization of object-oriented code.
-</p>
-
-<p>
-Instead of <b>runSimulation()</b>, you may want to apply an instance method
-to a list in <b>pool.map()</b>. A naïve way to do this is to replace
-<b>runSimulation</b> with with the method name but this too causes
-problems. I won't go into the details here, but one solution is to use
-an instance's <b>__call__()</b> method and pass the object instance into
-the pool. More details can be found <a href="http://stackoverflow.com/questions/1816958/cant-pickle-type-instancemethod-when-using-pythons-multiprocessing-pool-ma">here</a>.
-</p>
-</div>
-</div>
-
-<div id="outline-container-sec-6" class="outline-2">
-<h2 id="sec-6">Comparing computation times</h2>
-<div class="outline-text-2" id="text-6">
-<p>
-The following code makes a rough comparison between computation time
-for the parallel and serial versions of <b>map()</b>:
-</p>
-
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">multiprocessing</span>
-<span class="kn">import</span> <span class="nn">time</span>
-
-<span class="k">def</span> <span class="nf">runSimulation</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
-    <span class="sd">"""This is the main processing function. It will contain whatever</span>
-<span class="sd">    code should be run on multiple processors.</span>
-
-<span class="sd">    """</span>
-    <span class="n">param1</span><span class="p">,</span> <span class="n">param2</span> <span class="o">=</span> <span class="n">params</span>
-    <span class="c"># Example computation</span>
-    <span class="n">processedData</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">ctr</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000000</span><span class="p">):</span>
-	<span class="n">processedData</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">param1</span> <span class="o">*</span> <span class="n">ctr</span> <span class="o">-</span> <span class="n">param2</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">processedData</span>
-
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
-    <span class="c"># Define the parameters to test</span>
-    <span class="n">param1</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
-    <span class="n">param2</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">202</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-
-    <span class="n">params</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">param1</span><span class="p">,</span> <span class="n">param2</span><span class="p">)</span>
-
-    <span class="n">pool</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Pool</span><span class="p">()</span>
-
-    <span class="c"># Parallel map</span>
-    <span class="n">tic</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-    <span class="n">results</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">runSimulation</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
-    <span class="n">toc</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-
-    <span class="c"># Serial map</span>
-    <span class="n">tic2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-    <span class="n">results</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">runSimulation</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
-    <span class="n">toc2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-
-    <span class="k">print</span><span class="p">(</span><span class="s">'Parallel processing time: </span><span class="si">%r</span><span class="se">\n</span><span class="s">Serial processing time: </span><span class="si">%r</span><span class="s">'</span>
-	  <span class="o">%</span> <span class="p">(</span><span class="n">toc</span> <span class="o">-</span> <span class="n">tic</span><span class="p">,</span> <span class="n">toc2</span> <span class="o">-</span> <span class="n">tic2</span><span class="p">))</span>
-</pre></div>
-
-<p>
-On my machine, <b>pool.map()</b> ran in 9.6 seconds, but the serial version
-took 163.3 seconds. My laptop has 8 cores, so I would have expected
-the speedup to be a factor of 8, not a factor of 16. I'm not sure why
-it's 16, but I suspect part of the reason is that measuring system
-time using the <b>time.time()</b> function is not wholly accurate.
-</p>
-</div>
-</div>
-
-<div id="outline-container-sec-7" class="outline-2">
-<h2 id="sec-7">Important points</h2>
-<div class="outline-text-2" id="text-7">
-<p>
-I can verify that all the cores are being utilized on my machine while
-the code is running by using the <a href="http://hisham.hm/htop/">htop</a> console program. In some cases,
-Python modules like Numpy, scipy, etc. may limit processes in Python
-to running on only one core on Linux machines, which defeats the
-purpose of writing concurrent code in this case. (See for example <a href="http://stackoverflow.com/questions/15639779/what-determines-whether-different-python-processes-are-assigned-to-the-same-or-d/15641148#15641148">this
-discussion</a>.) To fix this, we can import Python's <b>os</b> module to reset
-the task affinity in our code:
-</p>
-
-<div class="highlight"><pre><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">"taskset -p 0xff </span><span class="si">%d</span><span class="s">"</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">())</span>
-</pre></div>
-</div>
-</div>
-
-<div id="outline-container-sec-8" class="outline-2">
-<h2 id="sec-8">Conclusions</h2>
-<div class="outline-text-2" id="text-8">
-<p>
-I think that Matlab's <b>parfor</b> construct is easier to use because one
-doesn't have to consider the nuances of writing concurrent code. So
-long as each loop iteration is independent of the others, you simply
-write a <b>parfor</b> instead of <b>for</b> and you're set.
-</p>
-
-<p>
-In Python, you have to prevent infinite, recursive function calls by
-placing your code in the <b><span class="underline"><span class="underline">main</span></span></b> section of your script or by
-placing the function in a different script and importing it. You also
-have to be sure that Numpy and other Python modules that use BLAS
-haven't reset the core affinity. What you gain over Matlab's
-implementation is the power of using Python as a general programming
-language with a lot of tools for scientific computing. This and the
-multiprocessing module is free; you have to have an institute license
-or pay for Matlab's <a href="http://www.mathworks.com/products/parallel-computing/">Parallel Computing Toolbox</a>.
-</p>
-</div>
-</div>
-    </div>
-    </article>
-</div>
-
-        <nav class="postindexpager"><ul class="pager">
-<li class="next">
-                <a href="index-1.html" rel="next">Older posts</a>
-            </li>
-        </ul></nav><script>var disqus_shortname="kmdouglass";(function(){var a=document.createElement("script");a.async=true;a.src="//"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+</article>
 </div>
         <!--End of body content-->
 
