@@ -6,59 +6,110 @@
 .. link:
 .. description: My brief biography
 .. type: text
+.. hidetitle: True
 #+END_COMMENT
 
-* Professional
-  + [[file:../kmdouglass_cv.pdf][CV]]
-  + [[http://orcid.org/0000-0003-4694-0922][Open Researcher and Contributor ID: 0000-0003-4694-0922]]
-  + [[https://www.researchgate.net/profile/Kyle_Douglass][Research Gate]]
+#+BEGIN_HTML
+  <div align="center">
+#+END_HTML
+
+  [[file:../images/me_for_web.jpg]]
+
+#+BEGIN_HTML
+  </div>
+#+END_HTML
+
+* Biosketch
+  I am a research scientist in optical sensing for soft matter
+  characterization and cell biology with over ten years of optics
+  laboratory experience. My strategy is to merge optical technologies
+  and custom software into sensing systems that are designed to
+  address specific problems. To do this, I work directly with
+  biologists and chemists to identify the shortcomings in their
+  measurement tools and design the solutions that effectively meet
+  their needs. I benefit greatly from my multidisciplinary background,
+  which has included topics such as fundamental optics, information
+  theory and signal processing, software design, and materials
+  science.
+
+  For my current project I am developing high throughput methods in
+  single molecule fluorescence microscopy by combining smart optical
+  design, new camera technologies, and efficient algorithms from
+  machine learning and bioinformatics. Recently I achieved the first
+  milestone of this work: the construction of a high-throughput,
+  super-resolution fluorescence microscope that I designed and built
+  myself. The next step will see the application of this microscope
+  towards the resolution of three problems in cell biology that
+  require extremely large datasets and automation to solve: contextual
+  effects in the structure of eukaryotic chromatin, mapping protein
+  distributions inside human centrioles, and establishing the genetic
+  regulatory network behind bacterial shape determination.
 
 -----
 
-* Brief Biography
-  
-  [[file:../images/me_for_web.jpg]]
+* Experience
 
-  Born and raised in the American
-  Midwestern state of Ohio, I am now a post-doc in the [[http://leb.epfl.ch][Laboratory for
-  Experimental Biophysics]] at [[http://www.epfl.ch][EPFL]] in Lausanne, Switzerland. My work is
-  in method development for super-resolution fluorescence microscopies
-  and their application to the study of cellular systems. This
-  involves utilizing my expertise in a diverse range of topics,
-  including optical design, statistical modeling, and computer
-  programming. The goal is to image single molecules inside cells with
-  resolution on the order of nanometers so we can better understand
-  their structure and function. In particular, I have designed
-  microscopes and/or analysis pipelines for imaging [[http://en.wikipedia.org/wiki/Chromatin][chromatin]] and the
-  [[http://en.wikipedia.org/wiki/Centrosome][centrosome]].
++ SystemsX.ch Transition Post-doc Fellow :: November, 2013 -- Present
+  + École Polytechnique Fédérale de Lausanne ([[http://people.epfl.ch/kyle.douglass][EPFL]])
+  + Advisor: Suliana Manley
+  + Designed and built a high-throughput super-resolution
+    fluorescence microscope based on the STORM imaging modality for
+    structural biology studies. This included a novel
+    epi-illumination design.
+  + Developed a statistical inference method based on polymer
+    Monte Carlo simulations for determining the structural
+    properties of human telomeres.
+  + Identified the source of a common aberration in 3D localization
+    microscopy and published open-source software to correct for
+    it ([[http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0142949][PLOS One]]).
 
-  My education began at [[http://www.edon.k12.oh.us/][Edon Northwest Schools]] in the small
-  agricultural town of Edon, Ohio. I attended college at [[http://www.rose-hulman.edu/][Rose-Hulman
-  Institute of Technology]], obtaining the B.S. degree in Engineering
-  Physics in 2007. In 2011, I obtained the M.S. in Optics from [[http://www.creol.ucf.edu/][CREOL]]
-  and the PhD in Optics in 2013.
++ Graduate Research Assistant :: August 2007 -- August 2013
+  + CREOL, the College of Optics and Photonics, University of Central Florida ([[http://www.creol.ucf.edu/][UCF]])
+  + Advisor: Aristide Dogariu
+  + Developed a fiber optic-based, low coherence interferometer for
+    characterizing highly scattering soft matter systems and
+    complex fluids ([[http://pubs.rsc.org/en/content/articlelanding/2015/ra/c4ra11627e#!divAbstract][RSC Advances]]).
+  + Modeled and experimentally demonstrated an optically-controlled
+    active medium based on forces in a random speckle. ([[http://www.nature.com/nphoton/journal/v6/n12/abs/nphoton.2012.278.html][Nature Photonics]]) ([[https://www.osapublishing.org/ol/abstract.cfm?uri=ol-38-14-2385][Optics Letters]])
+  + Demonstrated sub-diffusive light transport in disordered
+    photonic crystals. ([[https://www.osapublishing.org/oe/abstract.cfm?uri=oe-19-25-25320][Optics Express]])
 
-  I have been fortunate enough to work on research projects in a
-  number of very interesting fields. In my doctoral thesis, I worked
-  with Prof. Aristide Dogariu and studied the effects of
-  electromagnetic radiation propagation through disordered systems,
-  such as colloids, photonic crystals, and biological tissue. This
-  led, for example, to a new understanding of how to [[http://www.nature.com/nphoton/journal/v6/n12/abs/nphoton.2012.278.html][control colloidal
-  particles]] using multiple light scattering and a new [[http://pubs.rsc.org/en/content/articlelanding/2015/ra/c4ra11627e#!divAbstract][fiber
-  optic-based sensor]] for investigating microscopic strucutral
-  relaxation times in complex fluids.
++ Undergraduate Research Assistant :: June 2006 -- August 2006
+  + JILA, the University of Colorado at Boulder ([[https://jila.colorado.edu/][JILA]])
+  + Advisor: Margaret Murnane
+  + Funded through the National Science Foundation Research
+    Experience for Undergraduates
+  + Developed a vacuum-compatible visible light spectrometer for
+    characterizing a Ti:Sapphire laser beam.
 
-  In the summer of 2006, I worked with Prof. Margaret Murnane and
-  Prof. Henry Kapteyn as an undergraduate researcher at the University
-  of Colorado, Boulder developing an optical spectrometer for
-  Ti:Sapphire beam characterization in a vacuum chamber. While at
-  Rose-Hulman, I developed the software interface to photon counters
-  and developed a microfluidic platform for transporting oocytes on a
-  chip in the semiconductor device fabrication clean room.
+-----
 
-  I love rock climbing, hiking, bicycling, and the great outdoors. I
-  also love to travel and learn about different cultures. Most of my
-  free time is spent learning French, learning about computer
-  programming, and with my beautiful wife Kirsten, for whom I am
-  incredibly lucky to have in my life.
+* Education
+
++ Doctorate (PhD), Optics :: CREOL, the College of Optics and Photonics, University of Central Florida, 2013
+  + Dissertation: [[http://etd.fcla.edu/CF/CFE0004990/kmd-dissertation-final.pdf][Mesoscale Light-Matter Interactions]]
+  + Thesis Advisor: [[http://random.creol.ucf.edu/][Aristide Dogariu]]
++ Master of Science (MS), Optics :: CREOL, the College of Optics and Photonics, University of Central Florida, 2011
+  + Topic: Light scattering and optical sensing
++ Bachelor of Science (BS), Engineering Physics :: Rose-Hulman Institute of Technology, 2007
+  + Specialization: Semiconductor Materials and Devices
+
+-----
+
+#+BEGIN_COMMENT
+Skills and Competencies
+
++ Optics
++ Statistical Modeling
++ Biology
++ Software Development
+
+-----
+#+END_COMMENT
+
+* Professional Links
+  + [[file:../kmdouglass_cv.pdf][CV]]
+  + [[http://orcid.org/0000-0003-4694-0922][Open Researcher and Contributor ID: 0000-0003-4694-0922]]
+  + [[https://www.researchgate.net/profile/Kyle_Douglass][Research Gate]]
+  + [[https://ch.linkedin.com/in/kylemdouglass][LinkedIn]]
 
