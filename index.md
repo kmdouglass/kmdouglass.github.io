@@ -16,7 +16,7 @@
 	sensing, microscopy, and statistical data analysis with
 	applications in soft matter and fundamental cell
 	biology. Currently, he is working at the EPFL where he is
-	developing high-throughput, super-resolution fluoresence
+	developing high-throughput, super-resolution fluorescence
 	microscopy technologies for investigating the structural biology
 	of genes and organelles. He is financially supported by a
 	<a

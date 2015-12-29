@@ -4,7 +4,7 @@
 .. date: 12-26-2014
 .. tags: 
 .. link:
-.. description: My brief biography
+.. description: Biosketch of Kyle M. Douglass
 .. type: text
 .. hidetitle: True
 #+END_COMMENT
@@ -43,13 +43,13 @@
   require extremely large datasets and automation to solve: contextual
   effects in the structure of eukaryotic chromatin, mapping protein
   distributions inside human centrioles, and establishing the genetic
-  regulatory network behind bacterial shape determination.
+  regulatory network behind bacterial cell shape determination.
 
 -----
 
 * Experience
 
-+ SystemsX.ch Transition Post-doc Fellow :: November, 2013 -- Present
++ SystemsX.ch Transition Post-doctoral Fellow :: November, 2013 -- Present
   + École Polytechnique Fédérale de Lausanne ([[http://people.epfl.ch/kyle.douglass][EPFL]])
   + Advisor: Suliana Manley
   + Designed and built a high-throughput super-resolution
@@ -96,16 +96,39 @@
 
 -----
 
-#+BEGIN_COMMENT
-Skills and Competencies
+* Publications
 
-+ Optics
-+ Statistical Modeling
-+ Biology
-+ Software Development
+For my full list of publications, please see my [[http://orcid.org/0000-0003-4694-0922][Open Researcher and
+Contributor ID (ORCID) page]].
 
 -----
-#+END_COMMENT
+* Skills and Competencies
+
++ Optics
+  + Light and fluorescence microscopy
+  + Super-resolution fluorescence microscopy
+  + Static and dynamic light scattering
+  + Laboratory optics
+  + Fourier and statistical optics theory
++ Statistical and computational modeling
+  + Inverse problems
+  + Monte Carlo simulation
+  + Sparsity-promoting transformations
+  + Bootstrap sampling methods
++ Biology
+  + Chromatin architecture
+  + Telomeres
++ Software development
+  + Languages
+    + Python (full competence)
+    + MATLAB (full competence)
+    + C++    (medium competence)
+    + Java   (low competence)
+  + Familiar with both imperative and functional programming styles
+  + Basic knowledge of object-oriented design patterns
+  + Technical knowledge of both Linux and Windows operating systems
+
+-----
 
 * Professional Links
   + [[file:../kmdouglass_cv.pdf][CV]]
