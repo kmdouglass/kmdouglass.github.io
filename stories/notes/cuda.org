@@ -385,3 +385,19 @@ make
    driver was newer than the one provided by the CUDA 6.5 toolkit. The
    same happened if I ran the compiled programs with *optirun* or
    *primusrun*.
+
+-----
+
+* Uninstalling the Nvidia drivers
+  After uninstalling the drivers, it's important to remove the nouveau
+  blacklist if it was added to *modprobe.d*. These blacklist files are
+  saved in =/etc/modprobe.d=. You may also need to reinstall the
+  xserver and reconfigure it:
+
+#+BEGIN_SRC sh
+sudo apt-get install --reinstall xserver-xorg-video-nouveau
+sudo dpkg-reconfigure xserver-xorg
+sudo shutdown -r now
+#+END_SRC
+
+  More information may be found [[http://askubuntu.com/questions/360761/cannot-get-rid-of-nvidia-drivers-restore-nouveau-driver-and-get-desktop-working][here]].

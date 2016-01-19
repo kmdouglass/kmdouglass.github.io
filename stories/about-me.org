@@ -102,6 +102,30 @@ For my full list of publications, please see my [[http://orcid.org/0000-0003-469
 Contributor ID (ORCID) page]].
 
 -----
+
+* Teaching
++ EPFL Teaching Toolkit I :: November 17, 2015
+  + École Polytechnique Fédérale de Lausanne ([[http://people.epfl.ch/kyle.douglass][EPFL]])
+  + One day workshop covering
+    + Spaced-repetition as an effective teaching strategy
+    + Using proper questions to help students learn
+    + Managing classroom disruptions
+    + Giving proper feedback
+  + [[file:../kmdouglass_teachingtoolkit_1.pdf][Certificate of Completion]]
+
++ Rose-Hulman Learning Center Tutor :: May 2004--May, 2007
+    + Math, physics, and chemistry tutor at the [[http://www.rose-hulman.edu/offices-and-services/learning-center.aspx][Rose-Hulman Learning
+      Center]]
+    + Provided one-on-one tutoring in general math, science and
+      advanced physics to college students in engineering and science
+      degree
+    + Wrote practice tests for the freshmen-level physics classes at
+      Rose-Hulman Institute of Technology
+    + Designed and lectured at end-of-quarter review sessions for
+      freshmen-level physics class
+
+-----
+
 * Skills and Competencies
 
 + Optics

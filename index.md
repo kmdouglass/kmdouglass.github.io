@@ -34,9 +34,19 @@
     <h3 class="panel-title">News</h3>
   </div>
   <div class="panel-body">
-    <h3>December 28, 2015</h3>
 
-	<p>Kyle will present recent work on polymer modeling and
+  <h3>January 19, 2016</h3>
+
+   <p>Uploaded the <a
+   href="../kmdouglass_teachingtoolkit_1.pdf">Teaching Toolkit I
+   Certificate of Completion</a>. This document certifies that Kyle
+   completed EPFL's Teaching Toolkit I, a workshop on university
+   teaching strategies. Topics included asking questions to further
+   students' understanding, using spaced-repetition effectively, and
+   classroom management.</p>
+
+  <h3>December 28, 2015</h3>
+    <p>Kyle will present recent work on polymer modeling and
     statistical inference of human telomere structure at the <a
     href="http://www.quantitativebioimaging.com/">Quantitative
     Bioimaging Conference</a> in Delft, the Netherlands on January
