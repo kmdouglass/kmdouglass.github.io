@@ -19,7 +19,7 @@ div.output_area pre {
 
 div.text_cell_render {
   padding: 0px;
-  color: #c8c8c8;
+  color: #333333;
 }
 
 .rendered_html p {
@@ -36,10 +36,6 @@ div.text_cell_render {
 
 .rendered_html :link {
   text-decoration: none;
-}
-
-.rendered_html :link:hover {
-  text-decoration: underline;
 }
 
 .rendered_html pre, .rendered_html code {

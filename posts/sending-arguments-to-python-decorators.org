@@ -21,7 +21,7 @@ original or the decorated one, the arguments are sent in a Python
 decorated function call. I wrote the following script to better
 understand this process (I use Python 3.4):
 
-#+BEGIN_SRC python
+#+BEGIN_SRC
 def wrapper(inFunction):
     def outFunction(**kwargs):
         print('The input arguments were:')

@@ -116,7 +116,7 @@ system-wide site packages but not in your virtual environment. For
 example, inside venv I type =python= at the terminal prompt and tried
 importing numpy, which I had not yet installed in venv:
 
-#+BEGIN_SRC python
+#+BEGIN_SRC
 import numpy
 #+END_SRC
 
@@ -133,7 +133,7 @@ python3.4 interpreter in a virtual environment named
 ``python3-general''? Doing so would solve my original problem. Simply
 make a new virtual environment like so:
 
-#+BEGIN_SRC python
+#+BEGIN_SRC
 mkvirtualenv -p /usr/bin/python3.4 python3-general
 #+END_SRC
 

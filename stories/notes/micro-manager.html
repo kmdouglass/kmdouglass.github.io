@@ -267,7 +267,7 @@ MM directory that is mentioned <a href="https://micro-manager.org/wiki/Matlab_Co
 <span class="n">fileListJarBool</span> <span class="p">=</span> <span class="n">cellfun</span><span class="p">(@</span><span class="nb">isempty</span><span class="p">,</span><span class="n">fileListJarBool</span><span class="p">);</span>
 <span class="n">fileListJar</span> <span class="p">=</span> <span class="n">fileList</span><span class="p">(</span><span class="o">~</span><span class="n">fileListJarBool</span><span class="p">);</span>
 <span class="n">fid</span> <span class="p">=</span> <span class="n">fopen</span><span class="p">(</span><span class="n">fullfile</span><span class="p">(</span><span class="n">prefdir</span><span class="p">,</span><span class="s">'MMjavaclasspath.txt'</span><span class="p">),</span><span class="s">'w'</span><span class="p">);</span>
-<span class="n">fprintf</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span><span class="s">'&amp;lt;before&amp;gt;\r\n'</span><span class="p">);</span>
+<span class="n">fprintf</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span><span class="s">'&lt;before&gt;\r\n'</span><span class="p">);</span>
 <span class="n">cellfun</span><span class="p">(@(</span><span class="n">x</span><span class="p">)</span> <span class="n">fprintf</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span><span class="s">'%s\r\n'</span><span class="p">,</span><span class="n">x</span><span class="p">),</span> <span class="n">fileListJar</span><span class="p">);</span>
 <span class="n">fclose</span><span class="p">(</span><span class="n">fid</span><span class="p">);</span>
 <span class="c">%% nested directory listing ala gnovice from stackoverflow</span>

@@ -116,19 +116,19 @@ decorated function call. I wrote the following script to better
 understand this process (I use Python 3.4):
 </p>
 
-<div class="highlight"><pre><span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">inFunction</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">outFunction</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-	<span class="k">print</span><span class="p">(</span><span class="s">'The input arguments were:'</span><span class="p">)</span>
-	<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-	    <span class="k">print</span><span class="p">(</span><span class="s">'</span><span class="si">%r</span><span class="s"> : </span><span class="si">%r</span><span class="s">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+<div class="highlight"><pre>def wrapper(inFunction):
+    def outFunction(**kwargs):
+        print('The input arguments were:')
+        for key, value in kwargs.items():
+            print('%r : %r' % (key, value))
 
-	<span class="c"># Return the original function</span>
-	<span class="k">return</span> <span class="n">inFunction</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        # Return the original function
+        return inFunction(**kwargs)
 
-    <span class="k">return</span> <span class="n">outFunction</span>
+    return outFunction
 
-<span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+def add(x = 1, y = 2):
+    return x + y
 </pre></div>
 
 <p>

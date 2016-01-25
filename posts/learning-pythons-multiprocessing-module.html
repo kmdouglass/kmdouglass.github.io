@@ -164,19 +164,19 @@ calling its <b>start()</b> method.
 The basic example from their site looks like this:
 </p>
 
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<div class="highlight"><pre>import multiprocessing
 
-<span class="k">def</span> <span class="nf">worker</span><span class="p">():</span>
-    <span class="sd">"""worker function"""</span>
-    <span class="k">print</span> <span class="s">'Worker'</span>
-    <span class="k">return</span>
+def worker():
+    """worker function"""
+    print 'Worker'
+    return
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
-    <span class="n">jobs</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
-	<span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">worker</span><span class="p">)</span>
-	<span class="n">jobs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-	<span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+if __name__ == '__main__':
+    jobs = []
+    for i in range(5):
+        p = multiprocessing.Process(target=worker)
+        jobs.append(p)
+        p.start()
 </pre></div>
 
 <p>
@@ -184,7 +184,7 @@ In this example, it's important to create the Process instances inside
 the
 </p>
 
-<div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+<div class="highlight"><pre>if __name__ == '__main__':
 </pre></div>
 
 <p>
@@ -226,15 +226,15 @@ for squaring an argument, and supply this function and the list of
 integers to <b>Pool.map()</b>. The code looks like this:
 </p>
 
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<div class="highlight"><pre>import multiprocessing
 
-<span class="k">def</span> <span class="nf">funSquare</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">num</span> <span class="o">**</span> <span class="mi">2</span>
+def funSquare(num):
+    return num ** 2
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
-    <span class="n">pool</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Pool</span><span class="p">()</span>
-    <span class="n">results</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">funSquare</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+if __name__ == '__main__':
+    pool = multiprocessing.Pool()
+    results = pool.map(funSquare, range(10))
+    print(results)
 </pre></div>
 </div>
 </div>
@@ -290,31 +290,31 @@ demonstrate an example where <b>Pool.map()</b> is applied to a list of
 numbers.
 </p>
 
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<div class="highlight"><pre>import multiprocessing
 
-<span class="k">def</span> <span class="nf">runSimulation</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
-    <span class="sd">"""This is the main processing function. It will contain whatever</span>
-<span class="sd">    code should be run on multiple processors.</span>
+def runSimulation(params):
+    """This is the main processing function. It will contain whatever
+    code should be run on multiple processors.
+    
+    """
+    param1, param2 = params
+    # Example computation
+    processedData = []
+    for ctr in range(1000000):
+        processedData.append(param1 * ctr - param2 ** 2)
 
-<span class="sd">    """</span>
-    <span class="n">param1</span><span class="p">,</span> <span class="n">param2</span> <span class="o">=</span> <span class="n">params</span>
-    <span class="c"># Example computation</span>
-    <span class="n">processedData</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">ctr</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000000</span><span class="p">):</span>
-	<span class="n">processedData</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">param1</span> <span class="o">*</span> <span class="n">ctr</span> <span class="o">-</span> <span class="n">param2</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    return processedData
 
-    <span class="k">return</span> <span class="n">processedData</span>
+if __name__ == '__main__':
+    # Define the parameters to test
+    param1 = range(100)
+    param2 = range(2, 202, 2)
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
-    <span class="c"># Define the parameters to test</span>
-    <span class="n">param1</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
-    <span class="n">param2</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">202</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-
-    <span class="c"># Zip the parameters because pool.map() takes only one iterable</span>
-    <span class="n">params</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">param1</span><span class="p">,</span> <span class="n">param2</span><span class="p">)</span>
-
-    <span class="n">pool</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Pool</span><span class="p">()</span>
-    <span class="n">results</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">runSimulation</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    # Zip the parameters because pool.map() takes only one iterable
+    params = zip(param1, param2)
+    
+    pool = multiprocessing.Pool()
+    results = pool.map(runSimulation, params)
 </pre></div>
 
 <p>
@@ -359,37 +359,37 @@ long as instances of this class can be <a href="https://docs.python.org/3/librar
 iterable in <b>Pool.map()</b>, not just lists of floating point numbers.
 </p>
 
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<div class="highlight"><pre>import multiprocessing
 
-<span class="k">class</span> <span class="nc">simObject</span><span class="p">():</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
-	<span class="bp">self</span><span class="o">.</span><span class="n">param1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">param2</span> <span class="o">=</span> <span class="n">params</span>
+class simObject():
+    def __init__(self, params):
+        self.param1, self.param2 = params
 
-<span class="k">def</span> <span class="nf">runSimulation</span><span class="p">(</span><span class="n">objInstance</span><span class="p">):</span>
-    <span class="sd">"""This is the main processing function. It will contain whatever</span>
-<span class="sd">    code should be run on multiple processors.</span>
+def runSimulation(objInstance):
+    """This is the main processing function. It will contain whatever
+    code should be run on multiple processors.
+    
+    """
+    param1, param2 = objInstance.param1, objInstance.param2
+    # Example computation
+    processedData = []
+    for ctr in range(1000000):
+        processedData.append(param1 * ctr - param2 ** 2)
 
-<span class="sd">    """</span>
-    <span class="n">param1</span><span class="p">,</span> <span class="n">param2</span> <span class="o">=</span> <span class="n">objInstance</span><span class="o">.</span><span class="n">param1</span><span class="p">,</span> <span class="n">objInstance</span><span class="o">.</span><span class="n">param2</span>
-    <span class="c"># Example computation</span>
-    <span class="n">processedData</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">ctr</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000000</span><span class="p">):</span>
-	<span class="n">processedData</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">param1</span> <span class="o">*</span> <span class="n">ctr</span> <span class="o">-</span> <span class="n">param2</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    return processedData
 
-    <span class="k">return</span> <span class="n">processedData</span>
+if __name__ == '__main__':
+    # Define the parameters to test
+    param1 = range(100)
+    param2 = range(2, 202, 2)
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
-    <span class="c"># Define the parameters to test</span>
-    <span class="n">param1</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
-    <span class="n">param2</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">202</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    objList = []
+    # Create a list of objects to feed into pool.map()
+    for p1, p2 in zip(param1, param2):
+        objList.append(simObject((p1, p2)))
 
-    <span class="n">objList</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="c"># Create a list of objects to feed into pool.map()</span>
-    <span class="k">for</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">param1</span><span class="p">,</span> <span class="n">param2</span><span class="p">):</span>
-	<span class="n">objList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">simObject</span><span class="p">((</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">)))</span>
-
-    <span class="n">pool</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Pool</span><span class="p">()</span>
-    <span class="n">results</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">runSimulation</span><span class="p">,</span> <span class="n">objList</span><span class="p">)</span>
+    pool = multiprocessing.Pool()
+    results = pool.map(runSimulation, objList)
 </pre></div>
 
 <p>
@@ -417,43 +417,43 @@ The following code makes a rough comparison between computation time
 for the parallel and serial versions of <b>map()</b>:
 </p>
 
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">multiprocessing</span>
-<span class="kn">import</span> <span class="nn">time</span>
+<div class="highlight"><pre>import multiprocessing
+import time
 
-<span class="k">def</span> <span class="nf">runSimulation</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
-    <span class="sd">"""This is the main processing function. It will contain whatever</span>
-<span class="sd">    code should be run on multiple processors.</span>
+def runSimulation(params):
+    """This is the main processing function. It will contain whatever
+    code should be run on multiple processors.
+    
+    """
+    param1, param2 = params
+    # Example computation
+    processedData = []
+    for ctr in range(1000000):
+        processedData.append(param1 * ctr - param2 ** 2)
 
-<span class="sd">    """</span>
-    <span class="n">param1</span><span class="p">,</span> <span class="n">param2</span> <span class="o">=</span> <span class="n">params</span>
-    <span class="c"># Example computation</span>
-    <span class="n">processedData</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">ctr</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000000</span><span class="p">):</span>
-	<span class="n">processedData</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">param1</span> <span class="o">*</span> <span class="n">ctr</span> <span class="o">-</span> <span class="n">param2</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    return processedData
 
-    <span class="k">return</span> <span class="n">processedData</span>
+if __name__ == '__main__':
+    # Define the parameters to test
+    param1 = range(100)
+    param2 = range(2, 202, 2)
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
-    <span class="c"># Define the parameters to test</span>
-    <span class="n">param1</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
-    <span class="n">param2</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">202</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    params = zip(param1, param2)
 
-    <span class="n">params</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">param1</span><span class="p">,</span> <span class="n">param2</span><span class="p">)</span>
+    pool = multiprocessing.Pool()
 
-    <span class="n">pool</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Pool</span><span class="p">()</span>
+    # Parallel map
+    tic = time.time()
+    results = pool.map(runSimulation, params)
+    toc = time.time()
 
-    <span class="c"># Parallel map</span>
-    <span class="n">tic</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-    <span class="n">results</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">runSimulation</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
-    <span class="n">toc</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    # Serial map
+    tic2 = time.time()
+    results = map(runSimulation, params)
+    toc2 = time.time()
 
-    <span class="c"># Serial map</span>
-    <span class="n">tic2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-    <span class="n">results</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">runSimulation</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
-    <span class="n">toc2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-
-    <span class="k">print</span><span class="p">(</span><span class="s">'Parallel processing time: </span><span class="si">%r</span><span class="se">\n</span><span class="s">Serial processing time: </span><span class="si">%r</span><span class="s">'</span>
-	  <span class="o">%</span> <span class="p">(</span><span class="n">toc</span> <span class="o">-</span> <span class="n">tic</span><span class="p">,</span> <span class="n">toc2</span> <span class="o">-</span> <span class="n">tic2</span><span class="p">))</span>
+    print('Parallel processing time: %r\nSerial processing time: %r'
+          % (toc - tic, toc2 - tic2))
 </pre></div>
 
 <p>
@@ -479,7 +479,7 @@ discussion</a>.) To fix this, we can import Python's <b>os</b> module to reset
 the task affinity in our code:
 </p>
 
-<div class="highlight"><pre><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">"taskset -p 0xff </span><span class="si">%d</span><span class="s">"</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">())</span>
+<div class="highlight"><pre>os.system("taskset -p 0xff %d" % os.getpid())
 </pre></div>
 </div>
 </div>

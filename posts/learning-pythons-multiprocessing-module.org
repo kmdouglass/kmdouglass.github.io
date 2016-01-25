@@ -53,7 +53,7 @@ calling its *start()* method.
 
 The basic example from their site looks like this:
 
-#+BEGIN_SRC python
+#+BEGIN_SRC
 import multiprocessing
 
 def worker():
@@ -72,7 +72,7 @@ if __name__ == '__main__':
 In this example, it's important to create the Process instances inside
 the
 
-#+BEGIN_SRC python
+#+BEGIN_SRC
 if __name__ == '__main__':
 #+END_SRC
 
@@ -106,7 +106,7 @@ the square operation on multiple processors, I would write a function
 for squaring an argument, and supply this function and the list of
 integers to *Pool.map()*. The code looks like this:
 
-#+BEGIN_SRC python
+#+BEGIN_SRC
 import multiprocessing
 
 def funSquare(num):
@@ -149,7 +149,7 @@ module. I won't use objects like in my real code, but will first
 demonstrate an example where *Pool.map()* is applied to a list of
 numbers.
 
-#+BEGIN_SRC python
+#+BEGIN_SRC
 import multiprocessing
 
 def runSimulation(params):
@@ -205,7 +205,7 @@ structural parameters and methods for simulating a polymer model. So
 long as instances of this class can be [[https://docs.python.org/3/library/pickle.html][pickled]], I can use them as the
 iterable in *Pool.map()*, not just lists of floating point numbers.
 
-#+BEGIN_SRC python
+#+BEGIN_SRC
 import multiprocessing
 
 class simObject():
@@ -254,7 +254,7 @@ the pool. More details can be found [[http://stackoverflow.com/questions/1816958
 The following code makes a rough comparison between computation time
 for the parallel and serial versions of *map()*:
 
-#+BEGIN_SRC python
+#+BEGIN_SRC
 import multiprocessing
 import time
 
@@ -309,7 +309,7 @@ purpose of writing concurrent code in this case. (See for example [[http://stack
 discussion]].) To fix this, we can import Python's *os* module to reset
 the task affinity in our code:
 
-#+BEGIN_SRC python
+#+BEGIN_SRC
 os.system("taskset -p 0xff %d" % os.getpid())
 #+END_SRC
 

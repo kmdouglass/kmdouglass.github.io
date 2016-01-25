@@ -42,9 +42,9 @@ nikola plugin -i orgmode
    Next, I had to add the org-mode compiler to the COMPILERS
    dictionary in conf.py:
 
-   #+BEGIN_SRC python
+#+BEGIN_SRC
 COMPILERS["orgmode"] = ('.org',)
-   #+END_SRC
+#+END_SRC
    
    Note that I manually edited the COMPILERS dictionary to add the
    key-value pair; I did not actually add to the dictionary with the
@@ -53,7 +53,7 @@ COMPILERS["orgmode"] = ('.org',)
    I also had to modify my POSTS and PAGES variables in
    conf.py to read .org files:
 
-   #+BEGIN_SRC python
+   #+BEGIN_SRC
 POSTS = POSTS + (("posts/*.org", "posts", "post.tmpl"),)
 PAGES = PAGES + (("stories/*.org", "posts", "post.tmpl"),)
    #+END_SRC
@@ -86,7 +86,7 @@ PAGES = PAGES + (("stories/*.org", "posts", "post.tmpl"),)
    can do this in the conf.py file by uncommenting and modifying the
    line for the =GITHUB_DEPLOY_BRANCH= variable:
 
-   #+BEGIN_SRC python
+   #+BEGIN_SRC
 GITHUB_DEPLOY_BRANCH = 'master'
    #+END_SRC
 
@@ -158,7 +158,7 @@ nikola bootswatch_theme -n custom_theme -s darkly -p bootstrap3
 
    In *conf.py*, I set the following two variables:
 
-   #+BEGIN_SRC python
+   #+BEGIN_SRC
 COMMENT_SYSTEM = "disqus"
 COMMENT_SYSTEM_ID = "MY_SHORT_NAME"
    #+END_SRC
@@ -176,7 +176,7 @@ COMMENT_SYSTEM_ID = "MY_SHORT_NAME"
    Nikola makes it easy to setup a redirect in *conf.py*. I changed
    the *REDIRECTIONS* variable to the following:
 
-   #+BEGIN_SRC python
+   #+BEGIN_SRC
 REDIRECTIONS = [("notes/pgFocus.html", "/stories/notes/pgFocus.html")]
    #+END_SRC
 
@@ -226,16 +226,68 @@ pygmentize -S default -a .highlight -f html
    I can add this link by editing the following variable in my
    *conf.py* file:
 
-   #+BEGIN_SRC python
+   #+BEGIN_SRC
 EXTRA_HEAD_DATA = '''<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>'''
    #+END_SRC
 
    (Note that you will have to replace any occurence of &lt; and &gt;
    to less-than and greater-than symbols above. For whatever reason
    org-mode will ALWAYS try to render these into HTML and I haven't
-   figure out how to prevent this). After doing this, MathJax will
+   figured out how to prevent this). After doing this, MathJax will
    automatically used to render LaTeX equations into math. Very nice
    and simple!
+-----
+
+* Jupyter Notebooks
+
+** Fixing the font color
+   Posting from Jupyter notebooks seems to sometimes have issues with
+   styling. One problem I encountered is that the font color was too
+   dark with my slate bootswatch theme. The font color for the
+   Notebooks can be manually changed by editing the
+   =nikola_ipython.css= file in the Nikola install.
+
+   This file is currently in
+   =~/.venvs/Nikola/lib/python3.5/site-packages/nikola/data/themes/base/assets/css=. I
+   set it to =#c8c8c8= for the Slate bootswatch theme.
+
+   I also added the following tags to this file to bring the
+   underline-on-hover effect back to links:
+
+   #+BEGIN_SRC
+.rendered_html :link:hover {
+  text-decoration: underline;
+}
+   #+END_SRC
+
+-----
+
+** Inline LaTeX
+   To get inline LaTeX equations working, you need to tell MathJax to
+   read =\\(= and =\\)= tags. To do this, edit your *conf.py* file and
+   uncomment the default MATHJAX_CONFIG variable:
+
+#+BEGIN_SRC
+MATHJAX_CONFIG = """
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\\(","\\\)"] ],
+        displayMath: [ ['$$','$$'], ["\\\[","\\\]"] ]
+    },
+    displayAlign: 'center', // Change this to 'center' to center equations.
+    "HTML-CSS": {
+        styles: {'.MathJax_Display': {"margin": 0}}
+    }
+});
+</script>
+"""
+#+END_SRC
+
+   For some reason, single dollar signs still doesn't work, but the
+   double-backslash parenthesis does, so use this when making inline
+   LaTeX in a Jupyter notebook
+
 -----
 
 * Errors
