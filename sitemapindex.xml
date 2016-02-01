@@ -26,20 +26,24 @@
   <lastmod>2016-01-25</lastmod>
  </sitemap>
  <sitemap>
+  <loc>http://kmdouglass.github.io/categories/fourier-optics.xml</loc>
+  <lastmod>2016-02-01</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>http://kmdouglass.github.io/categories/micro-manager.xml</loc>
   <lastmod>2016-01-25</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/microscopy.xml</loc>
-  <lastmod>2016-01-25</lastmod>
+  <lastmod>2016-02-01</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/optics.xml</loc>
-  <lastmod>2016-01-25</lastmod>
+  <lastmod>2016-02-01</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/python.xml</loc>
-  <lastmod>2016-01-25</lastmod>
+  <lastmod>2016-02-01</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/sensing.xml</loc>
@@ -63,10 +67,10 @@
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/rss.xml</loc>
-  <lastmod>2016-01-25</lastmod>
+  <lastmod>2016-02-01</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/sitemap.xml</loc>
-  <lastmod>2016-01-25</lastmod>
+  <lastmod>2016-02-01</lastmod>
  </sitemap>
 </sitemapindex>

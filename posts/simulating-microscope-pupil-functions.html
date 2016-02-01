@@ -13,6 +13,7 @@
 <!--[if lt IE 9]><script src="../assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><meta name="description" itemprop="description" content="Using scalar diffraction theory to simulate a microscope's pupil function.">
 <meta name="author" content="Kyle M. Douglass">
 <link rel="prev" href="beware-the-paraxial-approximation-in-microscopy.html" title="Beware the paraxial approximation in microscopy" type="text/html">
+<link rel="next" href="approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html" title="Approximating diffraction patterns of rectangular apertures with the FFT" type="text/html">
 <meta property="og:site_name" content="Kyle M. Douglass">
 <meta property="og:title" content="Simulating microscope pupil functions">
 <meta property="og:url" content="http://kmdouglass.github.io/posts/simulating-microscope-pupil-functions.html">
@@ -272,7 +273,7 @@ Populating the interactive namespace from numpy and matplotlib
 <p>\(k_{Max} \propto \frac{1}{dx}\)</p>
 <p>\(x_{Max} \propto \frac{1}{dk}\)</p>
 </blockquote>
-<p>These two rules are just a manifestation of the <a href="https://en.wikipedia.org/wiki/Nyquist%E2%80%93Shannon_sampling_theorem">Nyquist-Shannon sampling criterion</a>: the maximum spatial frequency \(k<em>{Max}\) is determined by the inverse of the sampling period in space \(dx\), while the maximum size \(x</em>{Max}\) of the signal is proportional to the inverse of the period of spatial frequency samples \(dk\). This is why the maximum spatial frequency above is \(2 \pi / \text{pixelSize}\).</p>
+<p>These two rules are just a manifestation of the <a href="https://en.wikipedia.org/wiki/Nyquist%E2%80%93Shannon_sampling_theorem">Nyquist-Shannon sampling criterion</a>: the maximum spatial frequency \( k_{Max} \) is determined by the inverse of the sampling period in space \(dx\), while the maximum size \(x_{Max}\) of the signal is proportional to the inverse of the period of spatial frequency samples \(dk\). This is why the maximum spatial frequency above is \(2 \pi / \text{pixelSize}\).</p>
 <p>The pupil function of a microscope is non-zero for values of \(\left( k_x, k_y \right)\) such that \(k_x^2 + k_y^2 \leq \frac{2 \pi NA}{\lambda}\). The quantity \(\frac{2 \pi NA}{\lambda}\) is represented by <code>kNA</code> above. The size of a pixel <code>dk</code> in spatial frequency units (radians per distance) is inversely proportional to the maximum size of the image in pixels, or <code>imgSize * pixelSize</code>. Likewise, the size of a pixel in microns is proportional to the inverse of the maximum size of the pupil function in spatial frequencies. This is just a manifestation of the properties of Fourier transform pairs.</p>
 
 </div>
@@ -689,6 +690,9 @@ $$\text{PSF}_{\text{A}} \left( x, y, z \right) = \iint P \left( k_x, k_y \right)
 <ul class="pager hidden-print">
 <li class="previous">
                 <a href="beware-the-paraxial-approximation-in-microscopy.html" rel="prev" title="Beware the paraxial approximation in microscopy">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html" rel="next" title="Approximating diffraction patterns of rectangular apertures with the FFT">Next post</a>
             </li>
         </ul></nav></aside><section class="comments hidden-print"><h2>Comments</h2>
         
