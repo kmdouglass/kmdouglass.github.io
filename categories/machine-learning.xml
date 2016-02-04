@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Kyle M. Douglass (machine learning)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link href="http://kmdouglass.github.io/categories/machine-learning.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Thu, 04 Feb 2016 17:57:32 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Thoughts from the Swiss Photonics Machine Learning Workshop</title><link>http://kmdouglass.github.io/posts/thoughts-from-the-swiss-photonics-machine-learning-workshop.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;p&gt;
+Today I attended a &lt;a href="http://www.swissphotonics.net/workshops/workshop-datenbank?2886"&gt;machine learning workshop hosted by Swiss
+Photonics&lt;/a&gt;. The workshop was a small, day-long series of talks by
+industry experts in Neuchâtel, Switzerland, not far from Lausanne. I
+went to the workshop because a) I don't know much about machine
+learning and want to know more, and b) I wanted to connect with people
+within the Swiss Photonics circle. Most of the talks concerned deep
+learning for solving problems in industrial machine vision
+applications, such as quality control for the watch-making industry.
+&lt;/p&gt;
+
+&lt;p&gt;
+Here are the main things I learned, which may or not be correct. I
+welcome any opinions or corrections in the comments:
+&lt;/p&gt;
+
+&lt;ul class="org-ul"&gt;
+&lt;li&gt;The term "learning" is used to mean "teaching a computer to
+recognize and classify patterns in data", such as finding people in
+images.
+&lt;/li&gt;
+&lt;li&gt;Learning involves finding patterns in data. Once patterns are
+idenfitied, a set of them can be combined to form a model. A model
+makes predictions about what future data may look like. This means
+that a model may be used to see whether new data meets our
+expectations. An example would be using pictures of products from a
+production line and searching for defects, i.e. those products that
+don't fit our classification of "good" products.
+&lt;/li&gt;
+&lt;li&gt;Learning applications require lots of training data to
+implement. This is where the primary cost of applying learning
+algorithms comes from.
+&lt;/li&gt;
+&lt;li&gt;There are three categories of learning: supervised, reinforced, and
+unsupervised.
+&lt;/li&gt;
+&lt;li&gt;The value in neural networks is their ability to make decisions in a
+way that is similar to humans. Other classification and decision
+algorithms work using strict programmatic rules and look for
+user-specified features. Neural networks do not require domain
+knowledge to establish features for a classifier. Their generality
+is their strength.
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://en.wikipedia.org/wiki/Deep_learning"&gt;Deep learning&lt;/a&gt; just refers to really big neural networks. Neural
+networks are not new; recent hardware advances like GPU-based
+computation and the availability of large datasets are what has
+enabled Deep learning.
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;
+I did not hear much discussion about the tradeoffs and downsides to
+using neural networks or deep learning, other than that they require
+large amounts of training data. Notable talks were given by Reto Wyss
+of &lt;a href="http://www.vidi-systems.com/company/about-us.html"&gt;ViDi&lt;/a&gt; and Virginie Moser of &lt;a href="http://www.csem.ch/site/"&gt;CSEM&lt;/a&gt;. Wyss very eloquently explained
+why deep learning is useful for classification. Moser presented an
+extremely small and light-weight embedded machine vision system for
+traffic light control.
+&lt;/p&gt;</description><category>machine learning</category><category>photonics</category><category>Switzerland</category><guid>http://kmdouglass.github.io/posts/thoughts-from-the-swiss-photonics-machine-learning-workshop.html</guid><pubDate>Thu, 04 Feb 2016 17:31:32 GMT</pubDate></item></channel></rss>

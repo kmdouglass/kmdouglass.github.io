@@ -35,6 +35,13 @@
   </div>
   <div class="panel-body">
 
+  <h3>February 4, 2016</h3>
+
+  <p>Attended the Swiss Photonics Machine Learning Workshop in
+  Neuchâtel, Switzerland. You can read my <a
+  href="posts/thoughts-from-the-swiss-photonics-machine-learning-workshop.html">thoughts
+  about it here</a>.
+
   <h3>January 19, 2016</h3>
 
    <p>Uploaded the <a

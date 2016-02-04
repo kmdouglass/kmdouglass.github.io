@@ -2,12 +2,14 @@
 <html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
 <head>
 <meta charset="utf-8">
+<base href="http://kmdouglass.github.io/posts/index.html">
 <meta name="description" content="Biophysics, optics, and programming.">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kyle M. Douglass | Kyle M. Douglass</title>
+<title>Kyle M. Douglass</title>
 <link href="../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
 <link href="../assets/css/ipython.min.css" rel="stylesheet" type="text/css">
 <link href="../assets/css/nikola_ipython.css" rel="stylesheet" type="text/css">
+<meta content="#5670d4" name="theme-color">
 <link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml">
 <link rel="canonical" href="http://kmdouglass.github.io/posts/index.html">
 <link rel="next" href="index-1.html" type="text/html">
@@ -18,7 +20,7 @@
 
 <!-- Menubar -->
 
-<nav class="navbar navbar-default navbar-static-top" role="navigation"><div class="container">
+<nav class="navbar navbar-default navbar-static-top"><div class="container">
 <!-- This keeps the margins nice -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
@@ -69,9 +71,85 @@
             
 
 <div class="postindex">
-    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html" class="u-url">Approximating diffraction patterns of rectangular apertures with the FFT</a></h1>
+    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="thoughts-from-the-swiss-photonics-machine-learning-workshop.html" class="u-url">Thoughts from the Swiss Photonics Machine Learning Workshop</a></h1>
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">Kyle M. Douglass</span></p>
+            <p class="byline author vcard"><span class="byline-name fn">
+                Kyle M. Douglass
+            </span></p>
+            <p class="dateline"><a href="thoughts-from-the-swiss-photonics-machine-learning-workshop.html" rel="bookmark"><time class="published dt-published" datetime="2016-02-04T18:31:32+01:00" title="2016-02-04 18:31">2016-02-04 18:31</time></a></p>
+                <p class="commentline">
+        
+    <a href="thoughts-from-the-swiss-photonics-machine-learning-workshop.html#disqus_thread" data-disqus-identifier="cache/posts/thoughts-from-the-swiss-photonics-machine-learning-workshop.html">Comments</a>
+
+
+        </p>
+</div>
+    </header><div class="p-summary entry-summary">
+    <p>
+Today I attended a <a href="http://www.swissphotonics.net/workshops/workshop-datenbank?2886">machine learning workshop hosted by Swiss
+Photonics</a>. The workshop was a small, day-long series of talks by
+industry experts in Neuchâtel, Switzerland, not far from Lausanne. I
+went to the workshop because a) I don't know much about machine
+learning and want to know more, and b) I wanted to connect with people
+within the Swiss Photonics circle. Most of the talks concerned deep
+learning for solving problems in industrial machine vision
+applications, such as quality control for the watch-making industry.
+</p>
+
+<p>
+Here are the main things I learned, which may or not be correct. I
+welcome any opinions or corrections in the comments:
+</p>
+
+<ul class="org-ul">
+<li>The term "learning" is used to mean "teaching a computer to
+recognize and classify patterns in data", such as finding people in
+images.
+</li>
+<li>Learning involves finding patterns in data. Once patterns are
+idenfitied, a set of them can be combined to form a model. A model
+makes predictions about what future data may look like. This means
+that a model may be used to see whether new data meets our
+expectations. An example would be using pictures of products from a
+production line and searching for defects, i.e. those products that
+don't fit our classification of "good" products.
+</li>
+<li>Learning applications require lots of training data to
+implement. This is where the primary cost of applying learning
+algorithms comes from.
+</li>
+<li>There are three categories of learning: supervised, reinforced, and
+unsupervised.
+</li>
+<li>The value in neural networks is their ability to make decisions in a
+way that is similar to humans. Other classification and decision
+algorithms work using strict programmatic rules and look for
+user-specified features. Neural networks do not require domain
+knowledge to establish features for a classifier. Their generality
+is their strength.
+</li>
+<li>
+<a href="https://en.wikipedia.org/wiki/Deep_learning">Deep learning</a> just refers to really big neural networks. Neural
+networks are not new; recent hardware advances like GPU-based
+computation and the availability of large datasets are what has
+enabled Deep learning.
+</li>
+</ul>
+<p>
+I did not hear much discussion about the tradeoffs and downsides to
+using neural networks or deep learning, other than that they require
+large amounts of training data. Notable talks were given by Reto Wyss
+of <a href="http://www.vidi-systems.com/company/about-us.html">ViDi</a> and Virginie Moser of <a href="http://www.csem.ch/site/">CSEM</a>. Wyss very eloquently explained
+why deep learning is useful for classification. Moser presented an
+extremely small and light-weight embedded machine vision system for
+traffic light control.
+</p>
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html" class="u-url">Approximating diffraction patterns of rectangular apertures with the FFT</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Kyle M. Douglass
+            </span></p>
             <p class="dateline"><a href="approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html" rel="bookmark"><time class="published dt-published" datetime="2016-02-01T10:54:23+01:00" title="2016-02-01 10:54">2016-02-01 10:54</time></a></p>
                 <p class="commentline">
         
@@ -1048,7 +1126,9 @@ $$ f \left( x \right) = \text{rect} \left( \frac{n - M/2}{M} \right) , \, M \in 
     </div>
     </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="simulating-microscope-pupil-functions.html" class="u-url">Simulating microscope pupil functions</a></h1>
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">Kyle M. Douglass</span></p>
+            <p class="byline author vcard"><span class="byline-name fn">
+                Kyle M. Douglass
+            </span></p>
             <p class="dateline"><a href="simulating-microscope-pupil-functions.html" rel="bookmark"><time class="published dt-published" datetime="2016-01-24T15:13:40+01:00" title="2016-01-24 15:13">2016-01-24 15:13</time></a></p>
                 <p class="commentline">
         
@@ -1639,7 +1719,9 @@ $$\text{PSF}_{\text{A}} \left( x, y, z \right) = \iint P \left( k_x, k_y \right)
     </div>
     </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="beware-the-paraxial-approximation-in-microscopy.html" class="u-url">Beware the paraxial approximation in microscopy</a></h1>
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">Kyle M. Douglass</span></p>
+            <p class="byline author vcard"><span class="byline-name fn">
+                Kyle M. Douglass
+            </span></p>
             <p class="dateline"><a href="beware-the-paraxial-approximation-in-microscopy.html" rel="bookmark"><time class="published dt-published" datetime="2015-09-09T19:40:00+02:00" title="2015-09-09 19:40">2015-09-09 19:40</time></a></p>
                 <p class="commentline">
         
@@ -1763,7 +1845,9 @@ approximation are not often valid.
     </div>
     </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="whats-the-difference-between-a-back-focal-plane-and-pupil-plane.html" class="u-url">What's the difference between a back focal plane and pupil plane?</a></h1>
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">Kyle M. Douglass</span></p>
+            <p class="byline author vcard"><span class="byline-name fn">
+                Kyle M. Douglass
+            </span></p>
             <p class="dateline"><a href="whats-the-difference-between-a-back-focal-plane-and-pupil-plane.html" rel="bookmark"><time class="published dt-published" datetime="2015-08-26T08:49:13+02:00" title="2015-08-26 08:49">2015-08-26 08:49</time></a></p>
                 <p class="commentline">
         
@@ -1861,7 +1945,9 @@ aberrations, and whether this is at all feasible.
     </div>
     </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="paraxial-optics-2-what-problem-does-it-solve.html" class="u-url">Paraxial Optics (2): What problem does it solve?</a></h1>
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">Kyle M. Douglass</span></p>
+            <p class="byline author vcard"><span class="byline-name fn">
+                Kyle M. Douglass
+            </span></p>
             <p class="dateline"><a href="paraxial-optics-2-what-problem-does-it-solve.html" rel="bookmark"><time class="published dt-published" datetime="2015-05-31T15:37:13+02:00" title="2015-05-31 15:37">2015-05-31 15:37</time></a></p>
                 <p class="commentline">
         
@@ -2145,7 +2231,9 @@ geometrical optics theory.
     </div>
     </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="can-my-beam-be-collimated.html" class="u-url">Can my laser beam be collimated?</a></h1>
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">Kyle M. Douglass</span></p>
+            <p class="byline author vcard"><span class="byline-name fn">
+                Kyle M. Douglass
+            </span></p>
             <p class="dateline"><a href="can-my-beam-be-collimated.html" rel="bookmark"><time class="published dt-published" datetime="2015-05-04T09:44:42+02:00" title="2015-05-04 09:44">2015-05-04 09:44</time></a></p>
                 <p class="commentline">
         
@@ -2289,7 +2377,9 @@ lasers for a microscopy application.
     </div>
     </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="relearning-paraxial-optics.html" class="u-url">Relearning paraxial optics</a></h1>
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">Kyle M. Douglass</span></p>
+            <p class="byline author vcard"><span class="byline-name fn">
+                Kyle M. Douglass
+            </span></p>
             <p class="dateline"><a href="relearning-paraxial-optics.html" rel="bookmark"><time class="published dt-published" datetime="2015-04-19T11:05:21+02:00" title="2015-04-19 11:05">2015-04-19 11:05</time></a></p>
                 <p class="commentline">
         
@@ -2355,7 +2445,9 @@ dissonance and improve my understanding of the field I work in.
     </div>
     </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="reading-select-lines-from-a-text-file.html" class="u-url">Reading select lines from a text file</a></h1>
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">Kyle M. Douglass</span></p>
+            <p class="byline author vcard"><span class="byline-name fn">
+                Kyle M. Douglass
+            </span></p>
             <p class="dateline"><a href="reading-select-lines-from-a-text-file.html" rel="bookmark"><time class="published dt-published" datetime="2015-03-18T08:27:50+01:00" title="2015-03-18 08:27">2015-03-18 08:27</time></a></p>
                 <p class="commentline">
         
@@ -2423,7 +2515,9 @@ where others may be more likely to find it.
     </div>
     </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="the-basics-of-virtualenv.html" class="u-url">The basics of virtualenv</a></h1>
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">Kyle M. Douglass</span></p>
+            <p class="byline author vcard"><span class="byline-name fn">
+                Kyle M. Douglass
+            </span></p>
             <p class="dateline"><a href="the-basics-of-virtualenv.html" rel="bookmark"><time class="published dt-published" datetime="2015-02-10T07:47:50+01:00" title="2015-02-10 07:47">2015-02-10 07:47</time></a></p>
                 <p class="commentline">
         
@@ -2589,111 +2683,6 @@ Voilà. C'est tout. I hope this helps you get up and running with this
 great tool!
 </p>
     </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="sending-arguments-to-python-decorators.html" class="u-url">Sending arguments to Python decorators</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">Kyle M. Douglass</span></p>
-            <p class="dateline"><a href="sending-arguments-to-python-decorators.html" rel="bookmark"><time class="published dt-published" datetime="2015-01-24T08:45:38+01:00" title="2015-01-24 08:45">2015-01-24 08:45</time></a></p>
-                <p class="commentline">
-        
-    <a href="sending-arguments-to-python-decorators.html#disqus_thread" data-disqus-identifier="cache/posts/sending-arguments-to-python-decorators.html">Comments</a>
-
-
-        </p>
-</div>
-    </header><div class="p-summary entry-summary">
-    <p>
-<a href="http://simeonfranklin.com/blog/2012/jul/1/python-decorators-in-12-steps/">Python's decorators</a> are tools for changing the behavior of a function
-without completely recoding it. When we apply a decorator to a
-function, we say that the function has been decorated. Strictly
-speaking, when we decorate a function, we send it to a wrapper that
-returns another function. It's as simple as that.
-</p>
-
-<p>
-I was having trouble understanding exactly to which function, the
-original or the decorated one, the arguments are sent in a Python
-decorated function call. I wrote the following script to better
-understand this process (I use Python 3.4):
-</p>
-
-<div class="highlight"><pre>def wrapper(inFunction):
-    def outFunction(**kwargs):
-        print('The input arguments were:')
-        for key, value in kwargs.items():
-            print('%r : %r' % (key, value))
-
-        # Return the original function
-        return inFunction(**kwargs)
-
-    return outFunction
-
-def add(x = 1, y = 2):
-    return x + y
-</pre></div>
-
-<p>
-<code>wrapper(inFunction)</code> is a function that accepts another function as
-an argument. It returns a function that simply prints the keyword
-arguments of <i>inFunction()</i>, and calls <i>inFunction()</i> like normal.
-</p>
-
-<p>
-To decorate the function <i>add(x = 1, y = 2)</i> so that its arguments are
-printed without recoding it, we normally would place <code>@wrapper</code> before
-its definition. However, let's make the decorator in a way that's
-closer to how <i>@</i> works under the hood:
-</p>
-
-<div class="highlight"><pre>In [22]: decoratedAdd = wrapper(add)
-In [23]: decoratedAdd(x = 1, y = 24)
-The input arguments were:
-'y' : 24
-'x' : 1
-Out[23]: 25
-</pre></div>
-
-<p>
-When we call <i>decoratedAdd(x = 1, y = 24)</i>, the arguments are printed
-to the screen and we still get the same functionality of <i>add()</i>. What
-I wanted to know was this: are the keyword arguments x = 1, y = 24
-bound in the namespace of <i>wrapper()</i> or in the namespace of
-<i>outFunction()</i>? <b>In otherwords, does <i>wrapper()</i> at any point know
-what the arguments are that I send to the decorated function?</b>
-</p>
-
-<p>
-The answer, as it turns out, is no in this case. This is because the
-<i>wrapper()</i> function first returns the decorated function, and then
-the arguments are passed into the decorated function. If this order of
-operations were flipped, <i>wrapper()</i> should know that I set x to 1 and
-y to 24, but really it doesn't know these details at all.
-</p>
-
-<div class="highlight"><pre>In [24]: wrapper(add)(x = 1, y = 24)
-The input arguments were:
-'y' : 24
-'x' : 1
-Out[24]: 25
-</pre></div>
-
-<p>
-So, when I call <i>wrapper(add)(x = 1, y = 24)</i>, first <i>wrapper(add)</i> is
-called, which returns <i>outFunction()</i>, and then these arguments are
-passed to <i>outFunction()</i>.
-</p>
-
-<p>
-Now what happens when I call <code>wrapper(add(x = 1, y = 24))</code>? When I try
-this, the arguments are first passed into add, but then <i>outFunction</i>
-is returned without any arguments applied to it.
-</p>
-
-<p>
-This example can give us an idea about the working order of operations
-in Python. Here, this example reveals that function calls in Python
-are left-associative.
-</p>
-    </div>
     </article>
 </div>
 
@@ -2701,8 +2690,9 @@ are left-associative.
 <li class="next">
                 <a href="index-1.html" rel="next">Older posts</a>
             </li>
-        </ul></nav><script>var disqus_shortname="kmdouglass";(function(){var a=document.createElement("script");a.async=true;a.src="//"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script><script type="text/x-mathjax-config">
-        MathJax.Hub.Config({tex2jax: {inlineMath: [['$latex ','$'], ['\\(','\\)']]}});</script><script src="../assets/js/mathjax.js"></script>
+        </ul></nav><script>var disqus_shortname="kmdouglass";(function(){var a=document.createElement("script");a.async=true;a.src="//"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script><script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script><script type="text/x-mathjax-config">
+            MathJax.Hub.Config({tex2jax: {inlineMath: [['$latex ','$'], ['\\(','\\)']]}});
+            </script>
 </div>
         <!--End of body content-->
 
@@ -2715,7 +2705,7 @@ are left-associative.
 
 
             <script src="../assets/js/all-nocdn.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
-    moment.locale("");
+    moment.locale("en");
     fancydates(0, "YYYY-MM-DD HH:mm");
     </script><!-- end fancy dates -->
 </body>
