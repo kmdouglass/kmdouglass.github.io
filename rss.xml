@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Kyle M. Douglass</title><link>http://kmdouglass.github.io/</link><description>Biophysics, optics, and programming.</description><atom:link href="http://kmdouglass.github.io/rss.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Thu, 04 Feb 2016 17:57:31 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Thoughts from the Swiss Photonics Machine Learning Workshop</title><link>http://kmdouglass.github.io/posts/thoughts-from-the-swiss-photonics-machine-learning-workshop.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;p&gt;
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Kyle M. Douglass</title><link>http://kmdouglass.github.io/</link><description>Biophysics, optics, and programming.</description><atom:link href="http://kmdouglass.github.io/rss.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Fri, 05 Feb 2016 07:22:40 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Thoughts from the Swiss Photonics Machine Learning Workshop</title><link>http://kmdouglass.github.io/posts/thoughts-from-the-swiss-photonics-machine-learning-workshop.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;p&gt;
 Today I attended a &lt;a href="http://www.swissphotonics.net/workshops/workshop-datenbank?2886"&gt;machine learning workshop hosted by Swiss
 Photonics&lt;/a&gt;. The workshop was a small, day-long series of talks by
 industry experts in Neuchâtel, Switzerland, not far from Lausanne. I
@@ -121,7 +121,7 @@ $$U \left(x', z \right) = \frac{e^{jkz} e^{ jk\frac{x'^2}{2z} }}{\sqrt{j \lambda
 $$I \left( x', z \right) \propto \left| U \left( x', z \right) \right|^2$$&lt;p&gt;Taking the absolute square eliminates the complex exponentials preceding the integral so that the irradiance profile becomes&lt;/p&gt;
 $$I \left( x', z \right) \propto \frac{1}{\lambda z} \left| \int_{-\infty}^{\infty} u \left( x \right) \exp \left( -j \frac{2 \pi}{\lambda z} xx'\right) dx \right|^2 = \frac{1}{\lambda z} \left| \mathcal{F} \left[ u \left( x, z \right) \right] \left( \frac{x'}{\lambda z}\right) \right|^2 $$&lt;p&gt;This expression means that the irradiance describing the Fraunhofer diffraction pattern from slit is proportional to the absolute square of the Fourier transform of the field at the aperture evaluted at spatial frequencies \( f_{x} = x' / \lambda z\). To arrive at the analytical solution, we perform the integration over a region where the slit is not opaque, \( \left[ -a/2, a/2 \right] \). Inside this region, the field is simply \( u \left( x \right) = E_0 \) because we have a monochromatic plane wave with this amplitude.&lt;/p&gt;
 $$ \mathcal{F}\left[ u \left( x, z \right) \right] = \int_{-a/2}^{a/2} E_0 \exp \left( -j \frac{2 \pi}{\lambda z} xx'\right) dx $$&lt;p&gt;The analytical solution to this integral is&lt;/p&gt;
-$$ \mathcal{F}\left[ u \left( x, z \right) \right] = a E_0 \text{sinc} \left( \frac{ax'}{\lambda z} \right) $$&lt;p&gt;where \( \text{sinc} \left( x \right) = \frac{\sin{\pi x}}{\pi x}\). The far-field irradiance is therefore the absolute square of this quantity divided by the square of the product of the wavelength and the propagation distance.&lt;/p&gt;
+$$ \mathcal{F}\left[ u \left( x, z \right) \right] = a E_0 \text{sinc} \left( \frac{ax'}{\lambda z} \right) $$&lt;p&gt;where \( \text{sinc} \left( x \right) = \frac{\sin{\pi x}}{\pi x}\). The far-field irradiance is therefore the absolute square of this quantity divided by the product of the wavelength and the propagation distance.&lt;/p&gt;
 &lt;p&gt;Let's plot the analytically-determined irradiance profile of the diffraction pattern:&lt;/p&gt;
 
 &lt;/div&gt;
@@ -972,19 +972,6 @@ $$ f \left( x \right) = \text{rect} \left( \frac{n - M/2}{M} \right) , \, M \in 
 
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing code_cell rendered"&gt;
-&lt;div class="input"&gt;
-&lt;div class="prompt input_prompt"&gt;In [ ]:&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-    &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt; 
-&lt;/pre&gt;&lt;/div&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
 &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
