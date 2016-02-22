@@ -132,7 +132,7 @@ Comment=Starts the Jupyter Notebook Server
 Exec=/home/kmdouglass/anaconda3/bin/jupyter-notebook --no-browser
 OnlyShowIn=XFCE;
 StartupNotify=false
-Terminal=true
+Terminal=false
 Hidden=false
 #+END_SRC
 
