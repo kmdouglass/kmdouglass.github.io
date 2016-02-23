@@ -183,7 +183,7 @@ traffic light control.
 <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s">'image.cmap'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'plasma'</span> 
 
 <span class="kn">from</span> <span class="nn">scipy.fftpack</span> <span class="k">import</span> <span class="n">fft</span>
-<span class="kn">from</span> <span class="nn">scipy.fftpack</span> <span class="k">import</span> <span class="n">fftshift</span>
+<span class="kn">from</span> <span class="nn">scipy.fftpack</span> <span class="k">import</span> <span class="n">fftshift</span><span class="p">,</span> <span class="n">ifftshift</span>
 </pre></div>
 
 </div>
@@ -436,7 +436,9 @@ $$ \int_{-\infty}^{\infty} \left| U \left( x', z \right) \right|^2 dx' = \frac{a
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Let's go ahead now and compute the FFT of this sequence of field samples. We first need to figure out what the units of the FFT are going to be. The sampling frequency \(f_S\) for this field is simply 1 divided by the distance between each sample. The FFT outputs an array of numbers from spatial frequency 0 up to \( \left( \frac{N-1}{N} \right) f_S \). By default, the length of the output array \( N \) is the same as the length of the input. In Python, array indexes start from 0, so the relationship between index \( i \) and spatial frequency is</p>
-$$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/viewcontent.cgi?article=1006&amp;context=engineering_fac">In MATLAB</a>, array indexes start at 1 so \(i\) above should be replaced by \(i - 1\) ).</p>
+$$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/viewcontent.cgi?article=1006&amp;context=engineering_fac">In MATLAB</a>, array indexes start at 1 so \(i\) above should be replaced by \(i - 1\) .)</p>
+<p>We also need to do two other things when computing the numerical Fourier transform. First, we need to shift the input field using the <code>fftshift</code> command for arrays with an even number of elements and <code>ifftshift</code> for arrays with an odd number of elements. This will shift the elements of the array so that the point corresponding to x = 0 lies in the first element of the array (index 0).</p>
+<p>The second thing we must do is multiply the fft results by the grid spacing <code>dx</code> to ensure that the scaling on the y-axis is correct.</p>
 
 </div>
 </div>
@@ -450,7 +452,7 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 <span class="n">fS</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">dx</span>      <span class="c"># Spatial sampling frequency, units are inverse microns</span>
 <span class="n">f</span>  <span class="o">=</span> <span class="p">(</span><span class="n">fS</span> <span class="o">/</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="c"># inverse microns</span>
 
-<span class="n">diffractedField</span> <span class="o">=</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">fft</span><span class="p">(</span><span class="n">field</span><span class="p">)</span> <span class="c"># The field must be rescaled by dx to get the correct units</span>
+<span class="n">diffractedField</span> <span class="o">=</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">fft</span><span class="p">(</span><span class="n">fftshift</span><span class="p">(</span><span class="n">field</span><span class="p">))</span> <span class="c"># The field must be rescaled by dx to get the correct units</span>
 
 <span class="c"># Plot the field up to the Nyquist frequency, fS / 2</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="n">f</span> <span class="o">&lt;=</span> <span class="n">fS</span> <span class="o">/</span> <span class="mi">2</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">diffractedField</span><span class="p">[</span><span class="n">f</span> <span class="o">&lt;=</span> <span class="n">fS</span> <span class="o">/</span> <span class="mi">2</span><span class="p">]),</span> <span class="s">'.'</span><span class="p">,</span> <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
@@ -488,7 +490,7 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>OK, so far so good. Let's now put the results in a format that is more easily compared to the analytical theory for the diffracted irradiance. First, we'll shift the FFT results so that the peak is in the center. Then, we'll rescale the x-axis by multiplying by \( \lambda z \) to get \(x'\) and plot the theoretical result on top.</p>
+<p>OK, so far so good. Let's now put the results in a format that is more easily compared to the analytical theory for the diffracted irradiance. We'll shift the FFT results back so that the peak is in the center using <code>fftshift</code>. (We also need to use <code>fftshift</code> here for arrays with an odd number of elements; typically, the order for odd elements is <code>ifftshift</code> -&gt; <code>fft</code> -&gt; <code>fftshift</code>.) We'll also rescale the x-axis by multiplying by \( \lambda z \) to get \(x'\) and plot the theoretical result on top.</p>
 
 </div>
 </div>
@@ -525,7 +527,7 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 <div class="output_area">
 <div class="prompt"></div>
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>/home/douglass/anaconda3/envs/scipy/lib/python3.5/site-packages/ipykernel/__main__.py:1: DeprecationWarning: using a non-integer number instead of an integer will result in an error in the future
+<pre>/home/douglass/anaconda3/lib/python3.5/site-packages/ipykernel/__main__.py:1: DeprecationWarning: using a non-integer number instead of an integer will result in an error in the future
   if __name__ == '__main__':
 </pre>
 </div>
@@ -737,7 +739,7 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 <span class="n">f</span>     <span class="o">=</span> <span class="p">(</span><span class="n">fS</span> <span class="o">/</span> <span class="n">xNew</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">xNew</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="c"># inverse microns</span>
 <span class="n">xPrimeNew</span>   <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">f</span><span class="p">[</span><span class="o">-</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">size</span><span class="o">/</span><span class="mi">2</span><span class="p">):]</span> <span class="o">-</span> <span class="n">fS</span><span class="p">,</span> <span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">f</span><span class="o">.</span><span class="n">size</span><span class="o">/</span><span class="mi">2</span><span class="p">]))</span> <span class="o">*</span> <span class="n">wavelength</span> <span class="o">*</span> <span class="n">propDistance</span>
 
-<span class="n">diffractedField</span> <span class="o">=</span> <span class="n">dxNew</span> <span class="o">*</span> <span class="n">fft</span><span class="p">(</span><span class="n">fieldNew</span><span class="p">)</span> <span class="c"># The field must be rescaled by dx to get the correct units</span>
+<span class="n">diffractedField</span> <span class="o">=</span> <span class="n">dxNew</span> <span class="o">*</span> <span class="n">fft</span><span class="p">(</span><span class="n">fftshift</span><span class="p">(</span><span class="n">fieldNew</span><span class="p">))</span> <span class="c"># The field must be rescaled by dx to get the correct units</span>
 
 <span class="n">IrradTheoryNew</span> <span class="o">=</span> <span class="n">amplitude</span> <span class="o">/</span> <span class="p">(</span><span class="n">wavelength</span> <span class="o">*</span> <span class="n">propDistance</span><span class="p">)</span> <span class="o">*</span> \
     <span class="p">(</span><span class="n">slitWidth</span> <span class="o">*</span> <span class="n">sinc</span><span class="p">(</span><span class="n">xPrimeNew</span> <span class="o">*</span> <span class="n">slitWidth</span> <span class="o">/</span> <span class="n">wavelength</span> <span class="o">/</span> <span class="n">propDistance</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span>
@@ -764,7 +766,7 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 <div class="output_area">
 <div class="prompt"></div>
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>/home/douglass/anaconda3/envs/scipy/lib/python3.5/site-packages/ipykernel/__main__.py:4: DeprecationWarning: using a non-integer number instead of an integer will result in an error in the future
+<pre>/home/douglass/anaconda3/lib/python3.5/site-packages/ipykernel/__main__.py:4: DeprecationWarning: using a non-integer number instead of an integer will result in an error in the future
 </pre>
 </div>
 </div>
@@ -934,7 +936,7 @@ $$ f \left( x \right) = \text{rect} \left( \frac{n - M/2}{M} \right) , \, M \in 
 <span class="n">dx</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">fS</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">dx</span>
 <span class="n">f</span>  <span class="o">=</span> <span class="p">(</span><span class="n">fS</span> <span class="o">/</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="c"># inverse microns</span>
-<span class="n">diffractedField</span> <span class="o">=</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">fft</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+<span class="n">diffractedField</span> <span class="o">=</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">fft</span><span class="p">(</span><span class="n">fftshift</span><span class="p">(</span><span class="n">field</span><span class="p">))</span>
 
 <span class="c"># Sample the DTFT of a rectangular slit</span>
 <span class="n">dx_DTFT</span>  <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -1062,7 +1064,7 @@ $$ f \left( x \right) = \text{rect} \left( \frac{n - M/2}{M} \right) , \, M \in 
 <div class="output_area">
 <div class="prompt"></div>
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>/home/douglass/anaconda3/envs/scipy/lib/python3.5/site-packages/numpy/core/numeric.py:474: ComplexWarning: Casting complex values to real discards the imaginary part
+<pre>/home/douglass/anaconda3/lib/python3.5/site-packages/numpy/core/numeric.py:474: ComplexWarning: Casting complex values to real discards the imaginary part
   return array(a, dtype, copy=False, order=order)
 </pre>
 </div>
