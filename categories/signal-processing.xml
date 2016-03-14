@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0"><channel><title>Kyle M. Douglass (signal processing)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link rel="self" type="application/rss+xml" href="http://kmdouglass.github.io/categories/signal-processing.xml"></atom:link><language>en</language><lastBuildDate>Sun, 28 Feb 2016 08:38:14 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Correlated noise and the FFT</title><link>http://kmdouglass.github.io/posts/correlated-noise-and-the-fft.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div tabindex="-1" id="notebook" class="border-box-sizing"&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Kyle M. Douglass (signal processing)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link type="application/rss+xml" href="http://kmdouglass.github.io/categories/signal-processing.xml" rel="self"></atom:link><language>en</language><lastBuildDate>Mon, 14 Mar 2016 13:38:27 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Correlated noise and the FFT</title><link>http://kmdouglass.github.io/posts/correlated-noise-and-the-fft.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div tabindex="-1" id="notebook" class="border-box-sizing"&gt;
     &lt;div class="container" id="notebook-container"&gt;
 
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;
@@ -473,7 +473,7 @@ $$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$&lt;p&gt;The value \( a \) deter
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Now we have the same general trends in the 1/f noise signal as in the realization of the Gaussian signal, but with a lot of high frequency noise added.&lt;/p&gt;
-&lt;p&gt;We can see that the high frequency noise is coming from poor suppression of high frequencies in the spectrum. Remember that this is the spectrum of just one realization of the noise, this time without the real part of the random signal for clarity.&lt;/p&gt;
+&lt;p&gt;We can see that the high frequency noise is coming from poor suppression of high frequencies in the filtered spectrum. Remember that this is the spectrum of just one realization of the noise, this time without the real part of the random signal for clarity.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -522,7 +522,7 @@ $$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$&lt;p&gt;The value \( a \) deter
 &lt;ol&gt;
 &lt;li&gt;generate a completely uncorrelated, zero-mean random signal in frequency space,&lt;/li&gt;
 &lt;li&gt;multiply this signal by a filter that shapes the amplitudes of the signal,&lt;/li&gt;
-&lt;li&gt;and perform an inverse FFT to bring the signal back into real space. We get to random signals for the price of one; one from the real part and one from the imaginary part.&lt;/li&gt;
+&lt;li&gt;and perform an inverse FFT to bring the signal back into real space. We get two random signals for the price of one; one from the real part and one from the imaginary part.&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;/div&gt;

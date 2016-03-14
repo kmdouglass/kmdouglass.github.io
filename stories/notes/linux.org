@@ -439,6 +439,7 @@ sudo update-flashplugin-nonfree --install
 ** Automatic Backups with rsync and cron
    /Sources/
    1. http://www.howtogeek.com/135533/how-to-use-rsync-to-backup-your-data-on-linux/
+   2. http://www.jveweb.net/en/archives/2011/02/using-rsync-and-cron-to-automate-incremental-backups.html
    
    rsync is a very good command line backup tool for performing
    incremental backups. (Note that it works for Windows, though the
@@ -473,8 +474,52 @@ env EDITOR=emacs crontab -e
   #+BEGIN_SRC sh
 0 13 * * * rsync -av --delete /Directory1/ /Directory2
   #+END_SRC
+  -----
+*** Enabling cron logging
+    Sometimes cron jobs are difficult to troubleshoot. You can enable
+    logging of cron by editing =/etc/rsyslog.conf= and uncommenting
+    the line
 
-   -----
+    #+BEGIN_SRC sh
+# cron.*
+    #+END_SRC
+
+    Then, restart rsyslog via
+    
+    #+BEGIN_SRC sh
+sudo /etc/init.d/rsyslog restart
+    #+END_SRC    
+
+    -----
+*** Running cron with sudo privileges
+    Do not put sudo in cron jobs because the password will be saved as
+    plain text.
+
+    Instead, edit the root user's crontab with
+
+    #+BEGIN_SRC sh
+sudo env EDITOR=emacs crontab -e
+    #+END_SRC
+
+    and put your jobs in there.
+
+    -----
+*** Incremental backups
+    See this source: http://www.jveweb.net/en/archives/2011/02/using-rsync-and-cron-to-automate-incremental-backups.html
+
+    Currently, I run incremental backups with
+
+    #+BEGIN_SRC sh
+rsync -ab --backup-dir=old_`date +\%F` --delete --exclude=old_* /source/ /destination/
+    #+END_SRC
+
+    Note that some characters do not behave as expected in
+    crontab. For example, the percent sign must be preceded with a
+    backslash. Otherwise, crontab will interpret the percent sign as
+    new line and not part of the above command.
+
+-----
+
 ** Install Microsoft Core Fonts
    These fonts are located in the package *ttf-mscorefonts-installer*.
 
