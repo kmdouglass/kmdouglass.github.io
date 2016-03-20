@@ -290,6 +290,21 @@ MathJax.Hub.Config({
 
 -----
 
+** Displaying HTML5 Video
+   The size of HTML5 video from a Jupyter Notebook on a mobile phone
+   is horrible if you don't set the CSS manually; the video will pop
+   out of its container. I changed the video tag in
+   =assets/css/all-nocdn.css= to the following so that the video
+   filled the size of its container and did not pop out:
+
+#+BEGIN_SRC
+video {
+  width:  100% !important;
+  height: auto !important;
+}
+#+END_SRC
+
+-----
 * Errors
 
 ** Duplicated definition of render_listings
