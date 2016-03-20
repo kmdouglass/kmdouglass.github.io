@@ -7,43 +7,43 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>http://kmdouglass.github.io/2013/index.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:12:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/2014/index.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:12:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/2015/index.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:12:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/2016/index.html</loc>
-  <lastmod>2016-03-20T17:23:00Z</lastmod>
+  <lastmod>2016-03-20T18:12:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/archive.html</loc>
-  <lastmod>2016-03-20T16:47:00Z</lastmod>
+  <lastmod>2016-03-20T18:12:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/biology.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:13:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/biophysics.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:13:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/blog.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:13:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/complexity.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:13:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/computing.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:13:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/fourier-optics.html</loc>
@@ -51,7 +51,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/index.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:12:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/machine-learning.html</loc>
@@ -63,11 +63,11 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/microscopy.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:13:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/optics.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:13:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/photonics.html</loc>
@@ -75,11 +75,11 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/python.html</loc>
-  <lastmod>2016-03-20T17:23:00Z</lastmod>
+  <lastmod>2016-03-20T18:13:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/sensing.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:13:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/signal-processing.html</loc>
@@ -87,7 +87,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/super-resolution.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:13:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/switzerland.html</loc>
@@ -99,19 +99,19 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/wikipedia.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:13:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/galleries/index.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:12:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/index.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:13:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/alignment.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:13:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html</loc>
@@ -127,7 +127,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/confocal-by-scattering.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:13:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/correlated-noise-and-the-fft.html</loc>
@@ -135,11 +135,11 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/half-wave%20plate.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:13:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/hello-world.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:13:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/index-1.html</loc>
@@ -155,19 +155,19 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/learning-pythons-multiprocessing-module.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:13:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/measurements.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:13:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/omics.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:13:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/overcoming-complexity-in-biology.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:13:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/paraxial-optics-2-what-problem-does-it-solve.html</loc>
@@ -187,7 +187,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/sending-arguments-to-python-decorators.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:13:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/simulating-microscope-pupil-functions.html</loc>
@@ -207,19 +207,19 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/wikibooks.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:13:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/stories/about-me.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:13:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/stories/contact.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:13:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/stories/notes-and-projects.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:13:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/stories/notes/cellprofiler.html</loc>
@@ -231,15 +231,15 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/stories/notes/emacs.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:13:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/stories/notes/git.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:13:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/stories/notes/linux.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:13:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/stories/notes/micro-manager.html</loc>
@@ -247,26 +247,26 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/stories/notes/nikola.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:13:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/stories/notes/omero.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:13:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/stories/notes/pgFocus.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:13:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/stories/notes/scipy.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:13:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/stories/notes/windows.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:13:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/stories/what-is-optics-and-photonics.html</loc>
-  <lastmod>2016-03-20T16:46:00Z</lastmod>
+  <lastmod>2016-03-20T18:13:00Z</lastmod>
  </url>
 </urlset>

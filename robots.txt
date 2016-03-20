@@ -1,2 +1,4 @@
 Sitemap: http://kmdouglass.github.io/sitemapindex.xml
 
+User-Agent: *
+Host: kmdouglass.github.io
