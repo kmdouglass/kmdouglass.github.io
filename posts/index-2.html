@@ -2,12 +2,14 @@
 <html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
 <head>
 <meta charset="utf-8">
+<base href="http://kmdouglass.github.io/posts/index-2.html">
 <meta name="description" content="Biophysics, optics, and programming.">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kyle M. Douglass (old posts, page 2) | Kyle M. Douglass</title>
 <link href="../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
 <link href="../assets/css/ipython.min.css" rel="stylesheet" type="text/css">
 <link href="../assets/css/nikola_ipython.css" rel="stylesheet" type="text/css">
+<meta content="#5670d4" name="theme-color">
 <link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml">
 <link rel="canonical" href="http://kmdouglass.github.io/posts/index-2.html">
 <link rel="prev" href="index.html" type="text/html">
@@ -19,7 +21,7 @@
 
 <!-- Menubar -->
 
-<nav class="navbar navbar-default navbar-static-top" role="navigation"><div class="container">
+<nav class="navbar navbar-default navbar-static-top"><div class="container">
 <!-- This keeps the margins nice -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
@@ -70,9 +72,81 @@
             
 
 <div class="postindex">
-    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="the-basics-of-virtualenv.html" class="u-url">The basics of virtualenv</a></h1>
+    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="reading-select-lines-from-a-text-file.html" class="u-url">Reading select lines from a text file</a></h1>
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">Kyle M. Douglass</span></p>
+            <p class="byline author vcard"><span class="byline-name fn">
+                Kyle M. Douglass
+            </span></p>
+            <p class="dateline"><a href="reading-select-lines-from-a-text-file.html" rel="bookmark"><time class="published dt-published" datetime="2015-03-18T08:27:50+01:00" title="2015-03-18 08:27">2015-03-18 08:27</time></a></p>
+                <p class="commentline">
+        
+    <a href="reading-select-lines-from-a-text-file.html#disqus_thread" data-disqus-identifier="cache/posts/reading-select-lines-from-a-text-file.html">Comments</a>
+
+
+        </p>
+</div>
+    </header><div class="p-summary entry-summary">
+    <p>
+<a href="https://gist.github.com/kmdouglass/507717d339bc82f850ce">I just created a Python Gist</a> for reading select lines from a text file
+into memory. I came up with this Gist when I needed to parse the core
+log from our <a href="https://www.micro-manager.org/">microscope control software (Micro-Manager)</a>. One of our
+devices was continously sending its statistics to the computer, which
+would then be recorded to the log. I wanted to find only lines that
+contained the statistics by searching for the <b>STATS</b> identifier,
+which was unique to these lines.
+</p>
+
+<p>
+The problem was a bit more difficult than reading just the lines
+containing this string because I wanted the statistics only for times
+when the software was acquiring a time series of images. Luckily, the
+core log also contains lines with unique strings indicating when a
+time series was initiated and stopped. All lines in the log are
+time-stamped.
+</p>
+
+<p>
+Below is the Gist I used to solve this problem. The lines that will be
+retained in memory will contain the strings in the list lineFilters. I
+then define a function named stringIsIn that will return a list of
+bool indicating whether each string is present in the line.
+</p>
+
+<p>
+At the bottom of the Gist, I use a list comprehension to loop over
+each line in the file. The line is appended to a growing list called
+outputLines if the line contains <i>any</i> of the strings I defined. Note
+that it's not necessary to use a separate definition for stringIsIn;
+the list comprehension over lineFilters could have been placed inline
+with the primary list comprension over lines in the file. I do think
+it is more readable the way it is presented below, however.
+</p>
+
+<p>
+I welcome any comments or suggestions, especially on the <a href="https://gist.github.com/kmdouglass/507717d339bc82f850ce">Gist website</a>
+where others may be more likely to find it.
+</p>
+
+<div class="highlight"><pre><span class="n">filename</span>    <span class="o">=</span> <span class="s">'myFile.txt'</span>
+<span class="n">outputLines</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c"># Keep all lines containing ANY of the following list of strings.</span>
+<span class="n">lineFilters</span> <span class="o">=</span> <span class="p">[</span><span class="s">'line 1'</span><span class="p">,</span>
+	       <span class="s">'line 2'</span><span class="p">,</span>
+	       <span class="s">'line 3'</span><span class="p">]</span>
+<span class="n">stringIsIn</span>  <span class="o">=</span> <span class="k">lambda</span> <span class="n">line</span><span class="p">:</span> <span class="p">[</span><span class="nb">filter</span> <span class="ow">in</span> <span class="n">line</span> <span class="k">for</span> <span class="nb">filter</span> <span class="ow">in</span> <span class="n">lineFilters</span><span class="p">]</span>
+
+
+<span class="c"># Read only lines containing one of the strings into memory.</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">file</span><span class="p">:</span>
+    <span class="p">[</span><span class="n">outputLines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">file</span> <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">stringIsIn</span><span class="p">(</span><span class="n">line</span><span class="p">))]</span>
+</pre></div>
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="the-basics-of-virtualenv.html" class="u-url">The basics of virtualenv</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Kyle M. Douglass
+            </span></p>
             <p class="dateline"><a href="the-basics-of-virtualenv.html" rel="bookmark"><time class="published dt-published" datetime="2015-02-10T07:47:50+01:00" title="2015-02-10 07:47">2015-02-10 07:47</time></a></p>
                 <p class="commentline">
         
@@ -261,7 +335,7 @@ great tool!
 
 
             <script src="../assets/js/all-nocdn.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
-    moment.locale("");
+    moment.locale("en");
     fancydates(0, "YYYY-MM-DD HH:mm");
     </script><!-- end fancy dates -->
 </body>
