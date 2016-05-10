@@ -34,6 +34,13 @@
     <h3 class="panel-title">News</h3>
   </div>
   <div class="panel-body">
+  <h3>May 25-27, 2016<h3>
+
+   <p>Kyle will give a short presentation on his recent work
+   concerning quantitative fluorescence imaging of telomeres at the <a
+   href="http://icrea-bionanovision2016.com/">ICREA BioNanoVision
+   conference</a>. The presentation will be on Day 3, May 27 at 10:00
+   am.</p>
 
   <h3>February 17-18, 2016</h3>
 

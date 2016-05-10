@@ -19,7 +19,7 @@ div.output_area pre {
 
 div.text_cell_render {
   padding: 0px;
-  color: #ffffff;
+  color: #333333;
 }
 
 .rendered_html p {
