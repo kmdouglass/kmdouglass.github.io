@@ -269,9 +269,9 @@ to above. However, I can run bash.exe in Emacs' shell mode.
 To do this, I added the following lines to my <b>init.el</b> file:
 </p>
 
-<div class="highlight"><pre><span class="p">(</span><span class="nf">setq</span> <span class="nv">explicit-shell-file-name</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"C:/MinGW/msys/1.0/bin/bash.exe"</span><span class="nv">&lt;/span&gt;</span><span class="p">)</span>
-<span class="p">(</span><span class="nf">setq</span> <span class="nv">shell-file-name</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"bash"</span><span class="nv">&lt;/span&gt;</span><span class="p">)</span>
-<span class="p">(</span><span class="nf">setenv</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"SHELL"</span><span class="nv">&lt;/span&gt;</span> <span class="nv">shell-file-name</span><span class="p">)</span>
+<div class="highlight"><pre><span class="p">(</span><span class="nf">setq</span> <span class="nv">explicit-shell-file-name</span> <span class="s">"C:/MinGW/msys/1.0/bin/bash.exe"</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">setq</span> <span class="nv">shell-file-name</span> <span class="s">"bash"</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">setenv</span> <span class="s">"SHELL"</span> <span class="nv">shell-file-name</span><span class="p">)</span>
 <span class="p">(</span><span class="nf">add-hook</span> <span class="ss">'comint-output-filter-functions</span> <span class="ss">'comint-strip-ctrl-m</span><span class="p">)</span>
 </pre></div>
 
@@ -314,7 +314,7 @@ I can get a basic Python shell within Emacs on Windows by adding the
 following line to my <b>init.el</b> file:
 </p>
 
-<div class="highlight"><pre><span class="p">(</span><span class="nf">setq</span> <span class="nv">python-shell-interpreter</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"C:/Python34/python.exe"</span><span class="nv">&lt;/span&gt;</span><span class="p">)</span>
+<div class="highlight"><pre><span class="p">(</span><span class="nf">setq</span> <span class="nv">python-shell-interpreter</span> <span class="s">"C:/Python34/python.exe"</span><span class="p">)</span>
 </pre></div>
 
 <p>
@@ -329,17 +329,17 @@ After installing IPython, I could in fact print graphs using
 </p>
 
 <div class="highlight"><pre><span class="p">(</span><span class="nf">setq</span>
-  <span class="nv">python-shell-interpreter</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"C:\\Python34\\python.exe"</span><span class="nv">&lt;/span&gt;</span>
+  <span class="nv">python-shell-interpreter</span> <span class="s">"C:\\Python34\\python.exe"</span>
   <span class="nv">python-shell-interpreter-args</span>
-    <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"-i C:\\Python34\\Scripts\\ipython-script.py console --matplotlib"</span><span class="nv">&lt;/span&gt;</span>
-  <span class="nv">python-shell-prompt-regexp</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"In \\[[0-9]+\\]: "</span><span class="nv">&lt;/span&gt;</span>
-  <span class="nv">python-shell-prompt-output-regexp</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"Out\\[[0-9]+\\]: "</span><span class="nv">&lt;/span&gt;</span>
+    <span class="s">"-i C:\\Python34\\Scripts\\ipython-script.py console --matplotlib"</span>
+  <span class="nv">python-shell-prompt-regexp</span> <span class="s">"In \\[[0-9]+\\]: "</span>
+  <span class="nv">python-shell-prompt-output-regexp</span> <span class="s">"Out\\[[0-9]+\\]: "</span>
   <span class="nv">python-shell-completion-setup-code</span>
-    <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"from IPython.core.completerlib import module_completion"</span><span class="nv">&lt;/span&gt;</span>
+    <span class="s">"from IPython.core.completerlib import module_completion"</span>
   <span class="nv">python-shell-completion-module-string-code</span>
-    <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"';'.join(module_completion('''%s'''))\n"</span><span class="nv">&lt;/span&gt;</span>
+    <span class="s">"';'.join(module_completion('''%s'''))\n"</span>
   <span class="nv">python-shell-completion-string-code</span>
-    <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"';'.join(get_ipython().Completer.all_completions('''%s'''))\n"</span><span class="nv">&lt;/span&gt;</span><span class="p">)</span>
+    <span class="s">"';'.join(get_ipython().Completer.all_completions('''%s'''))\n"</span><span class="p">)</span>
 </pre></div>
 
 <p>
@@ -412,16 +412,16 @@ Finally, I copied pymacs.el into my <b>~/.emacs.d/my-packages/</b>
 directory and added the following lines to <b>init.el</b>:
 </p>
 
-<div class="highlight"><pre><span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold; font-style: italic;"</span><span class="nv">&gt;</span><span class="c1">;;; &lt;/span&gt;&lt;span style="font-weight: bold; font-style: italic;"&gt;Pymacs&lt;/span&gt;</span>
-<span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">'load-path</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"~/.emacs.d/my-packages/pymacs-0.25"</span><span class="nv">&lt;/span&gt;</span><span class="p">)</span>
-<span class="p">(</span><span class="nf">autoload</span> <span class="ss">'pymacs-apply</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"pymacs"</span><span class="nv">&lt;/span&gt;</span><span class="p">)</span>
-<span class="p">(</span><span class="nf">autoload</span> <span class="ss">'pymacs-call</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"pymacs"</span><span class="nv">&lt;/span&gt;</span><span class="p">)</span>
-<span class="p">(</span><span class="nf">autoload</span> <span class="ss">'pymacs-eval</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"pymacs"</span><span class="nv">&lt;/span&gt;</span> <span class="nv">nil</span> <span class="nv">t</span><span class="p">)</span>
-<span class="p">(</span><span class="nf">autoload</span> <span class="ss">'pymacs-exec</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"pymacs"</span><span class="nv">&lt;/span&gt;</span> <span class="nv">nil</span> <span class="nv">t</span><span class="p">)</span>
-<span class="p">(</span><span class="nf">autoload</span> <span class="ss">'pymacs-load</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"pymacs"</span><span class="nv">&lt;/span&gt;</span> <span class="nv">nil</span> <span class="nv">t</span><span class="p">)</span>
-<span class="p">(</span><span class="nf">autoload</span> <span class="ss">'pymacs-autoload</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"pymacs"</span><span class="nv">&lt;/span&gt;</span><span class="p">)</span>
-<span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold; font-style: italic;"</span><span class="nv">&gt;</span><span class="c1">;;&lt;/span&gt;&lt;span style="font-weight: bold; font-style: italic;"&gt;(eval-after-load "pymacs"&lt;/span&gt;</span>
-<span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold; font-style: italic;"</span><span class="nv">&gt;</span><span class="c1">;;  &lt;/span&gt;&lt;span style="font-weight: bold; font-style: italic;"&gt;'(add-to-list 'pymacs-load-path YOUR-PYMACS-DIRECTORY"))&lt;/span&gt;</span>
+<div class="highlight"><pre><span class="c1">;;; Pymacs</span>
+<span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">'load-path</span> <span class="s">"~/.emacs.d/my-packages/pymacs-0.25"</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">autoload</span> <span class="ss">'pymacs-apply</span> <span class="s">"pymacs"</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">autoload</span> <span class="ss">'pymacs-call</span> <span class="s">"pymacs"</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">autoload</span> <span class="ss">'pymacs-eval</span> <span class="s">"pymacs"</span> <span class="nv">nil</span> <span class="nv">t</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">autoload</span> <span class="ss">'pymacs-exec</span> <span class="s">"pymacs"</span> <span class="nv">nil</span> <span class="nv">t</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">autoload</span> <span class="ss">'pymacs-load</span> <span class="s">"pymacs"</span> <span class="nv">nil</span> <span class="nv">t</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">autoload</span> <span class="ss">'pymacs-autoload</span> <span class="s">"pymacs"</span><span class="p">)</span>
+<span class="c1">;;(eval-after-load "pymacs"</span>
+<span class="c1">;;  '(add-to-list 'pymacs-load-path YOUR-PYMACS-DIRECTORY"))</span>
 </pre></div>
 
 <p>
@@ -453,10 +453,10 @@ file into <b>~/.emacs.d/my-packages/python-mode.el-6.1.3</b>.
 Then, I added the following lines to my <b>init.el</b> file:
 </p>
 
-<div class="highlight"><pre><span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold; font-style: italic;"</span><span class="nv">&gt;</span><span class="c1">;;; &lt;/span&gt;&lt;span style="font-weight: bold; font-style: italic;"&gt;python-mode.el&lt;/span&gt;</span>
-<span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">'load-path</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"~/.emacs.d/my-packages/python-mode.el-6.1.3"</span><span class="nv">&lt;/span&gt;</span><span class="p">)</span> 
-<span class="p">(</span><span class="nf">setq</span> <span class="nv">py-install-directory</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"~/.emacs.d/my-packages/python-mode.el-6.1.3"</span><span class="nv">&lt;/span&gt;</span><span class="p">)</span>
-<span class="p">(</span><span class="nf">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold;"</span><span class="nv">&gt;require&lt;/span&gt;</span> <span class="ss">'&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold; text-decoration: underline;"</span><span class="nv">&gt;python-mode&lt;/span&gt;</span><span class="p">)</span>
+<div class="highlight"><pre><span class="c1">;;; python-mode.el</span>
+<span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">'load-path</span> <span class="s">"~/.emacs.d/my-packages/python-mode.el-6.1.3"</span><span class="p">)</span> 
+<span class="p">(</span><span class="nf">setq</span> <span class="nv">py-install-directory</span> <span class="s">"~/.emacs.d/my-packages/python-mode.el-6.1.3"</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">require</span> <span class="ss">'python-mode</span><span class="p">)</span>
 </pre></div>
 
 <p>
