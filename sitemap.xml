@@ -19,7 +19,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/2016/index.html</loc>
-  <lastmod>2016-05-11</lastmod>
+  <lastmod>2016-05-21</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/archive.html</loc>
@@ -63,11 +63,11 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/microscopy.html</loc>
-  <lastmod>2016-05-11</lastmod>
+  <lastmod>2016-05-21</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/optics.html</loc>
-  <lastmod>2016-05-11</lastmod>
+  <lastmod>2016-05-21</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/photonics.html</loc>
@@ -75,7 +75,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/python.html</loc>
-  <lastmod>2016-05-11</lastmod>
+  <lastmod>2016-05-21</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/sensing.html</loc>
@@ -147,11 +147,11 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/index-2.html</loc>
-  <lastmod>2016-05-11</lastmod>
+  <lastmod>2016-05-21</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/index.html</loc>
-  <lastmod>2016-05-11</lastmod>
+  <lastmod>2016-05-21</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/learning-pythons-multiprocessing-module.html</loc>
@@ -175,7 +175,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/perlin-noise.html</loc>
-  <lastmod>2016-05-11</lastmod>
+  <lastmod>2016-05-21</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/reading-select-lines-from-a-text-file.html</loc>
@@ -190,8 +190,12 @@
   <lastmod>2016-05-11</lastmod>
  </url>
  <url>
+  <loc>http://kmdouglass.github.io/posts/simulating-microscope-pupil-functions-copy1.html</loc>
+  <lastmod>2016-05-21</lastmod>
+ </url>
+ <url>
   <loc>http://kmdouglass.github.io/posts/simulating-microscope-pupil-functions.html</loc>
-  <lastmod>2016-05-11</lastmod>
+  <lastmod>2016-05-21</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/the-basics-of-virtualenv.html</loc>
@@ -223,7 +227,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/stories/notes/cellprofiler.html</loc>
-  <lastmod>2016-05-11</lastmod>
+  <lastmod>2016-05-21</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/stories/notes/cuda.html</loc>
@@ -247,7 +251,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/stories/notes/nikola.html</loc>
-  <lastmod>2016-05-11</lastmod>
+  <lastmod>2016-05-21</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/stories/notes/omero.html</loc>

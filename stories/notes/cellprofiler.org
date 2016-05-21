@@ -60,7 +60,7 @@ running. I found information on VIGRA [[http://ukoethe.github.io/vigra/][here]].
 *** Set the Java environment variables
 I added the following lines to my .bashrc so the Makefile could find the Java library files.
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC
 # Setup the Java environment for Cell profiler
 export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
 export LD_LIBRARY_PATH=/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/amd64/server:/usr/lib/jvm/java-7-openjdk-amd64:/usr/lib/jvm/java-7-openjdk-amd64/include
@@ -75,7 +75,7 @@ architectures.
 
 I fixed this by overwriting the HOSTTYPE variable as
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC
 export HOSTTYPE="amd64"
 #+END_SRC
 -----
@@ -96,7 +96,7 @@ I eventually solved this problem (albeit in a dirty way) by making
 symlinks to the .so library files in the directory where wx would
 search for them.
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC
 cd /usr/lib
 sudo ln -s x86_64-linux-gnu/libGL.so libGL.so
 sudo ln -s x86_64-linux-gnu/libGL.so.1 libGL.so.1
@@ -139,7 +139,7 @@ sudo find / -name libblas.so
 A major error I encountered using the Makefile approach
 occurred during the installation of cellh5:
 
-#+BEGIN_SRC python
+#+BEGIN_SRC
 ImportError: scipy/linalg/clapack.so: undefined symbol: clapack_sgesv
 #+END_SRC
 
@@ -300,7 +300,7 @@ the Debian non-stable repos.
 
 *** Run the Makefile
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC
 export PREFIX="${HOME}/cp2"
 export GITHOME=$PREFIX/src/CellProfiler
 mkdir -p $PREFIX/src
@@ -324,7 +324,7 @@ from =~/cp2/include= to =/usr/include=.
 To run CellProfiler, I created a bash script containing the following
 lines:
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC
 #!/bin/bash
 
 export PATH="$HOME/cp2/bin:${PATH}"
@@ -356,7 +356,7 @@ I fixed this problem by creating symlinks to the site-package files
 inside the virtualenv as suggested [[http://www.dangtrinh.com/2013/10/how-to-install-wxpython-inside.html][here]]. It requires that Debian's
 python-wxgtk2.8 package is installed.
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC
 ln -s /usr/lib/python2.7/dist-packages/wx* /home/envs/CellProfiler/lib/python2.7/site-packages/
 #+END_SRC
 
@@ -373,7 +373,7 @@ I was receiving an error stating that no module named cellh5 could be
 found shortly after I managed to get CellProfiler running. Since
 [[https://github.com/CellH5/cellh5][CellH5]] is not in PyPi, I manually installed it to my virtualenv.
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC
 pip install pandas scikit-learn lxml
 git clone https://github.com/CellH5/cellh5.git
 cd cellh5
@@ -409,7 +409,7 @@ this if you want to keep it clean, though I have not tried this.
 This is the list of Python packages installed in my CellProfiler
 virtualenv.
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC
 (CellProfiler)kmdouglass@kmd-laptop1:~/src/CellProfiler$ pip freeze
 cellh5==1.2.0
 Cython==0.22.1

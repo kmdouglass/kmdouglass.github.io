@@ -222,9 +222,9 @@ running. I found information on VIGRA <a href="http://ukoethe.github.io/vigra/">
 I added the following lines to my .bashrc so the Makefile could find the Java library files.
 </p>
 
-<div class="highlight"><pre><span class="c"># Setup the Java environment for Cell profiler</span>
-<span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span>/usr/lib/jvm/java-7-openjdk-amd64
-<span class="nb">export </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span>/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/amd64/server:/usr/lib/jvm/java-7-openjdk-amd64:/usr/lib/jvm/java-7-openjdk-amd64/include
+<div class="highlight"><pre># Setup the Java environment for Cell profiler
+export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
+export LD_LIBRARY_PATH=/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/amd64/server:/usr/lib/jvm/java-7-openjdk-amd64:/usr/lib/jvm/java-7-openjdk-amd64/include
 </pre></div>
 <hr>
 </div>
@@ -245,7 +245,7 @@ architectures.
 I fixed this by overwriting the HOSTTYPE variable as
 </p>
 
-<div class="highlight"><pre><span class="nb">export </span><span class="nv">HOSTTYPE</span><span class="o">=</span><span class="s2">"amd64"</span>
+<div class="highlight"><pre>export HOSTTYPE="amd64"
 </pre></div>
 <hr>
 </div>
@@ -275,7 +275,7 @@ symlinks to the .so library files in the directory where wx would
 search for them.
 </p>
 
-<div class="highlight"><pre><span class="nb">cd</span> /usr/lib
+<div class="highlight"><pre>cd /usr/lib
 sudo ln -s x86_64-linux-gnu/libGL.so libGL.so
 sudo ln -s x86_64-linux-gnu/libGL.so.1 libGL.so.1
 sudo ln -s x86_64-linux-gnu/libGLU.a libGLU.a
@@ -341,7 +341,7 @@ A major error I encountered using the Makefile approach
 occurred during the installation of cellh5:
 </p>
 
-<div class="highlight"><pre><span class="ne">ImportError</span><span class="p">:</span> <span class="n">scipy</span><span class="o">/</span><span class="n">linalg</span><span class="o">/</span><span class="n">clapack</span><span class="o">.</span><span class="n">so</span><span class="p">:</span> <span class="n">undefined</span> <span class="n">symbol</span><span class="p">:</span> <span class="n">clapack_sgesv</span>
+<div class="highlight"><pre>ImportError: scipy/linalg/clapack.so: undefined symbol: clapack_sgesv
 </pre></div>
 
 <p>
@@ -552,12 +552,12 @@ the Debian non-stable repos.
 <h4 id="sec-2-1-9">
 <span class="section-number-4">2.1.9</span> Run the Makefile</h4>
 <div class="outline-text-4" id="text-2-1-9">
-<div class="highlight"><pre><span class="nb">export </span><span class="nv">PREFIX</span><span class="o">=</span><span class="s2">"</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span><span class="s2">/cp2"</span>
-<span class="nb">export </span><span class="nv">GITHOME</span><span class="o">=</span><span class="nv">$PREFIX</span>/src/CellProfiler
-mkdir -p <span class="nv">$PREFIX</span>/src
-git clone https://github.com/CellProfiler/CellProfiler <span class="nv">$GITHOME</span>
-<span class="nb">cd</span> <span class="nv">$GITHOME</span>
-make -f Makefile.CP2 <span class="nv">PREFIX</span><span class="o">=</span><span class="s2">"</span><span class="si">${</span><span class="nv">PREFIX</span><span class="si">}</span><span class="s2">"</span>
+<div class="highlight"><pre>export PREFIX="${HOME}/cp2"
+export GITHOME=$PREFIX/src/CellProfiler
+mkdir -p $PREFIX/src
+git clone https://github.com/CellProfiler/CellProfiler $GITHOME
+cd $GITHOME
+make -f Makefile.CP2 PREFIX="${PREFIX}"
 </pre></div>
 <hr>
 </div>
@@ -591,15 +591,15 @@ To run CellProfiler, I created a bash script containing the following
 lines:
 </p>
 
-<div class="highlight"><pre><span class="c">#!/bin/bash</span>
+<div class="highlight"><pre>#!/bin/bash
 
-<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/cp2/bin:</span><span class="si">${</span><span class="nv">PATH</span><span class="si">}</span><span class="s2">"</span>
-<span class="nb">export </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/cp2/lib:</span><span class="nv">$HOME</span><span class="s2">/cp2/lib/mysql:</span><span class="nv">$HOME</span><span class="s2">/cp2/lib64:</span><span class="si">${</span><span class="nv">LD_LIBRARY_PATH</span><span class="si">}</span><span class="s2">"</span>
-<span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span><span class="s2">"/usr/lib/jvm/java-7-openjdk-amd64"</span>
-<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$JAVA_HOME</span><span class="s2">/bin:</span><span class="si">${</span><span class="nv">PATH</span><span class="si">}</span><span class="s2">"</span>
-<span class="nb">export </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="s2">"</span><span class="si">${</span><span class="nv">JAVA_HOME</span><span class="si">}</span><span class="s2">/jre/lib/amd64:</span><span class="si">${</span><span class="nv">JAVA_HOME</span><span class="si">}</span><span class="s2">/jre/lib/amd64/server:</span><span class="si">${</span><span class="nv">LD_LIBRARY_PATH</span><span class="si">}</span><span class="s2">"</span>
+export PATH="$HOME/cp2/bin:${PATH}"
+export LD_LIBRARY_PATH="$HOME/cp2/lib:$HOME/cp2/lib/mysql:$HOME/cp2/lib64:${LD_LIBRARY_PATH}"
+export JAVA_HOME="/usr/lib/jvm/java-7-openjdk-amd64"
+export PATH="$JAVA_HOME/bin:${PATH}"
+export LD_LIBRARY_PATH="${JAVA_HOME}/jre/lib/amd64:${JAVA_HOME}/jre/lib/amd64/server:${LD_LIBRARY_PATH}"
 
-<span class="nb">cd</span> <span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/cp2/src/CellProfiler/"</span>
+cd "$HOME/cp2/src/CellProfiler/"
 python CellProfiler.py --do-not-build --do-not-fetch
 </pre></div>
 
@@ -665,7 +665,7 @@ found shortly after I managed to get CellProfiler running. Since
 
 <div class="highlight"><pre>pip install pandas scikit-learn lxml
 git clone https://github.com/CellH5/cellh5.git
-<span class="nb">cd </span>cellh5
+cd cellh5
 ~/envs/CellProfiler/bin/python setup.py install
 </pre></div>
 
@@ -716,31 +716,31 @@ This is the list of Python packages installed in my CellProfiler
 virtualenv.
 </p>
 
-<div class="highlight"><pre><span class="o">(</span>CellProfiler<span class="o">)</span>kmdouglass@kmd-laptop1:~/src/CellProfiler<span class="nv">$ </span>pip freeze
-<span class="nv">cellh5</span><span class="o">==</span>1.2.0
-<span class="nv">Cython</span><span class="o">==</span>0.22.1
-<span class="nv">h5py</span><span class="o">==</span>2.5.0
-<span class="nv">javabridge</span><span class="o">==</span>1.0.11
-<span class="nv">libtiff</span><span class="o">==</span>0.4.0
-<span class="nv">lxml</span><span class="o">==</span>3.4.4
-<span class="nv">matplotlib</span><span class="o">==</span>1.4.3
-<span class="nv">mock</span><span class="o">==</span>1.0.1
-MySQL-python<span class="o">==</span>1.2.5
-<span class="nv">nose</span><span class="o">==</span>1.3.7
-<span class="nv">numpy</span><span class="o">==</span>1.9.2
-<span class="nv">pandas</span><span class="o">==</span>0.16.2
-<span class="nv">Pillow</span><span class="o">==</span>2.8.2
-<span class="nv">pyparsing</span><span class="o">==</span>2.0.3
-python-bioformats<span class="o">==</span>1.0.5
-python-dateutil<span class="o">==</span>2.4.2
-<span class="nv">pytz</span><span class="o">==</span>2015.4
-<span class="nv">pyzmq</span><span class="o">==</span>14.7.0
-scikit-learn<span class="o">==</span>0.16.1
-<span class="nv">scipy</span><span class="o">==</span>0.15.1
-<span class="nv">six</span><span class="o">==</span>1.9.0
-<span class="nv">verlib</span><span class="o">==</span>0.1
-<span class="nv">wxPython</span><span class="o">==</span>2.8.12.1
-wxPython-common<span class="o">==</span>2.8.12.1
+<div class="highlight"><pre>(CellProfiler)kmdouglass@kmd-laptop1:~/src/CellProfiler$ pip freeze
+cellh5==1.2.0
+Cython==0.22.1
+h5py==2.5.0
+javabridge==1.0.11
+libtiff==0.4.0
+lxml==3.4.4
+matplotlib==1.4.3
+mock==1.0.1
+MySQL-python==1.2.5
+nose==1.3.7
+numpy==1.9.2
+pandas==0.16.2
+Pillow==2.8.2
+pyparsing==2.0.3
+python-bioformats==1.0.5
+python-dateutil==2.4.2
+pytz==2015.4
+pyzmq==14.7.0
+scikit-learn==0.16.1
+scipy==0.15.1
+six==1.9.0
+verlib==0.1
+wxPython==2.8.12.1
+wxPython-common==2.8.12.1
 </pre></div>
 
 <hr>
