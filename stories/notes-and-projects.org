@@ -20,6 +20,8 @@
   + [[file:notes/emacs.org][Emacs]]
   + [[file:notes/windows.org][Notes on Windows]]
 
+  -----
+
 * Fiji and Micro-Manager
   Using and customizing Micro-Manager takes a while to learn. Here are
   the notes I have collected along the way.

@@ -86,11 +86,15 @@
 
     </header><div class="e-content entry-content" itemprop="articleBody text">
     <div>
-<h2>Notes on FIJI plugin development</h2>
+<h2>Setup the FIJI Development Environment</h2>
 <ul>
 <li>
 <p>The guide on setting up the development environment is here:
   <a href="http://imagej.net/Developing_ImageJ_in_Eclipse#Create_the_Eclipse_Projects">http://imagej.net/Developing_ImageJ_in_Eclipse#Create_the_Eclipse_Projects</a></p>
+</li>
+<li>
+<p>The <strong>README.md</strong> file is very useful for instructions on setting up
+  the environment.</p>
 </li>
 <li>
 <p>Be sure to download Eclipse for Java Developers, not Eclipse for
@@ -122,10 +126,55 @@
   fail with an unsupported version error when I use it.</p>
 </li>
 </ul>
+<h3>Maven and Plugin Dependencies</h3>
+<ul>
+<li>
+<p>The ImageJ Maven repository is at http://maven.imagej.net/</p>
+</li>
+<li>
+<p>When adding dependencies, first search the repository for the name
+  of your package. More information on finding Maven packages is here:
+  http://imagej.net/Maven#How_to_find_a_dependency.27s_groupId.2FartifactId.2Fversion_.28GAV.29.3F</p>
+</li>
+<li>
+<p>To add a Maven dependency, you add the package information between
+  the <code>&lt;dependencies&gt;</code> tags inside your plugin's <em>pom.xml</em> file. These
+  tags can be copied from the Maven repository website by clicking on
+  the package name and inspecting the XML code in the frame containing
+  the <strong>Maven</strong> and <strong>Artifact</strong> tabs. For example, the XML for the
+  jhdf5 package that is used by the HDF5 Plugin is</p>
+</li>
+</ul>
+<pre class="code literal-block"><span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>ch.systems.cisd<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>jhdf5<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>14.12.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre>
+
+
+<ul>
+<li>When adding a package, you should also verify whether Maven is aware
+  of the package's repository. For example, the jhdf5 package exists
+  in the <strong>OME External</strong> repository, which was not found until I
+  explictly added the <strong>imagej.public</strong> repository to my <em>pom.xml</em>
+  file. See
+  http://forum.imagej.net/t/adding-ij-maven-repository-to-pom-xml/199
+  for more information.</li>
+</ul>
+<pre class="code literal-block"><span class="nt">&lt;repositories&gt;</span>
+ <span class="nt">&lt;repository&gt;</span>
+   <span class="nt">&lt;id&gt;</span>imagej.public<span class="nt">&lt;/id&gt;</span>
+   <span class="nt">&lt;url&gt;</span>http://maven.imagej.net/content/groups/public<span class="nt">&lt;/url&gt;</span>
+ <span class="nt">&lt;/repository&gt;</span>
+<span class="nt">&lt;/repositories&gt;</span>
+</pre>
+
+
 <h2>Useful Links</h2>
 <p><a href="http://forum.imagej.net/t/creation-of-a-new-plug-in-in-eclipse-beginners-question/2008">http://forum.imagej.net/t/creation-of-a-new-plug-in-in-eclipse-beginners-question/2008</a></p>
-<h3>Eclipse Setup (Didn't work)</h3>
-<h4>Use FIJI's JRE</h4>
+<h2>Eclipse Setup (Didn't work)</h2>
+<h3>Use FIJI's JRE</h3>
 <p>When creating a new project in Eclipse, we can set the JRE to the same
 one used by FIJI. To do so, select <strong>Configure JREs</strong> inside the <em>New
 Java Project</em> window. Then, click the <strong>Search...</strong> button and look
@@ -134,7 +183,7 @@ search inside <strong>Fiji.app/java</strong>.</p>
 return to the <strong>New Java Project</strong> window and select the radio button
 next to <strong>Use a project specific JRE:</strong>. Be sure to choose the
 jdk1.6.0_24 JRE that was just found.</p>
-<h4>Link Additional Source</h4>
+<h3>Link Additional Source</h3>
 <p>In the window <em>New Java Project &gt; Java Settings</em> I linked an
 additional source: the folder <strong>Fiji.app/jars</strong>.</p>
 </div>
