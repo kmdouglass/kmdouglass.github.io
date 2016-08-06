@@ -14,9 +14,6 @@
 - The guide on setting up the development environment is here:
   [http://imagej.net/Developing_ImageJ_in_Eclipse#Create_the_Eclipse_Projects](http://imagej.net/Developing_ImageJ_in_Eclipse#Create_the_Eclipse_Projects)
 
-- The **README.md** file is very useful for instructions on setting up
-  the environment.
-
 - Be sure to download Eclipse for Java Developers, not Eclipse for
   Java EE Developers.
 
@@ -24,6 +21,9 @@
   importing it into Eclipse:
   [https://github.com/imagej/minimal-ij1-plugin/](https://github.com/imagej/minimal-ij1-plugin/)
   Import it as an existing Maven project.
+
+- The **README.md** file from the minimal IJ1 plugin is very useful
+  for instructions on setting up the environment.
 
 - To ensure that Maven is aware of the Fiji directory, select *Run >
   Run Configurations...* In the new window, double click **Maven
