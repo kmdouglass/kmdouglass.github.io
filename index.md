@@ -34,6 +34,17 @@
     <h3 class="panel-title">News</h3>
   </div>
   <div class="panel-body">
+
+  <h3>August 28 - September 1, 2016</h3>
+
+   <p>Kyle is giving a poster presentation on his work developing a
+   new microscope illumination system for large field of view single
+   molecule imaging at <a href="http://smlms.epfl.ch/">SMLMS 2016</a>
+   in Lausanne, Switzerland. This will be followed by another poster
+   presentation and lightning talk at <a
+   href="http://www.systemsx.ch/events-education/events/all-systemsxch-day/">All
+   SystemsX.ch Day</a> in Bern, Switzerland on September 1.
+
   <h3>May 25-27, 2016<h3>
 
    <p>Kyle will give a short presentation on his recent work
@@ -65,14 +76,6 @@
    teaching strategies. Topics included asking questions to further
    students' understanding, using spaced-repetition effectively, and
    classroom management.</p>
-
-  <h3>December 28, 2015</h3>
-    <p>Kyle will present recent work on polymer modeling and
-    statistical inference of human telomere structure at the <a
-    href="http://www.quantitativebioimaging.com/">Quantitative
-    Bioimaging Conference</a> in Delft, the Netherlands on January
-    13, 2016. The abstract may be found <a
-    href="http://qiftp.tudelft.nl/media/QBI/abstracts/Polymer%20Modeling%20And%20Super-resolution%20Microscopy%20Determine%20The%20Compaction%20Of%20Human%20Telomeres.pdf">here</a>.<p>
   
   </div>
 </div>

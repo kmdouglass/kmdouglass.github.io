@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0"><channel><title>Kyle M. Douglass (optics)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link rel="self" type="application/rss+xml" href="http://kmdouglass.github.io/categories/optics.xml"></atom:link><language>en</language><lastBuildDate>Sat, 06 Aug 2016 06:20:42 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Approximating diffraction patterns of rectangular apertures with the FFT</title><link>http://kmdouglass.github.io/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div tabindex="-1" id="notebook" class="border-box-sizing"&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Kyle M. Douglass (optics)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link href="http://kmdouglass.github.io/categories/optics.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Thu, 25 Aug 2016 14:22:15 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Approximating diffraction patterns of rectangular apertures with the FFT</title><link>http://kmdouglass.github.io/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div tabindex="-1" id="notebook" class="border-box-sizing"&gt;
     &lt;div class="container" id="notebook-container"&gt;
 
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;
@@ -2209,7 +2209,7 @@ useful for applications in the life sciences. This is because the
 resolution isn't that much better than a spinning disk confocal
 microscope, which has a larger field of view and would arguably be
 easier to use by biologists.
-&lt;/p&gt;</description><category>microscopy</category><category>optics</category><guid>http://kmdouglass.github.io/posts/confocal-by-scattering.html</guid><pubDate>Wed, 08 Oct 2014 22:00:00 GMT</pubDate></item><item><title>An accidental half-wave plate</title><link>http://kmdouglass.github.io/posts/half-wave%20plate.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;p&gt;
+&lt;/p&gt;</description><category>microscopy</category><category>optics</category><guid>http://kmdouglass.github.io/posts/confocal-by-scattering.html</guid><pubDate>Wed, 08 Oct 2014 22:00:00 GMT</pubDate></item><item><title>An accidental half-wave plate</title><link>http://kmdouglass.github.io/posts/half-wave plate.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;p&gt;
 Recently in the lab we made a seemingly minor change to one of our
 microscopes that led to a minor problem that lasted for about a
 week. Briefly, we introduced a mirror following a periscope that
@@ -2262,7 +2262,7 @@ beam trajectory is in the direction pointing &lt;i&gt;into&lt;/i&gt; the screen.
 &lt;div class="figure"&gt;
 &lt;p&gt;&lt;img src="http://kmdouglass.github.io/images/polarization_rotator.png" alt="polarization_rotator.png"&gt;
 &lt;/p&gt;
-&lt;/div&gt;</description><category>optics</category><guid>http://kmdouglass.github.io/posts/half-wave%20plate.html</guid><pubDate>Tue, 05 Aug 2014 22:00:00 GMT</pubDate></item><item><title>The art of alignment</title><link>http://kmdouglass.github.io/posts/alignment.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;p&gt;
+&lt;/div&gt;</description><category>optics</category><guid>http://kmdouglass.github.io/posts/half-wave plate.html</guid><pubDate>Tue, 05 Aug 2014 22:00:00 GMT</pubDate></item><item><title>The art of alignment</title><link>http://kmdouglass.github.io/posts/alignment.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;p&gt;
 I've been working on realigning one of our STORM microscopy setups
 and moving the other over the past couple weeks. As a result, I've
 been doing a lot more alignment lately than I normally do, which has
