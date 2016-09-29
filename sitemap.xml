@@ -19,7 +19,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/2016/index.html</loc>
-  <lastmod>2016-08-25</lastmod>
+  <lastmod>2016-09-29</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/archive.html</loc>
@@ -75,7 +75,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/python.html</loc>
-  <lastmod>2016-08-25</lastmod>
+  <lastmod>2016-09-29</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/sensing.html</loc>
@@ -83,7 +83,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/signal-processing.html</loc>
-  <lastmod>2016-08-25</lastmod>
+  <lastmod>2016-09-29</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/super-resolution.html</loc>
@@ -135,7 +135,11 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/correlated-noise-and-the-fft.html</loc>
-  <lastmod>2016-08-25</lastmod>
+  <lastmod>2016-09-29</lastmod>
+ </url>
+ <url>
+  <loc>http://kmdouglass.github.io/posts/field-dependent-photophysics-video.html</loc>
+  <lastmod>2016-09-29</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/half-wave plate.html</loc>
@@ -151,11 +155,11 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/index-2.html</loc>
-  <lastmod>2016-08-25</lastmod>
+  <lastmod>2016-09-29</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/index.html</loc>
-  <lastmod>2016-08-25</lastmod>
+  <lastmod>2016-09-29</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/learning-pythons-multiprocessing-module.html</loc>
@@ -179,7 +183,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/perlin-noise.html</loc>
-  <lastmod>2016-08-25</lastmod>
+  <lastmod>2016-09-29</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/reading-select-lines-from-a-text-file.html</loc>
