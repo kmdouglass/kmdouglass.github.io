@@ -12,7 +12,7 @@
 
 <div class="jumbotron">
 
-	<p>Dr. Kyle M. Douglass is a researcher specializing in optical
+	<p style="text-align:justify">Dr. Kyle M. Douglass is a researcher specializing in optical
 	sensing, microscopy, and statistical data analysis with
 	applications in soft matter and fundamental cell
 	biology. Currently, he is working at the EPFL where he is
