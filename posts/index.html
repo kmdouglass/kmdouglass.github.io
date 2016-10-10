@@ -69,57 +69,7 @@
             
 
 <div class="postindex">
-    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="field-dependent-photophysics-video.html" class="u-url">Field-dependent photophysics - video</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">Kyle M. Douglass</span></p>
-            <p class="dateline"><a href="field-dependent-photophysics-video.html" rel="bookmark"><time class="published dt-published" datetime="2016-09-29T11:36:24+02:00" title="2016-09-29 11:36">2016-09-29 11:36</time></a></p>
-                <p class="commentline">
-        
-    <a href="field-dependent-photophysics-video.html#disqus_thread" data-disqus-identifier="cache/posts/field-dependent-photophysics-video.html">Comments</a>
-
-
-        </p>
-</div>
-    </header><div class="p-summary entry-summary">
-    <div tabindex="-1" id="notebook" class="border-box-sizing">
-    <div class="container" id="notebook-container">
-
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Below you can see a video of a raw <a href="https://www.microscopyu.com/tutorials/stochastic-optical-reconstruction-microscopy-storm-imaging">STORM</a> movie that I acquired in the lab a few months ago on a standard, inverted laser fluorescence microscope. The sample consists of AlexaFluor 647-labeled tubulin in Cos7 cells at a frame rate of 100 fps. (I have slowed things down a bit to more easily see what's going on.) Go ahead and watch the video now, I'll discuss a little bit about what you're seeing aftwards.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<video controls src="../field-dependent-photophysics.mp4" type="video/mp4"></video>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>In the beginning of the movie you can see the moment when the laser beam first hits the sample. Since the illumination geometry is just widefield epi-illumination, the laser beam has a Gaussian-like <a href="https://en.wikipedia.org/wiki/Irradiance">irradiance</a> profile. (As explained in the link, irradiance is the amount of energy the laser beam carries per differential unit area. It is often referred to as intensity, though <a href="https://en.wikipedia.org/wiki/Radiant_intensity">intensity actually refers to a different quantity in the field of radiometry</a>.) This means that the fluorophores in the middle of the beam are exposed to a higher irradiance than those at the edges.</p>
-<p>The effect of the laser beam profile for STORM is quite clear when watching the video. The photoswitching rates of the fluorophores to the long-lived dark state are much higher in the center of the beam than at the edges. This leads to a field-dependent density of molecules in the fluorescence emitting state, which will ultimately affect one's ability to precisely and accurately localize the single molecule emissions. If you look closely, you can also see that the brightness of the fluorophores is also higher near the beam center, meaning that these molecules will be localized more precisely because we recorded more photons from them.</p>
-<p>All of these features mean that one must take care when performing quantitative analyses on STORM datasets, because the density, precision, and accuracy of the single molecule position estimates will vary across the field of view.</p>
-
-</div>
-</div>
-</div>
-    </div>
-  </div>
-
-    </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="perlin-noise.html" class="u-url">Perlin Noise</a></h1>
+    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="perlin-noise.html" class="u-url">Perlin Noise</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">Kyle M. Douglass</span></p>
             <p class="dateline"><a href="perlin-noise.html" rel="bookmark"><time class="published dt-published" datetime="2016-03-20T17:45:00+01:00" title="2016-03-20 17:45">2016-03-20 17:45</time></a></p>
@@ -3393,6 +3343,72 @@ Fortunately I can shrink the beam path enough that this should not be
 a problem, but it does serve as a very good lesson when looking for
 lasers for a microscopy application.
 </p>
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="relearning-paraxial-optics.html" class="u-url">Relearning paraxial optics</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">Kyle M. Douglass</span></p>
+            <p class="dateline"><a href="relearning-paraxial-optics.html" rel="bookmark"><time class="published dt-published" datetime="2015-04-19T11:05:21+02:00" title="2015-04-19 11:05">2015-04-19 11:05</time></a></p>
+                <p class="commentline">
+        
+    <a href="relearning-paraxial-optics.html#disqus_thread" data-disqus-identifier="cache/posts/relearning-paraxial-optics.html">Comments</a>
+
+
+        </p>
+</div>
+    </header><div class="p-summary entry-summary">
+    <p>
+As a microscopist who designs and builds custom microscopes, I often
+find that first order ray tracing is one of the most useful tools I
+have. It is most useful to me when I am starting a design or for
+checking that I have not made any serious logical blunders when
+working at the bench. I also find it to be a good teaching tool and
+excellent for communicating my designs to others.
+</p>
+
+<p>
+Since I have recently made a lot of back-of-the-envelope ray trace
+designs for a microscope I am building at work, I have begun to
+critically think about why ray tracing works so well and how it fits
+inside the structure of the physical theories of optics.
+</p>
+
+<p>
+Ray tracing is a technique derived from <b>paraxial geometrical optics</b>
+and really is just a consequence of the axioms and assumptions in the
+development of the theory. When I think back to when I first learned
+about paraxial optics, however, I am reminded of severe assumptions
+that place limits on the scope of its validity. So how can a theory
+that makes such an enormous simplification by treating the
+electromagnetic waves described by Maxwell's equations as lines
+obeying the rules of geometry still be so useful?
+</p>
+
+<p>
+In this next series of blog posts, I want to explore this question and
+take the time to relearn paraxial optics with the benefit of
+hindsight. Physicists typically learn paraxial optics as their first
+theory of optics because it is relatively easy as compared to
+electromagnetism and quantum optics. I am curious what aspects of the
+theory I can appreciate now that I am familiar with the more advanced
+optical theories.
+</p>
+
+<p>
+The picture below might also provide a bit of motivation for why this
+interests me: we physicists learn about optics theories in a direction
+of increasing complexity during our education. However, this approach
+also means that we learn the most general theories last, so it is not
+obvious why assumptions and approximations are made in the theories we
+learn first. The result, I think, leads to a bit of logical
+discordance in our minds that can prevent a clear understanding of the
+subject. With this series of posts I hope to remove this cognitive
+dissonance and improve my understanding of the field I work in.
+</p>
+
+
+<div class="figure">
+<p><img src="../order_of_optics_theories.png" alt="order_of_optics_theories.png"></p>
+</div>
     </div>
     </article>
 </div>
