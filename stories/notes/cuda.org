@@ -36,6 +36,49 @@ lspci | grep -i nvidia
 
 -----
 
+* Installing CUDA Toolkit in Debian with a 'normal' GPU
+
+  For normal graphics cards like one may find on a desktop computer,
+  most of the information about installing the Nvidia drivers may be
+  found at the Debian wiki:
+  https://wiki.debian.org/NvidiaGraphicsDrivers
+
+  For me, the directions on the Wiki have never worked without some
+  slight fixes. Be sure to:
+
+  1. Install the **nvidia-driver** from jessie-backports.
+  2. Install **nvidia-xconfig** and run it with sudo to create the
+     Xorg configuration script.
+  3. Here's the key part: make sure that Debian's nouveau driver is
+     actually blacklisted. I have found that the install scripts used
+     by **nvidia-xconfig** typically add comment characters to the
+     lines inside the blacklist files in =/etc/modprobe.d/=, which
+     results in nouveau not actually being blacklisted.
+
+  To fix the above problem, I add the following to the file
+  =/etc/modprobe.d/nvidia-blacklists-nouveau.conf=:
+
+  #+BEGIN_SRC
+blacklist nouveau
+blacklist lbm-nouveau
+options nouveau modeset=0
+alias nouveau off
+alias lbm-nouveau off
+  #+END_SRC
+
+  This should successfully prevent the system from using the nouveau
+  driver (after a reboot, of course).
+
+-----
+
+** Installing CUDA and OpenCL
+   
+   Once the Nvidia drivers are working, you will probably want to
+   install CUDA and OpenCL. Install the packages =nvidia-cuda-toolkit=
+   and =nvidia-opencl-common=.
+
+-----
+
 * Installation of the CUDA Toolkit in Debian with an Optimus chip
   My first attempts at installing the CUDA toolkit on Debian Jessie
   met in failure, likely because libraries were not placed in their

@@ -95,19 +95,25 @@
 </ul>
 </li>
 <li>
-<a href="cuda.html#sec-2">2. Installation of the CUDA Toolkit in Debian with an Optimus chip</a>
+<a href="cuda.html#sec-2">2. Installing CUDA Toolkit in Debian with a 'normal' GPU</a>
 <ul>
-<li><a href="cuda.html#sec-2-1">2.1. Installation of the CUDA driver</a></li>
+<li><a href="cuda.html#sec-2-1">2.1. Installing CUDA and OpenCL</a></li>
+</ul>
+</li>
 <li>
-<a href="cuda.html#sec-2-2">2.2. Installation of the toolkit from Nvidia</a>
+<a href="cuda.html#sec-3">3. Installation of the CUDA Toolkit in Debian with an Optimus chip</a>
 <ul>
-<li><a href="cuda.html#sec-2-2-1">2.2.1. Switching to another gcc version</a></li>
+<li><a href="cuda.html#sec-3-1">3.1. Installation of the CUDA driver</a></li>
+<li>
+<a href="cuda.html#sec-3-2">3.2. Installation of the toolkit from Nvidia</a>
+<ul>
+<li><a href="cuda.html#sec-3-2-1">3.2.1. Switching to another gcc version</a></li>
 </ul>
 </li>
-<li><a href="cuda.html#sec-2-3">2.3. Compiling the samples</a></li>
+<li><a href="cuda.html#sec-3-3">3.3. Compiling the samples</a></li>
 </ul>
 </li>
-<li><a href="cuda.html#sec-3">3. Uninstalling the Nvidia drivers</a></li>
+<li><a href="cuda.html#sec-4">4. Uninstalling the Nvidia drivers</a></li>
 </ul>
 </div>
 </div>
@@ -160,8 +166,72 @@ Capability 2.1.
 
 <div id="outline-container-sec-2" class="outline-2">
 <h2 id="sec-2">
-<span class="section-number-2">2</span> Installation of the CUDA Toolkit in Debian with an Optimus chip</h2>
+<span class="section-number-2">2</span> Installing CUDA Toolkit in Debian with a 'normal' GPU</h2>
 <div class="outline-text-2" id="text-2">
+<p>
+For normal graphics cards like one may find on a desktop computer,
+most of the information about installing the Nvidia drivers may be
+found at the Debian wiki:
+<a href="https://wiki.debian.org/NvidiaGraphicsDrivers">https://wiki.debian.org/NvidiaGraphicsDrivers</a>
+</p>
+
+<p>
+For me, the directions on the Wiki have never worked without some
+slight fixes. Be sure to:
+</p>
+
+<ol class="org-ol">
+<li>Install the <b><b>nvidia-driver</b></b> from jessie-backports.
+</li>
+<li>Install <b><b>nvidia-xconfig</b></b> and run it with sudo to create the
+Xorg configuration script.
+</li>
+<li>Here's the key part: make sure that Debian's nouveau driver is
+actually blacklisted. I have found that the install scripts used
+by <b><b>nvidia-xconfig</b></b> typically add comment characters to the
+lines inside the blacklist files in <code>/etc/modprobe.d/</code>, which
+results in nouveau not actually being blacklisted.
+</li>
+</ol>
+<p>
+To fix the above problem, I add the following to the file
+<code>/etc/modprobe.d/nvidia-blacklists-nouveau.conf</code>:
+</p>
+
+<div class="highlight"><pre>blacklist nouveau
+blacklist lbm-nouveau
+options nouveau modeset=0
+alias nouveau off
+alias lbm-nouveau off
+</pre></div>
+
+<p>
+This should successfully prevent the system from using the nouveau
+driver (after a reboot, of course).
+</p>
+
+<hr>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1">
+<span class="section-number-3">2.1</span> Installing CUDA and OpenCL</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+Once the Nvidia drivers are working, you will probably want to
+install CUDA and OpenCL. Install the packages <code>nvidia-cuda-toolkit</code>
+and <code>nvidia-opencl-common</code>.
+</p>
+
+<hr>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3">
+<span class="section-number-2">3</span> Installation of the CUDA Toolkit in Debian with an Optimus chip</h2>
+<div class="outline-text-2" id="text-3">
 <p>
 My first attempts at installing the CUDA toolkit on Debian Jessie
 met in failure, likely because libraries were not placed in their
@@ -193,10 +263,10 @@ install the later toolkits.
 <hr>
 </div>
 
-<div id="outline-container-sec-2-1" class="outline-3">
-<h3 id="sec-2-1">
-<span class="section-number-3">2.1</span> Installation of the CUDA driver</h3>
-<div class="outline-text-3" id="text-2-1">
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1">
+<span class="section-number-3">3.1</span> Installation of the CUDA driver</h3>
+<div class="outline-text-3" id="text-3-1">
 <p>
 <i>Sources</i>
 </p>
@@ -324,10 +394,10 @@ GCC version:  gcc version 4.8.4 (Debian 4.8.4-1)
 </div>
 </div>
 
-<div id="outline-container-sec-2-2" class="outline-3">
-<h3 id="sec-2-2">
-<span class="section-number-3">2.2</span> Installation of the toolkit from Nvidia</h3>
-<div class="outline-text-3" id="text-2-2">
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2">
+<span class="section-number-3">3.2</span> Installation of the toolkit from Nvidia</h3>
+<div class="outline-text-3" id="text-3-2">
 <p>
 <i>Sources</i>
 </p>
@@ -472,10 +542,10 @@ directed.
 <hr>
 </div>
 
-<div id="outline-container-sec-2-2-1" class="outline-4">
-<h4 id="sec-2-2-1">
-<span class="section-number-4">2.2.1</span> Switching to another gcc version</h4>
-<div class="outline-text-4" id="text-2-2-1">
+<div id="outline-container-sec-3-2-1" class="outline-4">
+<h4 id="sec-3-2-1">
+<span class="section-number-4">3.2.1</span> Switching to another gcc version</h4>
+<div class="outline-text-4" id="text-3-2-1">
 <p>
 <i>Sources</i>
 </p>
@@ -581,10 +651,10 @@ sudo update-alternatives --install /usr/bin/gcc gcc /usr/local/gcc/4.8.2/bin/gcc
 </div>
 </div>
 
-<div id="outline-container-sec-2-3" class="outline-3">
-<h3 id="sec-2-3">
-<span class="section-number-3">2.3</span> Compiling the samples</h3>
-<div class="outline-text-3" id="text-2-3">
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3">
+<span class="section-number-3">3.3</span> Compiling the samples</h3>
+<div class="outline-text-3" id="text-3-3">
 <p>
 If everything was installed correctly, you can try compiling the
 samples:
@@ -608,10 +678,10 @@ same happened if I ran the compiled programs with <b>optirun</b> or
 </div>
 </div>
 
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3">
-<span class="section-number-2">3</span> Uninstalling the Nvidia drivers</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4">
+<span class="section-number-2">4</span> Uninstalling the Nvidia drivers</h2>
+<div class="outline-text-2" id="text-4">
 <p>
 After uninstalling the drivers, it's important to remove the nouveau
 blacklist if it was added to <b>modprobe.d</b>. These blacklist files are
