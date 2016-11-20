@@ -1,7 +1,7 @@
 #+BEGIN_COMMENT
 .. title: About Me
 .. slug: about-me
-.. date: 12-26-2014
+.. date: 11-20-2016
 .. tags: 
 .. link:
 .. description: Biosketch of Kyle M. Douglass
@@ -9,41 +9,53 @@
 .. hidetitle: True
 #+END_COMMENT
 
-#+BEGIN_HTML
-  <div align="center">
-#+END_HTML
-
-  [[file:../images/me_for_web.jpg]]
-
-#+BEGIN_HTML
-  </div>
-#+END_HTML
-
 * Biosketch
-  I am a research scientist in optical sensing for soft matter
-  characterization and cell biology with over ten years of optics
-  laboratory experience. My strategy is to merge optical technologies
-  and custom software into sensing systems that are designed to
-  address specific problems. To do this, I work directly with
-  biologists and chemists to identify the shortcomings in their
-  measurement tools and design the solutions that effectively meet
-  their needs. I benefit greatly from my multidisciplinary background,
-  which has included topics such as fundamental optics, information
-  theory and signal processing, software design, and materials
-  science.
 
-  For my current project I am developing high throughput methods in
-  single molecule fluorescence microscopy by combining smart optical
-  design, new camera technologies, and efficient algorithms from
-  machine learning and bioinformatics. Recently I achieved the first
-  milestone of this work: the construction of a high-throughput,
-  super-resolution fluorescence microscope that I designed and built
-  myself. The next step will see the application of this microscope
-  towards the resolution of three problems in cell biology that
-  require extremely large datasets and automation to solve: contextual
-  effects in the structure of eukaryotic chromatin, mapping protein
-  distributions inside human centrioles, and establishing the genetic
-  regulatory network behind bacterial cell shape determination.
+#+BEGIN_HTML
+<img src="../kmd_lake_geneva.jpg" style="float:right;width:35%;height:35%;">
+#+END_HTML
+
+  I am a research scientist in optical sensing for soft matter and
+  cell biology with over ten years of optics laboratory experience. My
+  work involves the combination of optics and custom software into
+  sensing systems that are designed to address specific questions
+  about the microscopic structure of soft matter, i.e. proteins, DNA,
+  synthetic polymers, and similar macromolecules. To do this, I work
+  directly with biologists and chemists to identify the shortcomings
+  in their measurement tools and design the solutions that effectively
+  meet their needs. In my work, I benefit greatly from my
+  multidisciplinary background, which has included topics such as
+  optics and photonics, information theory and signal processing,
+  software design, and materials science.
+
+-----
+
+* Skills and Competencies
+
++ Optics
+  + Light and fluorescence microscopy
+  + Super-resolution fluorescence microscopy
+  + Static and dynamic light scattering
+  + Fourier and statistical optics
++ Software engineering
+  + Languages
+    + Python (full competence)
+    + MATLAB (full competence)
+    + C++    (medium competence)
+    + Java   (low competence)
+  + Open-source software development
+  + Object-oriented design patterns and software design
+  + Familiar with both imperative and functional programming styles
+  + Technical knowledge of both Linux and Windows operating systems
++ Statistical and computational modeling
+  + Inverse problems
+  + Monte Carlo simulation
+  + Sparsity-promoting transformations
+  + Bayesian inference
++ Biology
+  + Chromatin architecture
+  + Telomeres
+  + Centriole architecture
 
 -----
 
@@ -52,35 +64,22 @@
 + SystemsX.ch Transition Post-doctoral Fellow :: November, 2013 -- Present
   + École Polytechnique Fédérale de Lausanne ([[http://people.epfl.ch/kyle.douglass][EPFL]])
   + Advisor: Suliana Manley
-  + Designed and built a high-throughput super-resolution
-    fluorescence microscope based on the STORM imaging modality for
-    structural biology studies. This included a novel
-    epi-illumination design.
-  + Developed a statistical inference method based on polymer
-    Monte Carlo simulations for determining the structural
-    properties of human telomeres.
-  + Identified the source of a common aberration in 3D localization
-    microscopy and published open-source software to correct for
-    it ([[http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0142949][PLOS One]]).
+  + Designed and developed high-throughput imaging systems for
+    super-resolution imaging of chromatin and other cellular
+    organelles.
 
 + Graduate Research Assistant :: August 2007 -- August 2013
   + CREOL, the College of Optics and Photonics, University of Central Florida ([[http://www.creol.ucf.edu/][UCF]])
   + Advisor: Aristide Dogariu
-  + Developed a fiber optic-based, low coherence interferometer for
-    characterizing highly scattering soft matter systems and
-    complex fluids ([[http://pubs.rsc.org/en/content/articlelanding/2015/ra/c4ra11627e#!divAbstract][RSC Advances]]).
-  + Modeled and experimentally demonstrated an optically-controlled
-    active medium based on forces in a random speckle. ([[http://www.nature.com/nphoton/journal/v6/n12/abs/nphoton.2012.278.html][Nature Photonics]]) ([[https://www.osapublishing.org/ol/abstract.cfm?uri=ol-38-14-2385][Optics Letters]])
-  + Demonstrated sub-diffusive light transport in disordered
-    photonic crystals. ([[https://www.osapublishing.org/oe/abstract.cfm?uri=oe-19-25-25320][Optics Express]])
+  + Developed scattering-based light sensors for studying and
+    controlling soft-matter systems.
 
-+ Undergraduate Research Assistant :: June 2006 -- August 2006
++ NSF Research Experience for Undergraduates :: June 2006 -- August 2006
   + JILA, the University of Colorado at Boulder ([[https://jila.colorado.edu/][JILA]])
   + Advisor: Margaret Murnane
-  + Funded through the National Science Foundation Research
-    Experience for Undergraduates
   + Developed a vacuum-compatible visible light spectrometer for
-    characterizing a Ti:Sapphire laser beam.
+    characterizing a Ti:Sapphire laser beam in an extreme ultraviolet
+    nano-imaging system.
 
 -----
 
@@ -104,58 +103,18 @@ Contributor ID (ORCID) page]].
 -----
 
 * Teaching
+
 + EPFL Teaching Toolkit I :: November 17, 2015
   + École Polytechnique Fédérale de Lausanne ([[http://people.epfl.ch/kyle.douglass][EPFL]])
-  + One day workshop covering
-    + Spaced-repetition as an effective teaching strategy
-    + Using proper questions to help students learn
-    + Managing classroom disruptions
-    + Giving proper feedback
   + [[file:../kmdouglass_teachingtoolkit_1.pdf][Certificate of Completion]]
 
 + Rose-Hulman Learning Center Tutor :: May 2004--May, 2007
     + Math, physics, and chemistry tutor at the [[http://www.rose-hulman.edu/offices-and-services/learning-center.aspx][Rose-Hulman Learning
       Center]]
-    + Provided one-on-one tutoring in general math, science and
-      advanced physics to college students in engineering and science
-      degree
-    + Wrote practice tests for the freshmen-level physics classes at
-      Rose-Hulman Institute of Technology
-    + Designed and lectured at end-of-quarter review sessions for
-      freshmen-level physics class
-
------
-
-* Skills and Competencies
-
-+ Optics
-  + Light and fluorescence microscopy
-  + Super-resolution fluorescence microscopy
-  + Static and dynamic light scattering
-  + Laboratory optics
-  + Fourier and statistical optics theory
-+ Statistical and computational modeling
-  + Inverse problems
-  + Monte Carlo simulation
-  + Sparsity-promoting transformations
-  + Bootstrap sampling methods
-+ Biology
-  + Chromatin architecture
-  + Telomeres
-+ Software development
-  + Languages
-    + Python (full competence)
-    + MATLAB (full competence)
-    + C++    (medium competence)
-    + Java   (low competence)
-  + Familiar with both imperative and functional programming styles
-  + Basic knowledge of object-oriented design patterns
-  + Technical knowledge of both Linux and Windows operating systems
 
 -----
 
 * Professional Links
-  + [[file:../kmdouglass_cv.pdf][CV]]
   + [[http://orcid.org/0000-0003-4694-0922][Open Researcher and Contributor ID: 0000-0003-4694-0922]]
   + [[https://www.researchgate.net/profile/Kyle_Douglass][Research Gate]]
   + [[https://ch.linkedin.com/in/kylemdouglass][LinkedIn]]
