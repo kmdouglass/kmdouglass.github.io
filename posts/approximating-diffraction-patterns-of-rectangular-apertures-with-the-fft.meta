@@ -1,0 +1,7 @@
+.. title: Approximating diffraction patterns of rectangular apertures with the FFT
+.. slug: approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft
+.. date: 2016-02-01 10:54:23 UTC+01:00
+.. tags: optics, microscopy, Fourier optics
+.. link: 
+.. description: A straight-forward calculation of diffraction patterns with the FFT leads to aliasing errors in the results.
+.. type: text

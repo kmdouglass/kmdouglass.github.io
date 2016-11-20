@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1472.8571"
+   height="373.69455"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.3.1 r9886"
+   sodipodi:docname="order_of_optics_theories.svg"
+   inkscape:export-filename="/home/kmdouglass/Dropbox/kmdouglass.github.io/images/order_of_optics_theories.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs4">
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mend"
+       style="overflow:visible">
+      <path
+         id="path3859"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend"
+       style="overflow:visible">
+      <path
+         id="path3853"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mend-4"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path3859-1"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="1"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.49497475"
+     inkscape:cx="880.16019"
+     inkscape:cy="181.5681"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1366"
+     inkscape:window-height="715"
+     inkscape:window-x="0"
+     inkscape:window-y="31"
+     inkscape:window-maximized="1"
+     fit-margin-top="25"
+     fit-margin-left="25"
+     fit-margin-right="25"
+     fit-margin-bottom="25" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(23.571428,-176.18368)">
+    <g
+       id="g4553"
+       transform="translate(0,5.0770264)">
+      <g
+         transform="translate(0,-4.2857056)"
+         id="g3067">
+        <rect
+           style="fill:#0000ff;fill-opacity:1;stroke-width:5;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
+           id="rect2985"
+           width="255.71428"
+           height="89.999992"
+           x="1.4285717"
+           y="315.21933" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot2987"
+           style="font-size:24px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans"
+           transform="translate(-40.065851,-8.7378101)"><flowRegion
+             id="flowRegion2989"><rect
+               id="rect2991"
+               width="232.85715"
+               height="141.42857"
+               x="52.857143"
+               y="336.64789"
+               style="text-align:center;text-anchor:middle;fill:#ffffff" /></flowRegion><flowPara
+             id="flowPara2995">Paraxial geometrical optics</flowPara></flowRoot>      </g>
+      <g
+         transform="translate(-16.785736,-1.4285583)"
+         id="g3060">
+        <rect
+           y="312.36218"
+           x="310"
+           height="89.999992"
+           width="255.71428"
+           id="rect2999"
+           style="fill:#0000ff;fill-opacity:1;stroke-width:5;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none" />
+        <flowRoot
+           transform="translate(268.49386,3.4050427)"
+           style="font-size:24px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans"
+           id="flowRoot3001"
+           xml:space="preserve"><flowRegion
+             id="flowRegion3003"><rect
+               style="text-align:center;text-anchor:middle;fill:#ffffff"
+               y="336.64789"
+               x="52.857143"
+               height="141.42857"
+               width="232.85715"
+               id="rect3005" /></flowRegion><flowPara
+             id="flowPara3007">Geometrical optics</flowPara></flowRoot>      </g>
+      <g
+         transform="translate(-3.5714111,-1.4285583)"
+         id="g3053">
+        <rect
+           style="fill:#0000ff;fill-opacity:1;stroke-width:5;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
+           id="rect3009"
+           width="255.71428"
+           height="89.999992"
+           x="588.57141"
+           y="312.36218" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot3011"
+           style="font-size:24px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans"
+           transform="translate(547.06529,3.4050427)"><flowRegion
+             id="flowRegion3013"><rect
+               id="rect3015"
+               width="232.85715"
+               height="141.42857"
+               x="52.857143"
+               y="336.64789"
+               style="text-align:center;text-anchor:middle;fill:#ffffff" /></flowRegion><flowPara
+             id="flowPara3017">Wave optics</flowPara></flowRoot>      </g>
+      <g
+         transform="translate(-7.5,0)"
+         id="g3046">
+        <rect
+           y="310.93362"
+           x="884.28571"
+           height="89.999992"
+           width="255.71428"
+           id="rect3019"
+           style="fill:#0000ff;fill-opacity:1;stroke-width:5;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none" />
+        <flowRoot
+           transform="translate(842.77958,1.9764713)"
+           style="font-size:24px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans"
+           id="flowRoot3021"
+           xml:space="preserve"><flowRegion
+             id="flowRegion3023"><rect
+               style="text-align:center;text-anchor:middle;fill:#ffffff"
+               y="336.64789"
+               x="52.857143"
+               height="141.42857"
+               width="232.85715"
+               id="rect3025" /></flowRegion><flowPara
+             id="flowPara3027">Electromagnetism </flowPara></flowRoot>      </g>
+      <g
+         transform="translate(-1.2207031e-4,0)"
+         id="g3039">
+        <rect
+           style="fill:#0000ff;fill-opacity:1;stroke-width:5;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
+           id="rect3029"
+           width="255.71428"
+           height="89.999992"
+           x="1168.5714"
+           y="310.93362" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot3031"
+           style="font-size:24px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans"
+           transform="translate(1124.2082,-13.737814)"><flowRegion
+             id="flowRegion3033"><rect
+               id="rect3035"
+               width="232.85715"
+               height="141.42857"
+               x="52.857143"
+               y="336.64789"
+               style="text-align:center;text-anchor:middle;fill:#ffffff" /></flowRegion><flowPara
+             id="flowPara3037">Quantum Electrodynamics</flowPara></flowRoot>      </g>
+    </g>
+    <g
+       id="g4527">
+      <path
+         inkscape:connector-curvature="0"
+         id="path3076"
+         d="m 129.29953,248.28076 1165.71607,0"
+         style="fill:none;stroke:#000000;stroke-width:9;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow1Mend)" />
+      <flowRoot
+         transform="translate(-201.20376,94.954339)"
+         style="font-size:24px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         id="flowRoot4476"
+         xml:space="preserve"><flowRegion
+           id="flowRegion4478"><rect
+             y="96.757874"
+             x="523.25903"
+             height="107.07616"
+             width="890.95453"
+             id="rect4480" /></flowRegion><flowPara
+           style="font-size:40px"
+           id="flowPara4482">Order in which the theories are learned</flowPara></flowRoot>    </g>
+    <g
+       id="g4520">
+      <path
+         inkscape:connector-curvature="0"
+         id="path3076-8"
+         d="m 1301.7656,504.62823 -1165.71608,0"
+         style="fill:none;stroke:#000000;stroke-width:9;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow1Mend)" />
+      <flowRoot
+         transform="translate(-29.201815,343.22059)"
+         style="font-size:24px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         id="flowRoot4476-2"
+         xml:space="preserve"><flowRegion
+           id="flowRegion4478-0"><rect
+             y="96.757874"
+             x="523.25903"
+             height="107.07616"
+             width="890.95453"
+             id="rect4480-1" /></flowRegion><flowPara
+           style="font-size:40px"
+           id="flowPara4482-5">Decreasing generality</flowPara></flowRoot>    </g>
+  </g>
+</svg>

@@ -8,6 +8,31 @@
 .. type: text
 #+END_COMMENT
 
+* Misc. computer notes
+  These are all the notes I've collected so far for getting things
+  done on computers. I hope they can help you as well.
+
+  + [[file:notes/linux.org][Debian Linux]]
+  + [[file:notes/scipy.org][Python for Scientific Applications]]
+  + [[file:notes/nikola.org][Nikola]]
+  + [[file:notes/git.org][Git]]
+  + [[file:notes/cuda.org][CUDA]]
+  + [[file:notes/emacs.org][Emacs]]
+  + [[file:notes/windows.org][Notes on Windows]]
+
+  -----
+
+* Fiji and Micro-Manager
+  Using and customizing Micro-Manager takes a while to learn. Here are
+  the notes I have collected along the way.
+
+  + [[file:../notes/fiji.html][Fiji programming notes]]
+  + [[https://github.com/kmdouglass/Micro-Manager][My Micro-Manager utilities on GitHub]]
+  + [[file:notes/micro-manager.org][Micro-Manager notes]]
+  + [[https://www.micro-manager.org/][The Micro-Manager website]]
+
+  -----
+
 * pgFocus autofocus module
   I've tested Karl Bellve's [[http://big.umassmed.edu/wiki/index.php/PgFocus][pgFocus]] open source and open hardware
   autofocus module. This module maintains the focus of a microscope
@@ -31,29 +56,8 @@
   
   -----
 
-* Micro-Manager
-  Using and customizing Micro-Manager takes a while to learn. Here are
-  the notes I have collected along the way.
-
-  + [[file:notes/micro-manager.org][Micro-Manager notes]]
-  + [[https://www.micro-manager.org/][The Micro-Manager website]]
-
-  -----
-
 * CellProfiler
 
   + [[file:notes/cellprofiler.org][CellProfiler notes]]
 
 -----
-
-* Computer notes
-  These are all the notes I've collected so far for getting things
-  done on computers. I hope they can help you as well.
-
-  + [[file:notes/linux.org][Notes on Linux]]
-  + [[file:notes/scipy.org][Python for Scientific Applications]]
-  + [[file:notes/nikola.org][Nikola]]
-  + [[file:notes/git.org][Git]]
-  + [[file:notes/cuda.org][CUDA]]
-  + [[file:notes/emacs.org][Emacs]]
-  + [[file:notes/windows.org][Notes on Windows]]

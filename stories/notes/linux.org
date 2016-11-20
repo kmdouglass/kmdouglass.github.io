@@ -583,23 +583,49 @@ sudo ntpdate-debian
    This fixed my clock rather easily.
 -----
 
-* Choosing software version alternatives
-  Sometimes you may have multiple versions of a software package
-  installed. I ran into this issue once when trying to write a simple
-  Java program. Apparently, I compiled the source into bytecode with
-  the openjdk-7 compiler, but was attempting to run the code with the
-  openjdk-6 environment (guess what? it didn't work).
+* Managing Software Packages
+** Choosing software version alternatives
+   Sometimes you may have multiple versions of a software package
+   installed. I ran into this issue once when trying to write a simple
+   Java program. Apparently, I compiled the source into bytecode with
+   the openjdk-7 compiler, but was attempting to run the code with the
+   openjdk-6 environment (guess what? it didn't work).
 
-  To fix this, you can run the following from the command line:
+   To fix this, you can run the following from the command line:
 
-  #+BEGIN_SRC sh
+   #+BEGIN_SRC sh
 sudo update-alternatives --config java
-  #+END_SRC
+   #+END_SRC
 
-  This will allow you to select the version you want from a list of
-  installed versions. Choosing the Java environment from the openjdk-7
-  package fixed my compile-time errors about unsupported major.minor
-  versions.
+   This will allow you to select the version you want from a list of
+   installed versions. Choosing the Java environment from the
+   openjdk-7 package fixed my compile-time errors about unsupported
+   major.minor versions.
+
+-----
+
+** Debian Backports
+
+   Debian Backports are versions of software packages that are
+   intended for the next Debian release but are tuned to work in the
+   current release so that users can access the latest versions of
+   software. They are not necessarily tested as extensively as
+   packages in the stable distribution.
+
+   https://backports.debian.org/Instructions/
+
+   To enable backports in Jessie, add it to */etc/apt/sources.list*
+   and then run *apt-get update*.
+
+   #+BEGIN_SRC sh
+deb http://ftp.debian.org/debian jessie-backports main
+   #+END_SRC
+
+   To install a package from backports, use
+
+   #+BEGIN_SRC sh
+apt-get -t jessie-backports install package
+   #+END_SRC
 
 -----
 
@@ -619,14 +645,14 @@ sudo update-alternatives --config java
 
    I installed Python 3.4 with the following commands:
 
-   #+BEGIN_SRC sh
+   #+BEGIN_SRC
 CXX="/usr/bin/g++" \./configure --prefix=/usr --enable-shared --with-system-expat --with-system-ffi --with-ensurepip=install
 make
    #+END_SRC
 
    Next, run the following commands as root:
 
-   #+BEGIN_SRC sh
+   #+BEGIN_SRC
 make install
 chmod -v 755 /usr/lib/libpython3.4m.so
 chmod -v 755 /usr/lib/libpython3.so
@@ -635,7 +661,7 @@ chmod -v 755 /usr/lib/libpython3.so
    For the doc files, download the Python HTML documentation from
    here: https://docs.python.org/3.4/download.html. Install it using:
 
-   #+BEGIN_SRC sh
+   #+BEGIN_SRC
 install -v -dm755 /usr/share/doc/python-3.4.0/html
 tar --strip-components=1 --no-same-owner --no-same-permissions -C /usr/share/doc/python-3.4.0/html -xvf ../python-3.4.0-docs-html.tar.bz2
    #+END_SRC
@@ -648,7 +674,7 @@ tar --strip-components=1 --no-same-owner --no-same-permissions -C /usr/share/doc
    Finally, I removed */usr/bin/python* and created a symbolic link to
    Python3.4 so that it would run as the default:
 
-   #+BEGIN_SRC sh
+   #+BEGIN_SRC
 sudo rm /usr/bin/python
 sudo ln -s /usr/bin/python3.4 /usr/bin/python
    #+END_SRC
