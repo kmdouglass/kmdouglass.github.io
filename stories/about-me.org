@@ -12,7 +12,8 @@
 * Biosketch
 
 #+BEGIN_HTML
-<img src="../kmd_lake_geneva.jpg" style="float:right;width:35%;height:35%;">
+<img src="../kmd_lake_geneva.jpg" style="float:right;width:35%;height:35%;padding-left: 10px;">
+<div align = "justify">
 #+END_HTML
 
   I am a research scientist in optical sensing for soft matter and
@@ -27,6 +28,10 @@
   multidisciplinary background, which has included topics such as
   optics and photonics, information theory and signal processing,
   software design, and materials science.
+
+#+BEGIN_HTML
+</div>
+#+END_HTML
 
 -----
 

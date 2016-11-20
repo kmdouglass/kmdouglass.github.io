@@ -116,7 +116,7 @@ NAVIGATION_LINKS = {
     DEFAULT_LANG: (
         ("/stories/about-me.html", "About"),
         ("/posts/index.html", "Blog"),
-        ("/categories/index.html", "Tags"),
+#        ("/categories/index.html", "Tags"),
         ("/archive.html", "Archive"),
         ("/stories/notes-and-projects.html", "Notes"),
         ("/stories/contact.html", "Contact"),
@@ -413,16 +413,19 @@ GITHUB_REMOTE_NAME = 'origin'
 # Image Gallery Options
 # #############################################################################
 
-# Galleries are folders in galleries/
-# Final location of galleries will be output / GALLERY_PATH / gallery_name
-# GALLERY_PATH = "galleries"
-# THUMBNAIL_SIZE = 180
-# MAX_IMAGE_SIZE = 1280
-# USE_FILENAME_AS_TITLE = True
-# EXTRA_IMAGE_EXTENSIONS = []
+# One or more folders containing galleries. The format is a dictionary of
+# {"source": "relative_destination"}, where galleries are looked for in
+# "source/" and the results will be located in
+# "OUTPUT_PATH/relative_destination/gallery_name"
+# Default is:
+GALLERY_FOLDERS = {"galleries": "galleries"}
+THUMBNAIL_SIZE = 300
+MAX_IMAGE_SIZE = 1280
+USE_FILENAME_AS_TITLE = True
+EXTRA_IMAGE_EXTENSIONS = []
 #
 # If set to False, it will sort by filename instead. Defaults to True
-# GALLERY_SORT_BY_DATE = True
+GALLERY_SORT_BY_DATE = True
 
 # #############################################################################
 # HTML fragments and diverse things that are used by the templates
@@ -477,7 +480,7 @@ INDEX_TEASERS = True
 # 'Read more...' for the index page, if INDEX_TEASERS is True (translatable)
 INDEX_READ_MORE_LINK = '<p class="more"><a href="{link}">{read_more}…</a></p>'
 # 'Read more...' for the RSS_FEED, if RSS_TEASERS is True (translatable)
-RSS_READ_MORE_LINK = '<p><a href="{link}">{read_more}…</a> ({min_remaining_read})</p>'
+FEED_READ_MORE_LINK = '<p><a href="{link}">{read_more}…</a> ({min_remaining_read})</p>'
 
 # A HTML fragment describing the license, for the sidebar.
 # (translatable)

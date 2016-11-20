@@ -29,56 +29,22 @@
 
 </div>
 
-<div class="panel panel-danger">
-  <div class="panel-heading">
-    <h3 class="panel-title">News</h3>
-  </div>
-  <div class="panel-body">
+<div class="row">
+    <div class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title">Super-Resolution Microscopy</h3>
+      </div>
+      <div class="panel-body">
 
-  <h3>August 28 - September 1, 2016</h3>
+<div align = "center">
+<a href="galleries/Microscopy Images/Caulobacter Crescentus.png"><img src="galleries/Microscopy Images/Caulobacter Crescentus.png" alt="Caulobacter Crescentus", style="width:20%;height:20%;padding:5px;"></a>
+<a href="galleries/Microscopy Images/Cos7 Mitochondria 2.png"><img src="galleries/Microscopy Images/Cos7 Mitochondria 2.png" alt="Cos7 Mitochondria 2", style="width:20%;height:20%;padding:5px;"></a>
+<a href="galleries/Microscopy Images/Cos7 Microtubules Mitochondria.png"><img src="galleries/Microscopy Images/Cos7 Microtubules Mitochondria.png" alt="Cos7 Microtubules and Mitochondria", style="width:20%;height:20%;padding:5px;"></a>
+<a href="galleries/Microscopy Images/Cos7 Mitochondria.png"><img src="galleries/Microscopy Images/Cos7 Mitochondria.png" alt="Cos7 Mitochdonria", style="width:20%;height:20%;padding:5px;"></a>
+<p style = "font-style:italic;">All images were taken with the help of Christian Sieben and Ambroise Lambert in the laboratory of <a href="http://leb.epfl.ch">Suliana Manley</a>.</p>
+</div></div></div>
 
-   <p>Kyle is giving a poster presentation on his work developing a
-   new microscope illumination system for large field of view single
-   molecule imaging at <a href="http://smlms.epfl.ch/">SMLMS 2016</a>
-   in Lausanne, Switzerland. This will be followed by another poster
-   presentation and lightning talk at <a
-   href="http://www.systemsx.ch/events-education/events/all-systemsxch-day/">All
-   SystemsX.ch Day</a> in Bern, Switzerland on September 1.
-
-  <h3>May 25-27, 2016<h3>
-
-   <p>Kyle will give a short presentation on his recent work
-   concerning quantitative fluorescence imaging of telomeres at the <a
-   href="http://icrea-bionanovision2016.com/">ICREA BioNanoVision
-   conference</a>. The presentation will be on Day 3, May 27 at 10:00
-   am.</p>
-
-  <h3>February 17-18, 2016</h3>
-
-   <p>Attended a two day workshop hosted by SystemsX and <a
-   href="http://www.hfp-consulting.de/">hfp consulting</a> on
-   leadership skills for scientists. The workshop took place in
-   Gerzensee near Bern, Switzerland.</p>
-
-  <h3>February 4, 2016</h3>
-
-   <p>Attended the Swiss Photonics Machine Learning Workshop in
-   Neuchâtel, Switzerland. You can read my <a
-   href="posts/thoughts-from-the-swiss-photonics-machine-learning-workshop.html">thoughts
-   about it here</a>.</p>
-
-  <h3>January 19, 2016</h3>
-
-   <p>Uploaded the <a
-   href="../kmdouglass_teachingtoolkit_1.pdf">Teaching Toolkit I
-   Certificate of Completion</a>. This document certifies that Kyle
-   completed EPFL's Teaching Toolkit I, a workshop on university
-   teaching strategies. Topics included asking questions to further
-   students' understanding, using spaced-repetition effectively, and
-   classroom management.</p>
-  
-  </div>
-</div>
+<br>
 
 <div class="row">
   <div class="col-sm-6">
@@ -87,6 +53,19 @@
         <h3 class="panel-title">Recent Publications</h3>
       </div>
       <div class="panel-body">
+
+<a href =
+"http://www.nature.com/nphoton/journal/v10/n11/full/nphoton.2016.200.html">Super-resolution
+imaging of multiple cells by optimized flat-field epi-illumination</a>
+
+<p>I designed and demonstrated an epi-illumination system for
+performing super-resolution imaging of multiple cells. The system is
+based on the fly's eye condenser and efficiently homogenizes the laser
+beam across the sample, which removes artifacts due to field-dependent
+fluorophore photophysics. The work greatly improves the throughput of
+localization microscopy systems.</p>
+
+<hr>
 
 <a href =
 "http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0142949">Correction
@@ -162,3 +141,4 @@ through the following means:
 </div>
 </div>
 </div>
+
