@@ -8,9 +8,17 @@
 <link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
 <link href="../../assets/css/ipython.min.css" rel="stylesheet" type="text/css">
 <link href="../../assets/css/nikola_ipython.css" rel="stylesheet" type="text/css">
+<meta content="#5670d4" name="theme-color">
 <link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
 <link rel="canonical" href="http://kmdouglass.github.io/stories/notes/nikola.html">
-<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><meta name="description" itemprop="description" content="How to setup Nikola for making static websites">
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        processEscapes: true
+    }
+});
+</script><!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><meta name="description" itemprop="description" content="How to setup Nikola for making static websites">
 <meta name="author" content="Kyle M. Douglass">
 <meta property="og:site_name" content="Kyle M. Douglass">
 <meta property="og:title" content="Nikola">
@@ -25,7 +33,7 @@
 
 <!-- Menubar -->
 
-<nav class="navbar navbar-default navbar-static-top" role="navigation"><div class="container">
+<nav class="navbar navbar-default navbar-static-top"><div class="container">
 <!-- This keeps the margins nice -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
@@ -46,9 +54,6 @@
 <a href="../about-me.html">About</a>
                 </li>
 <li>
-<a href="../notes-and-projects.html">Notes</a>
-                </li>
-<li>
 <a href="../../posts/index.html">Blog</a>
                 </li>
 <li>
@@ -56,6 +61,9 @@
                 </li>
 <li>
 <a href="../../archive.html">Archive</a>
+                </li>
+<li>
+<a href="../notes-and-projects.html">Notes</a>
                 </li>
 <li>
 <a href="../contact.html">Contact</a>
@@ -80,7 +88,7 @@
         <div class="row">
             
             
-<article class="storypage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="#" class="u-url">Nikola</a></h1>
+<article class="post-text storypage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="#" class="u-url">Nikola</a></h1>
 
         
 
@@ -141,7 +149,7 @@ Type the following at the command line to initialize a new Nikola
 site:
 </p>
 
-<div class="highlight"><pre>nikola init site_name
+<div class="highlight"><pre><span></span>nikola init site_name
 </pre></div>
 
 <p>
@@ -163,7 +171,7 @@ plugin. Information on the plugin can be found here:
 site, I ran the following command from inside my site directory:
 </p>
 
-<div class="highlight"><pre>nikola plugin -i orgmode
+<div class="highlight"><pre><span></span>nikola plugin -i orgmode
 </pre></div>
 
 <p>
@@ -177,7 +185,7 @@ Next, I had to add the org-mode compiler to the COMPILERS
 dictionary in conf.py:
 </p>
 
-<div class="highlight"><pre>COMPILERS["orgmode"] = ('.org',)
+<div class="highlight"><pre><span></span>COMPILERS["orgmode"] = ('.org',)
 </pre></div>
 
 <p>
@@ -191,7 +199,7 @@ I also had to modify my POSTS and PAGES variables in
 conf.py to read .org files:
 </p>
 
-<div class="highlight"><pre>POSTS = POSTS + (("posts/*.org", "posts", "post.tmpl"),)
+<div class="highlight"><pre><span></span>POSTS = POSTS + (("posts/*.org", "posts", "post.tmpl"),)
 PAGES = PAGES + (("stories/*.org", "posts", "post.tmpl"),)
 </pre></div>
 
@@ -200,7 +208,7 @@ To create a post using org-mode, I need to enter the following code
 at the top of the org-file in a comments section:
 </p>
 
-<div class="highlight"><pre>#+BEGIN_COMMENT
+<div class="highlight"><pre><span></span>#+BEGIN_COMMENT
 .. title:
 .. slug: 
 .. date: 
@@ -231,7 +239,7 @@ can do this in the conf.py file by uncommenting and modifying the
 line for the <code>GITHUB_DEPLOY_BRANCH</code> variable:
 </p>
 
-<div class="highlight"><pre>GITHUB_DEPLOY_BRANCH = 'master'
+<div class="highlight"><pre><span></span>GITHUB_DEPLOY_BRANCH = 'master'
 </pre></div>
 
 <hr>
@@ -263,14 +271,14 @@ First, install the bootstrap3 theme from the themes repository. In
 the end, I don't think this part is necessary.
 </p>
 
-<div class="highlight"><pre>nikola install_theme bootstrap3
+<div class="highlight"><pre><span></span>nikola install_theme bootstrap3
 </pre></div>
 
 <p>
 Next, change the color scheme to darkly from bootswatch.com.
 </p>
 
-<div class="highlight"><pre>nikola bootswatch_theme -n custom_theme -s darkly -p bootstrap3
+<div class="highlight"><pre><span></span>nikola bootswatch_theme -n custom_theme -s darkly -p bootstrap3
 </pre></div>
 
 <p>
@@ -300,7 +308,7 @@ data folder; see the end of this section.) In the Menubar section,
 I found the tag
 </p>
 
-<div class="highlight"><pre>&lt;nav class="navbar navbar-inverse navbar-fixed-top" role="navigation"&gt;
+<div class="highlight"><pre><span></span>&lt;nav class="navbar navbar-inverse navbar-fixed-top" role="navigation"&gt;
 </pre></div>
 
 <p>
@@ -344,7 +352,7 @@ incredibly simple.
 In <b>conf.py</b>, I set the following two variables:
 </p>
 
-<div class="highlight"><pre>COMMENT_SYSTEM = "disqus"
+<div class="highlight"><pre><span></span>COMMENT_SYSTEM = "disqus"
 COMMENT_SYSTEM_ID = "MY_SHORT_NAME"
 </pre></div>
 
@@ -371,7 +379,7 @@ Nikola makes it easy to setup a redirect in <b>conf.py</b>. I changed
 the <b>REDIRECTIONS</b> variable to the following:
 </p>
 
-<div class="highlight"><pre>REDIRECTIONS = [("notes/pgFocus.html", "/stories/notes/pgFocus.html")]
+<div class="highlight"><pre><span></span>REDIRECTIONS = [("notes/pgFocus.html", "/stories/notes/pgFocus.html")]
 </pre></div>
 
 <hr>
@@ -394,14 +402,14 @@ First, I found the available styles for highlighting with the
 command:
 </p>
 
-<div class="highlight"><pre>pygmentize -L style
+<div class="highlight"><pre><span></span>pygmentize -L style
 </pre></div>
 
 <p>
 After choosing a style, I generated the custom css with
 </p>
 
-<div class="highlight"><pre>pygmentize -S default -a .highlight -f html
+<div class="highlight"><pre><span></span>pygmentize -S default -a .highlight -f html
 </pre></div>
 
 <p>
@@ -446,7 +454,7 @@ I can add this link by editing the following variable in my
 <b>conf.py</b> file:
 </p>
 
-<div class="highlight"><pre>EXTRA_HEAD_DATA = '''&lt;script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"&gt;&lt;/script&gt;'''
+<div class="highlight"><pre><span></span>EXTRA_HEAD_DATA = '''&lt;script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"&gt;&lt;/script&gt;'''
 </pre></div>
 
 <p>
@@ -483,12 +491,18 @@ This file is currently in
 set it to <code>#c8c8c8</code> for the Slate bootswatch theme.
 </p>
 
+<div class="highlight"><pre><span></span>div.text_cell_render {
+  padding: 0px;
+  color: #c8c8c8;
+}
+</pre></div>
+
 <p>
 I also added the following tags to this file to bring the
 underline-on-hover effect back to links:
 </p>
 
-<div class="highlight"><pre>.rendered_html :link:hover {
+<div class="highlight"><pre><span></span>.rendered_html :link:hover {
   text-decoration: underline;
 }
 </pre></div>
@@ -506,7 +520,7 @@ read <code>\\(</code> and <code>\\)</code> tags. To do this, edit your <b>conf.p
 uncomment the default MATHJAX_CONFIG variable:
 </p>
 
-<div class="highlight"><pre>MATHJAX_CONFIG = """
+<div class="highlight"><pre><span></span>MATHJAX_CONFIG = """
 &lt;script type="text/x-mathjax-config"&gt;
 MathJax.Hub.Config({
     tex2jax: {
@@ -544,7 +558,7 @@ out of its container. I changed the video tag in
 size of its container and did not pop out:
 </p>
 
-<div class="highlight"><pre>video {
+<div class="highlight"><pre><span></span>video {
   width:  100% !important;
   height: auto !important;
 }
@@ -567,7 +581,7 @@ I received the following error while running the command <code>nikola
    github_deploy</code>:
 </p>
 
-<div class="highlight"><pre>ERROR: Task generation <span class="s1">'render_site'</span> has duplicated definition of <span class="s1">'render_listings:output/listings/index.html'</span>
+<div class="highlight"><pre><span></span>ERROR: Task generation &lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-style: italic;"</span>&gt;<span class="s1">'render_site'</span>&lt;/span&gt; has duplicated definition of &lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-style: italic;"</span>&gt;<span class="s1">'render_listings:output/listings/index.html'</span>&lt;/span&gt;
 <span class="o">[</span>2014-12-27T15:09:48Z<span class="o">]</span> ERROR: github_deploy: Build failed, not deploying to GitHub
 </pre></div>
 
@@ -599,7 +613,7 @@ webpages.
 
 
             <script src="../../assets/js/all-nocdn.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
-    moment.locale("");
+    moment.locale("en");
     fancydates(0, "YYYY-MM-DD HH:mm");
     </script><!-- end fancy dates -->
 </body>

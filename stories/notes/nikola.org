@@ -251,6 +251,13 @@ EXTRA_HEAD_DATA = '''<script type="text/javascript" src="https://cdn.mathjax.org
    =~/.venvs/Nikola/lib/python3.5/site-packages/nikola/data/themes/base/assets/css=. I
    set it to =#c8c8c8= for the Slate bootswatch theme.
 
+   #+BEGIN_SRC
+div.text_cell_render {
+  padding: 0px;
+  color: #c8c8c8;
+}
+   #+END_SRC
+
    I also added the following tags to this file to bring the
    underline-on-hover effect back to links:
 
