@@ -57,9 +57,6 @@ MathJax.Hub.Config({
 <a href="../../posts/index.html">Blog</a>
                 </li>
 <li>
-<a href="../../categories/index.html">Tags</a>
-                </li>
-<li>
 <a href="../../archive.html">Archive</a>
                 </li>
 <li>
@@ -147,7 +144,7 @@ plot. For these situations, you can remove them by using methods
 associated to the <i>spines</i> field of your axis object.
 </p>
 
-<div class="highlight"><pre>ax.spines['top'].set_visible(False)
+<div class="highlight"><pre><span></span>ax.spines['top'].set_visible(False)
 ax.spines['right'].set_visible(False)
 </pre></div>
 
@@ -155,7 +152,7 @@ ax.spines['right'].set_visible(False)
 Removing the ticks is done like so:
 </p>
 
-<div class="highlight"><pre>ax.yaxis.set_ticks_position('left')
+<div class="highlight"><pre><span></span>ax.yaxis.set_ticks_position('left')
 ax.xaxis.set_ticks_position('bottom')
 </pre></div>
 
@@ -172,7 +169,7 @@ Changing the frame linewidth is achieved by the <i>set_linewidth</i>
 method of an axes <i>spine</i> field.
 </p>
 
-<div class="highlight"><pre>ax.spines['left'].set_linewidth(0.5)
+<div class="highlight"><pre><span></span>ax.spines['left'].set_linewidth(0.5)
 ax.spines['bottom'].set_linewidth(0.5)
 </pre></div>
 
@@ -184,7 +181,7 @@ ax.spines['bottom'].set_linewidth(0.5)
 <h3 id="sec-1-3">
 <span class="section-number-3">1.3</span> Remove the legend frame</h3>
 <div class="outline-text-3" id="text-1-3">
-<div class="highlight"><pre>import matplotlib.pyplot as plt
+<div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
 leg = plt.legend()
 leg.draw_frame(False)
 </pre></div>
@@ -214,7 +211,7 @@ multiple subplots.
 object, or through <b>pyplot</b>.
 </p>
 
-<div class="highlight"><pre>plt.tight_layout()
+<div class="highlight"><pre><span></span>plt.tight_layout()
 </pre></div>
 
 <p>
@@ -246,7 +243,7 @@ font. (Using font_manager isn't necessary if you know the name
 already.)
 </p>
 
-<div class="highlight"><pre>import matplotlib.font_manager as font_manager
+<div class="highlight"><pre><span></span>import matplotlib.font_manager as font_manager
 from matplotlib import rcParams
 
 fontpath = '/usr/share/fonts/truetype/msttcorefonts/Arial.ttf'
@@ -279,7 +276,7 @@ file.
 After adding new fonts, I should run the commands
 </p>
 
-<div class="highlight"><pre>rm -i ~/.cache/matplotlib/fontList.py3k.cache
+<div class="highlight"><pre><span></span>rm -i ~/.cache/matplotlib/fontList.py3k.cache
 rm -ri ~/.cache/matplotlib/tex.cache
 </pre></div>
 
@@ -300,7 +297,7 @@ hidden terminal window in Debian Jessie by adding a desktop file to
 information:
 </p>
 
-<div class="highlight"><pre>[Desktop Entry]
+<div class="highlight"><pre><span></span>[Desktop Entry]
 Encoding=UTF-8
 Version=0.9.4
 Type=Application
@@ -349,7 +346,7 @@ setting the –prefix and –exec-prefix flags when running the
 configure script:
 </p>
 
-<div class="highlight"><pre>./configure --prefix<span class="o">=</span>~/src/Python3.4.2 --exec-prefix<span class="o">=</span>~/src/Python3.4.2
+<div class="highlight"><pre><span></span>./configure --prefix<span class="o">=</span>~/src/Python3.4.2 --exec-prefix<span class="o">=</span>~/src/Python3.4.2
 </pre></div>
 
 <p>
@@ -371,7 +368,7 @@ new virtual environment that use these binaries with the <i>-p</i> flag
 in the mkvirtualenv command:
 </p>
 
-<div class="highlight"><pre>mkvirtualenv -p ~/Python3.4.2/bin/python3.4 MY_VENV_NAME
+<div class="highlight"><pre><span></span>mkvirtualenv -p ~/Python3.4.2/bin/python3.4 MY_VENV_NAME
 </pre></div>
 <hr>
 </div>
@@ -433,7 +430,7 @@ for every virtualenv that you want to use Spyder with.
 First, make sure you have the required libraries installed:
 </p>
 
-<div class="highlight"><pre>sudo apt-get install python2.7-dev libxext-dev qt4-dev-tools build-essential
+<div class="highlight"><pre><span></span>sudo apt-get install python2.7-dev libxext-dev qt4-dev-tools build-essential
 </pre></div>
 
 <p>
@@ -450,7 +447,7 @@ After this, move inside the PyQt4 source directory. Configure the Make
 file with
 </p>
 
-<div class="highlight"><pre>python configure-ng.py -q /usr/bin/qmake-qt4
+<div class="highlight"><pre><span></span>python configure-ng.py -q /usr/bin/qmake-qt4
 </pre></div>
 
 <p>
@@ -468,7 +465,7 @@ Follow this with another <code>make</code> and <code>sudo make install</code>.
 Once SIP and PyQt4 are installed, it's really easy to install Spyder:
 </p>
 
-<div class="highlight"><pre>pip install spyder
+<div class="highlight"><pre><span></span>pip install spyder
 </pre></div>
 
 <p>

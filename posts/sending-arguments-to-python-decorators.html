@@ -59,9 +59,6 @@ MathJax.Hub.Config({
 <a href="index.html">Blog</a>
                 </li>
 <li>
-<a href="../categories/index.html">Tags</a>
-                </li>
-<li>
 <a href="../archive.html">Archive</a>
                 </li>
 <li>
@@ -126,7 +123,7 @@ decorated function call. I wrote the following script to better
 understand this process (I use Python 3.4):
 </p>
 
-<div class="highlight"><pre>def wrapper(inFunction):
+<div class="highlight"><pre><span></span>def wrapper(inFunction):
     def outFunction(**kwargs):
         print('The input arguments were:')
         for key, value in kwargs.items():
@@ -154,7 +151,7 @@ its definition. However, let's make the decorator in a way that's
 closer to how <i>@</i> works under the hood:
 </p>
 
-<div class="highlight"><pre>In [22]: decoratedAdd = wrapper(add)
+<div class="highlight"><pre><span></span>In [22]: decoratedAdd = wrapper(add)
 In [23]: decoratedAdd(x = 1, y = 24)
 The input arguments were:
 'y' : 24
@@ -179,7 +176,7 @@ operations were flipped, <i>wrapper()</i> should know that I set x to 1 and
 y to 24, but really it doesn't know these details at all.
 </p>
 
-<div class="highlight"><pre>In [24]: wrapper(add)(x = 1, y = 24)
+<div class="highlight"><pre><span></span>In [24]: wrapper(add)(x = 1, y = 24)
 The input arguments were:
 'y' : 24
 'x' : 1

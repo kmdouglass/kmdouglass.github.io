@@ -51,9 +51,6 @@ MathJax.Hub.Config({
 <a href="index.html">Blog</a>
                 </li>
 <li>
-<a href="../categories/index.html">Tags</a>
-                </li>
-<li>
 <a href="../archive.html">Archive</a>
                 </li>
 <li>
@@ -202,19 +199,19 @@ I welcome any comments or suggestions, especially on the <a href="https://gist.g
 where others may be more likely to find it.
 </p>
 
-<div class="highlight"><pre><span class="n">filename</span>    <span class="o">=</span> <span class="s">'myFile.txt'</span>
-<span class="n">outputLines</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">span</span> <span class="n">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span><span class="o">&gt;</span><span class="n">filename</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span>    <span class="o">=</span> <span class="o">&lt;</span><span class="n">span</span> <span class="n">style</span><span class="o">=</span><span class="s2">"font-style: italic;"</span><span class="o">&gt;</span><span class="s1">'myFile.txt'</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">span</span> <span class="n">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span><span class="o">&gt;</span><span class="n">outputLines</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">[]</span>
 
-<span class="c"># Keep all lines containing ANY of the following list of strings.</span>
-<span class="n">lineFilters</span> <span class="o">=</span> <span class="p">[</span><span class="s">'line 1'</span><span class="p">,</span>
-	       <span class="s">'line 2'</span><span class="p">,</span>
-	       <span class="s">'line 3'</span><span class="p">]</span>
-<span class="n">stringIsIn</span>  <span class="o">=</span> <span class="k">lambda</span> <span class="n">line</span><span class="p">:</span> <span class="p">[</span><span class="nb">filter</span> <span class="ow">in</span> <span class="n">line</span> <span class="k">for</span> <span class="nb">filter</span> <span class="ow">in</span> <span class="n">lineFilters</span><span class="p">]</span>
+<span class="o">&lt;</span><span class="n">span</span> <span class="n">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span><span class="o">&gt;</span><span class="c1"># &lt;/span&gt;&lt;span style="font-weight: bold; font-style: italic;"&gt;Keep all lines containing ANY of the following list of strings.&lt;/span&gt;</span>
+<span class="o">&lt;</span><span class="n">span</span> <span class="n">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span><span class="o">&gt;</span><span class="n">lineFilters</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">span</span> <span class="n">style</span><span class="o">=</span><span class="s2">"font-style: italic;"</span><span class="o">&gt;</span><span class="s1">'line 1'</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span><span class="p">,</span>
+               <span class="o">&lt;</span><span class="n">span</span> <span class="n">style</span><span class="o">=</span><span class="s2">"font-style: italic;"</span><span class="o">&gt;</span><span class="s1">'line 2'</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span><span class="p">,</span>
+               <span class="o">&lt;</span><span class="n">span</span> <span class="n">style</span><span class="o">=</span><span class="s2">"font-style: italic;"</span><span class="o">&gt;</span><span class="s1">'line 3'</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span><span class="p">]</span>
+<span class="o">&lt;</span><span class="n">span</span> <span class="n">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span><span class="o">&gt;</span><span class="n">stringIsIn</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span>  <span class="o">=</span> <span class="o">&lt;</span><span class="n">span</span> <span class="n">style</span><span class="o">=</span><span class="s2">"font-weight: bold;"</span><span class="o">&gt;</span><span class="k">lambda</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span> <span class="n">line</span><span class="p">:</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">span</span> <span class="n">style</span><span class="o">=</span><span class="s2">"font-weight: bold;"</span><span class="o">&gt;</span><span class="nb">filter</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">span</span> <span class="n">style</span><span class="o">=</span><span class="s2">"font-weight: bold;"</span><span class="o">&gt;</span><span class="ow">in</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span> <span class="n">line</span> <span class="o">&lt;</span><span class="n">span</span> <span class="n">style</span><span class="o">=</span><span class="s2">"font-weight: bold;"</span><span class="o">&gt;</span><span class="k">for</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">span</span> <span class="n">style</span><span class="o">=</span><span class="s2">"font-weight: bold;"</span><span class="o">&gt;</span><span class="nb">filter</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">span</span> <span class="n">style</span><span class="o">=</span><span class="s2">"font-weight: bold;"</span><span class="o">&gt;</span><span class="ow">in</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span> <span class="n">lineFilters</span><span class="p">]</span>
 
 
-<span class="c"># Read only lines containing one of the strings into memory.</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">file</span><span class="p">:</span>
-    <span class="p">[</span><span class="n">outputLines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">file</span> <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">stringIsIn</span><span class="p">(</span><span class="n">line</span><span class="p">))]</span>
+<span class="o">&lt;</span><span class="n">span</span> <span class="n">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span><span class="o">&gt;</span><span class="c1"># &lt;/span&gt;&lt;span style="font-weight: bold; font-style: italic;"&gt;Read only lines containing one of the strings into memory.&lt;/span&gt;</span>
+<span class="o">&lt;</span><span class="n">span</span> <span class="n">style</span><span class="o">=</span><span class="s2">"font-weight: bold;"</span><span class="o">&gt;</span><span class="k">with</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">span</span> <span class="n">style</span><span class="o">=</span><span class="s2">"font-weight: bold;"</span><span class="o">&gt;</span><span class="nb">open</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">span</span> <span class="n">style</span><span class="o">=</span><span class="s2">"font-style: italic;"</span><span class="o">&gt;</span><span class="s1">'r'</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">&lt;</span><span class="n">span</span> <span class="n">style</span><span class="o">=</span><span class="s2">"font-weight: bold;"</span><span class="o">&gt;</span><span class="k">as</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">span</span> <span class="n">style</span><span class="o">=</span><span class="s2">"font-weight: bold;"</span><span class="o">&gt;</span><span class="nb">file</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span><span class="p">:</span>
+    <span class="p">[</span><span class="n">outputLines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">&lt;</span><span class="n">span</span> <span class="n">style</span><span class="o">=</span><span class="s2">"font-weight: bold;"</span><span class="o">&gt;</span><span class="k">for</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span> <span class="n">line</span> <span class="o">&lt;</span><span class="n">span</span> <span class="n">style</span><span class="o">=</span><span class="s2">"font-weight: bold;"</span><span class="o">&gt;</span><span class="ow">in</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">span</span> <span class="n">style</span><span class="o">=</span><span class="s2">"font-weight: bold;"</span><span class="o">&gt;</span><span class="nb">file</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">span</span> <span class="n">style</span><span class="o">=</span><span class="s2">"font-weight: bold;"</span><span class="o">&gt;</span><span class="k">if</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">span</span> <span class="n">style</span><span class="o">=</span><span class="s2">"font-weight: bold;"</span><span class="o">&gt;</span><span class="nb">any</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;</span><span class="p">(</span><span class="n">stringIsIn</span><span class="p">(</span><span class="n">line</span><span class="p">))]</span>
 </pre></div>
     </div>
     </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="the-basics-of-virtualenv.html" class="u-url">The basics of virtualenv</a></h1>
@@ -244,7 +241,7 @@ automatic update and that was the end of that.)
 To run some Python 2.7 programs, I used to do the following:
 </p>
 
-<div class="highlight"><pre>sudo rm /usr/bin/python 
+<div class="highlight"><pre><span></span>sudo rm /usr/bin/python 
 sudo ln -s /usr/bin/python2.7 /usr/bin/python
 </pre></div>
 
@@ -282,7 +279,7 @@ this because I want to keep Python 2.7 as my system's default Python
 environment.
 </p>
 
-<div class="highlight"><pre>sudo apt-get update
+<div class="highlight"><pre><span></span>sudo apt-get update
 sudo apt-get install python-pip
 </pre></div>
 
@@ -292,7 +289,7 @@ Once installed, I used it to install virtualenv and
 with virtualenv.
 </p>
 
-<div class="highlight"><pre>sudo pip install virtualenv
+<div class="highlight"><pre><span></span>sudo pip install virtualenv
 sudo pip install virtualenvwrapper
 </pre></div>
 
@@ -303,14 +300,14 @@ environment variable is called WORKON_HOME. First, I created the
 folder it will point to:
 </p>
 
-<div class="highlight"><pre>mkdir ~/Envs
+<div class="highlight"><pre><span></span>mkdir ~/Envs
 </pre></div>
 
 <p>
 Next, I edited my ~/.bashrc and added the following line:
 </p>
 
-<div class="highlight"><pre><span class="nb">export </span><span class="nv">WORKON_HOME</span><span class="o">=</span>~/Envs
+<div class="highlight"><pre><span></span>&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold;"</span>&gt;export&lt;/span&gt; &lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;WORKON_HOME&lt;/span&gt;<span class="o">=</span>~/Envs
 </pre></div>
 
 <p>
@@ -328,7 +325,7 @@ sudo (in fact, sudo could not find a command called ``source'') and
 that no output is returned when the script is run.
 </p>
 
-<div class="highlight"><pre><span class="nb">source</span> /usr/local/bin/virtualenvwrapper.sh
+<div class="highlight"><pre><span></span>&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold;"</span>&gt;source&lt;/span&gt; /usr/local/bin/virtualenvwrapper.sh
 </pre></div>
 
 <p>
@@ -338,7 +335,7 @@ by a name for the environment. I will use the name ``venv'' in this
 example, like Kenneth Reitz did in his guide that I linked above.
 </p>
 
-<div class="highlight"><pre>mkvirtualenv venv
+<div class="highlight"><pre><span></span>mkvirtualenv venv
 </pre></div>
 
 <p>
@@ -357,7 +354,7 @@ example, inside venv I type <code>python</code> at the terminal prompt and tried
 importing numpy, which I had not yet installed in venv:
 </p>
 
-<div class="highlight"><pre>import numpy
+<div class="highlight"><pre><span></span>import numpy
 </pre></div>
 
 <p>
@@ -379,7 +376,7 @@ python3.4 interpreter in a virtual environment named
 make a new virtual environment like so:
 </p>
 
-<div class="highlight"><pre>mkvirtualenv -p /usr/bin/python3.4 python3-general
+<div class="highlight"><pre><span></span>mkvirtualenv -p /usr/bin/python3.4 python3-general
 </pre></div>
 
 <p>

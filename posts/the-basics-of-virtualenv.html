@@ -59,9 +59,6 @@ MathJax.Hub.Config({
 <a href="index.html">Blog</a>
                 </li>
 <li>
-<a href="../categories/index.html">Tags</a>
-                </li>
-<li>
 <a href="../archive.html">Archive</a>
                 </li>
 <li>
@@ -124,7 +121,7 @@ automatic update and that was the end of that.)
 To run some Python 2.7 programs, I used to do the following:
 </p>
 
-<div class="highlight"><pre>sudo rm /usr/bin/python 
+<div class="highlight"><pre><span></span>sudo rm /usr/bin/python 
 sudo ln -s /usr/bin/python2.7 /usr/bin/python
 </pre></div>
 
@@ -162,7 +159,7 @@ this because I want to keep Python 2.7 as my system's default Python
 environment.
 </p>
 
-<div class="highlight"><pre>sudo apt-get update
+<div class="highlight"><pre><span></span>sudo apt-get update
 sudo apt-get install python-pip
 </pre></div>
 
@@ -172,7 +169,7 @@ Once installed, I used it to install virtualenv and
 with virtualenv.
 </p>
 
-<div class="highlight"><pre>sudo pip install virtualenv
+<div class="highlight"><pre><span></span>sudo pip install virtualenv
 sudo pip install virtualenvwrapper
 </pre></div>
 
@@ -183,14 +180,14 @@ environment variable is called WORKON_HOME. First, I created the
 folder it will point to:
 </p>
 
-<div class="highlight"><pre>mkdir ~/Envs
+<div class="highlight"><pre><span></span>mkdir ~/Envs
 </pre></div>
 
 <p>
 Next, I edited my ~/.bashrc and added the following line:
 </p>
 
-<div class="highlight"><pre><span class="nb">export </span><span class="nv">WORKON_HOME</span><span class="o">=</span>~/Envs
+<div class="highlight"><pre><span></span>&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold;"</span>&gt;export&lt;/span&gt; &lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;WORKON_HOME&lt;/span&gt;<span class="o">=</span>~/Envs
 </pre></div>
 
 <p>
@@ -208,7 +205,7 @@ sudo (in fact, sudo could not find a command called ``source'') and
 that no output is returned when the script is run.
 </p>
 
-<div class="highlight"><pre><span class="nb">source</span> /usr/local/bin/virtualenvwrapper.sh
+<div class="highlight"><pre><span></span>&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold;"</span>&gt;source&lt;/span&gt; /usr/local/bin/virtualenvwrapper.sh
 </pre></div>
 
 <p>
@@ -218,7 +215,7 @@ by a name for the environment. I will use the name ``venv'' in this
 example, like Kenneth Reitz did in his guide that I linked above.
 </p>
 
-<div class="highlight"><pre>mkvirtualenv venv
+<div class="highlight"><pre><span></span>mkvirtualenv venv
 </pre></div>
 
 <p>
@@ -237,7 +234,7 @@ example, inside venv I type <code>python</code> at the terminal prompt and tried
 importing numpy, which I had not yet installed in venv:
 </p>
 
-<div class="highlight"><pre>import numpy
+<div class="highlight"><pre><span></span>import numpy
 </pre></div>
 
 <p>
@@ -259,7 +256,7 @@ python3.4 interpreter in a virtual environment named
 make a new virtual environment like so:
 </p>
 
-<div class="highlight"><pre>mkvirtualenv -p /usr/bin/python3.4 python3-general
+<div class="highlight"><pre><span></span>mkvirtualenv -p /usr/bin/python3.4 python3-general
 </pre></div>
 
 <p>

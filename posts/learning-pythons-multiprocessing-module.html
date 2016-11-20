@@ -60,9 +60,6 @@ MathJax.Hub.Config({
 <a href="index.html">Blog</a>
                 </li>
 <li>
-<a href="../categories/index.html">Tags</a>
-                </li>
-<li>
 <a href="../archive.html">Archive</a>
                 </li>
 <li>
@@ -174,7 +171,7 @@ calling its <b>start()</b> method.
 The basic example from their site looks like this:
 </p>
 
-<div class="highlight"><pre>import multiprocessing
+<div class="highlight"><pre><span></span>import multiprocessing
 
 def worker():
     """worker function"""
@@ -194,7 +191,7 @@ In this example, it's important to create the Process instances inside
 the
 </p>
 
-<div class="highlight"><pre>if __name__ == '__main__':
+<div class="highlight"><pre><span></span>if __name__ == '__main__':
 </pre></div>
 
 <p>
@@ -210,7 +207,7 @@ To send arguments to the function (<b>worker()</b> in the example above),
 we can use the <b>args</b> keyword in the Process object instantiation like
 </p>
 
-<div class="highlight"><pre>p = multiprocessing.Process(target=worker, args=(i,))
+<div class="highlight"><pre><span></span>p = multiprocessing.Process(target=worker, args=(i,))
 </pre></div>
 
 <p>
@@ -236,7 +233,7 @@ for squaring an argument, and supply this function and the list of
 integers to <b>Pool.map()</b>. The code looks like this:
 </p>
 
-<div class="highlight"><pre>import multiprocessing
+<div class="highlight"><pre><span></span>import multiprocessing
 
 def funSquare(num):
     return num ** 2
@@ -300,7 +297,7 @@ demonstrate an example where <b>Pool.map()</b> is applied to a list of
 numbers.
 </p>
 
-<div class="highlight"><pre>import multiprocessing
+<div class="highlight"><pre><span></span>import multiprocessing
 
 def runSimulation(params):
     """This is the main processing function. It will contain whatever
@@ -369,7 +366,7 @@ long as instances of this class can be <a href="https://docs.python.org/3/librar
 iterable in <b>Pool.map()</b>, not just lists of floating point numbers.
 </p>
 
-<div class="highlight"><pre>import multiprocessing
+<div class="highlight"><pre><span></span>import multiprocessing
 
 class simObject():
     def __init__(self, params):
@@ -427,7 +424,7 @@ The following code makes a rough comparison between computation time
 for the parallel and serial versions of <b>map()</b>:
 </p>
 
-<div class="highlight"><pre>import multiprocessing
+<div class="highlight"><pre><span></span>import multiprocessing
 import time
 
 def runSimulation(params):
@@ -489,7 +486,7 @@ discussion</a>.) To fix this, we can import Python's <b>os</b> module to reset
 the task affinity in our code:
 </p>
 
-<div class="highlight"><pre>os.system("taskset -p 0xff %d" % os.getpid())
+<div class="highlight"><pre><span></span>os.system("taskset -p 0xff %d" % os.getpid())
 </pre></div>
 </div>
 </div>

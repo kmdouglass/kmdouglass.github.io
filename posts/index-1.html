@@ -50,9 +50,6 @@ MathJax.Hub.Config({
 <a href="index.html">Blog</a>
                 </li>
 <li>
-<a href="../categories/index.html">Tags</a>
-                </li>
-<li>
 <a href="../archive.html">Archive</a>
                 </li>
 <li>
@@ -107,7 +104,7 @@ decorated function call. I wrote the following script to better
 understand this process (I use Python 3.4):
 </p>
 
-<div class="highlight"><pre>def wrapper(inFunction):
+<div class="highlight"><pre><span></span>def wrapper(inFunction):
     def outFunction(**kwargs):
         print('The input arguments were:')
         for key, value in kwargs.items():
@@ -135,7 +132,7 @@ its definition. However, let's make the decorator in a way that's
 closer to how <i>@</i> works under the hood:
 </p>
 
-<div class="highlight"><pre>In [22]: decoratedAdd = wrapper(add)
+<div class="highlight"><pre><span></span>In [22]: decoratedAdd = wrapper(add)
 In [23]: decoratedAdd(x = 1, y = 24)
 The input arguments were:
 'y' : 24
@@ -160,7 +157,7 @@ operations were flipped, <i>wrapper()</i> should know that I set x to 1 and
 y to 24, but really it doesn't know these details at all.
 </p>
 
-<div class="highlight"><pre>In [24]: wrapper(add)(x = 1, y = 24)
+<div class="highlight"><pre><span></span>In [24]: wrapper(add)(x = 1, y = 24)
 The input arguments were:
 'y' : 24
 'x' : 1
@@ -361,7 +358,7 @@ calling its <b>start()</b> method.
 The basic example from their site looks like this:
 </p>
 
-<div class="highlight"><pre>import multiprocessing
+<div class="highlight"><pre><span></span>import multiprocessing
 
 def worker():
     """worker function"""
@@ -381,7 +378,7 @@ In this example, it's important to create the Process instances inside
 the
 </p>
 
-<div class="highlight"><pre>if __name__ == '__main__':
+<div class="highlight"><pre><span></span>if __name__ == '__main__':
 </pre></div>
 
 <p>
@@ -397,7 +394,7 @@ To send arguments to the function (<b>worker()</b> in the example above),
 we can use the <b>args</b> keyword in the Process object instantiation like
 </p>
 
-<div class="highlight"><pre>p = multiprocessing.Process(target=worker, args=(i,))
+<div class="highlight"><pre><span></span>p = multiprocessing.Process(target=worker, args=(i,))
 </pre></div>
 
 <p>
@@ -423,7 +420,7 @@ for squaring an argument, and supply this function and the list of
 integers to <b>Pool.map()</b>. The code looks like this:
 </p>
 
-<div class="highlight"><pre>import multiprocessing
+<div class="highlight"><pre><span></span>import multiprocessing
 
 def funSquare(num):
     return num ** 2
@@ -487,7 +484,7 @@ demonstrate an example where <b>Pool.map()</b> is applied to a list of
 numbers.
 </p>
 
-<div class="highlight"><pre>import multiprocessing
+<div class="highlight"><pre><span></span>import multiprocessing
 
 def runSimulation(params):
     """This is the main processing function. It will contain whatever
@@ -556,7 +553,7 @@ long as instances of this class can be <a href="https://docs.python.org/3/librar
 iterable in <b>Pool.map()</b>, not just lists of floating point numbers.
 </p>
 
-<div class="highlight"><pre>import multiprocessing
+<div class="highlight"><pre><span></span>import multiprocessing
 
 class simObject():
     def __init__(self, params):
@@ -614,7 +611,7 @@ The following code makes a rough comparison between computation time
 for the parallel and serial versions of <b>map()</b>:
 </p>
 
-<div class="highlight"><pre>import multiprocessing
+<div class="highlight"><pre><span></span>import multiprocessing
 import time
 
 def runSimulation(params):
@@ -676,7 +673,7 @@ discussion</a>.) To fix this, we can import Python's <b>os</b> module to reset
 the task affinity in our code:
 </p>
 
-<div class="highlight"><pre>os.system("taskset -p 0xff %d" % os.getpid())
+<div class="highlight"><pre><span></span>os.system("taskset -p 0xff %d" % os.getpid())
 </pre></div>
 </div>
 </div>

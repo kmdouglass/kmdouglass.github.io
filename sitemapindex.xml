@@ -23,11 +23,11 @@
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/computing.xml</loc>
-  <lastmod>2016-11-20T12:24:00Z</lastmod>
+  <lastmod>2016-11-20T13:43:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/fourier-optics.xml</loc>
-  <lastmod>2016-11-20T12:24:00Z</lastmod>
+  <lastmod>2016-11-20T13:43:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/machine-learning.xml</loc>
@@ -35,15 +35,15 @@
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/micro-manager.xml</loc>
-  <lastmod>2016-11-20T12:24:00Z</lastmod>
+  <lastmod>2016-11-20T13:43:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/microscopy.xml</loc>
-  <lastmod>2016-11-20T12:24:00Z</lastmod>
+  <lastmod>2016-11-20T13:43:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/optics.xml</loc>
-  <lastmod>2016-11-20T12:24:00Z</lastmod>
+  <lastmod>2016-11-20T13:43:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/photonics.xml</loc>
@@ -51,7 +51,7 @@
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/python.xml</loc>
-  <lastmod>2016-11-20T12:24:00Z</lastmod>
+  <lastmod>2016-11-20T13:43:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/sensing.xml</loc>
@@ -59,7 +59,7 @@
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/signal-processing.xml</loc>
-  <lastmod>2016-11-20T12:24:00Z</lastmod>
+  <lastmod>2016-11-20T13:43:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/super-resolution.xml</loc>
@@ -78,11 +78,19 @@
   <lastmod>2016-11-20T12:24:00Z</lastmod>
  </sitemap>
  <sitemap>
+  <loc>http://kmdouglass.github.io/galleries/Microscopy%20Images/rss.xml</loc>
+  <lastmod>2016-11-20T14:21:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>http://kmdouglass.github.io/galleries/rss.xml</loc>
+  <lastmod>2016-11-20T14:21:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>http://kmdouglass.github.io/rss.xml</loc>
-  <lastmod>2016-11-20T12:24:00Z</lastmod>
+  <lastmod>2016-11-20T13:43:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/sitemap.xml</loc>
-  <lastmod>2016-11-20T12:31:00Z</lastmod>
+  <lastmod>2016-11-20T14:24:00Z</lastmod>
  </sitemap>
 </sitemapindex>

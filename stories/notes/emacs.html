@@ -57,9 +57,6 @@ MathJax.Hub.Config({
 <a href="../../posts/index.html">Blog</a>
                 </li>
 <li>
-<a href="../../categories/index.html">Tags</a>
-                </li>
-<li>
 <a href="../../archive.html">Archive</a>
                 </li>
 <li>
@@ -137,7 +134,7 @@ discussion</a>. Essentially, I first added these lines to my <i>init.el</i>
 file.
 </p>
 
-<div class="highlight"><pre><span class="p">(</span><span class="nf">require</span> <span class="ss">'em-tramp</span><span class="p">)</span> <span class="c1">; to load eshell’s sudo</span>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nf">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold;"</span><span class="nv">&gt;require&lt;/span&gt;</span> <span class="ss">'&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold; text-decoration: underline;"</span><span class="nv">&gt;em-tramp&lt;/span&gt;</span><span class="p">)</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold; font-style: italic;"</span><span class="nv">&gt;</span><span class="c1">; &lt;/span&gt;&lt;span style="font-weight: bold; font-style: italic;"&gt;to load eshell&amp;#8217;s sudo&lt;/span&gt;</span>
 <span class="p">(</span><span class="nf">setq</span> <span class="nv">eshell-prefer-lisp-functions</span> <span class="nv">t</span><span class="p">)</span>
 <span class="p">(</span><span class="nf">setq</span> <span class="nv">eshell-prefer-lisp-variables</span> <span class="nv">t</span><span class="p">)</span>
 </pre></div>
@@ -147,14 +144,14 @@ Then, in the eshell, I created the following alias that gets
 permanently saved to my .emacs.d/ directory:
 </p>
 
-<div class="highlight"><pre><span class="nv">alias</span> <span class="nv">sudo</span> <span class="ss">'eshell/sudo</span> <span class="nv">$*</span><span class="o">'</span>
+<div class="highlight"><pre><span></span><span class="nv">alias</span> <span class="nv">sudo</span> <span class="ss">'eshell/sudo</span> <span class="nv">$*</span><span class="o">'</span>
 </pre></div>
 
 <p>
 Finally, I added these lines to my <i>init.el</i>
 </p>
-<div class="highlight"><pre><span class="p">(</span><span class="nf">setq</span> <span class="nv">password-cache</span> <span class="nv">t</span><span class="p">)</span> <span class="c1">; enable password caching</span>
-<span class="p">(</span><span class="nf">setq</span> <span class="nv">password-cache-expiry</span> <span class="mi">5</span><span class="p">)</span> <span class="c1">; for five minutes</span>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nf">setq</span> <span class="nv">password-cache</span> <span class="nv">t</span><span class="p">)</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold; font-style: italic;"</span><span class="nv">&gt;</span><span class="c1">; &lt;/span&gt;&lt;span style="font-weight: bold; font-style: italic;"&gt;enable password caching&lt;/span&gt;</span>
+<span class="p">(</span><span class="nf">setq</span> <span class="nv">password-cache-expiry</span> <span class="mi">5</span><span class="p">)</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold; font-style: italic;"</span><span class="nv">&gt;</span><span class="c1">; &lt;/span&gt;&lt;span style="font-weight: bold; font-style: italic;"&gt;for five minutes&lt;/span&gt;</span>
 </pre></div>
 
 <p>

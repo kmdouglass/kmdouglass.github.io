@@ -60,9 +60,6 @@ MathJax.Hub.Config({
 <a href="index.html">Blog</a>
                 </li>
 <li>
-<a href="../categories/index.html">Tags</a>
-                </li>
-<li>
 <a href="../archive.html">Archive</a>
                 </li>
 <li>
@@ -131,9 +128,9 @@ MathJax.Hub.Config({
 <div class="prompt input_prompt">In [1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span class="o">%</span><span class="k">pylab</span> inline
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">pylab</span> inline
 <span class="kn">from</span> <span class="nn">numpy.fft</span> <span class="k">import</span> <span class="n">fft</span><span class="p">,</span> <span class="n">fftshift</span><span class="p">,</span> <span class="n">ifft</span><span class="p">,</span> <span class="n">ifftshift</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s">'dark_background'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">'dark_background'</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -173,14 +170,14 @@ MathJax.Hub.Config({
 <div class="prompt input_prompt">In [2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span class="n">numSamples</span> <span class="o">=</span> <span class="mi">100</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">numSamples</span> <span class="o">=</span> <span class="mi">100</span>
 
 <span class="n">x</span>       <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">numSamples</span><span class="p">)</span>
 <span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">numSamples</span><span class="p">)</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="s">'.'</span><span class="p">,</span> <span class="n">markersize</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'Sample number'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="k">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="s1">'.'</span><span class="p">,</span> <span class="n">markersize</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Sample number'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
@@ -222,9 +219,9 @@ MathJax.Hub.Config({
 <div class="prompt input_prompt">In [3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'Sample number'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="k">True</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Sample number'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
@@ -291,31 +288,31 @@ MathJax.Hub.Config({
 <div class="prompt input_prompt">In [4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span class="n">M</span>  <span class="o">=</span> <span class="mi">2</span><span class="o">**</span><span class="mi">10</span>  <span class="c"># Size of the 1D grid</span>
-<span class="n">L</span>  <span class="o">=</span> <span class="mi">10</span>      <span class="c"># Physical size of the grid</span>
-<span class="n">dx</span> <span class="o">=</span> <span class="n">L</span> <span class="o">/</span> <span class="n">M</span>  <span class="c"># Sampling period</span>
-<span class="n">fs</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">dx</span> <span class="c"># Sampling frequency</span>
-<span class="n">df</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">L</span>  <span class="c"># Spacing between frequency components</span>
-<span class="n">x</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">L</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">L</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span>   <span class="n">num</span> <span class="o">=</span> <span class="n">M</span><span class="p">,</span> <span class="n">endpoint</span> <span class="o">=</span> <span class="k">False</span><span class="p">)</span>
-<span class="n">f</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">fs</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">fs</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">num</span> <span class="o">=</span> <span class="n">M</span><span class="p">,</span> <span class="n">endpoint</span> <span class="o">=</span> <span class="k">False</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">M</span>  <span class="o">=</span> <span class="mi">2</span><span class="o">**</span><span class="mi">10</span>  <span class="c1"># Size of the 1D grid</span>
+<span class="n">L</span>  <span class="o">=</span> <span class="mi">10</span>      <span class="c1"># Physical size of the grid</span>
+<span class="n">dx</span> <span class="o">=</span> <span class="n">L</span> <span class="o">/</span> <span class="n">M</span>  <span class="c1"># Sampling period</span>
+<span class="n">fs</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">dx</span> <span class="c1"># Sampling frequency</span>
+<span class="n">df</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">L</span>  <span class="c1"># Spacing between frequency components</span>
+<span class="n">x</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">L</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">L</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span>   <span class="n">num</span> <span class="o">=</span> <span class="n">M</span><span class="p">,</span> <span class="n">endpoint</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+<span class="n">f</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">fs</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">fs</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">num</span> <span class="o">=</span> <span class="n">M</span><span class="p">,</span> <span class="n">endpoint</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
 
 
 <span class="n">sigma_f</span> <span class="o">=</span> <span class="mf">0.1</span>
 <span class="n">sigma_r</span> <span class="o">=</span> <span class="mi">1</span>
 
-<span class="c"># Define a Gaussian function and an uncorrelated random function in frequency space</span>
+<span class="c1"># Define a Gaussian function and an uncorrelated random function in frequency space</span>
 <span class="n">F</span> <span class="o">=</span> <span class="n">fftshift</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">sigma_f</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">f</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
 <span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
 
-<span class="c"># Convert the product of the two functions back to real space</span>
+<span class="c1"># Convert the product of the two functions back to real space</span>
 <span class="n">noise</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">ifftshift</span><span class="p">(</span><span class="n">ifft</span><span class="p">(</span><span class="n">F</span> <span class="o">*</span> <span class="n">R</span><span class="p">))</span> <span class="o">*</span> <span class="n">sigma_r</span> <span class="o">/</span> <span class="n">dx</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 
-<span class="c"># Plot the real and imaginary parts of the noise signal</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">noise</span><span class="p">),</span> <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s">'real'</span><span class="p">)</span>
-<span class="c">#plt.plot(x, np.imag(noise), linewidth = 2, label = 'imaginary')</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'Spatial position'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="k">True</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span> <span class="o">=</span> <span class="s">'best'</span><span class="p">)</span>
+<span class="c1"># Plot the real and imaginary parts of the noise signal</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">noise</span><span class="p">),</span> <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">'real'</span><span class="p">)</span>
+<span class="c1">#plt.plot(x, np.imag(noise), linewidth = 2, label = 'imaginary')</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Spatial position'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span> <span class="o">=</span> <span class="s1">'best'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
@@ -357,12 +354,12 @@ MathJax.Hub.Config({
 <div class="prompt input_prompt">In [5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">ifftshift</span><span class="p">(</span><span class="n">R</span><span class="p">)),</span>   <span class="n">label</span> <span class="o">=</span> <span class="s">'real part of R'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">ifftshift</span><span class="p">(</span><span class="n">F</span><span class="o">*</span><span class="n">R</span><span class="p">)),</span> <span class="n">label</span> <span class="o">=</span> <span class="s">r'real part of F $\times$ R'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">ifftshift</span><span class="p">(</span><span class="n">F</span><span class="p">),</span>            <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s">'F'</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">ifftshift</span><span class="p">(</span><span class="n">R</span><span class="p">)),</span>   <span class="n">label</span> <span class="o">=</span> <span class="s1">'real part of R'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">ifftshift</span><span class="p">(</span><span class="n">F</span><span class="o">*</span><span class="n">R</span><span class="p">)),</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">r'real part of F $\times$ R'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">ifftshift</span><span class="p">(</span><span class="n">F</span><span class="p">),</span>            <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">'F'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">((</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'Frequency'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="k">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Frequency'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -406,21 +403,21 @@ MathJax.Hub.Config({
 <div class="prompt input_prompt">In [6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span class="c"># Define a Gaussian function and an uncorrelated random function in frequency space</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Define a Gaussian function and an uncorrelated random function in frequency space</span>
 <span class="n">F_tophat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
 
-<span class="c"># Set values outside of the width of the tophat to zero.</span>
+<span class="c1"># Set values outside of the width of the tophat to zero.</span>
 <span class="n">F_tophat</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">f</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">/</span> <span class="n">sigma_f</span><span class="p">,</span> <span class="n">f</span> <span class="o">&gt;</span> <span class="mf">0.5</span> <span class="o">/</span> <span class="n">sigma_f</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">F_tophat</span> <span class="o">=</span> <span class="n">fftshift</span><span class="p">(</span><span class="n">F_tophat</span><span class="p">)</span>
 
-<span class="c"># Convert the product of the two functions back to real space</span>
+<span class="c1"># Convert the product of the two functions back to real space</span>
 <span class="n">noise_tophat</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">ifftshift</span><span class="p">(</span><span class="n">ifft</span><span class="p">(</span><span class="n">F_tophat</span> <span class="o">*</span> <span class="n">R</span><span class="p">))</span> <span class="o">*</span> <span class="n">sigma_r</span> <span class="o">/</span> <span class="n">dx</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 
-<span class="c"># Plot the real and imaginary parts of the noise signal</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">noise_tophat</span><span class="p">),</span> <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s">'Tophat, real'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">noise</span><span class="p">),</span>        <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s">'Gaussian, real'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'Spatial position'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="k">True</span><span class="p">)</span>
+<span class="c1"># Plot the real and imaginary parts of the noise signal</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">noise_tophat</span><span class="p">),</span> <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">'Tophat, real'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">noise</span><span class="p">),</span>        <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">'Gaussian, real'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Spatial position'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -463,12 +460,12 @@ MathJax.Hub.Config({
 <div class="prompt input_prompt">In [7]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">ifftshift</span><span class="p">(</span><span class="n">R</span><span class="p">)),</span>          <span class="n">label</span> <span class="o">=</span> <span class="s">'real part of R'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">ifftshift</span><span class="p">(</span><span class="n">F_tophat</span><span class="o">*</span><span class="n">R</span><span class="p">)),</span> <span class="n">label</span> <span class="o">=</span> <span class="s">r'real part of F $\times$ R'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">ifftshift</span><span class="p">(</span><span class="n">F_tophat</span><span class="p">),</span>            <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s">'F'</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">ifftshift</span><span class="p">(</span><span class="n">R</span><span class="p">)),</span>          <span class="n">label</span> <span class="o">=</span> <span class="s1">'real part of R'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">ifftshift</span><span class="p">(</span><span class="n">F_tophat</span><span class="o">*</span><span class="n">R</span><span class="p">)),</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">r'real part of F $\times$ R'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">ifftshift</span><span class="p">(</span><span class="n">F_tophat</span><span class="p">),</span>            <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">'F'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">((</span><span class="o">-</span><span class="mi">40</span><span class="p">,</span> <span class="mi">40</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'Frequency'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="k">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Frequency'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -546,7 +543,7 @@ $$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$<p>The value \( a \) determines 
 <div class="prompt input_prompt">In [8]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span class="c"># Define the pink noise frequency-space filter for our random uncorrelated signals</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Define the pink noise frequency-space filter for our random uncorrelated signals</span>
 <span class="k">def</span> <span class="nf">pinkNoiseFilter</span><span class="p">(</span><span class="n">freq</span><span class="p">):</span>
     <span class="n">freq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">freq</span><span class="p">)</span>
     <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">freq</span><span class="p">)</span>
@@ -564,16 +561,16 @@ $$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$<p>The value \( a \) determines 
 <div class="prompt input_prompt">In [9]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span class="n">F_pinkNoise</span> <span class="o">=</span> <span class="n">fftshift</span><span class="p">(</span><span class="n">pinkNoiseFilter</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">F_pinkNoise</span> <span class="o">=</span> <span class="n">fftshift</span><span class="p">(</span><span class="n">pinkNoiseFilter</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
 
-<span class="c"># Convert the product of the two functions back to real space</span>
+<span class="c1"># Convert the product of the two functions back to real space</span>
 <span class="n">noise_pink</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">ifftshift</span><span class="p">(</span><span class="n">ifft</span><span class="p">(</span><span class="n">F_pinkNoise</span> <span class="o">*</span> <span class="n">R</span><span class="p">))</span> <span class="o">*</span> <span class="n">sigma_r</span> <span class="o">/</span> <span class="n">dx</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 
-<span class="c"># Plot the real and imaginary parts of the noise signal</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">noise_pink</span><span class="p">),</span> <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s">'1/f, real'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">noise</span><span class="p">),</span>      <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s">'Gaussian, real'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'Spatial position'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="k">True</span><span class="p">)</span>
+<span class="c1"># Plot the real and imaginary parts of the noise signal</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">noise_pink</span><span class="p">),</span> <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">'1/f, real'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">noise</span><span class="p">),</span>      <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">'Gaussian, real'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Spatial position'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -616,11 +613,11 @@ $$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$<p>The value \( a \) determines 
 <div class="prompt input_prompt">In [10]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">ifftshift</span><span class="p">(</span><span class="n">F_pinkNoise</span><span class="o">*</span><span class="n">R</span><span class="p">)),</span> <span class="n">label</span> <span class="o">=</span> <span class="s">r'real part of F $\times$ R'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">ifftshift</span><span class="p">(</span><span class="n">F_pinkNoise</span><span class="p">),</span>            <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s">'F'</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">ifftshift</span><span class="p">(</span><span class="n">F_pinkNoise</span><span class="o">*</span><span class="n">R</span><span class="p">)),</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">r'real part of F $\times$ R'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">ifftshift</span><span class="p">(</span><span class="n">F_pinkNoise</span><span class="p">),</span>            <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">'F'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">((</span><span class="o">-</span><span class="mi">40</span><span class="p">,</span> <span class="mi">40</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'Frequency'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="k">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Frequency'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>

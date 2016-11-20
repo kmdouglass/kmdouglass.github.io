@@ -56,9 +56,6 @@ MathJax.Hub.Config({
 <a href="../../posts/index.html">Blog</a>
                 </li>
 <li>
-<a href="../../categories/index.html">Tags</a>
-                </li>
-<li>
 <a href="../../archive.html">Archive</a>
                 </li>
 <li>
@@ -150,14 +147,14 @@ MathJax.Hub.Config({
 To check for a CUDA card in Linux, use the command:
 </p>
 
-<div class="highlight"><pre>lspci <span class="p">|</span> grep -i nvidia
+<div class="highlight"><pre><span></span>lspci <span class="p">|</span> grep -i nvidia
 </pre></div>
 
 <p>
 On my laptop, I get the following output:
 </p>
 
-<div class="highlight"><pre>01:00.0 VGA compatible controller: NVIDIA Corporation GF108M <span class="o">[</span>GeForce GT 555M<span class="o">]</span> <span class="o">(</span>rev a1<span class="o">)</span>
+<div class="highlight"><pre><span></span>01:00.0 VGA compatible controller: NVIDIA Corporation GF108M <span class="o">[</span>GeForce GT 555M<span class="o">]</span> <span class="o">(</span>rev a1<span class="o">)</span>
 </pre></div>
 
 <p>
@@ -206,7 +203,7 @@ To fix the above problem, I add the following to the file
 <code>/etc/modprobe.d/nvidia-blacklists-nouveau.conf</code>:
 </p>
 
-<div class="highlight"><pre>blacklist nouveau
+<div class="highlight"><pre><span></span>blacklist nouveau
 blacklist lbm-nouveau
 options nouveau modeset=0
 alias nouveau off
@@ -313,14 +310,14 @@ The first indication that you might require bumblbee comes from
 probing for VGA devices using PCI buses.
 </p>
 
-<div class="highlight"><pre>lspci <span class="p">|</span> grep VGA
+<div class="highlight"><pre><span></span>lspci <span class="p">|</span> grep VGA
 </pre></div>
 
 <p>
 I get the following result:
 </p>
 
-<div class="highlight"><pre>00:02.0 VGA compatible controller: Intel Corporation 2nd Generation Core Processor Family Integrated Graphics Controller <span class="o">(</span>rev 09<span class="o">)</span>
+<div class="highlight"><pre><span></span>00:02.0 VGA compatible controller: Intel Corporation 2nd Generation Core Processor Family Integrated Graphics Controller <span class="o">(</span>rev 09<span class="o">)</span>
 01:00.0 VGA compatible controller: NVIDIA Corporation GF108M <span class="o">[</span>GeForce GT 555M<span class="o">]</span> <span class="o">(</span>rev ff<span class="o">)</span>
 </pre></div>
 
@@ -334,7 +331,7 @@ some useful information on the renderer to your shell. Doing this
 produces the following on my device:
 </p>
 
-<div class="highlight"><pre>kmdouglass@kmd-laptop1:~<span class="nv">$ </span>glxheads
+<div class="highlight"><pre><span></span>kmdouglass@kmd-laptop1:~$ glxheads
 glxheads: exercise multiple GLX connections <span class="o">(</span>any <span class="nv">key</span> <span class="o">=</span> <span class="nb">exit</span><span class="o">)</span>
 Usage:
   glxheads xdisplayname ...
@@ -354,7 +351,7 @@ As you can see, GL is being rendered by the Intel chip, not the
 nvidia chip. Next, I installed bumblebee using
 </p>
 
-<div class="highlight"><pre>sudo apt-get install bumblebee-nvidia primus
+<div class="highlight"><pre><span></span>sudo apt-get install bumblebee-nvidia primus
 </pre></div>
 
 <p>
@@ -362,7 +359,7 @@ After a system restart, I tested that the driver installed
 correctly using the glxgears example:
 </p>
 
-<div class="highlight"><pre>sudo optirun glxgears -info
+<div class="highlight"><pre><span></span>sudo optirun glxgears -info
 </pre></div>
 
 <p>
@@ -372,7 +369,7 @@ more-or-less tells the operating system to use the nvidia card, not
 the Intel chip. Trying glxheads with optirun produces
 </p>
 
-<div class="highlight"><pre>kmdouglass@kmd-laptop1:~$ optirun glxheads
+<div class="highlight"><pre><span></span>kmdouglass@kmd-laptop1:~$ optirun glxheads
 glxheads: exercise multiple GLX connections (any key = exit)
 Usage:
   glxheads xdisplayname ...
@@ -393,7 +390,7 @@ nvidia drivers in <code>/proc/driver/</code> using optirun (this won't work if
 you do not use optirun).
 </p>
 
-<div class="highlight"><pre>kmdouglass@kmd-laptop1:~$ sudo optirun cat /proc/driver/nvidia/version
+<div class="highlight"><pre><span></span>kmdouglass@kmd-laptop1:~$ sudo optirun cat /proc/driver/nvidia/version
 NVRM version: NVIDIA UNIX x86_64 Kernel Module  340.65  Tue Dec  2 09:50:34 PST 2014
 GCC version:  gcc version 4.8.4 (Debian 4.8.4-1)
 </pre></div>
@@ -440,7 +437,7 @@ use Bumblebee because nvidia-smi will not detect a working graphics
 card.) 
 </p>
 
-<div class="highlight"><pre>kmdouglass@kmd-laptop1:~<span class="nv">$ </span>sudo aptitude versions nvidia-driver
+<div class="highlight"><pre><span></span>kmdouglass@kmd-laptop1:~$ sudo aptitude versions nvidia-driver
 Package nvidia-driver:                        
 i A 340.65-2                                      stable                    <span class="m">995</span> 
 
@@ -453,7 +450,7 @@ I verified this by using optirun to check the driver version. (I
 really need to better understand Bumblebee and optirun.)
 </p>
 
-<div class="highlight"><pre>kmdouglass@kmd-laptop1:~<span class="nv">$ </span>optirun cat /proc/driver/nvidia/version
+<div class="highlight"><pre><span></span>kmdouglass@kmd-laptop1:~$ optirun cat /proc/driver/nvidia/version
 NVRM version: NVIDIA UNIX x86_64 Kernel Module  340.65  Tue Dec  <span class="m">2</span> 09:50:34 PST 2014
 GCC version:  gcc version 4.8.4 <span class="o">(</span>Debian 4.8.4-1<span class="o">)</span>
 </pre></div>
@@ -491,7 +488,7 @@ received a notification in the final install message about these
 missing library files:
 </p>
 
-<div class="highlight"><pre>Missing recommended library: libX11.so
+<div class="highlight"><pre><span></span>Missing recommended library: libX11.so
 Missing recommended library: libXi.so
 Missing recommended library: libXmu.so
 Missing recommended library: libGL.so
@@ -506,7 +503,7 @@ find libraries in <code>/usr/lib</code>. To fix this, I created symlinks in
 <code>/usr/lib/</code> to the corresponding files:
 </p>
 
-<div class="highlight"><pre>sudo ln -s x86_64-linux-gnu/libX11.so libX11.so
+<div class="highlight"><pre><span></span>sudo ln -s x86_64-linux-gnu/libX11.so libX11.so
 sudo ln -s x86_64-linux-gnu/libXi.so libXi.so
 sudo ln -s x86_64-linux-gnu/libXmu.so libXmu.so
 sudo ln -s x86_64-linux-gnu/libGL.so libGL.so
@@ -517,7 +514,7 @@ I uninstalled and reinstalled the toolkit, finally receiving the
 following output:
 </p>
 
-<div class="highlight"><pre>===========
+<div class="highlight"><pre><span></span>===========
 = Summary =
 ===========
 
@@ -572,7 +569,7 @@ them by using <b>update-alternatives</b>. I configured the alternatives
 with the following commands:
 </p>
 
-<div class="highlight"><pre>sudo update-alternatives --remove-all gcc
+<div class="highlight"><pre><span></span>sudo update-alternatives --remove-all gcc
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 60
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 40
 </pre></div>
@@ -581,7 +578,7 @@ sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 40
 Next, I switched to version 4.8 using
 </p>
 
-<div class="highlight"><pre>sudo update-alternatives --config gcc
+<div class="highlight"><pre><span></span>sudo update-alternatives --config gcc
 </pre></div>
 
 <p>
@@ -589,7 +586,7 @@ Checking the version on the command line to ensure that 4.8 was
 selected:
 </p>
 
-<div class="highlight"><pre>kmdouglass@kmd-laptop1:~/src$ gcc --version
+<div class="highlight"><pre><span></span>kmdouglass@kmd-laptop1:~/src$ gcc --version
 gcc (Debian 4.8.4-1) 4.8.4
 Copyright (C) 2013 Free Software Foundation, Inc.
 This is free software; see the source for copying conditions.  There is NO
@@ -605,7 +602,7 @@ created a build directory. I switched back to gcc 4.9 using
 script.
 </p>
 
-<div class="highlight"><pre>cd ~/src
+<div class="highlight"><pre><span></span>cd ~/src
 tar -xvzf gcc-4.8.2.tar.gz
 mkdir gobj
 cd gobj
@@ -619,7 +616,7 @@ packages to pass the configuration checks. Once the configuration
 was succesful, I started the build.
 </p>
 
-<div class="highlight"><pre>make bootstrap
+<div class="highlight"><pre><span></span>make bootstrap
 </pre></div>
 
 <p>
@@ -641,7 +638,7 @@ the compiler to the directory that was set in the configure
 script:
 </p>
 
-<div class="highlight"><pre>sudo make install
+<div class="highlight"><pre><span></span>sudo make install
 </pre></div>
 
 <p>
@@ -649,7 +646,7 @@ Don't forget to use <b>update-alternatives</b> and switch gcc to the
 version you want.
 </p>
 
-<div class="highlight"><pre>sudo update-alternatives --remove gcc
+<div class="highlight"><pre><span></span>sudo update-alternatives --remove gcc
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 <span class="m">70</span> --slave /usr/bin/g++ g++ /usr/bin/g++-4.9 
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 <span class="m">20</span> 
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/local/gcc/4.8.2/bin/gcc <span class="m">10</span> --slave /usr/bin/g++ g++ /usr/local/gcc/4.8.2/bin/g++
@@ -668,7 +665,7 @@ If everything was installed correctly, you can try compiling the
 samples:
 </p>
 
-<div class="highlight"><pre><span class="nb">cd</span> ~/NVIDIA_CUDA-6.5_Samples
+<div class="highlight"><pre><span></span>&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold;"</span>&gt;cd&lt;/span&gt; ~/NVIDIA_CUDA-6.5_Samples
 make
 </pre></div>
 
@@ -697,7 +694,7 @@ saved in <code>/etc/modprobe.d</code>. You may also need to reinstall the
 xserver and reconfigure it:
 </p>
 
-<div class="highlight"><pre>sudo apt-get install --reinstall xserver-xorg-video-nouveau
+<div class="highlight"><pre><span></span>sudo apt-get install --reinstall xserver-xorg-video-nouveau
 sudo dpkg-reconfigure xserver-xorg
 sudo shutdown -r now
 </pre></div>

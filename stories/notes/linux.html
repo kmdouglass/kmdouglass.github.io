@@ -56,9 +56,6 @@ MathJax.Hub.Config({
 <a href="../../posts/index.html">Blog</a>
                 </li>
 <li>
-<a href="../../categories/index.html">Tags</a>
-                </li>
-<li>
 <a href="../../archive.html">Archive</a>
                 </li>
 <li>
@@ -314,7 +311,7 @@ stick as the latest message. On my machine, it is labeled as
 <code>/dev/sdb/</code>.
 </p>
 
-<div class="highlight"><pre>sudo cp Downloads/debian-live-7.4-amd64-xfce-desktop.iso /dev/sdb<span class="p">;</span> sync
+<div class="highlight"><pre><span></span>sudo cp Downloads/debian-live-7.4-amd64-xfce-desktop.iso /dev/sdb<span class="p">;</span> sync
 </pre></div>
 
 <p>
@@ -544,7 +541,7 @@ connect to automatically. In this file, add the following lines to
 add a network:
 </p>
 
-<div class="highlight"><pre>auto wlan0
+<div class="highlight"><pre><span></span>auto wlan0
 iface wlan0 inet dhcp
 wpa-ssid mynetwork
 wpa-psk password
@@ -578,7 +575,7 @@ I can get the latest emacs source files from the emacs git
 repository. Use the command
 </p>
 
-<div class="highlight"><pre>git clone --depth <span class="m">1</span> git://git.sv.gnu.org/emacs.git
+<div class="highlight"><pre><span></span>git clone --depth <span class="m">1</span> git://git.sv.gnu.org/emacs.git
 </pre></div>
 
 <p>
@@ -725,7 +722,7 @@ the sources above. I needed to add the recommended special tags to
 avoid an insserv error. The script looks like this:
 </p>
 
-<div class="highlight"><pre>### BEGIN INIT INFO
+<div class="highlight"><pre><span></span>### BEGIN INIT INFO
 # Provides:          dropbox
 # Required-Start:    $local_fs $network
 # Required-Stop:     $local_fs
@@ -802,7 +799,7 @@ exit 0
 Next, I ran the following commands:
 </p>
 
-<div class="highlight"><pre>sudo chmod +x /etc/init.d/dropbox 
+<div class="highlight"><pre><span></span>sudo chmod +x /etc/init.d/dropbox 
 sudo update-rc.d dropbox defaults
 </pre></div>
 
@@ -853,7 +850,7 @@ I installed Adobe Flash by adding "contrib" to the list of primary
 repositories in <code>/etc/apt/sources.list</code>. Then I ran the commands
 </p>
 
-<div class="highlight"><pre>sudo apt-get update
+<div class="highlight"><pre><span></span>sudo apt-get update
 sudo apt-get install flashplugin-nonfree
 </pre></div>
 
@@ -882,7 +879,7 @@ To update the Flash plugin, I've found that a simple <code>sudo apt-get
 following command:
 </p>
 
-<div class="highlight"><pre>sudo update-flashplugin-nonfree --install
+<div class="highlight"><pre><span></span>sudo update-flashplugin-nonfree --install
 </pre></div>
 
 <hr>
@@ -961,7 +958,7 @@ creators make no guarantees as to how well it will work.)
 I can backup my important data using the following command:
 </p>
 
-<div class="highlight"><pre>rsync -av --delete /Directory1/ /Directory2/
+<div class="highlight"><pre><span></span>rsync -av --delete /Directory1/ /Directory2/
 </pre></div>
 
 <p>
@@ -977,7 +974,7 @@ I setup daily backups with the Linux job scheduler cron. To use
 emacs to edit the cron file, I used the command
 </p>
 
-<div class="highlight"><pre>env &lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;EDITOR&lt;/span&gt;<span class="o">=</span>emacs crontab -e
+<div class="highlight"><pre><span></span>env &lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;EDITOR&lt;/span&gt;<span class="o">=</span>emacs crontab -e
 </pre></div>
 
 <p>
@@ -991,7 +988,7 @@ my backup everyday at 1:00 PM when I'm normally at lunch:
 </p>
 
 
-<div class="highlight"><pre><span class="m">0</span> <span class="m">13</span> * * * rsync -av --delete /Directory1/ /Directory2
+<div class="highlight"><pre><span></span><span class="m">0</span> <span class="m">13</span> * * * rsync -av --delete /Directory1/ /Directory2
 </pre></div>
 <hr>
 </div>
@@ -1005,14 +1002,14 @@ logging of cron by editing <code>/etc/rsyslog.conf</code> and uncommenting
 the line
 </p>
 
-<div class="highlight"><pre>&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;# &lt;/span&gt;&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;cron.*&lt;/span&gt;
+<div class="highlight"><pre><span></span>&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;# &lt;/span&gt;&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;cron.*&lt;/span&gt;
 </pre></div>
 
 <p>
 Then, restart rsyslog via
 </p>
 
-<div class="highlight"><pre>sudo /etc/init.d/rsyslog restart
+<div class="highlight"><pre><span></span>sudo /etc/init.d/rsyslog restart
 </pre></div>
 
 <hr>
@@ -1031,7 +1028,7 @@ plain text.
 Instead, edit the root user's crontab with
 </p>
 
-<div class="highlight"><pre>sudo env &lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;EDITOR&lt;/span&gt;<span class="o">=</span>emacs crontab -e
+<div class="highlight"><pre><span></span>sudo env &lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;EDITOR&lt;/span&gt;<span class="o">=</span>emacs crontab -e
 </pre></div>
 
 <p>
@@ -1053,7 +1050,7 @@ See this source: <a href="http://www.jveweb.net/en/archives/2011/02/using-rsync-
 Currently, I run incremental backups with
 </p>
 
-<div class="highlight"><pre>rsync -ab --backup-dir<span class="o">=</span>old_&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold;"</span>&gt;<span class="sb">`</span>date +<span class="se">\%</span>F<span class="sb">`</span>&lt;/span&gt; --delete --exclude<span class="o">=</span>old_* /source/ /destination/
+<div class="highlight"><pre><span></span>rsync -ab --backup-dir<span class="o">=</span>old_&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold;"</span>&gt;<span class="sb">`</span>date +<span class="se">\%</span>F<span class="sb">`</span>&lt;/span&gt; --delete --exclude<span class="o">=</span>old_* /source/ /destination/
 </pre></div>
 
 <p>
@@ -1076,7 +1073,7 @@ new line and not part of the above command.
 These fonts are located in the package <b>ttf-mscorefonts-installer</b>.
 </p>
 
-<div class="highlight"><pre>sudo apt-get install ttf-mscorefonts-installer
+<div class="highlight"><pre><span></span>sudo apt-get install ttf-mscorefonts-installer
 </pre></div>
 
 <hr>
@@ -1111,7 +1108,7 @@ to enable the setting in which one monitor was continuation of
 another.
 </p>
 
-<div class="highlight"><pre>xrandr --output MONITOR1 --left-of MONITOR2
+<div class="highlight"><pre><span></span>xrandr --output MONITOR1 --left-of MONITOR2
 </pre></div>
 
 <p>
@@ -1175,7 +1172,7 @@ To fix this, I first installed the <b>ntpdate</b> program, and then used
 it to sync to the Debian server:
 </p>
 
-<div class="highlight"><pre>sudo apt-get install ntpdate
+<div class="highlight"><pre><span></span>sudo apt-get install ntpdate
 sudo ntpdate-debian
 </pre></div>
 
@@ -1208,7 +1205,7 @@ openjdk-6 environment (guess what? it didn't work).
 To fix this, you can run the following from the command line:
 </p>
 
-<div class="highlight"><pre>sudo update-alternatives --config java
+<div class="highlight"><pre><span></span>sudo update-alternatives --config java
 </pre></div>
 
 <p>
@@ -1243,14 +1240,14 @@ To enable backports in Jessie, add it to <b>/etc/apt/sources.list</b>
 and then run <b>apt-get update</b>.
 </p>
 
-<div class="highlight"><pre>deb http://ftp.debian.org/debian jessie-backports main
+<div class="highlight"><pre><span></span>deb http://ftp.debian.org/debian jessie-backports main
 </pre></div>
 
 <p>
 To install a package from backports, use
 </p>
 
-<div class="highlight"><pre>apt-get -t jessie-backports install package
+<div class="highlight"><pre><span></span>apt-get -t jessie-backports install package
 </pre></div>
 
 <hr>
@@ -1291,7 +1288,7 @@ headers.
 I installed Python 3.4 with the following commands:
 </p>
 
-<div class="highlight"><pre>CXX="/usr/bin/g++" \./configure --prefix=/usr --enable-shared --with-system-expat --with-system-ffi --with-ensurepip=install
+<div class="highlight"><pre><span></span>CXX="/usr/bin/g++" \./configure --prefix=/usr --enable-shared --with-system-expat --with-system-ffi --with-ensurepip=install
 make
 </pre></div>
 
@@ -1299,7 +1296,7 @@ make
 Next, run the following commands as root:
 </p>
 
-<div class="highlight"><pre>make install
+<div class="highlight"><pre><span></span>make install
 chmod -v 755 /usr/lib/libpython3.4m.so
 chmod -v 755 /usr/lib/libpython3.so
 </pre></div>
@@ -1309,7 +1306,7 @@ For the doc files, download the Python HTML documentation from
 here: <a href="https://docs.python.org/3.4/download.html">https://docs.python.org/3.4/download.html</a>. Install it using:
 </p>
 
-<div class="highlight"><pre>install -v -dm755 /usr/share/doc/python-3.4.0/html
+<div class="highlight"><pre><span></span>install -v -dm755 /usr/share/doc/python-3.4.0/html
 tar --strip-components=1 --no-same-owner --no-same-permissions -C /usr/share/doc/python-3.4.0/html -xvf ../python-3.4.0-docs-html.tar.bz2
 </pre></div>
 
@@ -1325,7 +1322,7 @@ Finally, I removed <b>/usr/bin/python</b> and created a symbolic link to
 Python3.4 so that it would run as the default:
 </p>
 
-<div class="highlight"><pre>sudo rm /usr/bin/python
+<div class="highlight"><pre><span></span>sudo rm /usr/bin/python
 sudo ln -s /usr/bin/python3.4 /usr/bin/python
 </pre></div>
 
@@ -1354,7 +1351,7 @@ Python3 is actually <b>pip3</b>. Use the <b>[notebook]</b> option if you also
 want to install the <a href="http://ipython.org/notebook.html">IPython notebook</a> as well.
 </p>
 
-<div class="highlight"><pre>sudo pip3 install ipython<span class="o">[</span>notebook<span class="o">]</span>
+<div class="highlight"><pre><span></span>sudo pip3 install ipython<span class="o">[</span>notebook<span class="o">]</span>
 </pre></div>
 
 <p>
@@ -1362,7 +1359,7 @@ When I ran IPython the first time, I received the following
 messages:
 </p>
 
-<div class="highlight"><pre>WARNING: IPython History requires SQLite, your history will not be saved
+<div class="highlight"><pre><span></span>WARNING: IPython History requires SQLite, your history will not be saved
 WARNING: Readline services not available or not loaded.
 WARNING: The auto-indent feature requires the readline library
 </pre></div>
@@ -1407,7 +1404,7 @@ this, I first created the default IPython configuration files by
 running
 </p>
 
-<div class="highlight"><pre>ipython profile create
+<div class="highlight"><pre><span></span>ipython profile create
 </pre></div>
 
 <p>
@@ -1521,7 +1518,7 @@ the Marmalade repo using package.el, the repository version was
 el-get, I added the following lines to init.el:
 </p>
 
-<div class="highlight"><pre><span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold; font-style: italic;"</span><span class="nv">&gt;</span><span class="c1">; &lt;/span&gt;&lt;span style="font-weight: bold; font-style: italic;"&gt;Standard el-get setup&lt;/span&gt;</span>
+<div class="highlight"><pre><span></span><span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold; font-style: italic;"</span><span class="nv">&gt;</span><span class="c1">; &lt;/span&gt;&lt;span style="font-weight: bold; font-style: italic;"&gt;Standard el-get setup&lt;/span&gt;</span>
 <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold; font-style: italic;"</span><span class="nv">&gt;</span><span class="c1">; &lt;/span&gt;&lt;span style="font-weight: bold; font-style: italic;"&gt;(See also: https://github.com/dimitri/el-get#basic-setup)&lt;/span&gt;</span>
 <span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">'load-path</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"~/.emacs.d/el-get/el-get"</span><span class="nv">&lt;/span&gt;</span><span class="p">)</span>
 
@@ -1550,7 +1547,7 @@ Finally, I added the following lines to init.el, restarted emacs,
 and had a working jedi install.
 </p>
 
-<div class="highlight"><pre><span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold; font-style: italic;"</span><span class="nv">&gt;</span><span class="c1">;; &lt;/span&gt;&lt;span style="font-weight: bold; font-style: italic;"&gt;Standard Jedi.el setting&lt;/span&gt;</span>
+<div class="highlight"><pre><span></span><span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold; font-style: italic;"</span><span class="nv">&gt;</span><span class="c1">;; &lt;/span&gt;&lt;span style="font-weight: bold; font-style: italic;"&gt;Standard Jedi.el setting&lt;/span&gt;</span>
 <span class="p">(</span><span class="nf">add-hook</span> <span class="ss">'python-mode-hook</span> <span class="ss">'jedi:setup</span><span class="p">)</span>
 <span class="p">(</span><span class="nf">setq</span> <span class="nv">jedi:complete-on-dot</span> <span class="nv">t</span><span class="p">)</span>
 </pre></div>
@@ -1591,7 +1588,7 @@ minimal example from the Stack Exchange link and modified it
 slightly:
 </p>
 
-<div class="highlight"><pre>#+LATEX_HEADER: \usepackage{fullpage}
+<div class="highlight"><pre><span></span>#+LATEX_HEADER: \usepackage{fullpage}
 #+LATEX_HEADER: \usepackage[backend=bibtex,sorting=none]{biblatex}
 #+LATEX_HEADER: \usepackage{hyperref}
 #+LATEX_HEADER: \addbibresource{telomeres.bib}
@@ -1614,7 +1611,7 @@ Finally, I changed my original init.el file by modifying
 <b>org-latex-pdf-process</b> to the following:
 </p>
 
-<div class="highlight"><pre><span class="p">(</span><span class="nf">setq</span> <span class="nv">org-latex-pdf-process</span>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nf">setq</span> <span class="nv">org-latex-pdf-process</span>
   <span class="o">'</span><span class="p">(</span><span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -bibtex -f %f"</span><span class="nv">&lt;/span&gt;</span><span class="p">))</span>
 </pre></div>
 
@@ -1622,7 +1619,7 @@ Finally, I changed my original init.el file by modifying
 This was changed from what I had used in the past:
 </p>
 
-<div class="highlight"><pre><span class="p">(</span><span class="nf">setq</span> <span class="nv">org-latex-to-pdf-process</span> <span class="o">'</span><span class="p">(</span><span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"pdflatex -interaction nonstopmode %b"</span><span class="nv">&lt;/span&gt;</span>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nf">setq</span> <span class="nv">org-latex-to-pdf-process</span> <span class="o">'</span><span class="p">(</span><span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"pdflatex -interaction nonstopmode %b"</span><span class="nv">&lt;/span&gt;</span>
                                  <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"/usr/bin/bibtex %b"</span><span class="nv">&lt;/span&gt;</span>
                                  <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"pdflatex -interaction nonstopmode %b"</span><span class="nv">&lt;/span&gt;</span>
                                  <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"pdflatex -interaction nonstopmode %b"</span><span class="nv">&lt;/span&gt;</span><span class="p">))</span>
@@ -1675,7 +1672,7 @@ First, I created a credentials file with my Windows username and
 password called <b>~/.smbcredentials</b>. It contained the lines
 </p>
 
-<div class="highlight"><pre>&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;username&lt;/span&gt;<span class="o">=</span>USERNAME
+<div class="highlight"><pre><span></span>&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;username&lt;/span&gt;<span class="o">=</span>USERNAME
 &lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;password&lt;/span&gt;<span class="o">=</span>PASSWORD
 </pre></div>
 
@@ -1689,7 +1686,7 @@ Next, I created a mount point for the network share at
 <b>/mnt/LEB-Z</b>. I then added the following line to <b>/etc/fstab</b>
 </p>
 
-<div class="highlight"><pre>//SERVERIP/LEB /mnt/LEB-Z cifs &lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;credentials&lt;/span&gt;<span class="o">=</span>/home/kmdouglass/.smbcredentials,&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;iocharset&lt;/span&gt;<span class="o">=</span>utf8,&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;sec&lt;/span&gt;<span class="o">=</span>ntlm,noauto <span class="m">0</span> 0
+<div class="highlight"><pre><span></span>//SERVERIP/LEB /mnt/LEB-Z cifs &lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;credentials&lt;/span&gt;<span class="o">=</span>/home/kmdouglass/.smbcredentials,&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;iocharset&lt;/span&gt;<span class="o">=</span>utf8,&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;sec&lt;/span&gt;<span class="o">=</span>ntlm,noauto <span class="m">0</span> 0
 </pre></div>
 
 <p>
@@ -1716,7 +1713,7 @@ directories.
 To get around this, I modified the fstab line as such:
 </p>
 
-<div class="highlight"><pre>//SERVERIP/LEB /mnt/LEB-Z cifs &lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;credentials&lt;/span&gt;<span class="o">=</span>/home/kmdouglass/.smbcredentials,&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;iocharset&lt;/span&gt;<span class="o">=</span>utf8,&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;sec&lt;/span&gt;<span class="o">=</span>ntlm,&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;uid&lt;/span&gt;<span class="o">=</span>1000,&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;gid&lt;/span&gt;<span class="o">=</span>1000,noauto <span class="m">0</span> 0
+<div class="highlight"><pre><span></span>//SERVERIP/LEB /mnt/LEB-Z cifs &lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;credentials&lt;/span&gt;<span class="o">=</span>/home/kmdouglass/.smbcredentials,&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;iocharset&lt;/span&gt;<span class="o">=</span>utf8,&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;sec&lt;/span&gt;<span class="o">=</span>ntlm,&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;uid&lt;/span&gt;<span class="o">=</span>1000,&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;gid&lt;/span&gt;<span class="o">=</span>1000,noauto <span class="m">0</span> 0
 </pre></div>
 
 <p>
@@ -1730,7 +1727,7 @@ After mounting the share, the ownership still needs to be
 changed. This is done with the command
 </p>
 
-<div class="highlight"><pre>sudo chown -R user:user /mnt/LEB-Z
+<div class="highlight"><pre><span></span>sudo chown -R user:user /mnt/LEB-Z
 </pre></div>
 
 <p>
@@ -1805,7 +1802,7 @@ Next, I installed GRUB to the MBR of this USB stick by typing this
 important command:
 </p>
 
-<div class="highlight"><pre>grub-install --force --no-floppy --boot-directory<span class="o">=</span>/mnt/USB/boot /dev/sdX
+<div class="highlight"><pre><span></span>grub-install --force --no-floppy --boot-directory<span class="o">=</span>/mnt/USB/boot /dev/sdX
 </pre></div>
 
 <p>
@@ -1844,7 +1841,7 @@ partition to /mnt/linux. Next, I loaded some necessary directories
 from the running live instances into the newly mounted partition.
 </p>
 
-<div class="highlight"><pre>sudo mount --bind /dev /mnt/linux/dev
+<div class="highlight"><pre><span></span>sudo mount --bind /dev /mnt/linux/dev
 sudo mount --bind /sys /mnt/linux/sys
 sudo mount --bind /proc /mnt/linux/proc
 </pre></div>
@@ -1854,7 +1851,7 @@ Next I <b>chroot</b>'ed into the partition with <b>sudo chroot
 /mnt/linux</b>. I next ran
 </p>
 
-<div class="highlight"><pre>sudo update-grub
+<div class="highlight"><pre><span></span>sudo update-grub
 </pre></div>
 
 <p>
@@ -1894,7 +1891,7 @@ instead), I disabled the OS prober by adding the following line to
 the top of <code>/etc/default/grub</code>:
 </p>
 
-<div class="highlight"><pre>GRUB_DISABLE_OS_PROBER=true
+<div class="highlight"><pre><span></span>GRUB_DISABLE_OS_PROBER=true
 </pre></div>
 
 <p>

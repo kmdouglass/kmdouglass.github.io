@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0"><channel><title>Kyle M. Douglass (computing)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link rel="self" type="application/rss+xml" href="http://kmdouglass.github.io/categories/computing.xml"></atom:link><language>en</language><lastBuildDate>Sun, 20 Nov 2016 12:24:08 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Learning Python's Multiprocessing Module</title><link>http://kmdouglass.github.io/posts/learning-pythons-multiprocessing-module.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;p&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Kyle M. Douglass (computing)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link rel="self" href="http://kmdouglass.github.io/categories/computing.xml" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Sun, 20 Nov 2016 13:43:39 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Learning Python's Multiprocessing Module</title><link>http://kmdouglass.github.io/posts/learning-pythons-multiprocessing-module.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;p&gt;
 I've been doing a bit of programming work lately that would greatly
 benefit from a speed boost using parallel/concurrent processing
 tools. Essentially, I'm doing a &lt;a href="http://www.mathworks.com/help/simulink/examples/parallel-simulations-using-parfor-parameter-sweep-in-normal-mode.html"&gt;parameter sweep&lt;/a&gt; where the values for
@@ -61,7 +61,7 @@ calling its &lt;b&gt;start()&lt;/b&gt; method.
 The basic example from their site looks like this:
 &lt;/p&gt;
 
-&lt;div class="highlight"&gt;&lt;pre&gt;import multiprocessing
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;import multiprocessing
 
 def worker():
     """worker function"""
@@ -81,7 +81,7 @@ In this example, it's important to create the Process instances inside
 the
 &lt;/p&gt;
 
-&lt;div class="highlight"&gt;&lt;pre&gt;if __name__ == '__main__':
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;if __name__ == '__main__':
 &lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;
@@ -97,7 +97,7 @@ To send arguments to the function (&lt;b&gt;worker()&lt;/b&gt; in the example ab
 we can use the &lt;b&gt;args&lt;/b&gt; keyword in the Process object instantiation like
 &lt;/p&gt;
 
-&lt;div class="highlight"&gt;&lt;pre&gt;p = multiprocessing.Process(target=worker, args=(i,))
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;p = multiprocessing.Process(target=worker, args=(i,))
 &lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;
@@ -123,7 +123,7 @@ for squaring an argument, and supply this function and the list of
 integers to &lt;b&gt;Pool.map()&lt;/b&gt;. The code looks like this:
 &lt;/p&gt;
 
-&lt;div class="highlight"&gt;&lt;pre&gt;import multiprocessing
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;import multiprocessing
 
 def funSquare(num):
     return num ** 2
@@ -188,7 +188,7 @@ demonstrate an example where &lt;b&gt;Pool.map()&lt;/b&gt; is applied to a list 
 numbers.
 &lt;/p&gt;
 
-&lt;div class="highlight"&gt;&lt;pre&gt;import multiprocessing
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;import multiprocessing
 
 def runSimulation(params):
     """This is the main processing function. It will contain whatever
@@ -257,7 +257,7 @@ long as instances of this class can be &lt;a href="https://docs.python.org/3/lib
 iterable in &lt;b&gt;Pool.map()&lt;/b&gt;, not just lists of floating point numbers.
 &lt;/p&gt;
 
-&lt;div class="highlight"&gt;&lt;pre&gt;import multiprocessing
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;import multiprocessing
 
 class simObject():
     def __init__(self, params):
@@ -315,7 +315,7 @@ The following code makes a rough comparison between computation time
 for the parallel and serial versions of &lt;b&gt;map()&lt;/b&gt;:
 &lt;/p&gt;
 
-&lt;div class="highlight"&gt;&lt;pre&gt;import multiprocessing
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;import multiprocessing
 import time
 
 def runSimulation(params):
@@ -377,7 +377,7 @@ discussion&lt;/a&gt;.) To fix this, we can import Python's &lt;b&gt;os&lt;/b&gt;
 the task affinity in our code:
 &lt;/p&gt;
 
-&lt;div class="highlight"&gt;&lt;pre&gt;os.system("taskset -p 0xff %d" % os.getpid())
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;os.system("taskset -p 0xff %d" % os.getpid())
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;

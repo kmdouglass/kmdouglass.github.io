@@ -57,9 +57,6 @@ MathJax.Hub.Config({
 <a href="../../posts/index.html">Blog</a>
                 </li>
 <li>
-<a href="../../categories/index.html">Tags</a>
-                </li>
-<li>
 <a href="../../archive.html">Archive</a>
                 </li>
 <li>
@@ -204,7 +201,7 @@ though it does require a good deal of time and effort.
 <h4 id="sec-2-1-1">
 <span class="section-number-4">2.1.1</span> Download required repositories</h4>
 <div class="outline-text-4" id="text-2-1-1">
-<div class="highlight"><pre>sudo apt-get install cmake libglu1-mesa-dev libhdf5-dev libmysqlclient-dev libvigraimpex3
+<div class="highlight"><pre><span></span>sudo apt-get install cmake libglu1-mesa-dev libhdf5-dev libmysqlclient-dev libvigraimpex3
 </pre></div>
 
 <p>
@@ -230,7 +227,7 @@ running. I found information on VIGRA <a href="http://ukoethe.github.io/vigra/">
 I added the following lines to my .bashrc so the Makefile could find the Java library files.
 </p>
 
-<div class="highlight"><pre># Setup the Java environment for Cell profiler
+<div class="highlight"><pre><span></span># Setup the Java environment for Cell profiler
 export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
 export LD_LIBRARY_PATH=/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/amd64/server:/usr/lib/jvm/java-7-openjdk-amd64:/usr/lib/jvm/java-7-openjdk-amd64/include
 </pre></div>
@@ -253,7 +250,7 @@ architectures.
 I fixed this by overwriting the HOSTTYPE variable as
 </p>
 
-<div class="highlight"><pre>export HOSTTYPE="amd64"
+<div class="highlight"><pre><span></span>export HOSTTYPE="amd64"
 </pre></div>
 <hr>
 </div>
@@ -283,7 +280,7 @@ symlinks to the .so library files in the directory where wx would
 search for them.
 </p>
 
-<div class="highlight"><pre>cd /usr/lib
+<div class="highlight"><pre><span></span>cd /usr/lib
 sudo ln -s x86_64-linux-gnu/libGL.so libGL.so
 sudo ln -s x86_64-linux-gnu/libGL.so.1 libGL.so.1
 sudo ln -s x86_64-linux-gnu/libGLU.a libGLU.a
@@ -316,9 +313,9 @@ not find the BLAS library. These were fixed by setting the following
 environment variables <a href="http://www.scipy.org/scipylib/building/linux.html">as detailed here</a>:
 </p>
 
-<div class="highlight"><pre><span class="nb">export </span><span class="nv">BLAS</span><span class="o">=</span><span class="s2">"/usr/lib/libblas.so"</span>
-<span class="nb">export </span><span class="nv">LAPACK</span><span class="o">=</span><span class="s2">"/usr/lib/liblapack.so"</span>
-<span class="nb">export </span><span class="nv">ATLAS</span><span class="o">=</span><span class="s2">"/usr/lib/libatlas.so"</span>
+<div class="highlight"><pre><span></span>&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold;"</span>&gt;export&lt;/span&gt; &lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;BLAS&lt;/span&gt;<span class="o">=</span>&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-style: italic;"</span>&gt;<span class="s2">"/usr/lib/libblas.so"</span>&lt;/span&gt;
+&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold;"</span>&gt;export&lt;/span&gt; &lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;LAPACK&lt;/span&gt;<span class="o">=</span>&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-style: italic;"</span>&gt;<span class="s2">"/usr/lib/liblapack.so"</span>&lt;/span&gt;
+&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold;"</span>&gt;export&lt;/span&gt; &lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;ATLAS&lt;/span&gt;<span class="o">=</span>&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-style: italic;"</span>&gt;<span class="s2">"/usr/lib/libatlas.so"</span>&lt;/span&gt;
 </pre></div>
 
 <p>
@@ -334,7 +331,7 @@ These files might be stored elsewhere on your system. To find them,
 try searching for them using <code>find</code>:
 </p>
 
-<div class="highlight"><pre>sudo find / -name libblas.so
+<div class="highlight"><pre><span></span>sudo find / -name libblas.so
 </pre></div>
 <hr>
 </div>
@@ -349,7 +346,7 @@ A major error I encountered using the Makefile approach
 occurred during the installation of cellh5:
 </p>
 
-<div class="highlight"><pre>ImportError: scipy/linalg/clapack.so: undefined symbol: clapack_sgesv
+<div class="highlight"><pre><span></span>ImportError: scipy/linalg/clapack.so: undefined symbol: clapack_sgesv
 </pre></div>
 
 <p>
@@ -359,7 +356,7 @@ for me by following <a href="http://danielnouri.org/notes/2012/12/19/libblas-and
 the .so file my Debian system was using for <code>liblapack.so.3</code>.
 </p>
 
-<div class="highlight"><pre>sudo update-alternatives --config libblas.so.3
+<div class="highlight"><pre><span></span>sudo update-alternatives --config libblas.so.3
 sudo update-alternatives --config liblapack.so.3
 </pre></div>
 
@@ -443,7 +440,7 @@ Inside these files, I added:
 <p>
 <b>security.pref</b>
 </p>
-<div class="highlight"><pre>Package: *
+<div class="highlight"><pre><span></span>Package: *
 Pin: release l=Debian-Security
 Pin-Priority: 1000
 </pre></div>
@@ -451,7 +448,7 @@ Pin-Priority: 1000
 <p>
 <b>stable.pref</b>
 </p>
-<div class="highlight"><pre>Package: *
+<div class="highlight"><pre><span></span>Package: *
 Pin: release a=stable
 Pin-Priority: 995
 </pre></div>
@@ -459,7 +456,7 @@ Pin-Priority: 995
 <p>
 <b>testing.pref</b>
 </p>
-<div class="highlight"><pre>Package: *
+<div class="highlight"><pre><span></span>Package: *
 Pin: release a=testing
 Pin-Priority: 750
 </pre></div>
@@ -467,7 +464,7 @@ Pin-Priority: 750
 <p>
 <b>unstable.pref</b>
 </p>
-<div class="highlight"><pre>Package: *
+<div class="highlight"><pre><span></span>Package: *
 Pin: release a=unstable
 Pin-Priority: 50
 </pre></div>
@@ -475,7 +472,7 @@ Pin-Priority: 50
 <p>
 <b>experimental.pref</b>
 </p>
-<div class="highlight"><pre>Package: *
+<div class="highlight"><pre><span></span>Package: *
 Pin: release a=experimental
 Pin-Priority: 1
 </pre></div>
@@ -501,7 +498,7 @@ Next, I added the following lines to the end my
 <code>/etc/apt/sources.list</code> file:
 </p>
 
-<div class="highlight"><pre># Testing repository - main, contrib and non-free branches
+<div class="highlight"><pre><span></span># Testing repository - main, contrib and non-free branches
 deb http://debian.ethz.ch/debian/ testing main non-free contrib
 deb-src http://debian.ethz.ch/debian/ testing main non-free contrib
 
@@ -529,7 +526,7 @@ above.)
 At this point, to check whether the pin-priorities were set, type
 </p>
 
-<div class="highlight"><pre>sudo apt-get update
+<div class="highlight"><pre><span></span>sudo apt-get update
 sudo apt-cache policy libc6-dev
 </pre></div>
 
@@ -545,7 +542,7 @@ install</code>.
 Finally, I installed the testing version of libc6-dev with
 </p>
 
-<div class="highlight"><pre>sudo apt-get -t testing install libc6-dev
+<div class="highlight"><pre><span></span>sudo apt-get -t testing install libc6-dev
 </pre></div>
 
 <p>
@@ -560,7 +557,7 @@ the Debian non-stable repos.
 <h4 id="sec-2-1-9">
 <span class="section-number-4">2.1.9</span> Run the Makefile</h4>
 <div class="outline-text-4" id="text-2-1-9">
-<div class="highlight"><pre>export PREFIX="${HOME}/cp2"
+<div class="highlight"><pre><span></span>export PREFIX="${HOME}/cp2"
 export GITHOME=$PREFIX/src/CellProfiler
 mkdir -p $PREFIX/src
 git clone https://github.com/CellProfiler/CellProfiler $GITHOME
@@ -599,7 +596,7 @@ To run CellProfiler, I created a bash script containing the following
 lines:
 </p>
 
-<div class="highlight"><pre>#!/bin/bash
+<div class="highlight"><pre><span></span>#!/bin/bash
 
 export PATH="$HOME/cp2/bin:${PATH}"
 export LD_LIBRARY_PATH="$HOME/cp2/lib:$HOME/cp2/lib/mysql:$HOME/cp2/lib64:${LD_LIBRARY_PATH}"
@@ -647,7 +644,7 @@ inside the virtualenv as suggested <a href="http://www.dangtrinh.com/2013/10/how
 python-wxgtk2.8 package is installed.
 </p>
 
-<div class="highlight"><pre>ln -s /usr/lib/python2.7/dist-packages/wx* /home/envs/CellProfiler/lib/python2.7/site-packages/
+<div class="highlight"><pre><span></span>ln -s /usr/lib/python2.7/dist-packages/wx* /home/envs/CellProfiler/lib/python2.7/site-packages/
 </pre></div>
 
 <p>
@@ -671,7 +668,7 @@ found shortly after I managed to get CellProfiler running. Since
 <a href="https://github.com/CellH5/cellh5">CellH5</a> is not in PyPi, I manually installed it to my virtualenv.
 </p>
 
-<div class="highlight"><pre>pip install pandas scikit-learn lxml
+<div class="highlight"><pre><span></span>pip install pandas scikit-learn lxml
 git clone https://github.com/CellH5/cellh5.git
 cd cellh5
 ~/envs/CellProfiler/bin/python setup.py install
@@ -701,7 +698,7 @@ installed them to my system's site-packages with Synaptic, then copied
 them to my virtual env like so:
 </p>
 
-<div class="highlight"><pre>sudo apt-get install python-vigra
+<div class="highlight"><pre><span></span>sudo apt-get install python-vigra
 cp /usr/lib/pymodules/python2.7/vigra/ ~/envs/CellProfiler/lib/python2.7/site-packages/
 </pre></div>
 
@@ -724,7 +721,7 @@ This is the list of Python packages installed in my CellProfiler
 virtualenv.
 </p>
 
-<div class="highlight"><pre>(CellProfiler)kmdouglass@kmd-laptop1:~/src/CellProfiler$ pip freeze
+<div class="highlight"><pre><span></span>(CellProfiler)kmdouglass@kmd-laptop1:~/src/CellProfiler$ pip freeze
 cellh5==1.2.0
 Cython==0.22.1
 h5py==2.5.0
@@ -791,7 +788,7 @@ When starting my first pipeline (the example
 because it could not find a specific Python module called readlines.
 </p>
 
-<div class="highlight"><pre>Progress Counter({u'Unprocessed': 1})
+<div class="highlight"><pre><span></span>Progress Counter({u'Unprocessed': 1})
 Starting workers on address tcp://127.0.0.1:62445
 Worker 0: Traceback (most recent call last):
 Worker 0:   File "/home/kmdouglass/cp2/src/CellProfiler/cellprofiler/analysis_wo
@@ -823,7 +820,7 @@ I used pip to force an install of readline to the site-packages
 directory used by CellProfiler's Python install.
 </p>
 
-<div class="highlight"><pre>export READLINE="/home/kmdouglass/cp2/lib/python2.7/site-packages"
+<div class="highlight"><pre><span></span>export READLINE="/home/kmdouglass/cp2/lib/python2.7/site-packages"
 pip install --target=$READLINE readline
 </pre></div>
 </div>
