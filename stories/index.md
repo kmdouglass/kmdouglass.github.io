@@ -37,10 +37,10 @@
       <div class="panel-body">
 
 <div align = "center">
-<a href="galleries/Microscopy Images/Caulobacter Crescentus.png"><img src="galleries/Microscopy Images/Caulobacter Crescentus.png" alt="Caulobacter Crescentus", style="width:20%;height:20%;padding:5px;"></a>
-<a href="galleries/Microscopy Images/Cos7 Mitochondria 2.png"><img src="galleries/Microscopy Images/Cos7 Mitochondria 2.png" alt="Cos7 Mitochondria 2", style="width:20%;height:20%;padding:5px;"></a>
-<a href="galleries/Microscopy Images/Cos7 Microtubules Mitochondria.png"><img src="galleries/Microscopy Images/Cos7 Microtubules Mitochondria.png" alt="Cos7 Microtubules and Mitochondria", style="width:20%;height:20%;padding:5px;"></a>
-<a href="galleries/Microscopy Images/Cos7 Mitochondria.png"><img src="galleries/Microscopy Images/Cos7 Mitochondria.png" alt="Cos7 Mitochdonria", style="width:20%;height:20%;padding:5px;"></a>
+<a href="galleries/Microscopy Images/Caulobacter Crescentus.png"><img src="galleries/Microscopy Images/Caulobacter Crescentus.png" alt="Caulobacter Crescentus", style="width:30%;height:30%;padding:5px;"></a>
+<a href="galleries/Microscopy Images/Cos7 Mitochondria 2.png"><img src="galleries/Microscopy Images/Cos7 Mitochondria 2.png" alt="Cos7 Mitochondria 2", style="width:30%;height:30%;padding:5px;"></a><br>
+<a href="galleries/Microscopy Images/Cos7 Microtubules Mitochondria.png"><img src="galleries/Microscopy Images/Cos7 Microtubules Mitochondria.png" alt="Cos7 Microtubules and Mitochondria", style="width:30%;height:30%;padding:5px;"></a>
+<a href="galleries/Microscopy Images/Cos7 Mitochondria.png"><img src="galleries/Microscopy Images/Cos7 Mitochondria.png" alt="Cos7 Mitochdonria", style="width:30%;height:30%;padding:5px;"></a>
 <p style = "font-style:italic;">All images were taken with the help of Christian Sieben and Ambroise Lambert in the laboratory of <a href="http://leb.epfl.ch">Suliana Manley</a>.</p>
 </div></div></div>
 
