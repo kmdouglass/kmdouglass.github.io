@@ -253,8 +253,8 @@ EXTRA_HEAD_DATA = '''<script type="text/javascript" src="https://cdn.mathjax.org
 
    #+BEGIN_SRC
 div.text_cell_render {
-  padding: 0px;
-  color: #c8c8c8;
+padding: 0px;
+color: #c8c8c8;
 }
    #+END_SRC
 
@@ -263,9 +263,21 @@ div.text_cell_render {
 
    #+BEGIN_SRC
 .rendered_html :link:hover {
-  text-decoration: underline;
+text-decoration: underline;
 }
    #+END_SRC
+
+*** Fixing the output font color
+    Output from code execution is black by default. I changed it to
+    white by editing =nikola_ipython.css= and adding a *color* option
+    to the element *div.output_area pre*:
+
+#+BEGIN_SRC
+div.output_area pre {
+color: #FFFFFF;
+font-size: 13px;
+}
+#+END_SRC
 
 -----
 

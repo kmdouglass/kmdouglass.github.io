@@ -118,6 +118,7 @@ MathJax.Hub.Config({
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>*Note: I remade this post to address minor inconsistencies and what I perceived to be a lack of attention to units of some of the physical quantities. The updated post may be found <a href="kmdouglass.github.io/posts/simple-pupil-function-calculations.html">here</a>.</p>
 <h2 id="Simple-simulations-of-microscope-pupil-functions">Simple simulations of microscope pupil functions<a class="anchor-link" href="simulating-microscope-pupil-functions.html#Simple-simulations-of-microscope-pupil-functions">¶</a>
 </h2>
 <p><a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0142949">In one of my recent publications</a>, my co-authors and I investigated an aberration that is especially pernicious for 3D localization microscopies such as <a href="https://en.wikipedia.org/wiki/Super-resolution_microscopy#STORM.2C_PALM_and_FPALM">STORM and PALM</a>. This aberration results in a dependence of the perceived position of a single, fluorescent molecule on its axial position within the focal plane of a microscope. To identify a possible source for this aberration, I employed a phase retrieval algorithm to obtain the pupil function of the microscope. I then decomposed the pupil function into a number of orthogonal polynomial terms and identified the specific terms that led to the aberration that we observed. In this case, terms associated with <a href="https://en.wikipedia.org/wiki/Coma_%28optics%29">coma</a> were the culprits.</p>

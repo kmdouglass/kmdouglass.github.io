@@ -19,11 +19,11 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/2016/index.html</loc>
-  <lastmod>2016-11-20T14:21:00Z</lastmod>
+  <lastmod>2016-12-04T09:57:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/archive.html</loc>
-  <lastmod>2016-11-20T14:21:00Z</lastmod>
+  <lastmod>2016-11-21T03:21:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/biology.html</loc>
@@ -47,7 +47,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/fourier-optics.html</loc>
-  <lastmod>2016-11-20T14:21:00Z</lastmod>
+  <lastmod>2016-12-04T09:52:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/index.html</loc>
@@ -63,11 +63,11 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/microscopy.html</loc>
-  <lastmod>2016-11-20T14:21:00Z</lastmod>
+  <lastmod>2016-12-04T09:57:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/optics.html</loc>
-  <lastmod>2016-11-20T14:21:00Z</lastmod>
+  <lastmod>2016-12-04T09:57:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/photonics.html</loc>
@@ -75,7 +75,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/python.html</loc>
-  <lastmod>2016-11-20T14:21:00Z</lastmod>
+  <lastmod>2016-12-04T09:57:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/sensing.html</loc>
@@ -115,7 +115,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/index.html</loc>
-  <lastmod>2016-11-20T14:24:00Z</lastmod>
+  <lastmod>2016-12-04T09:58:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/notes/fiji.html</loc>
@@ -147,7 +147,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/field-dependent-photophysics-video.html</loc>
-  <lastmod>2016-11-20T14:21:00Z</lastmod>
+  <lastmod>2016-12-04T09:48:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/half-wave%20plate.html</loc>
@@ -163,11 +163,11 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/index-2.html</loc>
-  <lastmod>2016-11-20T14:21:00Z</lastmod>
+  <lastmod>2016-11-21T03:21:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/index.html</loc>
-  <lastmod>2016-11-20T14:21:00Z</lastmod>
+  <lastmod>2016-12-04T09:57:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/learning-pythons-multiprocessing-module.html</loc>
@@ -206,8 +206,16 @@
   <lastmod>2016-11-20T14:21:00Z</lastmod>
  </url>
  <url>
+  <loc>http://kmdouglass.github.io/posts/simple-pupil-function-calculations.html</loc>
+  <lastmod>2016-12-04T09:52:00Z</lastmod>
+ </url>
+ <url>
   <loc>http://kmdouglass.github.io/posts/simulating-microscope-pupil-functions.html</loc>
-  <lastmod>2016-11-20T14:21:00Z</lastmod>
+  <lastmod>2016-12-04T09:57:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://kmdouglass.github.io/posts/simulating-simple-pupil-functions.html</loc>
+  <lastmod>2016-12-04T09:39:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/the-basics-of-virtualenv.html</loc>
@@ -263,7 +271,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/stories/notes/nikola.html</loc>
-  <lastmod>2016-11-20T14:21:00Z</lastmod>
+  <lastmod>2016-12-04T09:17:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/stories/notes/omero.html</loc>
