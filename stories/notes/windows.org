@@ -67,7 +67,17 @@ pnputil -f -d oemXX.inf
 
    /Information sources/
    1. http://www3.ntu.edu.sg/home/ehchua/programming/howto/cygwin_Howto.html
+
+   -----
+
+   *UPDATE DECEMBER 2016:* A reader recently informed me that the
+   directions below are for MSYS 1.0. There is however a newer (and
+   independent) version 2.0 available: https://msys2.github.io/. I
+   cannot at this point verify whether these instructions will
+   translate for MSYS2.0.
    
+   -----
+
    I really wanted a bash shell in Windows. I knew that Git for
    Windows implemented one, and I found that it's part of MSYS, a
    collection of packages for MinGw, [[http://www.mingw.org/][the Minimalist GNU for Windows
@@ -102,6 +112,14 @@ C:\MinGW\bin;C:\MinGW\msys\1.0\bin
    2. http://www.masteringemacs.org/articles/2010/11/01/running-shells-in-emacs-overview/
    3. http://ergoemacs.org/emacs/emacs_unix.html
 
+   -----
+
+   *UPDATE DECEMBER 2016:* See my note above about using MSYS 2.0. The
+   directions below might work with MSYS 2.0 by changing the path to
+   bash.exe to the appropriate one in the MSYS 2.0 directory tree, but
+   I have not verified this myself.
+
+   -----
 
    Once I had the shell working, I wanted to /also/ use it in Emacs on
    Windows through a terminal emulator. Unfortunately, I don't think
@@ -110,7 +128,7 @@ C:\MinGW\bin;C:\MinGW\msys\1.0\bin
 
    To do this, I added the following lines to my *init.el* file:
 
-   #+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC
 (setq explicit-shell-file-name "C:/MinGW/msys/1.0/bin/bash.exe")
 (setq shell-file-name "bash")
 (setenv "SHELL" shell-file-name)
@@ -134,7 +152,7 @@ C:\MinGW\bin;C:\MinGW\msys\1.0\bin
    I can get a basic Python shell within Emacs on Windows by adding the
    following line to my *init.el* file:
    
-   #+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC
 (setq python-shell-interpreter "C:/Python34/python.exe")
    #+END_SRC
 
@@ -145,7 +163,7 @@ C:\MinGW\bin;C:\MinGW\msys\1.0\bin
    *plt.show()* and changing *python-shell-interpreter* and
    *python-shell-interpreter-args* as follows:
    
-   #+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC
 (setq
   python-shell-interpreter "C:\\Python34\\python.exe"
   python-shell-interpreter-args
@@ -206,7 +224,7 @@ git clone git://github.com/pinard/Pymacs
    Finally, I copied pymacs.el into my *~/.emacs.d/my-packages/*
    directory and added the following lines to *init.el*:
    
-   #+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC
 ;;; Pymacs
 (add-to-list 'load-path "~/.emacs.d/my-packages/pymacs-0.25")
 (autoload 'pymacs-apply "pymacs")
@@ -236,7 +254,7 @@ git clone git://github.com/pinard/Pymacs
 
    Then, I added the following lines to my *init.el* file:
 
-   #+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC
 ;;; python-mode.el
 (add-to-list 'load-path "~/.emacs.d/my-packages/python-mode.el-6.1.3") 
 (setq py-install-directory "~/.emacs.d/my-packages/python-mode.el-6.1.3")
