@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0"><channel><title>Kyle M. Douglass (microscopy)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link rel="self" type="application/rss+xml" href="http://kmdouglass.github.io/categories/microscopy.xml"></atom:link><language>en</language><lastBuildDate>Sun, 04 Dec 2016 09:57:41 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Approximating diffraction patterns of rectangular apertures with the FFT</title><link>http://kmdouglass.github.io/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div tabindex="-1" id="notebook" class="border-box-sizing"&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Kyle M. Douglass (microscopy)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link rel="self" type="application/rss+xml" href="http://kmdouglass.github.io/categories/microscopy.xml"></atom:link><language>en</language><lastBuildDate>Thu, 19 Jan 2017 06:50:17 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>FIFI Parts List</title><link>http://kmdouglass.github.io/posts/fifi-parts-list.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;Many people have been writing to Suliana or I recently and asking for
+a parts list for FIFI, the flat-field illuminator I developed for
+large field-of-view localization microscopy. (&lt;a class="reference external" href="http://www.nature.com/nphoton/journal/v10/n11/full/nphoton.2016.200.html"&gt;The manuscript may be
+found here&lt;/a&gt;.)&lt;/p&gt;
+&lt;p&gt;I compiled a list of the primary parts and suggestions for the
+optional parts that one may need to install FIFI into their own
+microscope. You may find the link to this document (in the Open
+Document .ods format) below.&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="https://github.com/kmdouglass/fifi_parts_list"&gt;FIFI Parts List&lt;/a&gt;&lt;/p&gt;
+&lt;div class="section" id="disclaimer"&gt;
+&lt;h2&gt;Disclaimer&lt;/h2&gt;
+&lt;p&gt;The prices for the parts are approximate and were taken from the
+respective vendor websites in January, 2017. Do not be surprised if
+the prices have changed since this time and differ from those in the
+spreadsheet.&lt;/p&gt;
+&lt;p&gt;If you find any problems or errors in this parts list, please do not
+hesitate to contact me. It is highly recommended that you perform the
+initial design of the illuminator for your setup before buying any
+parts to avoid making costly mistakes.&lt;/p&gt;
+&lt;p&gt;The parts list is &lt;a class="reference external" href="https://github.com/kmdouglass/fifi_parts_list/blob/master/LICENSE"&gt;MIT licensed&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;</description><category>microscopy</category><category>super-resolution</category><guid>http://kmdouglass.github.io/posts/fifi-parts-list.html</guid><pubDate>Thu, 19 Jan 2017 06:32:43 GMT</pubDate></item><item><title>Approximating diffraction patterns of rectangular apertures with the FFT</title><link>http://kmdouglass.github.io/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div tabindex="-1" id="notebook" class="border-box-sizing"&gt;
     &lt;div class="container" id="notebook-container"&gt;
 
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;
