@@ -5,10 +5,16 @@
 <meta name="description" content="How to use CellProfiler">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>CellProfiler notes | Kyle M. Douglass</title>
-<link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/rst.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/code.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/colorbox.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/theme.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/custom.css" rel="stylesheet" type="text/css">
 <link href="../../assets/css/ipython.min.css" rel="stylesheet" type="text/css">
 <link href="../../assets/css/nikola_ipython.css" rel="stylesheet" type="text/css">
-<meta content="#5670d4" name="theme-color">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
 <link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
 <link rel="canonical" href="http://kmdouglass.github.io/stories/notes/cellprofiler.html">
 <script type="text/x-mathjax-config">
@@ -313,9 +319,9 @@ not find the BLAS library. These were fixed by setting the following
 environment variables <a href="http://www.scipy.org/scipylib/building/linux.html">as detailed here</a>:
 </p>
 
-<div class="highlight"><pre><span></span>&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold;"</span>&gt;export&lt;/span&gt; &lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;BLAS&lt;/span&gt;<span class="o">=</span>&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-style: italic;"</span>&gt;<span class="s2">"/usr/lib/libblas.so"</span>&lt;/span&gt;
-&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold;"</span>&gt;export&lt;/span&gt; &lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;LAPACK&lt;/span&gt;<span class="o">=</span>&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-style: italic;"</span>&gt;<span class="s2">"/usr/lib/liblapack.so"</span>&lt;/span&gt;
-&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold;"</span>&gt;export&lt;/span&gt; &lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;ATLAS&lt;/span&gt;<span class="o">=</span>&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-style: italic;"</span>&gt;<span class="s2">"/usr/lib/libatlas.so"</span>&lt;/span&gt;
+<div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">BLAS</span><span class="o">=</span><span class="s2">"/usr/lib/libblas.so"</span>
+<span class="nb">export</span> <span class="nv">LAPACK</span><span class="o">=</span><span class="s2">"/usr/lib/liblapack.so"</span>
+<span class="nb">export</span> <span class="nv">ATLAS</span><span class="o">=</span><span class="s2">"/usr/lib/libatlas.so"</span>
 </pre></div>
 
 <p>
@@ -842,7 +848,7 @@ pip install --target=$READLINE readline
 </div>
 
 
-            <script src="../../assets/js/all-nocdn.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+            <script src="../../assets/js/jquery.min.js"></script><script src="../../assets/js/bootstrap.min.js"></script><script src="../../assets/js/moment-with-locales.min.js"></script><script src="../../assets/js/fancydates.js"></script><script src="../../assets/js/jquery.colorbox-min.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
     moment.locale("en");
     fancydates(0, "YYYY-MM-DD HH:mm");
     </script><!-- end fancy dates -->

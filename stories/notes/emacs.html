@@ -5,10 +5,16 @@
 <meta name="description" content="Notes on things I've learned in emacs">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Emacs Notes | Kyle M. Douglass</title>
-<link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/rst.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/code.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/colorbox.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/theme.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/custom.css" rel="stylesheet" type="text/css">
 <link href="../../assets/css/ipython.min.css" rel="stylesheet" type="text/css">
 <link href="../../assets/css/nikola_ipython.css" rel="stylesheet" type="text/css">
-<meta content="#5670d4" name="theme-color">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
 <link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
 <link rel="canonical" href="http://kmdouglass.github.io/stories/notes/emacs.html">
 <script type="text/x-mathjax-config">
@@ -134,7 +140,7 @@ discussion</a>. Essentially, I first added these lines to my <i>init.el</i>
 file.
 </p>
 
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="nf">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold;"</span><span class="nv">&gt;require&lt;/span&gt;</span> <span class="ss">'&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold; text-decoration: underline;"</span><span class="nv">&gt;em-tramp&lt;/span&gt;</span><span class="p">)</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold; font-style: italic;"</span><span class="nv">&gt;</span><span class="c1">; &lt;/span&gt;&lt;span style="font-weight: bold; font-style: italic;"&gt;to load eshell&amp;#8217;s sudo&lt;/span&gt;</span>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nf">require</span> <span class="ss">'em-tramp</span><span class="p">)</span> <span class="c1">; to load eshell’s sudo</span>
 <span class="p">(</span><span class="nf">setq</span> <span class="nv">eshell-prefer-lisp-functions</span> <span class="nv">t</span><span class="p">)</span>
 <span class="p">(</span><span class="nf">setq</span> <span class="nv">eshell-prefer-lisp-variables</span> <span class="nv">t</span><span class="p">)</span>
 </pre></div>
@@ -150,8 +156,8 @@ permanently saved to my .emacs.d/ directory:
 <p>
 Finally, I added these lines to my <i>init.el</i>
 </p>
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="nf">setq</span> <span class="nv">password-cache</span> <span class="nv">t</span><span class="p">)</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold; font-style: italic;"</span><span class="nv">&gt;</span><span class="c1">; &lt;/span&gt;&lt;span style="font-weight: bold; font-style: italic;"&gt;enable password caching&lt;/span&gt;</span>
-<span class="p">(</span><span class="nf">setq</span> <span class="nv">password-cache-expiry</span> <span class="mi">5</span><span class="p">)</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold; font-style: italic;"</span><span class="nv">&gt;</span><span class="c1">; &lt;/span&gt;&lt;span style="font-weight: bold; font-style: italic;"&gt;for five minutes&lt;/span&gt;</span>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nf">setq</span> <span class="nv">password-cache</span> <span class="nv">t</span><span class="p">)</span> <span class="c1">; enable password caching</span>
+<span class="p">(</span><span class="nf">setq</span> <span class="nv">password-cache-expiry</span> <span class="mi">5</span><span class="p">)</span> <span class="c1">; for five minutes</span>
 </pre></div>
 
 <p>
@@ -240,7 +246,7 @@ to turn off a given virtual environment.
 </div>
 
 
-            <script src="../../assets/js/all-nocdn.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+            <script src="../../assets/js/jquery.min.js"></script><script src="../../assets/js/bootstrap.min.js"></script><script src="../../assets/js/moment-with-locales.min.js"></script><script src="../../assets/js/fancydates.js"></script><script src="../../assets/js/jquery.colorbox-min.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
     moment.locale("en");
     fancydates(0, "YYYY-MM-DD HH:mm");
     </script><!-- end fancy dates -->

@@ -5,10 +5,16 @@
 <meta name="description" content="Notes I've collected for doing things in Linux">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Linux Notes | Kyle M. Douglass</title>
-<link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/rst.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/code.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/colorbox.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/theme.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/custom.css" rel="stylesheet" type="text/css">
 <link href="../../assets/css/ipython.min.css" rel="stylesheet" type="text/css">
 <link href="../../assets/css/nikola_ipython.css" rel="stylesheet" type="text/css">
-<meta content="#5670d4" name="theme-color">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
 <link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
 <link rel="canonical" href="http://kmdouglass.github.io/stories/notes/linux.html">
 <script type="text/x-mathjax-config">
@@ -974,7 +980,7 @@ I setup daily backups with the Linux job scheduler cron. To use
 emacs to edit the cron file, I used the command
 </p>
 
-<div class="highlight"><pre><span></span>env &lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;EDITOR&lt;/span&gt;<span class="o">=</span>emacs crontab -e
+<div class="highlight"><pre><span></span>env <span class="nv">EDITOR</span><span class="o">=</span>emacs crontab -e
 </pre></div>
 
 <p>
@@ -1002,7 +1008,7 @@ logging of cron by editing <code>/etc/rsyslog.conf</code> and uncommenting
 the line
 </p>
 
-<div class="highlight"><pre><span></span>&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;# &lt;/span&gt;&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;cron.*&lt;/span&gt;
+<div class="highlight"><pre><span></span><span class="c1"># cron.*</span>
 </pre></div>
 
 <p>
@@ -1028,7 +1034,7 @@ plain text.
 Instead, edit the root user's crontab with
 </p>
 
-<div class="highlight"><pre><span></span>sudo env &lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;EDITOR&lt;/span&gt;<span class="o">=</span>emacs crontab -e
+<div class="highlight"><pre><span></span>sudo env <span class="nv">EDITOR</span><span class="o">=</span>emacs crontab -e
 </pre></div>
 
 <p>
@@ -1050,7 +1056,7 @@ See this source: <a href="http://www.jveweb.net/en/archives/2011/02/using-rsync-
 Currently, I run incremental backups with
 </p>
 
-<div class="highlight"><pre><span></span>rsync -ab --backup-dir<span class="o">=</span>old_&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold;"</span>&gt;<span class="sb">`</span>date +<span class="se">\%</span>F<span class="sb">`</span>&lt;/span&gt; --delete --exclude<span class="o">=</span>old_* /source/ /destination/
+<div class="highlight"><pre><span></span>rsync -ab --backup-dir<span class="o">=</span>old_<span class="sb">`</span>date +<span class="se">\%</span>F<span class="sb">`</span> --delete --exclude<span class="o">=</span>old_* /source/ /destination/
 </pre></div>
 
 <p>
@@ -1518,14 +1524,14 @@ the Marmalade repo using package.el, the repository version was
 el-get, I added the following lines to init.el:
 </p>
 
-<div class="highlight"><pre><span></span><span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold; font-style: italic;"</span><span class="nv">&gt;</span><span class="c1">; &lt;/span&gt;&lt;span style="font-weight: bold; font-style: italic;"&gt;Standard el-get setup&lt;/span&gt;</span>
-<span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold; font-style: italic;"</span><span class="nv">&gt;</span><span class="c1">; &lt;/span&gt;&lt;span style="font-weight: bold; font-style: italic;"&gt;(See also: https://github.com/dimitri/el-get#basic-setup)&lt;/span&gt;</span>
-<span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">'load-path</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"~/.emacs.d/el-get/el-get"</span><span class="nv">&lt;/span&gt;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><span class="c1">; Standard el-get setup</span>
+<span class="c1">; (See also: https://github.com/dimitri/el-get#basic-setup)</span>
+<span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">'load-path</span> <span class="s">"~/.emacs.d/el-get/el-get"</span><span class="p">)</span>
 
-<span class="p">(</span><span class="nf">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold;"</span><span class="nv">&gt;unless&lt;/span&gt;</span> <span class="p">(</span><span class="nf">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold;"</span><span class="nv">&gt;require&lt;/span&gt;</span> <span class="ss">'&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold; text-decoration: underline;"</span><span class="nv">&gt;el-get&lt;/span&gt;</span> <span class="nv">nil</span> <span class="ss">'noerror</span><span class="p">)</span>
-  <span class="p">(</span><span class="nf">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold;"</span><span class="nv">&gt;with-current-buffer&lt;/span&gt;</span>
+<span class="p">(</span><span class="nf">unless</span> <span class="p">(</span><span class="nf">require</span> <span class="ss">'el-get</span> <span class="nv">nil</span> <span class="ss">'noerror</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">with-current-buffer</span>
       <span class="p">(</span><span class="nf">url-retrieve-synchronously</span>
-       <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"https://raw.github.com/dimitri/el-get/master/el-get-install.el"</span><span class="nv">&lt;/span&gt;</span><span class="p">)</span>
+       <span class="s">"https://raw.github.com/dimitri/el-get/master/el-get-install.el"</span><span class="p">)</span>
     <span class="p">(</span><span class="nf">goto-char</span> <span class="p">(</span><span class="nf">point-max</span><span class="p">))</span>
     <span class="p">(</span><span class="nf">eval-print-last-sexp</span><span class="p">)))</span>
 
@@ -1547,7 +1553,7 @@ Finally, I added the following lines to init.el, restarted emacs,
 and had a working jedi install.
 </p>
 
-<div class="highlight"><pre><span></span><span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold; font-style: italic;"</span><span class="nv">&gt;</span><span class="c1">;; &lt;/span&gt;&lt;span style="font-weight: bold; font-style: italic;"&gt;Standard Jedi.el setting&lt;/span&gt;</span>
+<div class="highlight"><pre><span></span><span class="c1">;; Standard Jedi.el setting</span>
 <span class="p">(</span><span class="nf">add-hook</span> <span class="ss">'python-mode-hook</span> <span class="ss">'jedi:setup</span><span class="p">)</span>
 <span class="p">(</span><span class="nf">setq</span> <span class="nv">jedi:complete-on-dot</span> <span class="nv">t</span><span class="p">)</span>
 </pre></div>
@@ -1612,17 +1618,17 @@ Finally, I changed my original init.el file by modifying
 </p>
 
 <div class="highlight"><pre><span></span><span class="p">(</span><span class="nf">setq</span> <span class="nv">org-latex-pdf-process</span>
-  <span class="o">'</span><span class="p">(</span><span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -bibtex -f %f"</span><span class="nv">&lt;/span&gt;</span><span class="p">))</span>
+  <span class="o">'</span><span class="p">(</span><span class="s">"latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -bibtex -f %f"</span><span class="p">))</span>
 </pre></div>
 
 <p>
 This was changed from what I had used in the past:
 </p>
 
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="nf">setq</span> <span class="nv">org-latex-to-pdf-process</span> <span class="o">'</span><span class="p">(</span><span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"pdflatex -interaction nonstopmode %b"</span><span class="nv">&lt;/span&gt;</span>
-                                 <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"/usr/bin/bibtex %b"</span><span class="nv">&lt;/span&gt;</span>
-                                 <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"pdflatex -interaction nonstopmode %b"</span><span class="nv">&lt;/span&gt;</span>
-                                 <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"pdflatex -interaction nonstopmode %b"</span><span class="nv">&lt;/span&gt;</span><span class="p">))</span>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nf">setq</span> <span class="nv">org-latex-to-pdf-process</span> <span class="o">'</span><span class="p">(</span><span class="s">"pdflatex -interaction nonstopmode %b"</span>
+				 <span class="s">"/usr/bin/bibtex %b"</span>
+				 <span class="s">"pdflatex -interaction nonstopmode %b"</span>
+				 <span class="s">"pdflatex -interaction nonstopmode %b"</span><span class="p">))</span>
 </pre></div>
 
 <p>
@@ -1672,8 +1678,8 @@ First, I created a credentials file with my Windows username and
 password called <b>~/.smbcredentials</b>. It contained the lines
 </p>
 
-<div class="highlight"><pre><span></span>&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;username&lt;/span&gt;<span class="o">=</span>USERNAME
-&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;password&lt;/span&gt;<span class="o">=</span>PASSWORD
+<div class="highlight"><pre><span></span><span class="nv">username</span><span class="o">=</span>USERNAME
+<span class="nv">password</span><span class="o">=</span>PASSWORD
 </pre></div>
 
 <p>
@@ -1686,7 +1692,7 @@ Next, I created a mount point for the network share at
 <b>/mnt/LEB-Z</b>. I then added the following line to <b>/etc/fstab</b>
 </p>
 
-<div class="highlight"><pre><span></span>//SERVERIP/LEB /mnt/LEB-Z cifs &lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;credentials&lt;/span&gt;<span class="o">=</span>/home/kmdouglass/.smbcredentials,&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;iocharset&lt;/span&gt;<span class="o">=</span>utf8,&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;sec&lt;/span&gt;<span class="o">=</span>ntlm,noauto <span class="m">0</span> 0
+<div class="highlight"><pre><span></span>//SERVERIP/LEB /mnt/LEB-Z cifs <span class="nv">credentials</span><span class="o">=</span>/home/kmdouglass/.smbcredentials,iocharset<span class="o">=</span>utf8,sec<span class="o">=</span>ntlm,noauto <span class="m">0</span> 0
 </pre></div>
 
 <p>
@@ -1713,7 +1719,7 @@ directories.
 To get around this, I modified the fstab line as such:
 </p>
 
-<div class="highlight"><pre><span></span>//SERVERIP/LEB /mnt/LEB-Z cifs &lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;credentials&lt;/span&gt;<span class="o">=</span>/home/kmdouglass/.smbcredentials,&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;iocharset&lt;/span&gt;<span class="o">=</span>utf8,&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;sec&lt;/span&gt;<span class="o">=</span>ntlm,&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;uid&lt;/span&gt;<span class="o">=</span>1000,&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;gid&lt;/span&gt;<span class="o">=</span>1000,noauto <span class="m">0</span> 0
+<div class="highlight"><pre><span></span>//SERVERIP/LEB /mnt/LEB-Z cifs <span class="nv">credentials</span><span class="o">=</span>/home/kmdouglass/.smbcredentials,iocharset<span class="o">=</span>utf8,sec<span class="o">=</span>ntlm,uid<span class="o">=</span>1000,gid<span class="o">=</span>1000,noauto <span class="m">0</span> 0
 </pre></div>
 
 <p>
@@ -1917,7 +1923,7 @@ configure GRUB on my system without the Windows partitions.
 </div>
 
 
-            <script src="../../assets/js/all-nocdn.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+            <script src="../../assets/js/jquery.min.js"></script><script src="../../assets/js/bootstrap.min.js"></script><script src="../../assets/js/moment-with-locales.min.js"></script><script src="../../assets/js/fancydates.js"></script><script src="../../assets/js/jquery.colorbox-min.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
     moment.locale("en");
     fancydates(0, "YYYY-MM-DD HH:mm");
     </script><!-- end fancy dates -->
