@@ -116,6 +116,19 @@ rm -ri ~/.cache/matplotlib/tex.cache
 
 -----
 
+* Anaconda
+
+** Copying Anaconda cloud packages
+
+   To copy a package on the Anaconda cloud (for example, filelock)
+   into your own channel, use
+
+#+BEGIN_SRC
+anaconda copy --to-owner kmdouglass conda-forge/filelock/2.0.7                                                                                                        
+#+END_SRC
+
+-----
+
 * Jupyter at Startup
   I can get a Jupyter Notebook server running from startup from a
   hidden terminal window in Debian Jessie by adding a desktop file to
