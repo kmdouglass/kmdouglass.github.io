@@ -857,6 +857,33 @@ cat /etc/resolv.conf
 
 -----
 
+** Connecting to a hotel's network
+   /Date/
+   2017-02-04
+
+   To get internet access in Debian at a hotel:
+
+   First, scan for networks with sudo iwlist wlan0 scanning. If you
+   bring down wlan0 before doing this, you can't scan.
+
+   You can also pipe this to grep ESSID, like:
+
+   sudo iwlist wlan0 scanning | grep ESSID
+
+   Bring down the interface with sudo ifdown wlan0
+
+   Next, edit /etc/network/interfaces and comment out the lines that
+   automatically try to make wlan0 use dhcp when bringing it up. You
+   may also have to stop network-manger using sudo service
+   network-manager stop.
+
+   After that, set the essid to the hotel's: sudo iwconfig wlan0 essid
+   "ESSID IN QUOTES"
+
+   Finally, request an ip with sudo dhclient wlan0.
+
+-----
+
 * Python setup
 
   *NOTE*: This section is relatively out of date as of 2017/02/04. I
