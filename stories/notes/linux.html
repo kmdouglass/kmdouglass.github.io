@@ -5,16 +5,10 @@
 <meta name="description" content="Notes I've collected for doing things in Linux">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Linux Notes | Kyle M. Douglass</title>
-<link href="../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-<link href="../../assets/css/rst.css" rel="stylesheet" type="text/css">
-<link href="../../assets/css/code.css" rel="stylesheet" type="text/css">
-<link href="../../assets/css/colorbox.css" rel="stylesheet" type="text/css">
-<link href="../../assets/css/theme.css" rel="stylesheet" type="text/css">
-<link href="../../assets/css/custom.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
 <link href="../../assets/css/ipython.min.css" rel="stylesheet" type="text/css">
 <link href="../../assets/css/nikola_ipython.css" rel="stylesheet" type="text/css">
-<meta name="theme-color" content="#5670d4">
-<meta name="generator" content="Nikola (getnikola.com)">
+<meta content="#5670d4" name="theme-color">
 <link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
 <link rel="canonical" href="http://kmdouglass.github.io/stories/notes/linux.html">
 <script type="text/x-mathjax-config">
@@ -100,102 +94,70 @@ MathJax.Hub.Config({
 <div id="text-table-of-contents">
 <ul>
 <li><a href="linux.html#sec-1">1. Notes on Linux</a></li>
-<li><a href="linux.html#sec-2">2. Why install Debian?</a></li>
 <li>
-<a href="linux.html#sec-3">3. Debian installation from a live USB stick</a>
+<a href="linux.html#sec-2">2. Debian installation from a live USB stick</a>
 <ul>
-<li><a href="linux.html#sec-3-1">3.1. Downloading the .iso image files</a></li>
-<li><a href="linux.html#sec-3-2">3.2. Copy the .iso file to a USB stick</a></li>
-<li><a href="linux.html#sec-3-3">3.3. Installing Debian</a></li>
+<li><a href="linux.html#sec-2-1">2.1. Downloading the .iso image files</a></li>
+<li><a href="linux.html#sec-2-2">2.2. Copy the .iso file to a USB stick</a></li>
+<li><a href="linux.html#sec-2-3">2.3. Installing Debian</a></li>
 </ul>
 </li>
 <li>
-<a href="linux.html#sec-4">4. Initial Debian Configuration</a>
+<a href="linux.html#sec-3">3. Initial Debian Configuration</a>
 <ul>
-<li><a href="linux.html#sec-4-1">4.1. List of required software</a></li>
-<li>
-<a href="linux.html#sec-4-2">4.2. WiFi</a>
-<ul>
-<li><a href="linux.html#sec-4-2-1">4.2.1. Adding non-free repositories</a></li>
-<li><a href="linux.html#sec-4-2-2">4.2.2. Installing non-free wireless drivers</a></li>
-<li><a href="linux.html#sec-4-2-3">4.2.3. Configuring WiFi</a></li>
+<li><a href="linux.html#sec-3-1">3.1. List of required software</a></li>
+<li><a href="linux.html#sec-3-2">3.2. WiFi</a></li>
+<li><a href="linux.html#sec-3-3">3.3. Installing emacs on Debian</a></li>
+<li><a href="linux.html#sec-3-4">3.4. Setting the keyboard layout to international</a></li>
+<li><a href="linux.html#sec-3-5">3.5. Changing the Caps Lock key to function as Control</a></li>
+<li><a href="linux.html#sec-3-6">3.6. Running Dropbox on startup</a></li>
+<li><a href="linux.html#sec-3-7">3.7. Remove the XFCE bottom panel</a></li>
+<li><a href="linux.html#sec-3-8">3.8. Adobe Flash</a></li>
+<li><a href="linux.html#sec-3-9">3.9. Playing DVD's in VLC</a></li>
+<li><a href="linux.html#sec-3-10">3.10. Activating the Firefox Java Plugin</a></li>
+<li><a href="linux.html#sec-3-11">3.11. Latex installation</a></li>
+<li><a href="linux.html#sec-3-12">3.12. Automatic Backups with rsync and cron</a></li>
+<li><a href="linux.html#sec-3-13">3.13. Install Microsoft Core Fonts</a></li>
+<li><a href="linux.html#sec-3-14">3.14. Monitor settings</a></li>
+<li><a href="linux.html#sec-3-15">3.15. Time updates with ntpdate</a></li>
 </ul>
 </li>
 <li>
-<a href="linux.html#sec-4-3">4.3. Installing emacs on Debian</a>
+<a href="linux.html#sec-4">4. Managing Software Packages</a>
 <ul>
-<li><a href="linux.html#sec-4-3-1">4.3.1. Configuring auto-complete</a></li>
-</ul>
-</li>
-<li><a href="linux.html#sec-4-4">4.4. Setting the keyboard layout to international</a></li>
-<li><a href="linux.html#sec-4-5">4.5. Changing the Caps Lock key to function as Control</a></li>
-<li><a href="linux.html#sec-4-6">4.6. Running Dropbox on startup</a></li>
-<li><a href="linux.html#sec-4-7">4.7. Remove the XFCE bottom panel</a></li>
-<li>
-<a href="linux.html#sec-4-8">4.8. Adobe Flash</a>
-<ul>
-<li><a href="linux.html#sec-4-8-1">4.8.1. Installing the Flash plugin</a></li>
-<li><a href="linux.html#sec-4-8-2">4.8.2. Updating Flash</a></li>
-</ul>
-</li>
-<li><a href="linux.html#sec-4-9">4.9. Playing DVD's in VLC</a></li>
-<li><a href="linux.html#sec-4-10">4.10. Activating the Firefox Java Plugin</a></li>
-<li><a href="linux.html#sec-4-11">4.11. Latex installation</a></li>
-<li>
-<a href="linux.html#sec-4-12">4.12. Automatic Backups with rsync and cron</a>
-<ul>
-<li><a href="linux.html#sec-4-12-1">4.12.1. Enabling cron logging</a></li>
-<li><a href="linux.html#sec-4-12-2">4.12.2. Running cron with sudo privileges</a></li>
-<li><a href="linux.html#sec-4-12-3">4.12.3. Incremental backups</a></li>
-</ul>
-</li>
-<li><a href="linux.html#sec-4-13">4.13. Install Microsoft Core Fonts</a></li>
-<li>
-<a href="linux.html#sec-4-14">4.14. Monitor settings</a>
-<ul>
-<li><a href="linux.html#sec-4-14-1">4.14.1. Dual monitors</a></li>
-<li><a href="linux.html#sec-4-14-2">4.14.2. Screen brightness</a></li>
-</ul>
-</li>
-<li><a href="linux.html#sec-4-15">4.15. Time updates with ntpdate</a></li>
+<li><a href="linux.html#sec-4-1">4.1. Choosing software version alternatives</a></li>
+<li><a href="linux.html#sec-4-2">4.2. Debian Backports</a></li>
 </ul>
 </li>
 <li>
-<a href="linux.html#sec-5">5. Managing Software Packages</a>
+<a href="linux.html#sec-5">5. File Systems</a>
 <ul>
-<li><a href="linux.html#sec-5-1">5.1. Choosing software version alternatives</a></li>
-<li><a href="linux.html#sec-5-2">5.2. Debian Backports</a></li>
+<li><a href="linux.html#sec-5-1">5.1. Renaming partitions</a></li>
+<li><a href="linux.html#sec-5-2">5.2. Finding UUID's and labels of partitions</a></li>
+<li><a href="linux.html#sec-5-3">5.3. CIFS</a></li>
 </ul>
 </li>
 <li>
-<a href="linux.html#sec-6">6. Python setup</a>
+<a href="linux.html#sec-6">6. Networking</a>
 <ul>
-<li><a href="linux.html#sec-6-1">6.1. Compiling Python 3.4</a></li>
-<li>
-<a href="linux.html#sec-6-2">6.2. Installing IPython 2.0</a>
-<ul>
-<li><a href="linux.html#sec-6-2-1">6.2.1. IPython Notebook</a></li>
-<li><a href="linux.html#sec-6-2-2">6.2.2. Fixing indentation errors</a></li>
-</ul>
-</li>
-<li><a href="linux.html#sec-6-3">6.3. Installing Numpy 1.8.1, matplotlib 1.3.1, scipy 0.14, and Pillow 2.4.0</a></li>
-<li><a href="linux.html#sec-6-4">6.4. Multiple IPython prompts at startup</a></li>
-<li><a href="linux.html#sec-6-5">6.5. Getting Tk and Latex support in Python</a></li>
-<li><a href="linux.html#sec-6-6">6.6. Installing Jedi</a></li>
+<li><a href="linux.html#sec-6-1">6.1. Find a machine's ip address/gateway/subnet/dns info</a></li>
 </ul>
 </li>
 <li>
-<a href="linux.html#sec-7">7. Org-mode configuration</a>
+<a href="linux.html#sec-7">7. Python setup</a>
 <ul>
-<li><a href="linux.html#sec-7-1">7.1. Publish to LaTeX with references</a></li>
+<li><a href="linux.html#sec-7-1">7.1. Compiling Python 3.4</a></li>
+<li><a href="linux.html#sec-7-2">7.2. Installing IPython 2.0</a></li>
+<li><a href="linux.html#sec-7-3">7.3. Installing Numpy 1.8.1, matplotlib 1.3.1, scipy 0.14, and Pillow 2.4.0</a></li>
+<li><a href="linux.html#sec-7-4">7.4. Multiple IPython prompts at startup</a></li>
+<li><a href="linux.html#sec-7-5">7.5. Getting Tk and Latex support in Python</a></li>
+<li><a href="linux.html#sec-7-6">7.6. Installing Jedi</a></li>
 </ul>
 </li>
 <li>
-<a href="linux.html#sec-8">8. CIFS</a>
+<a href="linux.html#sec-8">8. Org-mode configuration</a>
 <ul>
-<li><a href="linux.html#sec-8-1">8.1. CIFS installation</a></li>
-<li><a href="linux.html#sec-8-2">8.2. Accessing Windows shares remotely</a></li>
-<li><a href="linux.html#sec-8-3">8.3. fstab options for mounting shares as a user</a></li>
+<li><a href="linux.html#sec-8-1">8.1. Publish to LaTeX with references</a></li>
 </ul>
 </li>
 <li>
@@ -203,12 +165,7 @@ MathJax.Hub.Config({
 <ul>
 <li><a href="linux.html#sec-9-1">9.1. Installing GRUB onto a USB stick</a></li>
 <li><a href="linux.html#sec-9-2">9.2. Configuring GRUB on the USB stick to work with your machine</a></li>
-<li>
-<a href="linux.html#sec-9-3">9.3. GRUB troubleshooting</a>
-<ul>
-<li><a href="linux.html#sec-9-3-1">9.3.1. GRUB installation hangs when making device.map</a></li>
-</ul>
-</li>
+<li><a href="linux.html#sec-9-3">9.3. GRUB troubleshooting</a></li>
 </ul>
 </li>
 </ul>
@@ -232,45 +189,13 @@ if it helps you in any way!
 
 <div id="outline-container-sec-2" class="outline-2">
 <h2 id="sec-2">
-<span class="section-number-2">2</span> Why install Debian?</h2>
+<span class="section-number-2">2</span> Debian installation from a live USB stick</h2>
 <div class="outline-text-2" id="text-2">
-<p>
-For the last five or six years, I have been using Ubuntu at home,
-and sometimes at the office. (I'm writing this in 2014, a few months
-after I finished my PhD studies.) I've liked it quite a bit and
-learned a lot from it because it is a relatively gentle introduction
-to Linux.
-</p>
-
-<p>
-Lately I've become a bored with it however. I also get a vague
-feeling that it's becoming a bit bloated. At home, I mainly use
-emacs, Firefox, Anki (a flashcard program), and Python along with
-its many associated packages. I don't therefore need a large
-operating system. Now, I know that there are lightweight versions of
-Ubuntu, but at this point I'm really just interested in trying
-something else.
-</p>
-
-<p>
-So, I decided to give Debian a try. Ubuntu is based on Debian, but
-so far as I can tell Debian has remained closer to the open source
-paradigm. Furthermore, Debian is actively developed and very mature.
-</p>
-
-<hr>
 </div>
-</div>
-
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3">
-<span class="section-number-2">3</span> Debian installation from a live USB stick</h2>
-<div class="outline-text-2" id="text-3">
-</div>
-<div id="outline-container-sec-3-1" class="outline-3">
-<h3 id="sec-3-1">
-<span class="section-number-3">3.1</span> Downloading the .iso image files</h3>
-<div class="outline-text-3" id="text-3-1">
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1">
+<span class="section-number-3">2.1</span> Downloading the .iso image files</h3>
+<div class="outline-text-3" id="text-2-1">
 <p>
 <i>File: debian-live-7.4-amd64-xfce-desktop.iso.torrent</i>
 <i>Location: <a href="http://cdimage.debian.org/debian-cd/current-live/amd64/bt-hybrid/">http://cdimage.debian.org/debian-cd/current-live/amd64/bt-hybrid/</a></i>
@@ -292,10 +217,10 @@ it reduces load on their servers.
 </div>
 </div>
 
-<div id="outline-container-sec-3-2" class="outline-3">
-<h3 id="sec-3-2">
-<span class="section-number-3">3.2</span> Copy the .iso file to a USB stick</h3>
-<div class="outline-text-3" id="text-3-2">
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2">
+<span class="section-number-3">2.2</span> Copy the .iso file to a USB stick</h3>
+<div class="outline-text-3" id="text-2-2">
 <p>
 <i>Information sources</i>
 </p>
@@ -353,10 +278,10 @@ this.
 </div>
 </div>
 
-<div id="outline-container-sec-3-3" class="outline-3">
-<h3 id="sec-3-3">
-<span class="section-number-3">3.3</span> Installing Debian</h3>
-<div class="outline-text-3" id="text-3-3">
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3">
+<span class="section-number-3">2.3</span> Installing Debian</h3>
+<div class="outline-text-3" id="text-2-3">
 <p>
 I used the graphical installer provided by the system on the live
 USB stick. Before doing so, I had repartitioned my harddrive using
@@ -388,10 +313,10 @@ allowed me to boot into Debian or Windows 7.
 </div>
 </div>
 
-<div id="outline-container-sec-4" class="outline-2">
-<h2 id="sec-4">
-<span class="section-number-2">4</span> Initial Debian Configuration</h2>
-<div class="outline-text-2" id="text-4">
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3">
+<span class="section-number-2">3</span> Initial Debian Configuration</h2>
+<div class="outline-text-2" id="text-3">
 <p>
 A lot of my initial configuration is of the desktop environment. One
 especially useful set of tips for setting up XFCE is here:
@@ -401,10 +326,10 @@ especially useful set of tips for setting up XFCE is here:
 <hr>
 </div>
 
-<div id="outline-container-sec-4-1" class="outline-3">
-<h3 id="sec-4-1">
-<span class="section-number-3">4.1</span> List of required software</h3>
-<div class="outline-text-3" id="text-4-1">
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1">
+<span class="section-number-3">3.1</span> List of required software</h3>
+<div class="outline-text-3" id="text-3-1">
 <p>
 I use the following software packages regularly, so they should be
 installed after any fresh OS installation.
@@ -430,10 +355,10 @@ installed after any fresh OS installation.
 </div>
 </div>
 
-<div id="outline-container-sec-4-2" class="outline-3">
-<h3 id="sec-4-2">
-<span class="section-number-3">4.2</span> WiFi</h3>
-<div class="outline-text-3" id="text-4-2">
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2">
+<span class="section-number-3">3.2</span> WiFi</h3>
+<div class="outline-text-3" id="text-3-2">
 <p>
 Unfortunately, my wireless card doesn't work without some setup in
 Debian. The drivers for the wireless are non-free, which means that
@@ -443,10 +368,10 @@ they don't adhere to Debian's open source policy.
 <hr>
 </div>
 
-<div id="outline-container-sec-4-2-1" class="outline-4">
-<h4 id="sec-4-2-1">
-<span class="section-number-4">4.2.1</span> Adding non-free repositories</h4>
-<div class="outline-text-4" id="text-4-2-1">
+<div id="outline-container-sec-3-2-1" class="outline-4">
+<h4 id="sec-3-2-1">
+<span class="section-number-4">3.2.1</span> Adding non-free repositories</h4>
+<div class="outline-text-4" id="text-3-2-1">
 <p>
 <i>Information sources</i>
 </p>
@@ -469,10 +394,10 @@ include the primary packages. These should be left in place.
 </div>
 </div>
 
-<div id="outline-container-sec-4-2-2" class="outline-4">
-<h4 id="sec-4-2-2">
-<span class="section-number-4">4.2.2</span> Installing non-free wireless drivers</h4>
-<div class="outline-text-4" id="text-4-2-2">
+<div id="outline-container-sec-3-2-2" class="outline-4">
+<h4 id="sec-3-2-2">
+<span class="section-number-4">3.2.2</span> Installing non-free wireless drivers</h4>
+<div class="outline-text-4" id="text-3-2-2">
 <p>
 <i>Information sources</i>
 </p>
@@ -492,10 +417,10 @@ really need both.
 </div>
 </div>
 
-<div id="outline-container-sec-4-2-3" class="outline-4">
-<h4 id="sec-4-2-3">
-<span class="section-number-4">4.2.3</span> Configuring WiFi</h4>
-<div class="outline-text-4" id="text-4-2-3">
+<div id="outline-container-sec-3-2-3" class="outline-4">
+<h4 id="sec-3-2-3">
+<span class="section-number-4">3.2.3</span> Configuring WiFi</h4>
+<div class="outline-text-4" id="text-3-2-3">
 <p>
 <i>Information sources</i>
 </p>
@@ -564,10 +489,10 @@ Function-F&lt;num&gt; key combination to activate the WiFi as well.
 </div>
 </div>
 
-<div id="outline-container-sec-4-3" class="outline-3">
-<h3 id="sec-4-3">
-<span class="section-number-3">4.3</span> Installing emacs on Debian</h3>
-<div class="outline-text-3" id="text-4-3">
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3">
+<span class="section-number-3">3.3</span> Installing emacs on Debian</h3>
+<div class="outline-text-3" id="text-3-3">
 <p>
 <i>Sources</i>
 </p>
@@ -594,10 +519,10 @@ for this build in <code>/usr/bin</code>.
 <hr>
 </div>
 
-<div id="outline-container-sec-4-3-1" class="outline-4">
-<h4 id="sec-4-3-1">
-<span class="section-number-4">4.3.1</span> Configuring auto-complete</h4>
-<div class="outline-text-4" id="text-4-3-1">
+<div id="outline-container-sec-3-3-1" class="outline-4">
+<h4 id="sec-3-3-1">
+<span class="section-number-4">3.3.1</span> Configuring auto-complete</h4>
+<div class="outline-text-4" id="text-3-3-1">
 <p>
 <i>Sources</i>
 </p>
@@ -629,10 +554,10 @@ they're not, type <i>M-x auto-mode-complete</i> to get it working.
 </div>
 </div>
 
-<div id="outline-container-sec-4-4" class="outline-3">
-<h3 id="sec-4-4">
-<span class="section-number-3">4.4</span> Setting the keyboard layout to international</h3>
-<div class="outline-text-3" id="text-4-4">
+<div id="outline-container-sec-3-4" class="outline-3">
+<h3 id="sec-3-4">
+<span class="section-number-3">3.4</span> Setting the keyboard layout to international</h3>
+<div class="outline-text-3" id="text-3-4">
 <p>
 Understanding how the keyboard configuration works is one of the
 most mysterious things to me in Linux and Xfce. Fortunately I at
@@ -654,10 +579,10 @@ the original keyboard layout after adding the international one.
 </div>
 </div>
 
-<div id="outline-container-sec-4-5" class="outline-3">
-<h3 id="sec-4-5">
-<span class="section-number-3">4.5</span> Changing the Caps Lock key to function as Control</h3>
-<div class="outline-text-3" id="text-4-5">
+<div id="outline-container-sec-3-5" class="outline-3">
+<h3 id="sec-3-5">
+<span class="section-number-3">3.5</span> Changing the Caps Lock key to function as Control</h3>
+<div class="outline-text-3" id="text-3-5">
 <p>
 I usually change the Caps Lock key to Control since it makes typing
 in emacs much easier.
@@ -702,10 +627,10 @@ In the prompt, enter the following information:
 </div>
 </div>
 
-<div id="outline-container-sec-4-6" class="outline-3">
-<h3 id="sec-4-6">
-<span class="section-number-3">4.6</span> Running Dropbox on startup</h3>
-<div class="outline-text-3" id="text-4-6">
+<div id="outline-container-sec-3-6" class="outline-3">
+<h3 id="sec-3-6">
+<span class="section-number-3">3.6</span> Running Dropbox on startup</h3>
+<div class="outline-text-3" id="text-3-6">
 <p>
 <i>Sources</i>
 </p>
@@ -819,10 +744,10 @@ appropriate run-level folders inside <b><i>etc</i></b>.
 </div>
 </div>
 
-<div id="outline-container-sec-4-7" class="outline-3">
-<h3 id="sec-4-7">
-<span class="section-number-3">4.7</span> Remove the XFCE bottom panel</h3>
-<div class="outline-text-3" id="text-4-7">
+<div id="outline-container-sec-3-7" class="outline-3">
+<h3 id="sec-3-7">
+<span class="section-number-3">3.7</span> Remove the XFCE bottom panel</h3>
+<div class="outline-text-3" id="text-3-7">
 <p>
 I don't like how much space the XFCE bottom panel takes up, so I
 removed it by right-clicking on the desktop and navigating to
@@ -834,15 +759,15 @@ if I really wanted to remove the lower panel.
 <hr>
 </div>
 </div>
-<div id="outline-container-sec-4-8" class="outline-3">
-<h3 id="sec-4-8">
-<span class="section-number-3">4.8</span> Adobe Flash</h3>
-<div class="outline-text-3" id="text-4-8">
+<div id="outline-container-sec-3-8" class="outline-3">
+<h3 id="sec-3-8">
+<span class="section-number-3">3.8</span> Adobe Flash</h3>
+<div class="outline-text-3" id="text-3-8">
 </div>
-<div id="outline-container-sec-4-8-1" class="outline-4">
-<h4 id="sec-4-8-1">
-<span class="section-number-4">4.8.1</span> Installing the Flash plugin</h4>
-<div class="outline-text-4" id="text-4-8-1">
+<div id="outline-container-sec-3-8-1" class="outline-4">
+<h4 id="sec-3-8-1">
+<span class="section-number-4">3.8.1</span> Installing the Flash plugin</h4>
+<div class="outline-text-4" id="text-3-8-1">
 <p>
 <i>Sources</i>
 </p>
@@ -867,10 +792,10 @@ After a browser restart, I could see Flash videos on webpages.
 <hr>
 </div>
 </div>
-<div id="outline-container-sec-4-8-2" class="outline-4">
-<h4 id="sec-4-8-2">
-<span class="section-number-4">4.8.2</span> Updating Flash</h4>
-<div class="outline-text-4" id="text-4-8-2">
+<div id="outline-container-sec-3-8-2" class="outline-4">
+<h4 id="sec-3-8-2">
+<span class="section-number-4">3.8.2</span> Updating Flash</h4>
+<div class="outline-text-4" id="text-3-8-2">
 <p>
 <i>Sources</i>
 </p>
@@ -893,10 +818,10 @@ following command:
 </div>
 </div>
 
-<div id="outline-container-sec-4-9" class="outline-3">
-<h3 id="sec-4-9">
-<span class="section-number-3">4.9</span> Playing DVD's in VLC</h3>
-<div class="outline-text-3" id="text-4-9">
+<div id="outline-container-sec-3-9" class="outline-3">
+<h3 id="sec-3-9">
+<span class="section-number-3">3.9</span> Playing DVD's in VLC</h3>
+<div class="outline-text-3" id="text-3-9">
 <p>
 Most DVD's are write-protected and need a special package to play
 in VLC on Linux. This package is called <b>libdvdcss2</b> in Debian.
@@ -905,10 +830,10 @@ in VLC on Linux. This package is called <b>libdvdcss2</b> in Debian.
 <hr>
 </div>
 </div>
-<div id="outline-container-sec-4-10" class="outline-3">
-<h3 id="sec-4-10">
-<span class="section-number-3">4.10</span> Activating the Firefox Java Plugin</h3>
-<div class="outline-text-3" id="text-4-10">
+<div id="outline-container-sec-3-10" class="outline-3">
+<h3 id="sec-3-10">
+<span class="section-number-3">3.10</span> Activating the Firefox Java Plugin</h3>
+<div class="outline-text-3" id="text-3-10">
 <p>
 I installed the package called <i>icedtea-7-plugin</i> and it worked. Be
 sure to allow applets to run in your browser.
@@ -916,10 +841,10 @@ sure to allow applets to run in your browser.
 <hr>
 </div>
 </div>
-<div id="outline-container-sec-4-11" class="outline-3">
-<h3 id="sec-4-11">
-<span class="section-number-3">4.11</span> Latex installation</h3>
-<div class="outline-text-3" id="text-4-11">
+<div id="outline-container-sec-3-11" class="outline-3">
+<h3 id="sec-3-11">
+<span class="section-number-3">3.11</span> Latex installation</h3>
+<div class="outline-text-3" id="text-3-11">
 <p>
 <i>Sources</i>
 </p>
@@ -939,10 +864,10 @@ Latex is easily installed with <b>sudo apt-get install texlive</b> and
 <hr>
 </div>
 </div>
-<div id="outline-container-sec-4-12" class="outline-3">
-<h3 id="sec-4-12">
-<span class="section-number-3">4.12</span> Automatic Backups with rsync and cron</h3>
-<div class="outline-text-3" id="text-4-12">
+<div id="outline-container-sec-3-12" class="outline-3">
+<h3 id="sec-3-12">
+<span class="section-number-3">3.12</span> Automatic Backups with rsync and cron</h3>
+<div class="outline-text-3" id="text-3-12">
 <p>
 <i>Sources</i>
 </p>
@@ -980,7 +905,7 @@ I setup daily backups with the Linux job scheduler cron. To use
 emacs to edit the cron file, I used the command
 </p>
 
-<div class="highlight"><pre><span></span>env <span class="nv">EDITOR</span><span class="o">=</span>emacs crontab -e
+<div class="highlight"><pre><span></span>env &lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;EDITOR&lt;/span&gt;<span class="o">=</span>emacs crontab -e
 </pre></div>
 
 <p>
@@ -998,17 +923,17 @@ my backup everyday at 1:00 PM when I'm normally at lunch:
 </pre></div>
 <hr>
 </div>
-<div id="outline-container-sec-4-12-1" class="outline-4">
-<h4 id="sec-4-12-1">
-<span class="section-number-4">4.12.1</span> Enabling cron logging</h4>
-<div class="outline-text-4" id="text-4-12-1">
+<div id="outline-container-sec-3-12-1" class="outline-4">
+<h4 id="sec-3-12-1">
+<span class="section-number-4">3.12.1</span> Enabling cron logging</h4>
+<div class="outline-text-4" id="text-3-12-1">
 <p>
 Sometimes cron jobs are difficult to troubleshoot. You can enable
 logging of cron by editing <code>/etc/rsyslog.conf</code> and uncommenting
 the line
 </p>
 
-<div class="highlight"><pre><span></span><span class="c1"># cron.*</span>
+<div class="highlight"><pre><span></span>&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;# &lt;/span&gt;&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;cron.*&lt;/span&gt;
 </pre></div>
 
 <p>
@@ -1018,13 +943,20 @@ Then, restart rsyslog via
 <div class="highlight"><pre><span></span>sudo /etc/init.d/rsyslog restart
 </pre></div>
 
+<p>
+I have found that the syslog can at least tell you whether a cron
+job was executed (though it won't tell you the results).  This can
+be confirmed by searching for outputs from cron in
+<code>/var/log/syslog</code>.
+</p>
+
 <hr>
 </div>
 </div>
-<div id="outline-container-sec-4-12-2" class="outline-4">
-<h4 id="sec-4-12-2">
-<span class="section-number-4">4.12.2</span> Running cron with sudo privileges</h4>
-<div class="outline-text-4" id="text-4-12-2">
+<div id="outline-container-sec-3-12-2" class="outline-4">
+<h4 id="sec-3-12-2">
+<span class="section-number-4">3.12.2</span> Running cron with sudo privileges</h4>
+<div class="outline-text-4" id="text-3-12-2">
 <p>
 Do not put sudo in cron jobs because the password will be saved as
 plain text.
@@ -1034,7 +966,7 @@ plain text.
 Instead, edit the root user's crontab with
 </p>
 
-<div class="highlight"><pre><span></span>sudo env <span class="nv">EDITOR</span><span class="o">=</span>emacs crontab -e
+<div class="highlight"><pre><span></span>sudo env &lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;EDITOR&lt;/span&gt;<span class="o">=</span>emacs crontab -e
 </pre></div>
 
 <p>
@@ -1044,10 +976,10 @@ and put your jobs in there.
 <hr>
 </div>
 </div>
-<div id="outline-container-sec-4-12-3" class="outline-4">
-<h4 id="sec-4-12-3">
-<span class="section-number-4">4.12.3</span> Incremental backups</h4>
-<div class="outline-text-4" id="text-4-12-3">
+<div id="outline-container-sec-3-12-3" class="outline-4">
+<h4 id="sec-3-12-3">
+<span class="section-number-4">3.12.3</span> Incremental backups</h4>
+<div class="outline-text-4" id="text-3-12-3">
 <p>
 See this source: <a href="http://www.jveweb.net/en/archives/2011/02/using-rsync-and-cron-to-automate-incremental-backups.html">http://www.jveweb.net/en/archives/2011/02/using-rsync-and-cron-to-automate-incremental-backups.html</a>
 </p>
@@ -1056,7 +988,7 @@ See this source: <a href="http://www.jveweb.net/en/archives/2011/02/using-rsync-
 Currently, I run incremental backups with
 </p>
 
-<div class="highlight"><pre><span></span>rsync -ab --backup-dir<span class="o">=</span>old_<span class="sb">`</span>date +<span class="se">\%</span>F<span class="sb">`</span> --delete --exclude<span class="o">=</span>old_* /source/ /destination/
+<div class="highlight"><pre><span></span>rsync -ab --backup-dir<span class="o">=</span>old_&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold;"</span>&gt;<span class="sb">`</span>date +<span class="se">\%</span>F<span class="sb">`</span>&lt;/span&gt; --delete --exclude<span class="o">=</span>old_* /source/ /destination/
 </pre></div>
 
 <p>
@@ -1071,10 +1003,10 @@ new line and not part of the above command.
 </div>
 </div>
 
-<div id="outline-container-sec-4-13" class="outline-3">
-<h3 id="sec-4-13">
-<span class="section-number-3">4.13</span> Install Microsoft Core Fonts</h3>
-<div class="outline-text-3" id="text-4-13">
+<div id="outline-container-sec-3-13" class="outline-3">
+<h3 id="sec-3-13">
+<span class="section-number-3">3.13</span> Install Microsoft Core Fonts</h3>
+<div class="outline-text-3" id="text-3-13">
 <p>
 These fonts are located in the package <b>ttf-mscorefonts-installer</b>.
 </p>
@@ -1085,15 +1017,15 @@ These fonts are located in the package <b>ttf-mscorefonts-installer</b>.
 <hr>
 </div>
 </div>
-<div id="outline-container-sec-4-14" class="outline-3">
-<h3 id="sec-4-14">
-<span class="section-number-3">4.14</span> Monitor settings</h3>
-<div class="outline-text-3" id="text-4-14">
+<div id="outline-container-sec-3-14" class="outline-3">
+<h3 id="sec-3-14">
+<span class="section-number-3">3.14</span> Monitor settings</h3>
+<div class="outline-text-3" id="text-3-14">
 </div>
-<div id="outline-container-sec-4-14-1" class="outline-4">
-<h4 id="sec-4-14-1">
-<span class="section-number-4">4.14.1</span> Dual monitors</h4>
-<div class="outline-text-4" id="text-4-14-1">
+<div id="outline-container-sec-3-14-1" class="outline-4">
+<h4 id="sec-3-14-1">
+<span class="section-number-4">3.14.1</span> Dual monitors</h4>
+<div class="outline-text-4" id="text-3-14-1">
 <p>
 <i>Sources</i>
 </p>
@@ -1130,10 +1062,10 @@ Settings -&gt; Session and Startup</i>.
 <hr>
 </div>
 </div>
-<div id="outline-container-sec-4-14-2" class="outline-4">
-<h4 id="sec-4-14-2">
-<span class="section-number-4">4.14.2</span> Screen brightness</h4>
-<div class="outline-text-4" id="text-4-14-2">
+<div id="outline-container-sec-3-14-2" class="outline-4">
+<h4 id="sec-3-14-2">
+<span class="section-number-4">3.14.2</span> Screen brightness</h4>
+<div class="outline-text-4" id="text-3-14-2">
 <p>
 <i>Sources</i>
 </p>
@@ -1154,10 +1086,10 @@ labels, simply type <i>xrandr</i>.
 </div>
 </div>
 
-<div id="outline-container-sec-4-15" class="outline-3">
-<h3 id="sec-4-15">
-<span class="section-number-3">4.15</span> Time updates with ntpdate</h3>
-<div class="outline-text-3" id="text-4-15">
+<div id="outline-container-sec-3-15" class="outline-3">
+<h3 id="sec-3-15">
+<span class="section-number-3">3.15</span> Time updates with ntpdate</h3>
+<div class="outline-text-3" id="text-3-15">
 <p>
 <i>Sources</i>
 </p>
@@ -1190,15 +1122,15 @@ This fixed my clock rather easily.
 </div>
 </div>
 
-<div id="outline-container-sec-5" class="outline-2">
-<h2 id="sec-5">
-<span class="section-number-2">5</span> Managing Software Packages</h2>
-<div class="outline-text-2" id="text-5">
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4">
+<span class="section-number-2">4</span> Managing Software Packages</h2>
+<div class="outline-text-2" id="text-4">
 </div>
-<div id="outline-container-sec-5-1" class="outline-3">
-<h3 id="sec-5-1">
-<span class="section-number-3">5.1</span> Choosing software version alternatives</h3>
-<div class="outline-text-3" id="text-5-1">
+<div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1">
+<span class="section-number-3">4.1</span> Choosing software version alternatives</h3>
+<div class="outline-text-3" id="text-4-1">
 <p>
 Sometimes you may have multiple versions of a software package
 installed. I ran into this issue once when trying to write a simple
@@ -1225,10 +1157,10 @@ major.minor versions.
 </div>
 </div>
 
-<div id="outline-container-sec-5-2" class="outline-3">
-<h3 id="sec-5-2">
-<span class="section-number-3">5.2</span> Debian Backports</h3>
-<div class="outline-text-3" id="text-5-2">
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2">
+<span class="section-number-3">4.2</span> Debian Backports</h3>
+<div class="outline-text-3" id="text-4-2">
 <p>
 Debian Backports are versions of software packages that are
 intended for the next Debian release but are tuned to work in the
@@ -1261,15 +1193,406 @@ To install a package from backports, use
 </div>
 </div>
 
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5">
+<span class="section-number-2">5</span> File Systems</h2>
+<div class="outline-text-2" id="text-5">
+</div>
+<div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1">
+<span class="section-number-3">5.1</span> Renaming partitions</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+<i>Date</i>
+2017-02-04
+</p>
+
+<p>
+<i>Sources</i>
+</p>
+<ol class="org-ol">
+<li>
+<a href="https://help.ubuntu.com/community/RenameUSBDrive">https://help.ubuntu.com/community/RenameUSBDrive</a>
+</li>
+</ol>
+<p>
+This section explains how to rename a partition belonging to an
+external USB harddrive. Currently, the harddrive is always mounted
+to <code>/media/kmdouglass/0049C46E58BE73D1/</code>. I want to change the
+number to something more descriptive.
+</p>
+
+<hr>
+</div>
+
+<div id="outline-container-sec-5-1-1" class="outline-4">
+<h4 id="sec-5-1-1">
+<span class="section-number-4">5.1.1</span> Find the device and type of file system</h4>
+<div class="outline-text-4" id="text-5-1-1">
+<div class="highlight"><pre><span></span>sudo mount
+</pre></div>
+
+<p>
+Look for the device corresponding to the mount point. In this case:
+</p>
+
+<div class="highlight"><pre><span></span>/dev/sdb1 on /media/kmdouglass/0049C46E58BE73D1 type fuseblk (rw,nosuid,nodev,relatime,user_id=0,group_id=0,default_permissions,allow_other,blksize=4096,uhelper=udisks2)
+</pre></div>
+
+<p>
+To get the file system type, use <code>sudo fdisk -l | grep /dev/sdb1</code>.
+</p>
+
+<div class="highlight"><pre><span></span>/dev/sdb1        2048 1953458175 1953456128 931.5G  7 HPFS/NTFS/exFAT
+</pre></div>
+
+<hr>
+</div>
+</div>
+
+<div id="outline-container-sec-5-1-2" class="outline-4">
+<h4 id="sec-5-1-2">
+<span class="section-number-4">5.1.2</span> Install the labeling program (if necessary)</h4>
+<div class="outline-text-4" id="text-5-1-2">
+<p>
+Since my drive is formatted as NTFS, I'll use the program <code>ntfslabel</code>.
+</p>
+
+<div class="highlight"><pre><span></span>sudo apt-get install ntfs-3g
+</pre></div>
+
+<hr>
+</div>
+</div>
+
+<div id="outline-container-sec-5-1-3" class="outline-4">
+<h4 id="sec-5-1-3">
+<span class="section-number-4">5.1.3</span> Rename the partition</h4>
+<div class="outline-text-4" id="text-5-1-3">
+<p>
+First unmount it:
+</p>
+
+<div class="highlight"><pre><span></span>sudo umount /dev/sdb1
+</pre></div>
+
+<p>
+Next, check the current label.
+</p>
+
+<div class="highlight"><pre><span></span>sudo ntfslabel /dev/sdb1
+</pre></div>
+
+<p>
+When I ran the above command it returned nothing. Let's go ahead
+and assign a label to it then.
+</p>
+
+<div class="highlight"><pre><span></span>sudo ntfslabel /dev/sdb1 kmd-backup
+</pre></div>
+
+<p>
+Unplug the drive and plug it back in.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-5-1-4" class="outline-4">
+<h4 id="sec-5-1-4">
+<span class="section-number-4">5.1.4</span> Check the new name</h4>
+<div class="outline-text-4" id="text-5-1-4">
+<p>
+Try mounting the device and check the output of <code>mount</code> again. You
+should now see the name of the drive. In my case, the mount point
+is <code>/media/kmdouglass/kmd-backup</code>.
+</p>
+
+<hr>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-5-2" class="outline-3">
+<h3 id="sec-5-2">
+<span class="section-number-3">5.2</span> Finding UUID's and labels of partitions</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+<i>Date</i>
+2017-02-04
+</p>
+
+<p>
+<i>Sources</i>
+</p>
+<ol class="org-ol">
+<li>
+<a href="https://wiki.debian.org/Part-UUID">https://wiki.debian.org/Part-UUID</a>
+</li>
+</ol>
+<hr>
+</div>
+
+<div id="outline-container-sec-5-2-1" class="outline-4">
+<h4 id="sec-5-2-1">
+<span class="section-number-4">5.2.1</span> By UUID</h4>
+<div class="outline-text-4" id="text-5-2-1">
+<div class="highlight"><pre><span></span>ls -l /dev/disk/by-uuid/
+</pre></div>
+
+<hr>
+</div>
+</div>
+
+<div id="outline-container-sec-5-2-2" class="outline-4">
+<h4 id="sec-5-2-2">
+<span class="section-number-4">5.2.2</span> By label</h4>
+<div class="outline-text-4" id="text-5-2-2">
+<div class="highlight"><pre><span></span>ls -l /dev/disk/by-label
+</pre></div>
+
+<hr>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-5-3" class="outline-3">
+<h3 id="sec-5-3">
+<span class="section-number-3">5.3</span> CIFS</h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+I use CIFS to access my network shares at work, some of which come
+from Windows servers.
+</p>
+</div>
+
+<div id="outline-container-sec-5-3-1" class="outline-4">
+<h4 id="sec-5-3-1">
+<span class="section-number-4">5.3.1</span> CIFS installation</h4>
+<div class="outline-text-4" id="text-5-3-1">
+<p>
+It's easy. <i>sudo apt-get install cifs-utils</i>
+</p>
+<hr>
+</div>
+</div>
+
+<div id="outline-container-sec-5-3-2" class="outline-4">
+<h4 id="sec-5-3-2">
+<span class="section-number-4">5.3.2</span> Accessing Windows shares remotely</h4>
+<div class="outline-text-4" id="text-5-3-2">
+<p>
+<i>Sources</i>
+</p>
+<ol class="org-ol">
+<li>
+<a href="https://wiki.ubuntu.com/MountWindowsSharesPermanently">https://wiki.ubuntu.com/MountWindowsSharesPermanently</a>
+</li>
+</ol>
+<p>
+First, I created a credentials file with my Windows username and
+password called <b>~/.smbcredentials</b>. It contained the lines
+</p>
+
+<div class="highlight"><pre><span></span>&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;username&lt;/span&gt;<span class="o">=</span>USERNAME
+&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;password&lt;/span&gt;<span class="o">=</span>PASSWORD
+</pre></div>
+
+<p>
+with the obvious substitutions. I changed the read/write
+credentials using <b>chmod 600 ~/.smbcredentials</b>.
+</p>
+
+<p>
+Next, I created a mount point for the network share at
+<b>/mnt/LEB-Z</b>. I then added the following line to <b>/etc/fstab</b>
+</p>
+
+<div class="highlight"><pre><span></span>//SERVERIP/LEB /mnt/LEB-Z cifs &lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;credentials&lt;/span&gt;<span class="o">=</span>/home/kmdouglass/.smbcredentials,&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;iocharset&lt;/span&gt;<span class="o">=</span>utf8,&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;sec&lt;/span&gt;<span class="o">=</span>ntlm,noauto <span class="m">0</span> 0
+</pre></div>
+
+<p>
+The <b>noauto</b> parameter ensures that the share is not mounted at
+startup or with the <b>sudo mount -a</b> command. To mount the share, I
+enter the command <b>sudo mount /mnt/LEB-Z</b>.
+</p>
+
+<hr>
+</div>
+</div>
+
+<div id="outline-container-sec-5-3-3" class="outline-4">
+<h4 id="sec-5-3-3">
+<span class="section-number-4">5.3.3</span> fstab options for mounting shares as a user</h4>
+<div class="outline-text-4" id="text-5-3-3">
+<p>
+The method described above will mount the CIFS share as root, which
+means you're user account won't be able to access the files and
+directories.
+</p>
+
+<p>
+To get around this, I modified the fstab line as such:
+</p>
+
+<div class="highlight"><pre><span></span>//SERVERIP/LEB /mnt/LEB-Z cifs &lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;credentials&lt;/span&gt;<span class="o">=</span>/home/kmdouglass/.smbcredentials,&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;iocharset&lt;/span&gt;<span class="o">=</span>utf8,&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;sec&lt;/span&gt;<span class="o">=</span>ntlm,&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;uid&lt;/span&gt;<span class="o">=</span>1000,&lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"font-weight: bold; font-style: italic;"</span>&gt;gid&lt;/span&gt;<span class="o">=</span>1000,noauto <span class="m">0</span> 0
+</pre></div>
+
+<p>
+UID and GID are user and group id numbers for the user of
+interest. These can be obtained with <b>id -u username</b> and <b>id -g
+username</b>.
+</p>
+
+<p>
+After mounting the share, the ownership still needs to be
+changed. This is done with the command
+</p>
+
+<div class="highlight"><pre><span></span>sudo chown -R user:user /mnt/LEB-Z
+</pre></div>
+
+<p>
+where user is the username that belongs to the UID.
+</p>
+
+<hr>
+</div>
+</div>
+</div>
+</div>
+
+
 <div id="outline-container-sec-6" class="outline-2">
 <h2 id="sec-6">
-<span class="section-number-2">6</span> Python setup</h2>
+<span class="section-number-2">6</span> Networking</h2>
 <div class="outline-text-2" id="text-6">
 </div>
 <div id="outline-container-sec-6-1" class="outline-3">
 <h3 id="sec-6-1">
-<span class="section-number-3">6.1</span> Compiling Python 3.4</h3>
+<span class="section-number-3">6.1</span> Find a machine's ip address/gateway/subnet/dns info</h3>
 <div class="outline-text-3" id="text-6-1">
+<p>
+<i>Date</i>
+2017-02-04
+</p>
+
+<p>
+<i>Source</i>
+<a href="http://web.mit.edu/rama/www/IP_tools.htm">http://web.mit.edu/rama/www/IP_tools.htm</a>
+</p>
+
+<p>
+An Internet Protocol (IP) address is a unique number that can
+identify each host (computers, routers, switches, etc.) on a
+network. When a host sends information to the IP address of a
+second receiving host it includes IP of origination, IP of
+destination and other information. Knowing the IP address of key
+network components such as routers, firewalls and servers, can be
+useful when troubleshooting network problems. Use of utilities like
+Ping or Trace Route can help isolate problem areas.
+</p>
+
+<p>
+A knowledge of relevant network topology and settings including
+DNS, gateway and subnet mask can also be useful when exploring
+network issues.
+</p>
+
+<p>
+Domain Name Service (DNS) numbers are IP addresses that a
+workstation or server uses to refer to specific servers that
+resolve domain names to IP addresses.
+</p>
+
+<p>
+A gateway IP refers to a device on a network which sends local
+network traffic to other networks.
+</p>
+
+<p>
+The subnet mask number helps to define the relationship between the
+host (computers, routers, switches, etc.) and the rest of the
+network.
+</p>
+
+<hr>
+</div>
+
+<div id="outline-container-sec-6-1-1" class="outline-4">
+<h4 id="sec-6-1-1">
+<span class="section-number-4">6.1.1</span> Finding a machine's IP address and subnet mask</h4>
+<div class="outline-text-4" id="text-6-1-1">
+<p>
+Here's an example output (i.e. not from my machine) from <code>sudo
+    ifconfig</code>.
+</p>
+
+<div class="highlight"><pre><span></span>eth0 Link encap:Ethernet HWaddr 00:10:5A:1A:DC:65
+inet addr:198.209.253.169 Bcast:208.141.109.255 Mask:255.255.255.0
+UP BROADCAST RUNNING MULTICAST MTU:1500 Metric:1
+RX packets:18940 errors:1 dropped:0 overruns:0 frame:2
+TX packets:11554 errors:0 dropped:0 overruns:0 carrier:0
+collisions:2 txqueuelen:100
+RX bytes:4087250 (3.8 Mb) TX bytes:2499423 (2.3 Mb)
+Interrupt:11 Base address:0xd000
+</pre></div>
+
+<p>
+The IP address is denoted by <i>inet addr:</i> and is
+198.209.253.169. The mask is denoted by <i>Mask:</i> and in this case
+is 255.255.255.0.
+</p>
+
+<hr>
+</div>
+</div>
+
+<div id="outline-container-sec-6-1-2" class="outline-4">
+<h4 id="sec-6-1-2">
+<span class="section-number-4">6.1.2</span> Finding the gateway's IP address</h4>
+<div class="outline-text-4" id="text-6-1-2">
+<div class="highlight"><pre><span></span>kmdouglass@kmd-laptop:~$ netstat -rn
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
+0.0.0.0         192.168.0.1     0.0.0.0         UG        0 0          0 wlan0
+</pre></div>
+
+<p>
+In this case, the private IP address of my router is
+192.168.0.1. This is pretty standard for private networks.
+</p>
+
+<hr>
+</div>
+</div>
+
+<div id="outline-container-sec-6-1-3" class="outline-4">
+<h4 id="sec-6-1-3">
+<span class="section-number-4">6.1.3</span> Finding the Domain Name Servers (DNS)</h4>
+<div class="outline-text-4" id="text-6-1-3">
+<div class="highlight"><pre><span></span>cat /etc/resolv.conf
+</pre></div>
+
+<hr>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7">
+<span class="section-number-2">7</span> Python setup</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+<b>NOTE</b>: This section is relatively out of date as of 2017/02/04. I
+ now use Anaconda to manage Python libraries.
+</p>
+</div>
+
+<div id="outline-container-sec-7-1" class="outline-3">
+<h3 id="sec-7-1">
+<span class="section-number-3">7.1</span> Compiling Python 3.4</h3>
+<div class="outline-text-3" id="text-7-1">
 <p>
 <i>Sources</i>
 </p>
@@ -1336,10 +1659,10 @@ sudo ln -s /usr/bin/python3.4 /usr/bin/python
 </div>
 </div>
 
-<div id="outline-container-sec-6-2" class="outline-3">
-<h3 id="sec-6-2">
-<span class="section-number-3">6.2</span> Installing IPython 2.0</h3>
-<div class="outline-text-3" id="text-6-2">
+<div id="outline-container-sec-7-2" class="outline-3">
+<h3 id="sec-7-2">
+<span class="section-number-3">7.2</span> Installing IPython 2.0</h3>
+<div class="outline-text-3" id="text-7-2">
 <p>
 <i>Sources</i>
 </p>
@@ -1379,10 +1702,10 @@ readline</b>. However, I had to rebuild Python3 with the package
 <hr>
 </div>
 
-<div id="outline-container-sec-6-2-1" class="outline-4">
-<h4 id="sec-6-2-1">
-<span class="section-number-4">6.2.1</span> IPython Notebook</h4>
-<div class="outline-text-4" id="text-6-2-1">
+<div id="outline-container-sec-7-2-1" class="outline-4">
+<h4 id="sec-7-2-1">
+<span class="section-number-4">7.2.1</span> IPython Notebook</h4>
+<div class="outline-text-4" id="text-7-2-1">
 <p>
 The IPython notebook required that I install <b>libzmq</b> with apt-get
 and <b>pyzmq</b> with pip3.
@@ -1391,10 +1714,10 @@ and <b>pyzmq</b> with pip3.
 </div>
 </div>
 
-<div id="outline-container-sec-6-2-2" class="outline-4">
-<h4 id="sec-6-2-2">
-<span class="section-number-4">6.2.2</span> Fixing indentation errors</h4>
-<div class="outline-text-4" id="text-6-2-2">
+<div id="outline-container-sec-7-2-2" class="outline-4">
+<h4 id="sec-7-2-2">
+<span class="section-number-4">7.2.2</span> Fixing indentation errors</h4>
+<div class="outline-text-4" id="text-7-2-2">
 <p>
 <i>Source</i>
 </p>
@@ -1425,10 +1748,10 @@ the indentation errors.
 </div>
 </div>
 
-<div id="outline-container-sec-6-3" class="outline-3">
-<h3 id="sec-6-3">
-<span class="section-number-3">6.3</span> Installing Numpy 1.8.1, matplotlib 1.3.1, scipy 0.14, and Pillow 2.4.0</h3>
-<div class="outline-text-3" id="text-6-3">
+<div id="outline-container-sec-7-3" class="outline-3">
+<h3 id="sec-7-3">
+<span class="section-number-3">7.3</span> Installing Numpy 1.8.1, matplotlib 1.3.1, scipy 0.14, and Pillow 2.4.0</h3>
+<div class="outline-text-3" id="text-7-3">
 <p>
 Numpy 1.8.1 can be installed with pip3. Before doing so, I first
 ATLAS with <b>sudo apt-get install libatlas-base-dev</b>. Next, I
@@ -1445,10 +1768,10 @@ system, such as <b>gfortran</b>.
 </div>
 </div>
 
-<div id="outline-container-sec-6-4" class="outline-3">
-<h3 id="sec-6-4">
-<span class="section-number-3">6.4</span> Multiple IPython prompts at startup</h3>
-<div class="outline-text-3" id="text-6-4">
+<div id="outline-container-sec-7-4" class="outline-3">
+<h3 id="sec-7-4">
+<span class="section-number-3">7.4</span> Multiple IPython prompts at startup</h3>
+<div class="outline-text-3" id="text-7-4">
 <p>
 The reasons for the multiple prompts appearing the start of Ipython
 in emacs is given <a href="http://lists.gnu.org/archive/html/help-gnu-emacs/2014-05/msg00061.html">in this disccusion</a>.
@@ -1458,10 +1781,10 @@ in emacs is given <a href="http://lists.gnu.org/archive/html/help-gnu-emacs/2014
 </div>
 </div>
 
-<div id="outline-container-sec-6-5" class="outline-3">
-<h3 id="sec-6-5">
-<span class="section-number-3">6.5</span> Getting Tk and Latex support in Python</h3>
-<div class="outline-text-3" id="text-6-5">
+<div id="outline-container-sec-7-5" class="outline-3">
+<h3 id="sec-7-5">
+<span class="section-number-3">7.5</span> Getting Tk and Latex support in Python</h3>
+<div class="outline-text-3" id="text-7-5">
 <p>
 The first time I built Python, I did not have <b>tk8.5</b> or
 <b>tk8.5-dev</b> installed. This prevented me from creating plots with
@@ -1478,10 +1801,10 @@ if I want Latex support.
 </div>
 </div>
 
-<div id="outline-container-sec-6-6" class="outline-3">
-<h3 id="sec-6-6">
-<span class="section-number-3">6.6</span> Installing Jedi</h3>
-<div class="outline-text-3" id="text-6-6">
+<div id="outline-container-sec-7-6" class="outline-3">
+<h3 id="sec-7-6">
+<span class="section-number-3">7.6</span> Installing Jedi</h3>
+<div class="outline-text-3" id="text-7-6">
 <p>
 <i>Sources</i>
 </p>
@@ -1524,14 +1847,14 @@ the Marmalade repo using package.el, the repository version was
 el-get, I added the following lines to init.el:
 </p>
 
-<div class="highlight"><pre><span></span><span class="c1">; Standard el-get setup</span>
-<span class="c1">; (See also: https://github.com/dimitri/el-get#basic-setup)</span>
-<span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">'load-path</span> <span class="s">"~/.emacs.d/el-get/el-get"</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold; font-style: italic;"</span><span class="nv">&gt;</span><span class="c1">; &lt;/span&gt;&lt;span style="font-weight: bold; font-style: italic;"&gt;Standard el-get setup&lt;/span&gt;</span>
+<span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold; font-style: italic;"</span><span class="nv">&gt;</span><span class="c1">; &lt;/span&gt;&lt;span style="font-weight: bold; font-style: italic;"&gt;(See also: https://github.com/dimitri/el-get#basic-setup)&lt;/span&gt;</span>
+<span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">'load-path</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"~/.emacs.d/el-get/el-get"</span><span class="nv">&lt;/span&gt;</span><span class="p">)</span>
 
-<span class="p">(</span><span class="nf">unless</span> <span class="p">(</span><span class="nf">require</span> <span class="ss">'el-get</span> <span class="nv">nil</span> <span class="ss">'noerror</span><span class="p">)</span>
-  <span class="p">(</span><span class="nf">with-current-buffer</span>
+<span class="p">(</span><span class="nf">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold;"</span><span class="nv">&gt;unless&lt;/span&gt;</span> <span class="p">(</span><span class="nf">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold;"</span><span class="nv">&gt;require&lt;/span&gt;</span> <span class="ss">'&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold; text-decoration: underline;"</span><span class="nv">&gt;el-get&lt;/span&gt;</span> <span class="nv">nil</span> <span class="ss">'noerror</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold;"</span><span class="nv">&gt;with-current-buffer&lt;/span&gt;</span>
       <span class="p">(</span><span class="nf">url-retrieve-synchronously</span>
-       <span class="s">"https://raw.github.com/dimitri/el-get/master/el-get-install.el"</span><span class="p">)</span>
+       <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"https://raw.github.com/dimitri/el-get/master/el-get-install.el"</span><span class="nv">&lt;/span&gt;</span><span class="p">)</span>
     <span class="p">(</span><span class="nf">goto-char</span> <span class="p">(</span><span class="nf">point-max</span><span class="p">))</span>
     <span class="p">(</span><span class="nf">eval-print-last-sexp</span><span class="p">)))</span>
 
@@ -1553,7 +1876,7 @@ Finally, I added the following lines to init.el, restarted emacs,
 and had a working jedi install.
 </p>
 
-<div class="highlight"><pre><span></span><span class="c1">;; Standard Jedi.el setting</span>
+<div class="highlight"><pre><span></span><span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold; font-style: italic;"</span><span class="nv">&gt;</span><span class="c1">;; &lt;/span&gt;&lt;span style="font-weight: bold; font-style: italic;"&gt;Standard Jedi.el setting&lt;/span&gt;</span>
 <span class="p">(</span><span class="nf">add-hook</span> <span class="ss">'python-mode-hook</span> <span class="ss">'jedi:setup</span><span class="p">)</span>
 <span class="p">(</span><span class="nf">setq</span> <span class="nv">jedi:complete-on-dot</span> <span class="nv">t</span><span class="p">)</span>
 </pre></div>
@@ -1563,15 +1886,15 @@ and had a working jedi install.
 </div>
 </div>
 
-<div id="outline-container-sec-7" class="outline-2">
-<h2 id="sec-7">
-<span class="section-number-2">7</span> Org-mode configuration</h2>
-<div class="outline-text-2" id="text-7">
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8">
+<span class="section-number-2">8</span> Org-mode configuration</h2>
+<div class="outline-text-2" id="text-8">
 </div>
-<div id="outline-container-sec-7-1" class="outline-3">
-<h3 id="sec-7-1">
-<span class="section-number-3">7.1</span> Publish to LaTeX with references</h3>
-<div class="outline-text-3" id="text-7-1">
+<div id="outline-container-sec-8-1" class="outline-3">
+<h3 id="sec-8-1">
+<span class="section-number-3">8.1</span> Publish to LaTeX with references</h3>
+<div class="outline-text-3" id="text-8-1">
 <p>
 <i>Sources</i>
 </p>
@@ -1618,128 +1941,23 @@ Finally, I changed my original init.el file by modifying
 </p>
 
 <div class="highlight"><pre><span></span><span class="p">(</span><span class="nf">setq</span> <span class="nv">org-latex-pdf-process</span>
-  <span class="o">'</span><span class="p">(</span><span class="s">"latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -bibtex -f %f"</span><span class="p">))</span>
+  <span class="o">'</span><span class="p">(</span><span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -bibtex -f %f"</span><span class="nv">&lt;/span&gt;</span><span class="p">))</span>
 </pre></div>
 
 <p>
 This was changed from what I had used in the past:
 </p>
 
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="nf">setq</span> <span class="nv">org-latex-to-pdf-process</span> <span class="o">'</span><span class="p">(</span><span class="s">"pdflatex -interaction nonstopmode %b"</span>
-				 <span class="s">"/usr/bin/bibtex %b"</span>
-				 <span class="s">"pdflatex -interaction nonstopmode %b"</span>
-				 <span class="s">"pdflatex -interaction nonstopmode %b"</span><span class="p">))</span>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nf">setq</span> <span class="nv">org-latex-to-pdf-process</span> <span class="o">'</span><span class="p">(</span><span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"pdflatex -interaction nonstopmode %b"</span><span class="nv">&lt;/span&gt;</span>
+                                 <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"/usr/bin/bibtex %b"</span><span class="nv">&lt;/span&gt;</span>
+                                 <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"pdflatex -interaction nonstopmode %b"</span><span class="nv">&lt;/span&gt;</span>
+                                 <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nv">&gt;</span><span class="s">"pdflatex -interaction nonstopmode %b"</span><span class="nv">&lt;/span&gt;</span><span class="p">))</span>
 </pre></div>
 
 <p>
 Now, publishing to pdf with Latex and including citations works
 well.
 </p>
-<hr>
-</div>
-</div>
-</div>
-
-<div id="outline-container-sec-8" class="outline-2">
-<h2 id="sec-8">
-<span class="section-number-2">8</span> CIFS</h2>
-<div class="outline-text-2" id="text-8">
-<p>
-I use CIFS to access my network shares at work, some of which come
-from Windows servers.
-</p>
-</div>
-
-<div id="outline-container-sec-8-1" class="outline-3">
-<h3 id="sec-8-1">
-<span class="section-number-3">8.1</span> CIFS installation</h3>
-<div class="outline-text-3" id="text-8-1">
-<p>
-It's easy. <i>sudo apt-get install cifs-utils</i>
-</p>
-<hr>
-</div>
-</div>
-
-<div id="outline-container-sec-8-2" class="outline-3">
-<h3 id="sec-8-2">
-<span class="section-number-3">8.2</span> Accessing Windows shares remotely</h3>
-<div class="outline-text-3" id="text-8-2">
-<p>
-<i>Sources</i>
-</p>
-<ol class="org-ol">
-<li>
-<a href="https://wiki.ubuntu.com/MountWindowsSharesPermanently">https://wiki.ubuntu.com/MountWindowsSharesPermanently</a>
-</li>
-</ol>
-<p>
-First, I created a credentials file with my Windows username and
-password called <b>~/.smbcredentials</b>. It contained the lines
-</p>
-
-<div class="highlight"><pre><span></span><span class="nv">username</span><span class="o">=</span>USERNAME
-<span class="nv">password</span><span class="o">=</span>PASSWORD
-</pre></div>
-
-<p>
-with the obvious substitutions. I changed the read/write
-credentials using <b>chmod 600 ~/.smbcredentials</b>.
-</p>
-
-<p>
-Next, I created a mount point for the network share at
-<b>/mnt/LEB-Z</b>. I then added the following line to <b>/etc/fstab</b>
-</p>
-
-<div class="highlight"><pre><span></span>//SERVERIP/LEB /mnt/LEB-Z cifs <span class="nv">credentials</span><span class="o">=</span>/home/kmdouglass/.smbcredentials,iocharset<span class="o">=</span>utf8,sec<span class="o">=</span>ntlm,noauto <span class="m">0</span> 0
-</pre></div>
-
-<p>
-The <b>noauto</b> parameter ensures that the share is not mounted at
-startup or with the <b>sudo mount -a</b> command. To mount the share, I
-enter the command <b>sudo mount /mnt/LEB-Z</b>.
-</p>
-
-<hr>
-</div>
-</div>
-
-<div id="outline-container-sec-8-3" class="outline-3">
-<h3 id="sec-8-3">
-<span class="section-number-3">8.3</span> fstab options for mounting shares as a user</h3>
-<div class="outline-text-3" id="text-8-3">
-<p>
-The method described above will mount the CIFS share as root, which
-means you're user account won't be able to access the files and
-directories.
-</p>
-
-<p>
-To get around this, I modified the fstab line as such:
-</p>
-
-<div class="highlight"><pre><span></span>//SERVERIP/LEB /mnt/LEB-Z cifs <span class="nv">credentials</span><span class="o">=</span>/home/kmdouglass/.smbcredentials,iocharset<span class="o">=</span>utf8,sec<span class="o">=</span>ntlm,uid<span class="o">=</span>1000,gid<span class="o">=</span>1000,noauto <span class="m">0</span> 0
-</pre></div>
-
-<p>
-UID and GID are user and group id numbers for the user of
-interest. These can be obtained with <b>id -u username</b> and <b>id -g
-username</b>.
-</p>
-
-<p>
-After mounting the share, the ownership still needs to be
-changed. This is done with the command
-</p>
-
-<div class="highlight"><pre><span></span>sudo chown -R user:user /mnt/LEB-Z
-</pre></div>
-
-<p>
-where user is the username that belongs to the UID.
-</p>
-
 <hr>
 </div>
 </div>
@@ -1923,7 +2141,7 @@ configure GRUB on my system without the Windows partitions.
 </div>
 
 
-            <script src="../../assets/js/jquery.min.js"></script><script src="../../assets/js/bootstrap.min.js"></script><script src="../../assets/js/moment-with-locales.min.js"></script><script src="../../assets/js/fancydates.js"></script><script src="../../assets/js/jquery.colorbox-min.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+            <script src="../../assets/js/all-nocdn.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
     moment.locale("en");
     fancydates(0, "YYYY-MM-DD HH:mm");
     </script><!-- end fancy dates -->

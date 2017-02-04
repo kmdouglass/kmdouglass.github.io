@@ -8,34 +8,13 @@
 .. type: text
 #+END_COMMENT
 #+OPTIONS: toc:nil num:t ^:nil
-#+TOC: headlines 3
+#+TOC: headlines 2
 
 * Notes on Linux
   This page serves as a collection of notes I've made while using
   Linux. It's meant to be a resource to help others and myself when
   performing common tasks in the Linux operating system. Let me know
   if it helps you in any way!
-
------  
-
-* Why install Debian?
-  For the last five or six years, I have been using Ubuntu at home,
-  and sometimes at the office. (I'm writing this in 2014, a few months
-  after I finished my PhD studies.) I've liked it quite a bit and
-  learned a lot from it because it is a relatively gentle introduction
-  to Linux.
-
-  Lately I've become a bored with it however. I also get a vague
-  feeling that it's becoming a bit bloated. At home, I mainly use
-  emacs, Firefox, Anki (a flashcard program), and Python along with
-  its many associated packages. I don't therefore need a large
-  operating system. Now, I know that there are lightweight versions of
-  Ubuntu, but at this point I'm really just interested in trying
-  something else.
-  
-  So, I decided to give Debian a try. Ubuntu is based on Debian, but
-  so far as I can tell Debian has remained closer to the open source
-  paradigm. Furthermore, Debian is actively developed and very mature.
 
 -----
 
@@ -490,6 +469,11 @@ env EDITOR=emacs crontab -e
 sudo /etc/init.d/rsyslog restart
     #+END_SRC    
 
+    I have found that the syslog can at least tell you whether a cron
+    job was executed (though it won't tell you the results).  This can
+    be confirmed by searching for outputs from cron in
+    =/var/log/syslog=.
+
     -----
 *** Running cron with sudo privileges
     Do not put sudo in cron jobs because the password will be saved as
@@ -629,7 +613,254 @@ apt-get -t jessie-backports install package
 
 -----
 
+* File Systems
+
+** Renaming partitions
+   /Date/
+   2017-02-04
+   
+   /Sources/
+   1. https://help.ubuntu.com/community/RenameUSBDrive
+
+   This section explains how to rename a partition belonging to an
+   external USB harddrive. Currently, the harddrive is always mounted
+   to =/media/kmdouglass/0049C46E58BE73D1/=. I want to change the
+   number to something more descriptive.
+
+-----
+
+*** Find the device and type of file system
+
+    #+BEGIN_SRC
+sudo mount
+    #+END_SRC
+
+    Look for the device corresponding to the mount point. In this case:
+
+    #+BEGIN_SRC
+/dev/sdb1 on /media/kmdouglass/0049C46E58BE73D1 type fuseblk (rw,nosuid,nodev,relatime,user_id=0,group_id=0,default_permissions,allow_other,blksize=4096,uhelper=udisks2)
+    #+END_SRC
+
+    To get the file system type, use =sudo fdisk -l | grep /dev/sdb1=.
+
+    #+BEGIN_SRC
+/dev/sdb1        2048 1953458175 1953456128 931.5G  7 HPFS/NTFS/exFAT
+    #+END_SRC
+
+-----
+
+*** Install the labeling program (if necessary)
+
+    Since my drive is formatted as NTFS, I'll use the program =ntfslabel=.
+
+    #+BEGIN_SRC
+sudo apt-get install ntfs-3g
+    #+END_SRC
+
+-----
+
+*** Rename the partition
+
+    First unmount it:
+
+    #+BEGIN_SRC
+sudo umount /dev/sdb1
+    #+END_SRC
+
+    Next, check the current label.
+
+    #+BEGIN_SRC
+sudo ntfslabel /dev/sdb1
+    #+END_SRC
+
+    When I ran the above command it returned nothing. Let's go ahead
+    and assign a label to it then.
+
+    #+BEGIN_SRC
+sudo ntfslabel /dev/sdb1 kmd-backup
+    #+END_SRC
+    
+    Unplug the drive and plug it back in.
+
+*** Check the new name
+    Try mounting the device and check the output of =mount= again. You
+    should now see the name of the drive. In my case, the mount point
+    is =/media/kmdouglass/kmd-backup=.
+
+-----
+
+** Finding UUID's and labels of partitions
+   /Date/
+   2017-02-04
+
+   /Sources/
+   1. https://wiki.debian.org/Part-UUID
+
+-----
+
+*** By UUID
+
+    #+BEGIN_SRC
+ls -l /dev/disk/by-uuid/
+    #+END_SRC
+
+-----
+
+*** By label
+
+    #+BEGIN_SRC
+ls -l /dev/disk/by-label
+    #+END_SRC
+
+-----
+
+** CIFS
+   I use CIFS to access my network shares at work, some of which come
+   from Windows servers.
+
+*** CIFS installation
+   It's easy. /sudo apt-get install cifs-utils/
+-----
+
+*** Accessing Windows shares remotely
+   /Sources/
+   1. https://wiki.ubuntu.com/MountWindowsSharesPermanently
+  
+   First, I created a credentials file with my Windows username and
+   password called *~/.smbcredentials*. It contained the lines
+
+   #+BEGIN_SRC sh
+username=USERNAME
+password=PASSWORD
+   #+END_SRC
+
+   with the obvious substitutions. I changed the read/write
+   credentials using *chmod 600 ~/.smbcredentials*.
+
+   Next, I created a mount point for the network share at
+   */mnt/LEB-Z*. I then added the following line to */etc/fstab*
+
+   #+BEGIN_SRC sh
+//SERVERIP/LEB /mnt/LEB-Z cifs credentials=/home/kmdouglass/.smbcredentials,iocharset=utf8,sec=ntlm,noauto 0 0
+   #+END_SRC
+   
+   The *noauto* parameter ensures that the share is not mounted at
+   startup or with the *sudo mount -a* command. To mount the share, I
+   enter the command *sudo mount /mnt/LEB-Z*.
+
+-----
+
+*** fstab options for mounting shares as a user
+
+   The method described above will mount the CIFS share as root, which
+   means you're user account won't be able to access the files and
+   directories.
+
+   To get around this, I modified the fstab line as such:
+
+   #+BEGIN_SRC sh
+//SERVERIP/LEB /mnt/LEB-Z cifs credentials=/home/kmdouglass/.smbcredentials,iocharset=utf8,sec=ntlm,uid=1000,gid=1000,noauto 0 0
+   #+END_SRC
+
+   UID and GID are user and group id numbers for the user of
+   interest. These can be obtained with *id -u username* and *id -g
+   username*.
+
+   After mounting the share, the ownership still needs to be
+   changed. This is done with the command
+
+   #+BEGIN_SRC sh
+sudo chown -R user:user /mnt/LEB-Z
+   #+END_SRC
+
+   where user is the username that belongs to the UID.
+
+-----
+
+
+* Networking
+
+** Find a machine's ip address/gateway/subnet/dns info
+   /Date/
+   2017-02-04
+
+   /Source/
+   http://web.mit.edu/rama/www/IP_tools.htm
+
+   An Internet Protocol (IP) address is a unique number that can
+   identify each host (computers, routers, switches, etc.) on a
+   network. When a host sends information to the IP address of a
+   second receiving host it includes IP of origination, IP of
+   destination and other information. Knowing the IP address of key
+   network components such as routers, firewalls and servers, can be
+   useful when troubleshooting network problems. Use of utilities like
+   Ping or Trace Route can help isolate problem areas.
+
+   A knowledge of relevant network topology and settings including
+   DNS, gateway and subnet mask can also be useful when exploring
+   network issues.
+
+   Domain Name Service (DNS) numbers are IP addresses that a
+   workstation or server uses to refer to specific servers that
+   resolve domain names to IP addresses.
+
+   A gateway IP refers to a device on a network which sends local
+   network traffic to other networks.
+
+   The subnet mask number helps to define the relationship between the
+   host (computers, routers, switches, etc.) and the rest of the
+   network.
+
+-----
+
+*** Finding a machine's IP address and subnet mask
+
+    Here's an example output (i.e. not from my machine) from =sudo
+    ifconfig=.
+
+    #+BEGIN_SRC
+eth0 Link encap:Ethernet HWaddr 00:10:5A:1A:DC:65
+inet addr:198.209.253.169 Bcast:208.141.109.255 Mask:255.255.255.0
+UP BROADCAST RUNNING MULTICAST MTU:1500 Metric:1
+RX packets:18940 errors:1 dropped:0 overruns:0 frame:2
+TX packets:11554 errors:0 dropped:0 overruns:0 carrier:0
+collisions:2 txqueuelen:100
+RX bytes:4087250 (3.8 Mb) TX bytes:2499423 (2.3 Mb)
+Interrupt:11 Base address:0xd000 
+    #+END_SRC
+
+    The IP address is denoted by /inet addr:/ and is
+    198.209.253.169. The mask is denoted by /Mask:/ and in this case
+    is 255.255.255.0.
+
+-----
+
+*** Finding the gateway's IP address
+
+    #+BEGIN_SRC
+kmdouglass@kmd-laptop:~$ netstat -rn
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
+0.0.0.0         192.168.0.1     0.0.0.0         UG        0 0          0 wlan0
+    #+END_SRC
+
+    In this case, the private IP address of my router is
+    192.168.0.1. This is pretty standard for private networks.
+
+-----
+
+*** Finding the Domain Name Servers (DNS)
+
+    #+BEGIN_SRC
+cat /etc/resolv.conf
+    #+END_SRC
+
+-----
+
 * Python setup
+
+  *NOTE*: This section is relatively out of date as of 2017/02/04. I
+   now use Anaconda to manage Python libraries.
 
 ** Compiling Python 3.4
    /Sources/
@@ -874,69 +1105,6 @@ problem. A nice summary is provided in \cite{sfeir-jcellsci-2012}.
 
    Now, publishing to pdf with Latex and including citations works
    well.
------
-
-* CIFS
-  I use CIFS to access my network shares at work, some of which come
-  from Windows servers.
-
-** CIFS installation
-   It's easy. /sudo apt-get install cifs-utils/
------
-
-** Accessing Windows shares remotely
-   /Sources/
-   1. https://wiki.ubuntu.com/MountWindowsSharesPermanently
-  
-   First, I created a credentials file with my Windows username and
-   password called *~/.smbcredentials*. It contained the lines
-
-   #+BEGIN_SRC sh
-username=USERNAME
-password=PASSWORD
-   #+END_SRC
-
-   with the obvious substitutions. I changed the read/write
-   credentials using *chmod 600 ~/.smbcredentials*.
-
-   Next, I created a mount point for the network share at
-   */mnt/LEB-Z*. I then added the following line to */etc/fstab*
-
-   #+BEGIN_SRC sh
-//SERVERIP/LEB /mnt/LEB-Z cifs credentials=/home/kmdouglass/.smbcredentials,iocharset=utf8,sec=ntlm,noauto 0 0
-   #+END_SRC
-   
-   The *noauto* parameter ensures that the share is not mounted at
-   startup or with the *sudo mount -a* command. To mount the share, I
-   enter the command *sudo mount /mnt/LEB-Z*.
-
------
-
-** fstab options for mounting shares as a user
-
-   The method described above will mount the CIFS share as root, which
-   means you're user account won't be able to access the files and
-   directories.
-
-   To get around this, I modified the fstab line as such:
-
-   #+BEGIN_SRC sh
-//SERVERIP/LEB /mnt/LEB-Z cifs credentials=/home/kmdouglass/.smbcredentials,iocharset=utf8,sec=ntlm,uid=1000,gid=1000,noauto 0 0
-   #+END_SRC
-
-   UID and GID are user and group id numbers for the user of
-   interest. These can be obtained with *id -u username* and *id -g
-   username*.
-
-   After mounting the share, the ownership still needs to be
-   changed. This is done with the command
-
-   #+BEGIN_SRC sh
-sudo chown -R user:user /mnt/LEB-Z
-   #+END_SRC
-
-   where user is the username that belongs to the UID.
-
 -----
 * Booting from a bootloader on a USB stick
   I ran into some issues installing Debian on my work computer, which,
