@@ -76,7 +76,107 @@ MathJax.Hub.Config({
 
     
 <div class="postindex">
-    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="paraxial-optics-2-what-problem-does-it-solve.html" class="u-url">Paraxial Optics (2): What problem does it solve?</a></h1>
+    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="whats-the-difference-between-a-back-focal-plane-and-pupil-plane.html" class="u-url">What's the difference between a back focal plane and pupil plane?</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Kyle M. Douglass
+            </span></p>
+            <p class="dateline"><a href="whats-the-difference-between-a-back-focal-plane-and-pupil-plane.html" rel="bookmark"><time class="published dt-published" datetime="2015-08-26T08:49:13+02:00" title="2015-08-26 08:49">2015-08-26 08:49</time></a></p>
+                <p class="commentline">
+        
+    <a href="whats-the-difference-between-a-back-focal-plane-and-pupil-plane.html#disqus_thread" data-disqus-identifier="cache/posts/whats-the-difference-between-a-back-focal-plane-and-pupil-plane.html">Comments</a>
+
+
+        </p>
+</div>
+    </header><div class="p-summary entry-summary">
+    <p>
+Yesterday in the lab I asked one of my colleagues whether she knew
+what the pupil plane of a microscope objective was. Her answer was
+no. I then unknowingly proceeded to give her a description which I now
+realize was false. I said that the pupil plane is the plane near the
+backside of the objective where the light intensity is proportional to
+the Fourier transform of the image. Later that evening, I realized
+that this explanation was, in fact, wrong. I had described to her what
+is the <i>back focal plane</i> for an infinity-corrected objective.
+</p>
+
+<p>
+Don't worry, I will correct myself when I see her later
+today. However, this experience does raise one important question that
+I have never seriously considered in optics: what is the meaningful
+difference between the pupil plane of an optical system and its back
+focal plane?
+</p>
+
+<p>
+First, I should point out that there is no difference between a <i>back</i>
+focal plane and one of the two focal planes of an objective; these are
+merely semantics that reflect the fact that we think of the sample as
+being in front of the objective. The back focal plane is therefore the
+focal plane of the objective located on the side opposite the
+sample. Now, everyone who has taken a Fourier optics class has
+probably learned the following mantra:
+</p>
+
+<div align="center">
+
+<p>
+<b>The focal plane of a lens contains the Fourier transform of the
+object.</b>
+</p>
+
+</div>
+
+<p>
+Of course, this statement is usually what we remember, but in fact it
+should look more like this:
+</p>
+
+<div align="center">
+
+
+<p>
+<b>The focal plane of a lens contains the Fourier transform of the
+object, except for every other detail we ignore in the math.</b>
+</p>
+
+</div>
+
+
+<p>
+While it's true that the light intensity here reflects the sample's
+two-dimensional Fourier transform, the general case often contains
+additional phase factors and expressions to account for the pupil size
+and apodization (see <a href="https://books.google.ch/books?id=ow5xs_Rtt9AC&amp;printsec=frontcover&amp;dq=goodman+fourier+optics&amp;hl=en&amp;sa=X&amp;ved=0CB0Q6AEwAGoVChMI-5vjt5jGxwIVCMUUCh37ogzP#v=onepage&amp;q=goodman%20fourier%20optics&amp;f=false">Goodman</a>, section 5.2). Regardless, it is in the
+back focal plane where the light intensity contains information on the
+angular spectrum that makes up the object.
+</p>
+
+<p>
+In contrast, the pupil plane contains either the image of the
+objective's aperture stop or the physical stop itself, depending on
+what sets the limit on the numerical aperture of the objective in the
+infinity space (again, see <a href="https://books.google.ch/books?id=ow5xs_Rtt9AC&amp;printsec=frontcover&amp;dq=goodman+fourier+optics&amp;hl=en&amp;sa=X&amp;ved=0CB0Q6AEwAGoVChMI-5vjt5jGxwIVCMUUCh37ogzP#v=onepage&amp;q=goodman%20fourier%20optics&amp;f=false">Goodman</a>, appendix B). Moreover, the pupil
+plane is also used as the reference plane for quantifying the
+objective's aberrations. This is because, for a diffraction-limited
+system, the wavefront in the (exit) pupil plane will be a spherical
+wave converging towards the image of a point source and truncated by
+the aperture stop (<a href="https://books.google.ch/books?id=ow5xs_Rtt9AC&amp;printsec=frontcover&amp;dq=goodman+fourier+optics&amp;hl=en&amp;sa=X&amp;ved=0CB0Q6AEwAGoVChMI-5vjt5jGxwIVCMUUCh37ogzP#v=onepage&amp;q=goodman%20fourier%20optics&amp;f=false">Goodman</a> again discusses this in section
+6.1). Deviations from the spherical reference wave serve as the means
+to quantify the aberrations in a system.
+</p>
+
+<p>
+From an experimental point of view, the back focal plane is
+interesting because it is used in Fourier microscopy, for which many
+setups have been devised to image it (see Figure 1 in <a href="http://arxiv.org/abs/1507.04037">this excellent
+arXiv submission</a>.) What I really am wondering now is how one would go
+about imaging the pupil plane as a means of exploring an objective's
+aberrations, and whether this is at all feasible.
+</p>
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="paraxial-optics-2-what-problem-does-it-solve.html" class="u-url">Paraxial Optics (2): What problem does it solve?</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">
                 Kyle M. Douglass

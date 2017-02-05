@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Connecting a Raspberry Pi to a home Linux network | Kyle M. Douglass</title>
+<link href="../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<link href="../assets/css/ipython.min.css" rel="stylesheet" type="text/css">
+<link href="../assets/css/nikola_ipython.css" rel="stylesheet" type="text/css">
+<meta content="#5670d4" name="theme-color">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml">
+<link rel="canonical" href="http://kmdouglass.github.io/posts/connecting-a-raspberry-pi-to-a-home-linux-network.html">
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        processEscapes: true
+    }
+});
+</script><!--[if lt IE 9]><script src="../assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><meta name="author" content="Kyle M. Douglass">
+<link rel="prev" href="fifi-parts-list.html" title="FIFI Parts List" type="text/html">
+<meta property="og:site_name" content="Kyle M. Douglass">
+<meta property="og:title" content="Connecting a Raspberry Pi to a home Linux network">
+<meta property="og:url" content="http://kmdouglass.github.io/posts/connecting-a-raspberry-pi-to-a-home-linux-network.html">
+<meta property="og:description" content="I recently purchased a Raspberry Pi 3 Model B and have been tinkering
+with it for a few days. One of the first things I decided to do was to
+set it up so that I could access it from my laptop over my ">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2017-02-05T10:28:17+01:00">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="raspberry pi">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Menubar -->
+
+<nav class="navbar navbar-default navbar-static-top"><div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://kmdouglass.github.io/">
+
+                <span id="blog-title">Kyle M. Douglass</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
+            <ul class="nav navbar-nav">
+<li>
+<a href="../stories/about-me.html">About</a>
+                </li>
+<li>
+<a href="index.html">Blog</a>
+                </li>
+<li>
+<a href="../archive.html">Archive</a>
+                </li>
+<li>
+<a href="../stories/notes-and-projects.html">Notes</a>
+                </li>
+<li>
+<a href="../stories/contact.html">Contact</a>
+
+                
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+    <a href="connecting-a-raspberry-pi-to-a-home-linux-network.rst" id="sourcelink">Source</a>
+    </li>
+
+                
+            </ul>
+</div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="#" class="u-url">Connecting a Raspberry Pi to a home Linux network</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                    Kyle M. Douglass
+            </span></p>
+            <p class="dateline"><a href="#" rel="bookmark"><time class="published dt-published" datetime="2017-02-05T10:28:17+01:00" itemprop="datePublished" title="2017-02-05 10:28">2017-02-05 10:28</time></a></p>
+                <p class="commentline">
+        
+    <a href="connecting-a-raspberry-pi-to-a-home-linux-network.html#disqus_thread" data-disqus-identifier="cache/posts/connecting-a-raspberry-pi-to-a-home-linux-network.html">Comments</a>
+
+
+            
+        </p>
+<p class="sourceline"><a href="connecting-a-raspberry-pi-to-a-home-linux-network.rst" id="sourcelink">Source</a></p>
+
+        </div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<p>I recently purchased a Raspberry Pi 3 Model B and have been tinkering
+with it for a few days. One of the first things I decided to do was to
+set it up so that I could access it from my laptop over my home
+network. This post contains a step-by-step explanation of the
+process. If you have any questions, feel free to leave a comment or
+send me an e-mail.</p>
+<div class="section" id="collect-the-necessary-information">
+<h2>Collect the necessary information</h2>
+<p>To start, we need to collect a little bit of information about the
+home network. My internet is provided by a local company that supplied
+me with a Thomson TWG-870 router. This router determines the IP
+addresses of all the devices on my network. Since my laptop is running
+Linux (Debian Jessie, to be exact), I can use the <code>netstat</code>
+command to get the IP address of the router.:</p>
+<pre class="literal-block">
+kmdouglass@kmd-laptop:~$ netstat -rn
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
+0.0.0.0         192.168.0.1     0.0.0.0         UG        0 0          0 wlan0
+</pre>
+<p>The key part of this output is the <code>Gateway</code> column. A gateway
+is the IP address of the device (i.e. the router) that provides
+devices on a local network with access to the Internet.</p>
+<p>Knowing the IP address of the gateway, we can next trying entering it
+directly into the address bar of a web browser. On my machine, this
+opened a dialog asking for a username and password. (If you're not
+sure what these are, try asking your ISP. And if you haven't changed
+them from the default settings, then you really should do this.) After
+entering them and clicking <strong>OK</strong>, the browser window displayed the
+general configuration pages for the router.</p>
+<p>The next few steps will depend on the specific router. The information
+we are after is the list of IP addresses that the router reserves for
+static IP's. A static IP address is an address that is assigned to a
+device and doesn't change. Many routers have a so-called DHCP server
+that dynamically assigns IP addresses to devices such as smart phones
+as they log onto the network. We probably want to always find the Pi
+at the same address, however, so a static IP makes more sense than one
+that the router dynamically assigns.</p>
+<p>To find the list of static IP's on my specific router, I clicked on
+the link entitled <strong>Network</strong> in my router's configuration page. The
+relevant information for me looks like that in the image below:</p>
+<img alt="DHCP address pool" class="align-center" src="../dhcp_addresses.png"><p>This information is telling us that the router is reserving addresses
+192.168.0.10 to 192.168.0.254 for the DHCP server. We can therefore
+most probably use 192.168.0.2 through 9 for static IP's. (Remember
+that 192.168.0.1 is already taken; it's the address of the router.) I
+tested 192.168.0.2 by pinging it and received no response, so we will
+use this address for my Raspberry Pi. (Use Ctrl-C to stop pinging the
+device.):</p>
+<pre class="literal-block">
+kmdouglass@kmd-laptop:~$ ping 192.168.0.2
+PING 192.168.0.2 (192.168.0.2) 56(84) bytes of data.
+From 192.168.0.15 icmp_seq=1 Destination Host Unreachable
+From 192.168.0.15 icmp_seq=2 Destination Host Unreachable
+From 192.168.0.15 icmp_seq=3 Destination Host Unreachable
+^C
+--- 192.168.0.2 ping statistics ---
+4 packets transmitted, 0 received, +3 errors, 100% packet loss, time 3014ms
+pipe 3
+</pre>
+<p>For the next step, we need to collect the broadcast and subnet mask of
+the network. We can do this from the laptop that is already connected
+to the network by running the <code>sudo ifconfig</code> command. This
+command will report information that looks similar to the following
+example (note that this is not from my machine but is merely for
+illustration)::</p>
+<pre class="literal-block">
+eth0 Link encap:Ethernet HWaddr 00:10:5A:1A:DC:65
+inet addr:198.209.253.169 Bcast:208.141.109.255 Mask:255.255.255.0
+UP BROADCAST RUNNING MULTICAST MTU:1500 Metric:1
+RX packets:18940 errors:1 dropped:0 overruns:0 frame:2
+TX packets:11554 errors:0 dropped:0 overruns:0 carrier:0
+collisions:2 txqueuelen:100
+RX bytes:4087250 (3.8 Mb) TX bytes:2499423 (2.3 Mb)
+Interrupt:11 Base address:0xd000
+</pre>
+<p>The very first line tells us that this block of output belongs to the
+<strong>eth0</strong> interface. If you connect to the internet on your laptop
+through WiFi, then you may need to find the information for the
+<strong>wlan0</strong> interface instead. wlan0 is usually used to refer to
+wireless interfaces in Ubuntu and Debian Linux.</p>
+<p>The first line of output from ifconfig also provides the type of
+hardware and the ID of the ethernet card. The information we need,
+however, is on the second line. The device's IP address on the network
+is <strong>inet addr:198.209.253.169</strong>, but we don't really need this
+information. Rather, we need the two numbers that come next. The
+broadcast IP is reported in <strong>Bcast:208.141.109.255</strong> and the subnet
+mask in <strong>Mask:255.255.255.0</strong>. The <a class="reference external" href="https://en.wikipedia.org/wiki/Broadcast_address">broadcast IP</a> is used to send
+messages to all devices on the network, whereas the <a class="reference external" href="https://en.wikipedia.org/wiki/Subnetwork">subnet mask</a> is
+used to separate the parts of an address that identify the network
+from the parts that identify the devices and possible "sub-networks."</p>
+<p>To summarize this section, we need:</p>
+<ol class="arabic simple">
+<li>The static IP address that we'll assign to the Pi</li>
+<li>The IP address of the router, i.e. the gateway address</li>
+<li>The broadcast IP</li>
+<li>The subnet mask</li>
+</ol>
+</div>
+<div class="section" id="configure-the-pi">
+<h2>Configure the Pi</h2>
+<p>Now that we have decided on an IP address for the Pi, let's boot it up
+and configure it to always use this IP address. (I am currently using
+the <strong>NOOBS</strong> operating system that came with my Pi starter kit, but
+this should work with other flavors of Debian Linux as well.)</p>
+<p>Once logged on to the Pi, open a terminal and make a backup copy of
+the file <strong>/etc/network/interfaces</strong>:</p>
+<pre class="literal-block">
+sudo cp /etc/network/interfaces /etc/network/interfaces.bak
+</pre>
+<p>Making a backup is good practice; in case we ruin the configuration
+file, we can simply rewrite it using our backup. Next, open the
+original <strong>interfaces</strong> file for editing. In this example, I'll use
+the <strong>nano</strong> editor:</p>
+<pre class="literal-block">
+sudo nano /etc/network/interfaces
+</pre>
+<p>In this file, add the following lines (replacing the addresses with
+those appropriate for your network):</p>
+<pre class="literal-block">
+auto eth0
+iface eth0 inet static
+    address 192.168.0.2
+    netmask 255.255.255.0
+    gateway 192.168.0.1
+    broadcast 192.168.0.255
+</pre>
+<p>What do these lines do, you ask? Let's step through them one-by-one.</p>
+<div class="section" id="start-the-network-interface-at-boot">
+<h3>Start the network interface at boot</h3>
+<p>First off, we need to identify the network interface. <strong>eth0</strong> is the
+identifier that is referring to the dedicated ethernet port on the
+Pi. The line <strong>auto eth0</strong> means that this interface will be started
+at boot.</p>
+</div>
+<div class="section" id="configure-the-interface-to-use-a-static-ip">
+<h3>Configure the interface to use a static IP</h3>
+<p>Next, we see the line <strong>iface eth0 inet static</strong>. First, <strong>iface
+eth0</strong> means that we are configuring the ethernet port interface that
+was described in the last section. Following that, <strong>inet</strong> specifies
+that the interface uses TCP/IP networking. Finally, <strong>static</strong> is
+telling the NOOBS operating system that the device is going to request
+a static IP address from the router. (I obtained this explanation from
+<a class="reference external" href="http://askubuntu.com/questions/411616/what-does-keywords-in-my-etc-network-interfaces-means">this forum post</a>.)</p>
+</div>
+<div class="section" id="set-the-various-addresses">
+<h3>Set the various addresses</h3>
+<p>The next lines are indented because they are properties of the <strong>inet
+static</strong> family. If you've read everything until now, you should be
+able to figure out what addresses to enter next for each option. The
+desired static IP address for the Pi should follow the <strong>address</strong>
+field; the subnet mask, gateway, and broadcast IP's described above
+should follow <strong>netmask</strong>, <strong>gateway</strong>, and <strong>broadcast</strong>
+respectively.</p>
+<p>The <strong>network</strong> property (which is not shown above) contains the
+network address and <a class="reference external" href="http://man.cx/interfaces%285%29">is required for 2.0.x kernels</a>. These kernels
+are pretty old by now, so it is unlikely that you will need to specify
+this property.</p>
+</div>
+<div class="section" id="restart-the-network-interface">
+<h3>Restart the network interface</h3>
+<p>Restarting the interface we just configured on our Pi is as simple
+as entering these terminal commands:</p>
+<pre class="literal-block">
+sudo ifdown eth0
+sudo ifup eth0
+</pre>
+<p>(Remember to replace eth0 with the appropriate interface if yours is
+different.) If everything goes well, we should be able to use our web
+browser to navigate on the Internet. We should also be able to ping
+the Pi from the laptop and vice versa.</p>
+</div>
+</div>
+<div class="section" id="connecting-to-the-pi">
+<h2>Connecting to the Pi</h2>
+<p>Once the Pi is on the network, we need a way to connect to it from the
+laptop and other devices so that we can actually use it for
+something. One way is to use <a class="reference external" href="https://support.suso.com/supki/SSH_Tutorial_for_Linux">ssh</a>, or <a href="connecting-a-raspberry-pi-to-a-home-linux-network.html#id1"><span class="problematic" id="id2">**</span></a>S**ecure <a href="connecting-a-raspberry-pi-to-a-home-linux-network.html#id3"><span class="problematic" id="id4">**</span></a>SH**ell. ssh is
+program that let's us securely log on to other devices through a shell
+(i.e. terminal). This is useful for when we need to work only on the
+command line.</p>
+<div class="system-message" id="id1">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">&lt;string&gt;</tt>, line 201); <em><a href="connecting-a-raspberry-pi-to-a-home-linux-network.html#id2">backlink</a></em></p>
+Inline strong start-string without end-string.</div>
+<div class="system-message" id="id3">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">&lt;string&gt;</tt>, line 201); <em><a href="connecting-a-raspberry-pi-to-a-home-linux-network.html#id4">backlink</a></em></p>
+Inline strong start-string without end-string.</div>
+<p>If, on the other hand, we want a "Remote Desktop"-like GUI
+environment, we can use <a class="reference external" href="https://www.raspberrypi.org/documentation/remote-access/vnc/">VNC</a>. The documentation for VNC is quite
+good but detailed; I'll let you read up on it on your own if you're
+interested in using it.</p>
+<p>I'll now briefly explain how we can set up ssh on the Pi.</p>
+<div class="section" id="enable-ssh-on-the-pi">
+<h3>Enable ssh on the Pi</h3>
+<p>We need to enable ssh access to the Pi before we can use it. On the
+Pi, open a terminal and run the configuration utility::</p>
+<pre class="literal-block">
+sudo raspi-config
+</pre>
+<p>We should see the following window appear.</p>
+<img alt="The raspi-config menu with Interface Options highlighted." class="align-center" src="../pi-config-interface-options.png"><p>Use the keyboard to highlight <strong>Interface Options</strong> and tap the Enter
+key. In the following menu, we now should see an option to enable ssh
+as in the following image. Use the keyboard to highlight <strong>P2 SSH</strong>
+(or the relevant menu item if the name is different on your Pi) and
+hit the Enter key to enable it. Once ssh is enabled, we can hit Esc or
+select the &lt;Back&gt; option to until we exit the configuration utility.</p>
+<img alt="The raspi-config Interface Options menu with P2 SSH highlighted." class="align-center" src="../pi-config-ssh.png"><p>If you'e following along, you may need to restart your Pi for these
+changes to take effect.</p>
+</div>
+<div class="section" id="log-onto-the-pi-from-the-laptop">
+<h3>Log onto the Pi from the laptop</h3>
+<p>Now for the moment of truth. After restarting the Pi, <strong>we need to
+first ensure that we are not logged in to it</strong>. If we are, simply
+click the <strong>Menu</strong> button, followed by <strong>Shutdown... -&gt; Logout</strong> and
+log out of the session.</p>
+<p>Next, open a terminal on the laptop and enter the following command,
+changing the IP address to whatever was decided upon for the Pi::</p>
+<pre class="literal-block">
+ssh pi@192.168.0.2
+</pre>
+<p>This command runs the ssh program and asks to sign into the Pi as the
+user called <strong>pi</strong>. After running the command, we may be prompted for
+a password to log on if one was set on the Pi. (You did set one,
+didn't you?) Once successfully entering the password, we should notice
+that the terminal prompt has changed to something like
+<code>pi@raspberrypi:~ $</code>. This indicates that we are logged on to
+the Pi. If we enter the <code>ls</code> command, we should see the contents
+of the Pi's home directory. When we're ready to disconnect from the
+Pi, we can simply use the <code>exit</code> command at any time in the
+terminal. The prompt should change to reflect that we are back on our
+laptop machine when we have successfully exited.</p>
+<p>If this is all working as described above, then congratulations on
+connecting your Pi to your home Linux network! I wish you many happy
+hours of hacking :)</p>
+</div>
+</div>
+<div class="section" id="further-reading">
+<h2>Further Reading</h2>
+<ol class="arabic simple">
+<li>The Debian network setup manual is very detailed and describes
+many, many more aspects of setting up a network than I touched upon
+here. <a class="reference external" href="https://www.debian.org/doc/manuals/debian-reference/ch05.en.html">https://www.debian.org/doc/manuals/debian-reference/ch05.en.html</a>
+</li>
+<li>The Raspberry Pi documentation about VNC (Virtual Network
+Computing) is a great resource for setting up a graphical interface
+to remotely connect to your
+Pi. <a class="reference external" href="https://www.raspberrypi.org/documentation/remote-access/vnc/">https://www.raspberrypi.org/documentation/remote-access/vnc/</a>
+</li>
+</ol>
+</div>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../categories/linux.html" rel="tag">linux</a></li>
+            <li><a class="tag p-category" href="../categories/raspberry-pi.html" rel="tag">raspberry pi</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="fifi-parts-list.html" rel="prev" title="FIFI Parts List">Previous post</a>
+            </li>
+        </ul></nav></aside><section class="comments hidden-print"><h2>Comments</h2>
+        
+        
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="kmdouglass",
+            disqus_url="http://kmdouglass.github.io/posts/connecting-a-raspberry-pi-to-a-home-linux-network.html",
+        disqus_title="Connecting a Raspberry Pi to a home Linux network",
+        disqus_identifier="cache/posts/connecting-a-raspberry-pi-to-a-home-linux-network.html",
+        disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+        </section></article><script>var disqus_shortname="kmdouglass";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+</div>
+        <!--End of body content-->
+
+        <footer id="footer">
+            Contents © 2017         <a href="mailto:kyle.douglass@epfl.ch">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
+            
+        </footer>
+</div>
+</div>
+
+
+            <script src="../assets/js/all-nocdn.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+    moment.locale("en");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates -->
+</body>
+</html>

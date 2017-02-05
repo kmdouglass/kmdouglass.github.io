@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Kyle M. Douglass (linux)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link type="application/rss+xml" href="http://kmdouglass.github.io/categories/linux.xml" rel="self"></atom:link><language>en</language><lastBuildDate>Sun, 05 Feb 2017 09:40:10 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Connecting a Raspberry Pi to a home Linux network</title><link>http://kmdouglass.github.io/posts/connecting-a-raspberry-pi-to-a-home-linux-network.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;I recently purchased a Raspberry Pi 3 Model B and have been tinkering
+with it for a few days. One of the first things I decided to do was to
+set it up so that I could access it from my laptop over my home
+network. This post contains a step-by-step explanation of the
+process. If you have any questions, feel free to leave a comment or
+send me an e-mail.&lt;/p&gt;
+&lt;div class="section" id="collect-the-necessary-information"&gt;
+&lt;h2&gt;Collect the necessary information&lt;/h2&gt;
+&lt;p&gt;To start, we need to collect a little bit of information about the
+home network. My internet is provided by a local company that supplied
+me with a Thomson TWG-870 router. This router determines the IP
+addresses of all the devices on my network. Since my laptop is running
+Linux (Debian Jessie, to be exact), I can use the &lt;code&gt;netstat&lt;/code&gt;
+command to get the IP address of the router.:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+kmdouglass@kmd-laptop:~$ netstat -rn
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
+0.0.0.0         192.168.0.1     0.0.0.0         UG        0 0          0 wlan0
+&lt;/pre&gt;
+&lt;p&gt;The key part of this output is the &lt;code&gt;Gateway&lt;/code&gt; column. A gateway
+is the IP address of the device (i.e. the router) that provides
+devices on a local network with access to the Internet.&lt;/p&gt;
+&lt;p&gt;Knowing the IP address of the gateway, we can next trying entering it
+directly into the address bar of a web browser. On my machine, this
+opened a dialog asking for a username and password. (If you're not
+sure what these are, try asking your ISP. And if you haven't changed
+them from the default settings, then you really should do this.) After
+entering them and clicking &lt;strong&gt;OK&lt;/strong&gt;, the browser window displayed the
+general configuration pages for the router.&lt;/p&gt;
+&lt;p&gt;The next few steps will depend on the specific router. The information
+we are after is the list of IP addresses that the router reserves for
+static IP's. A static IP address is an address that is assigned to a
+device and doesn't change. Many routers have a so-called DHCP server
+that dynamically assigns IP addresses to devices such as smart phones
+as they log onto the network. We probably want to always find the Pi
+at the same address, however, so a static IP makes more sense than one
+that the router dynamically assigns.&lt;/p&gt;
+&lt;p&gt;To find the list of static IP's on my specific router, I clicked on
+the link entitled &lt;strong&gt;Network&lt;/strong&gt; in my router's configuration page. The
+relevant information for me looks like that in the image below:&lt;/p&gt;
+&lt;img alt="DHCP address pool" class="align-center" src="http://kmdouglass.github.io/dhcp_addresses.png"&gt;
+&lt;p&gt;This information is telling us that the router is reserving addresses
+192.168.0.10 to 192.168.0.254 for the DHCP server. We can therefore
+most probably use 192.168.0.2 through 9 for static IP's. (Remember
+that 192.168.0.1 is already taken; it's the address of the router.) I
+tested 192.168.0.2 by pinging it and received no response, so we will
+use this address for my Raspberry Pi. (Use Ctrl-C to stop pinging the
+device.):&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+kmdouglass@kmd-laptop:~$ ping 192.168.0.2
+PING 192.168.0.2 (192.168.0.2) 56(84) bytes of data.
+From 192.168.0.15 icmp_seq=1 Destination Host Unreachable
+From 192.168.0.15 icmp_seq=2 Destination Host Unreachable
+From 192.168.0.15 icmp_seq=3 Destination Host Unreachable
+^C
+--- 192.168.0.2 ping statistics ---
+4 packets transmitted, 0 received, +3 errors, 100% packet loss, time 3014ms
+pipe 3
+&lt;/pre&gt;
+&lt;p&gt;For the next step, we need to collect the broadcast and subnet mask of
+the network. We can do this from the laptop that is already connected
+to the network by running the &lt;code&gt;sudo ifconfig&lt;/code&gt; command. This
+command will report information that looks similar to the following
+example (note that this is not from my machine but is merely for
+illustration)::&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+eth0 Link encap:Ethernet HWaddr 00:10:5A:1A:DC:65
+inet addr:198.209.253.169 Bcast:208.141.109.255 Mask:255.255.255.0
+UP BROADCAST RUNNING MULTICAST MTU:1500 Metric:1
+RX packets:18940 errors:1 dropped:0 overruns:0 frame:2
+TX packets:11554 errors:0 dropped:0 overruns:0 carrier:0
+collisions:2 txqueuelen:100
+RX bytes:4087250 (3.8 Mb) TX bytes:2499423 (2.3 Mb)
+Interrupt:11 Base address:0xd000
+&lt;/pre&gt;
+&lt;p&gt;The very first line tells us that this block of output belongs to the
+&lt;strong&gt;eth0&lt;/strong&gt; interface. If you connect to the internet on your laptop
+through WiFi, then you may need to find the information for the
+&lt;strong&gt;wlan0&lt;/strong&gt; interface instead. wlan0 is usually used to refer to
+wireless interfaces in Ubuntu and Debian Linux.&lt;/p&gt;
+&lt;p&gt;The first line of output from ifconfig also provides the type of
+hardware and the ID of the ethernet card. The information we need,
+however, is on the second line. The device's IP address on the network
+is &lt;strong&gt;inet addr:198.209.253.169&lt;/strong&gt;, but we don't really need this
+information. Rather, we need the two numbers that come next. The
+broadcast IP is reported in &lt;strong&gt;Bcast:208.141.109.255&lt;/strong&gt; and the subnet
+mask in &lt;strong&gt;Mask:255.255.255.0&lt;/strong&gt;. The &lt;a class="reference external" href="https://en.wikipedia.org/wiki/Broadcast_address"&gt;broadcast IP&lt;/a&gt; is used to send
+messages to all devices on the network, whereas the &lt;a class="reference external" href="https://en.wikipedia.org/wiki/Subnetwork"&gt;subnet mask&lt;/a&gt; is
+used to separate the parts of an address that identify the network
+from the parts that identify the devices and possible "sub-networks."&lt;/p&gt;
+&lt;p&gt;To summarize this section, we need:&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;The static IP address that we'll assign to the Pi&lt;/li&gt;
+&lt;li&gt;The IP address of the router, i.e. the gateway address&lt;/li&gt;
+&lt;li&gt;The broadcast IP&lt;/li&gt;
+&lt;li&gt;The subnet mask&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div class="section" id="configure-the-pi"&gt;
+&lt;h2&gt;Configure the Pi&lt;/h2&gt;
+&lt;p&gt;Now that we have decided on an IP address for the Pi, let's boot it up
+and configure it to always use this IP address. (I am currently using
+the &lt;strong&gt;NOOBS&lt;/strong&gt; operating system that came with my Pi starter kit, but
+this should work with other flavors of Debian Linux as well.)&lt;/p&gt;
+&lt;p&gt;Once logged on to the Pi, open a terminal and make a backup copy of
+the file &lt;strong&gt;/etc/network/interfaces&lt;/strong&gt;:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+sudo cp /etc/network/interfaces /etc/network/interfaces.bak
+&lt;/pre&gt;
+&lt;p&gt;Making a backup is good practice; in case we ruin the configuration
+file, we can simply rewrite it using our backup. Next, open the
+original &lt;strong&gt;interfaces&lt;/strong&gt; file for editing. In this example, I'll use
+the &lt;strong&gt;nano&lt;/strong&gt; editor:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+sudo nano /etc/network/interfaces
+&lt;/pre&gt;
+&lt;p&gt;In this file, add the following lines (replacing the addresses with
+those appropriate for your network):&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+auto eth0
+iface eth0 inet static
+    address 192.168.0.2
+    netmask 255.255.255.0
+    gateway 192.168.0.1
+    broadcast 192.168.0.255
+&lt;/pre&gt;
+&lt;p&gt;What do these lines do, you ask? Let's step through them one-by-one.&lt;/p&gt;
+&lt;div class="section" id="start-the-network-interface-at-boot"&gt;
+&lt;h3&gt;Start the network interface at boot&lt;/h3&gt;
+&lt;p&gt;First off, we need to identify the network interface. &lt;strong&gt;eth0&lt;/strong&gt; is the
+identifier that is referring to the dedicated ethernet port on the
+Pi. The line &lt;strong&gt;auto eth0&lt;/strong&gt; means that this interface will be started
+at boot.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="configure-the-interface-to-use-a-static-ip"&gt;
+&lt;h3&gt;Configure the interface to use a static IP&lt;/h3&gt;
+&lt;p&gt;Next, we see the line &lt;strong&gt;iface eth0 inet static&lt;/strong&gt;. First, &lt;strong&gt;iface
+eth0&lt;/strong&gt; means that we are configuring the ethernet port interface that
+was described in the last section. Following that, &lt;strong&gt;inet&lt;/strong&gt; specifies
+that the interface uses TCP/IP networking. Finally, &lt;strong&gt;static&lt;/strong&gt; is
+telling the NOOBS operating system that the device is going to request
+a static IP address from the router. (I obtained this explanation from
+&lt;a class="reference external" href="http://askubuntu.com/questions/411616/what-does-keywords-in-my-etc-network-interfaces-means"&gt;this forum post&lt;/a&gt;.)&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="set-the-various-addresses"&gt;
+&lt;h3&gt;Set the various addresses&lt;/h3&gt;
+&lt;p&gt;The next lines are indented because they are properties of the &lt;strong&gt;inet
+static&lt;/strong&gt; family. If you've read everything until now, you should be
+able to figure out what addresses to enter next for each option. The
+desired static IP address for the Pi should follow the &lt;strong&gt;address&lt;/strong&gt;
+field; the subnet mask, gateway, and broadcast IP's described above
+should follow &lt;strong&gt;netmask&lt;/strong&gt;, &lt;strong&gt;gateway&lt;/strong&gt;, and &lt;strong&gt;broadcast&lt;/strong&gt;
+respectively.&lt;/p&gt;
+&lt;p&gt;The &lt;strong&gt;network&lt;/strong&gt; property (which is not shown above) contains the
+network address and &lt;a class="reference external" href="http://man.cx/interfaces%285%29"&gt;is required for 2.0.x kernels&lt;/a&gt;. These kernels
+are pretty old by now, so it is unlikely that you will need to specify
+this property.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="restart-the-network-interface"&gt;
+&lt;h3&gt;Restart the network interface&lt;/h3&gt;
+&lt;p&gt;Restarting the interface we just configured on our Pi is as simple
+as entering these terminal commands:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+sudo ifdown eth0
+sudo ifup eth0
+&lt;/pre&gt;
+&lt;p&gt;(Remember to replace eth0 with the appropriate interface if yours is
+different.) If everything goes well, we should be able to use our web
+browser to navigate on the Internet. We should also be able to ping
+the Pi from the laptop and vice versa.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="connecting-to-the-pi"&gt;
+&lt;h2&gt;Connecting to the Pi&lt;/h2&gt;
+&lt;p&gt;Once the Pi is on the network, we need a way to connect to it from the
+laptop and other devices so that we can actually use it for
+something. One way is to use &lt;a class="reference external" href="https://support.suso.com/supki/SSH_Tutorial_for_Linux"&gt;ssh&lt;/a&gt;, or &lt;a href="http://kmdouglass.github.io/posts/connecting-a-raspberry-pi-to-a-home-linux-network.html#id1"&gt;&lt;span class="problematic" id="id2"&gt;**&lt;/span&gt;&lt;/a&gt;S**ecure &lt;a href="http://kmdouglass.github.io/posts/connecting-a-raspberry-pi-to-a-home-linux-network.html#id3"&gt;&lt;span class="problematic" id="id4"&gt;**&lt;/span&gt;&lt;/a&gt;SH**ell. ssh is
+program that let's us securely log on to other devices through a shell
+(i.e. terminal). This is useful for when we need to work only on the
+command line.&lt;/p&gt;
+&lt;div class="system-message" id="id1"&gt;
+&lt;p class="system-message-title"&gt;System Message: WARNING/2 (&lt;tt class="docutils"&gt;&amp;lt;string&amp;gt;&lt;/tt&gt;, line 201); &lt;em&gt;&lt;a href="http://kmdouglass.github.io/posts/connecting-a-raspberry-pi-to-a-home-linux-network.html#id2"&gt;backlink&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+Inline strong start-string without end-string.&lt;/div&gt;
+&lt;div class="system-message" id="id3"&gt;
+&lt;p class="system-message-title"&gt;System Message: WARNING/2 (&lt;tt class="docutils"&gt;&amp;lt;string&amp;gt;&lt;/tt&gt;, line 201); &lt;em&gt;&lt;a href="http://kmdouglass.github.io/posts/connecting-a-raspberry-pi-to-a-home-linux-network.html#id4"&gt;backlink&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+Inline strong start-string without end-string.&lt;/div&gt;
+&lt;p&gt;If, on the other hand, we want a "Remote Desktop"-like GUI
+environment, we can use &lt;a class="reference external" href="https://www.raspberrypi.org/documentation/remote-access/vnc/"&gt;VNC&lt;/a&gt;. The documentation for VNC is quite
+good but detailed; I'll let you read up on it on your own if you're
+interested in using it.&lt;/p&gt;
+&lt;p&gt;I'll now briefly explain how we can set up ssh on the Pi.&lt;/p&gt;
+&lt;div class="section" id="enable-ssh-on-the-pi"&gt;
+&lt;h3&gt;Enable ssh on the Pi&lt;/h3&gt;
+&lt;p&gt;We need to enable ssh access to the Pi before we can use it. On the
+Pi, open a terminal and run the configuration utility::&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+sudo raspi-config
+&lt;/pre&gt;
+&lt;p&gt;We should see the following window appear.&lt;/p&gt;
+&lt;img alt="The raspi-config menu with Interface Options highlighted." class="align-center" src="http://kmdouglass.github.io/pi-config-interface-options.png"&gt;
+&lt;p&gt;Use the keyboard to highlight &lt;strong&gt;Interface Options&lt;/strong&gt; and tap the Enter
+key. In the following menu, we now should see an option to enable ssh
+as in the following image. Use the keyboard to highlight &lt;strong&gt;P2 SSH&lt;/strong&gt;
+(or the relevant menu item if the name is different on your Pi) and
+hit the Enter key to enable it. Once ssh is enabled, we can hit Esc or
+select the &amp;lt;Back&amp;gt; option to until we exit the configuration utility.&lt;/p&gt;
+&lt;img alt="The raspi-config Interface Options menu with P2 SSH highlighted." class="align-center" src="http://kmdouglass.github.io/pi-config-ssh.png"&gt;
+&lt;p&gt;If you'e following along, you may need to restart your Pi for these
+changes to take effect.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="log-onto-the-pi-from-the-laptop"&gt;
+&lt;h3&gt;Log onto the Pi from the laptop&lt;/h3&gt;
+&lt;p&gt;Now for the moment of truth. After restarting the Pi, &lt;strong&gt;we need to
+first ensure that we are not logged in to it&lt;/strong&gt;. If we are, simply
+click the &lt;strong&gt;Menu&lt;/strong&gt; button, followed by &lt;strong&gt;Shutdown... -&amp;gt; Logout&lt;/strong&gt; and
+log out of the session.&lt;/p&gt;
+&lt;p&gt;Next, open a terminal on the laptop and enter the following command,
+changing the IP address to whatever was decided upon for the Pi::&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+ssh pi@192.168.0.2
+&lt;/pre&gt;
+&lt;p&gt;This command runs the ssh program and asks to sign into the Pi as the
+user called &lt;strong&gt;pi&lt;/strong&gt;. After running the command, we may be prompted for
+a password to log on if one was set on the Pi. (You did set one,
+didn't you?) Once successfully entering the password, we should notice
+that the terminal prompt has changed to something like
+&lt;code&gt;pi@raspberrypi:~ $&lt;/code&gt;. This indicates that we are logged on to
+the Pi. If we enter the &lt;code&gt;ls&lt;/code&gt; command, we should see the contents
+of the Pi's home directory. When we're ready to disconnect from the
+Pi, we can simply use the &lt;code&gt;exit&lt;/code&gt; command at any time in the
+terminal. The prompt should change to reflect that we are back on our
+laptop machine when we have successfully exited.&lt;/p&gt;
+&lt;p&gt;If this is all working as described above, then congratulations on
+connecting your Pi to your home Linux network! I wish you many happy
+hours of hacking :)&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="further-reading"&gt;
+&lt;h2&gt;Further Reading&lt;/h2&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;The Debian network setup manual is very detailed and describes
+many, many more aspects of setting up a network than I touched upon
+here. &lt;a class="reference external" href="https://www.debian.org/doc/manuals/debian-reference/ch05.en.html"&gt;https://www.debian.org/doc/manuals/debian-reference/ch05.en.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;The Raspberry Pi documentation about VNC (Virtual Network
+Computing) is a great resource for setting up a graphical interface
+to remotely connect to your
+Pi. &lt;a class="reference external" href="https://www.raspberrypi.org/documentation/remote-access/vnc/"&gt;https://www.raspberrypi.org/documentation/remote-access/vnc/&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;&lt;/div&gt;</description><category>linux</category><category>raspberry pi</category><guid>http://kmdouglass.github.io/posts/connecting-a-raspberry-pi-to-a-home-linux-network.html</guid><pubDate>Sun, 05 Feb 2017 09:28:17 GMT</pubDate></item></channel></rss>
