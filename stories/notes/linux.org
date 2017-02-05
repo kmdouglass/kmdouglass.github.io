@@ -777,7 +777,6 @@ sudo chown -R user:user /mnt/LEB-Z
 
 -----
 
-
 * Networking
 
 ** Find a machine's ip address/gateway/subnet/dns info
@@ -881,6 +880,34 @@ cat /etc/resolv.conf
    "ESSID IN QUOTES"
 
    Finally, request an ip with sudo dhclient wlan0.
+
+-----
+
+
+** Copying files using ssh
+   /Date/
+   2017-02-05
+
+   /Source/
+   http://unix.stackexchange.com/questions/106480/how-to-copy-files-from-one-machine-to-another-using-ssh
+
+   To copy a file from one machine to another using ssh, use the =scp=
+   command.
+
+   #+BEGIN_SRC
+scp /path/to/file username@a:/path/to/destination
+   #+END_SRC
+
+   for copying from B to A while logged into B.
+
+   #+BEGIN_SRC
+scp username@b:/path/to/file /path/to/destination
+   #+END_SRC
+
+   for copying from B to A while logged into A.
+
+   Note that I should *NOT* be logged into the machine through a ssh
+   shell.
 
 -----
 
