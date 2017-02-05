@@ -209,8 +209,8 @@ Connecting to the Pi
 
 Once the Pi is on the network, we need a way to connect to it from the
 laptop and other devices so that we can actually use it for
-something. One way is to use `ssh`_, or **S**ecure **SH**ell. ssh is
-program that let's us securely log on to other devices through a shell
+something. One way is to use `ssh`_, or Secure SHell. ssh is program
+that let's us securely log on to other devices through a shell
 (i.e. terminal). This is useful for when we need to work only on the
 command line.
 
