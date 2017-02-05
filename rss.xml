@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Kyle M. Douglass</title><link>http://kmdouglass.github.io/</link><description>Biophysics, optics, and programming.</description><atom:link type="application/rss+xml" href="http://kmdouglass.github.io/rss.xml" rel="self"></atom:link><language>en</language><lastBuildDate>Sun, 05 Feb 2017 09:40:10 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Connecting a Raspberry Pi to a home Linux network</title><link>http://kmdouglass.github.io/posts/connecting-a-raspberry-pi-to-a-home-linux-network.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;I recently purchased a Raspberry Pi 3 Model B and have been tinkering
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Kyle M. Douglass</title><link>http://kmdouglass.github.io/</link><description>Biophysics, optics, and programming.</description><atom:link type="application/rss+xml" href="http://kmdouglass.github.io/rss.xml" rel="self"></atom:link><language>en</language><lastBuildDate>Sun, 05 Feb 2017 09:47:25 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Connecting a Raspberry Pi to a home Linux network</title><link>http://kmdouglass.github.io/posts/connecting-a-raspberry-pi-to-a-home-linux-network.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;I recently purchased a Raspberry Pi 3 Model B and have been tinkering
 with it for a few days. One of the first things I decided to do was to
 set it up so that I could access it from my laptop over my home
 network. This post contains a step-by-step explanation of the
@@ -176,16 +176,10 @@ the Pi from the laptop and vice versa.&lt;/p&gt;
 &lt;h2&gt;Connecting to the Pi&lt;/h2&gt;
 &lt;p&gt;Once the Pi is on the network, we need a way to connect to it from the
 laptop and other devices so that we can actually use it for
-something. One way is to use &lt;a class="reference external" href="https://support.suso.com/supki/SSH_Tutorial_for_Linux"&gt;ssh&lt;/a&gt;, or &lt;a href="http://kmdouglass.github.io/posts/connecting-a-raspberry-pi-to-a-home-linux-network.html#id1"&gt;&lt;span class="problematic" id="id2"&gt;**&lt;/span&gt;&lt;/a&gt;S**ecure &lt;a href="http://kmdouglass.github.io/posts/connecting-a-raspberry-pi-to-a-home-linux-network.html#id3"&gt;&lt;span class="problematic" id="id4"&gt;**&lt;/span&gt;&lt;/a&gt;SH**ell. ssh is
-program that let's us securely log on to other devices through a shell
+something. One way is to use &lt;a class="reference external" href="https://support.suso.com/supki/SSH_Tutorial_for_Linux"&gt;ssh&lt;/a&gt;, or Secure SHell. ssh is program
+that let's us securely log on to other devices through a shell
 (i.e. terminal). This is useful for when we need to work only on the
 command line.&lt;/p&gt;
-&lt;div class="system-message" id="id1"&gt;
-&lt;p class="system-message-title"&gt;System Message: WARNING/2 (&lt;tt class="docutils"&gt;&amp;lt;string&amp;gt;&lt;/tt&gt;, line 201); &lt;em&gt;&lt;a href="http://kmdouglass.github.io/posts/connecting-a-raspberry-pi-to-a-home-linux-network.html#id2"&gt;backlink&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
-Inline strong start-string without end-string.&lt;/div&gt;
-&lt;div class="system-message" id="id3"&gt;
-&lt;p class="system-message-title"&gt;System Message: WARNING/2 (&lt;tt class="docutils"&gt;&amp;lt;string&amp;gt;&lt;/tt&gt;, line 201); &lt;em&gt;&lt;a href="http://kmdouglass.github.io/posts/connecting-a-raspberry-pi-to-a-home-linux-network.html#id4"&gt;backlink&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
-Inline strong start-string without end-string.&lt;/div&gt;
 &lt;p&gt;If, on the other hand, we want a "Remote Desktop"-like GUI
 environment, we can use &lt;a class="reference external" href="https://www.raspberrypi.org/documentation/remote-access/vnc/"&gt;VNC&lt;/a&gt;. The documentation for VNC is quite
 good but detailed; I'll let you read up on it on your own if you're

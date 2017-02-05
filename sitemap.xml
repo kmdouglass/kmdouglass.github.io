@@ -23,7 +23,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/2017/index.html</loc>
-  <lastmod>2017-02-05T09:40:00Z</lastmod>
+  <lastmod>2017-02-05T09:47:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/archive.html</loc>
@@ -59,7 +59,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/linux.html</loc>
-  <lastmod>2017-02-05T09:40:00Z</lastmod>
+  <lastmod>2017-02-05T09:47:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/machine-learning.html</loc>
@@ -87,7 +87,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/raspberry-pi.html</loc>
-  <lastmod>2017-02-05T09:40:00Z</lastmod>
+  <lastmod>2017-02-05T09:47:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/sensing.html</loc>
@@ -155,15 +155,11 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/connecting-a-raspberry-pi-to-a-home-linux-network.html</loc>
-  <lastmod>2017-02-05T09:40:00Z</lastmod>
+  <lastmod>2017-02-05T09:47:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/correlated-noise-and-the-fft.html</loc>
   <lastmod>2017-02-04T14:50:00Z</lastmod>
- </url>
- <url>
-  <loc>http://kmdouglass.github.io/posts/creating-a-home-network-with-the-raspberry-pi.html</loc>
-  <lastmod>2017-02-05T09:27:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/field-dependent-photophysics-video.html</loc>
@@ -191,7 +187,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/index.html</loc>
-  <lastmod>2017-02-05T09:40:00Z</lastmod>
+  <lastmod>2017-02-05T09:47:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/learning-pythons-multiprocessing-module.html</loc>
