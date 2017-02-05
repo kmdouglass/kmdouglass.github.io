@@ -224,6 +224,20 @@ I'll now briefly explain how we can set up ssh on the Pi.
 .. _ssh: https://support.suso.com/supki/SSH_Tutorial_for_Linux
 .. _VNC: https://www.raspberrypi.org/documentation/remote-access/vnc/
 
+EDIT: VNC installation
+++++++++++++++++++++++
+
+As it turns out, you may run into some problems if you do try to setup
+VNC by following the documentation in the link above. Namely, the
+documentation is missing a key step, at least for me. I had to first
+install the VNC server software on the Pi via::
+
+  sudo apt-get update
+  sudo apt-get install realvnc-vnc-server
+
+Even though the rest of this post is about ssh, you may still find
+this information useful.
+
 Enable ssh on the Pi
 ++++++++++++++++++++
 

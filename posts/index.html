@@ -275,6 +275,19 @@ environment, we can use <a class="reference external" href="https://www.raspberr
 good but detailed; I'll let you read up on it on your own if you're
 interested in using it.</p>
 <p>I'll now briefly explain how we can set up ssh on the Pi.</p>
+<div class="section" id="edit-vnc-installation">
+<h3>EDIT: VNC installation</h3>
+<p>As it turns out, you may run into some problems if you do try to setup
+VNC by following the documentation in the link above. Namely, the
+documentation is missing a key step, at least for me. I had to first
+install the VNC server software on the Pi via:</p>
+<pre class="literal-block">
+sudo apt-get update
+sudo apt-get install realvnc-vnc-server
+</pre>
+<p>Even though the rest of this post is about ssh, you may still find
+this information useful.</p>
+</div>
 <div class="section" id="enable-ssh-on-the-pi">
 <h3>Enable ssh on the Pi</h3>
 <p>We need to enable ssh access to the Pi before we can use it. On the

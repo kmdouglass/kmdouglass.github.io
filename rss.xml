@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Kyle M. Douglass</title><link>http://kmdouglass.github.io/</link><description>Biophysics, optics, and programming.</description><atom:link type="application/rss+xml" href="http://kmdouglass.github.io/rss.xml" rel="self"></atom:link><language>en</language><lastBuildDate>Sun, 05 Feb 2017 09:47:25 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Connecting a Raspberry Pi to a home Linux network</title><link>http://kmdouglass.github.io/posts/connecting-a-raspberry-pi-to-a-home-linux-network.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;I recently purchased a Raspberry Pi 3 Model B and have been tinkering
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Kyle M. Douglass</title><link>http://kmdouglass.github.io/</link><description>Biophysics, optics, and programming.</description><atom:link rel="self" href="http://kmdouglass.github.io/rss.xml" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Sun, 05 Feb 2017 10:59:55 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Connecting a Raspberry Pi to a home Linux network</title><link>http://kmdouglass.github.io/posts/connecting-a-raspberry-pi-to-a-home-linux-network.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;I recently purchased a Raspberry Pi 3 Model B and have been tinkering
 with it for a few days. One of the first things I decided to do was to
 set it up so that I could access it from my laptop over my home
 network. This post contains a step-by-step explanation of the
@@ -185,6 +185,19 @@ environment, we can use &lt;a class="reference external" href="https://www.raspb
 good but detailed; I'll let you read up on it on your own if you're
 interested in using it.&lt;/p&gt;
 &lt;p&gt;I'll now briefly explain how we can set up ssh on the Pi.&lt;/p&gt;
+&lt;div class="section" id="edit-vnc-installation"&gt;
+&lt;h3&gt;EDIT: VNC installation&lt;/h3&gt;
+&lt;p&gt;As it turns out, you may run into some problems if you do try to setup
+VNC by following the documentation in the link above. Namely, the
+documentation is missing a key step, at least for me. I had to first
+install the VNC server software on the Pi via:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+sudo apt-get update
+sudo apt-get install realvnc-vnc-server
+&lt;/pre&gt;
+&lt;p&gt;Even though the rest of this post is about ssh, you may still find
+this information useful.&lt;/p&gt;
+&lt;/div&gt;
 &lt;div class="section" id="enable-ssh-on-the-pi"&gt;
 &lt;h3&gt;Enable ssh on the Pi&lt;/h3&gt;
 &lt;p&gt;We need to enable ssh access to the Pi before we can use it. On the
