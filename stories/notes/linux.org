@@ -567,6 +567,20 @@ sudo ntpdate-debian
    This fixed my clock rather easily.
 -----
 
+** Aliases
+
+   If you want to use a system's Python 3.x instead of Python 2.x when
+   using the =python= command, you can create an alias in your
+   *.bashrc* file:
+
+   #+BEGIN_SRC
+alias python=python3
+   #+END_SRC
+
+   Reload bash with =source ~/.bashrc=.
+
+-----
+
 * Managing Software Packages
 ** Choosing software version alternatives
    Sometimes you may have multiple versions of a software package

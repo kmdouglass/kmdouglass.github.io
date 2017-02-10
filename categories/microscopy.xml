@@ -1,5 +1,201 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Kyle M. Douglass (Posts about microscopy)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link type="application/rss+xml" href="http://kmdouglass.github.io/categories/microscopy.xml" rel="self"></atom:link><language>en</language><lastBuildDate>Thu, 26 Jan 2017 14:14:45 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>FIFI Parts List</title><link>http://kmdouglass.github.io/posts/fifi-parts-list.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;Many people have been writing to Suliana or I recently and asking for
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Kyle M. Douglass (microscopy)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link rel="self" type="application/rss+xml" href="http://kmdouglass.github.io/categories/microscopy.xml"></atom:link><language>en</language><lastBuildDate>Fri, 10 Feb 2017 18:44:57 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Micro-Manager on the Raspberry Pi</title><link>http://kmdouglass.github.io/posts/micro-manager-on-the-raspberry-pi.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;&lt;a class="reference external" href="https://micro-manager.org/"&gt;Micro-Manager&lt;/a&gt; is an open source platform for controlling microscope
+hardware, automating image acquisition, and tracking metadata about
+how images are acquired. In biomedical imaging research, it serves as
+an incredibly important tool because it is free and open source, which
+means that scientists can benefit from the contributions of others to
+the software without paying costly licensing fees.&lt;/p&gt;
+&lt;p&gt;I recently managed to compile Micro-Manager version 2.0 on the
+Raspberry Pi. I did this for a small hobby project I am working on to
+build a cheap yet effective tool for &lt;a class="reference external" href="https://hackaday.io/project/19677-basic-lensless-imaging-for-low-cost-microscopy"&gt;at-home microscope projects and
+hacking&lt;/a&gt;. Though I am not yet convinced that Micro-Manager will be
+the best tool for this particular job given it's relatively heavy
+footprint on the Pi's slower hardware, I thought that I would post my
+notes so that others could benefit from my experience.&lt;/p&gt;
+&lt;div class="section" id="software-versions"&gt;
+&lt;h2&gt;Software versions&lt;/h2&gt;
+&lt;p&gt;I am working with a Raspberry Pi 3 Model B:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+pi@raspberrypi:~ $ uname -a &amp;amp; gcc -dumpversion &amp;amp; make -v &amp;amp; ldd --version
+Linux raspberrypi 4.4.38-v7+ #938 SMP Thu Dec 15 15:22:21 GMT 2016 armv7l GNU/Linux
+
+pi@raspberrypi:~ $ gcc -dumpversion
+4.9.2
+
+pi@raspberrypi:~ $ make -v
+GNU Make 4.0
+
+pi@raspberrypi:~ $ ldd --version
+ldd (Debian GLIBC 2.19-18+deb8u7) 2.19
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="setup-a-network-share-for-3rd-party-libraries"&gt;
+&lt;h2&gt;Setup a network share for 3rd party libraries&lt;/h2&gt;
+&lt;p&gt;We need to compile Micro-Manager because binares for the Pi's ARM
+processor are not distributed by the Micro-Manager team (probably
+because too few people have ever wanted them). To compile
+Micro-Manager, we need to checkout a rather large set of 3rd party
+libraries. When I last checked, these libraries occupied 6.7 GB of
+space on my laptop, a size which can be prohibitive when using the
+Micro-SD cards that provide storage for the Pi.&lt;/p&gt;
+&lt;p&gt;To circumvent this problem, I checked out the &lt;strong&gt;3rdpartypublic&lt;/strong&gt; SVN
+repository onto my laptop and created a network share from this
+directory. Then, I mounted the share on my Pi in the directory just
+above that containing the Micro-Manager source code.&lt;/p&gt;
+&lt;p&gt;To get started, first have a look at my post on connecting a Pi to a
+Linux home network for ideas if you haven't already connected the Pi
+to your other machines at home:
+&lt;a class="reference external" href="http://kmdouglass.github.io/posts/connecting-a-raspberry-pi-to-a-home-linux-network.html"&gt;http://kmdouglass.github.io/posts/connecting-a-raspberry-pi-to-a-home-linux-network.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Once the Pi and the laptop are on the same network, checkout the SVN
+3rdpartypublic repository onto your laptop or home server. You may
+need to do this a few times until completion because the downloads can
+timeout after a few minutes:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+svn checkout https://valelab4.ucsf.edu/svn/3rdpartypublic/
+&lt;/pre&gt;
+&lt;p&gt;Next, we need to setup the network share. If your laptop or server is
+running Windows, then you will probably need to setup &lt;a class="reference external" href="https://www.samba.org/samba/what_is_samba.html"&gt;Samba&lt;/a&gt; on the
+Pi to share files between them. I however am running a Linux home
+network, so I decided to use &lt;a class="reference external" href="https://en.wikipedia.org/wiki/Network_File_System"&gt;NFS&lt;/a&gt; (Network File Sharing) to share
+the directory between my laptop--which runs Debian Linux--and the
+Pi. I installed NFS on my laptop with:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+sudo apt-get install nfs-kernel-server nfs-common
+&lt;/pre&gt;
+&lt;p&gt;Once installed, I added the following line to the newly created
+/etc/exports file:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+/home/kmdouglass/src/micro-manager/3rdpartypublic 192.168.0.2/24(ro)
+&lt;/pre&gt;
+&lt;p&gt;The first part is the directory to share, i.e. where the
+3rdpartypublic directory is stored on my laptop. The second part
+contains the static IP address of the Pi on my home network. The /24
+was REQUIRED for my client (the Pi) to mount the share. /24 simply
+denotes a network mask of 255.255.255.0; if you have a different mask
+on your network, then you can find a good discussion on this topic
+here: &lt;a class="reference external" href="https://arstechnica.com/civis/viewtopic.php?t=751834"&gt;https://arstechnica.com/civis/viewtopic.php?t=751834&lt;/a&gt; Finally,
+(...)  specifies shared options and &lt;strong&gt;ro&lt;/strong&gt; means read only.&lt;/p&gt;
+&lt;p&gt;After editing the file, export the folder and restart the NFS server:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+sudo exportfs -arv
+sudo /etc/init.d/nfs-kernel-server restart
+&lt;/pre&gt;
+&lt;p&gt;On the client (the Pi), the NFS client software was already
+installed. However, I had to restart the rpcbind service before I
+could mount the share:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+sudo /etc/init.d/rpcbind restart
+&lt;/pre&gt;
+&lt;p&gt;Finally, I added a line to the &lt;strong&gt;/etc/fstab&lt;/strong&gt; file on the Pi to make
+mounting the 3rdpartypublic share easier:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+192.168.0.102:/home/kmdouglass/src/micro-manager/3rdpartypublic /home/pi/src/micro-manager/3rdpartypublic nfs user,noauto 0 0
+&lt;/pre&gt;
+&lt;p&gt;The first part indicates the IP of the laptop and the share to
+mount. The second part, &lt;strong&gt;/home/pi/src/micro-manager/3rdpartypublic&lt;/strong&gt;
+is the directory on the Pi where the share will be mounted. I placed
+this one directory above where the MM source code is,
+(&lt;strong&gt;/home/pi/src/micro-manager/micro-manager&lt;/strong&gt; on my machine). &lt;strong&gt;nfs&lt;/strong&gt;
+indicates the type of share to mount, and &lt;strong&gt;user,noauto&lt;/strong&gt; permits any
+user to mount the share (not just root), though this share will not be
+automatically mounted when the Pi starts. The final two zeros are
+explained in the fstab comments but aren't really important for us. To
+mount the share, type the following on the Pi:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+sudo mount /home/pi/src/micro-manager/3rdpartypublic
+&lt;/pre&gt;
+&lt;p&gt;In case you're interested in learning more about the intricacies of
+Linux home networking, I found the following sources of information to
+be incredibly helpful.&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://www.howtoforge.com/install_nfs_server_and_client_on_debian_wheezy"&gt;https://www.howtoforge.com/install_nfs_server_and_client_on_debian_wheezy&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://www.youtube.com/watch?v=luqq8DUqqCw"&gt;https://www.youtube.com/watch?v=luqq8DUqqCw&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://nfs.sourceforge.net/nfs-howto/ar01s03.html#config_server_setup"&gt;http://nfs.sourceforge.net/nfs-howto/ar01s03.html#config_server_setup&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://www.tecmint.com/how-to-setup-nfs-server-in-linux/"&gt;http://www.tecmint.com/how-to-setup-nfs-server-in-linux/&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div class="section" id="building-mm"&gt;
+&lt;h2&gt;Building MM&lt;/h2&gt;
+&lt;p&gt;Once I was able to mount the share containing 3rd party libraries, I
+installed the following packages on the Pi and checked out the
+Micro-Manager source code:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+sudo apt-get install autoconf automake libtool pkg-config swig ant libboost-dev libboost-all-dev
+cd ~/src/micro-manager
+git clone https://github.com/micro-manager/micro-manager.git
+cd micro-manager
+git checkout mm2
+&lt;/pre&gt;
+&lt;p&gt;The last command switches to the mm2 branch where the Micro-Manager
+2.0 source code is found. Note that it may not be necessary to install
+all of the boost libraries with &lt;code&gt;sudo apt-get install
+libboost-all-dev&lt;/code&gt;, but I did this anyway because I encountered
+multiple errors due to missing boost library files the first few times
+I tried compiling.&lt;/p&gt;
+&lt;p&gt;The next step follows the normal Micro-Manager build routine using
+make, with the exception of the configuration step. From inside the
+Micro-Manager source code directory on the Pi, run the following
+commands one at a time:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+./autogen.sh
+PYTHON=/usr/bin/python3 ./configure --prefix=/opt/micro-manager --with-ij-jar=/usr/share/java/ij.jar --with-python=/usr/include/python3.4 --with-boost-libdir=/usr/lib/arm-linux-gnueabihf --with-boost=/usr/include/boost
+make fetchdeps
+make
+sudo make install
+&lt;/pre&gt;
+&lt;p&gt;In the configuration step, I set the Python interpreter to Python 3
+because I greatly prefer it over Python 2. This is done by setting the
+&lt;strong&gt;PYTHON&lt;/strong&gt; environment variable before running
+configure. &lt;strong&gt;--prefix=/opt/micro-manager/&lt;/strong&gt; indicates the preferred
+installation directory of
+Micro-Manager. &lt;strong&gt;--with-ij-jar=/usr/share/java/ij.jar&lt;/strong&gt; is the path to
+the ImageJ Java library, though I am uncertain whether this was
+necessary. (I installed ImageJ with a &lt;code&gt;sudo apt-get install
+imagej&lt;/code&gt; a while ago.) &lt;strong&gt;--with-python=/usr/include/python3.4&lt;/strong&gt; should
+point to the directory containing the &lt;strong&gt;Python.h&lt;/strong&gt; header file for the
+version of Python you are compiling against. &lt;strong&gt;with-boost-libdir&lt;/strong&gt;
+should point to the directory containing the boost libraries (.so
+files). This was critical for getting MM2 to build. If you are unsure
+where they are located, you can search for them with &lt;code&gt;sudo find
+/ -name "libboost*"&lt;/code&gt;. Finally, the last option, &lt;strong&gt;with-boost&lt;/strong&gt;, may or
+may not be necessary. I set it to the directory containing the boost
+headers but never checked to see whether MM compiles without it.&lt;/p&gt;
+&lt;p&gt;If all goes well, Micro-Manager will compile and install without
+problems. Compilation time on my Pi took around one hour.&lt;/p&gt;
+&lt;div class="section" id="set-the-maximum-amount-of-direct-memory"&gt;
+&lt;h3&gt;Set the maximum amount of direct memory&lt;/h3&gt;
+&lt;p&gt;In the next step, we need to make a minor edit to the Micro-Manager
+Linux start script. Edit the script
+(/opt/micro-manager/bin/micromanager) to reduce the maximum direct
+memory to something reasonable:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+/usr/lib/jvm/jdk-8-oracle-arm32-vfp-hflt/bin/java -Xmx1024M \
+  -XX:MaxDirectMemorySize=1000G \
+   -classpath "$CLASSPATH" \
+   -Dmmcorej.library.loading.stderr.log=yes \
+   -Dmmcorej.library.path="/opt/micro-manager/lib/micro-manager" \
+   -Dorg.micromanager.plugin.path="/opt/micro-manager/share/micro-manager/mmplugins" \
+&lt;/pre&gt;
+&lt;p&gt;Change 1000G to 512M or 256M; otherwise the Pi will complain that the
+MaxDirectMemorySize of 1000G is too large. You can start Micro-Manager
+by running this modified script.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="what-s-next"&gt;
+&lt;h2&gt;What's next?&lt;/h2&gt;
+&lt;p&gt;Though Micro-Manager compiles and runs on the Pi, I have not yet
+tested it thoroughly acquisitions. I am currently waiting on a camera
+board to arrive in the mail, and when it does, I will attempt to
+interface with it through Micro-Manager. Though I could write my own
+Python library, Micro-Manager is appealing because it can save a lot
+of time by providing a ready-made means to annotate, process, and
+store imaging data.&lt;/p&gt;
+&lt;p&gt;Running Micro-Manager on the Pi also raises the possibility of a fully
+open, embedded biomedical imaging platform, though I am uncertain at
+the moment whether the hardware on the Pi is up to the task. If you
+manage to do anything cool with Micro-Manager and the Raspberry Pi,
+please let me know in the comments!&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;</description><category>micro-manager</category><category>microscopy</category><category>open source</category><category>raspberry pi</category><guid>http://kmdouglass.github.io/posts/micro-manager-on-the-raspberry-pi.html</guid><pubDate>Fri, 10 Feb 2017 18:31:57 GMT</pubDate></item><item><title>FIFI Parts List</title><link>http://kmdouglass.github.io/posts/fifi-parts-list.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;Many people have been writing to Suliana or I recently and asking for
 a parts list for FIFI, the flat-field illuminator I developed for
 large field-of-view localization microscopy. (&lt;a class="reference external" href="http://www.nature.com/nphoton/journal/v10/n11/full/nphoton.2016.200.html"&gt;The manuscript may be
 found here&lt;/a&gt;.)&lt;/p&gt;
