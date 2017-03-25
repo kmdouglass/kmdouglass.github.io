@@ -11,99 +11,148 @@
 #+OPTIONS: ^:nil
 #+TOC: headlines 3
 
-* MMCoreJ: The Micro-Manager Java wrapper
-  Most of the support one finds for Micro-Manager is for the Java
-  wrapper around the MMCore class (which is written in C++). Because
-  of this, it is useful to try to understand how Micro-Manager works
-  in Java, rather than in Python or C++. Once a particular aspect of
-  MM is understood in Java, I have found that it is easier to use it
-  in another language.
+* Netbeans Installation
+  *DATE: 2017-03-25*
+** Download the Open JDK and set it as the default
 
------
-
-** Compiling against the MMCoreJ.jar library
-   For some unknown reason, specifying the location of MMCoreJ.jar in
-   bash's CLASSPATH environment variable just does not work for me. To
-   ensure that a Java program can find the Java wrappers, I pass the
-   full directory and name of the MMCoreJ.jar file to the compiler
-   with the =-cp= flag:
-
-   #+BEGIN_SRC sh
-javac -cp "/home/kmdouglass/mm/micro-manager1.4/MMCoreJ_wrap/MMCoreJ.jar" TestMM.java
+   #+BEGIN_SRC
+sudo aptitude install openjdk-8-jdk
    #+END_SRC
 
-   (Note that TestMM.java is the file containing the code that I wish
-   to compile.) Doing this successfully allows Java to find the
-   libraries in the .jar when the =import mmcorej.CMMCore;= line is
-   encountered.
+   Use aptitude instead of apt-get because apt-get gives up too
+   easily. You may need to force aptitude to install a new certificate
+   by not accepting its original solution, which is to do nothing.
+
+   List the available JDK's on your system with
+
+#+BEGIN_SRC
+sudo update-java-alternatives --list
+#+END_SRC
+
+   and select the OpenJDK 8 as the default with
+
+#+BEGIN_SRC
+sudo update-java-alternatives --set java-1.8.0-openjdk-amd64
+#+END_SRC
+
+   Finally, add the following lines to the end of =/etc/profile=
+
+#+BEGIN_SRC
+JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+PATH=$PATH:$HOME/bin:$JAVA_HOME/bin
+export JAVA_HOME
+export JAVA_BIN
+export PATH
+#+END_SRC
+
+   and run the command
+
+#+BEGIN_SRC
+. /etc/profile
+#+END_SRC
 
 -----
 
-** Specifying the mmcorej.library.path
-   In my opinion, the [[https://www.micro-manager.org/wiki/Search_Paths#MMCoreJ_wrap_Search_Paths][MM documentation on search paths]] is not very
-   clear. Much of the confusion comes from the fact that the proper
-   library required by the JVM linker is named and located differently
-   on Windows, Linux, and Mac. To get around this, the documentation
-   uses *MMCoreJ_wrap* to refer to this library independently of the
-   system, which is unfortunate since there is also a folder named
-   MMCoreJ_wrap. 
+** Install Netbeans
 
-   Once a .java file has been compiled with the appropriate classpath
-   flag described above, executing the java class file needs both a
-   classpath and information on where the generic MMCoreJ_wrap library
-   is located.
-
-   First, on Linux, the MMCoreJ_wrap library is actually inside a
-   hidden directory. (This fact alone caused me a good deal of
-   grief). On my system it's in =(MM SOURCE
-   DIR)/micro-manager1.4/MMCoreJ_wrap/.libs=, where =(MM SOURCE DIR)=
-   is the location of the MM source files. The appropriate library in
-   this folder seems to be *libMMCoreJ_wrap.so*. In Windows, I think
-   you will need a .dll file instead.
-
-   I specify the location of this library to the JVM using the
-   =-Dmmcorej.library.path= flag. Finally, note that I have to include
-   the current directory containing the .class file /in addition/ to
-   the directory of the MMCoreJ.jar file. (This is what the =.:= is
-   doing in the argument of the =-cp= flag below.) The full command
-   line argument to run a class file named TestMM.class that utilizes
-   mmcorej.CMMCore is
-
-   #+BEGIN_SRC sh
-java -cp ".:/home/kmdouglass/mm/micro-manager1.4/MMCoreJ_wrap/MMCoreJ.jar" -Dmmcorej.library.path=/home/kmdouglass/mm/micro-manager1.4/MMCoreJ_wrap/.libs TestMM
-   #+END_SRC
-
-   Say that three times fast.
------
-
-** Testing the Java environment
-   I can test that I have specified the classpath and library path
-   correctly by compiling and running the following simple Java
-   program that creates a CMMCore instance and prints the version to
-   the terminal window.
-
-   #+BEGIN_SRC java
-import mmcorej.CMMCore;
-
-public class TestMM {
-
-    public static void main(String[] args) {
-
-	CMMCore core = new CMMCore();
-	String info = core.getVersionInfo();
-	System.out.println(info);
-    }
-}
-   #+END_SRC
+   1. Download the Netbeans Java SE package from https://netbeans.org/downloads/
+   2. Navigate to the folder where the file downloaded and make it
+      executable: =chmod +x netbeans-8.2-javase-linux.sh=
+   3. Run the install script.
+   4. Follow the prompts. When prompted for the JDK directory, set it
+      to =/usr/lib/jvm/java-8-openjdk-amd64=
+   5. Finish with the rest of the prompts.
 
 -----
 
+** Setup a project in Netbeans
+   I followed the instructions [[https://micro-manager.org/wiki/How_to_debug_and_develop_MM2.0][here]] and reproduced below:
+   
+    1. Download and install the latest Micro-Manager nightly build. We
+       will refer to the installed Micro-Manager directory as
+       $INSTALLDIR below.
+    2. Download, install and run NetBeans. The Java SE Bundle is
+       sufficient if you already have the JDK (Java Development Kit)
+       installed on your computer. Otherwise, you can install the JDK
+       and NetBeans at the same time from Oracle's JDK download page.
+    3. Choose File > New Project... > [Categories] Java > [Projects]
+       Java Project with Existing Sources. Press Next.
+    4. Give your project a name. The Project Folder is best saved
+       outside of the Micro-Manager source directory. Press Next.
+    5. Under Source Package Folders, click Add Folder at right and
+       browse to $SRCDIR/mmstudio/src/main/resources. Also add
+       $SRCDIR/mmstudio/src/main/java. If you want to develop a
+       plugin, you can also add $SRCDIR/plugins/*/src at this
+       time. Press Next.
+    6. Right-click your project in the Projects tab (probably at left)
+       and select Properties.
+    7. Select Libraries under Categories. Make sure the Java Platform
+       matches the version of Micro-Manager you are using (e.g.,
+       64-bit JDK 1.6 - but using a newer Java Platform in NetBeans
+       than the one shipped with Micro-Manager is usually okay).
+    8. Under Compile > Compile-time Libraries, click Add Jar/Folder
+       and add $INSTALLDIR/ij.jar, as well as all jars in
+       $INSTALLDIR/plugins/Micro-Manager except for MMJ_.jar.
+    9. Select Run under Categories. For the <default config>, set the
+       following parameters:
+        + Main Class: type in ij.ImageJ
+        + Working Directory: type in your $INSTALLDIR
+        + VM options: for 64 bit systems, type in -Xmx3000M, otherwise
+          use -Xmx600M. This sets the maximum memory (megabytes) used
+          by Java.
+    10. Click OK, and then right-click your project and choose
+        Debug. If all is well, then Micro-Manager should launch inside
+        ImageJ.
 
-* Matlab control of Micro-Manager
+    *NOTE:* When running Micro-Manager from within Netbeans, I had to
+    navigate to Plugins > Micro-Manager > Micro-Manager Studio to
+    start Micro-Manager.
 
 -----
 
-** Accessing MMCore Java wrappers in Matlab
+* The "Hello World!" Plugin
+
+  To compile and run the Hello World! plugin, first add the source
+  code to your project.
+
+  1. Right click the Netbeans project and select *Properties*.
+  2. Select *Source* in the Categories pane on the left if it's not
+     already selected.
+  3. Click *Add Folder...*
+  4. Navigate to your plugin source code inside *SRCDIR/plugins/*/src*
+     where SRCDIR is the Micro-Manager source directory and *
+     represents the name of the folder holding your plugin.
+  5. Click OK to close the properties dialog.
+  6. Click the *Clean and Build Project* button (Shift+F11) to compile
+     the project.
+  7. Copy the jar file that is generated in project folder to the
+     *INSTALLDIR/mmplugins* directory, where INSTALLDIR is the
+     directory where Micro-Manager is installed.
+  8. Alternatively, to avoid copying the jar file manually, follow the
+     directions in step 9 under "Using Netbeans" at
+     https://micro-manager.org/wiki/Writing_plugins_for_Micro-Manager
+     
+     + Go to the Project *Files* tab in Netbeans.
+     + Find the folder with the same name as the plugin (in my case
+       HelloWorld).
+     + Expand the folder and open *build.xml*.
+     + Add the following to the end of the file, before the *project*
+       closing tag.
+
+#+BEGIN_SRC
+<property name="pluginsDir"  location="/home/kmdouglass/programs/ImageJ.app.Testing/mmplugins" />
+<target name="-post-jar">
+<echo message="--Copied MM plugin JAR to basedir: ${basedir}" />
+<copy file="${basedir}/${dist.jar}" toDir="${pluginsDir}" />
+</target>
+#+END_SRC
+
+* Micro-Manager 1.4 (OLD)
+** Matlab control of Micro-Manager
+
+-----
+
+*** Accessing MMCore Java wrappers in Matlab
   I want to access the Java wrappers to easily read image file stack
   metadata in Matlab. Unfortunately, it appears like the Micro-Manager
   documentation on this is not too clear. The documentation I am
@@ -112,7 +161,7 @@ public class TestMM {
 
 -----
 
-*** Location of the .jar files
+**** Location of the .jar files
    I used the Matlab script for identifying all the .jar files in the
    MM directory that is mentioned [[https://micro-manager.org/wiki/Matlab_Configuration][at this link]] and included below:
 
@@ -159,7 +208,7 @@ end
 
 -----
 
-*** Test that Matlab can access the MM .jar files
+**** Test that Matlab can access the MM .jar files
    Once the static class path has been updated and Matlab restarted,
    test that Matlab can see the .jar files using this code:
 
@@ -174,14 +223,14 @@ mmc.loadSystemConfiguration ('/usr/local/ImageJ/MMConfig_Demo.cfg');
 
 -----
 
-*** Don't use ~ to reference the home directory
+**** Don't use ~ to reference the home directory
    I discovered after a while that directories in javaclasspath.txt
    won't work if you use the tilde (~) to reference your home
    directory. Use the full path instead in directory names instead.
 
 -----
 
-** Opening a Micro-Manager tagged image
+*** Opening a Micro-Manager tagged image
    Micro-Manager inserts two kinds of metadata into the images it
    saves; one follows the [[https://www.openmicroscopy.org/site/support/ome-model/ome-tiff/][OME-TIFF]] specification and the other
    includes metadata about the aquisition. I often want the
@@ -211,3 +260,89 @@ img = javaObjectEDT('org.micromanager.acquisition.TaggedImageStorageMultipageTif
 
    Note that Matlab's empty array =[]= is the same as a NULL return in
    Java.
+** MMCoreJ: The Micro-Manager Java wrapper
+  Most of the support one finds for Micro-Manager is for the Java
+  wrapper around the MMCore class (which is written in C++). Because
+  of this, it is useful to try to understand how Micro-Manager works
+  in Java, rather than in Python or C++. Once a particular aspect of
+  MM is understood in Java, I have found that it is easier to use it
+  in another language.
+
+-----
+
+*** Compiling against the MMCoreJ.jar library
+   For some unknown reason, specifying the location of MMCoreJ.jar in
+   bash's CLASSPATH environment variable just does not work for me. To
+   ensure that a Java program can find the Java wrappers, I pass the
+   full directory and name of the MMCoreJ.jar file to the compiler
+   with the =-cp= flag:
+
+   #+BEGIN_SRC sh
+javac -cp "/home/kmdouglass/mm/micro-manager1.4/MMCoreJ_wrap/MMCoreJ.jar" TestMM.java
+   #+END_SRC
+
+   (Note that TestMM.java is the file containing the code that I wish
+   to compile.) Doing this successfully allows Java to find the
+   libraries in the .jar when the =import mmcorej.CMMCore;= line is
+   encountered.
+
+-----
+
+*** Specifying the mmcorej.library.path
+   In my opinion, the [[https://www.micro-manager.org/wiki/Search_Paths#MMCoreJ_wrap_Search_Paths][MM documentation on search paths]] is not very
+   clear. Much of the confusion comes from the fact that the proper
+   library required by the JVM linker is named and located differently
+   on Windows, Linux, and Mac. To get around this, the documentation
+   uses *MMCoreJ_wrap* to refer to this library independently of the
+   system, which is unfortunate since there is also a folder named
+   MMCoreJ_wrap. 
+
+   Once a .java file has been compiled with the appropriate classpath
+   flag described above, executing the java class file needs both a
+   classpath and information on where the generic MMCoreJ_wrap library
+   is located.
+
+   First, on Linux, the MMCoreJ_wrap library is actually inside a
+   hidden directory. (This fact alone caused me a good deal of
+   grief). On my system it's in =(MM SOURCE
+   DIR)/micro-manager1.4/MMCoreJ_wrap/.libs=, where =(MM SOURCE DIR)=
+   is the location of the MM source files. The appropriate library in
+   this folder seems to be *libMMCoreJ_wrap.so*. In Windows, I think
+   you will need a .dll file instead.
+
+   I specify the location of this library to the JVM using the
+   =-Dmmcorej.library.path= flag. Finally, note that I have to include
+   the current directory containing the .class file /in addition/ to
+   the directory of the MMCoreJ.jar file. (This is what the =.:= is
+   doing in the argument of the =-cp= flag below.) The full command
+   line argument to run a class file named TestMM.class that utilizes
+   mmcorej.CMMCore is
+
+   #+BEGIN_SRC sh
+java -cp ".:/home/kmdouglass/mm/micro-manager1.4/MMCoreJ_wrap/MMCoreJ.jar" -Dmmcorej.library.path=/home/kmdouglass/mm/micro-manager1.4/MMCoreJ_wrap/.libs TestMM
+   #+END_SRC
+
+   Say that three times fast.
+-----
+
+*** Testing the Java environment
+   I can test that I have specified the classpath and library path
+   correctly by compiling and running the following simple Java
+   program that creates a CMMCore instance and prints the version to
+   the terminal window.
+
+   #+BEGIN_SRC java
+import mmcorej.CMMCore;
+
+public class TestMM {
+
+    public static void main(String[] args) {
+
+	CMMCore core = new CMMCore();
+	String info = core.getVersionInfo();
+	System.out.println(info);
+    }
+}
+   #+END_SRC
+
+-----
