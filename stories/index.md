@@ -55,6 +55,20 @@
       <div class="panel-body">
 
 <a href =
+"http://genesdev.cshlp.org/content/31/6/567.short">
+The telomeric DNA damage response occurs in the absence of chromatin decompaction</a>
+
+<p>Telomeres are the regions located at the end of eukaryotic
+chromosomes and are associated with a number of important functions,
+from protecting chromosome ends from the DNA damage response machinery
+to aging and cancer development. In this work we applied to STORM to
+telomeres in HeLa cells to understand how and whether telomere sizes
+and shapes change under conditions where the DNA damage response has
+been triggered.</p>
+
+<hr>
+
+<a href =
 "http://www.nature.com/nphoton/journal/v10/n11/full/nphoton.2016.200.html">Super-resolution
 imaging of multiple cells by optimized flat-field epi-illumination</a>
 

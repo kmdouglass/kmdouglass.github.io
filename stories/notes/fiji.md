@@ -9,7 +9,21 @@
 .. type: text
 -->
 
-# Setup the FIJI Development Environment
+# Setup Netbeans
+
+  Netbeans should work right out of the box for Maven
+  projects. However, when importing a Maven project for the first
+  time, you may find that the project is unloadable. In this case, you
+  must right-click on the unloadable project in the projects window on
+  the left and choose an option that is something like "Resolve..." (I
+  can't remember exactly what the option was at the moment.)
+
+  By resolving, Maven should download any required dependences for
+  your project.
+
+-----
+
+# Setup the Fiji Development Environment in Eclipse
 
 - The guide on setting up the development environment is here:
   [http://imagej.net/Developing_ImageJ_in_Eclipse#Create_the_Eclipse_Projects](http://imagej.net/Developing_ImageJ_in_Eclipse#Create_the_Eclipse_Projects)
@@ -41,7 +55,9 @@
 - **Don't use the jdk1.6.0_24 that comes with Fiji**. Maven builds
   fail with an unsupported version error when I use it.
 
-## Maven and Plugin Dependencies
+-----
+
+# Maven and Plugin Dependencies
 
 - The ImageJ Maven repository is at http://maven.imagej.net/
 
@@ -80,6 +96,38 @@
  </repository>
 </repositories>
 ```
+
+-----
+
+## Property 'imagej.app.directory' unset; Skipping copy-jars
+
+If you receive this warning during after compilation, follow the
+directions
+[here](http://imagej.net/Maven_-_Frequently_Asked_Questions#What.27s_this:_Property_.27imagej.app.directory.27_unset.3B_Skipping_copy-jars).
+
+Briefly, simply add the contents below to your ~/.m2/settings.xml,
+modifying the **exists** tag to point to your Fiji install directory.
+
+```
+<settings>
+    <profiles>
+        <profile>
+            <id>imagej</id>
+            <activation>
+                <file>
+                    <exists>${env.HOME}/Desktop/Fiji.app</exists>
+                </file>
+            </activation>
+            <properties>
+                <imagej.app.directory>${env.HOME}/Desktop/Fiji.app</imagej.app.directory>
+                <delete.other.versions>true</delete.other.versions>
+            </properties>
+        </profile>
+    </profiles>
+</settings>
+```
+
+-----
 
 # Useful Links
 
