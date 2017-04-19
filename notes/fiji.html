@@ -91,7 +91,17 @@ MathJax.Hub.Config({
 
     </header><div class="e-content entry-content" itemprop="articleBody text">
     <div>
-<h2>Setup the FIJI Development Environment</h2>
+<h2>Setup Netbeans</h2>
+<p>Netbeans should work right out of the box for Maven
+  projects. However, when importing a Maven project for the first
+  time, you may find that the project is unloadable. In this case, you
+  must right-click on the unloadable project in the projects window on
+  the left and choose an option that is something like "Resolve..." (I
+  can't remember exactly what the option was at the moment.)</p>
+<p>By resolving, Maven should download any required dependences for
+  your project.</p>
+<hr>
+<h2>Setup the Fiji Development Environment in Eclipse</h2>
 <ul>
 <li>
 <p>The guide on setting up the development environment is here:
@@ -131,7 +141,8 @@ MathJax.Hub.Config({
   fail with an unsupported version error when I use it.</p>
 </li>
 </ul>
-<h3>Maven and Plugin Dependencies</h3>
+<hr>
+<h2>Maven and Plugin Dependencies</h2>
 <ul>
 <li>
 <p>The ImageJ Maven repository is at http://maven.imagej.net/</p>
@@ -176,6 +187,33 @@ MathJax.Hub.Config({
 </pre>
 
 
+<hr>
+<h3>Property 'imagej.app.directory' unset; Skipping copy-jars</h3>
+<p>If you receive this warning during after compilation, follow the
+directions
+<a href="http://imagej.net/Maven_-_Frequently_Asked_Questions#What.27s_this:_Property_.27imagej.app.directory.27_unset.3B_Skipping_copy-jars">here</a>.</p>
+<p>Briefly, simply add the contents below to your ~/.m2/settings.xml,
+modifying the <strong>exists</strong> tag to point to your Fiji install directory.</p>
+<pre class="code literal-block"><span></span><span class="nt">&lt;settings&gt;</span>
+    <span class="nt">&lt;profiles&gt;</span>
+        <span class="nt">&lt;profile&gt;</span>
+            <span class="nt">&lt;id&gt;</span>imagej<span class="nt">&lt;/id&gt;</span>
+            <span class="nt">&lt;activation&gt;</span>
+                <span class="nt">&lt;file&gt;</span>
+                    <span class="nt">&lt;exists&gt;</span><span class="cp">${</span><span class="n">env</span><span class="o">.</span><span class="n">HOME</span><span class="cp">}</span>/Desktop/Fiji.app<span class="nt">&lt;/exists&gt;</span>
+                <span class="nt">&lt;/file&gt;</span>
+            <span class="nt">&lt;/activation&gt;</span>
+            <span class="nt">&lt;properties&gt;</span>
+                <span class="nt">&lt;imagej.app.directory&gt;</span><span class="cp">${</span><span class="n">env</span><span class="o">.</span><span class="n">HOME</span><span class="cp">}</span>/Desktop/Fiji.app<span class="nt">&lt;/imagej.app.directory&gt;</span>
+                <span class="nt">&lt;delete.other.versions&gt;</span>true<span class="nt">&lt;/delete.other.versions&gt;</span>
+            <span class="nt">&lt;/properties&gt;</span>
+        <span class="nt">&lt;/profile&gt;</span>
+    <span class="nt">&lt;/profiles&gt;</span>
+<span class="nt">&lt;/settings&gt;</span>
+</pre>
+
+
+<hr>
 <h2>Useful Links</h2>
 <p><a href="http://forum.imagej.net/t/creation-of-a-new-plug-in-in-eclipse-beginners-question/2008">http://forum.imagej.net/t/creation-of-a-new-plug-in-in-eclipse-beginners-question/2008</a></p>
 <h2>Eclipse Setup (Didn't work)</h2>
