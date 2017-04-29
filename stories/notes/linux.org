@@ -897,7 +897,6 @@ cat /etc/resolv.conf
 
 -----
 
-
 ** Copying files using ssh
    /Date/
    2017-02-05
@@ -922,6 +921,27 @@ scp username@b:/path/to/file /path/to/destination
 
    Note that I should *NOT* be logged into the machine through a ssh
    shell.
+
+-----
+
+** Remote desktop from Debian to a Windows machine
+   
+   /Date/
+   2017-04-20
+
+   /Sources/
+   1. http://www.itworld.com/article/2988289/linux/how-to-install-and-use-rdesktop-the-remote-desktop-client-for-linux.html
+   2. https://www.youtube.com/watch?v=fuar6l60_lA
+
+   #+BEGIN_SRC
+rdesktop PC_IP_ADDRESS
+   #+END_SRC
+
+   You can change the screen size via
+
+   #+BEGIN_SRC
+rdesktop -g 1280x720 PC_IP_ADDRESS
+   #+END_SRC
 
 -----
 

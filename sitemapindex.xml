@@ -27,7 +27,11 @@
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/fourier-optics.xml</loc>
-  <lastmod>2017-01-26T14:14:00Z</lastmod>
+  <lastmod>2017-04-29T09:39:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>http://kmdouglass.github.io/categories/holography.xml</loc>
+  <lastmod>2017-04-29T09:39:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/linux.xml</loc>
@@ -59,7 +63,7 @@
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/python.xml</loc>
-  <lastmod>2017-02-04T14:50:00Z</lastmod>
+  <lastmod>2017-04-29T09:39:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/raspberry-pi.xml</loc>
@@ -71,7 +75,7 @@
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/signal-processing.xml</loc>
-  <lastmod>2017-01-26T14:14:00Z</lastmod>
+  <lastmod>2017-04-29T09:39:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/super-resolution.xml</loc>
@@ -99,10 +103,10 @@
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/rss.xml</loc>
-  <lastmod>2017-02-10T18:44:00Z</lastmod>
+  <lastmod>2017-04-29T09:39:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/sitemap.xml</loc>
-  <lastmod>2017-04-19T20:24:00Z</lastmod>
+  <lastmod>2017-04-29T09:39:00Z</lastmod>
  </sitemap>
 </sitemapindex>

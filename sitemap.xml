@@ -19,15 +19,15 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/2016/index.html</loc>
-  <lastmod>2017-01-26T14:24:00Z</lastmod>
+  <lastmod>2017-04-29T09:39:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/2017/index.html</loc>
-  <lastmod>2017-02-10T18:44:00Z</lastmod>
+  <lastmod>2017-04-29T09:39:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/archive.html</loc>
-  <lastmod>2017-02-10T18:33:00Z</lastmod>
+  <lastmod>2017-04-29T09:39:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/biology.html</loc>
@@ -51,11 +51,15 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/fourier-optics.html</loc>
-  <lastmod>2017-01-26T14:24:00Z</lastmod>
+  <lastmod>2017-04-29T09:39:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://kmdouglass.github.io/categories/holography.html</loc>
+  <lastmod>2017-04-29T09:39:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/index.html</loc>
-  <lastmod>2017-02-10T18:33:00Z</lastmod>
+  <lastmod>2017-04-29T09:39:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/linux.html</loc>
@@ -87,7 +91,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/python.html</loc>
-  <lastmod>2017-02-04T14:50:00Z</lastmod>
+  <lastmod>2017-04-29T09:39:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/raspberry-pi.html</loc>
@@ -99,7 +103,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/signal-processing.html</loc>
-  <lastmod>2017-01-26T14:24:00Z</lastmod>
+  <lastmod>2017-04-29T09:39:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/super-resolution.html</loc>
@@ -187,11 +191,11 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/index-2.html</loc>
-  <lastmod>2017-02-10T18:33:00Z</lastmod>
+  <lastmod>2017-04-29T09:39:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/index.html</loc>
-  <lastmod>2017-02-10T18:44:00Z</lastmod>
+  <lastmod>2017-04-29T09:39:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/learning-pythons-multiprocessing-module.html</loc>
@@ -203,7 +207,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/micro-manager-on-the-raspberry-pi.html</loc>
-  <lastmod>2017-02-10T18:44:00Z</lastmod>
+  <lastmod>2017-04-29T09:39:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/omics.html</loc>
@@ -219,7 +223,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/perlin-noise.html</loc>
-  <lastmod>2017-02-04T14:50:00Z</lastmod>
+  <lastmod>2017-04-29T09:39:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/reading-select-lines-from-a-text-file.html</loc>
@@ -236,6 +240,10 @@
  <url>
   <loc>http://kmdouglass.github.io/posts/simple-pupil-function-calculations.html</loc>
   <lastmod>2017-02-04T14:50:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://kmdouglass.github.io/posts/simulating-inline-holograms.html</loc>
+  <lastmod>2017-04-29T09:39:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/simulating-microscope-pupil-functions.html</loc>
@@ -287,7 +295,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/stories/notes/linux.html</loc>
-  <lastmod>2017-02-10T18:33:00Z</lastmod>
+  <lastmod>2017-04-29T09:39:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/stories/notes/micro-manager.html</loc>
