@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kyle M. Douglass (Fourier optics)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link type="application/rss+xml" href="http://kmdouglass.github.io/categories/fourier-optics.xml" rel="self"></atom:link><language>en</language><lastBuildDate>Sat, 29 Apr 2017 09:39:50 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Simulating Inline Holograms</title><link>http://kmdouglass.github.io/posts/simulating-inline-holograms.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div tabindex="-1" id="notebook" class="border-box-sizing"&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Kyle M. Douglass (Fourier optics)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link type="application/rss+xml" rel="self" href="http://kmdouglass.github.io/categories/fourier-optics.xml"></atom:link><language>en</language><lastBuildDate>Mon, 01 May 2017 07:26:53 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Simulating Inline Holograms</title><link>http://kmdouglass.github.io/posts/simulating-inline-holograms.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div tabindex="-1" id="notebook" class="border-box-sizing"&gt;
     &lt;div class="container" id="notebook-container"&gt;
 
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;
@@ -8,25 +8,7 @@
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Software has played a big role in digital holographic imaging, arguably starting from the publication in which &lt;a href="http://aip.scitation.org/doi/10.1063/1.1755043"&gt;Goodman and Lawrence generated images from electronically recorded holograms&lt;/a&gt;. One of the things I would like to do for my &lt;a href="https://hackaday.io/kmdouglass"&gt;lensless imager project&lt;/a&gt; is to develop a small set of tools to simulate various types of digital holograms. My reason for wanting to do this is that it will help in developing the algorithms that will actually perform the reconstructions from real holograms. In this post, I will explore a simple method for simulating holograms that is explained in an excellent publication I recently found: &lt;a href="https://arxiv.org/abs/1412.3674"&gt;Tatiana Latychevskaia and Hans-Werner Fink, " Practical algorithms for simulation and reconstruction of digital in-line holograms," arXiv 1412.3674 (2016)&lt;/a&gt;.&lt;/p&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Inline-holography-with-plane-waves"&gt;Inline holography with plane waves&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-inline-holograms.html#Inline-holography-with-plane-waves"&gt;¶&lt;/a&gt;&lt;/h2&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h3 id="Create-the-ground-truth"&gt;Create the ground truth&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-inline-holograms.html#Create-the-ground-truth"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The first step in the simulation of a digital hologram is to create a ground truth object, i.e. a an object whose optical properties we know &lt;em&gt;a priori&lt;/em&gt;. Rather than try to infer an object from a hologram--which is what the lensless imager should do--the simulations should work in the opposite sense and create a realistic hologram from the ground truth. Later, we can use the simulated holograms to test different reconstruction algorithms and see which ones come closest to reproducing the known objects.&lt;/p&gt;
+&lt;h2 id="Inline-holography-with-plane-waves"&gt;Inline holography with plane waves&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-inline-holograms.html#Inline-holography-with-plane-waves"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;h3 id="Create-the-ground-truth"&gt;Create the ground truth&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-inline-holograms.html#Create-the-ground-truth"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The first step in the simulation of a digital hologram is to create a ground truth object, i.e. a an object whose optical properties we know &lt;em&gt;a priori&lt;/em&gt;. Rather than try to infer an object from a hologram--which is what the lensless imager should do--the simulations should work in the opposite sense and create a realistic hologram from the ground truth. Later, we can use the simulated holograms to test different reconstruction algorithms and see which ones come closest to reproducing the known objects.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -199,15 +181,6 @@ Scipy version:		0.19.0
 &lt;li&gt;to emphasize that the object only weakly perturbs the light;&lt;/li&gt;
 &lt;li&gt;because one complete rotation of the phasor in the complex plane is \(2 \pi \) radians. Any value outside the range \( \left[ 0, 2 \pi \right] \) can be mapped back onto a value in this range.&lt;/li&gt;
 &lt;/ol&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;h4 id="Set-the-physical-dimensions"&gt;Set the physical dimensions&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-inline-holograms.html#Set-the-physical-dimensions"&gt;¶&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;The final step in the object creation is to set up the physical dimensions of the problem. There are a few ways we can do this, but I typically like to set the number of pixels that sample the object and the pixel size independently. Then, the physical radius of the object is equivalent to &lt;code&gt;gtRadius * pixelSize&lt;/code&gt; and the total array size is equal to &lt;code&gt;numPixels * pixelSize&lt;/code&gt;. What's more, because the array is square, we can create just one coordinate vector for both directions.&lt;/p&gt;
 
 &lt;/div&gt;
@@ -276,15 +249,6 @@ Scipy version:		0.19.0
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;&lt;code&gt;dx&lt;/code&gt; is the sampling period in the object space, whose inverse &lt;code&gt;fS&lt;/code&gt; is the sampling frequency. The maximum information content in the object's Fourier transform is found at the Nyquist frequency, or &lt;code&gt;fS / 2&lt;/code&gt;.&lt;/p&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;h3 id="Compute-the-hologram"&gt;Compute the hologram&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-inline-holograms.html#Compute-the-hologram"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Two common ways to generate a hologram in a real experiment are to illuminate the object with a plane wave and with a spherical wave. In this simulation, I will assume a plane wave illumination because this is somewhat simpler and an easy first case to deal with.&lt;/p&gt;
 &lt;h4 id="Step-1:-Find-the-Fourier-transform-of-the-object"&gt;Step 1: Find the Fourier transform of the object&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-inline-holograms.html#Step-1:-Find-the-Fourier-transform-of-the-object"&gt;¶&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;According to the publication by &lt;a href="https://arxiv.org/abs/1412.3674"&gt;Latychevskaia and Fink&lt;/a&gt;, we first need to compute the Fourier transform of the object.&lt;/p&gt;
 
@@ -391,16 +355,7 @@ Scipy version:		0.19.0
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h4 id="Step-2:-Verify-that-the-Fourier-transform-is-correct"&gt;Step 2: Verify that the Fourier transform is correct&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-inline-holograms.html#Step-2:-Verify-that-the-Fourier-transform-is-correct"&gt;¶&lt;/a&gt;&lt;/h4&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;We can verify that we did everything correctly by computing the discrete integral of the absolute squares of the field passing through the original object and its Fourier transform. By &lt;a href="https://en.wikipedia.org/wiki/Parseval's_theorem"&gt;Parseval's theorem&lt;/a&gt;, these should be equivalent. Though it may seem a bit mysterious, Parseval's theorem is just restating the well-known law about the conservation of energy. Simply put, the energy in the field passing through the object should be equal to the energy carried by its Fourier transform.&lt;/p&gt;
+&lt;h4 id="Step-2:-Verify-that-the-Fourier-transform-is-correct"&gt;Step 2: Verify that the Fourier transform is correct&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-inline-holograms.html#Step-2:-Verify-that-the-Fourier-transform-is-correct"&gt;¶&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;We can verify that we did everything correctly by computing the discrete integral of the absolute squares of the field passing through the original object and its Fourier transform. By &lt;a href="https://en.wikipedia.org/wiki/Parseval's_theorem"&gt;Parseval's theorem&lt;/a&gt;, these should be equivalent. Though it may seem a bit mysterious, Parseval's theorem is just restating the well-known law about the conservation of energy. Simply put, the energy in the field passing through the object should be equal to the energy carried by its Fourier transform.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -563,15 +518,6 @@ Integral, Fourier transform of object: 2631.7081
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;As you can see, there is also a slight difference between the average of the input field and the DC term of the input's Fourier transform. Since both sanity checks are relatively close, however, I suspect that the differences are due to numerical rounding errors.&lt;/p&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;h4 id="Step-3:-Create-the-angular-spectrum-propagator"&gt;Step 3: Create the angular spectrum propagator&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-inline-holograms.html#Step-3:-Create-the-angular-spectrum-propagator"&gt;¶&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;The reason we computed the Fourier transform of the object was to determine its angular spectrum, i.e. the array of plane waves traveling at different directions to the axis that coherently combine to form the object. Computing the field at another axial plane means advancing the phase of each of these plane waves by an amount that depends on the wavelength of the light and the angle at which the plane wave is traveling relative to the optical axis. We can do this by multiplying the Fourier transform of the object by what's known as the &lt;strong&gt;transfer function of free space&lt;/strong&gt;:&lt;/p&gt;
 \begin{equation*}
 H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 - \left( \lambda f_x \right)^2 - \left( \lambda f_y \right)^2 } \right]
@@ -701,15 +647,6 @@ H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 -
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;You can see right away that the transfer function appears circular. The reason for this is that the argument inside the square root becomes negative for large spatial frequencies, which makes the whole transfer function in this region into a decaying exponential. These spatial frequencies correspond to plane waves that exponentially decay as they propagate away from the sample; they are so-called "evanescent" waves.&lt;/p&gt;
 &lt;p&gt;For distances much larger than a wavelength of light, the amplitude of the transfer function in this area is effectively zero.&lt;/p&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;h4 id="Step-4:-Propagate-the-field-and-create-the-hologram"&gt;Step 4: Propagate the field and create the hologram&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-inline-holograms.html#Step-4:-Propagate-the-field-and-create-the-hologram"&gt;¶&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;Let's now compute the field in the new plane at some distance from the sample. We do this by multiplying the Fourier transform of the ground truth by the transfer function and computing this product's inverse Fourier transform.&lt;/p&gt;
 
 &lt;/div&gt;
@@ -1002,10 +939,10 @@ Integral, hologram plane: 2621.0387
 
 
 
-&lt;div id="c99be630-c9af-403b-bd6a-3fa30a05674f"&gt;&lt;/div&gt;
+&lt;div id="1400aad0-6213-449c-aad2-c7085fcdf9e0"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#c99be630-c9af-403b-bd6a-3fa30a05674f');
+var element = $('#1400aad0-6213-449c-aad2-c7085fcdf9e0');
 /* Put everything inside the global mpl namespace */
 window.mpl = {};
 

@@ -98,25 +98,8 @@ MathJax.Hub.Config({
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Software has played a big role in digital holographic imaging, arguably starting from the publication in which <a href="http://aip.scitation.org/doi/10.1063/1.1755043">Goodman and Lawrence generated images from electronically recorded holograms</a>. One of the things I would like to do for my <a href="https://hackaday.io/kmdouglass">lensless imager project</a> is to develop a small set of tools to simulate various types of digital holograms. My reason for wanting to do this is that it will help in developing the algorithms that will actually perform the reconstructions from real holograms. In this post, I will explore a simple method for simulating holograms that is explained in an excellent publication I recently found: <a href="https://arxiv.org/abs/1412.3674">Tatiana Latychevskaia and Hans-Werner Fink, " Practical algorithms for simulation and reconstruction of digital in-line holograms," arXiv 1412.3674 (2016)</a>.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Inline-holography-with-plane-waves">Inline holography with plane waves<a class="anchor-link" href="simulating-inline-holograms.html#Inline-holography-with-plane-waves">¶</a>
 </h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Create-the-ground-truth">Create the ground truth<a class="anchor-link" href="simulating-inline-holograms.html#Create-the-ground-truth">¶</a>
 </h3>
 <p>The first step in the simulation of a digital hologram is to create a ground truth object, i.e. a an object whose optical properties we know <em>a priori</em>. Rather than try to infer an object from a hologram--which is what the lensless imager should do--the simulations should work in the opposite sense and create a realistic hologram from the ground truth. Later, we can use the simulated holograms to test different reconstruction algorithms and see which ones come closest to reproducing the known objects.</p>
@@ -294,14 +277,6 @@ Scipy version:		0.19.0
 <li>to emphasize that the object only weakly perturbs the light;</li>
 <li>because one complete rotation of the phasor in the complex plane is \(2 \pi \) radians. Any value outside the range \( \left[ 0, 2 \pi \right] \) can be mapped back onto a value in this range.</li>
 </ol>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <h4 id="Set-the-physical-dimensions">Set the physical dimensions<a class="anchor-link" href="simulating-inline-holograms.html#Set-the-physical-dimensions">¶</a>
 </h4>
 <p>The final step in the object creation is to set up the physical dimensions of the problem. There are a few ways we can do this, but I typically like to set the number of pixels that sample the object and the pixel size independently. Then, the physical radius of the object is equivalent to <code>gtRadius * pixelSize</code> and the total array size is equal to <code>numPixels * pixelSize</code>. What's more, because the array is square, we can create just one coordinate vector for both directions.</p>
@@ -373,15 +348,6 @@ Scipy version:		0.19.0
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><code>dx</code> is the sampling period in the object space, whose inverse <code>fS</code> is the sampling frequency. The maximum information content in the object's Fourier transform is found at the Nyquist frequency, or <code>fS / 2</code>.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Compute-the-hologram">Compute the hologram<a class="anchor-link" href="simulating-inline-holograms.html#Compute-the-hologram">¶</a>
 </h3>
 <p>Two common ways to generate a hologram in a real experiment are to illuminate the object with a plane wave and with a spherical wave. In this simulation, I will assume a plane wave illumination because this is somewhat simpler and an easy first case to deal with.</p>
@@ -496,14 +462,6 @@ Scipy version:		0.19.0
 <div class="text_cell_render border-box-sizing rendered_html">
 <h4 id="Step-2:-Verify-that-the-Fourier-transform-is-correct">Step 2: Verify that the Fourier transform is correct<a class="anchor-link" href="simulating-inline-holograms.html#Step-2:-Verify-that-the-Fourier-transform-is-correct">¶</a>
 </h4>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>We can verify that we did everything correctly by computing the discrete integral of the absolute squares of the field passing through the original object and its Fourier transform. By <a href="https://en.wikipedia.org/wiki/Parseval's_theorem">Parseval's theorem</a>, these should be equivalent. Though it may seem a bit mysterious, Parseval's theorem is just restating the well-known law about the conservation of energy. Simply put, the energy in the field passing through the object should be equal to the energy carried by its Fourier transform.</p>
 
 </div>
@@ -671,15 +629,6 @@ Integral, Fourier transform of object: 2631.7081
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>As you can see, there is also a slight difference between the average of the input field and the DC term of the input's Fourier transform. Since both sanity checks are relatively close, however, I suspect that the differences are due to numerical rounding errors.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <h4 id="Step-3:-Create-the-angular-spectrum-propagator">Step 3: Create the angular spectrum propagator<a class="anchor-link" href="simulating-inline-holograms.html#Step-3:-Create-the-angular-spectrum-propagator">¶</a>
 </h4>
 <p>The reason we computed the Fourier transform of the object was to determine its angular spectrum, i.e. the array of plane waves traveling at different directions to the axis that coherently combine to form the object. Computing the field at another axial plane means advancing the phase of each of these plane waves by an amount that depends on the wavelength of the light and the angle at which the plane wave is traveling relative to the optical axis. We can do this by multiplying the Fourier transform of the object by what's known as the <strong>transfer function of free space</strong>:</p>
@@ -815,15 +764,6 @@ H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 -
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>You can see right away that the transfer function appears circular. The reason for this is that the argument inside the square root becomes negative for large spatial frequencies, which makes the whole transfer function in this region into a decaying exponential. These spatial frequencies correspond to plane waves that exponentially decay as they propagate away from the sample; they are so-called "evanescent" waves.</p>
 <p>For distances much larger than a wavelength of light, the amplitude of the transfer function in this area is effectively zero.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <h4 id="Step-4:-Propagate-the-field-and-create-the-hologram">Step 4: Propagate the field and create the hologram<a class="anchor-link" href="simulating-inline-holograms.html#Step-4:-Propagate-the-field-and-create-the-hologram">¶</a>
 </h4>
 <p>Let's now compute the field in the new plane at some distance from the sample. We do this by multiplying the Fourier transform of the ground truth by the transfer function and computing this product's inverse Fourier transform.</p>
@@ -1128,10 +1068,10 @@ Integral, hologram plane: 2621.0387
 
 
 
-<div id="c99be630-c9af-403b-bd6a-3fa30a05674f"></div>
+<div id="1400aad0-6213-449c-aad2-c7085fcdf9e0"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#c99be630-c9af-403b-bd6a-3fa30a05674f');
+var element = $('#1400aad0-6213-449c-aad2-c7085fcdf9e0');
 /* Put everything inside the global mpl namespace */
 window.mpl = {};
 
