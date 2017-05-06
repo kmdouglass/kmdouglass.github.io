@@ -1,0 +1,73 @@
+#+BEGIN_COMMENT
+.. title: Nix Notes
+.. slug: nix
+.. date: 05/06/2017
+.. tags: nix, package manager
+.. link: 
+.. description: Notes on using Nix, the functional package manager.
+.. type: text
+#+END_COMMENT
+#+OPTIONS: toc:nil num:t ^:nil
+#+TOC: headlines 2
+
+* Cheat sheet
+
+** Install/upgrade nix
+
+*Date*: 2017-05-06
+
+*Sources*:
+1. https://www.domenkozar.com/2014/01/02/getting-started-with-nix-package-manager/
+2. https://nixos.org/nix/
+
+#+BEGIN_SRC
+bash <(curl https://nixos.org/nix/install)
+#+END_SRC
+
+OR
+
+#+BEGIN_SRC
+$ curl https://nixos.org/nix/install | sh
+#+END_SRC
+
+-----
+
+** Activate a nix user profile
+
+#+BEGIN_SRC
+source ~/.nix-profile/etc/profile.d/nix.sh
+#+END_SRC
+
+-----
+
+** Search for packages
+
+#+BEGIN_SRC
+nix-env -qaP | grep python3-3
+#+END_SRC
+
+-----
+
+** List all installed packages
+
+#+BEGIN_SRC
+nix-env -q
+#+END_SRC
+
+** Garbage collect
+
+#+BEGIN_SRC
+nix-collect-garbage
+#+END_SRC
+
+* Glossary
+
+The official glossary is located in the Nix documentation here:
+http://nixos.org/nix/manual/#idm140737315919056
+
+* Useful Links
+
++ *Sander van der Burg* :: [[http://sandervanderburg.blogspot.ch/2013/12/using-nix-while-doing-development.html][Description of common development practices with Nix]]
++ *Domen Kožar* :: [[https://www.domenkozar.com/2014/01/02/getting-started-with-nix-package-manager/][A Nix quickstart]]
++ *Jakob Gillich* :: [[https://jakob.gillich.me/post/2016-03-22-self-contained-development-environments-using-nix/][Self-contained development environments using nix]]
++ *Nix Wiki* :: [[https://nixos.org/wiki/Development_Environments][Development environments]]

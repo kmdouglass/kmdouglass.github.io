@@ -13,9 +13,10 @@
   done on computers. I hope they can help you as well.
 
   + [[file:notes/linux.org][Debian Linux]]
-  + [[file:notes/scipy.org][Python for Scientific Applications]]
-  + [[file:notes/nikola.org][Nikola]]
   + [[file:notes/git.org][Git]]
+  + [[file:notes/nikola.org][Nikola]]
+  + [[file:notes/scipy.org][Python for Scientific Applications]]
+  + [[file:notes/nix.org][Nix Package Manager]]
   + [[file:notes/cuda.org][CUDA]]
   + [[file:notes/emacs.org][Emacs]]
   + [[file:notes/windows.org][Notes on Windows]]
