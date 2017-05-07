@@ -71,3 +71,4 @@ http://nixos.org/nix/manual/#idm140737315919056
 + *Domen Kožar* :: [[https://www.domenkozar.com/2014/01/02/getting-started-with-nix-package-manager/][A Nix quickstart]]
 + *Jakob Gillich* :: [[https://jakob.gillich.me/post/2016-03-22-self-contained-development-environments-using-nix/][Self-contained development environments using nix]]
 + *Nix Wiki* :: [[https://nixos.org/wiki/Development_Environments][Development environments]]
++ *Nixpkgs Manual* :: [[http://nixos.org/nixpkgs/manual/#sec-language-java][Java]]
