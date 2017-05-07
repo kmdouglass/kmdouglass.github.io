@@ -60,6 +60,18 @@ nix-env -q
 nix-collect-garbage
 #+END_SRC
 
+-----
+
+** Create a shell environment with the jdk package
+
+#+BEGIN_SRC
+nix-shell -p jdk
+#+END_SRC
+
+The -p argument specifies the packages to include in the environment.
+
+-----
+
 * Glossary
 
 The official glossary is located in the Nix documentation here:
