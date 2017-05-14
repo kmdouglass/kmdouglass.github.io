@@ -72,6 +72,83 @@ The -p argument specifies the packages to include in the environment.
 
 -----
 
+ 
+* Java
+
+** Packaging Maven projects
+*Date*
+May 12, 2017
+
+*Sources*
+1. https://ww.telent.net/2017/5/10/building_maven_packages_with_nix
+2. https://github.com/NixOS/mvn2nix-maven-plugin
+
+*IMPORTANT* Unfortunately, the [[https://github.com/NixOS/mvn2nix-maven-plugin/issues/5][workaround for authenticated]] flag
+problem in mvn2nix does not work for me. The directions in this
+section might work for you since others have reported success with
+it. I decided to install pre-built .jars using nix instead of building
+the source.
+
+To use the mvn2nix plugin, you need to have Maven >= 3.2.5. On May
+12, 2017, this required installing from jessie-backports on Debian:
+
+#+BEGIN_SRC
+sudo apt-get -t jessie-backports install maven
+#+END_SRC
+
+Next, generate the project-info.json file that build-maven.nix will
+use the Nix expression for your package. To do this, run the following
+command from inside the Maven project's root directory.
+
+#+BEGIN_SRC
+mvn -Dmaven.repo.local=$(mktemp -d -t mavenXXX) org.nixos.mvn2nix:mvn2nix-maven-plugin:mvn2nix
+#+END_SRC
+
+Important note: on my Debian Jessie system, =mktemp= requires at least
+three X's appended to the end of the output file, hence the =$(mktemp
+-d -t mavenXXX)= above. Alternatively, you can just drop the template
+argument altogether.
+
+The output of the above command will be a file named
+/project-info.json/. Move this some convenient directory inside your
+project's hierarchy, such as =app/=.
+
+-----
+
+** Installing pre-built .jars
+
+Instead of building Java source code, you could get away with simply
+installing prebuilt .jars using Nix. Here is a short expression I used
+to copy the ImageJ 1.51j .jar file into the Nix store.
+
+#+BEGIN_SRC
+with import <nixpkgs> {};
+
+stdenv.mkDerivation {
+  name = "ij-1.51j";
+  src = (builtins.toPath ./ij-1.51j.jar);
+  phases = "installPhase";
+
+  installPhase = ''
+    mkdir -p $out/java/share
+    cp -v $src $out/java/share/
+  '';
+
+  meta = {
+    description = "Open source scientific multidimensional image processing";
+    homepage = https://imagej.net;
+  };
+}
+#+END_SRC
+
+It's important to specify the =phases= attribute because
+=stdenv.mkDerivation= will attempt to run a build phase by
+default. This means it will try to run configure, make, make install,
+etc. on contents of the =src= attribute. By specifying that we only
+want an install phase, we can simply copy the .jar to the store.
+
+-----
+
 * Glossary
 
 The official glossary is located in the Nix documentation here:

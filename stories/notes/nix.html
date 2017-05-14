@@ -106,8 +106,15 @@ MathJax.Hub.Config({
 <li><a href="nix.html#sec-1-6">1.6. Create a shell environment with the jdk package</a></li>
 </ul>
 </li>
-<li><a href="nix.html#sec-2">2. Glossary</a></li>
-<li><a href="nix.html#sec-3">3. Useful Links</a></li>
+<li>
+<a href="nix.html#sec-2">2. Java</a>
+<ul>
+<li><a href="nix.html#sec-2-1">2.1. Packaging Maven projects</a></li>
+<li><a href="nix.html#sec-2-2">2.2. Installing pre-built .jars</a></li>
+</ul>
+</li>
+<li><a href="nix.html#sec-3">3. Glossary</a></li>
+<li><a href="nix.html#sec-4">4. Useful Links</a></li>
 </ul>
 </div>
 </div>
@@ -208,10 +215,120 @@ The -p argument specifies the packages to include in the environment.
 </div>
 </div>
 
+
 <div id="outline-container-sec-2" class="outline-2">
 <h2 id="sec-2">
-<span class="section-number-2">2</span> Glossary</h2>
+<span class="section-number-2">2</span> Java</h2>
 <div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1">
+<span class="section-number-3">2.1</span> Packaging Maven projects</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+<b>Date</b>
+May 12, 2017
+</p>
+
+<p>
+<b>Sources</b>
+</p>
+<ol class="org-ol">
+<li>
+<a href="https://ww.telent.net/2017/5/10/building_maven_packages_with_nix">https://ww.telent.net/2017/5/10/building_maven_packages_with_nix</a>
+</li>
+<li>
+<a href="https://github.com/NixOS/mvn2nix-maven-plugin">https://github.com/NixOS/mvn2nix-maven-plugin</a>
+</li>
+</ol>
+<p>
+<b>IMPORTANT</b> Unfortunately, the <a href="https://github.com/NixOS/mvn2nix-maven-plugin/issues/5">workaround for authenticated</a> flag
+problem in mvn2nix does not work for me. The directions in this
+section might work for you since others have reported success with
+it. I decided to install pre-built .jars using nix instead of building
+the source.
+</p>
+
+<p>
+To use the mvn2nix plugin, you need to have Maven &gt;= 3.2.5. On May
+12, 2017, this required installing from jessie-backports on Debian:
+</p>
+
+<div class="highlight"><pre><span></span>sudo apt-get -t jessie-backports install maven
+</pre></div>
+
+<p>
+Next, generate the project-info.json file that build-maven.nix will
+use the Nix expression for your package. To do this, run the following
+command from inside the Maven project's root directory.
+</p>
+
+<div class="highlight"><pre><span></span>mvn -Dmaven.repo.local=$(mktemp -d -t mavenXXX) org.nixos.mvn2nix:mvn2nix-maven-plugin:mvn2nix
+</pre></div>
+
+<p>
+Important note: on my Debian Jessie system, <code>mktemp</code> requires at least
+three X's appended to the end of the output file, hence the <code>$(mktemp
+-d -t mavenXXX)</code> above. Alternatively, you can just drop the template
+argument altogether.
+</p>
+
+<p>
+The output of the above command will be a file named
+<i>project-info.json</i>. Move this some convenient directory inside your
+project's hierarchy, such as <code>app/</code>.
+</p>
+
+<hr>
+</div>
+</div>
+
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2">
+<span class="section-number-3">2.2</span> Installing pre-built .jars</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+Instead of building Java source code, you could get away with simply
+installing prebuilt .jars using Nix. Here is a short expression I used
+to copy the ImageJ 1.51j .jar file into the Nix store.
+</p>
+
+<div class="highlight"><pre><span></span>with import &lt;nixpkgs&gt; {};
+
+stdenv.mkDerivation {
+  name = "ij-1.51j";
+  src = (builtins.toPath ./ij-1.51j.jar);
+  phases = "installPhase";
+
+  installPhase = ''
+    mkdir -p $out/java/share
+    cp -v $src $out/java/share/
+  '';
+
+  meta = {
+    description = "Open source scientific multidimensional image processing";
+    homepage = https://imagej.net;
+  };
+}
+</pre></div>
+
+<p>
+It's important to specify the <code>phases</code> attribute because
+<code>stdenv.mkDerivation</code> will attempt to run a build phase by
+default. This means it will try to run configure, make, make install,
+etc. on contents of the <code>src</code> attribute. By specifying that we only
+want an install phase, we can simply copy the .jar to the store.
+</p>
+
+<hr>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3">
+<span class="section-number-2">3</span> Glossary</h2>
+<div class="outline-text-2" id="text-3">
 <p>
 The official glossary is located in the Nix documentation here:
 <a href="http://nixos.org/nix/manual/#idm140737315919056">http://nixos.org/nix/manual/#idm140737315919056</a>
@@ -219,10 +336,10 @@ The official glossary is located in the Nix documentation here:
 </div>
 </div>
 
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3">
-<span class="section-number-2">3</span> Useful Links</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4">
+<span class="section-number-2">4</span> Useful Links</h2>
+<div class="outline-text-2" id="text-4">
 <dl class="org-dl">
 <dt> <b>Sander van der Burg</b> </dt>
 <dd>
