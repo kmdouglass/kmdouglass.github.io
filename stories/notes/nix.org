@@ -32,6 +32,23 @@ $ curl https://nixos.org/nix/install | sh
 
 -----
 
+*** Error setting certificate verify locations
+
+*Date*: 2017-05-24
+
+*Source*: https://stackoverflow.com/questions/3160909/how-do-i-deal-with-certificates-using-curl-while-trying-to-access-an-https-url
+
+If you get this error while trying to install Nix using curl, install
+the *ca-certificates* package via apt-get (or the appropriate package
+manager for your system).
+
+If the error persists, verify that ca-certificates.crt is in the
+correct location and, if not, create a symlink to it.
+
+Expected location: /etc/pki/tls/certs/ca-bundle.crt
+Location on my system: /etc/ssl/certs/ca-certificates.crt
+
+-----
 ** Activate a nix user profile
 
 #+BEGIN_SRC
@@ -72,7 +89,34 @@ The -p argument specifies the packages to include in the environment.
 
 -----
 
- 
+* Python
+
+** Convert pip packages to nix expressions
+
+*Date*: 2017-05-23
+
+*Source*: https://pypi.python.org/pypi/pip2nix
+
+First clone and install pip2nix:
+
+#+BEGIN_SRC
+git clone https://github.com/johbo/pip2nix
+nix-env -f pip2nix/release.nix -iA pip2nix.python35  # Same Python as target packages
+#+END_SRC
+
+Ensure that pythonXX matches the Python version to be used with the
+target package.
+
+Next, generate the /python-packages.nix/ file with
+
+#+BEGIN_SRC
+pip2nix generate -r requirements.txt
+#+END_SRC
+
+where requirements.txt is for the desired package.
+
+-----
+
 * Java
 
 ** Packaging Maven projects
