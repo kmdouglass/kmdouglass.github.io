@@ -116,7 +116,7 @@ NAVIGATION_LINKS = {
     DEFAULT_LANG: (
         ("/stories/about-me.html", "About"),
         ("/posts/index.html", "Blog"),
-#        ("/categories/index.html", "Tags"),
+        ("/categories/index.html", "Tags"),
         ("/archive.html", "Archive"),
         ("/stories/notes-and-projects.html", "Notes"),
         ("/stories/contact.html", "Contact"),
