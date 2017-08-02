@@ -728,6 +728,119 @@ ls -l /dev/disk/by-label
 
 -----
 
+** Format a USB drive and encrypt it
+
+We will use *cryptsetup* to perform the drive encryption.
+
+#+BEGIN_SRC
+sudo apt-get install cryptsetup
+#+END_SRC
+
+First, find the USB drive label as described above and repeated here:
+
+#+BEGIN_SRC
+sudo fdisk -l
+#+END_SRC
+
+I will assume for the rest of this section that the device label is
+*/dev/sdb1*.  Next, ensure that the device is not mounted:
+
+#+BEGIN_SRC
+sudo umount /dev/sdb1
+#+END_SRC
+
+If you are going to use the USB drive for secure purposes, you may
+want to start by first writing random bytes to the drive before
+creating the file system:
+
+#+BEGIN_SRC
+sudo dd if=/dev/urandom of=/dev/sdb bs=4M oflag=direct
+#+END_SRC
+
+Note that we write the random data directly to the disk /dev/sdb, not
+the partition /dev/sdb1. *dd* is a Linux program for creating a
+copying files. The *if* option specifies the input file, in this case
+a special device driver for generating random data. *of* is the output
+file, in this case the Linux file driver for the USB device. *BE SURE
+THAT YOU VERIFY THAT THIS NAME IS CORRECT.* *bs* specifies the block
+size, or which is the number of bytes that are written at a
+time. *oflag=direct* bypasses the system cache and writes directly to
+the drive.
+
+Writing random data to the disk will likely take a while, so you can
+display progress like this:
+
+#+BEGIN_SRC
+echo "MiB Written - Time Elapsed - Speed" && pv -tab /dev/urandom | sudo dd of=/dev/sdb1 bs=4M iflag=fullblock oflag=direct
+#+END_SRC
+
+[[https://www.opengeeks.me/2015/08/encrypted-usb-key-linux/][Source]]
+
+Next, we use parted to create a partition table on the drive. We will
+make only one primary partition that spans the full size of the drive.
+
+#+BEGIN_SRC
+sudo parted -s /dev/sdb mklabel msdos mkpart primary 0% 100%
+#+END_SRC
+
+This creates a msdos-style disk label and a single primary partition
+that runs from the beginning of the drive (0%) to the end (100%) on
+the /dev/sdb device.
+
+Now, we'll use cryptsetup to create the LUKS (Linux Unified Key
+System) volume on the drive.
+
+#+BEGIN_SRC
+sudo cryptsetup -v luksFormat /dev/sdb1
+#+END_SRC
+
+It will ask you to verify that you may lose all data, and then to
+specify a password. If all goes well, you will see the =Command
+successful.= message. Open the volume.
+
+#+BEGIN_SRC
+sudo cryptsetup luksOpen /dev/sdb1 MYDEVICE
+#+END_SRC
+
+This will create a device named MYDEVICE inside */dev/mapper*. The
+next step will be to create a file system on this volume. We will use
+*mkfs* to make a new file system on the drive. *mkfs* is the Linux
+program that builds a new file system. In this example, I will make a
+FAT32 file system with the label /my_drive/ (note that the options
+will vary with the file system you are creating):
+
+#+BEGIN_SRC
+sudo mkfs.vfat -n 'my_drive' -I /dev/mapper/MYDEVICE
+#+END_SRC
+
+We can check that the encrypted partition exists using =lsblk=.
+
+Finally, let's go ahead and mount the drive so that we can add files
+to it.
+
+#+BEGIN_SRC
+sudo mkdir /mnt/My_Device
+sudo mount /dev/mapper/MYDEVICE /mnt/My_Device
+#+END_SRC
+
+-----
+
+*** Closing the encrypted partition
+
+To close the encrypted partition, first unmount it:
+
+#+BEGIN_SRC
+sudo umount /mnt/My_Device
+#+END_SRC
+
+Next, close the LUKS container:
+
+#+BEGIN_SRC
+sudo cryptsetup close MYDEVICE
+#+END_SRC
+
+-----
+
 ** CIFS
    I use CIFS to access my network shares at work, some of which come
    from Windows servers.

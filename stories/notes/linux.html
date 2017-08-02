@@ -138,7 +138,8 @@ MathJax.Hub.Config({
 <ul>
 <li><a href="linux.html#sec-5-1">5.1. Renaming partitions</a></li>
 <li><a href="linux.html#sec-5-2">5.2. Finding UUID's and labels of partitions</a></li>
-<li><a href="linux.html#sec-5-3">5.3. CIFS</a></li>
+<li><a href="linux.html#sec-5-3">5.3. Format a USB drive and encrypt it</a></li>
+<li><a href="linux.html#sec-5-4">5.4. CIFS</a></li>
 </ul>
 </li>
 <li>
@@ -1385,18 +1386,159 @@ is <code>/media/kmdouglass/kmd-backup</code>.
 
 <div id="outline-container-sec-5-3" class="outline-3">
 <h3 id="sec-5-3">
-<span class="section-number-3">5.3</span> CIFS</h3>
+<span class="section-number-3">5.3</span> Format a USB drive and encrypt it</h3>
 <div class="outline-text-3" id="text-5-3">
+<p>
+We will use <b>cryptsetup</b> to perform the drive encryption.
+</p>
+
+<div class="highlight"><pre><span></span>sudo apt-get install cryptsetup
+</pre></div>
+
+<p>
+First, find the USB drive label as described above and repeated here:
+</p>
+
+<div class="highlight"><pre><span></span>sudo fdisk -l
+</pre></div>
+
+<p>
+I will assume for the rest of this section that the device label is
+<b>/dev/sdb1</b>.  Next, ensure that the device is not mounted:
+</p>
+
+<div class="highlight"><pre><span></span>sudo umount /dev/sdb1
+</pre></div>
+
+<p>
+If you are going to use the USB drive for secure purposes, you may
+want to start by first writing random bytes to the drive before
+creating the file system:
+</p>
+
+<div class="highlight"><pre><span></span>sudo dd if=/dev/urandom of=/dev/sdb bs=4M oflag=direct
+</pre></div>
+
+<p>
+Note that we write the random data directly to the disk /dev/sdb, not
+the partition /dev/sdb1. <b>dd</b> is a Linux program for creating a
+copying files. The <b>if</b> option specifies the input file, in this case
+a special device driver for generating random data. <b>of</b> is the output
+file, in this case the Linux file driver for the USB device. <b>BE SURE
+THAT YOU VERIFY THAT THIS NAME IS CORRECT.</b> <b>bs</b> specifies the block
+size, or which is the number of bytes that are written at a
+time. <b>oflag=direct</b> bypasses the system cache and writes directly to
+the drive.
+</p>
+
+<p>
+Writing random data to the disk will likely take a while, so you can
+display progress like this:
+</p>
+
+<div class="highlight"><pre><span></span>echo "MiB Written - Time Elapsed - Speed" &amp;&amp; pv -tab /dev/urandom | sudo dd of=/dev/sdb1 bs=4M iflag=fullblock oflag=direct
+</pre></div>
+
+<p>
+<a href="https://www.opengeeks.me/2015/08/encrypted-usb-key-linux/">Source</a>
+</p>
+
+<p>
+Next, we use parted to create a partition table on the drive. We will
+make only one primary partition that spans the full size of the drive.
+</p>
+
+<div class="highlight"><pre><span></span>sudo parted -s /dev/sdb mklabel msdos mkpart primary 0% 100%
+</pre></div>
+
+<p>
+This creates a msdos-style disk label and a single primary partition
+that runs from the beginning of the drive (0%) to the end (100%) on
+the /dev/sdb device.
+</p>
+
+<p>
+Now, we'll use cryptsetup to create the LUKS (Linux Unified Key
+System) volume on the drive.
+</p>
+
+<div class="highlight"><pre><span></span>sudo cryptsetup -v luksFormat /dev/sdb1
+</pre></div>
+
+<p>
+It will ask you to verify that you may lose all data, and then to
+specify a password. If all goes well, you will see the <code>Command
+successful.</code> message. Open the volume.
+</p>
+
+<div class="highlight"><pre><span></span>sudo cryptsetup luksOpen /dev/sdb1 MYDEVICE
+</pre></div>
+
+<p>
+This will create a device named MYDEVICE inside <b>/dev/mapper</b>. The
+next step will be to create a file system on this volume. We will use
+<b>mkfs</b> to make a new file system on the drive. <b>mkfs</b> is the Linux
+program that builds a new file system. In this example, I will make a
+FAT32 file system with the label <i>my_drive</i> (note that the options
+will vary with the file system you are creating):
+</p>
+
+<div class="highlight"><pre><span></span>sudo mkfs.vfat -n 'my_drive' -I /dev/mapper/MYDEVICE
+</pre></div>
+
+<p>
+We can check that the encrypted partition exists using <code>lsblk</code>.
+</p>
+
+<p>
+Finally, let's go ahead and mount the drive so that we can add files
+to it.
+</p>
+
+<div class="highlight"><pre><span></span>sudo mkdir /mnt/My_Device
+sudo mount /dev/mapper/MYDEVICE /mnt/My_Device
+</pre></div>
+
+<hr>
+</div>
+
+<div id="outline-container-sec-5-3-1" class="outline-4">
+<h4 id="sec-5-3-1">
+<span class="section-number-4">5.3.1</span> Closing the encrypted partition</h4>
+<div class="outline-text-4" id="text-5-3-1">
+<p>
+To close the encrypted partition, first unmount it:
+</p>
+
+<div class="highlight"><pre><span></span>sudo umount /mnt/My_Device
+</pre></div>
+
+<p>
+Next, close the LUKS container:
+</p>
+
+<div class="highlight"><pre><span></span>sudo cryptsetup close MYDEVICE
+</pre></div>
+
+<hr>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-5-4" class="outline-3">
+<h3 id="sec-5-4">
+<span class="section-number-3">5.4</span> CIFS</h3>
+<div class="outline-text-3" id="text-5-4">
 <p>
 I use CIFS to access my network shares at work, some of which come
 from Windows servers.
 </p>
 </div>
 
-<div id="outline-container-sec-5-3-1" class="outline-4">
-<h4 id="sec-5-3-1">
-<span class="section-number-4">5.3.1</span> CIFS installation</h4>
-<div class="outline-text-4" id="text-5-3-1">
+<div id="outline-container-sec-5-4-1" class="outline-4">
+<h4 id="sec-5-4-1">
+<span class="section-number-4">5.4.1</span> CIFS installation</h4>
+<div class="outline-text-4" id="text-5-4-1">
 <p>
 It's easy. <i>sudo apt-get install cifs-utils</i>
 </p>
@@ -1404,10 +1546,10 @@ It's easy. <i>sudo apt-get install cifs-utils</i>
 </div>
 </div>
 
-<div id="outline-container-sec-5-3-2" class="outline-4">
-<h4 id="sec-5-3-2">
-<span class="section-number-4">5.3.2</span> Accessing Windows shares remotely</h4>
-<div class="outline-text-4" id="text-5-3-2">
+<div id="outline-container-sec-5-4-2" class="outline-4">
+<h4 id="sec-5-4-2">
+<span class="section-number-4">5.4.2</span> Accessing Windows shares remotely</h4>
+<div class="outline-text-4" id="text-5-4-2">
 <p>
 <i>Sources</i>
 </p>
@@ -1448,10 +1590,10 @@ enter the command <b>sudo mount /mnt/LEB-Z</b>.
 </div>
 </div>
 
-<div id="outline-container-sec-5-3-3" class="outline-4">
-<h4 id="sec-5-3-3">
-<span class="section-number-4">5.3.3</span> fstab options for mounting shares as a user</h4>
-<div class="outline-text-4" id="text-5-3-3">
+<div id="outline-container-sec-5-4-3" class="outline-4">
+<h4 id="sec-5-4-3">
+<span class="section-number-4">5.4.3</span> fstab options for mounting shares as a user</h4>
+<div class="outline-text-4" id="text-5-4-3">
 <p>
 The method described above will mount the CIFS share as root, which
 means you're user account won't be able to access the files and
