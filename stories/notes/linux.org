@@ -730,6 +730,8 @@ ls -l /dev/disk/by-label
 
 ** Format a USB drive and encrypt it
 
+*Date: August 2, 2017*
+
 We will use *cryptsetup* to perform the drive encryption.
 
 #+BEGIN_SRC
@@ -838,6 +840,34 @@ Next, close the LUKS container:
 #+BEGIN_SRC
 sudo cryptsetup close MYDEVICE
 #+END_SRC
+
+-----
+
+** Transferring pictures from a digital camera
+
+*Date: August 5, 2017*
+
+Some digital cameras--like my Nikon D70s--support only the Picture
+Transfer Protocol (PTP). This means that they cannot be mounted like a
+normal USB drive.
+
+To transfer images from such a device, use the [[https://github.com/gphoto/gphotofs][gphotofs]] library. This
+uses libgphoto2, which supports the Nikon D70s. First, install it:
+
+#+BEGIN_SRC
+sudo apt-get update && sudo apt-get install gphotofs
+#+END_SRC
+
+Next plugin the camera via the USB port and turn it on. Create a mount
+point in =/media= and mount the camera there:
+
+#+BEGIN_SRC
+sudo mkdir /media/d70s
+sudo chown kmdouglass /media/d70s
+gphotofs /media/d70s
+#+END_SRC
+
+To unmount the camera, use =fusermount -u /media/d70s=.
 
 -----
 
