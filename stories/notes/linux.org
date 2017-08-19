@@ -871,6 +871,35 @@ To unmount the camera, use =fusermount -u /media/d70s=.
 
 -----
 
+** SSH transfers to/from an Android device
+
+*Date: August 18, 2017*
+*Source:* https://stackoverflow.com/questions/11468053/how-can-i-communicate-with-an-android-device-via-ssh
+
+I tried using media transfer protocol (MTP) to transfer files between
+my PC and Android without success. This led me to try SSH, which
+worked for basic transfers. Here's how I did it:
+
+1. Download and install SSHDroid on the Android device.
+2. Open the SSHDroid app.
+3. Make note of the IP and port number.
+4. On the PC, you can log in using ssh: =ssh USER@IP_ADDRESS -p PORT=,
+   where USER, IP_ADDRESS, and PORT are all provided by SSHDroid.
+5. Enter the password assigned by SSHDroid. By default, it will be
+   printed to the terminal during the login attempt.
+
+Note that this will only give you access to SSHDroid's user folder on
+the Android device. To actually access this data, your Android needs
+to be rooted.
+
+To use ssh for simple file transfers, we can use =scp=.
+
+#+BEGIN_SRC
+scp -P PORT /path/to/pc/file  USER@IP_ADDRESS:/path/to/android/file
+#+END_SRC
+
+-----
+
 ** CIFS
    I use CIFS to access my network shares at work, some of which come
    from Windows servers.
