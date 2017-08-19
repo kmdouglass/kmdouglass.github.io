@@ -140,7 +140,8 @@ MathJax.Hub.Config({
 <li><a href="linux.html#sec-5-2">5.2. Finding UUID's and labels of partitions</a></li>
 <li><a href="linux.html#sec-5-3">5.3. Format a USB drive and encrypt it</a></li>
 <li><a href="linux.html#sec-5-4">5.4. Transferring pictures from a digital camera</a></li>
-<li><a href="linux.html#sec-5-5">5.5. CIFS</a></li>
+<li><a href="linux.html#sec-5-5">5.5. SSH transfers to/from an Android device</a></li>
+<li><a href="linux.html#sec-5-6">5.6. CIFS</a></li>
 </ul>
 </li>
 <li>
@@ -1572,18 +1573,64 @@ To unmount the camera, use <code>fusermount -u /media/d70s</code>.
 
 <div id="outline-container-sec-5-5" class="outline-3">
 <h3 id="sec-5-5">
-<span class="section-number-3">5.5</span> CIFS</h3>
+<span class="section-number-3">5.5</span> SSH transfers to/from an Android device</h3>
 <div class="outline-text-3" id="text-5-5">
+<p>
+<b>Date: August 18, 2017</b>
+<b>Source:</b> <a href="https://stackoverflow.com/questions/11468053/how-can-i-communicate-with-an-android-device-via-ssh">https://stackoverflow.com/questions/11468053/how-can-i-communicate-with-an-android-device-via-ssh</a>
+</p>
+
+<p>
+I tried using media transfer protocol (MTP) to transfer files between
+my PC and Android without success. This led me to try SSH, which
+worked for basic transfers. Here's how I did it:
+</p>
+
+<ol class="org-ol">
+<li>Download and install SSHDroid on the Android device.
+</li>
+<li>Open the SSHDroid app.
+</li>
+<li>Make note of the IP and port number.
+</li>
+<li>On the PC, you can log in using ssh: <code>ssh USER@IP_ADDRESS -p PORT</code>,
+where USER, IP_ADDRESS, and PORT are all provided by SSHDroid.
+</li>
+<li>Enter the password assigned by SSHDroid. By default, it will be
+printed to the terminal during the login attempt.
+</li>
+</ol>
+<p>
+Note that this will only give you access to SSHDroid's user folder on
+the Android device. To actually access this data, your Android needs
+to be rooted.
+</p>
+
+<p>
+To use ssh for simple file transfers, we can use <code>scp</code>.
+</p>
+
+<div class="highlight"><pre><span></span>scp -P PORT /path/to/pc/file  USER@IP_ADDRESS:/path/to/android/file
+</pre></div>
+
+<hr>
+</div>
+</div>
+
+<div id="outline-container-sec-5-6" class="outline-3">
+<h3 id="sec-5-6">
+<span class="section-number-3">5.6</span> CIFS</h3>
+<div class="outline-text-3" id="text-5-6">
 <p>
 I use CIFS to access my network shares at work, some of which come
 from Windows servers.
 </p>
 </div>
 
-<div id="outline-container-sec-5-5-1" class="outline-4">
-<h4 id="sec-5-5-1">
-<span class="section-number-4">5.5.1</span> CIFS installation</h4>
-<div class="outline-text-4" id="text-5-5-1">
+<div id="outline-container-sec-5-6-1" class="outline-4">
+<h4 id="sec-5-6-1">
+<span class="section-number-4">5.6.1</span> CIFS installation</h4>
+<div class="outline-text-4" id="text-5-6-1">
 <p>
 It's easy. <i>sudo apt-get install cifs-utils</i>
 </p>
@@ -1591,10 +1638,10 @@ It's easy. <i>sudo apt-get install cifs-utils</i>
 </div>
 </div>
 
-<div id="outline-container-sec-5-5-2" class="outline-4">
-<h4 id="sec-5-5-2">
-<span class="section-number-4">5.5.2</span> Accessing Windows shares remotely</h4>
-<div class="outline-text-4" id="text-5-5-2">
+<div id="outline-container-sec-5-6-2" class="outline-4">
+<h4 id="sec-5-6-2">
+<span class="section-number-4">5.6.2</span> Accessing Windows shares remotely</h4>
+<div class="outline-text-4" id="text-5-6-2">
 <p>
 <i>Sources</i>
 </p>
@@ -1635,10 +1682,10 @@ enter the command <b>sudo mount /mnt/LEB-Z</b>.
 </div>
 </div>
 
-<div id="outline-container-sec-5-5-3" class="outline-4">
-<h4 id="sec-5-5-3">
-<span class="section-number-4">5.5.3</span> fstab options for mounting shares as a user</h4>
-<div class="outline-text-4" id="text-5-5-3">
+<div id="outline-container-sec-5-6-3" class="outline-4">
+<h4 id="sec-5-6-3">
+<span class="section-number-4">5.6.3</span> fstab options for mounting shares as a user</h4>
+<div class="outline-text-4" id="text-5-6-3">
 <p>
 The method described above will mount the CIFS share as root, which
 means you're user account won't be able to access the files and
