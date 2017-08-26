@@ -23,11 +23,11 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/2017/index.html</loc>
-  <lastmod>2017-07-14T06:15:00Z</lastmod>
+  <lastmod>2017-08-26T21:34:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/archive.html</loc>
-  <lastmod>2017-07-14T05:32:00Z</lastmod>
+  <lastmod>2017-08-26T18:10:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/biology.html</loc>
@@ -83,11 +83,11 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/optics.html</loc>
-  <lastmod>2017-07-14T05:33:00Z</lastmod>
+  <lastmod>2017-08-26T21:34:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/photonics.html</loc>
-  <lastmod>2017-07-14T06:15:00Z</lastmod>
+  <lastmod>2017-08-26T21:34:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/python.html</loc>
@@ -95,7 +95,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/raspberry-pi.html</loc>
-  <lastmod>2017-07-14T05:32:00Z</lastmod>
+  <lastmod>2017-08-26T21:34:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/sensing.html</loc>
@@ -142,6 +142,10 @@
   <lastmod>2017-07-14T05:33:00Z</lastmod>
  </url>
  <url>
+  <loc>http://kmdouglass.github.io/posts/accessing-the-raspberry-pi-camera-image-sensor.html</loc>
+  <lastmod>2017-08-26T21:35:00Z</lastmod>
+ </url>
+ <url>
   <loc>http://kmdouglass.github.io/posts/alignment.html</loc>
   <lastmod>2017-07-14T05:33:00Z</lastmod>
  </url>
@@ -186,16 +190,20 @@
   <lastmod>2017-07-14T05:33:00Z</lastmod>
  </url>
  <url>
+  <loc>http://kmdouglass.github.io/posts/how-not-to-access-sensor-of-the-raspberry-pi-camera.html</loc>
+  <lastmod>2017-08-26T21:20:00Z</lastmod>
+ </url>
+ <url>
   <loc>http://kmdouglass.github.io/posts/index-1.html</loc>
   <lastmod>2017-07-14T05:33:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/index-2.html</loc>
-  <lastmod>2017-07-14T05:33:00Z</lastmod>
+  <lastmod>2017-08-26T18:11:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/index.html</loc>
-  <lastmod>2017-07-14T06:15:00Z</lastmod>
+  <lastmod>2017-08-26T21:34:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/learning-pythons-multiprocessing-module.html</loc>
@@ -211,7 +219,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations.html</loc>
-  <lastmod>2017-07-14T06:15:00Z</lastmod>
+  <lastmod>2017-08-26T21:35:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/omics.html</loc>
