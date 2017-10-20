@@ -23,11 +23,11 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/2017/index.html</loc>
-  <lastmod>2017-08-26T21:34:00Z</lastmod>
+  <lastmod>2017-10-20T05:55:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/archive.html</loc>
-  <lastmod>2017-08-26T18:10:00Z</lastmod>
+  <lastmod>2017-10-20T05:55:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/biology.html</loc>
@@ -75,7 +75,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/microscopy.html</loc>
-  <lastmod>2017-07-14T05:33:00Z</lastmod>
+  <lastmod>2017-10-20T05:55:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/open-source.html</loc>
@@ -83,7 +83,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/optics.html</loc>
-  <lastmod>2017-08-26T21:34:00Z</lastmod>
+  <lastmod>2017-10-20T05:55:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/photonics.html</loc>
@@ -143,7 +143,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/accessing-the-raspberry-pi-camera-image-sensor.html</loc>
-  <lastmod>2017-08-26T21:35:00Z</lastmod>
+  <lastmod>2017-10-20T05:55:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/alignment.html</loc>
@@ -190,8 +190,8 @@
   <lastmod>2017-07-14T05:33:00Z</lastmod>
  </url>
  <url>
-  <loc>http://kmdouglass.github.io/posts/how-not-to-access-sensor-of-the-raspberry-pi-camera.html</loc>
-  <lastmod>2017-08-26T21:20:00Z</lastmod>
+  <loc>http://kmdouglass.github.io/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python.html</loc>
+  <lastmod>2017-10-20T05:55:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/index-1.html</loc>
@@ -199,11 +199,15 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/index-2.html</loc>
-  <lastmod>2017-08-26T18:11:00Z</lastmod>
+  <lastmod>2017-10-20T05:55:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://kmdouglass.github.io/posts/index-3.html</loc>
+  <lastmod>2017-10-20T05:55:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/index.html</loc>
-  <lastmod>2017-08-26T21:34:00Z</lastmod>
+  <lastmod>2017-10-20T05:55:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/learning-pythons-multiprocessing-module.html</loc>
