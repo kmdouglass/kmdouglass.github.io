@@ -627,6 +627,29 @@ apt-get -t jessie-backports install package
 
 -----
 
+** Uninstall programs via the command line
+
+   You can search for installed packages with =dpkg=.
+
+   #+BEGIN_SRC sh
+dpkg --list
+   #+END_SRC
+
+   Pipe the output to grep if you want to filter this list:
+
+   #+BEGIN_SRC sh
+dpkg --list | grep PROGRAM_NAME
+   #+END_SRC
+
+   Once you find the name of the program, you can uninstall it with
+   =apt-get=:
+
+   #+BEGIN_SRC sh
+sudo apt-get --purge remove PROGRAM_NAME
+   #+END_SRC
+
+-----
+
 * File Systems
 
 ** Renaming partitions
