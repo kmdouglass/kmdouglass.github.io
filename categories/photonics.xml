@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kyle M. Douglass (photonics)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link rel="self" href="http://kmdouglass.github.io/categories/photonics.xml" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Sat, 26 Aug 2017 21:35:01 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Accessing the Raspberry Pi camera image sensor</title><link>http://kmdouglass.github.io/posts/accessing-the-raspberry-pi-camera-image-sensor.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;&lt;strong&gt;WARNING&lt;/strong&gt; You can easily ruin your Raspberry Pi camera module by
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Kyle M. Douglass (Posts about photonics)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link href="http://kmdouglass.github.io/categories/photonics.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Sat, 28 Apr 2018 12:09:15 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Accessing the Raspberry Pi camera image sensor</title><link>http://kmdouglass.github.io/posts/accessing-the-raspberry-pi-camera-image-sensor.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;&lt;strong&gt;WARNING&lt;/strong&gt; You can easily ruin your Raspberry Pi camera module by
 following the steps in this post. Proceed with caution.&lt;/p&gt;
 &lt;p&gt;Over the past half year I have been making slow but steady progress on
 &lt;a class="reference external" href="https://hackaday.io/project/19677-basic-lensless-imaging-for-low-cost-microscopy"&gt;my lensless imager project&lt;/a&gt;. The
@@ -100,8 +100,7 @@ different methods for mounting the sample.&lt;/p&gt;
 &lt;/div&gt;&lt;/div&gt;</description><category>optics</category><category>photonics</category><category>raspberry pi</category><guid>http://kmdouglass.github.io/posts/accessing-the-raspberry-pi-camera-image-sensor.html</guid><pubDate>Sat, 26 Aug 2017 21:33:07 GMT</pubDate></item><item><title>Modeling noise for image simulations</title><link>http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div tabindex="-1" id="notebook" class="border-box-sizing"&gt;
     &lt;div class="container" id="notebook-container"&gt;
 
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -139,7 +138,11 @@ different methods for mounting the sample.&lt;/p&gt;
 &lt;div class="output"&gt;
 
 
-&lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_area"&gt;
+
+&lt;div class="prompt"&gt;&lt;/div&gt;
+
+
 &lt;div class="output_subarea output_stream output_stdout output_text"&gt;
 &lt;pre&gt;Populating the interactive namespace from numpy and matplotlib
 Python version:
@@ -157,8 +160,7 @@ Scipy version:		0.19.0
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -169,77 +171,79 @@ Scipy version:		0.19.0
 &lt;p&gt;&lt;img src="http://kmdouglass.github.io/camera_noise_model.png" alt="Optical system with pupils"&gt;&lt;/p&gt;
 &lt;p&gt;In this model, the camera/sensor is a single pixel that takes an input (a number of photons) and transforms this number to an output (a digital value in analog-to-digital units, or ADU). In performing this transformation, various sources of noise are added to the signal so that, given a camera's output in ADU, we can only make probabilisitic inferences about the actual number of photons impinging upon it. There are also a few assumptions in this model that, when taken together, constitute what's called an &lt;em&gt;ideal image sensor&lt;/em&gt;. They are:&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;the numer of photons collected by the pixel depends on the product of irradiance \( E \, \left[ W / m^2 \right] \) and the exposure time \( t_{exp} \, \left[ s \right] \);&lt;/li&gt;
-&lt;li&gt;the sensor is linear, i.e. the digital signal \( y \) increases linearly with the number of photons received;&lt;/li&gt;
+&lt;li&gt;the numer of photons collected by the pixel depends on the product of irradiance $ E \, \left[ W / m^2 \right] $ and the exposure time $ t_{exp} \, \left[ s \right] $;&lt;/li&gt;
+&lt;li&gt;the sensor is linear, i.e. the digital signal $ y $ increases linearly with the number of photons received;&lt;/li&gt;
 &lt;li&gt;all noise sources are constant in time and space;&lt;/li&gt;
 &lt;li&gt;only the total quantum efficiency of the camera is dependent on the wavelength of the incident irradiation;&lt;/li&gt;
 &lt;li&gt;and only the dark current depends on the temperature.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;From these five assumptions, the laws of quantum mechanics, and the laws of probability, expressions for the mean output, \( \mu_y \), the variance of the output \( \sigma_y^2 \), and the signal-to-noise ratio (\(SNR \)) may be derived.&lt;/p&gt;
-\begin{equation*}
+&lt;p&gt;From these five assumptions, the laws of quantum mechanics, and the laws of probability, expressions for the mean output, $ \mu_y $, the variance of the output $ \sigma_y^2 $, and the signal-to-noise ratio ($SNR $) may be derived.&lt;/p&gt;
+&lt;p&gt;\begin{equation*}
 \mu_y = K \mu_d + K \eta \mu_p \\
 \sigma_y^2 = K^2 \sigma_d^2 + K \left( \mu_y - K \mu_d \right) \\
 SNR = \frac{\eta \mu_p}{\sqrt{\sigma_d^2 + \sigma_q^2/K^2 + \eta \mu_p}}
-\end{equation*}&lt;p&gt;In these expressions, \(\mu\) and \(\sigma^2\) represent the mean and variance of the number of photons hitting the camera (\(p\)), the dark noise (\(d\)), and the output signal in ADU's (\(y\)). The number of electrons \( \mu_e \) generated by \(\mu_p\) photons hitting the active area of the sensor is obtained from the expression for the quantum efficiency \(\eta\), an engineered property of the camera that in general depends on the wavelength.&lt;/p&gt;
-\begin{equation*}
+\end{equation*}&lt;/p&gt;
+&lt;p&gt;In these expressions, $\mu$ and $\sigma^2$ represent the mean and variance of the number of photons hitting the camera ($p$), the dark noise ($d$), and the output signal in ADU's ($y$). The number of electrons $ \mu_e $ generated by $\mu_p$ photons hitting the active area of the sensor is obtained from the expression for the quantum efficiency $\eta$, an engineered property of the camera that in general depends on the wavelength.&lt;/p&gt;
+&lt;p&gt;\begin{equation*}
 \eta \left( \lambda \right) = \frac{\mu_e}{\mu_p}
-\end{equation*}&lt;p&gt;The sensitivity of the camera \(K \, \left[ ADU / e^- \right] \) represents the amplification of the voltage in the pixel from the photoelectrons and is also a property of the camera. Finally, \( \sigma_q^2 \) represents the noise introduced by digitzing the continous voltage signal into a digital one.&lt;/p&gt;
+\end{equation*}&lt;/p&gt;
+&lt;p&gt;The sensitivity of the camera $K \, \left[ ADU / e^- \right] $ represents the amplification of the voltage in the pixel from the photoelectrons and is also a property of the camera. Finally, $ \sigma_q^2 $ represents the noise introduced by digitzing the continous voltage signal into a digital one.&lt;/p&gt;
 &lt;p&gt;The EMVA 1288 Standard explains how to derive these expressions from the assumptions and known physical laws, so I will not go into their derivations in this post. Instead, I will focus on explaining how we can use this model to simulate the effects of camera noise in our holograms.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;h2 id="From-Model-to-Simulation"&gt;From Model to Simulation&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations.html#From-Model-to-Simulation"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The goal of the simulation will be to take a simulated hologram as input and convert it into an image that might be captured by a digital camera. This means that the final image should contain noise that is realistic and follows the rules of the model.&lt;/p&gt;
 &lt;p&gt;The model will depend on five free parameters that vary from camera-to-camera. They are:&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;the total quantum efficiency \( \eta \);&lt;/li&gt;
-&lt;li&gt;the read noise variance \( \sigma_{r}^2 \) (or its standard deviation);&lt;/li&gt;
-&lt;li&gt;the dark current \( \mu_I \);&lt;/li&gt;
-&lt;li&gt;the sensitivity \(K\);&lt;/li&gt;
-&lt;li&gt;and the bit-depth of the camera \(k\).&lt;/li&gt;
+&lt;li&gt;the total quantum efficiency $ \eta $;&lt;/li&gt;
+&lt;li&gt;the read noise variance $ \sigma_{r}^2 $ (or its standard deviation);&lt;/li&gt;
+&lt;li&gt;the dark current $ \mu_I $;&lt;/li&gt;
+&lt;li&gt;the sensitivity $K$;&lt;/li&gt;
+&lt;li&gt;and the bit-depth of the camera $k$.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;The dark noise \( \sigma_d^2 \) is actually comprised of two separate noise sources, i.e. the read noise \( \sigma_r^2 \) and the dark current \( \mu_I \). Because the noise sources are independent, we can write&lt;/p&gt;
-\begin{equation*}
+&lt;p&gt;The dark noise $ \sigma_d^2 $ is actually comprised of two separate noise sources, i.e. the read noise $ \sigma_r^2 $ and the dark current $ \mu_I $. Because the noise sources are independent, we can write&lt;/p&gt;
+&lt;p&gt;\begin{equation*}
 \sigma_d^2 = \sigma_r^2 + \sigma_I^2 \\
 \sigma_d^2 = \sigma_r^2 + \mu_I t_{exp}
-\end{equation*}&lt;p&gt;where the last step relies on the fact that the generation of thermal electrons is a Poisson process whose mean is equal to its variance. The units of \(\mu_I\) are \(e^- / s \) and values for \( \mu_I \) are often provided on camera spec. sheets. Likewise, the read noise \(\sigma_r^2\) is also provided on spec. sheets, although in my experience the units are likely to be in root-mean-square electrons or median electrons and not electrons-squared.&lt;/p&gt;
+\end{equation*}&lt;/p&gt;
+&lt;p&gt;where the last step relies on the fact that the generation of thermal electrons is a Poisson process whose mean is equal to its variance. The units of $\mu_I$ are $e^- / s $ and values for $ \mu_I $ are often provided on camera spec. sheets. Likewise, the read noise $\sigma_r^2$ is also provided on spec. sheets, although in my experience the units are likely to be in root-mean-square electrons or median electrons and not electrons-squared.&lt;/p&gt;
 &lt;p&gt;Other than the inputs, we do not need to provide values for the other numbers in the model because they are related to the free parameters by various physical and mathematical laws.&lt;/p&gt;
-&lt;p&gt;Finally, let's ignore spatial noise sources in these simulations because it's difficult to characterize them with a single number. Spatial noise is a variation in the free parameters of the camera from pixel to pixel. An example of a common type of spatial noise is photon response non-uniformity and is manifest in a sensitivity \( K \) that varies between pixels. Ignoring spatial noise in the simulations simply means that values for the read noise, dark current, quantum efficiency, and sensitivty are the same for all pixels.&lt;/p&gt;
+&lt;p&gt;Finally, let's ignore spatial noise sources in these simulations because it's difficult to characterize them with a single number. Spatial noise is a variation in the free parameters of the camera from pixel to pixel. An example of a common type of spatial noise is photon response non-uniformity and is manifest in a sensitivity $ K $ that varies between pixels. Ignoring spatial noise in the simulations simply means that values for the read noise, dark current, quantum efficiency, and sensitivty are the same for all pixels.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;h3 id="Step-0:-Convert-the-electric-field-to-photons"&gt;Step 0: Convert the electric field to photons&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations.html#Step-0:-Convert-the-electric-field-to-photons"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Before doing anything, we need to take the electric field from our Fourier optics simulations and convert it to units of photons. If it isn't clear how you would first get an electric field, you can refer to my &lt;a href="http://kmdouglass.github.io/posts/simulating-inline-holograms.html"&gt;previous post&lt;/a&gt; on calculating the hologram of a thin, circular phase-only object. Typically, the calcuation of the electric field will follow from the laws of diffraction and serve as an input for the camera model.&lt;/p&gt;
 &lt;p&gt;To get the number of photons, we first compute the irradiance of the field using the magnitude of the time-averaged &lt;a href="https://en.wikipedia.org/wiki/Poynting_vector#Plane_waves"&gt;Poynting vector&lt;/a&gt; of a linearly-polarzed electromagnetic wave in free space, which is&lt;/p&gt;
-\begin{equation*}
+&lt;p&gt;\begin{equation*}
 E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
-\end{equation*}&lt;p&gt;Here, \(E \left( x, y \right) \) is the irradiance at point \( \left( x, y \right) \), \(U \left( x, y \right) \) is the scalar electric field at the same point, and \(Z_0 \approx 377 \, \Omega \) is the &lt;a href="https://en.wikipedia.org/wiki/Wave_impedance"&gt;impedance of free space&lt;/a&gt;. We would change the value for the impedance if we were imaging in a medium other than vacuum. The units of the field are \( V / m \) which, when squared and divided by the units of the impedance (Ohms), gives units of power per area, or \( W / m^2 \). It's also worth mentioning that we are implicitly assuming the field varies smoothly on the length scale of a pixel. This is why we can use the expression for the Poynting vector of a plane wave.&lt;/p&gt;
+\end{equation*}&lt;/p&gt;
+&lt;p&gt;Here, $E \left( x, y \right) $ is the irradiance at point $ \left( x, y \right) $, $U \left( x, y \right) $ is the scalar electric field at the same point, and $Z_0 \\approx 377 \, \Omega $ is the &lt;a href="https://en.wikipedia.org/wiki/Wave_impedance"&gt;impedance of free space&lt;/a&gt;. We would change the value for the impedance if we were imaging in a medium other than vacuum. The units of the field are $ V / m $ which, when squared and divided by the units of the impedance (Ohms), gives units of power per area, or $ W / m^2 $. It's also worth mentioning that we are implicitly assuming the field varies smoothly on the length scale of a pixel. This is why we can use the expression for the Poynting vector of a plane wave.&lt;/p&gt;
 &lt;p&gt;The mean number of photons is obtained from the irradiance by the expression&lt;/p&gt;
-\begin{align*}
+&lt;p&gt;\begin{align*}
 \mu_p &amp;amp;= \frac{\lambda A}{hc}Et_{exp} \\
 &amp;amp;= \frac{\lambda A}{2hcZ_0} \left| U \right|^2 t_{exp}
-\end{align*}&lt;p&gt;where \( A \) is the pixel's area and \( \frac{hc}{\lambda} \) is the energy per photon in units of Joules, with \(hc \approx 2 \times 10^{-25} \, J \cdot m \).&lt;/p&gt;
+\end{align*}&lt;/p&gt;
+&lt;p&gt;where $ A $ is the pixel's area and $ \frac{hc}{\lambda} $ is the energy per photon in units of Joules, with $hc \approx 2 \times 10^{-25} \, J \cdot m $.&lt;/p&gt;
 &lt;p&gt;This step is a bit cumbersome, and in the rest of what follows I will skip this step and will use a set number of photons directly as the input to the simulations, rather than a scalar field.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h3 id="Step-1:-Compute-the-photon-shot-noise"&gt;Step 1: Compute the photon shot noise&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations.html#Step-1:-Compute-the-photon-shot-noise"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;For the sake of simplicity, let's start by assuming that we have a camera with \( 256 \times 256 \) pixels and a mean incident photon flux of 500 photons on each pixel. This would produce an image that looks like this:&lt;/p&gt;
+&lt;h3 id="Step-1:-Compute-the-photon-shot-noise"&gt;Step 1: Compute the photon shot noise&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations.html#Step-1:-Compute-the-photon-shot-noise"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;For the sake of simplicity, let's start by assuming that we have a camera with $ 256 \times 256 $ pixels and a mean incident photon flux of 500 photons on each pixel. This would produce an image that looks like this:&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -273,7 +277,11 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 &lt;div class="output"&gt;
 
 
-&lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_area"&gt;
+
+&lt;div class="prompt"&gt;&lt;/div&gt;
+
+
 
 
 &lt;div class="output_png output_subarea "&gt;
@@ -286,12 +294,11 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Shot_noise"&gt;Photon shot noise&lt;/a&gt; arises from the fact that the incident number of photons is not deterministic but rather a random process whose statistics are Poissonian. In a Poisson process, the variance of the noise \( \sigma_p^2 \) is equal to the mean number of photons \( \mu_p \).&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Shot_noise"&gt;Photon shot noise&lt;/a&gt; arises from the fact that the incident number of photons is not deterministic but rather a random process whose statistics are Poissonian. In a Poisson process, the variance of the noise $ \sigma_p^2 $ is equal to the mean number of photons $ \mu_p $.&lt;/p&gt;
 &lt;p&gt;Poisson random numbers are easy to generate with NumPy. First, we set a seed so that we can reproducibly generate the same random numbers each time and initialize a &lt;a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.random.RandomState.html#numpy.random.RandomState"&gt;RandomState&lt;/a&gt; instance with it. Using this RandomState instance, we call the &lt;code&gt;poisson&lt;/code&gt; method with a mean of &lt;code&gt;num_photons&lt;/code&gt; and a size &lt;code&gt;(num_pixels, num_pixels)&lt;/code&gt;. Finally, we plot the image and compare it to the one where no shot noise is present.&lt;/p&gt;
 
 &lt;/div&gt;
@@ -338,7 +345,11 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 &lt;div class="output"&gt;
 
 
-&lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_area"&gt;
+
+&lt;div class="prompt"&gt;&lt;/div&gt;
+
+
 
 
 &lt;div class="output_png output_subarea "&gt;
@@ -371,7 +382,11 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 &lt;div class="output"&gt;
 
 
-&lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_area"&gt;
+
+&lt;div class="prompt"&gt;&lt;/div&gt;
+
+
 
 
 &lt;div class="output_png output_subarea "&gt;
@@ -384,8 +399,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -465,7 +479,11 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 &lt;div class="output"&gt;
 
 
-&lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_area"&gt;
+
+&lt;div class="prompt"&gt;&lt;/div&gt;
+
+
 
 
 &lt;div class="output_png output_subarea "&gt;
@@ -478,8 +496,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -529,7 +546,11 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 &lt;div class="output"&gt;
 
 
-&lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_area"&gt;
+
+&lt;div class="prompt"&gt;&lt;/div&gt;
+
+
 
 
 &lt;div class="output_png output_subarea "&gt;
@@ -568,7 +589,11 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 &lt;div class="output"&gt;
 
 
-&lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_area"&gt;
+
+&lt;div class="prompt"&gt;&lt;/div&gt;
+
+
 
 
 &lt;div class="output_png output_subarea "&gt;
@@ -581,12 +606,11 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h3 id="Step-4:-Convert-from-\(-e^--\)-to-ADU"&gt;Step 4: Convert from \( e^- \) to ADU&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations.html#Step-4:-Convert-from-%5C(-e%5E--%5C)-to-ADU"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Now we need to convert the value of each pixel from electrons to ADU, or analog-to-digital units. ADU's are the units of grey scale that are output by monochrome cameras. To do this, we multiply the number of electrons after the addition of read noise by the sensitivity. We also need to ensure that the final ADU count is discrete and to set the maximum upper value of ADU's to the \( 2^k - 1 \) where \( k \) is the camera's bit-depth. The latter operation ensures that saturation of the pixels is correctly modeled.&lt;/p&gt;
+&lt;h3 id="Step-4:-Convert-from-$-e^--$-to-ADU"&gt;Step 4: Convert from $ e^- $ to ADU&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations.html#Step-4:-Convert-from-%24-e%5E--%24-to-ADU"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Now we need to convert the value of each pixel from electrons to ADU, or analog-to-digital units. ADU's are the units of grey scale that are output by monochrome cameras. To do this, we multiply the number of electrons after the addition of read noise by the sensitivity. We also need to ensure that the final ADU count is discrete and to set the maximum upper value of ADU's to the $ 2^k - 1 $ where $ k $ is the camera's bit-depth. The latter operation ensures that saturation of the pixels is correctly modeled.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -621,7 +645,11 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 &lt;div class="output"&gt;
 
 
-&lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_area"&gt;
+
+&lt;div class="prompt"&gt;&lt;/div&gt;
+
+
 
 
 &lt;div class="output_png output_subarea "&gt;
@@ -634,8 +662,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -672,7 +699,11 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 &lt;div class="output"&gt;
 
 
-&lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_area"&gt;
+
+&lt;div class="prompt"&gt;&lt;/div&gt;
+
+
 
 
 &lt;div class="output_png output_subarea "&gt;
@@ -685,8 +716,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -744,8 +774,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -787,12 +816,11 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;Finally, we create our animation of the simulated digital images of an inline planewave hologram from the object at axial planes between \( 0 \) and \( 100 \, \mu m \) away from the object. It's true that some of the noise you will see in the video is due to the compression artifacts, but a lot of it is also due to the temporal noise in each individual pixel. Pay close to attention the regions of low signal to see it.&lt;/p&gt;
+&lt;p&gt;Finally, we create our animation of the simulated digital images of an inline planewave hologram from the object at axial planes between $ 0 $ and $ 100 \, \mu m $ away from the object. It's true that some of the noise you will see in the video is due to the compression artifacts, but a lot of it is also due to the temporal noise in each individual pixel. Pay close to attention the regions of low signal to see it.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -813,7 +841,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 &lt;span class="n"&gt;img&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_extent&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]])&lt;/span&gt;
 &lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_xticks&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]])&lt;/span&gt;
 &lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_yticks&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]])&lt;/span&gt;
-&lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_xlabel&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;r'$x, \, \mu m$'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_xlabel&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;r&lt;/span&gt;&lt;span class="s1"&gt;'$x, \, \mu m$'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
 &lt;span class="n"&gt;cb&lt;/span&gt;  &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;colorbar&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;img&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;cb&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_label&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'ADU'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -861,7 +889,11 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 &lt;div class="output"&gt;
 
 
-&lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_area"&gt;
+
+&lt;div class="prompt"&gt;&lt;/div&gt;
+
+
 &lt;div class="output_subarea output_stream output_stderr output_text"&gt;
 &lt;pre&gt;/home/kmdouglass/anaconda3/envs/nikola/lib/python3.5/site-packages/ipykernel/__main__.py:25: RuntimeWarning: invalid value encountered in sqrt
 &lt;/pre&gt;
@@ -872,8 +904,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -881,13 +912,12 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;h2 id="Simulated-holograms-on-a-poor-camera"&gt;Simulated holograms on a poor camera&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations.html#Simulated-holograms-on-a-poor-camera"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;As I mentioned, the FLIR Chameleon camera is actually quite good. In fact, a similar camera with the Sony IMX265 chip has been successfully used for &lt;a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5431525/"&gt;single molecule localization microscopy&lt;/a&gt;, which means that the noise floor is low enough and the quantum efficiency is high enough to detect the fluorescence from single molecules. Here's what another hologram might look like if the dark noise was worse, say 20 electrons. (For comparison, many sensors in digital cameras have read noise values around or below 10 electrons. Thanks &lt;a href="https://twitter.com/kD3AN/status/885602631091179521"&gt;@kD3AN&lt;/a&gt; for this &lt;a href="http://www.clarkvision.com/articles/digital.sensor.performance.summary/#read_noise"&gt;link&lt;/a&gt;.)&lt;/p&gt;
-&lt;p&gt;Notice how many of the features of the hologram--especially those away from the center--become much more difficult to detect due to increased dark noise of the sensor. In particular, try pausing both movies around a distance of \( 40 \, \mu m \) and notice how much clearer the rings are for the low noise camera.&lt;/p&gt;
+&lt;p&gt;Notice how many of the features of the hologram--especially those away from the center--become much more difficult to detect due to increased dark noise of the sensor. In particular, try pausing both movies around a distance of $ 40 \, \mu m $ and notice how much clearer the rings are for the low noise camera.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -908,7 +938,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 &lt;span class="n"&gt;img&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_extent&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]])&lt;/span&gt;
 &lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_xticks&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]])&lt;/span&gt;
 &lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_yticks&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]])&lt;/span&gt;
-&lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_xlabel&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;r'$x, \, \mu m$'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_xlabel&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;r&lt;/span&gt;&lt;span class="s1"&gt;'$x, \, \mu m$'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
 &lt;span class="n"&gt;cb&lt;/span&gt;  &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;colorbar&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;img&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;cb&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_label&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'ADU'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -956,7 +986,11 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 &lt;div class="output"&gt;
 
 
-&lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_area"&gt;
+
+&lt;div class="prompt"&gt;&lt;/div&gt;
+
+
 &lt;div class="output_subarea output_stream output_stderr output_text"&gt;
 &lt;pre&gt;/home/kmdouglass/anaconda3/envs/nikola/lib/python3.5/site-packages/ipykernel/__main__.py:25: RuntimeWarning: invalid value encountered in sqrt
 &lt;/pre&gt;
@@ -967,8 +1001,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -976,8 +1009,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;

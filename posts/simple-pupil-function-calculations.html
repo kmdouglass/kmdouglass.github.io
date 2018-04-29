@@ -7,17 +7,11 @@
 <link href="../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
 <link href="../assets/css/ipython.min.css" rel="stylesheet" type="text/css">
 <link href="../assets/css/nikola_ipython.css" rel="stylesheet" type="text/css">
-<meta content="#5670d4" name="theme-color">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
 <link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml">
 <link rel="canonical" href="http://kmdouglass.github.io/posts/simple-pupil-function-calculations.html">
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-    tex2jax: {
-        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-        processEscapes: true
-    }
-});
-</script><!--[if lt IE 9]><script src="../assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><meta name="author" content="Kyle M. Douglass">
+<!--[if lt IE 9]><script src="../assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><meta name="author" content="Kyle M. Douglass">
 <link rel="prev" href="field-dependent-photophysics-video.html" title="Field-dependent photophysics - video" type="text/html">
 <link rel="next" href="fifi-parts-list.html" title="FIFI Parts List" type="text/html">
 <meta property="og:site_name" content="Kyle M. Douglass">
@@ -91,7 +85,7 @@ MathJax.Hub.Config({
 <article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="#" class="u-url">Simple pupile function calculations</a></h1>
 
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                     Kyle M. Douglass
             </span></p>
             <p class="dateline"><a href="#" rel="bookmark"><time class="published dt-published" datetime="2016-12-04T10:45:56+01:00" itemprop="datePublished" title="2016-12-04 10:45">2016-12-04 10:45</time></a></p>
@@ -102,7 +96,7 @@ MathJax.Hub.Config({
 
             
         </p>
-<p class="sourceline"><a href="simple-pupil-function-calculations.ipynb" id="sourcelink">Source</a></p>
+<p class="sourceline"><a href="simple-pupil-function-calculations.ipynb" class="sourcelink">Source</a></p>
 
         </div>
         
@@ -135,24 +129,27 @@ MathJax.Hub.Config({
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Theoretical-background">Theoretical background<a class="anchor-link" href="simple-pupil-function-calculations.html#Theoretical-background">¶</a>
 </h2>
-<p>In scalar diffraction theory, light is represented as a three-dimensional function known as the scalar field. At every point in space \( \mathbf{r} \), the scalar field \( u \left( \mathbf{r} \right) \) is a single, complex value that represents the electric field at that point. The physical laws of diffraction require that the scalar field be described by two numbers, an <strong>amplitude</strong> and a <strong>phase</strong>, that are derived from the field's real and the imaginary parts, \( \text{Re} \left[ u \left( \mathbf{r} \right) \right] \) and \( \text{Im} \left[ u \left( \mathbf{r} \right) \right] \):</p>
-\begin{align*}
+<p>In scalar diffraction theory, light is represented as a three-dimensional function known as the scalar field. At every point in space $ \mathbf{r} $, the scalar field $ u \left( \mathbf{r} \right) $ is a single, complex value that represents the electric field at that point. The physical laws of diffraction require that the scalar field be described by two numbers, an <strong>amplitude</strong> and a <strong>phase</strong>, that are derived from the field's real and the imaginary parts, $ \text{Re} \left[ u \left( \mathbf{r} \right) \right] $ and $ \text{Im} \left[ u \left( \mathbf{r} \right) \right] $:</p>
+<p>\begin{align*}
 A &amp;= \sqrt{\text{Re} \left[ u \left( \mathbf{r} \right) \right]^2 + \text{Im} \left[ u \left( \mathbf{r} \right) \right]^2 } \\
 \phi &amp;= \arctan \left( \frac{\text{Im} \left[ u \left( \mathbf{r} \right) \right]}{\text{Re} \left[ u \left( \mathbf{r} \right) \right]} \right)
-\end{align*}<p>If we know the amplitude and phase at a given point, then we know the scalar field at that point. Despite the fact that scalar diffraction theory ignores the polarization of light, it does wonderfully well at describing a large range of optical phenomena.</p>
+\end{align*}</p>
+<p>If we know the amplitude and phase at a given point, then we know the scalar field at that point. Despite the fact that scalar diffraction theory ignores the polarization of light, it does wonderfully well at describing a large range of optical phenomena.</p>
 <p>For most problems in imaging, we don't really need to know the three-dimensional distribution of the field in all of space. Instead, we simplify the problem by asking how an optical system transforms the field in some two-dimensional <em>object plane</em> into a new field distribution in the <em>image plane</em> (see the figure below). Any changes in scale between these two planes are caused by the system's magnification; any blurring or distortion is caused by diffraction and possibly aberrations.</p>
 <p><img src="../optical_system_with_pupils.png" alt="Optical system with pupils"></p>
 <p>The <strong>pupil function</strong> is the two-dimensional Fourier transform of the scalar field in the image plane when the object is a point source emitting light equally in all directions, i.e. an <em>isotropic</em> point source. Mathematically, the pupil function is written as</p>
-\begin{equation*}
+<p>\begin{equation*}
 P \left(f_x, f_y \right) = \frac{1}{A}\iint_{-\infty}^{\infty} \text{PSF}_A \left( x, y \right) \exp \left[ -j 2 \pi \left( f_x x + f_y y\right) \right] \, dx \, dy
-\end{equation*}<p>where \( A \) is a normalizing constant, \( f_x \) and \( f_y \) represent spatial frequencies in the x- and y-directions, and \( j \) is the imaginary number. \( \text{PSF}_A \left( x, y \right) \) is known as the <strong>amplitude point spread function</strong>. Despite the intimidating name, \( \text{PSF}_A \left( x, y \right) \) is just the scalar field from the isotropic point source in the image plane. The pupil function and the amplitude point spread function form a Fourier transform pair, so we can also write</p>
-\begin{equation*}
+\end{equation*}</p>
+<p>where $ A $ is a normalizing constant, $ f_x $ and $ f_y $ represent spatial frequencies in the x- and y-directions, and $ j $ is the imaginary number. $ \text{PSF}_A \left( x, y \right) $ is known as the <strong>amplitude point spread function</strong>. Despite the intimidating name, $ \text{PSF}_A \left( x, y \right) $ is just the scalar field from the isotropic point source in the image plane. The pupil function and the amplitude point spread function form a Fourier transform pair, so we can also write</p>
+<p>\begin{equation*}
 \text{PSF}_A \left(x, y \right) = A \iint_{-\infty}^{\infty} P \left( f_x, f_y \right) \exp \left[ j 2 \pi \left( f_x x + f_y y\right) \right] \, df_x \, df_y
-\end{equation*}<p>What all of this means is that we can compute the image of an on-axis, isotropic point source if we know the pupil function that describes the system: compute the two-dimensional Fourier transform of the pupil function and voilà, you have the image (or at least the field that will form the image).</p>
-<h3 id="The-pupil-punction-is-dimensionless;-\(-\text{PSF}_A-\)-is-a-field">The pupil punction is dimensionless; \( \text{PSF}_A \) is a field<a class="anchor-link" href="simple-pupil-function-calculations.html#The-pupil-punction-is-dimensionless;-%5C(-%5Ctext%7BPSF%7D_A-%5C)-is-a-field">¶</a>
+\end{equation*}</p>
+<p>What all of this means is that we can compute the image of an on-axis, isotropic point source if we know the pupil function that describes the system: compute the two-dimensional Fourier transform of the pupil function and voilà, you have the image (or at least the field that will form the image).</p>
+<h3 id="The-pupil-punction-is-dimensionless;-$-\text{PSF}_A-$-is-a-field">The pupil punction is dimensionless; $ \text{PSF}_A $ is a field<a class="anchor-link" href="simple-pupil-function-calculations.html#The-pupil-punction-is-dimensionless;-%24-%5Ctext%7BPSF%7D_A-%24-is-a-field">¶</a>
 </h3>
-<p>By convention the pupil function is a dimensionless complex number and has a magnitude between 0 and 1. The amplitude PSF, however, has units of electric field, or Volts per distance, \( V / m \).</p>
-<p>If you perform a dimensional analysis on the Fourier transform expressions above, you can see that the normalizing constant \( A \) has to have units of \( V \times m \). For example, if \( \text{PSF}_A \) has units of \( V / m \) and \( dx \) and \( dy \) both have units of \( m \), then \( A \) has units of \( V \times m \) and the pupil function is therefore dimensionless. Sometimes in the literature you will find that units or a normalizing constant are ignored or, worse, that the reader can sort of "fill them in" later. I prefer to be explicit and to define the \( \text{PSF}_A \) to be a field.</p>
+<p>By convention the pupil function is a dimensionless complex number and has a magnitude between 0 and 1. The amplitude PSF, however, has units of electric field, or Volts per distance, $ V / m $.</p>
+<p>If you perform a dimensional analysis on the Fourier transform expressions above, you can see that the normalizing constant $ A $ has to have units of $ V \times m $. For example, if $ \text{PSF}_A $ has units of $ V / m $ and $ dx $ and $ dy $ both have units of $ m $, then $ A $ has units of $ V \times m $ and the pupil function is therefore dimensionless. Sometimes in the literature you will find that units or a normalizing constant are ignored or, worse, that the reader can sort of "fill them in" later. I prefer to be explicit and to define the $ \text{PSF}_A $ to be a field.</p>
 <h3 id="Pupil-functions-are-not-entrance-or-exit-pupils">Pupil functions are not entrance or exit pupils<a class="anchor-link" href="simple-pupil-function-calculations.html#Pupil-functions-are-not-entrance-or-exit-pupils">¶</a>
 </h3>
 <p>The pupil function and the pupil planes of a system are not the same thing. The entrance and exit pupils--which together are known as the pupil planes--are the planes in which the images of the system's <a href="http://hyperphysics.phy-astr.gsu.edu/hbase/geoopt/stop.html">aperture stop</a> are located. The pupil function, however, is not an image of the aperture stop of the system; it's a 2D Fourier transform of a field.</p>
@@ -176,7 +173,7 @@ P \left(f_x, f_y \right) = \frac{1}{A}\iint_{-\infty}^{\infty} \text{PSF}_A \lef
 <li>create the pupil plane and normalize it so that the field carries the desired amount of power;</li>
 <li>and compute the field in the image plane.</li>
 </ol>
-<p>Before we go further, it's worth pointing out that the pupil function and \( \text{PSF}_A \) are obtained by calculating the <strong>continuous Fourier transform</strong> of one another. On a computer, however, it's often easiest to compute what's called a discrete Fourier tranform via the <strong>fast Fourier transform (FFT)</strong> algorithm. <a href="http://blogs.mathworks.com/steve/2010/03/15/the-dft-and-the-dtft-mathjax/">The continuous Fourier transform and the FFT are not, strictly speaking, the same thing</a>. Therefore, we should expect from the start that there may be small differences between the computed \( \text{PSF}_A \) and the analytical calculation.</p>
+<p>Before we go further, it's worth pointing out that the pupil function and $ \text{PSF}_A $ are obtained by calculating the <strong>continuous Fourier transform</strong> of one another. On a computer, however, it's often easiest to compute what's called a discrete Fourier tranform via the <strong>fast Fourier transform (FFT)</strong> algorithm. <a href="http://blogs.mathworks.com/steve/2010/03/15/the-dft-and-the-dtft-mathjax/">The continuous Fourier transform and the FFT are not, strictly speaking, the same thing</a>. Therefore, we should expect from the start that there may be small differences between the computed $ \text{PSF}_A $ and the analytical calculation.</p>
 <p>With this in mind, we'll start by importing a few scientific libraries like Numpy and Scipy.</p>
 
 </div>
@@ -214,7 +211,10 @@ P \left(f_x, f_y \right) = \frac{1}{A}\iint_{-\infty}^{\infty} \text{PSF}_A \lef
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Populating the interactive namespace from numpy and matplotlib
 Python version:
@@ -243,22 +243,23 @@ Seaborn version:	0.7.1
 <p>Next, we need to define a few parameters that will determine the output of the simulations. These parameters are:</p>
 <ol>
 <li>
-<strong>wavelength</strong> Units are \( \mu m \).</li>
+<strong>wavelength</strong> Units are $ \mu m $.</li>
 <li>
 <strong>NA</strong> Numerical aperture of the system. No units.</li>
 <li>
-<strong>pixelSize</strong> The length of a square pixel in the object space. Units are \( \mu m \).</li>
+<strong>pixelSize</strong> The length of a square pixel in the object space. Units are $ \mu m $.</li>
 <li>
 <strong>numPixels</strong> The number of pixels in your camera. This will be assumed to be even.</li>
 <li>
-<strong>power</strong> The total power carried by the field in Watts, \( W \).</li>
+<strong>power</strong> The total power carried by the field in Watts, $ W $.</li>
 </ol>
 <p>Note that pixel size is defined as the size of a pixel in the <em>object space</em>. Defining it like this is often more intuitive than defining the pixel size in the image space. For example, when you see a scale bar on a microscopy image, the distances correspond to object space distances, not the actual distance that the image spans on the piece of paper or computer screen. Furthermore, there is no problem with working with an object space pixel size in the image plane since the coordinate systems in the object and image planes of our perfect optical system can be easily mapped onto one another by a linear scaling by the system's magnification.</p>
 <p>We don't neccessarily need to use a camera as the detector. Since we are limited to working with discrete arrays in the computer, though, it's convenient to say that we have a camera as a detector since each pixel is a discrete sample of the field.</p>
-<p>In addition to the above parameters, we'll assume that the object, the imaging system, and the image plane are all in air. We'll define a constant \( Z_0 = 376.73 \, \Omega \) which is known as the <a href="https://en.wikipedia.org/wiki/Wave_impedance">impedance of free space</a> or the vacuum impedance. This is the constant of proportionality between the power carried by the scalar field and the integral of its absolute square in the image plane:</p>
-\begin{equation*}
+<p>In addition to the above parameters, we'll assume that the object, the imaging system, and the image plane are all in air. We'll define a constant $ Z_0 = 376.73 \, \Omega $ which is known as the <a href="https://en.wikipedia.org/wiki/Wave_impedance">impedance of free space</a> or the vacuum impedance. This is the constant of proportionality between the power carried by the scalar field and the integral of its absolute square in the image plane:</p>
+<p>\begin{equation*}
 P_0 = \frac{1}{Z_0} \iint_{-\infty}^{\infty} \left| \text{PSF}_A \left( x, y \right) \right|^2 \, dx \, dy
-\end{equation*}<p>Of course, air does not really have the same impedance as vacuum, but the two values are close enough. I have also used \( P_0 \) to denote the power because I already used \( P \left( f_x, f_y \right) \) to denote the pupil function.</p>
+\end{equation*}</p>
+<p>Of course, air does not really have the same impedance as vacuum, but the two values are close enough. I have also used $ P_0 $ to denote the power because I already used $ P \left( f_x, f_y \right) $ to denote the pupil function.</p>
 
 </div>
 </div>
@@ -290,7 +291,7 @@ P_0 = \frac{1}{Z_0} \iint_{-\infty}^{\infty} \left| \text{PSF}_A \left( x, y \ri
 <h2 id="Step-2:-Create-the-image-and-pupil-plane-coordinate-systems">Step 2: Create the image and pupil plane coordinate systems<a class="anchor-link" href="simple-pupil-function-calculations.html#Step-2:-Create-the-image-and-pupil-plane-coordinate-systems">¶</a>
 </h2>
 <p>Our simulation will transform the values in a two-dimensional square array of complex numbers (the pupil function) into a new two-dimensional array of complex numbers of the same size. Before we do this, however, let's first determine the coordinates of each pixel.</p>
-<p>Since we specified the pixel size and the number of pixels, it's easiest to start with the image plane coordinates. We will define the origin of our coordinate system to lie at the center of the array, which, for an even number of pixels and array indexes that start at zero, lies halfway between the pixels \( \left( \frac{\text{numPixels}}{2} \right) - 1 \) and \( \left( \frac{\text{numPixels}}{2} \right) \) in both the horizontal and vertical directions.</p>
+<p>Since we specified the pixel size and the number of pixels, it's easiest to start with the image plane coordinates. We will define the origin of our coordinate system to lie at the center of the array, which, for an even number of pixels and array indexes that start at zero, lies halfway between the pixels $ \left( \frac{\text{numPixels}}{2} \right) - 1 $ and $ \left( \frac{\text{numPixels}}{2} \right) $ in both the horizontal and vertical directions.</p>
 
 </div>
 </div>
@@ -318,9 +319,9 @@ P_0 = \frac{1}{Z_0} \iint_{-\infty}^{\infty} \left| \text{PSF}_A \left( x, y \ri
 <p>With the image plane coordinates taken care of, the next question is: what are the pupil plane coordinates? This question is a frequent source of frustration for students (and full-time scientists). I won't go into the details in this post, but instead will just tell you the two rules you need to remember for Fourier optics simulations</p>
 <ol>
 <li>The number of elements in the pupil function array is the same as the number of elements in the image plane array.</li>
-<li>For an even number of array elements, the frequency values along either principle direction in the pupil function run from \( -\frac{f_S}{2} \) to \( f_S \left( \frac{1}{2} - \frac{1}{\text{numPixels}} \right) \) with the spacing between discrete coordinate values equal to \( \frac{f_S}{\text{numPixels}} \).</li>
+<li>For an even number of array elements, the frequency values along either principle direction in the pupil function run from $ -\frac{f_S}{2} $ to $ f_S \left( \frac{1}{2} - \frac{1}{\text{numPixels}} \right) $ with the spacing between discrete coordinate values equal to $ \frac{f_S}{\text{numPixels}} $.</li>
 </ol>
-<p>\( f_S \) is called the sampling frequency and is equal to one divided by the spacing between image space coordinates. We can go ahead now and compute the frequency-space coordinate values.</p>
+<p>$ f_S $ is called the sampling frequency and is equal to one divided by the spacing between image space coordinates. We can go ahead now and compute the frequency-space coordinate values.</p>
 
 </div>
 </div>
@@ -349,8 +350,8 @@ P_0 = \frac{1}{Z_0} \iint_{-\infty}^{\infty} \left| \text{PSF}_A \left( x, y \ri
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Step-3:-Create-the-pupil-function">Step 3: Create the pupil function<a class="anchor-link" href="simple-pupil-function-calculations.html#Step-3:-Create-the-pupil-function">¶</a>
 </h2>
-<p>In nearly all imaging systems, the pupil is circular because its optical elements are circular. The radius of the pupil function is the ratio of the system's numerical aperture to the wavelength of the light, \( \frac{\text{NA}}{\lambda} \) (<a href="http://onlinelibrary.wiley.com/doi/10.1111/j.0022-2720.2004.01393.x/full">Hanser, 2004</a>). Perfect systems like the one we are modeling here have a pupil with a constant value everywhere inside this circle and zero outside of it.</p>
-<p>We can simulate such a pupil by making a circular mask with a radius of \( \frac{\text{NA}}{\lambda} \). The mask is one inside the circle and zero outside of it.</p>
+<p>In nearly all imaging systems, the pupil is circular because its optical elements are circular. The radius of the pupil function is the ratio of the system's numerical aperture to the wavelength of the light, $ \frac{\text{NA}}{\lambda} $ (<a href="http://onlinelibrary.wiley.com/doi/10.1111/j.0022-2720.2004.01393.x/full">Hanser, 2004</a>). Perfect systems like the one we are modeling here have a pupil with a constant value everywhere inside this circle and zero outside of it.</p>
+<p>We can simulate such a pupil by making a circular mask with a radius of $ \frac{\text{NA}}{\lambda} $. The mask is one inside the circle and zero outside of it.</p>
 
 </div>
 </div>
@@ -381,10 +382,11 @@ P_0 = \frac{1}{Z_0} \iint_{-\infty}^{\infty} \left| \text{PSF}_A \left( x, y \ri
 <h3 id="Define-the-power-carried-by-the-scalar-field">Define the power carried by the scalar field<a class="anchor-link" href="simple-pupil-function-calculations.html#Define-the-power-carried-by-the-scalar-field">¶</a>
 </h3>
 <p>I mentioned in the theoretical background above that the total optical power carried by the field is the two dimensional integral of the absolute square of the field divided by the impedance. If we want to set the power as an input of the simulation, we need to first normalize our pupil values by this integral.</p>
-<p><a href="https://en.wikipedia.org/wiki/Parseval's_theorem">Parseval's theorem</a> tells us that we can integrate over \( \text{PSF}_A \left( x, y \right) \) and \( A \times P \left( f_x, f_y \right) \), i.e. the image plane field or the normalized pupil, respectively, and get the same number:</p>
-\begin{equation*}
+<p><a href="https://en.wikipedia.org/wiki/Parseval's_theorem">Parseval's theorem</a> tells us that we can integrate over $ \text{PSF}_A \left( x, y \right) $ and $ A \times P \left( f_x, f_y \right) $, i.e. the image plane field or the normalized pupil, respectively, and get the same number:</p>
+<p>\begin{equation*}
 \iint_{-\infty}^{\infty} \left| \text{PSF}_A \left( x, y \right) \right|^2 \, dx \, dy = A^2 \iint_{-\infty}^{\infty} \left| P \left( f_x, f_y \right) \right|^2 \, df_x \, df_y
-\end{equation*}<p>Now that we have the pupil, we can perform a numerical integration over it using Simpson's rule to find the normalizing constant. We then multiply the pupil by the square root of this constant times our desired value for the power to set the total power carried by the field.</p>
+\end{equation*}</p>
+<p>Now that we have the pupil, we can perform a numerical integration over it using Simpson's rule to find the normalizing constant. We then multiply the pupil by the square root of this constant times our desired value for the power to set the total power carried by the field.</p>
 
 </div>
 </div>
@@ -416,7 +418,10 @@ P_0 = \frac{1}{Z_0} \iint_{-\infty}^{\infty} \left| \text{PSF}_A \left( x, y \ri
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Normalization constant:		0.0940 W
 User-defined power:		0.1000 W
@@ -457,7 +462,10 @@ Power now carried by field:	0.1000 W
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -467,7 +475,10 @@ Power now carried by field:	0.1000 W
 </div>
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Power in pupil plane: 0.1000 W
 </pre>
@@ -486,12 +497,12 @@ Power now carried by field:	0.1000 W
 <h2 id="Step-4:-Compute-the-image-of-the-point-source">Step 4: Compute the image of the point source<a class="anchor-link" href="simple-pupil-function-calculations.html#Step-4:-Compute-the-image-of-the-point-source">¶</a>
 </h2>
 <p>With the pupil and coordinate systems established, we are now ready to compute the image of the isotropic point source that this system produces.</p>
-<p>To do this, we need to perform a few easy but important steps. In the first step, we will shift the origin of the pupil from the center of the array to the array indexes \( \left( 0, 0 \right) \) using the <code>ifftshift()</code> function. The reason we do this is that <code>fft2()</code> expects that the zero frequency value lies at the origin of the array. The two-dimensional FFT of the shifted pupil is then computed, producing a new array with the zero frequency at array indexes \( \left( 0, 0 \right) \) and the Nyquist frequency \( f_S / 2 \) in the middle of the array's axes (<a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.fft.fft2.html">numpy.fft.fft2 - NumPy v1.11 Manual, accessed on 2016-11-15</a>). We finish by shifting the origin back to the center of the array using <code>fftshift()</code> so that it makes sense when we visualize the results.</p>
+<p>To do this, we need to perform a few easy but important steps. In the first step, we will shift the origin of the pupil from the center of the array to the array indexes $ \left( 0, 0 \right) $ using the <code>ifftshift()</code> function. The reason we do this is that <code>fft2()</code> expects that the zero frequency value lies at the origin of the array. The two-dimensional FFT of the shifted pupil is then computed, producing a new array with the zero frequency at array indexes $ \left( 0, 0 \right) $ and the Nyquist frequency $ f_S / 2 $ in the middle of the array's axes (<a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.fft.fft2.html">numpy.fft.fft2 - NumPy v1.11 Manual, accessed on 2016-11-15</a>). We finish by shifting the origin back to the center of the array using <code>fftshift()</code> so that it makes sense when we visualize the results.</p>
 <p>The final step is to multiply the result by the square of the spacing between frequency coordinates. This step ensures that the power is preserved during the FFT operation (<a href="http://spie.org/Publications/Book/866274">Schmidt, 2010, pp. 15-18</a>).</p>
 <p>Chaining the functions together, these steps look like:</p>
 <div class="highlight"><pre><span></span><span class="n">psf_a</span> <span class="o">=</span> <span class="n">fftshift</span><span class="p">(</span><span class="n">fft2</span><span class="p">(</span><span class="n">ifftshift</span><span class="p">(</span><span class="n">normedPupil</span><span class="p">)))</span> <span class="o">*</span> <span class="n">df</span><span class="o">**</span><span class="mi">2</span>
 </pre></div>
-<p>The image is the <a href="https://en.wikipedia.org/wiki/Irradiance">irradiance</a> in the image plane, which is the absolute square of the field, divided by the vacuum impedance. Its units are power per area, or in this case \( W / \mu m^2 \). In optics, the irradiance is what is measured by a camera, not the field.</p>
+<p>The image is the <a href="https://en.wikipedia.org/wiki/Irradiance">irradiance</a> in the image plane, which is the absolute square of the field, divided by the vacuum impedance. Its units are power per area, or in this case $ W / \mu m^2 $. In optics, the irradiance is what is measured by a camera, not the field.</p>
 <div class="highlight"><pre><span></span><span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">psf_a</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">Z0</span>
 </pre></div>
 
@@ -528,7 +539,10 @@ Power now carried by field:	0.1000 W
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -582,7 +596,10 @@ Power now carried by field:	0.1000 W
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Power in pupil plane: 0.1000 W
 Power in object plane: 0.1000 W
@@ -600,9 +617,10 @@ Power in object plane: 0.1000 W
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>So far so good. The next thing that we can do to verify these results is to calculate the sampled values of the analytical solution to this problem. Scalar diffraction theory predicts that the solution for the irradiance of the field diffracted by a circular aperture is an <a href="https://en.wikipedia.org/wiki/Airy_disk">Airy disk</a>:</p>
-\begin{equation*}
+<p>\begin{equation*}
 I \left( r \right) = I_0 \left[ \frac{2 J_1 \left( X \right)}{X} \right]^2
-\end{equation*}<p>where \(X = \frac{2 \pi r \, \text{NA}}{\lambda} \), \( r = \sqrt{x^2 + y^2} \) is the radial coordinate, and \( J_1 \left( r \right) \) is called the first-order Bessel function of the first kind (<a href="https://en.wikipedia.org/wiki/Irradiance">Weisstein, Mathworld, accessed on 2016-11-16</a>). This function does not exist inside Python's scientific libraries, so we will need to create it.</p>
+\end{equation*}</p>
+<p>where $X = \frac{2 \pi r \, \text{NA}}{\lambda} $, $ r = \sqrt{x^2 + y^2} $ is the radial coordinate, and $ J_1 \left( r \right) $ is called the first-order Bessel function of the first kind (<a href="https://en.wikipedia.org/wiki/Irradiance">Weisstein, Mathworld, accessed on 2016-11-16</a>). This function does not exist inside Python's scientific libraries, so we will need to create it.</p>
 
 </div>
 </div>
@@ -727,7 +745,10 @@ I \left( r \right) = I_0 \left[ \frac{2 J_1 \left( X \right)}{X} \right]^2
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>/home/kmdouglass/anaconda3/envs/nikola/lib/python3.5/site-packages/ipykernel/__main__.py:21: RuntimeWarning: invalid value encountered in true_divide
 </pre>
@@ -735,7 +756,10 @@ I \left( r \right) = I_0 \left[ \frac{2 J_1 \left( X \right)}{X} \right]^2
 </div>
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -778,7 +802,10 @@ I \left( r \right) = I_0 \left[ \frac{2 J_1 \left( X \right)}{X} \right]^2
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>/home/kmdouglass/anaconda3/envs/nikola/lib/python3.5/site-packages/ipykernel/__main__.py:21: RuntimeWarning: invalid value encountered in true_divide
 </pre>
@@ -786,7 +813,10 @@ I \left( r \right) = I_0 \left[ \frac{2 J_1 \left( X \right)}{X} \right]^2
 </div>
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -860,7 +890,7 @@ I \left( r \right) = I_0 \left[ \frac{2 J_1 \left( X \right)}{X} \right]^2
     <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
 
 
-        </section><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script><script type="text/x-mathjax-config">
+        </section><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha256-SDRP1VVYu+tgAGKhddBSl5+ezofHKZeI+OzxakbIe/Y=" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
 MathJax.Hub.Config({
     tex2jax: {
         inlineMath: [ ['$','$'], ["\\(","\\)"] ],
@@ -872,7 +902,7 @@ MathJax.Hub.Config({
         <!--End of body content-->
 
         <footer id="footer">
-            Contents © 2017         <a href="mailto:kyle.douglass@epfl.ch">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
+            Contents © 2018         <a href="mailto:kyle.douglass@epfl.ch">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
             
         </footer>
 </div>

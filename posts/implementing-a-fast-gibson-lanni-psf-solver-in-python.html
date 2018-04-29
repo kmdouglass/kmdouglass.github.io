@@ -8,19 +8,13 @@
 <link href="../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
 <link href="../assets/css/ipython.min.css" rel="stylesheet" type="text/css">
 <link href="../assets/css/nikola_ipython.css" rel="stylesheet" type="text/css">
-<meta content="#5670d4" name="theme-color">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
 <link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml">
 <link rel="canonical" href="http://kmdouglass.github.io/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python.html">
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-    tex2jax: {
-        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-        processEscapes: true
-    }
-});
-</script><!--[if lt IE 9]><script src="../assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><meta name="description" itemprop="description" content="A Python implementation of a fast algorithm to compute Gibson-Lanni PSFs used in microscopy">
-<meta name="author" content="Kyle M. Douglass">
+<!--[if lt IE 9]><script src="../assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><meta name="author" content="Kyle M. Douglass">
 <link rel="prev" href="accessing-the-raspberry-pi-camera-image-sensor.html" title="Accessing the Raspberry Pi camera image sensor" type="text/html">
+<link rel="next" href="how-i-built-a-cross-compilation-workflow-for-the-raspberry-pi.html" title="How I built a cross-compilation workflow for the Raspberry Pi" type="text/html">
 <meta property="og:site_name" content="Kyle M. Douglass">
 <meta property="og:title" content="Implementing a fast Gibson-Lanni PSF solver in Python">
 <meta property="og:url" content="http://kmdouglass.github.io/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python.html">
@@ -93,7 +87,7 @@ MathJax.Hub.Config({
 <article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="#" class="u-url">Implementing a fast Gibson-Lanni PSF solver in Python</a></h1>
 
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                     Kyle M. Douglass
             </span></p>
             <p class="dateline"><a href="#" rel="bookmark"><time class="published dt-published" datetime="2017-10-20T07:25:54+02:00" itemprop="datePublished" title="2017-10-20 07:25">2017-10-20 07:25</time></a></p>
@@ -104,10 +98,9 @@ MathJax.Hub.Config({
 
             
         </p>
-<p class="sourceline"><a href="implementing-a-fast-gibson-lanni-psf-solver-in-python.ipynb" id="sourcelink">Source</a></p>
+<p class="sourceline"><a href="implementing-a-fast-gibson-lanni-psf-solver-in-python.ipynb" class="sourcelink">Source</a></p>
 
-                <meta name="description" itemprop="description" content="A Python implementation of a fast algorithm to compute Gibson-Lanni PSFs used in microscopy">
-</div>
+        </div>
         
 
     </header><div class="e-content entry-content" itemprop="articleBody text">
@@ -159,7 +152,10 @@ MathJax.Hub.Config({
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Populating the interactive namespace from numpy and matplotlib
 Python 3.5.2 |Continuum Analytics, Inc.| (default, Jul  2 2016, 17:53:06) 
@@ -280,9 +276,10 @@ SciPy		0.19.1
 </h2>
 <p><code>z.reshape(-1,1)</code> flips <code>z</code> from a row array to a column array so that it may be broadcast across <code>rho</code>.</p>
 <p>The coefficients <code>C</code> are found by a least-squares solution to the equation</p>
-\begin{equation*}
+<p>\begin{equation*}
 \mathbf{\phi} \left( \rho , z \right)= \mathbf{J} \left( \rho \right) \mathbf{c} \left( z \right)
-\end{equation*}<p>\( \mathbf{c} \) has dimensions <code>num_basis</code> \( \times \) <code>len(z)</code>. The <code>J</code> array has dimensions <code>num_basis</code> \( \times \) <code>len(rho)</code> and the <code>phase</code> array has dimensions <code>len(z)</code> \( \times \) <code>len(rho)</code>. The <code>J</code> and <code>phase</code> arrays are therefore transposed to get the dimensions right in the call to <code>np.linalg.lstsq</code>.</p>
+\end{equation*}</p>
+<p>$ \mathbf{c} $ has dimensions <code>num_basis</code> $ \times $ <code>len(z)</code>. The <code>J</code> array has dimensions <code>num_basis</code> $ \times $ <code>len(rho)</code> and the <code>phase</code> array has dimensions <code>len(z)</code> $ \times $ <code>len(rho)</code>. The <code>J</code> and <code>phase</code> arrays are therefore transposed to get the dimensions right in the call to <code>np.linalg.lstsq</code>.</p>
 
 </div>
 </div>
@@ -340,15 +337,15 @@ SciPy		0.19.1
 <span class="n">est</span> <span class="o">=</span> <span class="n">J</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">C</span><span class="p">[:,</span><span class="n">z0</span><span class="p">])</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">phase</span><span class="p">[</span><span class="n">z0</span><span class="p">,</span> <span class="p">:]),</span> <span class="n">label</span><span class="o">=</span><span class="s1">r'$ \exp{ \left[ jW \left( \rho \right) \right] }$'</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">phase</span><span class="p">[</span><span class="n">z0</span><span class="p">,</span> <span class="p">:]),</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">'$ \exp{ \left[ jW \left( \rho \right) \right] }$'</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">est</span><span class="p">),</span> <span class="s1">'--'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Fourier-Bessel'</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">r'$\rho$'</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'$\rho$'</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'Real'</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">'upper left'</span><span class="p">)</span>
 
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="n">phase</span><span class="p">[</span><span class="n">z0</span><span class="p">,</span> <span class="p">:]))</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="n">est</span><span class="p">),</span> <span class="s1">'--'</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">r'$\rho$'</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'$\rho$'</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'Imaginary'</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">((</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">))</span>
 
@@ -364,7 +361,10 @@ SciPy		0.19.1
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -384,11 +384,12 @@ SciPy		0.19.1
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Step-2:-Compute-the-PSF">Step 2: Compute the PSF<a class="anchor-link" href="implementing-a-fast-gibson-lanni-psf-solver-in-python.html#Step-2:-Compute-the-PSF">¶</a>
 </h2>
-<p>Here, we use the Fourier-Bessel series expansion of the phase function and a Bessel integral identity to compute the approximate PSF. Each coefficient \( c_{m} \left( z \right) \) needs to be multiplied by</p>
-\begin{equation*}
+<p>Here, we use the Fourier-Bessel series expansion of the phase function and a Bessel integral identity to compute the approximate PSF. Each coefficient $ c_{m} \left( z \right) $ needs to be multiplied by</p>
+<p>\begin{equation*}
 R \left(r; \mathbf{p} \right) = \frac{\sigma_m J_1 \left( \sigma_m a \right) J_0 \left( \beta a \right)a - \beta J_0 \left( \sigma_m a \right) J_1 \left( \beta a \right)a }{\sigma_m^2 - \beta^2}
-\end{equation*}<p>and the resulting products summed over the number of basis functions. \( \mathbf{p} \) is the parameter vector for the Gibson-Lanni model, \( \sigma_m \) is the scaling factor for the argument to the \( m'th \) Bessel basis function, and \( \beta = kr\text{NA} \).</p>
-<p><code>b</code> is defined such that <code>R</code> has dimensions of <code>len(r)</code> \( \times \) <code>len(rho)</code>.</p>
+\end{equation*}</p>
+<p>and the resulting products summed over the number of basis functions. $ \mathbf{p} $ is the parameter vector for the Gibson-Lanni model, $ \sigma_m $ is the scaling factor for the argument to the $ m'th $ Bessel basis function, and $ \beta = kr\text{NA} $.</p>
+<p><code>b</code> is defined such that <code>R</code> has dimensions of <code>len(r)</code> $ \times $ <code>len(rho)</code>.</p>
 
 </div>
 </div>
@@ -421,9 +422,10 @@ R \left(r; \mathbf{p} \right) = \frac{\sigma_m J_1 \left( \sigma_m a \right) J_0
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Now compute the point-spread function via</p>
-\begin{equation*}
+<p>\begin{equation*}
 PSF \left( r, z; z_p, \mathbf{p} \right) = \left| \mathbf{R} \left( r; \mathbf{p} \right) \mathbf{c} \left( z \right) \right|^2
-\end{equation*}
+\end{equation*}</p>
+
 </div>
 </div>
 </div>
@@ -465,8 +467,8 @@ PSF \left( r, z; z_p, \mathbf{p} \right) = \left| \mathbf{R} \left( r; \mathbf{p
 <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">PSF_rz</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">r</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">z</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">z</span><span class="o">.</span><span class="n">min</span><span class="p">()))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mf">2.5</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">((</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">r'r, $\mu m$'</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">r'z, $\mu m$'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'r, $\mu m$'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'z, $\mu m$'</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -480,7 +482,10 @@ PSF \left( r, z; z_p, \mathbf{p} \right) = \left| \mathbf{R} \left( r; \mathbf{p
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -557,10 +562,10 @@ PSF \left( r, z; z_p, \mathbf{p} \right) = \left| \mathbf{R} \left( r; \mathbf{p
 <span class="n">txt</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="s1">'z = </span><span class="si">{:.1f}</span><span class="s1"> $\mu m$'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">z</span><span class="p">[</span><span class="mi">64</span><span class="p">]))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">((</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">((</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">r'x, $\mu m$'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'x, $\mu m$'</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">((</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">((</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">r'y, $\mu m$'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'y, $\mu m$'</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">'top'</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">'bottom'</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">'left'</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
@@ -628,6 +633,9 @@ PSF \left( r, z; z_p, \mathbf{p} \right) = \left| \mathbf{R} \left( r; \mathbf{p
 <li class="previous">
                 <a href="accessing-the-raspberry-pi-camera-image-sensor.html" rel="prev" title="Accessing the Raspberry Pi camera image sensor">Previous post</a>
             </li>
+            <li class="next">
+                <a href="how-i-built-a-cross-compilation-workflow-for-the-raspberry-pi.html" rel="next" title="How I built a cross-compilation workflow for the Raspberry Pi">Next post</a>
+            </li>
         </ul></nav></aside><section class="comments hidden-print"><h2>Comments</h2>
         
         
@@ -650,7 +658,7 @@ PSF \left( r, z; z_p, \mathbf{p} \right) = \left| \mathbf{R} \left( r; \mathbf{p
     <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
 
 
-        </section><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script><script type="text/x-mathjax-config">
+        </section><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha256-SDRP1VVYu+tgAGKhddBSl5+ezofHKZeI+OzxakbIe/Y=" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
 MathJax.Hub.Config({
     tex2jax: {
         inlineMath: [ ['$','$'], ["\\(","\\)"] ],
@@ -662,7 +670,7 @@ MathJax.Hub.Config({
         <!--End of body content-->
 
         <footer id="footer">
-            Contents © 2017         <a href="mailto:kyle.douglass@epfl.ch">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
+            Contents © 2018         <a href="mailto:kyle.douglass@epfl.ch">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
             
         </footer>
 </div>

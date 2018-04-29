@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0"><channel><title>Kyle M. Douglass (python)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link rel="self" href="http://kmdouglass.github.io/categories/python.xml" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Sun, 09 Jul 2017 12:51:01 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Perlin Noise</title><link>http://kmdouglass.github.io/posts/perlin-noise.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div tabindex="-1" id="notebook" class="border-box-sizing"&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Kyle M. Douglass (Posts about python)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link href="http://kmdouglass.github.io/categories/python.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Sat, 28 Apr 2018 12:09:15 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Perlin Noise</title><link>http://kmdouglass.github.io/posts/perlin-noise.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div tabindex="-1" id="notebook" class="border-box-sizing"&gt;
     &lt;div class="container" id="notebook-container"&gt;
 
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -35,7 +34,11 @@
 &lt;div class="output"&gt;
 
 
-&lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_area"&gt;
+
+&lt;div class="prompt"&gt;&lt;/div&gt;
+
+
 &lt;div class="output_subarea output_stream output_stdout output_text"&gt;
 &lt;pre&gt;Populating the interactive namespace from numpy and matplotlib
 &lt;/pre&gt;
@@ -46,8 +49,7 @@
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -83,7 +85,11 @@
 &lt;div class="output"&gt;
 
 
-&lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_area"&gt;
+
+&lt;div class="prompt"&gt;&lt;/div&gt;
+
+
 
 
 &lt;div class="output_png output_subarea "&gt;
@@ -96,8 +102,7 @@
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -135,7 +140,11 @@
 &lt;div class="output"&gt;
 
 
-&lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_area"&gt;
+
+&lt;div class="prompt"&gt;&lt;/div&gt;
+
+
 
 
 &lt;div class="output_png output_subarea "&gt;
@@ -148,8 +157,7 @@
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -185,7 +193,11 @@
 &lt;div class="output"&gt;
 
 
-&lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_area"&gt;
+
+&lt;div class="prompt"&gt;&lt;/div&gt;
+
+
 
 
 &lt;div class="output_png output_subarea "&gt;
@@ -198,8 +210,7 @@
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -215,8 +226,7 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -287,8 +297,7 @@
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -296,8 +305,7 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -306,8 +314,7 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -383,8 +390,7 @@
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -392,8 +398,7 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -409,8 +414,7 @@
 </description><category>python</category><category>signal processing</category><guid>http://kmdouglass.github.io/posts/perlin-noise.html</guid><pubDate>Sun, 20 Mar 2016 16:45:00 GMT</pubDate></item><item><title>Correlated noise and the FFT</title><link>http://kmdouglass.github.io/posts/correlated-noise-and-the-fft.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div tabindex="-1" id="notebook" class="border-box-sizing"&gt;
     &lt;div class="container" id="notebook-container"&gt;
 
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -438,7 +442,11 @@
 &lt;div class="output"&gt;
 
 
-&lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_area"&gt;
+
+&lt;div class="prompt"&gt;&lt;/div&gt;
+
+
 &lt;div class="output_subarea output_stream output_stdout output_text"&gt;
 &lt;pre&gt;Populating the interactive namespace from numpy and matplotlib
 &lt;/pre&gt;
@@ -449,8 +457,7 @@
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -483,7 +490,11 @@
 &lt;div class="output"&gt;
 
 
-&lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_area"&gt;
+
+&lt;div class="prompt"&gt;&lt;/div&gt;
+
+
 
 
 &lt;div class="output_png output_subarea "&gt;
@@ -496,8 +507,7 @@
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -526,7 +536,11 @@
 &lt;div class="output"&gt;
 
 
-&lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_area"&gt;
+
+&lt;div class="prompt"&gt;&lt;/div&gt;
+
+
 
 
 &lt;div class="output_png output_subarea "&gt;
@@ -539,8 +553,7 @@
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -549,8 +562,7 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -561,8 +573,7 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -612,7 +623,11 @@
 &lt;div class="output"&gt;
 
 
-&lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_area"&gt;
+
+&lt;div class="prompt"&gt;&lt;/div&gt;
+
+
 
 
 &lt;div class="output_png output_subarea "&gt;
@@ -625,8 +640,7 @@
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -642,7 +656,7 @@
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
 &lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;plot&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;real&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ifftshift&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;R&lt;/span&gt;&lt;span class="p"&gt;)),&lt;/span&gt;   &lt;span class="n"&gt;label&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'real part of R'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;plot&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;real&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ifftshift&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;F&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;R&lt;/span&gt;&lt;span class="p"&gt;)),&lt;/span&gt; &lt;span class="n"&gt;label&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;r'real part of F $\times$ R'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;plot&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;real&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ifftshift&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;F&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;R&lt;/span&gt;&lt;span class="p"&gt;)),&lt;/span&gt; &lt;span class="n"&gt;label&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="sa"&gt;r&lt;/span&gt;&lt;span class="s1"&gt;'real part of F $\times$ R'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;plot&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ifftshift&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;F&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;            &lt;span class="n"&gt;linewidth&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;label&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'F'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;xlim&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;xlabel&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Frequency'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -659,7 +673,11 @@
 &lt;div class="output"&gt;
 
 
-&lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_area"&gt;
+
+&lt;div class="prompt"&gt;&lt;/div&gt;
+
+
 
 
 &lt;div class="output_png output_subarea "&gt;
@@ -672,8 +690,7 @@
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -716,7 +733,11 @@
 &lt;div class="output"&gt;
 
 
-&lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_area"&gt;
+
+&lt;div class="prompt"&gt;&lt;/div&gt;
+
+
 
 
 &lt;div class="output_png output_subarea "&gt;
@@ -729,8 +750,7 @@
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -746,7 +766,7 @@
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
 &lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;plot&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;real&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ifftshift&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;R&lt;/span&gt;&lt;span class="p"&gt;)),&lt;/span&gt;          &lt;span class="n"&gt;label&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'real part of R'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;plot&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;real&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ifftshift&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;F_tophat&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;R&lt;/span&gt;&lt;span class="p"&gt;)),&lt;/span&gt; &lt;span class="n"&gt;label&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;r'real part of F $\times$ R'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;plot&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;real&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ifftshift&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;F_tophat&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;R&lt;/span&gt;&lt;span class="p"&gt;)),&lt;/span&gt; &lt;span class="n"&gt;label&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="sa"&gt;r&lt;/span&gt;&lt;span class="s1"&gt;'real part of F $\times$ R'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;plot&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ifftshift&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;F_tophat&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;            &lt;span class="n"&gt;linewidth&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;label&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'F'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;xlim&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;40&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;40&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;xlabel&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Frequency'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -763,7 +783,11 @@
 &lt;div class="output"&gt;
 
 
-&lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_area"&gt;
+
+&lt;div class="prompt"&gt;&lt;/div&gt;
+
+
 
 
 &lt;div class="output_png output_subarea "&gt;
@@ -776,8 +800,7 @@
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -786,8 +809,7 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -802,16 +824,16 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;h2 id="One-last-example:-1/f-noise"&gt;One last example: 1/f noise&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/correlated-noise-and-the-fft.html#One-last-example:-1/f-noise"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I realized the day after writing the draft of this post that the above discussion is useful for illustrating some of the "colored" noises. In this case, we use the ideas presented above to generate a realization of &lt;a href="https://en.wikipedia.org/wiki/Pink_noise"&gt;1/f noise&lt;/a&gt;, also known as &lt;em&gt;pink noise&lt;/em&gt; or &lt;em&gt;fractal noise&lt;/em&gt;.&lt;/p&gt;
 &lt;p&gt;Can you guess how the amplitude of the spectrum of 1/f noise varies?&lt;/p&gt;
-&lt;p&gt;Surprise! It actually varies as \( \frac{1}{f^{1/2}} \). This is because the &lt;strong&gt;power&lt;/strong&gt; spectrum of pink noise varies as 1/f; the &lt;strong&gt;amplitude&lt;/strong&gt; of the spectral components is the square root of the average power delivered by each component. The &lt;a href="https://en.wikipedia.org/wiki/Spectral_density#Energy_spectral_density"&gt;proper Wikipedia sections on energy and power spectral densities&lt;/a&gt; explain this. The difficulty in actually implementing this filter, though, is what happens as we approach the DC value \( f = 0 \) in frequency space. At this value the filter becomes infinite.&lt;/p&gt;
-&lt;p&gt;Instead, we can easily approximate a realization of pink noise with a filter that is one near the origin and quickly rolls off into a \( f^{-1/2} \) behavior. A function that does this is&lt;/p&gt;
-$$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$&lt;p&gt;The value \( a \) determines how quickly the function moves from a weak dependence on frequency to a \( f^{-1/2} \) dependence. For us, we should set it to a value that is relatively large compared to the frequency spacing in Fourier space. This type of filter is just a special case of the &lt;a href="https://en.wikipedia.org/wiki/Chebyshev_filter"&gt;Chebyshev filter&lt;/a&gt; that is well-known in signal processing circles.&lt;/p&gt;
+&lt;p&gt;Surprise! It actually varies as $ \frac{1}{f^{1/2}} $. This is because the &lt;strong&gt;power&lt;/strong&gt; spectrum of pink noise varies as 1/f; the &lt;strong&gt;amplitude&lt;/strong&gt; of the spectral components is the square root of the average power delivered by each component. The &lt;a href="https://en.wikipedia.org/wiki/Spectral_density#Energy_spectral_density"&gt;proper Wikipedia sections on energy and power spectral densities&lt;/a&gt; explain this. The difficulty in actually implementing this filter, though, is what happens as we approach the DC value $ f = 0 $ in frequency space. At this value the filter becomes infinite.&lt;/p&gt;
+&lt;p&gt;Instead, we can easily approximate a realization of pink noise with a filter that is one near the origin and quickly rolls off into a $ f^{-1/2} $ behavior. A function that does this is&lt;/p&gt;
+&lt;p&gt;$$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$&lt;/p&gt;
+&lt;p&gt;The value $ a $ determines how quickly the function moves from a weak dependence on frequency to a $ f^{-1/2} $ dependence. For us, we should set it to a value that is relatively large compared to the frequency spacing in Fourier space. This type of filter is just a special case of the &lt;a href="https://en.wikipedia.org/wiki/Chebyshev_filter"&gt;Chebyshev filter&lt;/a&gt; that is well-known in signal processing circles.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -861,7 +883,11 @@ $$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$&lt;p&gt;The value \( a \) deter
 &lt;div class="output"&gt;
 
 
-&lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_area"&gt;
+
+&lt;div class="prompt"&gt;&lt;/div&gt;
+
+
 
 
 &lt;div class="output_png output_subarea "&gt;
@@ -874,8 +900,7 @@ $$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$&lt;p&gt;The value \( a \) deter
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -890,7 +915,7 @@ $$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$&lt;p&gt;The value \( a \) deter
 &lt;div class="prompt input_prompt"&gt;In [10]:&lt;/div&gt;
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;plot&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;real&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ifftshift&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;F_pinkNoise&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;R&lt;/span&gt;&lt;span class="p"&gt;)),&lt;/span&gt; &lt;span class="n"&gt;label&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;r'real part of F $\times$ R'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;plot&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;real&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ifftshift&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;F_pinkNoise&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;R&lt;/span&gt;&lt;span class="p"&gt;)),&lt;/span&gt; &lt;span class="n"&gt;label&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="sa"&gt;r&lt;/span&gt;&lt;span class="s1"&gt;'real part of F $\times$ R'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;plot&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ifftshift&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;F_pinkNoise&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;            &lt;span class="n"&gt;linewidth&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;label&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'F'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;xlim&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;40&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;40&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;xlabel&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Frequency'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -907,7 +932,11 @@ $$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$&lt;p&gt;The value \( a \) deter
 &lt;div class="output"&gt;
 
 
-&lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_area"&gt;
+
+&lt;div class="prompt"&gt;&lt;/div&gt;
+
+
 
 
 &lt;div class="output_png output_subarea "&gt;
@@ -920,8 +949,7 @@ $$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$&lt;p&gt;The value \( a \) deter
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -940,8 +968,7 @@ $$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$&lt;p&gt;The value \( a \) deter
 </description><category>python</category><category>signal processing</category><guid>http://kmdouglass.github.io/posts/correlated-noise-and-the-fft.html</guid><pubDate>Sun, 28 Feb 2016 08:15:37 GMT</pubDate></item><item><title>Simulating microscope pupil functions</title><link>http://kmdouglass.github.io/posts/simulating-microscope-pupil-functions.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div tabindex="-1" id="notebook" class="border-box-sizing"&gt;
     &lt;div class="container" id="notebook-container"&gt;
 
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -953,20 +980,22 @@ $$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$&lt;p&gt;The value \( a \) deter
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;h3 id="Pupil-Function-Basics"&gt;Pupil Function Basics&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-microscope-pupil-functions.html#Pupil-Function-Basics"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The pupil function of a microscope (and really, of any optical system) is an important tool for analyzing the aberrations present in the system. The pupil function is defined as the two dimensional Fourier transform of the image of an isotropic point source. &lt;a href="http://mathworld.wolfram.com/FourierTransform.html"&gt;The two dimensional Fourier transform&lt;/a&gt; of a function of two variables x and y is expressed as&lt;/p&gt;
-$$F \left( k_x, k_y \right) = \iint f \left( x, y \right) \exp \left[ -j \left( k_{x}x + k_{y}y \right) \right] dx dy$$&lt;p&gt;(I was originally trained as an engineer, so I tend to use 'j' for the imaginary number more than 'i'.) The inverse Fourier transform converts \(F \left( k_x, k_y \right)\) back into \(f \left( x, y \right)\) and is given by&lt;/p&gt;
-$$f \left( x, y \right) = \iint F \left( k_x, k_y \right) \exp \left[ j \left( k_{x}x + k_{y}y \right) \right] dk_x dk_y$$&lt;p&gt;In this case, \(x\) and \(y\) are variables representing 2D coordinates in the image plane and \(k_x\) and \(k_y\) are the spatial frequencies. \(f \left( x, y \right)\) and \(F \left( k_x, k_y \right)\) are known as Fourier transform pairs.&lt;/p&gt;
+&lt;p&gt;$$F \left( k_x, k_y \right) = \iint f \left( x, y \right) \exp \left[ -j \left( k_{x}x + k_{y}y \right) \right] dx dy$$&lt;/p&gt;
+&lt;p&gt;(I was originally trained as an engineer, so I tend to use 'j' for the imaginary number more than 'i'.) The inverse Fourier transform converts $F \left( k_x, k_y \right)$ back into $f \left( x, y \right)$ and is given by&lt;/p&gt;
+&lt;p&gt;$$f \left( x, y \right) = \iint F \left( k_x, k_y \right) \exp \left[ j \left( k_{x}x + k_{y}y \right) \right] dk_x dk_y$$&lt;/p&gt;
+&lt;p&gt;In this case, $x$ and $y$ are variables representing 2D coordinates in the image plane and $k_x$ and $k_y$ are the spatial frequencies. $f \left( x, y \right)$ and $F \left( k_x, k_y \right)$ are known as Fourier transform pairs.&lt;/p&gt;
 &lt;p&gt;An isotropic point source is an idealized source of electromagnetic radiation that emits an equal intensity in all directions. Strictly speaking, real sources such as atoms and molecules are dipoles and not isotropic emitters. This assumption is however a good model for collections of many fluorescent molecules possessing dipole moments that are all pointing in different directions and that are smaller than the wavelength of light because the molecules' individual emission patterns average out. It is also a good approximation for a dipole whose moment is randomly reorienting in many directions during an image acquisition due to thermally-induced rotational diffusion.&lt;/p&gt;
 &lt;p&gt;The image of a point source is known as the &lt;a href="https://en.wikipedia.org/wiki/Point_spread_function"&gt;point spread function (PSF)&lt;/a&gt; of the microscope. In signal processing, it's known as a two dimensional impulse response.&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://www.msg.ucsf.edu/agard/Publications/148-Agard-JMicrosc-2004.pdf"&gt;The equation&lt;/a&gt; that relates the image of the isotropic point source to the pupil function \(P \left( k_x, k_y \right)\) is&lt;/p&gt;
-$$\text{PSF}_{\text{A}} \left( x, y \right) = \iint P \left( k_x, k_y \right) \exp \left[ -j \left( k_{x}x + k_{y}y \right) \right] dx dy$$&lt;p&gt;The subscript &lt;code&gt;A&lt;/code&gt; on the PSF stands for &lt;em&gt;amplitude&lt;/em&gt; and means that we are working with the electric field, not the &lt;a href="https://en.wikipedia.org/wiki/Irradiance"&gt;irradiance&lt;/a&gt;. The irradiance, which is what a camera or your eye measures, is proportional to the absolute square of \(\text{PSF}_{\text{A}}\). In words, the above equation restates the definition above: the pupil function and the amplitude PSF are Fourier transform pairs.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.msg.ucsf.edu/agard/Publications/148-Agard-JMicrosc-2004.pdf"&gt;The equation&lt;/a&gt; that relates the image of the isotropic point source to the pupil function $P \left( k_x, k_y \right)$ is&lt;/p&gt;
+&lt;p&gt;$$\text{PSF}_{\text{A}} \left( x, y \right) = \iint P \left( k_x, k_y \right) \exp \left[ -j \left( k_{x}x + k_{y}y \right) \right] dx dy$$&lt;/p&gt;
+&lt;p&gt;The subscript &lt;code&gt;A&lt;/code&gt; on the PSF stands for &lt;em&gt;amplitude&lt;/em&gt; and means that we are working with the electric field, not the &lt;a href="https://en.wikipedia.org/wiki/Irradiance"&gt;irradiance&lt;/a&gt;. The irradiance, which is what a camera or your eye measures, is proportional to the absolute square of $\text{PSF}_{\text{A}}$. In words, the above equation restates the definition above: the pupil function and the amplitude PSF are Fourier transform pairs.&lt;/p&gt;
 &lt;h3 id="Simulating-Diffraction-Limited-Pupil-Functions-and-PSF's"&gt;Simulating Diffraction Limited Pupil Functions and PSF's&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-microscope-pupil-functions.html#Simulating-Diffraction-Limited-Pupil-Functions-and-PSF's"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;We can simulate how an aberration affects the image of a point source by simulating an aberrated pupil function and computing the Fourier transform above to get the amplitude PSF. The easiest model to simulate is based on scalar diffraction theory, which means that we ignore the fact that the electromagnetic radiation is polarized (i.e. a vector) and treat it as a scalar quantity instead. Even though this is an approximation, it still can give us a good idea about the fundamental physics involved.&lt;/p&gt;
-&lt;p&gt;To perform the simulation, we must first discretize the continuous quantities in the Fourier transform. We'll model \(\text{PSF}_{\text{A}}\) and \(P \left( k_x, k_y \right)\) as discrete scalar quantities on 2D grids and perform a &lt;a href="https://en.wikipedia.org/wiki/Fast_Fourier_transform"&gt;fast Fourier transform&lt;/a&gt; to turn the pupil function into the PSF.&lt;/p&gt;
+&lt;p&gt;To perform the simulation, we must first discretize the continuous quantities in the Fourier transform. We'll model $\text{PSF}_{\text{A}}$ and $P \left( k_x, k_y \right)$ as discrete scalar quantities on 2D grids and perform a &lt;a href="https://en.wikipedia.org/wiki/Fast_Fourier_transform"&gt;fast Fourier transform&lt;/a&gt; to turn the pupil function into the PSF.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -991,7 +1020,11 @@ $$\text{PSF}_{\text{A}} \left( x, y \right) = \iint P \left( k_x, k_y \right) \e
 &lt;div class="output"&gt;
 
 
-&lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_area"&gt;
+
+&lt;div class="prompt"&gt;&lt;/div&gt;
+
+
 &lt;div class="output_subarea output_stream output_stdout output_text"&gt;
 &lt;pre&gt;Using matplotlib backend: Qt4Agg
 Populating the interactive namespace from numpy and matplotlib
@@ -1017,8 +1050,7 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -1040,8 +1072,7 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -1066,8 +1097,7 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -1091,17 +1121,16 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;When working with discrete Fourier transforms, a common question that arises is "What are the units of the Fourier transform variable?" We can answer this question by these rules:&lt;/p&gt;
-&lt;blockquote&gt;&lt;p&gt;\(k_{Max} \propto \frac{1}{dx}\)&lt;/p&gt;
-&lt;p&gt;\(x_{Max} \propto \frac{1}{dk}\)&lt;/p&gt;
+&lt;blockquote&gt;&lt;p&gt;$k_{Max} \propto \frac{1}{dx}$&lt;/p&gt;
+&lt;p&gt;$x_{Max} \propto \frac{1}{dk}$&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;These two rules are just a manifestation of the &lt;a href="https://en.wikipedia.org/wiki/Nyquist%E2%80%93Shannon_sampling_theorem"&gt;Nyquist-Shannon sampling criterion&lt;/a&gt;: the maximum spatial frequency \( k_{Max} \) is determined by the inverse of the sampling period in space \(dx\), while the maximum size \(x_{Max}\) of the signal is proportional to the inverse of the period of spatial frequency samples \(dk\). This is why the maximum spatial frequency above is \(2 \pi / \text{pixelSize}\). I will go into more detail on this in a later post.&lt;/p&gt;
-&lt;p&gt;The pupil function of a microscope is non-zero for values of \(\left( k_x, k_y \right)\) such that \(k_x^2 + k_y^2 \leq \frac{2 \pi NA}{\lambda}\). The quantity \(\frac{2 \pi NA}{\lambda}\) is represented by &lt;code&gt;kNA&lt;/code&gt; above. The size of a pixel &lt;code&gt;dk&lt;/code&gt; in spatial frequency units (radians per distance) is inversely proportional to the maximum size of the image in pixels, or &lt;code&gt;imgSize * pixelSize&lt;/code&gt;. Likewise, the size of a pixel in microns is proportional to the inverse of the maximum size of the pupil function in spatial frequencies. This is just a manifestation of the properties of Fourier transform pairs.&lt;/p&gt;
+&lt;p&gt;These two rules are just a manifestation of the &lt;a href="https://en.wikipedia.org/wiki/Nyquist%E2%80%93Shannon_sampling_theorem"&gt;Nyquist-Shannon sampling criterion&lt;/a&gt;: the maximum spatial frequency $ k\_{Max} $ is determined by the inverse of the sampling period in space $dx$, while the maximum size $x\_{Max}$ of the signal is proportional to the inverse of the period of spatial frequency samples $dk$. This is why the maximum spatial frequency above is $2 \pi / \text{pixelSize}$. I will go into more detail on this in a later post.&lt;/p&gt;
+&lt;p&gt;The pupil function of a microscope is non-zero for values of $\left( k_x, k_y \right)$ such that $k_x^2 + k_y^2 \leq \frac{2 \pi NA}{\lambda}$. The quantity $\frac{2 \pi NA}{\lambda}$ is represented by &lt;code&gt;kNA&lt;/code&gt; above. The size of a pixel &lt;code&gt;dk&lt;/code&gt; in spatial frequency units (radians per distance) is inversely proportional to the maximum size of the image in pixels, or &lt;code&gt;imgSize * pixelSize&lt;/code&gt;. Likewise, the size of a pixel in microns is proportional to the inverse of the maximum size of the pupil function in spatial frequencies. This is just a manifestation of the properties of Fourier transform pairs.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -1127,7 +1156,11 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;div class="output"&gt;
 
 
-&lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_area"&gt;
+
+&lt;div class="prompt"&gt;&lt;/div&gt;
+
+
 &lt;div class="output_subarea output_stream output_stdout output_text"&gt;
 &lt;pre&gt;kmin : -31.354686913020938
 kmax : 31.354686913020036
@@ -1140,8 +1173,7 @@ Size of kx : 513
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -1175,7 +1207,11 @@ Size of kx : 513
 &lt;div class="output"&gt;
 
 
-&lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_area"&gt;
+
+&lt;div class="prompt"&gt;&lt;/div&gt;
+
+
 
 
 &lt;div class="output_png output_subarea "&gt;
@@ -1188,8 +1224,7 @@ Size of kx : 513
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -1238,7 +1273,11 @@ Size of kx : 513
 &lt;div class="output"&gt;
 
 
-&lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_area"&gt;
+
+&lt;div class="prompt"&gt;&lt;/div&gt;
+
+
 
 
 &lt;div class="output_png output_subarea "&gt;
@@ -1251,8 +1290,7 @@ Size of kx : 513
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -1289,7 +1327,11 @@ Size of kx : 513
 &lt;div class="output"&gt;
 
 
-&lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_area"&gt;
+
+&lt;div class="prompt"&gt;&lt;/div&gt;
+
+
 
 
 &lt;div class="output_png output_subarea "&gt;
@@ -1302,8 +1344,7 @@ Size of kx : 513
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -1313,13 +1354,13 @@ Size of kx : 513
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Let's see how a line profile through the center of the image looks relative to the profile of the &lt;a href="https://en.wikipedia.org/wiki/Airy_disk"&gt;Airy disk&lt;/a&gt;, which is the mathematical solution to the diffraction pattern from a circular aperture in scalar diffraction theory. The Airy disk is given by&lt;/p&gt;
-$$I \left( X \right) = I_{0} \left[ \frac{2J_{1} \left( X \right)}{X} \right]^2$$&lt;p&gt;where \(J_{1} \left( X \right) \) is the Bessel function of the first kind and order 1 and \( X = \frac{2 \pi r  (\text{NA})}{\lambda} \). Here, \(r\) is the distance from the center of the image plane, so we can easily convert it to pixels.&lt;/p&gt;
+&lt;p&gt;$$I \left( X \right) = I_{0} \left[ \frac{2J_{1} \left( X \right)}{X} \right]^2$$&lt;/p&gt;
+&lt;p&gt;where $J_{1} \left( X \right) $ is the Bessel function of the first kind and order 1 and $ X = \frac{2 \pi r  (\text{NA})}{\lambda} $. Here, $r$ is the distance from the center of the image plane, so we can easily convert it to pixels.&lt;/p&gt;
 &lt;p&gt;Because the pupil of the microscope is circular and unaberrated, it is also the solution for PSF of the microscope.&lt;/p&gt;
 
 &lt;/div&gt;
@@ -1357,14 +1398,22 @@ $$I \left( X \right) = I_{0} \left[ \frac{2J_{1} \left( X \right)}{X} \right]^2$
 &lt;div class="output"&gt;
 
 
-&lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_area"&gt;
+
+&lt;div class="prompt"&gt;&lt;/div&gt;
+
+
 &lt;div class="output_subarea output_stream output_stderr output_text"&gt;
 &lt;pre&gt;/home/douglass/anaconda3/lib/python3.5/site-packages/ipykernel/__main__.py:4: RuntimeWarning: invalid value encountered in true_divide
 &lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_area"&gt;
+
+&lt;div class="prompt"&gt;&lt;/div&gt;
+
+
 
 
 &lt;div class="output_png output_subarea "&gt;
@@ -1377,8 +1426,7 @@ $$I \left( X \right) = I_{0} \left[ \frac{2J_{1} \left( X \right)}{X} \right]^2$
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -1387,15 +1435,15 @@ $$I \left( X \right) = I_{0} \left[ \frac{2J_{1} \left( X \right)}{X} \right]^2$
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;h3 id="Defocus"&gt;Defocus&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-microscope-pupil-functions.html#Defocus"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Now that we can simulate the diffraction-limited image of an &lt;em&gt;in-focus&lt;/em&gt; isotropic point source, let's add some defocus to demonstrate what the PSF would look like as the camera or sample is scanned along the axial direction.&lt;/p&gt;
 &lt;p&gt;Defocus can be added in numerous ways. One is to multiply our pupil function by the phase aberration for defocus, which is usually modeled as a parabolic phase aberration in the pupil coordinates. However, &lt;a href="http://kmdouglass.github.io/posts/beware-the-paraxial-approximation-in-microscopy.html"&gt;as I explained in a previous post&lt;/a&gt;, this is an approximate model for defocus and fails for large numerical apertures.&lt;/p&gt;
 &lt;p&gt;Another simple way is to propagate the plane wave angular spectrum in the image plane to nearby planes. This relatively easy method is used in a well-known microscopy paper (&lt;a href="http://onlinelibrary.wiley.com/doi/10.1111/j.0022-2720.2004.01393.x/abstract"&gt;Hanser, 2004&lt;/a&gt;) and involves multiplying the pupil function by a defocus kernel before performing the Fourier transform.&lt;/p&gt;
-$$\text{PSF}_{\text{A}} \left( x, y, z \right) = \iint P \left( k_x, k_y \right) \exp \left( j k_{z} z \right) \exp \left[ -j \left( k_{x}x + k_{y}y \right) \right] dx dy$$&lt;p&gt;Here, \(k_z = \sqrt{\left( 2 \pi n / \lambda \right)^2 - k_x^2 - k_y^2}\). The defocus kernel essentially shifts the phase of each plane wave with pupil coordinates \(\left( k_x, k_y \right)\) by an amount that depends on its coordinates and the distance from the image plane \(z\).&lt;/p&gt;
+&lt;p&gt;$$\text{PSF}_{\text{A}} \left( x, y, z \right) = \iint P \left( k_x, k_y \right) \exp \left( j k_{z} z \right) \exp \left[ -j \left( k_{x}x + k_{y}y \right) \right] dx dy$$&lt;/p&gt;
+&lt;p&gt;Here, $k_z = \sqrt{\left( 2 \pi n / \lambda \right)^2 - k_x^2 - k_y^2}$. The defocus kernel essentially shifts the phase of each plane wave with pupil coordinates $\left( k_x, k_y \right)$ by an amount that depends on its coordinates and the distance from the image plane $z$.&lt;/p&gt;
 &lt;p&gt;The above equation means that we can model the PSF behavior as we scan through the focal plane by computing the defocus kernel for different distances from focus. Then, we multiply our perfect pupil by this defocus kernel and compute its Fourier transform to get the amplitude and irradiance PSF's.&lt;/p&gt;
 
 &lt;/div&gt;
@@ -1424,8 +1472,7 @@ $$\text{PSF}_{\text{A}} \left( x, y, z \right) = \iint P \left( k_x, k_y \right)
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -1472,7 +1519,11 @@ $$\text{PSF}_{\text{A}} \left( x, y, z \right) = \iint P \left( k_x, k_y \right)
 &lt;div class="output"&gt;
 
 
-&lt;div class="output_area"&gt;&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_area"&gt;
+
+&lt;div class="prompt"&gt;&lt;/div&gt;
+
+
 
 
 &lt;div class="output_png output_subarea "&gt;
@@ -1485,8 +1536,7 @@ $$\text{PSF}_{\text{A}} \left( x, y, z \right) = \iint P \left( k_x, k_y \right)
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;

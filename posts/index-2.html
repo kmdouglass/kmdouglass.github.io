@@ -8,19 +8,13 @@
 <link href="../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
 <link href="../assets/css/ipython.min.css" rel="stylesheet" type="text/css">
 <link href="../assets/css/nikola_ipython.css" rel="stylesheet" type="text/css">
-<meta content="#5670d4" name="theme-color">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
 <link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml">
 <link rel="canonical" href="http://kmdouglass.github.io/posts/index-2.html">
 <link rel="prev" href="index-3.html" type="text/html">
 <link rel="next" href="index-1.html" type="text/html">
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-    tex2jax: {
-        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-        processEscapes: true
-    }
-});
-</script><!--[if lt IE 9]><script src="../assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<!--[if lt IE 9]><script src="../assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -78,10 +72,13 @@ MathJax.Hub.Config({
             
 
     
+
+
+    
 <div class="postindex">
     <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="thoughts-from-the-swiss-photonics-machine-learning-workshop.html" class="u-url">Thoughts from the Swiss Photonics Machine Learning Workshop</a></h1>
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
             <p class="dateline"><a href="thoughts-from-the-swiss-photonics-machine-learning-workshop.html" rel="bookmark"><time class="published dt-published" datetime="2016-02-04T18:31:32+01:00" title="2016-02-04 18:31">2016-02-04 18:31</time></a></p>
@@ -155,7 +152,7 @@ traffic light control.
     </div>
     </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html" class="u-url">Approximating diffraction patterns of rectangular apertures with the FFT</a></h1>
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
             <p class="dateline"><a href="approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html" rel="bookmark"><time class="published dt-published" datetime="2016-02-01T10:54:23+01:00" title="2016-02-01 10:54">2016-02-01 10:54</time></a></p>
@@ -209,7 +206,10 @@ traffic light control.
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Using matplotlib backend: Qt4Agg
 Populating the interactive namespace from numpy and matplotlib
@@ -229,12 +229,17 @@ Populating the interactive namespace from numpy and matplotlib
 <h2 id="Scalar-diffraction-theory-for-a-1D-slit">Scalar diffraction theory for a 1D slit<a class="anchor-link" href="approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html#Scalar-diffraction-theory-for-a-1D-slit">¶</a>
 </h2>
 <p><a href="https://books.google.ch/books/about/Introduction_to_Fourier_Optics.html?id=ow5xs_Rtt9AC&amp;redir_esc=y">Goodman</a> and <a href="https://en.wikipedia.org/wiki/Fraunhofer_diffraction_%28mathematics%29#Examples_of_Fraunhofer_diffraction_with_a_normally_incident_monochromatic_plane_wave">many others</a> have shown that the far-field (also known as Fraunhofer) solution to the diffracted electric field from a rectangular aperture is proportional to the Fourier transform of the field distribution in the aperture. This fact follows directly from applying the Fraunhofer approximation to the diffraction integral developed by Huygens and Fresnel (<a href="https://books.google.ch/books/about/Introduction_to_Fourier_Optics.html?id=ow5xs_Rtt9AC&amp;redir_esc=y">Goodman</a>).</p>
-<p>For both convenience and numerical efficiency, I will focus on the one-dimensional analog to this problem: diffraction from an infinitely-long slit with width \( a \). If there is an incident monochromatic plane wave with amplitude \(E_0\) traveling in the z-direction perpendicular to a slit in the \(z=0\) plane, then the Fraunhofer diffraction pattern for the field is expressed by the equation</p>
-$$U \left(x', z \right) = \frac{e^{jkz} e^{ jk\frac{x'^2}{2z} }}{\sqrt{j \lambda z}} \int_{-\infty}^{\infty} u \left( x, z = 0 \right) \exp \left( -j \frac{2 \pi}{\lambda z} xx'\right) dx $$<p>with \(u \left( x, z = 0 \right) = E_0 \) denoting the incident field, \( k = \frac{2 \pi}{\lambda} \) representing the freespace wavenumber, \( x = 0 \) and \( x' = 0 \) the center planes of the slit and diffraction patterns, respectively, and \( j \) the imaginary number. The factor \( \sqrt{j \lambda z} \) comes from <a href="https://www.kth.se/polopoly_fs/1.569752!/Gaussian%20beams.pdf">separating the solution to the 2D Huygens-Fresnel integral into two, 1D solutions</a>. The irradiance in the z-planes after the slit is <a href="https://en.wikipedia.org/wiki/Poynting_vector">proportional to the absolute square of the field</a>,</p>
-$$I \left( x', z \right) \propto \left| U \left( x', z \right) \right|^2$$<p>Taking the absolute square eliminates the complex exponentials preceding the integral so that the irradiance profile becomes</p>
-$$I \left( x', z \right) \propto \frac{1}{\lambda z} \left| \int_{-\infty}^{\infty} u \left( x \right) \exp \left( -j \frac{2 \pi}{\lambda z} xx'\right) dx \right|^2 = \frac{1}{\lambda z} \left| \mathcal{F} \left[ u \left( x, z \right) \right] \left( \frac{x'}{\lambda z}\right) \right|^2 $$<p>This expression means that the irradiance describing the Fraunhofer diffraction pattern from slit is proportional to the absolute square of the Fourier transform of the field at the aperture evaluted at spatial frequencies \( f_{x} = x' / \lambda z\). To arrive at the analytical solution, we perform the integration over a region where the slit is not opaque, \( \left[ -a/2, a/2 \right] \). Inside this region, the field is simply \( u \left( x \right) = E_0 \) because we have a monochromatic plane wave with this amplitude.</p>
-$$ \mathcal{F}\left[ u \left( x, z \right) \right] = \int_{-a/2}^{a/2} E_0 \exp \left( -j \frac{2 \pi}{\lambda z} xx'\right) dx $$<p>The analytical solution to this integral is</p>
-$$ \mathcal{F}\left[ u \left( x, z \right) \right] = a E_0 \text{sinc} \left( \frac{ax'}{\lambda z} \right) $$<p>where \( \text{sinc} \left( x \right) = \frac{\sin{\pi x}}{\pi x}\). The far-field irradiance is therefore the absolute square of this quantity divided by the product of the wavelength and the propagation distance.</p>
+<p>For both convenience and numerical efficiency, I will focus on the one-dimensional analog to this problem: diffraction from an infinitely-long slit with width $ a $. If there is an incident monochromatic plane wave with amplitude $E_0$ traveling in the z-direction perpendicular to a slit in the $z=0$ plane, then the Fraunhofer diffraction pattern for the field is expressed by the equation</p>
+<p>$$U \left(x', z \right) = \frac{e^{jkz} e^{ jk\frac{x'^2}{2z} }}{\sqrt{j \lambda z}} \int_{-\infty}^{\infty} u \left( x, z = 0 \right) \exp \left( -j \frac{2 \pi}{\lambda z} xx'\right) dx $$</p>
+<p>with $u \left( x, z = 0 \right) = E_0 $ denoting the incident field, $ k = \frac{2 \pi}{\lambda} $ representing the freespace wavenumber, $ x = 0 $ and $ x' = 0 $ the center planes of the slit and diffraction patterns, respectively, and $ j $ the imaginary number. The factor $ \sqrt{j \lambda z} $ comes from <a href="https://www.kth.se/polopoly_fs/1.569752!/Gaussian%20beams.pdf">separating the solution to the 2D Huygens-Fresnel integral into two, 1D solutions</a>. The irradiance in the z-planes after the slit is <a href="https://en.wikipedia.org/wiki/Poynting_vector">proportional to the absolute square of the field</a>,</p>
+<p>$$I \left( x', z \right) \propto \left| U \left( x', z \right) \right|^2$$</p>
+<p>Taking the absolute square eliminates the complex exponentials preceding the integral so that the irradiance profile becomes</p>
+<p>$$I \left( x', z \right) \propto \frac{1}{\lambda z} \left| \int_{-\infty}^{\infty} u \left( x \right) \exp \left( -j \frac{2 \pi}{\lambda z} xx'\right) dx \right|^2 = \frac{1}{\lambda z} \left| \mathcal{F} \left[ u \left( x, z \right) \right] \left( \frac{x'}{\lambda z}\right) \right|^2 $$</p>
+<p>This expression means that the irradiance describing the Fraunhofer diffraction pattern from slit is proportional to the absolute square of the Fourier transform of the field at the aperture evaluted at spatial frequencies $ f_{x} = x' / \lambda z$. To arrive at the analytical solution, we perform the integration over a region where the slit is not opaque, $ \left[ -a/2, a/2 \right] $. Inside this region, the field is simply $ u \left( x \right) = E_0 $ because we have a monochromatic plane wave with this amplitude.</p>
+<p>$$ \mathcal{F}\left[ u \left( x, z \right) \right] = \int_{-a/2}^{a/2} E_0 \exp \left( -j \frac{2 \pi}{\lambda z} xx'\right) dx $$</p>
+<p>The analytical solution to this integral is</p>
+<p>$$ \mathcal{F}\left[ u \left( x, z \right) \right] = a E_0 \text{sinc} \left( \frac{ax'}{\lambda z} \right) $$</p>
+<p>where $ \text{sinc} \left( x \right) = \frac{\sin{\pi x}}{\pi x}$. The far-field irradiance is therefore the absolute square of this quantity divided by the product of the wavelength and the propagation distance.</p>
 <p>Let's plot the analytically-determined irradiance profile of the diffraction pattern:</p>
 
 </div>
@@ -265,7 +270,7 @@ $$ \mathcal{F}\left[ u \left( x, z \right) \right] = a E_0 \text{sinc} \left( \f
 
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">I</span><span class="p">,</span> <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">((</span><span class="o">-</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">r'Position in observation plane, $\mu m$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'Position in observation plane, $\mu m$'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Power density, $V^2 / \mu m$'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -280,7 +285,10 @@ $$ \mathcal{F}\left[ u \left( x, z \right) \right] = a E_0 \text{sinc} \left( \f
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -299,11 +307,15 @@ $$ \mathcal{F}\left[ u \left( x, z \right) \right] = a E_0 \text{sinc} \left( \f
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We can also verify a few key properties of the Fourier transform and ensure that our units are correct. The most important property is the conservation of energy, which in signal processing is often known as <a href="https://en.wikipedia.org/wiki/Parseval%27s_theorem">Parseval's theorem</a>. In our case, conservation of energy means that the integral of the field over the slit must equal the integral of the field in any arbitrary z-plane.</p>
-$$\int_{-\infty}^{\infty} \left| u \left( x, z = 0 \right) \right|^2 dx = \int_{-\infty}^{\infty} \left| U \left( x', z \right) \right|^2 dx'$$<p>where the spatial frequency is \( f_{x} = \frac{x'}{\lambda z} \). Because the incident field is a plane wave, the integral over the slit is just the square of the plane wave amplitude multiplied by the slit width:</p>
-$$\int_{-a/2}^{a/2} E_0^2 dx = aE_0^2$$<p>We need the square integral to be proportional to units of power, which will be true if the field has units of \( \frac{\text{Volts}}{\sqrt{\mu m}} \) and not the more familiar \( \frac{\text{Volts}}{\mu m} \). This peculiarity stems from the fact that we're looking at a somewhat synthetic 1D case. With this in mind, the square integral has units of \( \text{Volts}^2 \) and is proportional to the power delivered by the plane wave.</p>
+<p>$$\int_{-\infty}^{\infty} \left| u \left( x, z = 0 \right) \right|^2 dx = \int_{-\infty}^{\infty} \left| U \left( x', z \right) \right|^2 dx'$$</p>
+<p>where the spatial frequency is $ f_{x} = \frac{x'}{\lambda z} $. Because the incident field is a plane wave, the integral over the slit is just the square of the plane wave amplitude multiplied by the slit width:</p>
+<p>$$\int_{-a/2}^{a/2} E_0^2 dx = aE_0^2$$</p>
+<p>We need the square integral to be proportional to units of power, which will be true if the field has units of $ \frac{\text{Volts}}{\sqrt{\mu m}} $ and not the more familiar $ \frac{\text{Volts}}{\mu m} $. This peculiarity stems from the fact that we're looking at a somewhat synthetic 1D case. With this in mind, the square integral has units of $ \text{Volts}^2 $ and is proportional to the power delivered by the plane wave.</p>
 <p>The absolute square of the diffracted field is</p>
-$$ \left| U \left( x', z \right) \right|^2 = \frac{a^2 E_0^2}{\lambda z} \text{sinc}^2 \left( \frac{a x'}{\lambda z} \right)$$<p>The integral of \( \text{sinc}^2 \left( x \right) \) with my definition of \( \text{sinc} \left( x \right) \) <a href="http://math.stackexchange.com/questions/903117/integral-of-sinc-function-squared-over-the-real-line">over the real number line</a> is just 1, so</p>
-$$ \int_{-\infty}^{\infty} \left| U \left( x', z \right) \right|^2 dx' = \frac{a^2 E_0^2}{\lambda z} \times \frac{\lambda z}{a} = aE_0^2$$<p>All of this is essentially a verification that our units and prefactors have most likely been handled correctly. Most Fourier optics texts drop a lot of prefactors in their derivations, so it's always good to check that they've done everything correctly :)</p>
+<p>$$ \left| U \left( x', z \right) \right|^2 = \frac{a^2 E_0^2}{\lambda z} \text{sinc}^2 \left( \frac{a x'}{\lambda z} \right)$$</p>
+<p>The integral of $ \text{sinc}^2 \left( x \right) $ with my definition of $ \text{sinc} \left( x \right) $ <a href="http://math.stackexchange.com/questions/903117/integral-of-sinc-function-squared-over-the-real-line">over the real number line</a> is just 1, so</p>
+<p>$$ \int_{-\infty}^{\infty} \left| U \left( x', z \right) \right|^2 dx' = \frac{a^2 E_0^2}{\lambda z} \times \frac{\lambda z}{a} = aE_0^2$$</p>
+<p>All of this is essentially a verification that our units and prefactors have most likely been handled correctly. Most Fourier optics texts drop a lot of prefactors in their derivations, so it's always good to check that they've done everything correctly :)</p>
 
 </div>
 </div>
@@ -334,7 +346,10 @@ $$ \int_{-\infty}^{\infty} \left| U \left( x', z \right) \right|^2 dx' = \frac{a
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>The input power is 5.0000 square Volts. The output power is 5.0373 square Volts
 </pre>
@@ -353,7 +368,7 @@ $$ \int_{-\infty}^{\infty} \left| U \left( x', z \right) \right|^2 dx' = \frac{a
 <h2 id="Simulating-slit-diffraction-with-the-FFT">Simulating slit diffraction with the FFT<a class="anchor-link" href="approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html#Simulating-slit-diffraction-with-the-FFT">¶</a>
 </h2>
 <p>Can we simply use the FFT in Python's Scipy or in MATLAB to arrive at the same solution as above, skipping the math in the process? Let's try it.</p>
-<p>We'll start by defining a square slit centered at the origin with the same width as above. The incident field is a plane wave with amplitude \(E_0 = 1 \, V / \sqrt{m} \).</p>
+<p>We'll start by defining a square slit centered at the origin with the same width as above. The incident field is a plane wave with amplitude $E_0 = 1 \, V / \sqrt{m} $.</p>
 
 </div>
 </div>
@@ -369,8 +384,8 @@ $$ \int_{-\infty}^{\infty} \left| U \left( x', z \right) \right|^2 dx' = \frac{a
 <span class="n">field</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="o">-</span><span class="n">slitWidth</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="n">slitWidth</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)]</span> <span class="o">=</span> <span class="n">amplitude</span> <span class="o">+</span> <span class="mi">0</span><span class="n">j</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">field</span><span class="p">),</span> <span class="s1">'.'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">r'x-position, $\mu m$'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">r'Field amplitude, $V / \sqrt{\mu m}$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'x-position, $\mu m$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'Field amplitude, $V / \sqrt{\mu m}$'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -385,7 +400,10 @@ $$ \int_{-\infty}^{\infty} \left| U \left( x', z \right) \right|^2 dx' = \frac{a
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -414,8 +432,8 @@ $$ \int_{-\infty}^{\infty} \left| U \left( x', z \right) \right|^2 dx' = \frac{a
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">field</span><span class="p">),</span> <span class="s1">'.'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">r'x-position, $\mu m$'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">r'Field amplitude, $V / \sqrt{\mu m}$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'x-position, $\mu m$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'Field amplitude, $V / \sqrt{\mu m}$'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">((</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">((</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
@@ -431,7 +449,10 @@ $$ \int_{-\infty}^{\infty} \left| U \left( x', z \right) \right|^2 dx' = \frac{a
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -449,8 +470,9 @@ $$ \int_{-\infty}^{\infty} \left| U \left( x', z \right) \right|^2 dx' = \frac{a
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Let's go ahead now and compute the FFT of this sequence of field samples. We first need to figure out what the units of the FFT are going to be. The sampling frequency \(f_S\) for this field is simply 1 divided by the distance between each sample. The FFT outputs an array of numbers from spatial frequency 0 up to \( \left( \frac{N-1}{N} \right) f_S \). By default, the length of the output array \( N \) is the same as the length of the input. In Python, array indexes start from 0, so the relationship between index \( i \) and spatial frequency is</p>
-$$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/viewcontent.cgi?article=1006&amp;context=engineering_fac">In MATLAB</a>, array indexes start at 1 so \(i\) above should be replaced by \(i - 1\) .)</p>
+<p>Let's go ahead now and compute the FFT of this sequence of field samples. We first need to figure out what the units of the FFT are going to be. The sampling frequency $f_S$ for this field is simply 1 divided by the distance between each sample. The FFT outputs an array of numbers from spatial frequency 0 up to $ \left( \frac{N-1}{N} \right) f_S $. By default, the length of the output array $ N $ is the same as the length of the input. In Python, array indexes start from 0, so the relationship between index $ i $ and spatial frequency is</p>
+<p>$$ f_{x} = \frac{f_S}{N} i $$</p>
+<p>(<a href="http://scholarsarchive.jwu.edu/cgi/viewcontent.cgi?article=1006&amp;context=engineering_fac">In MATLAB</a>, array indexes start at 1 so $i$ above should be replaced by $i - 1$ .)</p>
 <p>We also need to do two other things when computing the numerical Fourier transform. First, we need to shift the input field using the <code>fftshift</code> command for arrays with an even number of elements and <code>ifftshift</code> for arrays with an odd number of elements. This will shift the elements of the array so that the point corresponding to x = 0 lies in the first element of the array (index 0).</p>
 <p>The second thing we must do is multiply the fft results by the grid spacing <code>dx</code> to ensure that the scaling on the y-axis is correct.</p>
 
@@ -471,8 +493,8 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 <span class="c1"># Plot the field up to the Nyquist frequency, fS / 2</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="n">f</span> <span class="o">&lt;=</span> <span class="n">fS</span> <span class="o">/</span> <span class="mi">2</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">diffractedField</span><span class="p">[</span><span class="n">f</span> <span class="o">&lt;=</span> <span class="n">fS</span> <span class="o">/</span> <span class="mi">2</span><span class="p">]),</span> <span class="s1">'.'</span><span class="p">,</span> <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="n">fS</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">r'Spatial frequency, $\mu m^{-1}$'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">r'Field amplitude, $V / \sqrt{\mu m}$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'Spatial frequency, $\mu m^{-1}$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'Field amplitude, $V / \sqrt{\mu m}$'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -486,7 +508,10 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -504,7 +529,7 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>OK, so far so good. Let's now put the results in a format that is more easily compared to the analytical theory for the diffracted irradiance. We'll shift the FFT results back so that the peak is in the center using <code>fftshift</code>. (We also need to use <code>fftshift</code> here for arrays with an odd number of elements; typically, the order for odd elements is <code>ifftshift</code> -&gt; <code>fft</code> -&gt; <code>fftshift</code>.) We'll also rescale the x-axis by multiplying by \( \lambda z \) to get \(x'\) and plot the theoretical result on top.</p>
+<p>OK, so far so good. Let's now put the results in a format that is more easily compared to the analytical theory for the diffracted irradiance. We'll shift the FFT results back so that the peak is in the center using <code>fftshift</code>. (We also need to use <code>fftshift</code> here for arrays with an odd number of elements; typically, the order for odd elements is <code>ifftshift</code> -&gt; <code>fft</code> -&gt; <code>fftshift</code>.) We'll also rescale the x-axis by multiplying by $ \lambda z $ to get $x'$ and plot the theoretical result on top.</p>
 
 </div>
 </div>
@@ -523,8 +548,8 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xPrime</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">IrradFFT</span><span class="p">),</span> <span class="s1">'.'</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">'FFT'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xPrime</span><span class="p">,</span> <span class="n">IrradTheory</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">'Theory'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">((</span><span class="o">-</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">r'x-position, $\mu m$'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">r'Power density, $V^2 / \mu m$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'x-position, $\mu m$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'Power density, $V^2 / \mu m$'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -539,7 +564,10 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>/home/douglass/anaconda3/lib/python3.5/site-packages/ipykernel/__main__.py:1: DeprecationWarning: using a non-integer number instead of an integer will result in an error in the future
   if __name__ == '__main__':
@@ -548,7 +576,10 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 </div>
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -582,15 +613,15 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 <span class="n">ax0</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xPrime</span><span class="p">,</span> <span class="n">IrradTheory</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">'Theory'</span><span class="p">,</span> <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
 <span class="n">ax0</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">((</span><span class="o">-</span><span class="mi">500</span><span class="p">,</span> <span class="mi">500</span><span class="p">))</span>
 <span class="n">ax0</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">((</span><span class="mf">0.002</span><span class="p">,</span> <span class="mf">0.005</span><span class="p">))</span>
-<span class="n">ax0</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">r'x-position, $\mu m$'</span><span class="p">)</span>
-<span class="n">ax0</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">r'Power density, $V^2 / \mu m$'</span><span class="p">)</span>
+<span class="n">ax0</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'x-position, $\mu m$'</span><span class="p">)</span>
+<span class="n">ax0</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'Power density, $V^2 / \mu m$'</span><span class="p">)</span>
 <span class="n">ax0</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xPrime</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">IrradFFT</span><span class="p">),</span> <span class="s1">'.'</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">'FFT'</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xPrime</span><span class="p">,</span> <span class="n">IrradTheory</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">'Theory'</span><span class="p">,</span> <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">((</span><span class="o">-</span><span class="mi">2250</span><span class="p">,</span> <span class="o">-</span><span class="mi">1750</span><span class="p">))</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">((</span><span class="mf">0.000</span><span class="p">,</span> <span class="mf">0.0004</span><span class="p">))</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">r'x-position, $\mu m$'</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'x-position, $\mu m$'</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 
@@ -607,7 +638,10 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -651,7 +685,7 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">percentError</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">IrradTheory</span> <span class="o">-</span> <span class="n">IrradFFT</span><span class="p">)</span> <span class="o">/</span> <span class="n">IrradTheory</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">xPrime</span><span class="p">,</span> <span class="n">percentError</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">r'x-position, $\mu m$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'x-position, $\mu m$'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Percent error'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">((</span><span class="o">-</span><span class="mi">20000</span><span class="p">,</span> <span class="mi">20000</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
@@ -667,7 +701,10 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -714,8 +751,8 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 <span class="n">fieldNew</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">xNew</span> <span class="o">&gt;</span> <span class="o">-</span><span class="n">slitWidth</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">xNew</span> <span class="o">&lt;=</span> <span class="n">slitWidth</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)]</span> <span class="o">=</span> <span class="n">amplitude</span> <span class="o">+</span> <span class="mi">0</span><span class="n">j</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xNew</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">fieldNew</span><span class="p">),</span> <span class="s1">'.'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">r'x-position, $\mu m$'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">r'Field amplitude, $V / \sqrt{\mu m}$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'x-position, $\mu m$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'Field amplitude, $V / \sqrt{\mu m}$'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -730,7 +767,10 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -762,8 +802,8 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xPrimeNew</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">IrradFFTNew</span><span class="p">),</span> <span class="s1">'.'</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">'FFT'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xPrimeNew</span><span class="p">,</span> <span class="n">IrradTheoryNew</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">'Theory'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">((</span><span class="o">-</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">r'x-position, $\mu m$'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">r'Power density, $V^2 / \mu m$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'x-position, $\mu m$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'Power density, $V^2 / \mu m$'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -778,7 +818,10 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>/home/douglass/anaconda3/lib/python3.5/site-packages/ipykernel/__main__.py:4: DeprecationWarning: using a non-integer number instead of an integer will result in an error in the future
 </pre>
@@ -786,7 +829,10 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 </div>
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -804,7 +850,7 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now the agreement looks much better! Here's the new percent error with \( 2^{20} \) samples compared to the old one with \( 2^{10} \).</p>
+<p>Now the agreement looks much better! Here's the new percent error with $ 2^{20} $ samples compared to the old one with $ 2^{10} $.</p>
 
 </div>
 </div>
@@ -816,9 +862,9 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">percentErrorNew</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">IrradTheoryNew</span> <span class="o">-</span> <span class="n">IrradFFTNew</span><span class="p">)</span> <span class="o">/</span> <span class="n">IrradTheoryNew</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">xPrime</span><span class="p">,</span>    <span class="n">percentError</span><span class="p">,</span>       <span class="n">label</span> <span class="o">=</span> <span class="s1">r'$N = 2^</span><span class="si">{10}</span><span class="s1">$'</span><span class="p">,</span> <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">xPrimeNew</span><span class="p">,</span> <span class="n">percentErrorNew</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">r'$N = 2^</span><span class="si">{20}</span><span class="s1">$'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">r'x-position, $\mu m$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">xPrime</span><span class="p">,</span>    <span class="n">percentError</span><span class="p">,</span>       <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">'$N = 2^</span><span class="si">{10}</span><span class="s1">$'</span><span class="p">,</span> <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">xPrimeNew</span><span class="p">,</span> <span class="n">percentErrorNew</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">'$N = 2^</span><span class="si">{20}</span><span class="s1">$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'x-position, $\mu m$'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Percent error'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">((</span><span class="o">-</span><span class="mi">20000</span><span class="p">,</span> <span class="mi">20000</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
@@ -835,7 +881,10 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -872,9 +921,11 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 </ol>
 <p>Since the analytical solution and the FFT solution come from two related but different mathematical operations, should we have expected to get the right answer in the first place? <a href="http://ch.mathworks.com/matlabcentral/newsreader/view_thread/294772">As others have pointed out</a>, the discrete time Fourier transform (DTFT) of a square function is a ratio of two sines, not a sinc. Furthermore, the DFT (and equivalently the FFT result) is simply a sampled version of the DTFT. Therefore, we might expect that sampling the DTFT solution for a square wave will produce the same results as the FFT solution. Let's go ahead and try it.</p>
 <p><a href="https://en.wikipedia.org/wiki/Discrete-time_Fourier_transform#Table_of_discrete-time_Fourier_transforms">According to Wikipedia</a>, and changing variables to agree with my notation above, the DTFT solution of the square wave is</p>
-$$F \left( f_{x} \right) = \frac{\sin \left[ \pi f_{x} \left( M + 1 \right) \right] }{\sin \left( \pi f_{x} \right) } e^{ -j \pi f_{x} M }, \, M \in \mathbb{Z} $$<p>where \( M \) is an integer and \( f_{x} \) is the spatial frequency. An important property of the DTFT  is that it is periodic between 0 and 1. If I had used the angular spatial frequency \( k_{x} = 2 \pi f_{x} \) the periodicity would be between 0 and \( 2 \pi \). With this information, we can map our spatial frequency vector onto the appropriate range for the DTFT.</p>
+<p>$$F \left( f_{x} \right) = \frac{\sin \left[ \pi f_{x} \left( M + 1 \right) \right] }{\sin \left( \pi f_{x} \right) } e^{ -j \pi f_{x} M }, \, M \in \mathbb{Z} $$</p>
+<p>where $ M $ is an integer and $ f\_{x} $ is the spatial frequency. An important property of the DTFT  is that it is periodic between 0 and 1. If I had used the angular spatial frequency $ k\_{x} = 2 \pi f\_{x} $ the periodicity would be between 0 and $ 2 \pi $. With this information, we can map our spatial frequency vector onto the appropriate range for the DTFT.</p>
 <p>The square function corresponding to this DTFT solution is defined with the left edge of the square starting at the origin:</p>
-$$ f \left( x \right) = \text{rect} \left( \frac{n - M/2}{M} \right) , \, M \in \mathbb{Z}, \, n = 0, 1, \ldots, N - 1$$<p>\( n \) is the index of the samples taken from the square and \( M \) denotes the center of the square. So, to use this expression for the DTFT of the square, we will first need to shift our original input so that the left edge of the square is at the origin.</p>
+<p>$$ f \left( x \right) = \text{rect} \left( \frac{n - M/2}{M} \right) , \, M \in \mathbb{Z}, \, n = 0, 1, \ldots, N - 1$$</p>
+<p>$ n $ is the index of the samples taken from the square and $ M $ denotes the center of the square. So, to use this expression for the DTFT of the square, we will first need to shift our original input so that the left edge of the square is at the origin.</p>
 
 </div>
 </div>
@@ -892,8 +943,8 @@ $$ f \left( x \right) = \text{rect} \left( \frac{n - M/2}{M} \right) , \, M \in 
 <span class="n">M</span>                     <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">field</span><span class="p">)</span> <span class="o">/</span> <span class="n">amplitude</span><span class="p">)</span> <span class="c1"># Only works if input field is real and ones.</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">field</span><span class="p">),</span> <span class="s1">'.'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">r'x-position, $\mu m$'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">r'Field amplitude, $V / \sqrt{\mu m}$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'x-position, $\mu m$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'Field amplitude, $V / \sqrt{\mu m}$'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -910,7 +961,10 @@ $$ f \left( x \right) = \text{rect} \left( \frac{n - M/2}{M} \right) , \, M \in 
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -920,7 +974,10 @@ $$ f \left( x \right) = \text{rect} \left( \frac{n - M/2}{M} \right) , \, M \in 
 </div>
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>M is 52429.
 </pre>
@@ -961,8 +1018,8 @@ $$ f \left( x \right) = \text{rect} \left( \frac{n - M/2}{M} \right) , \, M \in 
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fDTFT</span> <span class="o">*</span> <span class="n">fS_DTFT</span><span class="p">,</span> <span class="n">dx_DTFT</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">rectDTFT</span><span class="p">(</span><span class="n">fDTFT</span><span class="p">,</span> <span class="n">M</span><span class="p">)),</span> <span class="s1">'.'</span><span class="p">,</span>           <span class="n">label</span> <span class="o">=</span> <span class="s1">'DTFT'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">r'Spatial frequency, $\mu m^{-1}$'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">r'Field amplitude, $V / \sqrt{ \mu m}$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'Spatial frequency, $\mu m^{-1}$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'Field amplitude, $V / \sqrt{ \mu m}$'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -977,7 +1034,10 @@ $$ f \left( x \right) = \text{rect} \left( \frac{n - M/2}{M} \right) , \, M \in 
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -996,7 +1056,7 @@ $$ f \left( x \right) = \text{rect} \left( \frac{n - M/2}{M} \right) , \, M \in 
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>I placed the x- and y-axes to display a similar range as the equivalent plot above. We see that the DTFT result, which is the ratio of two sine waves, is also in good agreement with the FFT. So now we have the FFT <em>and</em> the DTFT of the field at the aperture modeling the diffraction pattern reasonably well.</p>
-<p>How well does the DTFT match the analytical results? Let's look at their percent error and compare it to the one between the analytical theory and the FFT for \( 2^{20} \) samples.</p>
+<p>How well does the DTFT match the analytical results? Let's look at their percent error and compare it to the one between the analytical theory and the FFT for $ 2^{20} $ samples.</p>
 
 </div>
 </div>
@@ -1010,9 +1070,9 @@ $$ f \left( x \right) = \text{rect} \left( \frac{n - M/2}{M} \right) , \, M \in 
     
 <span class="n">percentErrorDTFT</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">IrradTheoryNew</span> <span class="o">-</span> <span class="n">IrradDTFT</span><span class="p">)</span> <span class="o">/</span> <span class="n">IrradTheoryNew</span> <span class="o">*</span> <span class="mi">100</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">xPrimeNew</span><span class="p">,</span> <span class="n">percentErrorNew</span><span class="p">,</span>  <span class="n">label</span> <span class="o">=</span> <span class="s1">r'FFT vs. Theory, $N = 2^</span><span class="si">{20}</span><span class="s1">$'</span><span class="p">,</span> <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">xPrimeNew</span><span class="p">,</span> <span class="n">percentErrorDTFT</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">r'DTFT vs. Theory, $N = 2^</span><span class="si">{20}</span><span class="s1">$'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">r'x-position, $\mu m$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">xPrimeNew</span><span class="p">,</span> <span class="n">percentErrorNew</span><span class="p">,</span>  <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">'FFT vs. Theory, $N = 2^</span><span class="si">{20}</span><span class="s1">$'</span><span class="p">,</span> <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">xPrimeNew</span><span class="p">,</span> <span class="n">percentErrorDTFT</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">'DTFT vs. Theory, $N = 2^</span><span class="si">{20}</span><span class="s1">$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'x-position, $\mu m$'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Percent error'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">((</span><span class="o">-</span><span class="mi">20000</span><span class="p">,</span> <span class="mi">20000</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
@@ -1029,7 +1089,10 @@ $$ f \left( x \right) = \text{rect} \left( \frac{n - M/2}{M} \right) , \, M \in 
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -1076,7 +1139,10 @@ $$ f \left( x \right) = \text{rect} \left( \frac{n - M/2}{M} \right) , \, M \in 
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>/home/douglass/anaconda3/lib/python3.5/site-packages/numpy/core/numeric.py:474: ComplexWarning: Casting complex values to real discards the imaginary part
   return array(a, dtype, copy=False, order=order)
@@ -1085,7 +1151,10 @@ $$ f \left( x \right) = \text{rect} \left( \frac{n - M/2}{M} \right) , \, M \in 
 </div>
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -1123,7 +1192,7 @@ $$ f \left( x \right) = \text{rect} \left( \frac{n - M/2}{M} \right) , \, M \in 
     </div>
     </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="simulating-microscope-pupil-functions.html" class="u-url">Simulating microscope pupil functions</a></h1>
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
             <p class="dateline"><a href="simulating-microscope-pupil-functions.html" rel="bookmark"><time class="published dt-published" datetime="2016-01-24T15:13:40+01:00" title="2016-01-24 15:13">2016-01-24 15:13</time></a></p>
@@ -1161,16 +1230,19 @@ $$ f \left( x \right) = \text{rect} \left( \frac{n - M/2}{M} \right) , \, M \in 
 <h3 id="Pupil-Function-Basics">Pupil Function Basics<a class="anchor-link" href="simulating-microscope-pupil-functions.html#Pupil-Function-Basics">¶</a>
 </h3>
 <p>The pupil function of a microscope (and really, of any optical system) is an important tool for analyzing the aberrations present in the system. The pupil function is defined as the two dimensional Fourier transform of the image of an isotropic point source. <a href="http://mathworld.wolfram.com/FourierTransform.html">The two dimensional Fourier transform</a> of a function of two variables x and y is expressed as</p>
-$$F \left( k_x, k_y \right) = \iint f \left( x, y \right) \exp \left[ -j \left( k_{x}x + k_{y}y \right) \right] dx dy$$<p>(I was originally trained as an engineer, so I tend to use 'j' for the imaginary number more than 'i'.) The inverse Fourier transform converts \(F \left( k_x, k_y \right)\) back into \(f \left( x, y \right)\) and is given by</p>
-$$f \left( x, y \right) = \iint F \left( k_x, k_y \right) \exp \left[ j \left( k_{x}x + k_{y}y \right) \right] dk_x dk_y$$<p>In this case, \(x\) and \(y\) are variables representing 2D coordinates in the image plane and \(k_x\) and \(k_y\) are the spatial frequencies. \(f \left( x, y \right)\) and \(F \left( k_x, k_y \right)\) are known as Fourier transform pairs.</p>
+<p>$$F \left( k_x, k_y \right) = \iint f \left( x, y \right) \exp \left[ -j \left( k_{x}x + k_{y}y \right) \right] dx dy$$</p>
+<p>(I was originally trained as an engineer, so I tend to use 'j' for the imaginary number more than 'i'.) The inverse Fourier transform converts $F \left( k_x, k_y \right)$ back into $f \left( x, y \right)$ and is given by</p>
+<p>$$f \left( x, y \right) = \iint F \left( k_x, k_y \right) \exp \left[ j \left( k_{x}x + k_{y}y \right) \right] dk_x dk_y$$</p>
+<p>In this case, $x$ and $y$ are variables representing 2D coordinates in the image plane and $k_x$ and $k_y$ are the spatial frequencies. $f \left( x, y \right)$ and $F \left( k_x, k_y \right)$ are known as Fourier transform pairs.</p>
 <p>An isotropic point source is an idealized source of electromagnetic radiation that emits an equal intensity in all directions. Strictly speaking, real sources such as atoms and molecules are dipoles and not isotropic emitters. This assumption is however a good model for collections of many fluorescent molecules possessing dipole moments that are all pointing in different directions and that are smaller than the wavelength of light because the molecules' individual emission patterns average out. It is also a good approximation for a dipole whose moment is randomly reorienting in many directions during an image acquisition due to thermally-induced rotational diffusion.</p>
 <p>The image of a point source is known as the <a href="https://en.wikipedia.org/wiki/Point_spread_function">point spread function (PSF)</a> of the microscope. In signal processing, it's known as a two dimensional impulse response.</p>
-<p><a href="http://www.msg.ucsf.edu/agard/Publications/148-Agard-JMicrosc-2004.pdf">The equation</a> that relates the image of the isotropic point source to the pupil function \(P \left( k_x, k_y \right)\) is</p>
-$$\text{PSF}_{\text{A}} \left( x, y \right) = \iint P \left( k_x, k_y \right) \exp \left[ -j \left( k_{x}x + k_{y}y \right) \right] dx dy$$<p>The subscript <code>A</code> on the PSF stands for <em>amplitude</em> and means that we are working with the electric field, not the <a href="https://en.wikipedia.org/wiki/Irradiance">irradiance</a>. The irradiance, which is what a camera or your eye measures, is proportional to the absolute square of \(\text{PSF}_{\text{A}}\). In words, the above equation restates the definition above: the pupil function and the amplitude PSF are Fourier transform pairs.</p>
+<p><a href="http://www.msg.ucsf.edu/agard/Publications/148-Agard-JMicrosc-2004.pdf">The equation</a> that relates the image of the isotropic point source to the pupil function $P \left( k_x, k_y \right)$ is</p>
+<p>$$\text{PSF}_{\text{A}} \left( x, y \right) = \iint P \left( k_x, k_y \right) \exp \left[ -j \left( k_{x}x + k_{y}y \right) \right] dx dy$$</p>
+<p>The subscript <code>A</code> on the PSF stands for <em>amplitude</em> and means that we are working with the electric field, not the <a href="https://en.wikipedia.org/wiki/Irradiance">irradiance</a>. The irradiance, which is what a camera or your eye measures, is proportional to the absolute square of $\text{PSF}_{\text{A}}$. In words, the above equation restates the definition above: the pupil function and the amplitude PSF are Fourier transform pairs.</p>
 <h3 id="Simulating-Diffraction-Limited-Pupil-Functions-and-PSF's">Simulating Diffraction Limited Pupil Functions and PSF's<a class="anchor-link" href="simulating-microscope-pupil-functions.html#Simulating-Diffraction-Limited-Pupil-Functions-and-PSF's">¶</a>
 </h3>
 <p>We can simulate how an aberration affects the image of a point source by simulating an aberrated pupil function and computing the Fourier transform above to get the amplitude PSF. The easiest model to simulate is based on scalar diffraction theory, which means that we ignore the fact that the electromagnetic radiation is polarized (i.e. a vector) and treat it as a scalar quantity instead. Even though this is an approximation, it still can give us a good idea about the fundamental physics involved.</p>
-<p>To perform the simulation, we must first discretize the continuous quantities in the Fourier transform. We'll model \(\text{PSF}_{\text{A}}\) and \(P \left( k_x, k_y \right)\) as discrete scalar quantities on 2D grids and perform a <a href="https://en.wikipedia.org/wiki/Fast_Fourier_transform">fast Fourier transform</a> to turn the pupil function into the PSF.</p>
+<p>To perform the simulation, we must first discretize the continuous quantities in the Fourier transform. We'll model $\text{PSF}_{\text{A}}$ and $P \left( k_x, k_y \right)$ as discrete scalar quantities on 2D grids and perform a <a href="https://en.wikipedia.org/wiki/Fast_Fourier_transform">fast Fourier transform</a> to turn the pupil function into the PSF.</p>
 
 </div>
 </div>
@@ -1196,7 +1268,10 @@ $$\text{PSF}_{\text{A}} \left( x, y \right) = \iint P \left( k_x, k_y \right) \e
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Using matplotlib backend: Qt4Agg
 Populating the interactive namespace from numpy and matplotlib
@@ -1303,11 +1378,11 @@ Populating the interactive namespace from numpy and matplotlib
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>When working with discrete Fourier transforms, a common question that arises is "What are the units of the Fourier transform variable?" We can answer this question by these rules:</p>
 <blockquote>
-<p>\(k_{Max} \propto \frac{1}{dx}\)</p>
-<p>\(x_{Max} \propto \frac{1}{dk}\)</p>
+<p>$k_{Max} \propto \frac{1}{dx}$</p>
+<p>$x_{Max} \propto \frac{1}{dk}$</p>
 </blockquote>
-<p>These two rules are just a manifestation of the <a href="https://en.wikipedia.org/wiki/Nyquist%E2%80%93Shannon_sampling_theorem">Nyquist-Shannon sampling criterion</a>: the maximum spatial frequency \( k_{Max} \) is determined by the inverse of the sampling period in space \(dx\), while the maximum size \(x_{Max}\) of the signal is proportional to the inverse of the period of spatial frequency samples \(dk\). This is why the maximum spatial frequency above is \(2 \pi / \text{pixelSize}\). I will go into more detail on this in a later post.</p>
-<p>The pupil function of a microscope is non-zero for values of \(\left( k_x, k_y \right)\) such that \(k_x^2 + k_y^2 \leq \frac{2 \pi NA}{\lambda}\). The quantity \(\frac{2 \pi NA}{\lambda}\) is represented by <code>kNA</code> above. The size of a pixel <code>dk</code> in spatial frequency units (radians per distance) is inversely proportional to the maximum size of the image in pixels, or <code>imgSize * pixelSize</code>. Likewise, the size of a pixel in microns is proportional to the inverse of the maximum size of the pupil function in spatial frequencies. This is just a manifestation of the properties of Fourier transform pairs.</p>
+<p>These two rules are just a manifestation of the <a href="https://en.wikipedia.org/wiki/Nyquist%E2%80%93Shannon_sampling_theorem">Nyquist-Shannon sampling criterion</a>: the maximum spatial frequency $ k\_{Max} $ is determined by the inverse of the sampling period in space $dx$, while the maximum size $x\_{Max}$ of the signal is proportional to the inverse of the period of spatial frequency samples $dk$. This is why the maximum spatial frequency above is $2 \pi / \text{pixelSize}$. I will go into more detail on this in a later post.</p>
+<p>The pupil function of a microscope is non-zero for values of $\left( k_x, k_y \right)$ such that $k_x^2 + k_y^2 \leq \frac{2 \pi NA}{\lambda}$. The quantity $\frac{2 \pi NA}{\lambda}$ is represented by <code>kNA</code> above. The size of a pixel <code>dk</code> in spatial frequency units (radians per distance) is inversely proportional to the maximum size of the image in pixels, or <code>imgSize * pixelSize</code>. Likewise, the size of a pixel in microns is proportional to the inverse of the maximum size of the pupil function in spatial frequencies. This is just a manifestation of the properties of Fourier transform pairs.</p>
 
 </div>
 </div>
@@ -1334,7 +1409,10 @@ Populating the interactive namespace from numpy and matplotlib
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>kmin : -31.354686913020938
 kmax : 31.354686913020036
@@ -1383,7 +1461,10 @@ Size of kx : 513
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -1447,7 +1528,10 @@ Size of kx : 513
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -1499,7 +1583,10 @@ Size of kx : 513
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -1529,7 +1616,8 @@ Size of kx : 513
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Let's see how a line profile through the center of the image looks relative to the profile of the <a href="https://en.wikipedia.org/wiki/Airy_disk">Airy disk</a>, which is the mathematical solution to the diffraction pattern from a circular aperture in scalar diffraction theory. The Airy disk is given by</p>
-$$I \left( X \right) = I_{0} \left[ \frac{2J_{1} \left( X \right)}{X} \right]^2$$<p>where \(J_{1} \left( X \right) \) is the Bessel function of the first kind and order 1 and \( X = \frac{2 \pi r  (\text{NA})}{\lambda} \). Here, \(r\) is the distance from the center of the image plane, so we can easily convert it to pixels.</p>
+<p>$$I \left( X \right) = I_{0} \left[ \frac{2J_{1} \left( X \right)}{X} \right]^2$$</p>
+<p>where $J_{1} \left( X \right) $ is the Bessel function of the first kind and order 1 and $ X = \frac{2 \pi r  (\text{NA})}{\lambda} $. Here, $r$ is the distance from the center of the image plane, so we can easily convert it to pixels.</p>
 <p>Because the pupil of the microscope is circular and unaberrated, it is also the solution for PSF of the microscope.</p>
 
 </div>
@@ -1568,7 +1656,10 @@ $$I \left( X \right) = I_{0} \left[ \frac{2J_{1} \left( X \right)}{X} \right]^2$
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>/home/douglass/anaconda3/lib/python3.5/site-packages/ipykernel/__main__.py:4: RuntimeWarning: invalid value encountered in true_divide
 </pre>
@@ -1576,7 +1667,10 @@ $$I \left( X \right) = I_{0} \left[ \frac{2J_{1} \left( X \right)}{X} \right]^2$
 </div>
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -1609,7 +1703,8 @@ $$I \left( X \right) = I_{0} \left[ \frac{2J_{1} \left( X \right)}{X} \right]^2$
 <p>Now that we can simulate the diffraction-limited image of an <em>in-focus</em> isotropic point source, let's add some defocus to demonstrate what the PSF would look like as the camera or sample is scanned along the axial direction.</p>
 <p>Defocus can be added in numerous ways. One is to multiply our pupil function by the phase aberration for defocus, which is usually modeled as a parabolic phase aberration in the pupil coordinates. However, <a href="http://kmdouglass.github.io/posts/beware-the-paraxial-approximation-in-microscopy.html">as I explained in a previous post</a>, this is an approximate model for defocus and fails for large numerical apertures.</p>
 <p>Another simple way is to propagate the plane wave angular spectrum in the image plane to nearby planes. This relatively easy method is used in a well-known microscopy paper (<a href="http://onlinelibrary.wiley.com/doi/10.1111/j.0022-2720.2004.01393.x/abstract">Hanser, 2004</a>) and involves multiplying the pupil function by a defocus kernel before performing the Fourier transform.</p>
-$$\text{PSF}_{\text{A}} \left( x, y, z \right) = \iint P \left( k_x, k_y \right) \exp \left( j k_{z} z \right) \exp \left[ -j \left( k_{x}x + k_{y}y \right) \right] dx dy$$<p>Here, \(k_z = \sqrt{\left( 2 \pi n / \lambda \right)^2 - k_x^2 - k_y^2}\). The defocus kernel essentially shifts the phase of each plane wave with pupil coordinates \(\left( k_x, k_y \right)\) by an amount that depends on its coordinates and the distance from the image plane \(z\).</p>
+<p>$$\text{PSF}_{\text{A}} \left( x, y, z \right) = \iint P \left( k_x, k_y \right) \exp \left( j k_{z} z \right) \exp \left[ -j \left( k_{x}x + k_{y}y \right) \right] dx dy$$</p>
+<p>Here, $k_z = \sqrt{\left( 2 \pi n / \lambda \right)^2 - k_x^2 - k_y^2}$. The defocus kernel essentially shifts the phase of each plane wave with pupil coordinates $\left( k_x, k_y \right)$ by an amount that depends on its coordinates and the distance from the image plane $z$.</p>
 <p>The above equation means that we can model the PSF behavior as we scan through the focal plane by computing the defocus kernel for different distances from focus. Then, we multiply our perfect pupil by this defocus kernel and compute its Fourier transform to get the amplitude and irradiance PSF's.</p>
 
 </div>
@@ -1687,7 +1782,10 @@ $$\text{PSF}_{\text{A}} \left( x, y, z \right) = \iint P \left( k_x, k_y \right)
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -1717,7 +1815,7 @@ $$\text{PSF}_{\text{A}} \left( x, y, z \right) = \iint P \left( k_x, k_y \right)
     </div>
     </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="beware-the-paraxial-approximation-in-microscopy.html" class="u-url">Beware the paraxial approximation in microscopy</a></h1>
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
             <p class="dateline"><a href="beware-the-paraxial-approximation-in-microscopy.html" rel="bookmark"><time class="published dt-published" datetime="2015-09-09T19:40:00+02:00" title="2015-09-09 19:40">2015-09-09 19:40</time></a></p>
@@ -1843,7 +1941,7 @@ approximation are not often valid.
     </div>
     </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="whats-the-difference-between-a-back-focal-plane-and-pupil-plane.html" class="u-url">What's the difference between a back focal plane and pupil plane?</a></h1>
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
             <p class="dateline"><a href="whats-the-difference-between-a-back-focal-plane-and-pupil-plane.html" rel="bookmark"><time class="published dt-published" datetime="2015-08-26T08:49:13+02:00" title="2015-08-26 08:49">2015-08-26 08:49</time></a></p>
@@ -1943,7 +2041,7 @@ aberrations, and whether this is at all feasible.
     </div>
     </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="paraxial-optics-2-what-problem-does-it-solve.html" class="u-url">Paraxial Optics (2): What problem does it solve?</a></h1>
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
             <p class="dateline"><a href="paraxial-optics-2-what-problem-does-it-solve.html" rel="bookmark"><time class="published dt-published" datetime="2015-05-31T15:37:13+02:00" title="2015-05-31 15:37">2015-05-31 15:37</time></a></p>
@@ -2229,7 +2327,7 @@ geometrical optics theory.
     </div>
     </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="can-my-beam-be-collimated.html" class="u-url">Can my laser beam be collimated?</a></h1>
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
             <p class="dateline"><a href="can-my-beam-be-collimated.html" rel="bookmark"><time class="published dt-published" datetime="2015-05-04T09:44:42+02:00" title="2015-05-04 09:44">2015-05-04 09:44</time></a></p>
@@ -2375,7 +2473,7 @@ lasers for a microscopy application.
     </div>
     </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="relearning-paraxial-optics.html" class="u-url">Relearning paraxial optics</a></h1>
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
             <p class="dateline"><a href="relearning-paraxial-optics.html" rel="bookmark"><time class="published dt-published" datetime="2015-04-19T11:05:21+02:00" title="2015-04-19 11:05">2015-04-19 11:05</time></a></p>
@@ -2443,7 +2541,7 @@ dissonance and improve my understanding of the field I work in.
     </div>
     </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="reading-select-lines-from-a-text-file.html" class="u-url">Reading select lines from a text file</a></h1>
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
             <p class="dateline"><a href="reading-select-lines-from-a-text-file.html" rel="bookmark"><time class="published dt-published" datetime="2015-03-18T08:27:50+01:00" title="2015-03-18 08:27">2015-03-18 08:27</time></a></p>
@@ -2513,7 +2611,7 @@ where others may be more likely to find it.
     </div>
     </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="the-basics-of-virtualenv.html" class="u-url">The basics of virtualenv</a></h1>
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
             <p class="dateline"><a href="the-basics-of-virtualenv.html" rel="bookmark"><time class="published dt-published" datetime="2015-02-10T07:47:50+01:00" title="2015-02-10 07:47">2015-02-10 07:47</time></a></p>
@@ -2691,7 +2789,7 @@ great tool!
             <li class="next">
                 <a href="index-1.html" rel="next">Older posts</a>
             </li>
-        </ul></nav><script>var disqus_shortname="kmdouglass";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script><script type="text/x-mathjax-config">
+        </ul></nav><script>var disqus_shortname="kmdouglass";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha256-SDRP1VVYu+tgAGKhddBSl5+ezofHKZeI+OzxakbIe/Y=" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
 MathJax.Hub.Config({
     tex2jax: {
         inlineMath: [ ['$','$'], ["\\(","\\)"] ],
@@ -2703,7 +2801,7 @@ MathJax.Hub.Config({
         <!--End of body content-->
 
         <footer id="footer">
-            Contents © 2017         <a href="mailto:kyle.douglass@epfl.ch">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
+            Contents © 2018         <a href="mailto:kyle.douglass@epfl.ch">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
             
         </footer>
 </div>

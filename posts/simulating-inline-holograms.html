@@ -8,18 +8,11 @@
 <link href="../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
 <link href="../assets/css/ipython.min.css" rel="stylesheet" type="text/css">
 <link href="../assets/css/nikola_ipython.css" rel="stylesheet" type="text/css">
-<meta content="#5670d4" name="theme-color">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
 <link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml">
 <link rel="canonical" href="http://kmdouglass.github.io/posts/simulating-inline-holograms.html">
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-    tex2jax: {
-        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-        processEscapes: true
-    }
-});
-</script><!--[if lt IE 9]><script src="../assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><meta name="description" itemprop="description" content="How to simulate an inline hologram of a phase object.">
-<meta name="author" content="Kyle M. Douglass">
+<!--[if lt IE 9]><script src="../assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><meta name="author" content="Kyle M. Douglass">
 <link rel="prev" href="micro-manager-on-the-raspberry-pi.html" title="Micro-Manager on the Raspberry Pi" type="text/html">
 <link rel="next" href="modeling-noise-for-image-simulations.html" title="Modeling noise for image simulations" type="text/html">
 <meta property="og:site_name" content="Kyle M. Douglass">
@@ -94,7 +87,7 @@ MathJax.Hub.Config({
 <article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="#" class="u-url">Simulating Inline Holograms</a></h1>
 
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                     Kyle M. Douglass
             </span></p>
             <p class="dateline"><a href="#" rel="bookmark"><time class="published dt-published" datetime="2017-04-29T11:25:01+02:00" itemprop="datePublished" title="2017-04-29 11:25">2017-04-29 11:25</time></a></p>
@@ -105,10 +98,9 @@ MathJax.Hub.Config({
 
             
         </p>
-<p class="sourceline"><a href="simulating-inline-holograms.ipynb" id="sourcelink">Source</a></p>
+<p class="sourceline"><a href="simulating-inline-holograms.ipynb" class="sourcelink">Source</a></p>
 
-                <meta name="description" itemprop="description" content="How to simulate an inline hologram of a phase object.">
-</div>
+        </div>
         
 
     </header><div class="e-content entry-content" itemprop="articleBody text">
@@ -159,7 +151,10 @@ MathJax.Hub.Config({
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Populating the interactive namespace from numpy and matplotlib
 Python version:
@@ -215,7 +210,7 @@ Scipy version:		0.19.0
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The last line of the code above, <code>gt[gtMask] = np.exp(1j * gtPhase)</code>, sets all the values in the <code>gt</code> array that are inside the circular mask to the complex phasor \( \exp \left( j \phi \right) \), where \( \phi \) is the value of the phase imparted onto the light by the object. For real objects, this phase would be equal to the optical path length of the object, which is the product of the object's refractive index by its real size.</p>
+<p>The last line of the code above, <code>gt[gtMask] = np.exp(1j * gtPhase)</code>, sets all the values in the <code>gt</code> array that are inside the circular mask to the complex phasor $ \exp \left( j \phi \right) $, where $ \phi $ is the value of the phase imparted onto the light by the object. For real objects, this phase would be equal to the optical path length of the object, which is the product of the object's refractive index by its real size.</p>
 <p>Let's now go ahead and visualize the object to make sure we created it correctly.</p>
 
 </div>
@@ -248,7 +243,7 @@ Scipy version:		0.19.0
     <span class="n">cax</span>  <span class="o">=</span> <span class="n">divider</span><span class="o">.</span><span class="n">append_axes</span><span class="p">(</span><span class="s2">"right"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="s2">"5%"</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
     <span class="n">cb_phase</span>  <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">phase</span><span class="p">,</span> <span class="n">cax</span><span class="o">=</span><span class="n">cax</span><span class="p">)</span>
     <span class="n">cb_phase</span><span class="o">.</span><span class="n">set_ticks</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">])</span>
-    <span class="n">cb_phase</span><span class="o">.</span><span class="n">set_ticklabels</span><span class="p">([</span><span class="s1">'0'</span><span class="p">,</span> <span class="s1">r'2$\pi$'</span><span class="p">])</span>
+    <span class="n">cb_phase</span><span class="o">.</span><span class="n">set_ticklabels</span><span class="p">([</span><span class="s1">'0'</span><span class="p">,</span> <span class="sa">r</span><span class="s1">'2$\pi$'</span><span class="p">])</span>
 
     <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">amp</span><span class="p">,</span> <span class="n">phase</span><span class="p">,</span> <span class="n">cb_amp</span><span class="p">,</span> <span class="n">cb_phase</span>
 </pre></div>
@@ -277,7 +272,10 @@ Scipy version:		0.19.0
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -295,10 +293,10 @@ Scipy version:		0.19.0
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>As you can see, the amplitude remains equal to 1 everywhere, which is what we would expect for a non-absorbing object. In the plot of the phase you can see the faint circle at the center of the image. I plotted the phase on a scale of \( \left[ 0, 2 \pi \right] \) for two reasons:</p>
+<p>As you can see, the amplitude remains equal to 1 everywhere, which is what we would expect for a non-absorbing object. In the plot of the phase you can see the faint circle at the center of the image. I plotted the phase on a scale of $ \left[ 0, 2 \pi \right] $ for two reasons:</p>
 <ol>
 <li>to emphasize that the object only weakly perturbs the light;</li>
-<li>because one complete rotation of the phasor in the complex plane is \(2 \pi \) radians. Any value outside the range \( \left[ 0, 2 \pi \right] \) can be mapped back onto a value in this range.</li>
+<li>because one complete rotation of the phasor in the complex plane is $2 \pi $ radians. Any value outside the range $ \left[ 0, 2 \pi \right] $ can be mapped back onto a value in this range.</li>
 </ol>
 <h4 id="Set-the-physical-dimensions">Set the physical dimensions<a class="anchor-link" href="simulating-inline-holograms.html#Set-the-physical-dimensions">¶</a>
 </h4>
@@ -328,7 +326,10 @@ Scipy version:		0.19.0
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>The physical radius is:  5.0 microns
 </pre>
@@ -392,14 +393,14 @@ Scipy version:		0.19.0
 <span class="n">amp</span><span class="o">.</span><span class="n">set_extent</span><span class="p">([</span><span class="n">fx</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">fx</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">fx</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">fx</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([</span><span class="o">-</span><span class="n">fS</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">fS</span> <span class="o">/</span> <span class="mi">2</span><span class="p">])</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([</span><span class="o">-</span><span class="n">fS</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">fS</span> <span class="o">/</span> <span class="mi">2</span><span class="p">])</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">r'$f_</span><span class="si">{x}</span><span class="s1">, \, \mu m^{-1}$'</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">r'$f_</span><span class="si">{y}</span><span class="s1">, \, \mu m^{-1}$'</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'$f_</span><span class="si">{x}</span><span class="s1">, \, \mu m^{-1}$'</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'$f_</span><span class="si">{y}</span><span class="s1">, \, \mu m^{-1}$'</span><span class="p">)</span>
 <span class="n">cb_amp</span><span class="o">.</span><span class="n">set_ticks</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2612</span><span class="p">])</span> <span class="c1"># I think that there's a bug in matplotlib 2.0 preventing correct tick displays</span>
 
 <span class="n">phase</span><span class="o">.</span><span class="n">set_extent</span><span class="p">([</span><span class="n">fx</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">fx</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">fx</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">fx</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([</span><span class="o">-</span><span class="n">fS</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">fS</span> <span class="o">/</span> <span class="mi">2</span><span class="p">])</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([</span><span class="o">-</span><span class="n">fS</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">fS</span> <span class="o">/</span> <span class="mi">2</span><span class="p">])</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">r'$f_</span><span class="si">{x}</span><span class="s1">, \, \mu m^{-1}$'</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'$f_</span><span class="si">{x}</span><span class="s1">, \, \mu m^{-1}$'</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -414,7 +415,10 @@ Scipy version:		0.19.0
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -450,8 +454,8 @@ Scipy version:		0.19.0
 
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([</span><span class="o">-</span><span class="n">fS</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">fS</span> <span class="o">/</span> <span class="mi">2</span><span class="p">])</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([</span><span class="o">-</span><span class="n">fS</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">fS</span> <span class="o">/</span> <span class="mi">2</span><span class="p">])</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">r'$f_</span><span class="si">{x}</span><span class="s1">, \, \mu m^{-1}$'</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">r'$f_</span><span class="si">{y}</span><span class="s1">, \, \mu m^{-1}$'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'$f_</span><span class="si">{x}</span><span class="s1">, \, \mu m^{-1}$'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'$f_</span><span class="si">{y}</span><span class="s1">, \, \mu m^{-1}$'</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -465,7 +469,10 @@ Scipy version:		0.19.0
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -510,7 +517,10 @@ Scipy version:		0.19.0
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Integral, object: 2621.4400
 Integral, Fourier transform of object: 2631.7081
@@ -550,7 +560,10 @@ Integral, Fourier transform of object: 2631.7081
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Percent error: 0.39%
 </pre>
@@ -568,12 +581,14 @@ Integral, Fourier transform of object: 2631.7081
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The error is not large, but it does make you wonder where exactly it comes from. Let's do one more sanity check before going any farther. Another property of Fourier transforms is that the DC component (the value of the Fourier transform at a frequency of zero) should be equal to the average of the original signal.</p>
 <p>The average of a two-dimensional discrete signal whose samples are equally spaced is expressed as</p>
-\begin{equation*}
+<p>\begin{equation*}
 \bar{f} = \frac{1}{XY}\sum_{i=0}^{M-1}\sum_{j=0}^{N-1} f \left( i, j \right) \Delta x \Delta y
-\end{equation*}<p>Here, \( X \) and \( Y \) are the physical lengths of the array representing the signal and \( \Delta x \) and \( \Delta y \) are the spacings between each array element. Furthermore, the array has a number of pixels \( M \) and \( N \) in the \( x \) and \( y \) directions, respectively. In our case the arrays are square and equally sampled in both directions, so \( X = Y \) and \( \Delta X = \Delta Y \). Additionally, the number of pixels is just \( M = \frac{X}{\Delta X} \), which means that the above expression may be simplified to</p>
-\begin{equation*}
+\end{equation*}</p>
+<p>Here, $ X $ and $ Y $ are the physical lengths of the array representing the signal and $ \Delta x $ and $ \Delta y $ are the spacings between each array element. Furthermore, the array has a number of pixels $ M $ and $ N $ in the $ x $ and $ y $ directions, respectively. In our case the arrays are square and equally sampled in both directions, so $ X = Y $ and $ \Delta X = \Delta Y $. Additionally, the number of pixels is just $ M = \frac{X}{\Delta X} $, which means that the above expression may be simplified to</p>
+<p>\begin{equation*}
 \bar{f} = \frac{1}{M^2}\sum_{i=0}^{M-1}\sum_{j=0}^{M-1} f \left( i, j \right)
-\end{equation*}
+\end{equation*}</p>
+
 </div>
 </div>
 </div>
@@ -596,7 +611,10 @@ Integral, Fourier transform of object: 2631.7081
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Average of the object field: 0.9959+0.0205j
 </pre>
@@ -635,7 +653,10 @@ Integral, Fourier transform of object: 2631.7081
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>DC term: 0.9920+0.0204j
 </pre>
@@ -655,10 +676,11 @@ Integral, Fourier transform of object: 2631.7081
 <h4 id="Step-3:-Create-the-angular-spectrum-propagator">Step 3: Create the angular spectrum propagator<a class="anchor-link" href="simulating-inline-holograms.html#Step-3:-Create-the-angular-spectrum-propagator">¶</a>
 </h4>
 <p>The reason we computed the Fourier transform of the object was to determine its angular spectrum, i.e. the array of plane waves traveling at different directions to the axis that coherently combine to form the object. Computing the field at another axial plane means advancing the phase of each of these plane waves by an amount that depends on the wavelength of the light and the angle at which the plane wave is traveling relative to the optical axis. We can do this by multiplying the Fourier transform of the object by what's known as the <strong>transfer function of free space</strong>:</p>
-\begin{equation*}
+<p>\begin{equation*}
 H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 - \left( \lambda f_x \right)^2 - \left( \lambda f_y \right)^2 } \right]
-\end{equation*}<p>\( z \) is a free parameter and is the distance from the object plane in which we wish to compute the field. To get the field from the object in a plane \( z \), we multiply the Fourier transform of the field by this transfer function and then compute the inverse Fourier transform of the product. This is essentially the operation I performed in a <a href="http://kmdouglass.github.io/posts/simulating-microscope-pupil-functions.html">previous post where I computed the defocused image of an isotropic point emitter in a microscope</a>.</p>
-<p>Here's what the phase angle the transfer function looks like for propagation over \( 10 \, \mu m \):</p>
+\end{equation*}</p>
+<p>$ z $ is a free parameter and is the distance from the object plane in which we wish to compute the field. To get the field from the object in a plane $ z $, we multiply the Fourier transform of the field by this transfer function and then compute the inverse Fourier transform of the product. This is essentially the operation I performed in a <a href="http://kmdouglass.github.io/posts/simulating-microscope-pupil-functions.html">previous post where I computed the defocused image of an isotropic point emitter in a microscope</a>.</p>
+<p>Here's what the phase angle the transfer function looks like for propagation over $ 10 \, \mu m $:</p>
 
 </div>
 </div>
@@ -684,8 +706,8 @@ H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 -
 
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([</span><span class="o">-</span><span class="n">fS</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">fS</span> <span class="o">/</span> <span class="mi">2</span><span class="p">])</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([</span><span class="o">-</span><span class="n">fS</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">fS</span> <span class="o">/</span> <span class="mi">2</span><span class="p">])</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">r'$f_</span><span class="si">{x}</span><span class="s1">, \, \mu m^{-1}$'</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">r'$f_</span><span class="si">{y}</span><span class="s1">, \, \mu m^{-1}$'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'$f_</span><span class="si">{x}</span><span class="s1">, \, \mu m^{-1}$'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'$f_</span><span class="si">{y}</span><span class="s1">, \, \mu m^{-1}$'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
@@ -698,7 +720,10 @@ H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 -
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>/home/kmdouglass/anaconda3/envs/nikola/lib/python3.5/site-packages/ipykernel/__main__.py:2: RuntimeWarning: invalid value encountered in sqrt
   from ipykernel import kernelapp as app
@@ -707,7 +732,10 @@ H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 -
 </div>
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -744,8 +772,8 @@ H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 -
 
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([</span><span class="o">-</span><span class="n">fS</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">fS</span> <span class="o">/</span> <span class="mi">2</span><span class="p">])</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([</span><span class="o">-</span><span class="n">fS</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">fS</span> <span class="o">/</span> <span class="mi">2</span><span class="p">])</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">r'$f_</span><span class="si">{x}</span><span class="s1">, \, \mu m^{-1}$'</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">r'$f_</span><span class="si">{y}</span><span class="s1">, \, \mu m^{-1}$'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'$f_</span><span class="si">{x}</span><span class="s1">, \, \mu m^{-1}$'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'$f_</span><span class="si">{y}</span><span class="s1">, \, \mu m^{-1}$'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
@@ -758,7 +786,10 @@ H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 -
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>/home/kmdouglass/anaconda3/envs/nikola/lib/python3.5/site-packages/ipykernel/__main__.py:2: RuntimeWarning: invalid value encountered in sqrt
   from ipykernel import kernelapp as app
@@ -767,7 +798,10 @@ H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 -
 </div>
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -814,7 +848,10 @@ H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 -
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>/home/kmdouglass/anaconda3/envs/nikola/lib/python3.5/site-packages/ipykernel/__main__.py:2: RuntimeWarning: invalid value encountered in sqrt
   from ipykernel import kernelapp as app
@@ -823,7 +860,10 @@ H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 -
 </div>
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -859,7 +899,10 @@ H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 -
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Integral, object: 2621.4400
 Integral, Fourier transform of object: 2631.7081
@@ -896,8 +939,8 @@ Integral, hologram plane: 2621.0387
 
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">r'$x, \, \mu m$'</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">r'$y, \, \mu m$'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'$x, \, \mu m$'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'$y, \, \mu m$'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
@@ -910,7 +953,10 @@ Integral, hologram plane: 2621.0387
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -930,7 +976,7 @@ Integral, hologram plane: 2621.0387
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Movie-of-propagating-hologram">Movie of propagating hologram<a class="anchor-link" href="simulating-inline-holograms.html#Movie-of-propagating-hologram">¶</a>
 </h2>
-<p>Here I've made a movie of the hologram propagating along the axial direction between \(z = 0 \, \mu m \) and \(z = 100 \, \mu m \).</p>
+<p>Here I've made a movie of the hologram propagating along the axial direction between $z = 0 \, \mu m $ and $z = 100 \, \mu m $.</p>
 
 </div>
 </div>
@@ -963,7 +1009,7 @@ Integral, hologram plane: 2621.0387
 <span class="n">img</span><span class="o">.</span><span class="n">set_extent</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">r'$x, \, \mu m$'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'$x, \, \mu m$'</span><span class="p">)</span>
 
 <span class="n">cb</span>  <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
 <span class="n">cb</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s1">'amplitude$^2$'</span><span class="p">)</span>
@@ -1007,7 +1053,10 @@ Integral, hologram plane: 2621.0387
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>/home/kmdouglass/anaconda3/envs/nikola/lib/python3.5/site-packages/ipykernel/__main__.py:2: RuntimeWarning: invalid value encountered in sqrt
   from ipykernel import kernelapp as app
@@ -1058,7 +1107,7 @@ Integral, hologram plane: 2621.0387
 
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">r'$x, \, \mu m$'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'$x, \, \mu m$'</span><span class="p">)</span>
 
 <span class="n">cb</span>  <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
 <span class="n">cb</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s1">'amplitude$^2$'</span><span class="p">)</span>
@@ -1087,14 +1136,17 @@ Integral, hologram plane: 2621.0387
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
 
 
 
-<div id="6579a006-9230-40ee-b113-796219eba514"></div>
+
+
+<div id="5ca43f27-4a30-45ea-9a3f-67f43017c90b"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#6579a006-9230-40ee-b113-796219eba514');
+var element = $('#5ca43f27-4a30-45ea-9a3f-67f43017c90b');
 /* Put everything inside the global mpl namespace */
 window.mpl = {};
 
@@ -1868,7 +1920,10 @@ if (IPython.notebook.kernel != null) {
 </div>
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 <div class="output_html rendered_html output_subarea ">
 <img src="data:image/png;base64,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" width="431.03332005934624">
@@ -1898,7 +1953,10 @@ if (IPython.notebook.kernel != null) {
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>/home/kmdouglass/anaconda3/envs/nikola/lib/python3.5/site-packages/ipykernel/__main__.py:2: RuntimeWarning: invalid value encountered in sqrt
   from ipykernel import kernelapp as app
@@ -1960,7 +2018,7 @@ if (IPython.notebook.kernel != null) {
     <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
 
 
-        </section><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script><script type="text/x-mathjax-config">
+        </section><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha256-SDRP1VVYu+tgAGKhddBSl5+ezofHKZeI+OzxakbIe/Y=" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
 MathJax.Hub.Config({
     tex2jax: {
         inlineMath: [ ['$','$'], ["\\(","\\)"] ],
@@ -1972,7 +2030,7 @@ MathJax.Hub.Config({
         <!--End of body content-->
 
         <footer id="footer">
-            Contents © 2017         <a href="mailto:kyle.douglass@epfl.ch">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
+            Contents © 2018         <a href="mailto:kyle.douglass@epfl.ch">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
             
         </footer>
 </div>

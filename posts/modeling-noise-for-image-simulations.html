@@ -8,18 +8,11 @@
 <link href="../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
 <link href="../assets/css/ipython.min.css" rel="stylesheet" type="text/css">
 <link href="../assets/css/nikola_ipython.css" rel="stylesheet" type="text/css">
-<meta content="#5670d4" name="theme-color">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
 <link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml">
 <link rel="canonical" href="http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations.html">
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-    tex2jax: {
-        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-        processEscapes: true
-    }
-});
-</script><!--[if lt IE 9]><script src="../assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><meta name="description" itemprop="description" content="How to model digital sensor noise for imaging simulations.">
-<meta name="author" content="Kyle M. Douglass">
+<!--[if lt IE 9]><script src="../assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><meta name="author" content="Kyle M. Douglass">
 <link rel="prev" href="simulating-inline-holograms.html" title="Simulating Inline Holograms" type="text/html">
 <link rel="next" href="accessing-the-raspberry-pi-camera-image-sensor.html" title="Accessing the Raspberry Pi camera image sensor" type="text/html">
 <meta property="og:site_name" content="Kyle M. Douglass">
@@ -96,7 +89,7 @@ MathJax.Hub.Config({
 <article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="#" class="u-url">Modeling noise for image simulations</a></h1>
 
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                     Kyle M. Douglass
             </span></p>
             <p class="dateline"><a href="#" rel="bookmark"><time class="published dt-published" datetime="2017-07-14T08:14:00+02:00" itemprop="datePublished" title="2017-07-14 08:14">2017-07-14 08:14</time></a></p>
@@ -107,10 +100,9 @@ MathJax.Hub.Config({
 
             
         </p>
-<p class="sourceline"><a href="modeling-noise-for-image-simulations.ipynb" id="sourcelink">Source</a></p>
+<p class="sourceline"><a href="modeling-noise-for-image-simulations.ipynb" class="sourcelink">Source</a></p>
 
-                <meta name="description" itemprop="description" content="How to model digital sensor noise for imaging simulations.">
-</div>
+        </div>
         
 
     </header><div class="e-content entry-content" itemprop="articleBody text">
@@ -157,7 +149,10 @@ MathJax.Hub.Config({
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Populating the interactive namespace from numpy and matplotlib
 Python version:
@@ -190,21 +185,23 @@ Scipy version:		0.19.0
 <p><img src="../camera_noise_model.png" alt="Optical system with pupils"></p>
 <p>In this model, the camera/sensor is a single pixel that takes an input (a number of photons) and transforms this number to an output (a digital value in analog-to-digital units, or ADU). In performing this transformation, various sources of noise are added to the signal so that, given a camera's output in ADU, we can only make probabilisitic inferences about the actual number of photons impinging upon it. There are also a few assumptions in this model that, when taken together, constitute what's called an <em>ideal image sensor</em>. They are:</p>
 <ol>
-<li>the numer of photons collected by the pixel depends on the product of irradiance \( E \, \left[ W / m^2 \right] \) and the exposure time \( t_{exp} \, \left[ s \right] \);</li>
-<li>the sensor is linear, i.e. the digital signal \( y \) increases linearly with the number of photons received;</li>
+<li>the numer of photons collected by the pixel depends on the product of irradiance $ E \, \left[ W / m^2 \right] $ and the exposure time $ t_{exp} \, \left[ s \right] $;</li>
+<li>the sensor is linear, i.e. the digital signal $ y $ increases linearly with the number of photons received;</li>
 <li>all noise sources are constant in time and space;</li>
 <li>only the total quantum efficiency of the camera is dependent on the wavelength of the incident irradiation;</li>
 <li>and only the dark current depends on the temperature.</li>
 </ol>
-<p>From these five assumptions, the laws of quantum mechanics, and the laws of probability, expressions for the mean output, \( \mu_y \), the variance of the output \( \sigma_y^2 \), and the signal-to-noise ratio (\(SNR \)) may be derived.</p>
-\begin{equation*}
+<p>From these five assumptions, the laws of quantum mechanics, and the laws of probability, expressions for the mean output, $ \mu_y $, the variance of the output $ \sigma_y^2 $, and the signal-to-noise ratio ($SNR $) may be derived.</p>
+<p>\begin{equation*}
 \mu_y = K \mu_d + K \eta \mu_p \\
 \sigma_y^2 = K^2 \sigma_d^2 + K \left( \mu_y - K \mu_d \right) \\
 SNR = \frac{\eta \mu_p}{\sqrt{\sigma_d^2 + \sigma_q^2/K^2 + \eta \mu_p}}
-\end{equation*}<p>In these expressions, \(\mu\) and \(\sigma^2\) represent the mean and variance of the number of photons hitting the camera (\(p\)), the dark noise (\(d\)), and the output signal in ADU's (\(y\)). The number of electrons \( \mu_e \) generated by \(\mu_p\) photons hitting the active area of the sensor is obtained from the expression for the quantum efficiency \(\eta\), an engineered property of the camera that in general depends on the wavelength.</p>
-\begin{equation*}
+\end{equation*}</p>
+<p>In these expressions, $\mu$ and $\sigma^2$ represent the mean and variance of the number of photons hitting the camera ($p$), the dark noise ($d$), and the output signal in ADU's ($y$). The number of electrons $ \mu_e $ generated by $\mu_p$ photons hitting the active area of the sensor is obtained from the expression for the quantum efficiency $\eta$, an engineered property of the camera that in general depends on the wavelength.</p>
+<p>\begin{equation*}
 \eta \left( \lambda \right) = \frac{\mu_e}{\mu_p}
-\end{equation*}<p>The sensitivity of the camera \(K \, \left[ ADU / e^- \right] \) represents the amplification of the voltage in the pixel from the photoelectrons and is also a property of the camera. Finally, \( \sigma_q^2 \) represents the noise introduced by digitzing the continous voltage signal into a digital one.</p>
+\end{equation*}</p>
+<p>The sensitivity of the camera $K \, \left[ ADU / e^- \right] $ represents the amplification of the voltage in the pixel from the photoelectrons and is also a property of the camera. Finally, $ \sigma_q^2 $ represents the noise introduced by digitzing the continous voltage signal into a digital one.</p>
 <p>The EMVA 1288 Standard explains how to derive these expressions from the assumptions and known physical laws, so I will not go into their derivations in this post. Instead, I will focus on explaining how we can use this model to simulate the effects of camera noise in our holograms.</p>
 
 </div>
@@ -220,19 +217,20 @@ SNR = \frac{\eta \mu_p}{\sqrt{\sigma_d^2 + \sigma_q^2/K^2 + \eta \mu_p}}
 <p>The goal of the simulation will be to take a simulated hologram as input and convert it into an image that might be captured by a digital camera. This means that the final image should contain noise that is realistic and follows the rules of the model.</p>
 <p>The model will depend on five free parameters that vary from camera-to-camera. They are:</p>
 <ol>
-<li>the total quantum efficiency \( \eta \);</li>
-<li>the read noise variance \( \sigma_{r}^2 \) (or its standard deviation);</li>
-<li>the dark current \( \mu_I \);</li>
-<li>the sensitivity \(K\);</li>
-<li>and the bit-depth of the camera \(k\).</li>
+<li>the total quantum efficiency $ \eta $;</li>
+<li>the read noise variance $ \sigma_{r}^2 $ (or its standard deviation);</li>
+<li>the dark current $ \mu_I $;</li>
+<li>the sensitivity $K$;</li>
+<li>and the bit-depth of the camera $k$.</li>
 </ol>
-<p>The dark noise \( \sigma_d^2 \) is actually comprised of two separate noise sources, i.e. the read noise \( \sigma_r^2 \) and the dark current \( \mu_I \). Because the noise sources are independent, we can write</p>
-\begin{equation*}
+<p>The dark noise $ \sigma_d^2 $ is actually comprised of two separate noise sources, i.e. the read noise $ \sigma_r^2 $ and the dark current $ \mu_I $. Because the noise sources are independent, we can write</p>
+<p>\begin{equation*}
 \sigma_d^2 = \sigma_r^2 + \sigma_I^2 \\
 \sigma_d^2 = \sigma_r^2 + \mu_I t_{exp}
-\end{equation*}<p>where the last step relies on the fact that the generation of thermal electrons is a Poisson process whose mean is equal to its variance. The units of \(\mu_I\) are \(e^- / s \) and values for \( \mu_I \) are often provided on camera spec. sheets. Likewise, the read noise \(\sigma_r^2\) is also provided on spec. sheets, although in my experience the units are likely to be in root-mean-square electrons or median electrons and not electrons-squared.</p>
+\end{equation*}</p>
+<p>where the last step relies on the fact that the generation of thermal electrons is a Poisson process whose mean is equal to its variance. The units of $\mu_I$ are $e^- / s $ and values for $ \mu_I $ are often provided on camera spec. sheets. Likewise, the read noise $\sigma_r^2$ is also provided on spec. sheets, although in my experience the units are likely to be in root-mean-square electrons or median electrons and not electrons-squared.</p>
 <p>Other than the inputs, we do not need to provide values for the other numbers in the model because they are related to the free parameters by various physical and mathematical laws.</p>
-<p>Finally, let's ignore spatial noise sources in these simulations because it's difficult to characterize them with a single number. Spatial noise is a variation in the free parameters of the camera from pixel to pixel. An example of a common type of spatial noise is photon response non-uniformity and is manifest in a sensitivity \( K \) that varies between pixels. Ignoring spatial noise in the simulations simply means that values for the read noise, dark current, quantum efficiency, and sensitivty are the same for all pixels.</p>
+<p>Finally, let's ignore spatial noise sources in these simulations because it's difficult to characterize them with a single number. Spatial noise is a variation in the free parameters of the camera from pixel to pixel. An example of a common type of spatial noise is photon response non-uniformity and is manifest in a sensitivity $ K $ that varies between pixels. Ignoring spatial noise in the simulations simply means that values for the read noise, dark current, quantum efficiency, and sensitivty are the same for all pixels.</p>
 
 </div>
 </div>
@@ -246,14 +244,16 @@ SNR = \frac{\eta \mu_p}{\sqrt{\sigma_d^2 + \sigma_q^2/K^2 + \eta \mu_p}}
 </h3>
 <p>Before doing anything, we need to take the electric field from our Fourier optics simulations and convert it to units of photons. If it isn't clear how you would first get an electric field, you can refer to my <a href="simulating-inline-holograms.html">previous post</a> on calculating the hologram of a thin, circular phase-only object. Typically, the calcuation of the electric field will follow from the laws of diffraction and serve as an input for the camera model.</p>
 <p>To get the number of photons, we first compute the irradiance of the field using the magnitude of the time-averaged <a href="https://en.wikipedia.org/wiki/Poynting_vector#Plane_waves">Poynting vector</a> of a linearly-polarzed electromagnetic wave in free space, which is</p>
-\begin{equation*}
+<p>\begin{equation*}
 E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
-\end{equation*}<p>Here, \(E \left( x, y \right) \) is the irradiance at point \( \left( x, y \right) \), \(U \left( x, y \right) \) is the scalar electric field at the same point, and \(Z_0 \approx 377 \, \Omega \) is the <a href="https://en.wikipedia.org/wiki/Wave_impedance">impedance of free space</a>. We would change the value for the impedance if we were imaging in a medium other than vacuum. The units of the field are \( V / m \) which, when squared and divided by the units of the impedance (Ohms), gives units of power per area, or \( W / m^2 \). It's also worth mentioning that we are implicitly assuming the field varies smoothly on the length scale of a pixel. This is why we can use the expression for the Poynting vector of a plane wave.</p>
+\end{equation*}</p>
+<p>Here, $E \left( x, y \right) $ is the irradiance at point $ \left( x, y \right) $, $U \left( x, y \right) $ is the scalar electric field at the same point, and $Z_0 \\approx 377 \, \Omega $ is the <a href="https://en.wikipedia.org/wiki/Wave_impedance">impedance of free space</a>. We would change the value for the impedance if we were imaging in a medium other than vacuum. The units of the field are $ V / m $ which, when squared and divided by the units of the impedance (Ohms), gives units of power per area, or $ W / m^2 $. It's also worth mentioning that we are implicitly assuming the field varies smoothly on the length scale of a pixel. This is why we can use the expression for the Poynting vector of a plane wave.</p>
 <p>The mean number of photons is obtained from the irradiance by the expression</p>
-\begin{align*}
+<p>\begin{align*}
 \mu_p &amp;= \frac{\lambda A}{hc}Et_{exp} \\
 &amp;= \frac{\lambda A}{2hcZ_0} \left| U \right|^2 t_{exp}
-\end{align*}<p>where \( A \) is the pixel's area and \( \frac{hc}{\lambda} \) is the energy per photon in units of Joules, with \(hc \approx 2 \times 10^{-25} \, J \cdot m \).</p>
+\end{align*}</p>
+<p>where $ A $ is the pixel's area and $ \frac{hc}{\lambda} $ is the energy per photon in units of Joules, with $hc \approx 2 \times 10^{-25} \, J \cdot m $.</p>
 <p>This step is a bit cumbersome, and in the rest of what follows I will skip this step and will use a set number of photons directly as the input to the simulations, rather than a scalar field.</p>
 
 </div>
@@ -266,7 +266,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Step-1:-Compute-the-photon-shot-noise">Step 1: Compute the photon shot noise<a class="anchor-link" href="modeling-noise-for-image-simulations.html#Step-1:-Compute-the-photon-shot-noise">¶</a>
 </h3>
-<p>For the sake of simplicity, let's start by assuming that we have a camera with \( 256 \times 256 \) pixels and a mean incident photon flux of 500 photons on each pixel. This would produce an image that looks like this:</p>
+<p>For the sake of simplicity, let's start by assuming that we have a camera with $ 256 \times 256 $ pixels and a mean incident photon flux of 500 photons on each pixel. This would produce an image that looks like this:</p>
 
 </div>
 </div>
@@ -301,7 +301,10 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -319,7 +322,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><a href="https://en.wikipedia.org/wiki/Shot_noise">Photon shot noise</a> arises from the fact that the incident number of photons is not deterministic but rather a random process whose statistics are Poissonian. In a Poisson process, the variance of the noise \( \sigma_p^2 \) is equal to the mean number of photons \( \mu_p \).</p>
+<p><a href="https://en.wikipedia.org/wiki/Shot_noise">Photon shot noise</a> arises from the fact that the incident number of photons is not deterministic but rather a random process whose statistics are Poissonian. In a Poisson process, the variance of the noise $ \sigma_p^2 $ is equal to the mean number of photons $ \mu_p $.</p>
 <p>Poisson random numbers are easy to generate with NumPy. First, we set a seed so that we can reproducibly generate the same random numbers each time and initialize a <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.random.RandomState.html#numpy.random.RandomState">RandomState</a> instance with it. Using this RandomState instance, we call the <code>poisson</code> method with a mean of <code>num_photons</code> and a size <code>(num_pixels, num_pixels)</code>. Finally, we plot the image and compare it to the one where no shot noise is present.</p>
 
 </div>
@@ -367,7 +370,10 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -401,7 +407,10 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -494,7 +503,10 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -561,7 +573,10 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -601,7 +616,10 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -619,9 +637,9 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Step-4:-Convert-from-\(-e^--\)-to-ADU">Step 4: Convert from \( e^- \) to ADU<a class="anchor-link" href="modeling-noise-for-image-simulations.html#Step-4:-Convert-from-%5C(-e%5E--%5C)-to-ADU">¶</a>
+<h3 id="Step-4:-Convert-from-$-e^--$-to-ADU">Step 4: Convert from $ e^- $ to ADU<a class="anchor-link" href="modeling-noise-for-image-simulations.html#Step-4:-Convert-from-%24-e%5E--%24-to-ADU">¶</a>
 </h3>
-<p>Now we need to convert the value of each pixel from electrons to ADU, or analog-to-digital units. ADU's are the units of grey scale that are output by monochrome cameras. To do this, we multiply the number of electrons after the addition of read noise by the sensitivity. We also need to ensure that the final ADU count is discrete and to set the maximum upper value of ADU's to the \( 2^k - 1 \) where \( k \) is the camera's bit-depth. The latter operation ensures that saturation of the pixels is correctly modeled.</p>
+<p>Now we need to convert the value of each pixel from electrons to ADU, or analog-to-digital units. ADU's are the units of grey scale that are output by monochrome cameras. To do this, we multiply the number of electrons after the addition of read noise by the sensitivity. We also need to ensure that the final ADU count is discrete and to set the maximum upper value of ADU's to the $ 2^k - 1 $ where $ k $ is the camera's bit-depth. The latter operation ensures that saturation of the pixels is correctly modeled.</p>
 
 </div>
 </div>
@@ -657,7 +675,10 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -711,7 +732,10 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -833,7 +857,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Finally, we create our animation of the simulated digital images of an inline planewave hologram from the object at axial planes between \( 0 \) and \( 100 \, \mu m \) away from the object. It's true that some of the noise you will see in the video is due to the compression artifacts, but a lot of it is also due to the temporal noise in each individual pixel. Pay close to attention the regions of low signal to see it.</p>
+<p>Finally, we create our animation of the simulated digital images of an inline planewave hologram from the object at axial planes between $ 0 $ and $ 100 \, \mu m $ away from the object. It's true that some of the noise you will see in the video is due to the compression artifacts, but a lot of it is also due to the temporal noise in each individual pixel. Pay close to attention the regions of low signal to see it.</p>
 
 </div>
 </div>
@@ -854,7 +878,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 <span class="n">img</span><span class="o">.</span><span class="n">set_extent</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">r'$x, \, \mu m$'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'$x, \, \mu m$'</span><span class="p">)</span>
 
 <span class="n">cb</span>  <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
 <span class="n">cb</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s1">'ADU'</span><span class="p">)</span>
@@ -903,7 +927,10 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>/home/kmdouglass/anaconda3/envs/nikola/lib/python3.5/site-packages/ipykernel/__main__.py:25: RuntimeWarning: invalid value encountered in sqrt
 </pre>
@@ -931,7 +958,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 <h2 id="Simulated-holograms-on-a-poor-camera">Simulated holograms on a poor camera<a class="anchor-link" href="modeling-noise-for-image-simulations.html#Simulated-holograms-on-a-poor-camera">¶</a>
 </h2>
 <p>As I mentioned, the FLIR Chameleon camera is actually quite good. In fact, a similar camera with the Sony IMX265 chip has been successfully used for <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5431525/">single molecule localization microscopy</a>, which means that the noise floor is low enough and the quantum efficiency is high enough to detect the fluorescence from single molecules. Here's what another hologram might look like if the dark noise was worse, say 20 electrons. (For comparison, many sensors in digital cameras have read noise values around or below 10 electrons. Thanks <a href="https://twitter.com/kD3AN/status/885602631091179521">@kD3AN</a> for this <a href="http://www.clarkvision.com/articles/digital.sensor.performance.summary/#read_noise">link</a>.)</p>
-<p>Notice how many of the features of the hologram--especially those away from the center--become much more difficult to detect due to increased dark noise of the sensor. In particular, try pausing both movies around a distance of \( 40 \, \mu m \) and notice how much clearer the rings are for the low noise camera.</p>
+<p>Notice how many of the features of the hologram--especially those away from the center--become much more difficult to detect due to increased dark noise of the sensor. In particular, try pausing both movies around a distance of $ 40 \, \mu m $ and notice how much clearer the rings are for the low noise camera.</p>
 
 </div>
 </div>
@@ -952,7 +979,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 <span class="n">img</span><span class="o">.</span><span class="n">set_extent</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">r'$x, \, \mu m$'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'$x, \, \mu m$'</span><span class="p">)</span>
 
 <span class="n">cb</span>  <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
 <span class="n">cb</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s1">'ADU'</span><span class="p">)</span>
@@ -1001,7 +1028,10 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>/home/kmdouglass/anaconda3/envs/nikola/lib/python3.5/site-packages/ipykernel/__main__.py:25: RuntimeWarning: invalid value encountered in sqrt
 </pre>
@@ -1075,7 +1105,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
     <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
 
 
-        </section><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script><script type="text/x-mathjax-config">
+        </section><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha256-SDRP1VVYu+tgAGKhddBSl5+ezofHKZeI+OzxakbIe/Y=" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
 MathJax.Hub.Config({
     tex2jax: {
         inlineMath: [ ['$','$'], ["\\(","\\)"] ],
@@ -1087,7 +1117,7 @@ MathJax.Hub.Config({
         <!--End of body content-->
 
         <footer id="footer">
-            Contents © 2017         <a href="mailto:kyle.douglass@epfl.ch">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
+            Contents © 2018         <a href="mailto:kyle.douglass@epfl.ch">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
             
         </footer>
 </div>

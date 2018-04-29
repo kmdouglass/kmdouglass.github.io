@@ -1,5 +1,693 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Kyle M. Douglass (micro-manager)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link rel="self" type="application/rss+xml" href="http://kmdouglass.github.io/categories/micro-manager.xml"></atom:link><language>en</language><lastBuildDate>Fri, 10 Feb 2017 18:44:57 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Micro-Manager on the Raspberry Pi</title><link>http://kmdouglass.github.io/posts/micro-manager-on-the-raspberry-pi.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;&lt;a class="reference external" href="https://micro-manager.org/"&gt;Micro-Manager&lt;/a&gt; is an open source platform for controlling microscope
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0"><channel><title>Kyle M. Douglass (Posts about micro-manager)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link href="http://kmdouglass.github.io/categories/micro-manager.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Sun, 29 Apr 2018 10:11:13 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>How I built a cross-compilation workflow for the Raspberry Pi</title><link>http://kmdouglass.github.io/posts/how-i-built-a-cross-compilation-workflow-for-the-raspberry-pi.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;Some of you may know I tinker with the Raspberry Pi in my free time
+and that one of my current projects is to build a lensless microscope
+with the Pi as the brains. To control the microscope, I decided a
+while ago that I would use &lt;a class="reference external" href="https://micro-manager.org/wiki/Micro-Manager"&gt;Micro-Manager&lt;/a&gt;, an open-source
+software package for microscope control. I made this decision for a
+few reasons:&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;I already knew the Micro-Manager codebase since I use it frequently
+at work.&lt;/li&gt;
+&lt;li&gt;The Micro-Manager core provides a device-independent interface to
+hardware.&lt;/li&gt;
+&lt;li&gt;I've contributed to the project in the past and feel a sense of
+loyalty to the project and the people involved. Expanding
+Micro-Manager into embedded microscopy would be a great way for me
+to give back to the community.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Building Micro-Manager from source code presents its own set of
+challenges. After ensuring that you have the correct build
+environment, you need to actually compile it, and here's where things
+get tricky in Raspyberry Pi development. The Pi has an ARM processor,
+whereas most laptops and workstations use a x86_64 processor. This
+means that code compiled on a typical desktop PC will not work on the
+Pi. As I showed in &lt;a class="reference external" href="https://kmdouglass.github.io/posts/micro-manager-on-the-raspberry-pi.html"&gt;my earlier post&lt;/a&gt;,
+you can compile the code directly on the Pi to circumvent this, but
+this unfortunately is quite cumbersome because the code base and
+dependencies are quite large. (They are nearly 8 GB in
+total). Furthermore, compiling the project on the Pi is slow and
+requires connecting to it via ssh or working directly on a TV screen
+or monitor.&lt;/p&gt;
+&lt;p&gt;These problems extend beyond Micro-Manager to other large-scale
+projects that require code compilation for a specific processor
+architecture. In this post, I'll describe the workflow that I
+developed for cross-compiling projects for the Raspberry Pi.&lt;/p&gt;
+&lt;div class="section" id="previous-attempts"&gt;
+&lt;h2&gt;Previous attempts&lt;/h2&gt;
+&lt;p&gt;Prior to the workflow that is the main topic of this post, I managed
+to cross-compile Micro-Manager using a &lt;cite&gt;chroot&lt;/cite&gt; environment and the
+&lt;a class="reference external" href="https://www.qemu.org/"&gt;QEMU emulator&lt;/a&gt;. &lt;a class="reference external" href="https://en.wikipedia.org/wiki/Chroot"&gt;chroot&lt;/a&gt; is a Linux command that
+changes the apparent root (or '/') directory for a running
+process. With this approach, I mount an image of the &lt;a class="reference external" href="https://www.raspberrypi.org/downloads/raspbian/"&gt;Raspbian
+operating system&lt;/a&gt;
+that contains the gcc and g++ compilers and libraries for the ARM
+architecture. Then, I chroot into the image and run a setup script
+that builds the software. During execution of this script, the QEMU
+static libraries run the ARM compilers from within the chroot
+environment to build the project. The compiled code remains inside the
+image, which I then burn onto a micro SD card to insert into the Pi. I
+uploaded &lt;a class="reference external" href="https://gist.github.com/kmdouglass/38e1383c7e62745f3cf522702c21cb49"&gt;a gist of the bash script&lt;/a&gt;
+which orchestrates all this, and my inspiration for this approach came
+from a great series of blog posts from &lt;a class="reference external" href="https://disconnected.systems/blog/custom-rpi-image-with-github-travis/"&gt;Disconnected Systems&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Ultimately this approach is a huge amount of work. As you can see in
+the gist, it's fairly complicated bash scripting that's not easy to
+debug. Furthermore, the setup script that is run inside the image
+needs to do a lot of work beyond cross-compiling, like setting up the
+user, permissions, network, etc. Debugging the final product is also a
+challenge because you need to verify that it's working on the Pi,
+which requires burning the image to a micro SD card.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="cross-compiling-with-docker"&gt;
+&lt;h2&gt;Cross-compiling with Docker&lt;/h2&gt;
+&lt;p&gt;After a bit of research I decided I would try instead to use &lt;a class="reference external" href="https://www.docker.com/"&gt;Docker&lt;/a&gt; for cross-compilation and deployment to
+the Pi. I had just started using Docker at work to build reproducible
+environments for scientific computing research. In particular, and
+unlike my chroot script, I had learned that a Docker container that
+built the project could work on nearly any system that had Docker
+installed. Furthermore, deploying updates can be done on any Raspberry
+Pi that's running Docker.&lt;/p&gt;
+&lt;p&gt;I liked the idea of a portable cross-compilation workflow, so I dove
+into the Docker documentation and managed to get everything working in
+a few weeks of tinkering at home.&lt;/p&gt;
+&lt;div class="section" id="an-overview-of-docker"&gt;
+&lt;h3&gt;An overview of Docker&lt;/h3&gt;
+&lt;p&gt;You can find many resources online about Docker, so I won't go into
+the details here. The main thing you need to know is that Docker is a
+system for creating, running, and sharing &lt;em&gt;containers&lt;/em&gt;, which are
+something like light weight virtual machines. Containers solve the
+problem in software development of how to build and deploy programs
+that have a complex set of dependencies. It does this by isolating the
+environment in which a program runs from the rest of the operating
+system. For example, if you have a computer that has a certain version
+of gcc (the GNU C compiler) installed, but your application requires a
+different version, then you can install the required gcc along with
+your application inside a container and they will not interfere with
+the version of gcc that belongs to your operating system. This also
+means that you can send your container to any machine that has Docker
+installed and it should just run without having to do any setup.&lt;/p&gt;
+&lt;p&gt;Other important things to know about Docker are:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;There are two main types of objects: images and containers. Images
+are sort of like blueprints that define what is inside a container,
+whereas containers are like the actual buildings specified by the
+blueprints. There can be many containers that come from a single
+image.&lt;/li&gt;
+&lt;li&gt;Containers are meant to be immutable. When you stop them and restart
+them, they always restart in the same state as when they were first
+created.&lt;/li&gt;
+&lt;li&gt;Since containers are immutable, some of your application data may
+need to be placed in a volume, which is either another container or
+a folder on the host system. A volume gets connected to your
+application container and exists even when your application
+container is not running.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="the-cross-compilation-workflow"&gt;
+&lt;h2&gt;The cross-compilation workflow&lt;/h2&gt;
+&lt;p&gt;Now that we have established the essential background to this project,
+let's look at the cross-compilation workflow. Below is a picture that
+provides a sense of the entire process, moving in general from
+left-to-right.&lt;/p&gt;
+&lt;img alt="The cross-compilation workflow" class="align-center" src="http://kmdouglass.github.io/mm_docker_workflow.png"&gt;
+&lt;p&gt;The process involves two Docker containers: one for building
+Micro-Manager and the other for running the application. The build
+dependencies and the QEMU emulator are both located inside the build
+container, having been specified when its image was created. These
+allow us to compile Micro-Manager for the ARM architecture.  The
+source code is connected to the build container as a &lt;em&gt;bind mount&lt;/em&gt;,
+which is a folder from the host workstation that is mounted inside the
+build container when it is run.&lt;/p&gt;
+&lt;p&gt;Once the libraries are compiled, they are installed into a folder
+inside the bind mount so that the host system will have access to them
+after the build container closes. Next, the compiled libraries are
+copied directly into an image that defines the application
+container. This image defines only the essential run-time requirements
+for running Micro-Manager and nothing else. The application image is
+stored on the registry server which I set up on my local network. This
+makes it easy for the Raspberry Pi to download the latest image and
+run the Micro-Manager application container whenever I make changes.&lt;/p&gt;
+&lt;p&gt;An important aspect of this workflow is how the data is passed between
+the systems and containers. Unlike what you will find in many
+introductory tutorials on Docker, I do not add the Micro-Manager
+source code directly to the build image/containers but instead use a
+bind mount. The reason for this is that the source code and 3rd party
+libraries are quite large, about 8 GB in total. By using a bind mount,
+I avoid needless copying of this data. Another reason for using a bind
+mount is that the source code will change frequently during
+development. If I add the source code to the image, then I will have
+to recreate the image every time the source code changes.&lt;/p&gt;
+&lt;p&gt;Once the libraries are built, I directly copy them into the
+application image because they are much, much smaller than the source
+code. I also want the code stored directly in the image so that the
+application image is all the Raspberry Pi needs to run the
+program. The image is stored in my local &lt;a class="reference external" href="https://docs.docker.com/registry/"&gt;Docker registry&lt;/a&gt; server so that once I push an
+updated image to the server, the Raspberry Pi can download it and use
+it immediately.&lt;/p&gt;
+&lt;div class="section" id="step-0-prerequisites"&gt;
+&lt;h3&gt;Step 0: Prerequisites&lt;/h3&gt;
+&lt;p&gt;I am going to assume that you already have installed Docker. (If not,
+follow &lt;a class="reference external" href="https://docs.docker.com/install/"&gt;these directions&lt;/a&gt;.) I am
+also going to assume that you are somewhat familiar with how to work
+on a Linux system. The Raspberry Pi runs Linux, so you probably
+wouldn't be here if you didn't already know at least a little.&lt;/p&gt;
+&lt;p&gt;For this article, I am working with these versions of Docker and
+Ubuntu on my host workstation.:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+kmdouglass@xxxxx:~$ uname -a
+Linux xxxxx 4.13.0-39-generic #44~16.04.1-Ubuntu SMP Thu Apr 5 16:43:10 UTC 2018 x86_64 x86_64
+x86_64 GNU/Linux
+
+kmdouglass@xxxxx:~$ docker version
+Client:
+ Version:      18.03.1-ce
+ API version:  1.37
+ Go version:   go1.9.5
+ Git commit:   9ee9f40
+ Built:        Thu Apr 26 07:17:20 2018
+ OS/Arch:      linux/amd64
+ Experimental: false
+ Orchestrator: swarm
+
+Server:
+ Engine:
+  Version:      18.03.1-ce
+  API version:  1.37 (minimum version 1.12)
+  Go version:   go1.9.5
+  Git commit:   9ee9f40
+  Built:        Thu Apr 26 07:15:30 2018
+  OS/Arch:      linux/amd64
+  Experimental: false
+&lt;/pre&gt;
+&lt;p&gt;Finally, below is how my project directory structure is laid out.:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+kmdouglass@xxxxx:~/src/alphapi/docker$ tree -L 2
+.
+└── rpi-micromanager
+    ├── 2.0-python
+    │   ├── build
+    │   └── Dockerfile
+    └── build
+        ├── build
+        ├── Dockerfile
+        ├── run
+        └── setup
+&lt;/pre&gt;
+&lt;p&gt;I have two folders; build, which contains the files for the build
+container, and 2.0-python, which contains the files for creating the
+Micro-Manager application container. (In my case, I am going to build
+the Python wrapper for Micro-Manager 2.0.) Inside each folder are the
+scripts and Dockerfiles that execute the various steps of the
+workflow.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="step-1-create-the-build-image"&gt;
+&lt;h3&gt;Step 1: Create the build image&lt;/h3&gt;
+&lt;p&gt;Inside the build folder, I have a file called Dockerfile. Here are its
+contents:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+# Copyright (C) 2018 Kyle M. Douglass
+#
+# Defines a build environment for Micro-Manager on the Raspberry Pi.
+#
+# Usage: docker build \
+#          -t NAME:TAG \
+#          .
+#
+
+FROM resin/raspberrypi3-debian:stretch
+MAINTAINER Kyle M. Douglass &amp;lt;kyle.m.douglass@gmail.com&amp;gt;
+
+RUN [ "cross-build-start" ]
+
+# Get the build dependencies.
+RUN apt-get update &amp;amp;&amp;amp; apt-get -y install --no-install-recommends \
+autoconf \
+automake \
+build-essential \
+git \
+libatlas-base-dev \
+libboost-dev \
+libboost-all-dev \
+libtool \
+patch \
+pkg-config \
+python3-dev \
+python3-pip \
+python3-setuptools \
+python3-wheel \
+swig \
+&amp;amp;&amp;amp; apt-get clean &amp;amp;&amp;amp; rm -rf /var/lib/apt/lists/* \
+&amp;amp;&amp;amp; pip3 install numpy
+
+RUN [ "cross-build-end" ]
+
+# Set up the mount point for the source files and setup script.
+ADD setup /micro-manager/
+VOLUME /micro-manager/src
+
+WORKDIR /micro-manager/src
+ENTRYPOINT [ "/sbin/tini", "-s", "--" ]
+CMD [ "/micro-manager/setup" ]
+&lt;/pre&gt;
+&lt;p&gt;A Dockerfile defines the steps in building an image -- in this case,
+the build image. Let's break this file down into pieces. In the first
+two lines that follow the comments, I specify that my image is based
+on the resin/raspberrypi3-debian:stretch image and that I am the
+maintainer.:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+FROM resin/raspberrypi3-debian:stretch
+MAINTAINER Kyle M. Douglass &amp;lt;kyle.m.douglass@gmail.com&amp;gt;
+&lt;/pre&gt;
+&lt;p&gt;Images from &lt;a class="reference external" href="https://hub.docker.com/u/resin/"&gt;Resin&lt;/a&gt; are freely
+available and already have the QEMU emulator installed. Next, I
+specify what commands should be run for the ARM architecture. Any
+commands located between &lt;tt class="docutils literal"&gt;RUN [ &lt;span class="pre"&gt;"cross-build-start"&lt;/span&gt; ]&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;RUN [
+&lt;span class="pre"&gt;"cross-build-end"&lt;/span&gt; ]&lt;/tt&gt; will be run using the emulator. Inside these two
+commands, I install the build dependencies for Micro-Manager using
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;apt-get&lt;/span&gt;&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;pip&lt;/tt&gt;. (These are just standard commands for
+installing software on Debian/Ubuntu Linux machines and from PyPI,
+respectively.)&lt;/p&gt;
+&lt;p&gt;After the installation of the requirements completes, I add the setup
+script to the folder /micro-manager inside the image with the &lt;tt class="docutils literal"&gt;ADD
+setup &lt;span class="pre"&gt;/micro-manager/&lt;/span&gt;&lt;/tt&gt; command. The setup script contains the
+commands that will actually compile Micro-Manager. I then define a
+mount point for the source code with &lt;tt class="docutils literal"&gt;VOLUME
+&lt;span class="pre"&gt;/micro-manager/src&lt;/span&gt;&lt;/tt&gt;. &lt;strong&gt;It's important to realize here that you do not
+mount volumes inside images, you mount volumes inside containers.&lt;/strong&gt;
+This command is just telling the image to expect a folder to be
+mounted at this location when the container is run.&lt;/p&gt;
+&lt;p&gt;The last three lines set the working directory, the entrypoint and the
+default container command, respectively.:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+WORKDIR /micro-manager/src
+ENTRYPOINT [ "/sbin/tini", "-s", "--" ]
+CMD [ "/micro-manager/setup" ]
+&lt;/pre&gt;
+&lt;p&gt;This specific entrypoint tells Docker that any containers built from
+this image should first run Tini, which is a lightweight init system
+for Docker containers. If you do not specify Tini as the entry point,
+then it will not be able to reap zombies. (I don't know what this
+means exactly, but it sounds cool and you can read about it here:
+&lt;a class="reference external" href="https://github.com/krallin/tini"&gt;https://github.com/krallin/tini&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;By default, the container will run the setup script, but, since I used
+the &lt;tt class="docutils literal"&gt;CMD&lt;/tt&gt; directive, this can be overriden in case we need to
+perform some manual steps. Roughly speaking, you can think of the
+entrypoint as the command that can not be overridden and the CMD
+command as the one that can be. In other words, Tini will always be
+executed when containers created from this image are launched, whereas
+you can choose not to run the setup script but instead to enter the
+container through a Bash shell, for example.&lt;/p&gt;
+&lt;p&gt;To build the image, I use the following build script located in the
+same directory as the Dockerfile for convenience:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+#!/bin/bash
+# Copyright (C) 2018 Kyle M. Douglass
+#
+# Usage: ./build
+#
+
+docker build \
+       -t localhost:5000/rpi-micromanager:build \
+       .
+&lt;/pre&gt;
+&lt;p&gt;By using &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-t&lt;/span&gt; &lt;span class="pre"&gt;localhost:5000/rpi-micromanager:build&lt;/span&gt;&lt;/tt&gt; argument I am
+giving the image a name of &lt;em&gt;rpi-micromanager&lt;/em&gt;, a tag of &lt;em&gt;build&lt;/em&gt;, and
+specifying that I will eventually host this image on my local registry
+server (localhost) on port 5000.&lt;/p&gt;
+&lt;p&gt;In case you are wondering about the contents of the setup script,
+don't worry. I'll explain it in the next section.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="step-2-compile-micro-manager"&gt;
+&lt;h3&gt;Step 2: Compile Micro-Manager&lt;/h3&gt;
+&lt;p&gt;After the image is built, I create a container and use it to compile
+Micro-Manager. For this, I use the run script in the build directory:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+#!/bin/bash
+# Copyright (C) 2018 Kyle M. Douglass
+#
+# Usage: ./run DIR CONFIGURE
+#
+# DIR is the parent folder containing the micro-manager Git
+# repository, the 3rdpartypublic Subversion repository, and any
+# additional build resources.
+#
+# If CONFIGURE=true, the build system is remade and the configure
+# script is rerun before running 'make' and 'make install'. If
+# CONFIGURE=false, only 'make' and 'make install' are run.
+#
+# The compiled program files are stored in a bind mount volume so that
+# they may be copied into the deployment container.
+#
+
+src_dir=$1
+cmd="/micro-manager/setup $2"
+
+# Remove the build artifacts from previous builds.
+if [ "$2" == true ] || [ "$2" == false ]; then
+    rm -rf ${src_dir}/build || true
+fi
+
+docker run --rm \
+       -v ${src_dir}:/micro-manager/src \
+       --name mm-build \
+       localhost:5000/rpi-micromanager:build \
+       ${cmd}
+&lt;/pre&gt;
+&lt;p&gt;The script takes two arguments. The first is the path to the folder
+containing all the source code (see below for details). The second
+argument is either &lt;strong&gt;true&lt;/strong&gt; or &lt;strong&gt;false&lt;/strong&gt;. (It can actually be
+anything, but it will only compile Micro-Manager if either &lt;strong&gt;true&lt;/strong&gt; or
+&lt;strong&gt;false&lt;/strong&gt; are provided.) If true, the full build process is run,
+including setting up the configure script; if false, only make and
+make install are run, which should recompile and install only recently
+updated files.&lt;/p&gt;
+&lt;p&gt;The run script uses the -v argument to &lt;tt class="docutils literal"&gt;docker run&lt;/tt&gt; to mount the
+source directory into the container at the point specified by the
+&lt;tt class="docutils literal"&gt;VOLUME&lt;/tt&gt; command in the Dockerfile. The directory layout on my host
+file system for the source directory looks like this:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+kmdouglass@xxxxx:/media/kmdouglass/Data/micro-manager$ tree -L 1
+.
+├── 3rdpartypublic
+├── micro-manager
+└── patches
+&lt;/pre&gt;
+&lt;p&gt;The patches folder is not necessary and only there to fix &lt;a class="reference external" href="https://github.com/micro-manager/micro-manager/pull/613"&gt;a bug&lt;/a&gt; in the
+WieneckeSinscke device adapter. (This bug may be fixed by now.)
+3rdpartypublic is the large Subversion repository of all the required
+software to build Micro-Manager, and micro-manager is the &lt;a class="reference external" href="https://github.com/micro-manager/micro-manager"&gt;cloned
+GitHub repository&lt;/a&gt;. Prior to building,
+I checkout the mm2 branch because I am interested in developing my
+application for Micro-Manager 2.0.&lt;/p&gt;
+&lt;p&gt;The setup script that is run inside the container and mentioned in the
+previous section looks like this:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+#!/bin/bash
+#
+# # Copyright (C) 2018 Kyle M. Douglass
+#
+# Builds Micro-Manager.
+#
+# Usage: ./setup CONFIGURE
+#
+# If CONFIGURE=true, the build system is remade and the configure
+# script is rerun before running 'make' and 'make install'. If
+# CONFIGURE=false, only 'make' and 'make install' or run.
+#
+# Kyle M. Douglass, 2018
+#
+
+# Move into the source directory.
+cd micro-manager
+
+# Undo any previous patches.
+git checkout -- DeviceAdapters/WieneckeSinske/CAN29.cpp
+git checkout -- DeviceAdapters/WieneckeSinske/WieneckeSinske.cpp
+
+# Patch the broken WieneckeSinske device adapter.
+patch DeviceAdapters/WieneckeSinske/CAN29.cpp &amp;lt; ../patches/CAN29.cpp.diff \
+&amp;amp;&amp;amp; patch DeviceAdapters/WieneckeSinske/WieneckeSinske.cpp &amp;lt; ../patches/WieneckeSinske.cpp.diff
+
+# Compile MM2.
+if [ "$1" = true ]; then
+    # Remake the entire build system, then compile from scratch.
+    ./autogen.sh
+    PYTHON="/usr/bin/python3" ./configure \
+        --prefix="/micro-manager/src/build" \
+        --with-python="/usr/include/python3.5" \
+        --with-boost-libdir="/usr/lib/arm-linux-gnueabihf" \
+        --with-boost="/usr/include/boost" \
+        --disable-java-app \
+        --disable-install-dependency-jars \
+        --with-java="no"
+    make
+    make install
+    chmod -R a+w /micro-manager/src/build
+elif [ "$1" = false ]; then
+    # Only recompile changed source files.
+    make
+    make install
+    chmod -R a+w /micro-manager/src/build
+else
+    echo "$1 : Unrecognized argument."
+    echo "Pass \"true\" to run the full build process."
+    echo "Pass \"false\" to run only \"make\" and \"make install\"."
+fi
+&lt;/pre&gt;
+&lt;p&gt;Most important in this script is the call to &lt;tt class="docutils literal"&gt;configure&lt;/tt&gt;. You can
+see that the compiled libraries and Python wrapper will be written to
+the build folder inside the mounted directory. This gives the host
+file system access to the compiled artifacts after the container has
+stopped.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="step-3-build-the-application-image"&gt;
+&lt;h3&gt;Step 3: Build the application image&lt;/h3&gt;
+&lt;p&gt;Once the libraries are compiled, we can add them to an application
+image that contains only the essentials for running Micro-Manager.&lt;/p&gt;
+&lt;p&gt;For this, I use a separate Dockerfile inside the 2.0-python
+directory:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+# Copyright (C) 2018 Kyle M. Douglass
+#
+# Builds the Micro-Manager 2.0 Python wrapper for the Raspberry Pi.
+#
+# Usage: docker build \
+#          -t NAME:TAG \
+#          .
+#
+
+FROM resin/raspberrypi3-debian:stretch
+MAINTAINER Kyle M. Douglass &amp;lt;kyle.m.douglass@gmail.com&amp;gt;
+
+RUN [ "cross-build-start" ]
+
+# Install the run-time dependencies.
+RUN apt-get update &amp;amp;&amp;amp; apt-get -y install --no-install-recommends \
+    libatlas-base-dev \
+    libboost-all-dev \
+    python3-pip \
+    python3-setuptools \
+    python3-wheel \
+    &amp;amp;&amp;amp; pip3 install numpy \
+    &amp;amp;&amp;amp; apt-get clean &amp;amp;&amp;amp; rm -rf /var/lib/apt/lists/*
+
+# Copy in the Micro-Manager source files.
+RUN useradd -ms /bin/bash micro-manager
+WORKDIR /home/micro-manager/app
+COPY --chown=micro-manager:micro-manager . .
+
+RUN [ "cross-build-end" ]
+
+# Final environment configuration.
+USER micro-manager:micro-manager
+ENV PYTHONPATH /home/micro-manager/app/lib/micro-manager
+ENTRYPOINT ["/sbin/tini", "-s", "--"]
+CMD ["/usr/bin/python3"]
+&lt;/pre&gt;
+&lt;p&gt;As before, I use a clean resin base image. However, this time I only
+install the essential software to run Micro-Manager.&lt;/p&gt;
+&lt;p&gt;After apt-getting and pip-installing everything, I create a new user
+called &lt;strong&gt;micro-manager&lt;/strong&gt; and a new folder called &lt;strong&gt;app&lt;/strong&gt; inside this
+user's home directory:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+# Copy in the Micro-Manager source files.
+RUN useradd -ms /bin/bash micro-manager
+WORKDIR /home/micro-manager/app
+&lt;/pre&gt;
+&lt;p&gt;Next, I directly copy the compiled libraries into the image with the
+COPY command:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+COPY --chown=micro-manager:micro-manager . .
+&lt;/pre&gt;
+&lt;p&gt;The two periods (.) mean that I copy the current host directory's
+contents into the container's current working directory
+(/home/micro-manager/app). What is the current host directory? Well,
+as I explain below, I actually run this Dockerfile from inside the
+&lt;strong&gt;build&lt;/strong&gt; folder that was created to hold the compiled libraries in
+the previous step. But first, I'll end my explanation of the
+Dockerfile by saying that I switch the USER so that I do not run the
+container as root, add the library to the PYTHONPATH environment
+variable, and setup the default command as the python3 interpreter.&lt;/p&gt;
+&lt;p&gt;To build this image, I use the following build script:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+#!/bin/bash
+# Copyright (C) 2018 Kyle M. Douglass
+#
+# Usage: ./build DIR
+#
+# DIR is the root directory containing the Micro-Manager build
+# artifacts. These artifacts will be added to the Docker image.
+#
+
+src_dir=$1
+
+cp Dockerfile ${src_dir}
+cd ${src_dir}
+
+docker build \
+       -t localhost:5000/rpi-micromanager:2.0-python \
+       .
+&lt;/pre&gt;
+&lt;p&gt;This script takes one argument, which is the &lt;strong&gt;build&lt;/strong&gt; directory
+containing the compiled source code. The script first copies the
+Dockerfile into this directory and then changes into it with the cd
+command. (This explains the two periods (.) in the COPY command in the
+Dockerfile.)&lt;/p&gt;
+&lt;p&gt;Finally, I build the image and give it a name of
+localhost:5000/rpi-micromanager:2.0-python.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="step-4-add-the-image-to-the-local-registry-server"&gt;
+&lt;h3&gt;Step 4: Add the image to the local registry server&lt;/h3&gt;
+&lt;p&gt;Now we need a way to get the image from the workstation onto the
+Raspberry Pi. Of course, I could manually transfer the file with a USB
+stick or possibly use ssh, but what if I have multiple Pi's? This
+process could become cumbersome. Docker provides a few ways to push
+and pull images across a network. The most obvious is &lt;a class="reference external" href="https://hub.docker.com/"&gt;Dockerhub&lt;/a&gt;, a site for freely sharing images. For the
+moment I don't want to use Dockerhub, though, because I have not yet
+checked all the software licenses and am unsure as to what my rights
+are for putting an image with Micro-Manager software on a public
+repository.&lt;/p&gt;
+&lt;p&gt;A better option, especially for testing, is to use a local registry
+server. This server operates only on my home network and already
+allows my workstation and Pi's to communicate with one
+another. Following the &lt;a class="reference external" href="https://docs.docker.com/registry/deploying/"&gt;official registry documentation&lt;/a&gt; and &lt;a class="reference external" href="http://zacharykeeton.com/docker-private-registry/"&gt;this blog post by
+Zachary Keeton&lt;/a&gt;,
+I managed to setup the registry as follows.&lt;/p&gt;
+&lt;div class="section" id="host-setup"&gt;
+&lt;h4&gt;Host setup&lt;/h4&gt;
+&lt;p&gt;First, we need to setup a transport layer security (TLS)
+certificate. It's possible to run the server without one if you don't
+expect your network to be attacked, but it's good practice so let's
+create one.&lt;/p&gt;
+&lt;p&gt;To do this, I edit the /etc/ssl/openssl.cnf file and add the following
+to the top of the [ v3_ca ] section.:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+subjectAltName = IP:192.168.XXX.XXX
+&lt;/pre&gt;
+&lt;p&gt;where the IP address is the address of the workstation on the
+network. Next, I actually create the certificate. I make a directory
+called certs inside my workstation home directory and then use openssl
+to make the cerficate. During the prompts, I press ENTER at every step
+except the FQDN (fully qualified domain name). For the FQDN, I enter
+the same IP address as above.:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+mkdir certs
+openssl req -newkey rsa:4096 -nodes -sha256 \
+-keyout certs/domain.key -x509 -days 365 \
+-config /etc/ssl/openssl.cnf -out certs/domain.crt
+&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;I had to add the ``-config /etc/ssl/openssl.cnf`` argument for the
+subject alternative name to be added to the certificate.&lt;/strong&gt; This part
+was tricky, because if this argument is not included, then the key
+generation step will use some other .cnf file (I am not sure
+which). This results in the following SAN error when attemptingt to
+connect to the registry.:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+cannot validate certificate for 192.168.XXX.XXX because it doesn't contain any IP SANs
+&lt;/pre&gt;
+&lt;p&gt;After the domain.key and domain.crt files have been created, I run the
+official registry server container. (See how handy Docker containers
+are? There's no messy installation beyond grabbing the container.):&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+docker run -d -p 5000:5000 \
+  --restart=always \
+  --name registry \
+  -v $(pwd)/certs:/certs \
+  -e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/domain.crt \
+  -e REGISTRY_HTTP_TLS_KEY=/certs/domain.key \
+  registry:2
+&lt;/pre&gt;
+&lt;p&gt;If the registry:2 image is not already downloaded, then it will be
+downloaded for automatically when running the container. Note that
+the -p 5000:5000 argument indicates that the server is using port 5000
+on both the host system and inside the container. Note also that the
+certs directory is relative to the current directory because I use the
+($pwd) command. You can change this to an absolute path if you wish on
+your setup.&lt;/p&gt;
+&lt;p&gt;Let's go ahead and push the application image to the server now that
+it's running.:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+docker push localhost:5000/rpi-micromanager:2.0-python
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="setup-the-pi"&gt;
+&lt;h4&gt;Setup the Pi&lt;/h4&gt;
+&lt;p&gt;Now, startup the Pi. I will assume that you have &lt;a class="reference external" href="https://www.raspberrypi.org/blog/docker-comes-to-raspberry-pi/"&gt;already installed
+Docker&lt;/a&gt; on
+it and know how to communicate with it via ssh and copy files to it
+using scp.&lt;/p&gt;
+&lt;p&gt;I copy the certificate from the host with scp:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+sudo mkdir -p /etc/docker/certs.d/192.168.XXX.XXX:5000/
+sudo scp kmdouglass@192.168.XXX.XXX:/home/kmdouglass/certs/domain.crt /etc/docker/certs.d/192.168.XXX.XXX:5000/ca.crt
+&lt;/pre&gt;
+&lt;p&gt;The IP address that I am using is the one to the machine where the
+registry server is running. After this step, I make the operating
+system trust the certificate:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+sudo scp kmdouglass@192.168.XXX.XXX:/home/kmdouglass/certs/domain.crt /usr/local/share/ca-certificates/192.168.XXX.XXX.crt
+sudo update-ca-certifications
+&lt;/pre&gt;
+&lt;p&gt;Finally, I restart the Docker daemon.:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+sudo service docker restart
+&lt;/pre&gt;
+&lt;p&gt;If everything is working, then I should be able to pull the image from
+your network's registry server:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+docker pull 192.168.XXX.XXX:5000/rpi-micromanager:python2.0
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="step-5-run-micro-manager"&gt;
+&lt;h3&gt;Step 5: Run Micro-Manager!&lt;/h3&gt;
+&lt;p&gt;And now the moment of truth: running the application container. Since
+it's setup to run Python automatically, I use a pretty simple &lt;tt class="docutils literal"&gt;docker
+run&lt;/tt&gt; command.:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+docker run -it --rm \
+     --name micro-manager \
+     192.168.XXX.XXX:5000/rpi-micromanager:2.0-python
+&lt;/pre&gt;
+&lt;p&gt;I verify that the Micro-Manager Python wrapper is working by trying to
+import it and run &lt;a class="reference external" href="https://micro-manager.org/wiki/Using_the_Micro-Manager_python_library"&gt;a few basic commands&lt;/a&gt;:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+&amp;gt;&amp;gt;&amp;gt; import MMCorePy
+&amp;gt;&amp;gt;&amp;gt; mmc = MMCorePy.CMMCore()
+&amp;gt;&amp;gt;&amp;gt; mmc.getVersionInfo()
+&lt;/pre&gt;
+&lt;p&gt;If these work without error, then congratulations! You're now ready to
+start building your embedded microscopy system ;)&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="step-6-running-the-whole-process"&gt;
+&lt;h3&gt;Step 6: Running the whole process&lt;/h3&gt;
+&lt;p&gt;The beauty of having scripted all these steps is that the full
+workflow may be executed quite simply. From the host system's build
+folder, run:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+kmdouglass@xxxxx:~/src/alphapi/docker/rpi-micromanager/build$ ./build
+kmdouglass@xxxxx:~/src/alphapi/docker/rpi-micromanager/build$ ./run /path/to/source true
+&lt;/pre&gt;
+&lt;p&gt;From the 2.0-python folder:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+kmdouglass@xxxxx:~/src/alphapi/docker/rpi-micromanager/2.0-python ./build /path/to/source/artifacts
+kmdouglass@xxxxx:~$ docker push localhost:5000/rpi-micromanager:2.0-python
+&lt;/pre&gt;
+&lt;p&gt;And from the Raspberry Pi:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+pi@yyyyy:~$ docker pull 192.168.XXX.XXX:5000/rpi-micromanager:2.0-python
+pi@yyyyy:~$ docker run -it --rm \
+                   --name micro-manager \
+                   192.168.XXX.XXX:5000/rpi-micromanager:2.0-python
+&lt;/pre&gt;
+&lt;p&gt;Hopefully this is enough to get you started building Micro-Manager for
+the Raspberry Pi with Docker. Though I focused on Micro-Manager, the
+workflow should be generally applicable to any large scale project in
+which you want to isolate the build environment from the host machine.&lt;/p&gt;
+&lt;p&gt;If you have any questions, just leave them in the comments. Happy
+programming!&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;</description><category>docker</category><category>micro-manager</category><category>raspberry pi</category><guid>http://kmdouglass.github.io/posts/how-i-built-a-cross-compilation-workflow-for-the-raspberry-pi.html</guid><pubDate>Sun, 29 Apr 2018 10:10:26 GMT</pubDate></item><item><title>Micro-Manager on the Raspberry Pi</title><link>http://kmdouglass.github.io/posts/micro-manager-on-the-raspberry-pi.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;&lt;a class="reference external" href="https://micro-manager.org/"&gt;Micro-Manager&lt;/a&gt; is an open source platform for controlling microscope
 hardware, automating image acquisition, and tracking metadata about
 how images are acquired. In biomedical imaging research, it serves as
 an incredibly important tool because it is free and open source, which

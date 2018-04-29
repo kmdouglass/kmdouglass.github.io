@@ -8,18 +8,11 @@
 <link href="../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
 <link href="../assets/css/ipython.min.css" rel="stylesheet" type="text/css">
 <link href="../assets/css/nikola_ipython.css" rel="stylesheet" type="text/css">
-<meta content="#5670d4" name="theme-color">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
 <link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml">
 <link rel="canonical" href="http://kmdouglass.github.io/posts/correlated-noise-and-the-fft.html">
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-    tex2jax: {
-        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-        processEscapes: true
-    }
-});
-</script><!--[if lt IE 9]><script src="../assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><meta name="description" itemprop="description" content="Simulating correlated noise with the FFT.">
-<meta name="author" content="Kyle M. Douglass">
+<!--[if lt IE 9]><script src="../assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><meta name="author" content="Kyle M. Douglass">
 <link rel="prev" href="thoughts-from-the-swiss-photonics-machine-learning-workshop.html" title="Thoughts from the Swiss Photonics Machine Learning Workshop" type="text/html">
 <link rel="next" href="perlin-noise.html" title="Perlin Noise" type="text/html">
 <meta property="og:site_name" content="Kyle M. Douglass">
@@ -94,7 +87,7 @@ MathJax.Hub.Config({
 <article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="#" class="u-url">Correlated noise and the FFT</a></h1>
 
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                     Kyle M. Douglass
             </span></p>
             <p class="dateline"><a href="#" rel="bookmark"><time class="published dt-published" datetime="2016-02-28T09:15:37+01:00" itemprop="datePublished" title="2016-02-28 09:15">2016-02-28 09:15</time></a></p>
@@ -105,10 +98,9 @@ MathJax.Hub.Config({
 
             
         </p>
-<p class="sourceline"><a href="correlated-noise-and-the-fft.ipynb" id="sourcelink">Source</a></p>
+<p class="sourceline"><a href="correlated-noise-and-the-fft.ipynb" class="sourcelink">Source</a></p>
 
-                <meta name="description" itemprop="description" content="Simulating correlated noise with the FFT.">
-</div>
+        </div>
         
 
     </header><div class="e-content entry-content" itemprop="articleBody text">
@@ -145,7 +137,10 @@ MathJax.Hub.Config({
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Populating the interactive namespace from numpy and matplotlib
 </pre>
@@ -193,7 +188,10 @@ MathJax.Hub.Config({
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -237,7 +235,10 @@ MathJax.Hub.Config({
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -328,7 +329,10 @@ MathJax.Hub.Config({
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -358,7 +362,7 @@ MathJax.Hub.Config({
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">ifftshift</span><span class="p">(</span><span class="n">R</span><span class="p">)),</span>   <span class="n">label</span> <span class="o">=</span> <span class="s1">'real part of R'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">ifftshift</span><span class="p">(</span><span class="n">F</span><span class="o">*</span><span class="n">R</span><span class="p">)),</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">r'real part of F $\times$ R'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">ifftshift</span><span class="p">(</span><span class="n">F</span><span class="o">*</span><span class="n">R</span><span class="p">)),</span> <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">'real part of F $\times$ R'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">ifftshift</span><span class="p">(</span><span class="n">F</span><span class="p">),</span>            <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">'F'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">((</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Frequency'</span><span class="p">)</span>
@@ -376,7 +380,10 @@ MathJax.Hub.Config({
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -434,7 +441,10 @@ MathJax.Hub.Config({
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -464,7 +474,7 @@ MathJax.Hub.Config({
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">ifftshift</span><span class="p">(</span><span class="n">R</span><span class="p">)),</span>          <span class="n">label</span> <span class="o">=</span> <span class="s1">'real part of R'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">ifftshift</span><span class="p">(</span><span class="n">F_tophat</span><span class="o">*</span><span class="n">R</span><span class="p">)),</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">r'real part of F $\times$ R'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">ifftshift</span><span class="p">(</span><span class="n">F_tophat</span><span class="o">*</span><span class="n">R</span><span class="p">)),</span> <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">'real part of F $\times$ R'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">ifftshift</span><span class="p">(</span><span class="n">F_tophat</span><span class="p">),</span>            <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">'F'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">((</span><span class="o">-</span><span class="mi">40</span><span class="p">,</span> <span class="mi">40</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Frequency'</span><span class="p">)</span>
@@ -482,7 +492,10 @@ MathJax.Hub.Config({
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -534,9 +547,10 @@ MathJax.Hub.Config({
 </h2>
 <p>I realized the day after writing the draft of this post that the above discussion is useful for illustrating some of the "colored" noises. In this case, we use the ideas presented above to generate a realization of <a href="https://en.wikipedia.org/wiki/Pink_noise">1/f noise</a>, also known as <em>pink noise</em> or <em>fractal noise</em>.</p>
 <p>Can you guess how the amplitude of the spectrum of 1/f noise varies?</p>
-<p>Surprise! It actually varies as \( \frac{1}{f^{1/2}} \). This is because the <strong>power</strong> spectrum of pink noise varies as 1/f; the <strong>amplitude</strong> of the spectral components is the square root of the average power delivered by each component. The <a href="https://en.wikipedia.org/wiki/Spectral_density#Energy_spectral_density">proper Wikipedia sections on energy and power spectral densities</a> explain this. The difficulty in actually implementing this filter, though, is what happens as we approach the DC value \( f = 0 \) in frequency space. At this value the filter becomes infinite.</p>
-<p>Instead, we can easily approximate a realization of pink noise with a filter that is one near the origin and quickly rolls off into a \( f^{-1/2} \) behavior. A function that does this is</p>
-$$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$<p>The value \( a \) determines how quickly the function moves from a weak dependence on frequency to a \( f^{-1/2} \) dependence. For us, we should set it to a value that is relatively large compared to the frequency spacing in Fourier space. This type of filter is just a special case of the <a href="https://en.wikipedia.org/wiki/Chebyshev_filter">Chebyshev filter</a> that is well-known in signal processing circles.</p>
+<p>Surprise! It actually varies as $ \frac{1}{f^{1/2}} $. This is because the <strong>power</strong> spectrum of pink noise varies as 1/f; the <strong>amplitude</strong> of the spectral components is the square root of the average power delivered by each component. The <a href="https://en.wikipedia.org/wiki/Spectral_density#Energy_spectral_density">proper Wikipedia sections on energy and power spectral densities</a> explain this. The difficulty in actually implementing this filter, though, is what happens as we approach the DC value $ f = 0 $ in frequency space. At this value the filter becomes infinite.</p>
+<p>Instead, we can easily approximate a realization of pink noise with a filter that is one near the origin and quickly rolls off into a $ f^{-1/2} $ behavior. A function that does this is</p>
+<p>$$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$</p>
+<p>The value $ a $ determines how quickly the function moves from a weak dependence on frequency to a $ f^{-1/2} $ dependence. For us, we should set it to a value that is relatively large compared to the frequency spacing in Fourier space. This type of filter is just a special case of the <a href="https://en.wikipedia.org/wiki/Chebyshev_filter">Chebyshev filter</a> that is well-known in signal processing circles.</p>
 
 </div>
 </div>
@@ -587,7 +601,10 @@ $$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$<p>The value \( a \) determines 
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -616,7 +633,7 @@ $$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$<p>The value \( a \) determines 
 <div class="prompt input_prompt">In [10]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">ifftshift</span><span class="p">(</span><span class="n">F_pinkNoise</span><span class="o">*</span><span class="n">R</span><span class="p">)),</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">r'real part of F $\times$ R'</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">ifftshift</span><span class="p">(</span><span class="n">F_pinkNoise</span><span class="o">*</span><span class="n">R</span><span class="p">)),</span> <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">'real part of F $\times$ R'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">ifftshift</span><span class="p">(</span><span class="n">F_pinkNoise</span><span class="p">),</span>            <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">'F'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">((</span><span class="o">-</span><span class="mi">40</span><span class="p">,</span> <span class="mi">40</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Frequency'</span><span class="p">)</span>
@@ -634,7 +651,10 @@ $$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$<p>The value \( a \) determines 
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -698,7 +718,7 @@ $$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$<p>The value \( a \) determines 
     <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
 
 
-        </section><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script><script type="text/x-mathjax-config">
+        </section><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha256-SDRP1VVYu+tgAGKhddBSl5+ezofHKZeI+OzxakbIe/Y=" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
 MathJax.Hub.Config({
     tex2jax: {
         inlineMath: [ ['$','$'], ["\\(","\\)"] ],
@@ -710,7 +730,7 @@ MathJax.Hub.Config({
         <!--End of body content-->
 
         <footer id="footer">
-            Contents © 2017         <a href="mailto:kyle.douglass@epfl.ch">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
+            Contents © 2018         <a href="mailto:kyle.douglass@epfl.ch">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
             
         </footer>
 </div>

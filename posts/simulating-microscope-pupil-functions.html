@@ -8,18 +8,11 @@
 <link href="../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
 <link href="../assets/css/ipython.min.css" rel="stylesheet" type="text/css">
 <link href="../assets/css/nikola_ipython.css" rel="stylesheet" type="text/css">
-<meta content="#5670d4" name="theme-color">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
 <link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml">
 <link rel="canonical" href="http://kmdouglass.github.io/posts/simulating-microscope-pupil-functions.html">
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-    tex2jax: {
-        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-        processEscapes: true
-    }
-});
-</script><!--[if lt IE 9]><script src="../assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><meta name="description" itemprop="description" content="Using scalar diffraction theory to simulate a microscope's pupil function.">
-<meta name="author" content="Kyle M. Douglass">
+<!--[if lt IE 9]><script src="../assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><meta name="author" content="Kyle M. Douglass">
 <link rel="prev" href="beware-the-paraxial-approximation-in-microscopy.html" title="Beware the paraxial approximation in microscopy" type="text/html">
 <link rel="next" href="approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html" title="Approximating diffraction patterns of rectangular apertures with the FFT" type="text/html">
 <meta property="og:site_name" content="Kyle M. Douglass">
@@ -95,7 +88,7 @@ MathJax.Hub.Config({
 <article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="#" class="u-url">Simulating microscope pupil functions</a></h1>
 
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                     Kyle M. Douglass
             </span></p>
             <p class="dateline"><a href="#" rel="bookmark"><time class="published dt-published" datetime="2016-01-24T15:13:40+01:00" itemprop="datePublished" title="2016-01-24 15:13">2016-01-24 15:13</time></a></p>
@@ -106,10 +99,9 @@ MathJax.Hub.Config({
 
             
         </p>
-<p class="sourceline"><a href="simulating-microscope-pupil-functions.ipynb" id="sourcelink">Source</a></p>
+<p class="sourceline"><a href="simulating-microscope-pupil-functions.ipynb" class="sourcelink">Source</a></p>
 
-                <meta name="description" itemprop="description" content="Using scalar diffraction theory to simulate a microscope's pupil function.">
-</div>
+        </div>
         
 
     </header><div class="e-content entry-content" itemprop="articleBody text">
@@ -139,16 +131,19 @@ MathJax.Hub.Config({
 <h3 id="Pupil-Function-Basics">Pupil Function Basics<a class="anchor-link" href="simulating-microscope-pupil-functions.html#Pupil-Function-Basics">¶</a>
 </h3>
 <p>The pupil function of a microscope (and really, of any optical system) is an important tool for analyzing the aberrations present in the system. The pupil function is defined as the two dimensional Fourier transform of the image of an isotropic point source. <a href="http://mathworld.wolfram.com/FourierTransform.html">The two dimensional Fourier transform</a> of a function of two variables x and y is expressed as</p>
-$$F \left( k_x, k_y \right) = \iint f \left( x, y \right) \exp \left[ -j \left( k_{x}x + k_{y}y \right) \right] dx dy$$<p>(I was originally trained as an engineer, so I tend to use 'j' for the imaginary number more than 'i'.) The inverse Fourier transform converts \(F \left( k_x, k_y \right)\) back into \(f \left( x, y \right)\) and is given by</p>
-$$f \left( x, y \right) = \iint F \left( k_x, k_y \right) \exp \left[ j \left( k_{x}x + k_{y}y \right) \right] dk_x dk_y$$<p>In this case, \(x\) and \(y\) are variables representing 2D coordinates in the image plane and \(k_x\) and \(k_y\) are the spatial frequencies. \(f \left( x, y \right)\) and \(F \left( k_x, k_y \right)\) are known as Fourier transform pairs.</p>
+<p>$$F \left( k_x, k_y \right) = \iint f \left( x, y \right) \exp \left[ -j \left( k_{x}x + k_{y}y \right) \right] dx dy$$</p>
+<p>(I was originally trained as an engineer, so I tend to use 'j' for the imaginary number more than 'i'.) The inverse Fourier transform converts $F \left( k_x, k_y \right)$ back into $f \left( x, y \right)$ and is given by</p>
+<p>$$f \left( x, y \right) = \iint F \left( k_x, k_y \right) \exp \left[ j \left( k_{x}x + k_{y}y \right) \right] dk_x dk_y$$</p>
+<p>In this case, $x$ and $y$ are variables representing 2D coordinates in the image plane and $k_x$ and $k_y$ are the spatial frequencies. $f \left( x, y \right)$ and $F \left( k_x, k_y \right)$ are known as Fourier transform pairs.</p>
 <p>An isotropic point source is an idealized source of electromagnetic radiation that emits an equal intensity in all directions. Strictly speaking, real sources such as atoms and molecules are dipoles and not isotropic emitters. This assumption is however a good model for collections of many fluorescent molecules possessing dipole moments that are all pointing in different directions and that are smaller than the wavelength of light because the molecules' individual emission patterns average out. It is also a good approximation for a dipole whose moment is randomly reorienting in many directions during an image acquisition due to thermally-induced rotational diffusion.</p>
 <p>The image of a point source is known as the <a href="https://en.wikipedia.org/wiki/Point_spread_function">point spread function (PSF)</a> of the microscope. In signal processing, it's known as a two dimensional impulse response.</p>
-<p><a href="http://www.msg.ucsf.edu/agard/Publications/148-Agard-JMicrosc-2004.pdf">The equation</a> that relates the image of the isotropic point source to the pupil function \(P \left( k_x, k_y \right)\) is</p>
-$$\text{PSF}_{\text{A}} \left( x, y \right) = \iint P \left( k_x, k_y \right) \exp \left[ -j \left( k_{x}x + k_{y}y \right) \right] dx dy$$<p>The subscript <code>A</code> on the PSF stands for <em>amplitude</em> and means that we are working with the electric field, not the <a href="https://en.wikipedia.org/wiki/Irradiance">irradiance</a>. The irradiance, which is what a camera or your eye measures, is proportional to the absolute square of \(\text{PSF}_{\text{A}}\). In words, the above equation restates the definition above: the pupil function and the amplitude PSF are Fourier transform pairs.</p>
+<p><a href="http://www.msg.ucsf.edu/agard/Publications/148-Agard-JMicrosc-2004.pdf">The equation</a> that relates the image of the isotropic point source to the pupil function $P \left( k_x, k_y \right)$ is</p>
+<p>$$\text{PSF}_{\text{A}} \left( x, y \right) = \iint P \left( k_x, k_y \right) \exp \left[ -j \left( k_{x}x + k_{y}y \right) \right] dx dy$$</p>
+<p>The subscript <code>A</code> on the PSF stands for <em>amplitude</em> and means that we are working with the electric field, not the <a href="https://en.wikipedia.org/wiki/Irradiance">irradiance</a>. The irradiance, which is what a camera or your eye measures, is proportional to the absolute square of $\text{PSF}_{\text{A}}$. In words, the above equation restates the definition above: the pupil function and the amplitude PSF are Fourier transform pairs.</p>
 <h3 id="Simulating-Diffraction-Limited-Pupil-Functions-and-PSF's">Simulating Diffraction Limited Pupil Functions and PSF's<a class="anchor-link" href="simulating-microscope-pupil-functions.html#Simulating-Diffraction-Limited-Pupil-Functions-and-PSF's">¶</a>
 </h3>
 <p>We can simulate how an aberration affects the image of a point source by simulating an aberrated pupil function and computing the Fourier transform above to get the amplitude PSF. The easiest model to simulate is based on scalar diffraction theory, which means that we ignore the fact that the electromagnetic radiation is polarized (i.e. a vector) and treat it as a scalar quantity instead. Even though this is an approximation, it still can give us a good idea about the fundamental physics involved.</p>
-<p>To perform the simulation, we must first discretize the continuous quantities in the Fourier transform. We'll model \(\text{PSF}_{\text{A}}\) and \(P \left( k_x, k_y \right)\) as discrete scalar quantities on 2D grids and perform a <a href="https://en.wikipedia.org/wiki/Fast_Fourier_transform">fast Fourier transform</a> to turn the pupil function into the PSF.</p>
+<p>To perform the simulation, we must first discretize the continuous quantities in the Fourier transform. We'll model $\text{PSF}_{\text{A}}$ and $P \left( k_x, k_y \right)$ as discrete scalar quantities on 2D grids and perform a <a href="https://en.wikipedia.org/wiki/Fast_Fourier_transform">fast Fourier transform</a> to turn the pupil function into the PSF.</p>
 
 </div>
 </div>
@@ -174,7 +169,10 @@ $$\text{PSF}_{\text{A}} \left( x, y \right) = \iint P \left( k_x, k_y \right) \e
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Using matplotlib backend: Qt4Agg
 Populating the interactive namespace from numpy and matplotlib
@@ -281,11 +279,11 @@ Populating the interactive namespace from numpy and matplotlib
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>When working with discrete Fourier transforms, a common question that arises is "What are the units of the Fourier transform variable?" We can answer this question by these rules:</p>
 <blockquote>
-<p>\(k_{Max} \propto \frac{1}{dx}\)</p>
-<p>\(x_{Max} \propto \frac{1}{dk}\)</p>
+<p>$k_{Max} \propto \frac{1}{dx}$</p>
+<p>$x_{Max} \propto \frac{1}{dk}$</p>
 </blockquote>
-<p>These two rules are just a manifestation of the <a href="https://en.wikipedia.org/wiki/Nyquist%E2%80%93Shannon_sampling_theorem">Nyquist-Shannon sampling criterion</a>: the maximum spatial frequency \( k_{Max} \) is determined by the inverse of the sampling period in space \(dx\), while the maximum size \(x_{Max}\) of the signal is proportional to the inverse of the period of spatial frequency samples \(dk\). This is why the maximum spatial frequency above is \(2 \pi / \text{pixelSize}\). I will go into more detail on this in a later post.</p>
-<p>The pupil function of a microscope is non-zero for values of \(\left( k_x, k_y \right)\) such that \(k_x^2 + k_y^2 \leq \frac{2 \pi NA}{\lambda}\). The quantity \(\frac{2 \pi NA}{\lambda}\) is represented by <code>kNA</code> above. The size of a pixel <code>dk</code> in spatial frequency units (radians per distance) is inversely proportional to the maximum size of the image in pixels, or <code>imgSize * pixelSize</code>. Likewise, the size of a pixel in microns is proportional to the inverse of the maximum size of the pupil function in spatial frequencies. This is just a manifestation of the properties of Fourier transform pairs.</p>
+<p>These two rules are just a manifestation of the <a href="https://en.wikipedia.org/wiki/Nyquist%E2%80%93Shannon_sampling_theorem">Nyquist-Shannon sampling criterion</a>: the maximum spatial frequency $ k\_{Max} $ is determined by the inverse of the sampling period in space $dx$, while the maximum size $x\_{Max}$ of the signal is proportional to the inverse of the period of spatial frequency samples $dk$. This is why the maximum spatial frequency above is $2 \pi / \text{pixelSize}$. I will go into more detail on this in a later post.</p>
+<p>The pupil function of a microscope is non-zero for values of $\left( k_x, k_y \right)$ such that $k_x^2 + k_y^2 \leq \frac{2 \pi NA}{\lambda}$. The quantity $\frac{2 \pi NA}{\lambda}$ is represented by <code>kNA</code> above. The size of a pixel <code>dk</code> in spatial frequency units (radians per distance) is inversely proportional to the maximum size of the image in pixels, or <code>imgSize * pixelSize</code>. Likewise, the size of a pixel in microns is proportional to the inverse of the maximum size of the pupil function in spatial frequencies. This is just a manifestation of the properties of Fourier transform pairs.</p>
 
 </div>
 </div>
@@ -312,7 +310,10 @@ Populating the interactive namespace from numpy and matplotlib
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>kmin : -31.354686913020938
 kmax : 31.354686913020036
@@ -361,7 +362,10 @@ Size of kx : 513
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -425,7 +429,10 @@ Size of kx : 513
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -477,7 +484,10 @@ Size of kx : 513
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -507,7 +517,8 @@ Size of kx : 513
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Let's see how a line profile through the center of the image looks relative to the profile of the <a href="https://en.wikipedia.org/wiki/Airy_disk">Airy disk</a>, which is the mathematical solution to the diffraction pattern from a circular aperture in scalar diffraction theory. The Airy disk is given by</p>
-$$I \left( X \right) = I_{0} \left[ \frac{2J_{1} \left( X \right)}{X} \right]^2$$<p>where \(J_{1} \left( X \right) \) is the Bessel function of the first kind and order 1 and \( X = \frac{2 \pi r  (\text{NA})}{\lambda} \). Here, \(r\) is the distance from the center of the image plane, so we can easily convert it to pixels.</p>
+<p>$$I \left( X \right) = I_{0} \left[ \frac{2J_{1} \left( X \right)}{X} \right]^2$$</p>
+<p>where $J_{1} \left( X \right) $ is the Bessel function of the first kind and order 1 and $ X = \frac{2 \pi r  (\text{NA})}{\lambda} $. Here, $r$ is the distance from the center of the image plane, so we can easily convert it to pixels.</p>
 <p>Because the pupil of the microscope is circular and unaberrated, it is also the solution for PSF of the microscope.</p>
 
 </div>
@@ -546,7 +557,10 @@ $$I \left( X \right) = I_{0} \left[ \frac{2J_{1} \left( X \right)}{X} \right]^2$
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>/home/douglass/anaconda3/lib/python3.5/site-packages/ipykernel/__main__.py:4: RuntimeWarning: invalid value encountered in true_divide
 </pre>
@@ -554,7 +568,10 @@ $$I \left( X \right) = I_{0} \left[ \frac{2J_{1} \left( X \right)}{X} \right]^2$
 </div>
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -587,7 +604,8 @@ $$I \left( X \right) = I_{0} \left[ \frac{2J_{1} \left( X \right)}{X} \right]^2$
 <p>Now that we can simulate the diffraction-limited image of an <em>in-focus</em> isotropic point source, let's add some defocus to demonstrate what the PSF would look like as the camera or sample is scanned along the axial direction.</p>
 <p>Defocus can be added in numerous ways. One is to multiply our pupil function by the phase aberration for defocus, which is usually modeled as a parabolic phase aberration in the pupil coordinates. However, <a href="http://kmdouglass.github.io/posts/beware-the-paraxial-approximation-in-microscopy.html">as I explained in a previous post</a>, this is an approximate model for defocus and fails for large numerical apertures.</p>
 <p>Another simple way is to propagate the plane wave angular spectrum in the image plane to nearby planes. This relatively easy method is used in a well-known microscopy paper (<a href="http://onlinelibrary.wiley.com/doi/10.1111/j.0022-2720.2004.01393.x/abstract">Hanser, 2004</a>) and involves multiplying the pupil function by a defocus kernel before performing the Fourier transform.</p>
-$$\text{PSF}_{\text{A}} \left( x, y, z \right) = \iint P \left( k_x, k_y \right) \exp \left( j k_{z} z \right) \exp \left[ -j \left( k_{x}x + k_{y}y \right) \right] dx dy$$<p>Here, \(k_z = \sqrt{\left( 2 \pi n / \lambda \right)^2 - k_x^2 - k_y^2}\). The defocus kernel essentially shifts the phase of each plane wave with pupil coordinates \(\left( k_x, k_y \right)\) by an amount that depends on its coordinates and the distance from the image plane \(z\).</p>
+<p>$$\text{PSF}_{\text{A}} \left( x, y, z \right) = \iint P \left( k_x, k_y \right) \exp \left( j k_{z} z \right) \exp \left[ -j \left( k_{x}x + k_{y}y \right) \right] dx dy$$</p>
+<p>Here, $k_z = \sqrt{\left( 2 \pi n / \lambda \right)^2 - k_x^2 - k_y^2}$. The defocus kernel essentially shifts the phase of each plane wave with pupil coordinates $\left( k_x, k_y \right)$ by an amount that depends on its coordinates and the distance from the image plane $z$.</p>
 <p>The above equation means that we can model the PSF behavior as we scan through the focal plane by computing the defocus kernel for different distances from focus. Then, we multiply our perfect pupil by this defocus kernel and compute its Fourier transform to get the amplitude and irradiance PSF's.</p>
 
 </div>
@@ -665,7 +683,10 @@ $$\text{PSF}_{\text{A}} \left( x, y, z \right) = \iint P \left( k_x, k_y \right)
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -727,7 +748,7 @@ $$\text{PSF}_{\text{A}} \left( x, y, z \right) = \iint P \left( k_x, k_y \right)
     <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
 
 
-        </section><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script><script type="text/x-mathjax-config">
+        </section><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha256-SDRP1VVYu+tgAGKhddBSl5+ezofHKZeI+OzxakbIe/Y=" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
 MathJax.Hub.Config({
     tex2jax: {
         inlineMath: [ ['$','$'], ["\\(","\\)"] ],
@@ -739,7 +760,7 @@ MathJax.Hub.Config({
         <!--End of body content-->
 
         <footer id="footer">
-            Contents © 2017         <a href="mailto:kyle.douglass@epfl.ch">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
+            Contents © 2018         <a href="mailto:kyle.douglass@epfl.ch">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
             
         </footer>
 </div>

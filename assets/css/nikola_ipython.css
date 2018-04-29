@@ -14,7 +14,7 @@ div.output_prompt {
 }
 
 div.output_area pre {
-  color: #ffffff;
+  color: #FFFFFF;
   font-size: 13px;
 }
 
@@ -40,7 +40,7 @@ div.text_cell_render {
 }
 
 .rendered_html :link:hover {
-  text-decoration: underline;
+text-decoration: underline;
 }
 
 .rendered_html pre, .rendered_html code {
