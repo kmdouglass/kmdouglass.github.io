@@ -18,7 +18,7 @@
 	biology. Currently, he is working at the EPFL where he is
 	developing high-throughput, super-resolution fluorescence
 	microscopy technologies for investigating the structural biology
-	of genes and organelles. He is financially supported by a
+	of genes and organelles. He has been financially supported by a
 	<a
 	href="http://www.systemsx.ch/projects/transition-postdoc-fellowships/tpdf-projects-2014/">SystemsX.ch
 	Transition Post-doc Fellowship</a>.</p>
@@ -55,6 +55,33 @@
       <div class="panel-body">
 
 <a href =
+"https://www.biorxiv.org/content/early/2018/04/05/295519">
+Design Principles for Autonomous Illumination Control in Localization Microscopy</a>
+
+<p>My teammates and I developed an autonomous illumination control
+system for localization microscopy. We discuss the key concepts in
+building such a control system and demonstrate two new sub-components:
+a deep learning-based fluorescence spot counter and a self-tuning
+controller. The software presented in this paper is freely available
+here: <a
+href="https://github.com/LEB-EPFL/ALICA">https://github.com/LEB-EPFL/ALICA</a>.
+
+<hr>
+
+<a href =
+"https://www.biorxiv.org/content/early/2018/01/28/255364">
+Multicolor single particle reconstruction of protein complexes</a>
+
+<p>My co-authors and I develop a workflow that uses data from
+high-throughput, two-color STORM microscopy to perform single particle
+reconstructions of multi-protein complexes. We demonstrate the
+usefulness of this workflow on various centriolar proteins. What's new
+in this work is how we use one protein as a reference point to align
+others that are of less abundance in super-resolution microscopy.</p>
+
+<hr>
+
+<a href =
 "http://genesdev.cshlp.org/content/31/6/567.short">
 The telomeric DNA damage response occurs in the absence of chromatin decompaction</a>
 
@@ -78,43 +105,6 @@ based on the fly's eye condenser and efficiently homogenizes the laser
 beam across the sample, which removes artifacts due to field-dependent
 fluorophore photophysics. The work greatly improves the throughput of
 localization microscopy systems.</p>
-
-<hr>
-
-<a href =
-"http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0142949">Correction
-of a Depth-Dependent Lateral Distortion in 3D Super-resolution
-Imaging</a>
-
-<p>In this paper, my co-authors and I investigated the source of a
-common aberration in 3D localization microscopy. We found that it is
-caused by aberrations in the microscope's pupil function that lack
-rotational symmetry and provide open-source software to correct this
-aberration.</p>
-
-<hr>
-
-<a href = "http://pubs.rsc.org/en/content/articlelanding/2015/ra/c4ra11627e#!divAbstract">
-Passive Optical Mapping of Structural Evolution in Complex Fluids</a>
-
-<p>This paper is the result of many years of work during my PhD. We
-detailed the development of a low-coherence, fiber optic-based system
-for measuring the structural dynamics of complex polymer
-solutions. Furthermore, we demonstrated the capabilities of this
-system in an industrial triblock copolymer solution by measuring
-relaxation times spanning several orders of magnitude and scattering
-regimes from single scattering to heavy multiple scattering, which is
-a significant improvement over traditional dynamic light scattering
-methods.</p>
-
-<hr>
-
-<a href = "https://www.osapublishing.org/ol/abstract.cfm?uri=ol-38-14-2385">Dipole–dipole interaction in random electromagnetic fields</a>
-
-<p>This is a theortical paper in which my co-authors and I predict an
-optical binding force between two induced dipoles in a random speckle
-field. This counter-intuitive result is related to the Casimir effect
-and was experimentally demonstrated <a href="http://www.nature.com/ncomms/2015/150622/ncomms8460/full/ncomms8460.html">here</a>.</p>
 
 </div>
 </div>
