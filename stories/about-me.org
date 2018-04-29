@@ -35,35 +35,6 @@
 
 -----
 
-* Skills and Competencies
-
-+ Optics
-  + Light and fluorescence microscopy
-  + Super-resolution fluorescence microscopy
-  + Static and dynamic light scattering
-  + Fourier and statistical optics
-+ Software engineering
-  + Languages
-    + Python (full competence)
-    + MATLAB (full competence)
-    + C++    (medium competence)
-    + Java   (low competence)
-  + Open-source software development
-  + Object-oriented design patterns and software design
-  + Familiar with both imperative and functional programming styles
-  + Technical knowledge of both Linux and Windows operating systems
-+ Statistical and computational modeling
-  + Inverse problems
-  + Monte Carlo simulation
-  + Sparsity-promoting transformations
-  + Bayesian inference
-+ Biology
-  + Chromatin architecture
-  + Telomeres
-  + Centriole architecture
-
------
-
 * Experience
 
 + SystemsX.ch Transition Post-doctoral Fellow :: November, 2013 -- Present
