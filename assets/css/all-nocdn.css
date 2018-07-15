@@ -38,8 +38,8 @@ audio,
 canvas,
 progress,
 video {
-  width:  100% !important;
-  height: auto !important;
+  display: inline-block;
+  vertical-align: baseline;
 }
 audio:not([controls]) {
   display: none;

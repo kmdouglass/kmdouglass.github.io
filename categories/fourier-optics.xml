@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Kyle M. Douglass (Posts about Fourier optics)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link href="http://kmdouglass.github.io/categories/fourier-optics.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Sat, 28 Apr 2018 12:09:14 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Modeling noise for image simulations</title><link>http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div tabindex="-1" id="notebook" class="border-box-sizing"&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kyle M. Douglass (Posts about Fourier optics)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link rel="self" href="http://kmdouglass.github.io/categories/fourier-optics.xml" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Sun, 15 Jul 2018 14:58:41 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Modeling noise for image simulations</title><link>http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div tabindex="-1" id="notebook" class="border-box-sizing"&gt;
     &lt;div class="container" id="notebook-container"&gt;
 
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
@@ -1926,10 +1926,10 @@ Integral, hologram plane: 2621.0387
 
 
 
-&lt;div id="5ca43f27-4a30-45ea-9a3f-67f43017c90b"&gt;&lt;/div&gt;
+&lt;div id="39e696bf-90a3-4051-886a-2795b3a2ea92"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#5ca43f27-4a30-45ea-9a3f-67f43017c90b');
+var element = $('#39e696bf-90a3-4051-886a-2795b3a2ea92');
 /* Put everything inside the global mpl namespace */
 window.mpl = {};
 

@@ -7,110 +7,106 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/biology.xml</loc>
-  <lastmod>2018-04-28T12:09:00Z</lastmod>
+  <lastmod>2018-07-15T14:58:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/biophysics.xml</loc>
-  <lastmod>2018-04-28T12:09:00Z</lastmod>
+  <lastmod>2018-07-15T14:58:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/blog.xml</loc>
-  <lastmod>2018-04-28T12:09:00Z</lastmod>
+  <lastmod>2018-07-15T14:58:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/complexity.xml</loc>
-  <lastmod>2018-04-28T12:09:00Z</lastmod>
+  <lastmod>2018-07-15T14:58:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/computing.xml</loc>
-  <lastmod>2018-04-28T12:09:00Z</lastmod>
+  <lastmod>2018-07-15T14:58:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/docker.xml</loc>
-  <lastmod>2018-04-29T10:11:00Z</lastmod>
+  <lastmod>2018-07-15T14:58:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/fourier-optics.xml</loc>
-  <lastmod>2018-04-28T12:09:00Z</lastmod>
+  <lastmod>2018-07-15T14:58:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/holography.xml</loc>
-  <lastmod>2018-04-28T12:09:00Z</lastmod>
+  <lastmod>2018-07-15T14:58:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/linux.xml</loc>
-  <lastmod>2018-04-28T12:09:00Z</lastmod>
+  <lastmod>2018-07-15T14:58:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/machine-learning.xml</loc>
-  <lastmod>2018-04-28T12:09:00Z</lastmod>
+  <lastmod>2018-07-15T14:58:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/micro-manager.xml</loc>
-  <lastmod>2018-04-29T10:11:00Z</lastmod>
+  <lastmod>2018-07-15T14:58:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/microscopy.xml</loc>
-  <lastmod>2018-04-28T12:09:00Z</lastmod>
+  <lastmod>2018-07-15T14:58:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/open-source.xml</loc>
-  <lastmod>2018-04-28T12:09:00Z</lastmod>
+  <lastmod>2018-07-15T14:58:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/optics.xml</loc>
-  <lastmod>2018-04-28T12:09:00Z</lastmod>
+  <lastmod>2018-07-15T14:58:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/photonics.xml</loc>
-  <lastmod>2018-04-28T12:09:00Z</lastmod>
+  <lastmod>2018-07-15T14:58:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/python.xml</loc>
-  <lastmod>2018-04-28T12:09:00Z</lastmod>
+  <lastmod>2018-07-15T14:58:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/raspberry-pi.xml</loc>
-  <lastmod>2018-04-29T10:11:00Z</lastmod>
+  <lastmod>2018-07-15T14:58:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/sensing.xml</loc>
-  <lastmod>2018-04-28T12:09:00Z</lastmod>
+  <lastmod>2018-07-15T14:58:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/signal-processing.xml</loc>
-  <lastmod>2018-04-28T12:09:00Z</lastmod>
+  <lastmod>2018-07-15T14:58:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/super-resolution.xml</loc>
-  <lastmod>2018-04-28T12:09:00Z</lastmod>
+  <lastmod>2018-07-15T14:58:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/switzerland.xml</loc>
-  <lastmod>2018-04-28T12:09:00Z</lastmod>
+  <lastmod>2018-07-15T14:58:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/tutorials.xml</loc>
-  <lastmod>2018-04-28T12:09:00Z</lastmod>
+  <lastmod>2018-07-15T14:58:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/wikipedia.xml</loc>
-  <lastmod>2018-04-28T12:09:00Z</lastmod>
- </sitemap>
- <sitemap>
-  <loc>http://kmdouglass.github.io/galleries/Microscopy%20Images/rss.xml</loc>
-  <lastmod>2018-04-28T12:08:00Z</lastmod>
+  <lastmod>2018-07-15T14:58:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/galleries/rss.xml</loc>
-  <lastmod>2018-04-28T12:08:00Z</lastmod>
+  <lastmod>2018-07-15T15:02:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/rss.xml</loc>
-  <lastmod>2018-04-29T10:11:00Z</lastmod>
+  <lastmod>2018-07-15T15:02:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/sitemap.xml</loc>
-  <lastmod>2018-04-29T10:31:00Z</lastmod>
+  <lastmod>2018-07-15T15:09:00Z</lastmod>
  </sitemap>
 </sitemapindex>

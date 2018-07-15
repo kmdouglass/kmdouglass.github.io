@@ -2,19 +2,19 @@
 <html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="description" content="Biophysics, optics, and programming.">
+<meta name="description" content="Optics, programming, and science.">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kyle M. Douglass (old posts, page 3) | Kyle M. Douglass</title>
-<link href="../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
-<link href="../assets/css/ipython.min.css" rel="stylesheet" type="text/css">
-<link href="../assets/css/nikola_ipython.css" rel="stylesheet" type="text/css">
+<link href="assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<link href="assets/css/ipython.min.css" rel="stylesheet" type="text/css">
+<link href="assets/css/nikola_ipython.css" rel="stylesheet" type="text/css">
 <meta name="theme-color" content="#5670d4">
 <meta name="generator" content="Nikola (getnikola.com)">
-<link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml">
-<link rel="canonical" href="http://kmdouglass.github.io/posts/index-3.html">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml">
+<link rel="canonical" href="http://kmdouglass.github.io/index-3.html">
 <link rel="prev" href="index.html" type="text/html">
 <link rel="next" href="index-2.html" type="text/html">
-<!--[if lt IE 9]><script src="../assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -39,22 +39,13 @@
         <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
             <ul class="nav navbar-nav">
 <li>
-<a href="../stories/about-me.html">About</a>
+<a href="categories/index.html">Tags</a>
                 </li>
 <li>
-<a href="index.html">Blog</a>
+<a href="archive.html">Archive</a>
                 </li>
 <li>
-<a href="../categories/index.html">Tags</a>
-                </li>
-<li>
-<a href="../archive.html">Archive</a>
-                </li>
-<li>
-<a href="../stories/notes-and-projects.html">Notes</a>
-                </li>
-<li>
-<a href="../stories/contact.html">Contact</a>
+<a href="stories/contact.html">Contact</a>
 
                 
             </li>
@@ -76,15 +67,67 @@
 
     
 <div class="postindex">
-    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="perlin-noise.html" class="u-url">Perlin Noise</a></h1>
+    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/field-dependent-photophysics-video.html" class="u-url">Field-dependent photophysics - video</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
-            <p class="dateline"><a href="perlin-noise.html" rel="bookmark"><time class="published dt-published" datetime="2016-03-20T17:45:00+01:00" title="2016-03-20 17:45">2016-03-20 17:45</time></a></p>
+            <p class="dateline"><a href="posts/field-dependent-photophysics-video.html" rel="bookmark"><time class="published dt-published" datetime="2016-09-29T11:36:24+02:00" title="2016-09-29 11:36">2016-09-29 11:36</time></a></p>
                 <p class="commentline">
         
-    <a href="perlin-noise.html#disqus_thread" data-disqus-identifier="cache/posts/perlin-noise.html">Comments</a>
+    <a href="posts/field-dependent-photophysics-video.html#disqus_thread" data-disqus-identifier="cache/posts/field-dependent-photophysics-video.html">Comments</a>
+
+
+        </p>
+</div>
+    </header><div class="p-summary entry-summary">
+    <div tabindex="-1" id="notebook" class="border-box-sizing">
+    <div class="container" id="notebook-container">
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Below you can see a video of a raw <a href="https://www.microscopyu.com/tutorials/stochastic-optical-reconstruction-microscopy-storm-imaging">STORM</a> movie that I acquired in the lab a few months ago on a standard, inverted laser fluorescence microscope. The sample consists of AlexaFluor 647-labeled tubulin in Cos7 cells at a frame rate of 100 fps. (I have slowed things down a bit to more easily see what's going on.) Go ahead and watch the video now, I'll discuss a little bit about what you're seeing aftwards.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<video controls src="field-dependent-photophysics.mp4" type="video/mp4"></video>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In the beginning of the movie you can see the moment when the laser beam first hits the sample. Since the illumination geometry is just widefield epi-illumination, the laser beam has a Gaussian-like <a href="https://en.wikipedia.org/wiki/Irradiance">irradiance</a> profile. (As explained in the link, irradiance is the amount of energy the laser beam carries per differential unit area. It is often referred to as intensity, though <a href="https://en.wikipedia.org/wiki/Radiant_intensity">intensity actually refers to a different quantity in the field of radiometry</a>.) This means that the fluorophores in the middle of the beam are exposed to a higher irradiance than those at the edges.</p>
+<p>The effect of the laser beam profile for STORM is quite clear when watching the video. The photoswitching rates of the fluorophores to the long-lived dark state are much higher in the center of the beam than at the edges. This leads to a field-dependent density of molecules in the fluorescence emitting state, which will ultimately affect one's ability to precisely and accurately localize the single molecule emissions. If you look closely, you can also see that the brightness of the fluorophores is also higher near the beam center, meaning that these molecules will be localized more precisely because we recorded more photons from them.</p>
+<p>All of these features mean that one must take care when performing quantitative analyses on STORM datasets, because the density, precision, and accuracy of the single molecule position estimates will vary across the field of view.</p>
+
+</div>
+</div>
+</div>
+    </div>
+  </div>
+
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/perlin-noise.html" class="u-url">Perlin Noise</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                Kyle M. Douglass
+            </span></p>
+            <p class="dateline"><a href="posts/perlin-noise.html" rel="bookmark"><time class="published dt-published" datetime="2016-03-20T17:45:00+01:00" title="2016-03-20 17:45">2016-03-20 17:45</time></a></p>
+                <p class="commentline">
+        
+    <a href="posts/perlin-noise.html#disqus_thread" data-disqus-identifier="cache/posts/perlin-noise.html">Comments</a>
 
 
         </p>
@@ -146,7 +189,7 @@
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Generating-Perlin-noise-with-the-noise-library">Generating Perlin noise with the <code>noise</code> library<a class="anchor-link" href="perlin-noise.html#Generating-Perlin-noise-with-the-noise-library">¶</a>
+<h2 id="Generating-Perlin-noise-with-the-noise-library">Generating Perlin noise with the <code>noise</code> library<a class="anchor-link" href="posts/perlin-noise.html#Generating-Perlin-noise-with-the-noise-library">¶</a>
 </h2>
 <p>The basic function <code>pnoise1()</code> takes a single float argument x. It won't work with numpy arrays. For this reason, I'm generating the noise signal in a <code>for</code> loop.</p>
 
@@ -329,7 +372,7 @@
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Random-waveforms-in-time">Random waveforms in time<a class="anchor-link" href="perlin-noise.html#Random-waveforms-in-time">¶</a>
+<h2 id="Random-waveforms-in-time">Random waveforms in time<a class="anchor-link" href="posts/perlin-noise.html#Random-waveforms-in-time">¶</a>
 </h2>
 <p>Because Perlin noise is continuous, we can easily generate a nice-looking, traveling Perlin noise waveform and animate it. To do this, I use <code>FuncAnimation</code> from <a href="http://matplotlib.org/api/animation_api.html">matplotlib's animation API</a>. Every time <code>FuncAnimation</code> is called, I add a constant to the time array, which shifts the curve to the left. I'm also plotting a small particle undergoing a 1D walk and whose position is equivalent to the waveform value at the left-most side of the axis.</p>
 
@@ -403,7 +446,7 @@
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<video controls src="../traveling_Perlin_wave.mp4" type="video/mp4"></video>
+<video controls src="traveling_Perlin_wave.mp4" type="video/mp4"></video>
 </div>
 </div>
 </div>
@@ -422,7 +465,7 @@
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Random-Perlin-and-Brownian-Walks">Random Perlin and Brownian Walks<a class="anchor-link" href="perlin-noise.html#Random-Perlin-and-Brownian-Walks">¶</a>
+<h2 id="Random-Perlin-and-Brownian-Walks">Random Perlin and Brownian Walks<a class="anchor-link" href="posts/perlin-noise.html#Random-Perlin-and-Brownian-Walks">¶</a>
 </h2>
 <p>Finally, let's compare a random walk created using Perlin noise to one created with <a href="https://en.wikipedia.org/wiki/White_noise">white noise</a>, which is completely uncorrelated. A walk generated with white noise is the same as good ol' Brownian motion. By comparing the two, you should be able to see why Perlin noise often better approximates natural phenomena: things just don't look quite natural when modeled with white noise.</p>
 
@@ -501,7 +544,7 @@
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<video controls src="../walkers.mp4" type="video/mp4"></video>
+<video controls src="walkers.mp4" type="video/mp4"></video>
 </div>
 </div>
 </div>
@@ -521,15 +564,15 @@
   </div>
 
     </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="correlated-noise-and-the-fft.html" class="u-url">Correlated noise and the FFT</a></h1>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/correlated-noise-and-the-fft.html" class="u-url">Correlated noise and the FFT</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
-            <p class="dateline"><a href="correlated-noise-and-the-fft.html" rel="bookmark"><time class="published dt-published" datetime="2016-02-28T09:15:37+01:00" title="2016-02-28 09:15">2016-02-28 09:15</time></a></p>
+            <p class="dateline"><a href="posts/correlated-noise-and-the-fft.html" rel="bookmark"><time class="published dt-published" datetime="2016-02-28T09:15:37+01:00" title="2016-02-28 09:15">2016-02-28 09:15</time></a></p>
                 <p class="commentline">
         
-    <a href="correlated-noise-and-the-fft.html#disqus_thread" data-disqus-identifier="cache/posts/correlated-noise-and-the-fft.html">Comments</a>
+    <a href="posts/correlated-noise-and-the-fft.html#disqus_thread" data-disqus-identifier="cache/posts/correlated-noise-and-the-fft.html">Comments</a>
 
 
         </p>
@@ -587,7 +630,7 @@
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Uncorrelated-noise">Uncorrelated noise<a class="anchor-link" href="correlated-noise-and-the-fft.html#Uncorrelated-noise">¶</a>
+<h2 id="Uncorrelated-noise">Uncorrelated noise<a class="anchor-link" href="posts/correlated-noise-and-the-fft.html#Uncorrelated-noise">¶</a>
 </h2>
 <p>One reason that Perlin noise models many natural phenomena so well is that its randomness is correlated. To see what I mean by this, I'll first plot a single realization of a purely random signal composed of random integers between 0 and 1. The samples from this signal are <strong>not</strong> correlated.</p>
 
@@ -697,7 +740,7 @@
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Correlated-noise">Correlated noise<a class="anchor-link" href="correlated-noise-and-the-fft.html#Correlated-noise">¶</a>
+<h2 id="Correlated-noise">Correlated noise<a class="anchor-link" href="posts/correlated-noise-and-the-fft.html#Correlated-noise">¶</a>
 </h2>
 <p>Perlin noise is a way of generating a random signal whose samples are correlated over short distances but uncorrelated over longer distances. I haven't yet found any quick and easy implementations for generating Perlin noise in Python, but you can find many examples of on the web, such as <a href="https://www.google.ch/search?q=perlin+noise&amp;tbm=isch&amp;tbo=u&amp;source=univ&amp;sa=X&amp;ved=0ahUKEwi1ytjsx5jLAhXE_3IKHWrfAGkQsAQIPg&amp;biw=1366&amp;bih=644#tbm=isch&amp;q=perlin+noise+1d">1D Perlin noise images from Google Image search</a>. (By "quick and easy", I mean something I can install from Anaconda and use with only a couple minutes of reading the docs.)</p>
 <p>A long time ago I wrote a computer simulation that modeled the motion of a small dipole in a three-dimensional, random electromagnetic field. This involved moving the dipole in a ballistic manner over short times, where the particle's <a href="https://en.wikipedia.org/wiki/Mean_squared_displacement">mean-squared-displacement (MSD)</a> evolved quadratically with time, and smoothly rounding off to a random, diffusive motion characterized by a linear time dependence of the MSD at long times. I have also done some partial coherence modeling of illumination systems, which also involves generating correlated noise.</p>
@@ -711,7 +754,7 @@
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Generating-correlated-noise-using-FFT's">Generating correlated noise using FFT's<a class="anchor-link" href="correlated-noise-and-the-fft.html#Generating-correlated-noise-using-FFT's">¶</a>
+<h3 id="Generating-correlated-noise-using-FFT's">Generating correlated noise using FFT's<a class="anchor-link" href="posts/correlated-noise-and-the-fft.html#Generating-correlated-noise-using-FFT's">¶</a>
 </h3>
 <p>Below is a relatively simple code snippet that generates a correlated noise signal. It was inspired by <a href="https://www.osapublishing.org/oe/abstract.cfm?uri=oe-14-16-6986">work publised by Xiao and Voelz</a> in 2006 for modeling partially coherent laser beam propagation through turbulence.</p>
 
@@ -944,7 +987,7 @@
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Reasoning-about-the-differences">Reasoning about the differences<a class="anchor-link" href="correlated-noise-and-the-fft.html#Reasoning-about-the-differences">¶</a>
+<h3 id="Reasoning-about-the-differences">Reasoning about the differences<a class="anchor-link" href="posts/correlated-noise-and-the-fft.html#Reasoning-about-the-differences">¶</a>
 </h3>
 <p>So far we've learned that we could create correlated noise by filtering a zero-mean, Gaussian random signal in frequency space. We also learned that the nature of the resulting signals changes when the shape of the frequency space filter is modified. In the case of the top hat filter, the resulting random signal became a bit more jagged. This makes sense because the amplitudes of the mid-range spectral components were larger for the top hat filtered signal; there was no smooth Gaussian rolloff but instead a hard cutoff at +/- <code>0.5 / sigma_f</code>. Even though the Gaussian-filtered signal had a larger bandwidth, the high frequency amplitudes were diminished exponentially, so they essentially didn't matter.</p>
 
@@ -956,7 +999,7 @@
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="The-connection-with-Perlin-noise">The connection with Perlin noise<a class="anchor-link" href="correlated-noise-and-the-fft.html#The-connection-with-Perlin-noise">¶</a>
+<h2 id="The-connection-with-Perlin-noise">The connection with Perlin noise<a class="anchor-link" href="posts/correlated-noise-and-the-fft.html#The-connection-with-Perlin-noise">¶</a>
 </h2>
 <p>Conceptually, Perlin noise is generated by adding together curves with different amplitudes and frequencies <a href="http://freespace.virgin.net/hugo.elias/models/m_perlin.htm">as explained here</a>. This is similar to what we did in the examples above: we took sine waves with random phases and different frequencies, modulated their amplitudes, and then added them together to get a realization of a smooth random signal.</p>
 <p>So what are the differences between the two approaches then? Here's what I can think of for now.</p>
@@ -974,7 +1017,7 @@
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="One-last-example:-1/f-noise">One last example: 1/f noise<a class="anchor-link" href="correlated-noise-and-the-fft.html#One-last-example:-1/f-noise">¶</a>
+<h2 id="One-last-example:-1/f-noise">One last example: 1/f noise<a class="anchor-link" href="posts/correlated-noise-and-the-fft.html#One-last-example:-1/f-noise">¶</a>
 </h2>
 <p>I realized the day after writing the draft of this post that the above discussion is useful for illustrating some of the "colored" noises. In this case, we use the ideas presented above to generate a realization of <a href="https://en.wikipedia.org/wiki/Pink_noise">1/f noise</a>, also known as <em>pink noise</em> or <em>fractal noise</em>.</p>
 <p>Can you guess how the amplitude of the spectrum of 1/f noise varies?</p>
@@ -1138,14 +1181,14 @@ MathJax.Hub.Config({
         <!--End of body content-->
 
         <footer id="footer">
-            Contents © 2018         <a href="mailto:kyle.douglass@epfl.ch">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
+            Contents © 2018         <a href="mailto:kyle.m.douglass@gmail.com">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
             
         </footer>
 </div>
 </div>
 
 
-            <script src="../assets/js/all-nocdn.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+            <script src="assets/js/all-nocdn.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
     moment.locale("en");
     fancydates(0, "YYYY-MM-DD HH:mm");
     </script><!-- end fancy dates -->
