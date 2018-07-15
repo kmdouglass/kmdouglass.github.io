@@ -25,8 +25,8 @@ SITE_URL = "http://kmdouglass.github.io/"
 # This is the URL where Nikola's output will be deployed.
 # If not set, defaults to SITE_URL
 # BASE_URL = "http://kmdouglass.github.io"
-BLOG_EMAIL = "kyle.douglass@epfl.ch"
-BLOG_DESCRIPTION = "Biophysics, optics, and programming."  # (translatable)
+BLOG_EMAIL = "kyle.m.douglass@gmail.com"
+BLOG_DESCRIPTION = "Optics, programming, and science."  # (translatable)
 
 # Added in a later version of Nikola
 WRITE_TAG_CLOUD = True
@@ -114,11 +114,8 @@ TRANSLATIONS_PATTERN = "{path}.{lang}.{ext}"
 
 NAVIGATION_LINKS = {
     DEFAULT_LANG: (
-        ("/stories/about-me.html", "About"),
-        ("/posts/index.html", "Blog"),
         ("/categories/index.html", "Tags"),
         ("/archive.html", "Archive"),
-        ("/stories/notes-and-projects.html", "Notes"),
         ("/stories/contact.html", "Contact"),
     ),
 }
@@ -272,7 +269,7 @@ COMPILERS = {
 
 # Final location for the main blog page and sibling paginated pages is
 # output / TRANSLATION[lang] / INDEX_PATH / index-*.html
-INDEX_PATH = "posts"
+#INDEX_PATH = "posts"
 
 # Create per-month archives instead of per-year
 # CREATE_MONTHLY_ARCHIVE = False
