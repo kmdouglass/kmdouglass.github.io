@@ -13,7 +13,7 @@
 <link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml">
 <link rel="canonical" href="http://kmdouglass.github.io/index.html">
 <link rel="next" href="index-3.html" type="text/html">
-<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><link rel="prefetch" href="posts/create-a-custom-raspbian-image-with-pi-gen.html" type="text/html">
+<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><link rel="prefetch" href="posts/how-i-built-a-cross-compilation-workflow-for-the-raspberry-pi.html" type="text/html">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -66,107 +66,7 @@
 
     
 <div class="postindex">
-    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/create-a-custom-raspbian-image-with-pi-gen.html" class="u-url">Create a custom Raspbian image with pi-gen</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
-                Kyle M. Douglass
-            </span></p>
-            <p class="dateline"><a href="posts/create-a-custom-raspbian-image-with-pi-gen.html" rel="bookmark"><time class="published dt-published" datetime="2018-07-14T19:15:28+02:00" title="2018-07-14 19:15">2018-07-14 19:15</time></a></p>
-                <p class="commentline">
-        
-    <a href="posts/create-a-custom-raspbian-image-with-pi-gen.html#disqus_thread" data-disqus-identifier="cache/posts/create-a-custom-raspbian-image-with-pi-gen.html">Comments</a>
-
-
-        </p>
-</div>
-    </header><div class="p-summary entry-summary">
-    <div>
-<p>Docker has been an amazing tool for improving my development
-efficiency on the Raspberry Pi. For example, I recently used it to
-<a class="reference external" href="posts/how-i-built-a-cross-compilation-workflow-for-the-raspberry-pi.html">cross-compile a large C++ and Python library</a> for the Pi's ARM
-architecture on my x86_64 laptop. However, in that post I took it for
-granted that I had already set up my Raspberry Pi with user accounts,
-packages, ssh keys, etc. Performing these steps manually on a fresh
-install of the Pi's <a class="reference external" href="https://www.raspberrypi.org/downloads/raspbian/">Raspbian</a> operating system can become tedious,
-especially because ssh needs to be manually enabled before doing any
-remote work.</p>
-<p>Fortunately, the Raspberry Pi developers have provided us with
-<a class="reference external" href="https://github.com/RPi-Distro/pi-gen">pi-gen</a>, useful collection of Shell scripts and a Docker container
-for creating custom Raspbian images. In this post, I will summarize
-the steps that I take in using pi-gen to create my own, personalized
-Raspbian image.</p>
-<div class="section" id="clone-the-pi-gen-repository">
-<h2>Clone the pi-gen repository</h2>
-<p>This is as easy as cloning the git repository.</p>
-<pre class="code shell"><a name="rest_code_cbef8c93823740e1a234e17719ffeb9d-1"></a>git clone git@github.com:RPi-Distro/pi-gen.git
-</pre>
-<p>Alternatively, you can use the https address instead of ssh, which is
-<a class="reference external" href="https://github.com/RPi-Distro/pi-gen.git">https://github.com/RPi-Distro/pi-gen.git</a>.</p>
-</div>
-<div class="section" id="build-the-official-raspbian-images">
-<h2>Build the official Raspbian images</h2>
-<p>By default, the pi-gen repository will build the official Raspbian
-images. Doing this once before making any modifications is probably a
-good idea; if you can't build the official images, how will you be
-able to build a custom image?</p>
-<p>There are two main scripts that you can use to do this: <strong>build.sh</strong>
-and <strong>build-docker.sh</strong>. <strong>build.sh</strong> requires you to install the
-packages that are listed in the repository's README.md file, whereas
-<strong>build-docker.sh</strong> requires that you have Docker already installed on
-your computer. I'm going to be using the Docker-based build script for
-the rest of this post. If you don't have Docker installed on your
-system, you can <a class="reference external" href="https://docs.docker.com/install/">follow the instructions here</a> for the community
-edition.</p>
-<div class="section" id="name-your-image">
-<h3>Name your image</h3>
-<p>First we need to give a name to our image, even if we use the default
-build. To do this, we assign a name to a variable called <strong>IMG_NAME</strong>
-inside a file called <strong>config</strong> that is located inside the root pi-gen
-folder.</p>
-<pre class="code shell"><a name="rest_code_5f369bf9276e4f14a239d8ab66ce0143-1"></a><span class="nb">echo</span> <span class="s2">"IMG_NAME=my_name"</span> &gt; config
-</pre>
-</div>
-<div class="section" id="build-the-default-image">
-<h3>Build the default image</h3>
-<p>Once we've named our image, we can go ahead and run the build script.</p>
-<pre class="code shell"><a name="rest_code_1823b9c776d3471397070c82b770c8a7-1"></a>./build-docker.sh
-</pre>
-<p>Be prepared to wait a while when running this script; the full build
-took well over half an hour on my laptop and with the Docker volume
-located on a SSD. It also consumed several GB of space on the SSD.</p>
-<div class="section" id="resuming-a-failed-build">
-<h4>Resuming a failed build</h4>
-<p>The first time I used pi-gen the build failed twice. Once, it hung
-without doing anything for several minutes, so I canceled it with a
-<strong>Ctrl-C</strong> command. The other time I encountered a hash error when
-installing a Debian package.</p>
-<p>We can resume a failed build from the point of failure by assigning
-the value 1 to the CONTINUE variable when calling build-docker.sh
-again.</p>
-<pre class="code shell"><a name="rest_code_a0a6dbce6fc942c8a6b5d6daec28e383-1"></a><span class="nv">CONTINUE</span><span class="o">=</span><span class="m">1</span> ./build-docker.sh
-</pre>
-<p>After a successful build, we can find our custom images located inside
-the <strong>deploy</strong> folder of the pi-gen directory. These may then be
-written onto a SD card and used as a standard Raspbian image.</p>
-</div>
-</div>
-</div>
-<div class="section" id="custom-raspbian-images">
-<h2>Custom Raspbian images</h2>
-<p>Now that we've got the default build working, let's start by
-customizing the build process. For this post, I have the following
-goals:</p>
-<ul class="simple">
-<li>Build only the <em>lite</em> version of the Raspbian images</li>
-<li>Add a custom user account and delete the default <em>pi</em> account</li>
-<li>Setup the WiFi for a home network</li>
-<li>Setup ssh so that we can log on to the Pi remotely on its first
-startup</li>
-</ul>
-</div>
-</div>
-    </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/how-i-built-a-cross-compilation-workflow-for-the-raspberry-pi.html" class="u-url">How I built a cross-compilation workflow for the Raspberry Pi</a></h1>
+    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/how-i-built-a-cross-compilation-workflow-for-the-raspberry-pi.html" class="u-url">How I built a cross-compilation workflow for the Raspberry Pi</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
@@ -5678,6 +5578,58 @@ I \left( r \right) = I_0 \left[ \frac{2 J_1 \left( X \right)}{X} \right]^2
 <p>The calculations I discussed here rely on quite a few simplifying assumptions. The first is that they are based on scalar diffraction theory. The real electromagnetic field is polarized and is described not by a scalar but by a three dimensional, complex-valued vector. The theory of vector diffraction describes how such a field propagates through an optical system; naturally, it is more complicated than scalar diffraction theory.</p>
 <p>Isotropic point sources are also an idealization of reality. Single fluorescent molecules, for instance, do not emit light equally in all directions but rather in a pattern known as <a href="https://www.youtube.com/watch?v=Lx7LNVtQvTs">dipole radiation</a>.</p>
 <p>Finally, the optical system as modeled here was a linear, shift-invariant system. This means that the same pupil function can actually be used to compute the image of any off-axis point source as well; we would only need to apply a linear phase ramp to the pupil to account for this. Real optical systems are only approximatley linear and shift-invariant, which means that a more complete model would assign a different pupil function to each object point. This then allows for aberrations that vary as a function of object position, but requires more information to fully describe the system.</p>
+
+</div>
+</div>
+</div>
+    </div>
+  </div>
+
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/field-dependent-photophysics-video.html" class="u-url">Field-dependent photophysics - video</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                Kyle M. Douglass
+            </span></p>
+            <p class="dateline"><a href="posts/field-dependent-photophysics-video.html" rel="bookmark"><time class="published dt-published" datetime="2016-09-29T11:36:24+02:00" title="2016-09-29 11:36">2016-09-29 11:36</time></a></p>
+                <p class="commentline">
+        
+    <a href="posts/field-dependent-photophysics-video.html#disqus_thread" data-disqus-identifier="cache/posts/field-dependent-photophysics-video.html">Comments</a>
+
+
+        </p>
+</div>
+    </header><div class="p-summary entry-summary">
+    <div tabindex="-1" id="notebook" class="border-box-sizing">
+    <div class="container" id="notebook-container">
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Below you can see a video of a raw <a href="https://www.microscopyu.com/tutorials/stochastic-optical-reconstruction-microscopy-storm-imaging">STORM</a> movie that I acquired in the lab a few months ago on a standard, inverted laser fluorescence microscope. The sample consists of AlexaFluor 647-labeled tubulin in Cos7 cells at a frame rate of 100 fps. (I have slowed things down a bit to more easily see what's going on.) Go ahead and watch the video now, I'll discuss a little bit about what you're seeing aftwards.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<video controls src="field-dependent-photophysics.mp4" type="video/mp4"></video>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In the beginning of the movie you can see the moment when the laser beam first hits the sample. Since the illumination geometry is just widefield epi-illumination, the laser beam has a Gaussian-like <a href="https://en.wikipedia.org/wiki/Irradiance">irradiance</a> profile. (As explained in the link, irradiance is the amount of energy the laser beam carries per differential unit area. It is often referred to as intensity, though <a href="https://en.wikipedia.org/wiki/Radiant_intensity">intensity actually refers to a different quantity in the field of radiometry</a>.) This means that the fluorophores in the middle of the beam are exposed to a higher irradiance than those at the edges.</p>
+<p>The effect of the laser beam profile for STORM is quite clear when watching the video. The photoswitching rates of the fluorophores to the long-lived dark state are much higher in the center of the beam than at the edges. This leads to a field-dependent density of molecules in the fluorescence emitting state, which will ultimately affect one's ability to precisely and accurately localize the single molecule emissions. If you look closely, you can also see that the brightness of the fluorophores is also higher near the beam center, meaning that these molecules will be localized more precisely because we recorded more photons from them.</p>
+<p>All of these features mean that one must take care when performing quantitative analyses on STORM datasets, because the density, precision, and accuracy of the single molecule position estimates will vary across the field of view.</p>
 
 </div>
 </div>

@@ -1,83 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0"><channel><title>Kyle M. Douglass</title><link>http://kmdouglass.github.io/</link><description>Optics, programming, and science.</description><atom:link href="http://kmdouglass.github.io/rss.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Sun, 15 Jul 2018 15:02:58 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Create a custom Raspbian image with pi-gen</title><link>http://kmdouglass.github.io/posts/create-a-custom-raspbian-image-with-pi-gen.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;Docker has been an amazing tool for improving my development
-efficiency on the Raspberry Pi. For example, I recently used it to
-&lt;a class="reference external" href="http://kmdouglass.github.io/posts/how-i-built-a-cross-compilation-workflow-for-the-raspberry-pi.html"&gt;cross-compile a large C++ and Python library&lt;/a&gt; for the Pi's ARM
-architecture on my x86_64 laptop. However, in that post I took it for
-granted that I had already set up my Raspberry Pi with user accounts,
-packages, ssh keys, etc. Performing these steps manually on a fresh
-install of the Pi's &lt;a class="reference external" href="https://www.raspberrypi.org/downloads/raspbian/"&gt;Raspbian&lt;/a&gt; operating system can become tedious,
-especially because ssh needs to be manually enabled before doing any
-remote work.&lt;/p&gt;
-&lt;p&gt;Fortunately, the Raspberry Pi developers have provided us with
-&lt;a class="reference external" href="https://github.com/RPi-Distro/pi-gen"&gt;pi-gen&lt;/a&gt;, useful collection of Shell scripts and a Docker container
-for creating custom Raspbian images. In this post, I will summarize
-the steps that I take in using pi-gen to create my own, personalized
-Raspbian image.&lt;/p&gt;
-&lt;div class="section" id="clone-the-pi-gen-repository"&gt;
-&lt;h2&gt;Clone the pi-gen repository&lt;/h2&gt;
-&lt;p&gt;This is as easy as cloning the git repository.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_cbef8c93823740e1a234e17719ffeb9d-1"&gt;&lt;/a&gt;git clone git@github.com:RPi-Distro/pi-gen.git
-&lt;/pre&gt;&lt;p&gt;Alternatively, you can use the https address instead of ssh, which is
-&lt;a class="reference external" href="https://github.com/RPi-Distro/pi-gen.git"&gt;https://github.com/RPi-Distro/pi-gen.git&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="section" id="build-the-official-raspbian-images"&gt;
-&lt;h2&gt;Build the official Raspbian images&lt;/h2&gt;
-&lt;p&gt;By default, the pi-gen repository will build the official Raspbian
-images. Doing this once before making any modifications is probably a
-good idea; if you can't build the official images, how will you be
-able to build a custom image?&lt;/p&gt;
-&lt;p&gt;There are two main scripts that you can use to do this: &lt;strong&gt;build.sh&lt;/strong&gt;
-and &lt;strong&gt;build-docker.sh&lt;/strong&gt;. &lt;strong&gt;build.sh&lt;/strong&gt; requires you to install the
-packages that are listed in the repository's README.md file, whereas
-&lt;strong&gt;build-docker.sh&lt;/strong&gt; requires that you have Docker already installed on
-your computer. I'm going to be using the Docker-based build script for
-the rest of this post. If you don't have Docker installed on your
-system, you can &lt;a class="reference external" href="https://docs.docker.com/install/"&gt;follow the instructions here&lt;/a&gt; for the community
-edition.&lt;/p&gt;
-&lt;div class="section" id="name-your-image"&gt;
-&lt;h3&gt;Name your image&lt;/h3&gt;
-&lt;p&gt;First we need to give a name to our image, even if we use the default
-build. To do this, we assign a name to a variable called &lt;strong&gt;IMG_NAME&lt;/strong&gt;
-inside a file called &lt;strong&gt;config&lt;/strong&gt; that is located inside the root pi-gen
-folder.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_5f369bf9276e4f14a239d8ab66ce0143-1"&gt;&lt;/a&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;"IMG_NAME=my_name"&lt;/span&gt; &amp;gt; config
-&lt;/pre&gt;&lt;/div&gt;
-&lt;div class="section" id="build-the-default-image"&gt;
-&lt;h3&gt;Build the default image&lt;/h3&gt;
-&lt;p&gt;Once we've named our image, we can go ahead and run the build script.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_1823b9c776d3471397070c82b770c8a7-1"&gt;&lt;/a&gt;./build-docker.sh
-&lt;/pre&gt;&lt;p&gt;Be prepared to wait a while when running this script; the full build
-took well over half an hour on my laptop and with the Docker volume
-located on a SSD. It also consumed several GB of space on the SSD.&lt;/p&gt;
-&lt;div class="section" id="resuming-a-failed-build"&gt;
-&lt;h4&gt;Resuming a failed build&lt;/h4&gt;
-&lt;p&gt;The first time I used pi-gen the build failed twice. Once, it hung
-without doing anything for several minutes, so I canceled it with a
-&lt;strong&gt;Ctrl-C&lt;/strong&gt; command. The other time I encountered a hash error when
-installing a Debian package.&lt;/p&gt;
-&lt;p&gt;We can resume a failed build from the point of failure by assigning
-the value 1 to the CONTINUE variable when calling build-docker.sh
-again.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_a0a6dbce6fc942c8a6b5d6daec28e383-1"&gt;&lt;/a&gt;&lt;span class="nv"&gt;CONTINUE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; ./build-docker.sh
-&lt;/pre&gt;&lt;p&gt;After a successful build, we can find our custom images located inside
-the &lt;strong&gt;deploy&lt;/strong&gt; folder of the pi-gen directory. These may then be
-written onto a SD card and used as a standard Raspbian image.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="section" id="custom-raspbian-images"&gt;
-&lt;h2&gt;Custom Raspbian images&lt;/h2&gt;
-&lt;p&gt;Now that we've got the default build working, let's start by
-customizing the build process. For this post, I have the following
-goals:&lt;/p&gt;
-&lt;ul class="simple"&gt;
-&lt;li&gt;Build only the &lt;em&gt;lite&lt;/em&gt; version of the Raspbian images&lt;/li&gt;
-&lt;li&gt;Add a custom user account and delete the default &lt;em&gt;pi&lt;/em&gt; account&lt;/li&gt;
-&lt;li&gt;Setup the WiFi for a home network&lt;/li&gt;
-&lt;li&gt;Setup ssh so that we can log on to the Pi remotely on its first
-startup&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;&lt;/div&gt;</description><guid>http://kmdouglass.github.io/posts/create-a-custom-raspbian-image-with-pi-gen.html</guid><pubDate>Sat, 14 Jul 2018 17:15:28 GMT</pubDate></item><item><title>How I built a cross-compilation workflow for the Raspberry Pi</title><link>http://kmdouglass.github.io/posts/how-i-built-a-cross-compilation-workflow-for-the-raspberry-pi.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;Some of you may know I tinker with the Raspberry Pi in my free time
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kyle M. Douglass</title><link>http://kmdouglass.github.io/</link><description>Optics, programming, and science.</description><atom:link href="http://kmdouglass.github.io/rss.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Sun, 15 Jul 2018 15:11:12 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>How I built a cross-compilation workflow for the Raspberry Pi</title><link>http://kmdouglass.github.io/posts/how-i-built-a-cross-compilation-workflow-for-the-raspberry-pi.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;Some of you may know I tinker with the Raspberry Pi in my free time
 and that one of my current projects is to build a lensless microscope
 with the Pi as the brains. To control the microscope, I decided a
 while ago that I would use &lt;a class="reference external" href="https://micro-manager.org/wiki/Micro-Manager"&gt;Micro-Manager&lt;/a&gt;, an open-source
@@ -5301,4 +5223,37 @@ I \left( r \right) = I_0 \left[ \frac{2 J_1 \left( X \right)}{X} \right]^2
 &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
-</description><category>Fourier optics</category><guid>http://kmdouglass.github.io/posts/simple-pupil-function-calculations.html</guid><pubDate>Sun, 04 Dec 2016 09:45:56 GMT</pubDate></item></channel></rss>
+</description><category>Fourier optics</category><guid>http://kmdouglass.github.io/posts/simple-pupil-function-calculations.html</guid><pubDate>Sun, 04 Dec 2016 09:45:56 GMT</pubDate></item><item><title>Field-dependent photophysics - video</title><link>http://kmdouglass.github.io/posts/field-dependent-photophysics-video.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div tabindex="-1" id="notebook" class="border-box-sizing"&gt;
+    &lt;div class="container" id="notebook-container"&gt;
+
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;Below you can see a video of a raw &lt;a href="https://www.microscopyu.com/tutorials/stochastic-optical-reconstruction-microscopy-storm-imaging"&gt;STORM&lt;/a&gt; movie that I acquired in the lab a few months ago on a standard, inverted laser fluorescence microscope. The sample consists of AlexaFluor 647-labeled tubulin in Cos7 cells at a frame rate of 100 fps. (I have slowed things down a bit to more easily see what's going on.) Go ahead and watch the video now, I'll discuss a little bit about what you're seeing aftwards.&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;video controls src="http://kmdouglass.github.io/field-dependent-photophysics.mp4" type="video/mp4"&gt;&lt;/video&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;In the beginning of the movie you can see the moment when the laser beam first hits the sample. Since the illumination geometry is just widefield epi-illumination, the laser beam has a Gaussian-like &lt;a href="https://en.wikipedia.org/wiki/Irradiance"&gt;irradiance&lt;/a&gt; profile. (As explained in the link, irradiance is the amount of energy the laser beam carries per differential unit area. It is often referred to as intensity, though &lt;a href="https://en.wikipedia.org/wiki/Radiant_intensity"&gt;intensity actually refers to a different quantity in the field of radiometry&lt;/a&gt;.) This means that the fluorophores in the middle of the beam are exposed to a higher irradiance than those at the edges.&lt;/p&gt;
+&lt;p&gt;The effect of the laser beam profile for STORM is quite clear when watching the video. The photoswitching rates of the fluorophores to the long-lived dark state are much higher in the center of the beam than at the edges. This leads to a field-dependent density of molecules in the fluorescence emitting state, which will ultimately affect one's ability to precisely and accurately localize the single molecule emissions. If you look closely, you can also see that the brightness of the fluorophores is also higher near the beam center, meaning that these molecules will be localized more precisely because we recorded more photons from them.&lt;/p&gt;
+&lt;p&gt;All of these features mean that one must take care when performing quantitative analyses on STORM datasets, because the density, precision, and accuracy of the single molecule position estimates will vary across the field of view.&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+</description><guid>http://kmdouglass.github.io/posts/field-dependent-photophysics-video.html</guid><pubDate>Thu, 29 Sep 2016 09:36:24 GMT</pubDate></item></channel></rss>
