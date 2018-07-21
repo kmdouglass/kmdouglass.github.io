@@ -2,7 +2,7 @@
 .. slug: how-i-built-a-cross-compilation-workflow-for-the-raspberry-pi
 .. date: 2018-04-29 12:10:26 UTC+02:00
 .. tags: raspberry pi, micro-manager, docker
-.. category: 
+.. category: raspberry pi
 .. link: 
 .. description: How to setup a cross-compilation workflow with Docker.
 .. type: text
@@ -237,60 +237,64 @@ Step 1: Create the build image
 ------------------------------
 
 Inside the build folder, I have a file called Dockerfile. Here are its
-contents::
+contents.
 
-  # Copyright (C) 2018 Kyle M. Douglass
-  #
-  # Defines a build environment for Micro-Manager on the Raspberry Pi.
-  #
-  # Usage: docker build \
-  #          -t NAME:TAG \
-  #	     .
-  #
+.. code-block:: shell
 
-  FROM resin/raspberrypi3-debian:stretch
-  MAINTAINER Kyle M. Douglass <kyle.m.douglass@gmail.com>
+   # Copyright (C) 2018 Kyle M. Douglass
+   #
+   # Defines a build environment for Micro-Manager on the Raspberry Pi.
+   #
+   # Usage: docker build \
+   #          -t NAME:TAG \
+   #	     .
+   #
 
-  RUN [ "cross-build-start" ]
+   FROM resin/raspberrypi3-debian:stretch
+   MAINTAINER Kyle M. Douglass <kyle.m.douglass@gmail.com>
 
-  # Get the build dependencies.
-  RUN apt-get update && apt-get -y install --no-install-recommends \
-  autoconf \
-  automake \
-  build-essential \
-  git \
-  libatlas-base-dev \
-  libboost-dev \
-  libboost-all-dev \
-  libtool \
-  patch \
-  pkg-config \
-  python3-dev \
-  python3-pip \
-  python3-setuptools \
-  python3-wheel \
-  swig \
-  && apt-get clean && rm -rf /var/lib/apt/lists/* \
-  && pip3 install numpy
+   RUN [ "cross-build-start" ]
 
-  RUN [ "cross-build-end" ]
+   # Get the build dependencies.
+   RUN apt-get update && apt-get -y install --no-install-recommends \
+   autoconf \
+   automake \
+   build-essential \
+   git \
+   libatlas-base-dev \
+   libboost-dev \
+   libboost-all-dev \
+   libtool \
+   patch \
+   pkg-config \
+   python3-dev \
+   python3-pip \
+   python3-setuptools \
+   python3-wheel \
+   swig \
+   && apt-get clean && rm -rf /var/lib/apt/lists/* \
+   && pip3 install numpy
 
-  # Set up the mount point for the source files and setup script.
-  ADD setup /micro-manager/
-  VOLUME /micro-manager/src
+   RUN [ "cross-build-end" ]
 
-  WORKDIR /micro-manager/src
-  ENTRYPOINT [ "/sbin/tini", "-s", "--" ]
-  CMD [ "/micro-manager/setup" ]
+   # Set up the mount point for the source files and setup script.
+   ADD setup /micro-manager/
+   VOLUME /micro-manager/src
+
+   WORKDIR /micro-manager/src
+   ENTRYPOINT [ "/sbin/tini", "-s", "--" ]
+   CMD [ "/micro-manager/setup" ]
 
 A Dockerfile defines the steps in building an image -- in this case,
 the build image. Let's break this file down into pieces. In the first
 two lines that follow the comments, I specify that my image is based
 on the resin/raspberrypi3-debian:stretch image and that I am the
-maintainer.::
+maintainer.
 
-  FROM resin/raspberrypi3-debian:stretch
-  MAINTAINER Kyle M. Douglass <kyle.m.douglass@gmail.com>
+.. code-block:: shell
+
+   FROM resin/raspberrypi3-debian:stretch
+   MAINTAINER Kyle M. Douglass <kyle.m.douglass@gmail.com>
 
 Images from `Resin <https://hub.docker.com/u/resin/>`_ are freely
 available and already have the QEMU emulator installed. Next, I
@@ -313,11 +317,13 @@ This command is just telling the image to expect a folder to be
 mounted at this location when the container is run.
 
 The last three lines set the working directory, the entrypoint and the
-default container command, respectively.::
+default container command, respectively.
 
-    WORKDIR /micro-manager/src
-    ENTRYPOINT [ "/sbin/tini", "-s", "--" ]
-    CMD [ "/micro-manager/setup" ]
+.. code-block:: shell
+		
+   WORKDIR /micro-manager/src
+   ENTRYPOINT [ "/sbin/tini", "-s", "--" ]
+   CMD [ "/micro-manager/setup" ]
 
 This specific entrypoint tells Docker that any containers built from
 this image should first run Tini, which is a lightweight init system
@@ -336,17 +342,19 @@ you can choose not to run the setup script but instead to enter the
 container through a Bash shell, for example.
 
 To build the image, I use the following build script located in the
-same directory as the Dockerfile for convenience::
+same directory as the Dockerfile for convenience.
 
-  #!/bin/bash
-  # Copyright (C) 2018 Kyle M. Douglass
-  #
-  # Usage: ./build
-  #
+.. code-block:: shell
 
-  docker build \
-         -t localhost:5000/rpi-micromanager:build \
-         .
+   #!/bin/bash
+   # Copyright (C) 2018 Kyle M. Douglass
+   #
+   # Usage: ./build
+   #
+
+   docker build \
+          -t localhost:5000/rpi-micromanager:build \
+          .
 
 By using ``-t localhost:5000/rpi-micromanager:build`` argument I am
 giving the image a name of *rpi-micromanager*, a tag of *build*, and
@@ -360,38 +368,40 @@ Step 2: Compile Micro-Manager
 -----------------------------
 
 After the image is built, I create a container and use it to compile
-Micro-Manager. For this, I use the run script in the build directory::
+Micro-Manager. For this, I use the run script in the build directory.
 
-  #!/bin/bash
-  # Copyright (C) 2018 Kyle M. Douglass
-  #
-  # Usage: ./run DIR CONFIGURE
-  #
-  # DIR is the parent folder containing the micro-manager Git
-  # repository, the 3rdpartypublic Subversion repository, and any
-  # additional build resources.
-  #
-  # If CONFIGURE=true, the build system is remade and the configure
-  # script is rerun before running 'make' and 'make install'. If
-  # CONFIGURE=false, only 'make' and 'make install' are run.
-  #
-  # The compiled program files are stored in a bind mount volume so that
-  # they may be copied into the deployment container.
-  #
+.. code-block:: shell
 
-  src_dir=$1
-  cmd="/micro-manager/setup $2"
+   #!/bin/bash
+   # Copyright (C) 2018 Kyle M. Douglass
+   #
+   # Usage: ./run DIR CONFIGURE
+   #
+   # DIR is the parent folder containing the micro-manager Git
+   # repository, the 3rdpartypublic Subversion repository, and any
+   # additional build resources.
+   #
+   # If CONFIGURE=true, the build system is remade and the configure
+   # script is rerun before running 'make' and 'make install'. If
+   # CONFIGURE=false, only 'make' and 'make install' are run.
+   #
+   # The compiled program files are stored in a bind mount volume so that
+   # they may be copied into the deployment container.
+   #
 
-  # Remove the build artifacts from previous builds.
-  if [ "$2" == true ] || [ "$2" == false ]; then
-      rm -rf ${src_dir}/build || true
-  fi
+   src_dir=$1
+   cmd="/micro-manager/setup $2"
 
-  docker run --rm \
-         -v ${src_dir}:/micro-manager/src \
-         --name mm-build \
-         localhost:5000/rpi-micromanager:build \
-         ${cmd}
+   # Remove the build artifacts from previous builds.
+   if [ "$2" == true ] || [ "$2" == false ]; then
+       rm -rf ${src_dir}/build || true
+   fi
+
+   docker run --rm \
+          -v ${src_dir}:/micro-manager/src \
+          --name mm-build \
+          localhost:5000/rpi-micromanager:build \
+          ${cmd}
 
 The script takes two arguments. The first is the path to the folder
 containing all the source code (see below for details). The second
@@ -424,59 +434,61 @@ I checkout the mm2 branch because I am interested in developing my
 application for Micro-Manager 2.0.
 
 The setup script that is run inside the container and mentioned in the
-previous section looks like this::
+previous section looks like this.
 
-  #!/bin/bash
-  #
-  # # Copyright (C) 2018 Kyle M. Douglass
-  #
-  # Builds Micro-Manager.
-  #
-  # Usage: ./setup CONFIGURE
-  #
-  # If CONFIGURE=true, the build system is remade and the configure
-  # script is rerun before running 'make' and 'make install'. If
-  # CONFIGURE=false, only 'make' and 'make install' or run.
-  #
-  # Kyle M. Douglass, 2018
-  #
+.. code-block:: shell
 
-  # Move into the source directory.
-  cd micro-manager
+   #!/bin/bash
+   #
+   # # Copyright (C) 2018 Kyle M. Douglass
+   #
+   # Builds Micro-Manager.
+   #
+   # Usage: ./setup CONFIGURE
+   #
+   # If CONFIGURE=true, the build system is remade and the configure
+   # script is rerun before running 'make' and 'make install'. If
+   # CONFIGURE=false, only 'make' and 'make install' or run.
+   #
+   # Kyle M. Douglass, 2018
+   #
 
-  # Undo any previous patches.
-  git checkout -- DeviceAdapters/WieneckeSinske/CAN29.cpp
-  git checkout -- DeviceAdapters/WieneckeSinske/WieneckeSinske.cpp
+   # Move into the source directory.
+   cd micro-manager
 
-  # Patch the broken WieneckeSinske device adapter.
-  patch DeviceAdapters/WieneckeSinske/CAN29.cpp < ../patches/CAN29.cpp.diff \
-  && patch DeviceAdapters/WieneckeSinske/WieneckeSinske.cpp < ../patches/WieneckeSinske.cpp.diff
+   # Undo any previous patches.
+   git checkout -- DeviceAdapters/WieneckeSinske/CAN29.cpp
+   git checkout -- DeviceAdapters/WieneckeSinske/WieneckeSinske.cpp
 
-  # Compile MM2.
-  if [ "$1" = true ]; then 
-      # Remake the entire build system, then compile from scratch.
-      ./autogen.sh
-      PYTHON="/usr/bin/python3" ./configure \
-          --prefix="/micro-manager/src/build" \
-	  --with-python="/usr/include/python3.5" \
-       	  --with-boost-libdir="/usr/lib/arm-linux-gnueabihf" \
-	  --with-boost="/usr/include/boost" \
-	  --disable-java-app \
-	  --disable-install-dependency-jars \
-	  --with-java="no"
-      make
-      make install
-      chmod -R a+w /micro-manager/src/build
-  elif [ "$1" = false ]; then
-      # Only recompile changed source files.
-      make
-      make install
-      chmod -R a+w /micro-manager/src/build
-  else
-      echo "$1 : Unrecognized argument."
-      echo "Pass \"true\" to run the full build process."
-      echo "Pass \"false\" to run only \"make\" and \"make install\"."
-  fi
+   # Patch the broken WieneckeSinske device adapter.
+   patch DeviceAdapters/WieneckeSinske/CAN29.cpp < ../patches/CAN29.cpp.diff \
+   && patch DeviceAdapters/WieneckeSinske/WieneckeSinske.cpp < ../patches/WieneckeSinske.cpp.diff
+
+   # Compile MM2.
+   if [ "$1" = true ]; then 
+       # Remake the entire build system, then compile from scratch.
+       ./autogen.sh
+       PYTHON="/usr/bin/python3" ./configure \
+           --prefix="/micro-manager/src/build" \
+ 	   --with-python="/usr/include/python3.5" \
+       	   --with-boost-libdir="/usr/lib/arm-linux-gnueabihf" \
+	   --with-boost="/usr/include/boost" \
+	   --disable-java-app \
+	   --disable-install-dependency-jars \
+	   --with-java="no"
+       make
+       make install
+       chmod -R a+w /micro-manager/src/build
+   elif [ "$1" = false ]; then
+       # Only recompile changed source files.
+       make
+       make install
+       chmod -R a+w /micro-manager/src/build
+   else
+       echo "$1 : Unrecognized argument."
+       echo "Pass \"true\" to run the full build process."
+       echo "Pass \"false\" to run only \"make\" and \"make install\"."
+   fi
 
 Most important in this script is the call to ``configure``. You can
 see that the compiled libraries and Python wrapper will be written to
@@ -491,60 +503,66 @@ Once the libraries are compiled, we can add them to an application
 image that contains only the essentials for running Micro-Manager.
 
 For this, I use a separate Dockerfile inside the 2.0-python
-directory::
+directory.
 
-  # Copyright (C) 2018 Kyle M. Douglass
-  #
-  # Builds the Micro-Manager 2.0 Python wrapper for the Raspberry Pi.
-  #
-  # Usage: docker build \
-  #          -t NAME:TAG \
-  #	     .
-  #
+.. code-block:: shell
 
-  FROM resin/raspberrypi3-debian:stretch
-  MAINTAINER Kyle M. Douglass <kyle.m.douglass@gmail.com>
+   # Copyright (C) 2018 Kyle M. Douglass
+   #
+   # Builds the Micro-Manager 2.0 Python wrapper for the Raspberry Pi.
+   #
+   # Usage: docker build \
+   #          -t NAME:TAG \
+   #	      .
+   #
 
-  RUN [ "cross-build-start" ]
+   FROM resin/raspberrypi3-debian:stretch
+   MAINTAINER Kyle M. Douglass <kyle.m.douglass@gmail.com>
 
-  # Install the run-time dependencies.
-  RUN apt-get update && apt-get -y install --no-install-recommends \
-      libatlas-base-dev \
-      libboost-all-dev \
-      python3-pip \
-      python3-setuptools \
-      python3-wheel \
-      && pip3 install numpy \
-      && apt-get clean && rm -rf /var/lib/apt/lists/*
+   RUN [ "cross-build-start" ]
 
-  # Copy in the Micro-Manager source files.
-  RUN useradd -ms /bin/bash micro-manager
-  WORKDIR /home/micro-manager/app
-  COPY --chown=micro-manager:micro-manager . .
+   # Install the run-time dependencies.
+   RUN apt-get update && apt-get -y install --no-install-recommends \
+       libatlas-base-dev \
+       libboost-all-dev \
+       python3-pip \
+       python3-setuptools \
+       python3-wheel \
+       && pip3 install numpy \
+       && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-  RUN [ "cross-build-end" ]
+   # Copy in the Micro-Manager source files.
+   RUN useradd -ms /bin/bash micro-manager
+   WORKDIR /home/micro-manager/app
+   COPY --chown=micro-manager:micro-manager . .
 
-  # Final environment configuration.
-  USER micro-manager:micro-manager
-  ENV PYTHONPATH /home/micro-manager/app/lib/micro-manager
-  ENTRYPOINT ["/sbin/tini", "-s", "--"]
-  CMD ["/usr/bin/python3"]
+   RUN [ "cross-build-end" ]
+
+   # Final environment configuration.
+   USER micro-manager:micro-manager
+   ENV PYTHONPATH /home/micro-manager/app/lib/micro-manager
+   ENTRYPOINT ["/sbin/tini", "-s", "--"]
+   CMD ["/usr/bin/python3"]
 
 As before, I use a clean resin base image. However, this time I only
 install the essential software to run Micro-Manager.
 
 After apt-getting and pip-installing everything, I create a new user
 called **micro-manager** and a new folder called **app** inside this
-user's home directory::
+user's home directory.
 
-  # Copy in the Micro-Manager source files.
-  RUN useradd -ms /bin/bash micro-manager
-  WORKDIR /home/micro-manager/app
+.. code-block:: shell
+
+   # Copy in the Micro-Manager source files.
+   RUN useradd -ms /bin/bash micro-manager
+   WORKDIR /home/micro-manager/app
 
 Next, I directly copy the compiled libraries into the image with the
-COPY command::
+COPY command.
 
-  COPY --chown=micro-manager:micro-manager . .
+.. code-block:: shell
+
+   COPY --chown=micro-manager:micro-manager . .
 
 The two periods (.) mean that I copy the current host directory's
 contents into the container's current working directory
@@ -556,25 +574,27 @@ Dockerfile by saying that I switch the USER so that I do not run the
 container as root, add the library to the PYTHONPATH environment
 variable, and setup the default command as the python3 interpreter.
 
-To build this image, I use the following build script::
+To build this image, I use the following build script.
 
-  #!/bin/bash
-  # Copyright (C) 2018 Kyle M. Douglass
-  #
-  # Usage: ./build DIR
-  #
-  # DIR is the root directory containing the Micro-Manager build
-  # artifacts. These artifacts will be added to the Docker image.
-  #
+.. code-block:: shell
 
-  src_dir=$1
+   #!/bin/bash
+   # Copyright (C) 2018 Kyle M. Douglass
+   #
+   # Usage: ./build DIR
+   #
+   # DIR is the root directory containing the Micro-Manager build
+   # artifacts. These artifacts will be added to the Docker image.
+   #
 
-  cp Dockerfile ${src_dir}
-  cd ${src_dir}
+   src_dir=$1
 
-  docker build \
-         -t localhost:5000/rpi-micromanager:2.0-python \
-	 .
+   cp Dockerfile ${src_dir}
+   cd ${src_dir}
+
+   docker build \
+          -t localhost:5000/rpi-micromanager:2.0-python \
+       	  .
 
 This script takes one argument, which is the **build** directory
 containing the compiled source code. The script first copies the
@@ -626,13 +646,14 @@ network. Next, I actually create the certificate. I make a directory
 called certs inside my workstation home directory and then use openssl
 to make the cerficate. During the prompts, I press ENTER at every step
 except the FQDN (fully qualified domain name). For the FQDN, I enter
-the same IP address as above.::
+the same IP address as above.
 
+.. code-block:: shell
 
-  mkdir certs
-  openssl req -newkey rsa:4096 -nodes -sha256 \
-  -keyout certs/domain.key -x509 -days 365 \
-  -config /etc/ssl/openssl.cnf -out certs/domain.crt
+   mkdir certs
+   openssl req -newkey rsa:4096 -nodes -sha256 \
+   -keyout certs/domain.key -x509 -days 365 \
+   -config /etc/ssl/openssl.cnf -out certs/domain.crt
 
 
 **I had to add the ``-config /etc/ssl/openssl.cnf`` argument for the
@@ -646,15 +667,17 @@ connect to the registry.::
 
 After the domain.key and domain.crt files have been created, I run the
 official registry server container. (See how handy Docker containers
-are? There's no messy installation beyond grabbing the container.)::
+are? There's no messy installation beyond grabbing the container.)
 
-  docker run -d -p 5000:5000 \
-    --restart=always \
-    --name registry \
-    -v $(pwd)/certs:/certs \
-    -e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/domain.crt \
-    -e REGISTRY_HTTP_TLS_KEY=/certs/domain.key \
-    registry:2
+.. code-block:: shell
+
+   docker run -d -p 5000:5000 \
+     --restart=always \
+     --name registry \
+     -v $(pwd)/certs:/certs \
+     -e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/domain.crt \
+     -e REGISTRY_HTTP_TLS_KEY=/certs/domain.key \
+     registry:2
 
 If the registry:2 image is not already downloaded, then it will be
 downloaded for automatically when running the container. Note that
@@ -665,9 +688,11 @@ certs directory is relative to the current directory because I use the
 your setup.
 
 Let's go ahead and push the application image to the server now that
-it's running.::
+it's running.
 
-  docker push localhost:5000/rpi-micromanager:2.0-python
+.. code-block:: shell
+
+   docker push localhost:5000/rpi-micromanager:2.0-python
 
 Setup the Pi
 ++++++++++++
@@ -678,45 +703,57 @@ Docker
 it and know how to communicate with it via ssh and copy files to it
 using scp.
 
-I copy the certificate from the host with scp::
+I copy the certificate from the host with scp.
 
-  sudo mkdir -p /etc/docker/certs.d/192.168.XXX.XXX:5000/
-  sudo scp kmdouglass@192.168.XXX.XXX:/home/kmdouglass/certs/domain.crt /etc/docker/certs.d/192.168.XXX.XXX:5000/ca.crt
+.. code-block:: shell
+
+   sudo mkdir -p /etc/docker/certs.d/192.168.XXX.XXX:5000/
+   sudo scp kmdouglass@192.168.XXX.XXX:/home/kmdouglass/certs/domain.crt /etc/docker/certs.d/192.168.XXX.XXX:5000/ca.crt
 
 The IP address that I am using is the one to the machine where the
 registry server is running. After this step, I make the operating
-system trust the certificate::
+system trust the certificate.
 
-  sudo scp kmdouglass@192.168.XXX.XXX:/home/kmdouglass/certs/domain.crt /usr/local/share/ca-certificates/192.168.XXX.XXX.crt
-  sudo update-ca-certifications
+.. code-block:: shell
 
-Finally, I restart the Docker daemon.::
+   sudo scp kmdouglass@192.168.XXX.XXX:/home/kmdouglass/certs/domain.crt /usr/local/share/ca-certificates/192.168.XXX.XXX.crt
+   sudo update-ca-certifications
 
-  sudo service docker restart
+Finally, I restart the Docker daemon.
+
+.. code-block:: shell
+
+   sudo service docker restart
 
 If everything is working, then I should be able to pull the image from
-your network's registry server::
+your network's registry server.
 
-  docker pull 192.168.XXX.XXX:5000/rpi-micromanager:python2.0
+.. code-block:: shell
+
+   docker pull 192.168.XXX.XXX:5000/rpi-micromanager:python2.0
   
 Step 5: Run Micro-Manager!
 --------------------------
 
 And now the moment of truth: running the application container. Since
 it's setup to run Python automatically, I use a pretty simple ``docker
-run`` command.::
+run`` command.
 
-  docker run -it --rm \
-       --name micro-manager \
-       192.168.XXX.XXX:5000/rpi-micromanager:2.0-python
+.. code-block:: shell
+
+   docker run -it --rm \
+        --name micro-manager \
+        192.168.XXX.XXX:5000/rpi-micromanager:2.0-python
 
 I verify that the Micro-Manager Python wrapper is working by trying to
 import it and run `a few basic commands
-<https://micro-manager.org/wiki/Using_the_Micro-Manager_python_library>`_::
+<https://micro-manager.org/wiki/Using_the_Micro-Manager_python_library>`_.
 
-  >>> import MMCorePy
-  >>> mmc = MMCorePy.CMMCore()
-  >>> mmc.getVersionInfo()
+.. code-block:: python
+
+   >>> import MMCorePy
+   >>> mmc = MMCorePy.CMMCore()
+   >>> mmc.getVersionInfo()
 
 If these work without error, then congratulations! You're now ready to
 start building your embedded microscopy system ;)

@@ -2,7 +2,7 @@
 .. slug: micro-manager-on-the-raspberry-pi
 .. date: 2017-02-10 19:31:57 UTC+01:00
 .. tags: micro-manager, raspberry pi, microscopy, open source
-.. category: 
+.. category: embedded microscopy
 .. link: 
 .. description: How I compiled Micro-Manager 2.0 on the Raspberry Pi
 .. type: text
