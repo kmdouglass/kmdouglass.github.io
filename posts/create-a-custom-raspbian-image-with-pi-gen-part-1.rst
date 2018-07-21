@@ -342,7 +342,8 @@ your root partition or other important data.
 
 After writing the image, we can plug the SD card into our pi, boot it
 up, and try logging in as alphapi with the random password that was
-created in the users file. We can also verify that the keyboard was
+created in the users file. **Be sure at this point to change your
+user's and root's password**. We can also verify that the keyboard was
 set to US English by typing Shift-3 and observing whether we get a
 hashtag (#) symbol and not the symbol for the British pound currency.
 
