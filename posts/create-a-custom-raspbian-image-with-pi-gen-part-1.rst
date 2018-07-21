@@ -6,7 +6,7 @@
 .. link: 
 .. description: Part 1 of a tutorial on creating custom Raspbian images with pi-gen.
 .. type: text
-.. status: draft
+.. status: published
 
 .. role:: shell(code)
    :language: shell
@@ -224,7 +224,7 @@ following:
    root_passwd=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-8})
 
    # Write passwords to a file.
-   cat <<EOF > deploy/users
+   cat <<EOF > /pi-gen/deploy/users
    ${user_passwd}
    ${root_passwd}
    EOF
