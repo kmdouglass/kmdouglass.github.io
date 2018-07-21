@@ -18,12 +18,20 @@
   <lastmod>2018-07-15T14:58:00Z</lastmod>
  </sitemap>
  <sitemap>
+  <loc>http://kmdouglass.github.io/categories/cat_raspberry-pi.xml</loc>
+  <lastmod>2018-07-21T10:31:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>http://kmdouglass.github.io/categories/complexity.xml</loc>
   <lastmod>2018-07-15T14:58:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/computing.xml</loc>
   <lastmod>2018-07-15T14:58:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>http://kmdouglass.github.io/categories/devops.xml</loc>
+  <lastmod>2018-07-21T10:31:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/docker.xml</loc>
@@ -59,11 +67,11 @@
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/optics.xml</loc>
-  <lastmod>2018-07-15T14:58:00Z</lastmod>
+  <lastmod>2018-07-21T09:50:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/photonics.xml</loc>
-  <lastmod>2018-07-15T14:58:00Z</lastmod>
+  <lastmod>2018-07-21T09:50:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/python.xml</loc>
@@ -71,7 +79,11 @@
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/raspberry-pi.xml</loc>
-  <lastmod>2018-07-15T14:58:00Z</lastmod>
+  <lastmod>2018-07-21T10:31:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>http://kmdouglass.github.io/categories/raspbian.xml</loc>
+  <lastmod>2018-07-21T10:31:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/sensing.xml</loc>
@@ -103,10 +115,10 @@
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/rss.xml</loc>
-  <lastmod>2018-07-15T15:11:00Z</lastmod>
+  <lastmod>2018-07-21T10:31:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/sitemap.xml</loc>
-  <lastmod>2018-07-15T15:11:00Z</lastmod>
+  <lastmod>2018-07-21T10:33:00Z</lastmod>
  </sitemap>
 </sitemapindex>

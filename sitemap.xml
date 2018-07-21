@@ -23,15 +23,15 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/2017/index.html</loc>
-  <lastmod>2018-07-15T15:02:00Z</lastmod>
+  <lastmod>2018-07-21T09:50:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/2018/index.html</loc>
-  <lastmod>2018-07-15T15:11:00Z</lastmod>
+  <lastmod>2018-07-21T10:31:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/archive.html</loc>
-  <lastmod>2018-07-15T15:11:00Z</lastmod>
+  <lastmod>2018-07-15T16:57:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/biology.html</loc>
@@ -46,12 +46,20 @@
   <lastmod>2018-07-15T15:02:00Z</lastmod>
  </url>
  <url>
+  <loc>http://kmdouglass.github.io/categories/cat_raspberry-pi.html</loc>
+  <lastmod>2018-07-21T10:31:00Z</lastmod>
+ </url>
+ <url>
   <loc>http://kmdouglass.github.io/categories/complexity.html</loc>
   <lastmod>2018-07-15T15:02:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/computing.html</loc>
   <lastmod>2018-07-15T15:02:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://kmdouglass.github.io/categories/devops.html</loc>
+  <lastmod>2018-07-21T10:31:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/docker.html</loc>
@@ -67,7 +75,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/index.html</loc>
-  <lastmod>2018-07-15T15:02:00Z</lastmod>
+  <lastmod>2018-07-21T09:50:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/linux.html</loc>
@@ -91,11 +99,11 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/optics.html</loc>
-  <lastmod>2018-07-15T15:02:00Z</lastmod>
+  <lastmod>2018-07-21T09:50:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/photonics.html</loc>
-  <lastmod>2018-07-15T15:02:00Z</lastmod>
+  <lastmod>2018-07-21T09:50:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/python.html</loc>
@@ -103,7 +111,11 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/raspberry-pi.html</loc>
-  <lastmod>2018-07-15T15:02:00Z</lastmod>
+  <lastmod>2018-07-21T10:31:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://kmdouglass.github.io/categories/raspbian.html</loc>
+  <lastmod>2018-07-21T10:31:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/sensing.html</loc>
@@ -147,11 +159,11 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/index-3.html</loc>
-  <lastmod>2018-07-15T15:11:00Z</lastmod>
+  <lastmod>2018-07-15T16:57:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/index.html</loc>
-  <lastmod>2018-07-15T15:11:00Z</lastmod>
+  <lastmod>2018-07-21T10:31:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/notes/fiji.html</loc>
@@ -159,7 +171,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/accessing-the-raspberry-pi-camera-image-sensor.html</loc>
-  <lastmod>2018-07-15T15:02:00Z</lastmod>
+  <lastmod>2018-07-21T09:50:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/alignment.html</loc>
@@ -190,6 +202,10 @@
   <lastmod>2018-07-15T15:02:00Z</lastmod>
  </url>
  <url>
+  <loc>http://kmdouglass.github.io/posts/create-a-custom-raspbian-image-with-pi-gen-part-1.html</loc>
+  <lastmod>2018-07-21T10:31:00Z</lastmod>
+ </url>
+ <url>
   <loc>http://kmdouglass.github.io/posts/field-dependent-photophysics-video.html</loc>
   <lastmod>2018-07-15T15:02:00Z</lastmod>
  </url>
@@ -207,7 +223,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/how-i-built-a-cross-compilation-workflow-for-the-raspberry-pi.html</loc>
-  <lastmod>2018-07-15T15:11:00Z</lastmod>
+  <lastmod>2018-07-21T09:50:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python.html</loc>

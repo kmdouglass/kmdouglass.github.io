@@ -13,7 +13,7 @@
 <link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml">
 <link rel="canonical" href="http://kmdouglass.github.io/index.html">
 <link rel="next" href="index-3.html" type="text/html">
-<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><link rel="prefetch" href="posts/how-i-built-a-cross-compilation-workflow-for-the-raspberry-pi.html" type="text/html">
+<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><link rel="prefetch" href="posts/create-a-custom-raspbian-image-with-pi-gen-part-1.html" type="text/html">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -66,7 +66,295 @@
 
     
 <div class="postindex">
-    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/how-i-built-a-cross-compilation-workflow-for-the-raspberry-pi.html" class="u-url">How I built a cross-compilation workflow for the Raspberry Pi</a></h1>
+    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/create-a-custom-raspbian-image-with-pi-gen-part-1.html" class="u-url">Create a custom Raspbian image with pi-gen: part 1</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                Kyle M. Douglass
+            </span></p>
+            <p class="dateline"><a href="posts/create-a-custom-raspbian-image-with-pi-gen-part-1.html" rel="bookmark"><time class="published dt-published" datetime="2018-07-21T12:31:28+02:00" title="2018-07-21 12:31">2018-07-21 12:31</time></a></p>
+                <p class="commentline">
+        
+    <a href="posts/create-a-custom-raspbian-image-with-pi-gen-part-1.html#disqus_thread" data-disqus-identifier="cache/posts/create-a-custom-raspbian-image-with-pi-gen-part-1.html">Comments</a>
+
+
+        </p>
+</div>
+    </header><div class="p-summary entry-summary">
+    <div>
+<p>Docker has been an amazing tool for improving my development
+efficiency on the Raspberry Pi. For example, I recently used it to
+<a class="reference external" href="posts/how-i-built-a-cross-compilation-workflow-for-the-raspberry-pi.html">cross-compile a large C++ and Python library</a> for the Pi's ARM
+architecture on my x86_64 laptop. However, in that post I took it for
+granted that I had already set up my Raspberry Pi with user accounts,
+packages, ssh keys, etc. Performing these steps manually on a fresh
+install of the Pi's <a class="reference external" href="https://www.raspberrypi.org/downloads/raspbian/">Raspbian</a> operating system can become tedious,
+especially because ssh needs to be manually enabled before doing any
+remote work.</p>
+<p>Fortunately, the Raspberry Pi developers have provided us with
+<a class="reference external" href="https://github.com/RPi-Distro/pi-gen">pi-gen</a>, a useful collection of Shell scripts and a Docker container
+for creating custom Raspbian images. In this post, I will summarize
+the steps that I take in using pi-gen to create my own, personalized
+Raspbian image.</p>
+<p><em>After I wrote this post, I found a set of posts at</em> <a class="reference external" href="https://learnthinksolvecreate.wordpress.com/category/raspberry-pi/pi-gen/">Learn Think
+Solve Create</a> <em>that describe many of the tasks I explain here. Be
+sure to check them out for another take on modifying Raspbian images.</em></p>
+<div class="section" id="clone-the-pi-gen-repository">
+<h2>Clone the pi-gen repository</h2>
+<p>This is as easy as cloning the git repository.</p>
+<pre class="code shell"><a name="rest_code_441236111ddc4bbebe3d1f4088cb8828-1"></a>git clone git@github.com:RPi-Distro/pi-gen.git
+</pre>
+<p>Alternatively, you can use the https address instead of ssh, which is
+<a class="reference external" href="https://github.com/RPi-Distro/pi-gen.git">https://github.com/RPi-Distro/pi-gen.git</a>.</p>
+<p>From now on, all directories in this post will be relative to the root
+pi-gen directory.</p>
+</div>
+<div class="section" id="build-the-official-raspbian-images">
+<h2>Build the official Raspbian images</h2>
+<p>By default, the pi-gen repository will build the official Raspbian
+images. Doing this once before making any modifications is probably a
+good idea; if you can't build the official images, how will you be
+able to build a custom image?</p>
+<p>There are two main scripts that you can use to do this: <strong>build.sh</strong>
+and <strong>build-docker.sh</strong>. build.sh requires you to install the packages
+that are listed in the repository's README.md file, whereas
+build-docker.sh requires only that you have Docker already installed
+on your computer. I'm going to be using the Docker-based build script
+for the rest of this post. If you don't have Docker installed on your
+system, you can <a class="reference external" href="https://docs.docker.com/install/">follow the instructions here</a> for the community
+edition.</p>
+<div class="section" id="name-your-image">
+<h3>Name your image</h3>
+<p>First we need to give a name to our image, even if we use the default
+build. To do this, we assign a name to a variable called <strong>IMG_NAME</strong>
+inside a file called <strong>config</strong> that is located inside the root pi-gen
+folder.</p>
+<pre class="code shell"><a name="rest_code_94be7c038f924352ad3c7e415bb1a8c9-1"></a><span class="nb">echo</span> <span class="s2">"IMG_NAME=my_name"</span> &gt; config
+</pre>
+</div>
+<div class="section" id="build-the-default-image">
+<h3>Build the default image</h3>
+<p>Once we've named our image, we can go ahead and run the build script.</p>
+<pre class="code shell"><a name="rest_code_23b19b70f4834503a1646148a2e7edb2-1"></a>./build-docker.sh
+</pre>
+<p>Be prepared to wait a while when running this script; the full build
+took well over half an hour on my laptop and with the Docker volume
+located on a SSD. It also consumed several GB of space on the SSD.</p>
+<div class="section" id="resuming-a-failed-build">
+<h4>Resuming a failed build</h4>
+<p>The first time I used pi-gen the build failed twice. Once, it hung
+without doing anything for several minutes, so I canceled it with a
+<strong>Ctrl-C</strong> command. The other time I encountered a hash error when
+installing a Debian package.</p>
+<p>We can resume a failed build from the point of failure by assigning
+the value 1 to the CONTINUE variable when calling build-docker.sh
+again.</p>
+<pre class="code shell"><a name="rest_code_86b60f5ba14a41bbb041fa8cd85ba35b-1"></a><span class="nv">CONTINUE</span><span class="o">=</span><span class="m">1</span> ./build-docker.sh
+</pre>
+<p>If we don't want to run previously built stages, we can simply place a
+file inside the corresponding folder named SKIP. For example, if our
+build fails at stage2, we can place SKIP files inside the stage0 and
+stage1 folders, then rerun the build-docker.sh script with
+CONTINUE=1.</p>
+<p>Unfortunately, I have sometimes noticed that I have to also rebuild
+the stage <em>prior</em> to the one where the build failed. In the worst
+case, I had to rebuild all the stages because the fixes I applied to a
+file in stage2 were not accounted for when I tried to skip building
+stages 0 and 1. YMMV with this; I have no idea how well the SKIP
+mechanism works for the normal build.sh script.</p>
+<p>After a successful build, we can find our custom images located inside
+the <strong>deploy</strong> folder of the pi-gen directory. These may then be
+written onto a SD card and used as a standard Raspbian image.</p>
+<p>We can ensure that the build container is preserved even after successful
+builds using</p>
+<pre class="code shell"><a name="rest_code_ecf8748072154d398f537b0aa69b2ab7-1"></a><span class="nv">PRESERVE_CONTAINER</span><span class="o">=</span><span class="m">1</span> ./build-docker.sh
+</pre>
+</div>
+</div>
+</div>
+<div class="section" id="custom-raspbian-images">
+<h2>Custom Raspbian images</h2>
+<p>Now that we've got the default build working, let's start by
+customizing the build process. For this post, I have the following
+goals:</p>
+<ul class="simple">
+<li>Build only the <em>lite</em> version of the Raspbian images</li>
+<li>Add a custom user account and delete the default <em>pi</em> account</li>
+<li>Set the Pi's locale information</li>
+</ul>
+<p>In a follow-up post, I will discuss the following:</p>
+<ul class="simple">
+<li>Setup the WiFi for a home network</li>
+<li>Setup ssh so that we can log on to the Pi remotely on its first
+startup</li>
+</ul>
+<div class="section" id="building-just-raspbian-lite">
+<h3>Building just Raspbian Lite</h3>
+<p>Raspbian Lite is a <a class="reference external" href="https://raspberrypi.stackexchange.com/questions/39932/differences-between-raspbian-jessie-and-raspbian-jessie-lite#39933">minimal Raspbian image</a> without the X windows
+server and speciality modules that would otherwise make Raspbian more
+user friendly. It's an ideal starting point for projects that are
+highly specialized, require only a few packages, and do not require a
+GUI.</p>
+<p>pi-gen creates Raspbian images in sequential steps called stages. At
+the time of this writing, there were five stages, with stages 2, 4,
+and 5 producing images of the operating system. Building everything
+from stage 0 up to and including stage 2 produces a Raspbian Lite
+image. We can speed up the build process and save harddrive space by
+disabling all the later stages.</p>
+<p>To disable the build for a particular a stage, we add an empty file
+called <strong>SKIP</strong> inside the corresponding stage folder of the pi-gen
+root directory, just as we did above when skipping previously built
+stages. We also disable the explicit creation of images by adding an
+empty file called <strong>SKIP_IMAGES</strong> to stages 4 and 5. (We don't need to
+add a SKIP_IMAGES file to the stage3 folder because no image is
+produced at this stage.)</p>
+<pre class="code shell"><a name="rest_code_bd8b298ab70f4a9c98341b2d49e2547a-1"></a>touch ./stage3/SKIP ./stage4/SKIP ./stage5/SKIP
+<a name="rest_code_bd8b298ab70f4a9c98341b2d49e2547a-2"></a>touch ./stage4/SKIP_IMAGES ./stage5/SKIP_IMAGES
+</pre>
+<p>Now, when we run build-docker.sh, pi-gen will only build and produce
+one image for Raspbian Lite in the deploy directory.</p>
+</div>
+<div class="section" id="add-a-custom-user-account">
+<h3>Add a custom user account</h3>
+<p>The default user in Raspbian is called <strong>pi</strong>. This account is created
+in stage1 in the the script <strong>stage1/01-sys-tweaks/00-run.sh</strong>. This
+account is not very secure because it and its password, <em>raspberry</em>,
+are the well-known defaults in Raspbian. Let's go ahead and change
+them.</p>
+<p>The relevant lines in the script look like this:</p>
+<pre class="code shell"><a name="rest_code_c3a265de1d35485f8ab5c89c4aa2813f-1"></a>on_chroot <span class="s">&lt;&lt; EOF</span>
+<a name="rest_code_c3a265de1d35485f8ab5c89c4aa2813f-2"></a><span class="s">if ! id -u pi &gt;/dev/null 2&gt;&amp;1; then</span>
+<a name="rest_code_c3a265de1d35485f8ab5c89c4aa2813f-3"></a><span class="s">     adduser --disabled-password --gecos "" pi</span>
+<a name="rest_code_c3a265de1d35485f8ab5c89c4aa2813f-4"></a><span class="s">fi</span>
+<a name="rest_code_c3a265de1d35485f8ab5c89c4aa2813f-5"></a><span class="s">echo "pi:raspberry" | chpasswd</span>
+<a name="rest_code_c3a265de1d35485f8ab5c89c4aa2813f-6"></a><span class="s">echo "root:root" | chpasswd</span>
+<a name="rest_code_c3a265de1d35485f8ab5c89c4aa2813f-7"></a><span class="s">EOF</span>
+</pre>
+<p>The user pi is created with the line
+<code class="shell">adduser --disabled-password --gecos <span class="s2">""</span> pi</code> if it doesn't
+already exist. According to the <a class="reference external" href="http://manpages.ubuntu.com/manpages/trusty/man8/adduser.8.html">adduser man pages</a>
+The --disabled-password flag prevents the program passwd from setting
+the account's password when adduser is run, but remote logins without
+password authentication to the pi account are still allowed. the
+<code class="shell">--gecos <span class="s2">""</span></code> flag simply adds an empty string to the
+/etc/passwd file for the pi account.</p>
+<p>After the user is created, <em>raspberry</em> is set as pi's password and
+<em>root</em> is set as the root password in the lines <code class="shell"><span class="nb">echo</span>
+<span class="s2">"pi:raspberry"</span> <span class="p">|</span> chpasswd</code> and <code class="shell"><span class="nb">echo</span> <span class="s2">"root:root"</span> <span class="p">|</span> chpasswd</code>.</p>
+<p>Let's start by modifying the pi account. For the sake of this example,
+let's change its name to alphapi. For the password, we will generate a
+<strong>temporary, random</strong> password and write it to a file in the deploy
+directory. We'll do the same for root. The modifications look like the
+following:</p>
+<pre class="code shell"><a name="rest_code_f56519effb7c41c5a0b0514bfe7a1ba7-1"></a><span class="nv">user_passwd</span><span class="o">=</span><span class="k">$(</span>&lt; /dev/urandom tr -dc _A-Z-a-z-0-9 <span class="p">|</span> head -c<span class="si">${</span><span class="nv">1</span><span class="k">:-</span><span class="nv">8</span><span class="si">}</span><span class="k">)</span>
+<a name="rest_code_f56519effb7c41c5a0b0514bfe7a1ba7-2"></a><span class="nv">root_passwd</span><span class="o">=</span><span class="k">$(</span>&lt; /dev/urandom tr -dc _A-Z-a-z-0-9 <span class="p">|</span> head -c<span class="si">${</span><span class="nv">1</span><span class="k">:-</span><span class="nv">8</span><span class="si">}</span><span class="k">)</span>
+<a name="rest_code_f56519effb7c41c5a0b0514bfe7a1ba7-3"></a>
+<a name="rest_code_f56519effb7c41c5a0b0514bfe7a1ba7-4"></a><span class="c1"># Write passwords to a file.</span>
+<a name="rest_code_f56519effb7c41c5a0b0514bfe7a1ba7-5"></a>cat <span class="s">&lt;&lt;EOF &gt; deploy/users</span>
+<a name="rest_code_f56519effb7c41c5a0b0514bfe7a1ba7-6"></a><span class="s">${user_passwd}</span>
+<a name="rest_code_f56519effb7c41c5a0b0514bfe7a1ba7-7"></a><span class="s">${root_passwd}</span>
+<a name="rest_code_f56519effb7c41c5a0b0514bfe7a1ba7-8"></a><span class="s">EOF</span>
+<a name="rest_code_f56519effb7c41c5a0b0514bfe7a1ba7-9"></a>
+<a name="rest_code_f56519effb7c41c5a0b0514bfe7a1ba7-10"></a>on_chroot <span class="s">&lt;&lt; EOF</span>
+<a name="rest_code_f56519effb7c41c5a0b0514bfe7a1ba7-11"></a><span class="s">if ! id -u alphapi &gt;/dev/null 2&gt;&amp;1; then</span>
+<a name="rest_code_f56519effb7c41c5a0b0514bfe7a1ba7-12"></a><span class="s">     adduser --disabled-password --gecos "" alphapi</span>
+<a name="rest_code_f56519effb7c41c5a0b0514bfe7a1ba7-13"></a><span class="s">fi</span>
+<a name="rest_code_f56519effb7c41c5a0b0514bfe7a1ba7-14"></a><span class="s">echo "alphapi:${user_passwd}" | chpasswd</span>
+<a name="rest_code_f56519effb7c41c5a0b0514bfe7a1ba7-15"></a><span class="s">echo "root:${root_passwd}" | chpasswd</span>
+<a name="rest_code_f56519effb7c41c5a0b0514bfe7a1ba7-16"></a><span class="s">EOF</span>
+</pre>
+<p>The first two lines create random alphanumeric passwords for the users
+alphapi and root. They should be changed immediately when the image is
+first run.</p>
+<pre class="code shell"><a name="rest_code_7556c39b749844a3bc92659b5a6877c1-1"></a><span class="nv">user_passwd</span><span class="o">=</span><span class="k">$(</span>&lt; /dev/urandom tr -dc _A-Z-a-z-0-9 <span class="p">|</span> head -c<span class="si">${</span><span class="nv">1</span><span class="k">:-</span><span class="nv">8</span><span class="si">}</span><span class="k">)</span>
+<a name="rest_code_7556c39b749844a3bc92659b5a6877c1-2"></a><span class="nv">root_passwd</span><span class="o">=</span><span class="k">$(</span>&lt; /dev/urandom tr -dc _A-Z-a-z-0-9 <span class="p">|</span> head -c<span class="si">${</span><span class="nv">1</span><span class="k">:-</span><span class="nv">8</span><span class="si">}</span><span class="k">)</span>
+</pre>
+<p>This way of password generation works by reading random bytes from
+/dev/urandom and redirecting them to the standard input of the tr
+command, which filters the input so only alphanumeric characters
+remain. Next, the output is piped to the head command, which outputs
+only the first eight alphanumeric characters produced in this fashion.</p>
+<p>The passwords are then written to a file named <strong>users</strong> inside the
+deploy directory where the outputs will eventually be placed.</p>
+<pre class="code shell"><a name="rest_code_9a95709fa2dd4a09aa90c8c44b1f8e0f-1"></a><span class="c1"># Write passwords to a file.</span>
+<a name="rest_code_9a95709fa2dd4a09aa90c8c44b1f8e0f-2"></a>cat <span class="s">&lt;&lt;EOF &gt; /pi-gen/deploy/users</span>
+<a name="rest_code_9a95709fa2dd4a09aa90c8c44b1f8e0f-3"></a><span class="s">${user_passwd}</span>
+<a name="rest_code_9a95709fa2dd4a09aa90c8c44b1f8e0f-4"></a><span class="s">${root_passwd}</span>
+<a name="rest_code_9a95709fa2dd4a09aa90c8c44b1f8e0f-5"></a><span class="s">EOF</span>
+</pre>
+<p>The remaining parts of the script are more-or-less the same as before,
+except I changed pi to alphapi and used variable substitution for the
+passwords.</p>
+<p>Running ./build-docker.sh at this point will raise an error in stage02
+because it's at this stage where the user pi is added to the various
+groups on the system. We therefore need to open
+<strong>stage2/01-sys-tweaks/01-run.sh</strong> and modify the following lines,
+replacing pi with alphapi.</p>
+<pre class="code shell"><a name="rest_code_13869c58beff43fa97d3a6a36f82a22a-1"></a><span class="k">for</span> GRP in adm dialout cdrom audio users sudo video games plugdev input gpio spi i2c netdev<span class="p">;</span> <span class="k">do</span>
+<a name="rest_code_13869c58beff43fa97d3a6a36f82a22a-2"></a>    adduser alphapi <span class="nv">$GRP</span>
+<a name="rest_code_13869c58beff43fa97d3a6a36f82a22a-3"></a><span class="k">done</span>
+</pre>
+</div>
+<div class="section" id="set-the-locale-information">
+<h3>Set the locale information</h3>
+<p>The locale information used by your operating system may be modified
+as follows. Open <strong>stage0/01-locale/00-debconf</strong>. I personally changed
+every occurence of en_GB.UTF-8 to en_US.UTF-8, but you can set your
+locale accordingly.</p>
+<pre class="code shell"><a name="rest_code_10e09ea8c3454f2ba1b564d1ae3ac9ad-1"></a><span class="c1"># Locales to be generated:</span>
+<a name="rest_code_10e09ea8c3454f2ba1b564d1ae3ac9ad-2"></a><span class="c1"># Choices: All locales, aa_DJ ISO-8859-1, aa_DJ.UTF-8 UTF-8, ...</span>
+<a name="rest_code_10e09ea8c3454f2ba1b564d1ae3ac9ad-3"></a>locales locales/locales_to_be_generated multiselect en_US.UTF-8 UTF-8
+<a name="rest_code_10e09ea8c3454f2ba1b564d1ae3ac9ad-4"></a><span class="c1"># Default locale for the system environment:</span>
+<a name="rest_code_10e09ea8c3454f2ba1b564d1ae3ac9ad-5"></a><span class="c1"># Choices: None, C.UTF-8, en_US.UTF-8</span>
+<a name="rest_code_10e09ea8c3454f2ba1b564d1ae3ac9ad-6"></a>locales locales/default_environment_locale   <span class="k">select</span>  en_US.UTF-8
+</pre>
+<p>Next, we open <strong>stage2/01-sys-tweaks/00-debconf</strong>. I currently live in
+Europe, so I made the following changes:</p>
+<pre class="literal-block">
+tzdata        tzdata/Areas    select  Europe
+</pre>
+<p>I also made the following changes to switch from the default British
+English to American English:</p>
+<pre class="code shell"><a name="rest_code_9abff0780e774adb85ea42ce419bb92f-1"></a>keyboard-configuration keyboard-configuration/xkb-keymap <span class="k">select</span> us
+<a name="rest_code_9abff0780e774adb85ea42ce419bb92f-2"></a>keyboard-configuration keyboard-configuration/fvariant  <span class="k">select</span>  English <span class="o">(</span>US<span class="o">)</span> - English <span class="o">(</span>US<span class="se">\,</span> international with dead keys<span class="o">)</span>
+</pre>
+<p>Note that the comment in 00-debconf above the
+keyboard-configuration/xkb-keymap line erroneously states that
+American English is an option, but it's not. You need to change it
+from "gb" to "us" if you want the American layout.</p>
+</div>
+</div>
+<div class="section" id="using-the-custom-image">
+<h2>Using the custom image</h2>
+<p>With all these changes, we can build our new image by running
+<code class="shell">./build-docker.sh</code> and, if successful, find a .zip file inside
+the deploy directory with the image name and date.</p>
+<p>To use this image, we unzip the file to extract the .img file inside
+it. Next, we need to copy it onto a SD card that will plug into the
+pi. I have a SD card reader/writer on my laptop for which I check for
+its Linux device name by running <code class="shell">lsblk</code> before and after
+plugging in the card. (The device that appears in the output of lsblk
+after plugging it in is its name, which is <strong>/dev/mmcblk0</strong> on my
+laptop). Once I get its device name, I use the Linux <code class="shell">dd</code>
+command to copy the contents of the image onto the card. (Be sure to
+change /dev/mccblk0 to match the name that your system gives to your
+SD card device.)</p>
+<pre class="code shell"><a name="rest_code_d8b1df0da3cd4c5d9c0f337461f76d34-1"></a>sudo dd <span class="k">if</span><span class="o">=</span><span class="m">2018</span>-07-21-my_name-lite.img <span class="nv">of</span><span class="o">=</span>/dev/mmcblk0 <span class="nv">bs</span><span class="o">=</span><span class="m">4096</span><span class="p">;</span> sync
+</pre>
+<p><strong>Please be EXTREMELY careful that you get the device name right.</strong>
+It's not very difficult to write the contents of the image file over
+your root partition or other important data.</p>
+<p>After writing the image, we can plug the SD card into our pi, boot it
+up, and try logging in as alphapi with the random password that was
+created in the users file. We can also verify that the keyboard was
+set to US English by typing Shift-3 and observing whether we get a
+hashtag (#) symbol and not the symbol for the British pound currency.</p>
+<p>In a follow-up post, I will describe how to setup the network and SSH
+so I can continue to setup my Raspberry Pi without ever needing a
+terminal.</p>
+</div>
+</div>
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/how-i-built-a-cross-compilation-workflow-for-the-raspberry-pi.html" class="u-url">How I built a cross-compilation workflow for the Raspberry Pi</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
@@ -5578,58 +5866,6 @@ I \left( r \right) = I_0 \left[ \frac{2 J_1 \left( X \right)}{X} \right]^2
 <p>The calculations I discussed here rely on quite a few simplifying assumptions. The first is that they are based on scalar diffraction theory. The real electromagnetic field is polarized and is described not by a scalar but by a three dimensional, complex-valued vector. The theory of vector diffraction describes how such a field propagates through an optical system; naturally, it is more complicated than scalar diffraction theory.</p>
 <p>Isotropic point sources are also an idealization of reality. Single fluorescent molecules, for instance, do not emit light equally in all directions but rather in a pattern known as <a href="https://www.youtube.com/watch?v=Lx7LNVtQvTs">dipole radiation</a>.</p>
 <p>Finally, the optical system as modeled here was a linear, shift-invariant system. This means that the same pupil function can actually be used to compute the image of any off-axis point source as well; we would only need to apply a linear phase ramp to the pupil to account for this. Real optical systems are only approximatley linear and shift-invariant, which means that a more complete model would assign a different pupil function to each object point. This then allows for aberrations that vary as a function of object position, but requires more information to fully describe the system.</p>
-
-</div>
-</div>
-</div>
-    </div>
-  </div>
-
-    </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/field-dependent-photophysics-video.html" class="u-url">Field-dependent photophysics - video</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
-                Kyle M. Douglass
-            </span></p>
-            <p class="dateline"><a href="posts/field-dependent-photophysics-video.html" rel="bookmark"><time class="published dt-published" datetime="2016-09-29T11:36:24+02:00" title="2016-09-29 11:36">2016-09-29 11:36</time></a></p>
-                <p class="commentline">
-        
-    <a href="posts/field-dependent-photophysics-video.html#disqus_thread" data-disqus-identifier="cache/posts/field-dependent-photophysics-video.html">Comments</a>
-
-
-        </p>
-</div>
-    </header><div class="p-summary entry-summary">
-    <div tabindex="-1" id="notebook" class="border-box-sizing">
-    <div class="container" id="notebook-container">
-
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Below you can see a video of a raw <a href="https://www.microscopyu.com/tutorials/stochastic-optical-reconstruction-microscopy-storm-imaging">STORM</a> movie that I acquired in the lab a few months ago on a standard, inverted laser fluorescence microscope. The sample consists of AlexaFluor 647-labeled tubulin in Cos7 cells at a frame rate of 100 fps. (I have slowed things down a bit to more easily see what's going on.) Go ahead and watch the video now, I'll discuss a little bit about what you're seeing aftwards.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<video controls src="field-dependent-photophysics.mp4" type="video/mp4"></video>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>In the beginning of the movie you can see the moment when the laser beam first hits the sample. Since the illumination geometry is just widefield epi-illumination, the laser beam has a Gaussian-like <a href="https://en.wikipedia.org/wiki/Irradiance">irradiance</a> profile. (As explained in the link, irradiance is the amount of energy the laser beam carries per differential unit area. It is often referred to as intensity, though <a href="https://en.wikipedia.org/wiki/Radiant_intensity">intensity actually refers to a different quantity in the field of radiometry</a>.) This means that the fluorophores in the middle of the beam are exposed to a higher irradiance than those at the edges.</p>
-<p>The effect of the laser beam profile for STORM is quite clear when watching the video. The photoswitching rates of the fluorophores to the long-lived dark state are much higher in the center of the beam than at the edges. This leads to a field-dependent density of molecules in the fluorescence emitting state, which will ultimately affect one's ability to precisely and accurately localize the single molecule emissions. If you look closely, you can also see that the brightness of the fluorophores is also higher near the beam center, meaning that these molecules will be localized more precisely because we recorded more photons from them.</p>
-<p>All of these features mean that one must take care when performing quantitative analyses on STORM datasets, because the density, precision, and accuracy of the single molecule position estimates will vary across the field of view.</p>
 
 </div>
 </div>
