@@ -2,7 +2,7 @@
 .. slug: connecting-a-raspberry-pi-to-a-home-linux-network
 .. date: 2017-02-05 10:28:17 UTC+01:00
 .. tags: raspberry pi, linux
-.. category: 
+.. category: raspberry pi
 .. link: 
 .. description: 
 .. type: text

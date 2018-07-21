@@ -2,7 +2,7 @@
 .. slug: accessing-the-raspberry-pi-camera-image-sensor
 .. date: 2017-08-26 23:33:07 UTC+02:00
 .. tags: raspberry pi, optics, photonics
-.. category: raspberry pi
+.. category: embedded microscopy
 .. link: 
 .. description: I describe how removed the housing around the sensor of a Raspberry Pi camera.
 .. type: text
