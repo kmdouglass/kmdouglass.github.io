@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kyle M. Douglass (Posts about devops)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link rel="self" type="application/rss+xml" href="http://kmdouglass.github.io/categories/devops.xml"></atom:link><language>en</language><lastBuildDate>Tue, 24 Jul 2018 16:26:32 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Create a custom Raspbian image with pi-gen: part 2</title><link>http://kmdouglass.github.io/posts/create-a-custom-raspbian-image-with-pi-gen-part-2.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;In my &lt;a class="reference external" href="http://kmdouglass.github.io/posts/create-a-custom-raspbian-image-with-pi-gen-part-1.html"&gt;previous post&lt;/a&gt;, I discussed how to setup user accounts and
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Kyle M. Douglass (Posts about devops)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link href="http://kmdouglass.github.io/categories/devops.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Tue, 24 Jul 2018 16:37:34 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Create a custom Raspbian image with pi-gen: part 2</title><link>http://kmdouglass.github.io/posts/create-a-custom-raspbian-image-with-pi-gen-part-2.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;In my &lt;a class="reference external" href="http://kmdouglass.github.io/posts/create-a-custom-raspbian-image-with-pi-gen-part-1.html"&gt;previous post&lt;/a&gt;, I discussed how to setup user accounts and
 locales in a custom Raspbian image using pi-gen. In this follow-up
 post, I will discuss the main problems that I want to solve:
 automatically configuring the network and ssh on a new Raspberry Pi
@@ -27,7 +27,7 @@ update_config=1
 includes its name and the password. For security reasons that I hope
 are obvious, we should not store the password in this file. Instead,
 we create a hash of the password and put that inside the file.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_e574381d1e9947b78aaed7399df256d0-1"&gt;&lt;/a&gt;wpa_passphrase ESSID PASSWORD &amp;gt; psk
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_1bb36e08b1bf43a6af2813eda617c50e-1"&gt;&lt;/a&gt;wpa_passphrase ESSID PASSWORD &amp;gt; psk
 &lt;/pre&gt;&lt;p&gt;where ESSID is our wireless network's name. Note that I also used a
 space before the &lt;code class="shell"&gt;wpa_passphrase&lt;/code&gt; command to prevent the
 password being written to my .bash_history file. Now, we copy and
