@@ -1,6 +1,6 @@
 .. title: Create a custom Raspbian image with pi-gen: part 2
 .. slug: create-a-custom-raspbian-image-with-pi-gen-part-2
-.. date: 2018-07-21 17:39:26 UTC+02:00
+.. date: 2018-07-24 18:25:26 UTC+02:00
 .. tags: raspbian, raspberry pi, devops
 .. category: raspberry pi
 .. link: 
