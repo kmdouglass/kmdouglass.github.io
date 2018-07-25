@@ -4,7 +4,7 @@
 .. tags: raspbian, raspberry pi, devops
 .. category: raspberry pi
 .. link: 
-.. description: Part 1 of a tutorial on creating custom Raspbian images with pi-gen.
+.. description: Part 2 of a tutorial on creating custom Raspbian images with pi-gen.
 .. type: text
 .. status: published
 

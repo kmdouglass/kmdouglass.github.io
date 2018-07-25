@@ -2,7 +2,7 @@
 <html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="description" content="Part 1 of a tutorial on creating custom Raspbian images with pi-gen.">
+<meta name="description" content="Part 2 of a tutorial on creating custom Raspbian images with pi-gen.">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Create a custom Raspbian image with pi-gen: part 2 | Kyle M. Douglass</title>
 <link href="../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="Kyle M. Douglass">
 <meta property="og:title" content="Create a custom Raspbian image with pi-gen: part 2">
 <meta property="og:url" content="http://kmdouglass.github.io/posts/create-a-custom-raspbian-image-with-pi-gen-part-2.html">
-<meta property="og:description" content="Part 1 of a tutorial on creating custom Raspbian images with pi-gen.">
+<meta property="og:description" content="Part 2 of a tutorial on creating custom Raspbian images with pi-gen.">
 <meta property="og:type" content="article">
 <meta property="article:published_time" content="2018-07-24T18:25:26+02:00">
 <meta property="article:tag" content="devops">
@@ -120,7 +120,7 @@ network, which includes its name and the password. For security
 reasons that I hope are obvious, we should not store the password in
 this file. Instead, we create a hash of the password and put that
 inside the file. The command to create the password hash is</p>
-<pre class="code shell"><a name="rest_code_1a608963719b4487bf5c3bf311c17312-1"></a>wpa_passphrase ESSID PASSWORD &gt; psk
+<pre class="code shell"><a name="rest_code_941cf4b3bd3048be881817ea8d892f54-1"></a>wpa_passphrase ESSID PASSWORD &gt; psk
 </pre>
 <p>where ESSID is our wireless network's name. Note that I also used a
 space before the <code class="shell">wpa_passphrase</code> command to prevent the
