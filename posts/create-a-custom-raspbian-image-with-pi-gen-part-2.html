@@ -99,13 +99,13 @@
 <p>In my <a class="reference external" href="create-a-custom-raspbian-image-with-pi-gen-part-1.html">previous post</a>, I discussed how to setup user accounts and
 locales in a custom Raspbian image using pi-gen. In this follow-up
 post, I will discuss the main problems that I want to solve:
-automatically configuring the network and ssh on a new Raspberry Pi
-without a terminal.</p>
+automatically configuring the wireless network and ssh on a new
+Raspberry Pi without a terminal attached directly to the Pi.</p>
 <div class="section" id="set-up-the-wireless-network">
 <h2>Set up the wireless network</h2>
 <div class="section" id="the-wpa-supplicant">
 <h3>The WPA supplicant</h3>
-<p>The Pi's network is configured in stage 2 in the file
+<p>The Pi's wireless credentials are configured in stage 2 in the file
 <strong>stage2/02-net-tweaks/files/wpa_supplicant.conf</strong>. Here's how it
 looks by default:</p>
 <pre class="literal-block">
@@ -114,17 +114,13 @@ update_config=1
 </pre>
 <p>According to the blogs <a class="reference external" href="https://learnthinksolvecreate.wordpress.com/2017/07/25/pi-gen-setting-default-wifi-settings/">Learn Think Solve Create</a> and the <a class="reference external" href="https://www.raspberrypi-spy.co.uk/2017/04/manually-setting-up-pi-wifi-using-wpa_supplicant-conf/">Raspberry
 Spy</a>, the first thing we should do is add our country code to the top
-of this file</p>
-<pre class="literal-block">
-country=CH
-ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
-update_config=1
-</pre>
-<p>Next, we want to enter the details for our wireless network, which
-includes its name and the password. For security reasons that I hope
-are obvious, we should not store the password in this file. Instead,
-we create a hash of the password and put that inside the file.</p>
-<pre class="code shell"><a name="rest_code_1bb36e08b1bf43a6af2813eda617c50e-1"></a>wpa_passphrase ESSID PASSWORD &gt; psk
+of this file with the line <cite>country=CH</cite>. (Use your own country code
+for this.) Next, we want to enter the details for our wireless
+network, which includes its name and the password. For security
+reasons that I hope are obvious, we should not store the password in
+this file. Instead, we create a hash of the password and put that
+inside the file. The command to create the password hash is</p>
+<pre class="code shell"><a name="rest_code_1a608963719b4487bf5c3bf311c17312-1"></a>wpa_passphrase ESSID PASSWORD &gt; psk
 </pre>
 <p>where ESSID is our wireless network's name. Note that I also used a
 space before the <code class="shell">wpa_passphrase</code> command to prevent the
@@ -141,23 +137,17 @@ network={
 }
 </pre>
 </div>
-<div class="section" id="configure-the-network-interfaces">
-<h3>Configure the network interfaces</h3>
+<div class="section" id="configure-the-wireless-network-interfaces">
+<h3>Configure the wireless network interfaces</h3>
 <p>After having configured the supplicant, we next move on to configuring
 the network interfaces used by Raspbian. The appropriate file is found
-in <strong>stage1/02-net-tweaks/files/interfaces</strong>. At the time of this
-writing, its default contents were:</p>
-<pre class="literal-block">
-auto lo
-
-iface lo inet loopback
-iface eth0 inet dhcp
-</pre>
-<p>In my post <a class="reference external" href="connecting-a-raspberry-pi-to-a-home-linux-network.html">Connecting a Raspberry Pi to a Home Linux Network</a> I
-described how to set up the network interfaces by editing
-<strong>/etc/network/interfaces</strong>. For now, we will use this file to set up
-our pi to use DHCP. We will use <strong>/etc/dhcpcd.conf</strong> at a later time
-to set up a static IP address when provisioning the pi.</p>
+in <strong>stage1/02-net-tweaks/files/interfaces</strong>. In my post <a class="reference external" href="connecting-a-raspberry-pi-to-a-home-linux-network.html">Connecting a
+Raspberry Pi to a Home Linux Network</a> I described how to set up the
+network interfaces by editing <strong>/etc/network/interfaces</strong>. Much of the
+information presented in that post has now been superseded in Raspbian
+by the DHCP daemon. For now, we will use the interfaces file to
+instruct our Pi to use DHCP and will use <strong>/etc/dhcpcd.conf</strong> at a
+later time to set up a static IP address when provisioning the Pi.</p>
 <p>We first need to make a few changes to make the interfaces file aware
 of the credentials in the wpa supplicant configuration file. According
 to the blog <a class="reference external" href="https://kerneldriver.wordpress.com/2012/10/21/configuring-wpa2-using-wpa_supplicant-on-the-raspberry-pi/">kerneldriver</a>, we need modify the
@@ -173,23 +163,16 @@ iface wlan0 inet manual
      wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
 iface default inet dhcp
 </pre>
-<p>(Of course, you will need to replace the x's with the numbers
-appropriate for your setup.) In the first modification, I specify that
-I want the wirless interface <strong>wlan0</strong> started automatically:</p>
-<pre class="literal-block">
-auto wlan0
-</pre>
-<p>Next, I specify that the wlan0 interface should use the <a class="reference external" href="https://manpages.debian.org/stretch/ifupdown/interfaces.5.en.html#The_manual_Method">manual inet
-address family</a> with the line:</p>
-<pre class="literal-block">
-iface wlan0 inet manual
-</pre>
+<p>In the first modification, I specify that I want the wirless interface
+<strong>wlan0</strong> started automatically with <cite>auto wlan0</cite>. Next, I specify
+that the wlan0 interface should use the <a class="reference external" href="https://manpages.debian.org/stretch/ifupdown/interfaces.5.en.html#The_manual_Method">manual inet address family</a>
+with the line <cite>iface wlan0 inet manual</cite>.</p>
 <p>According to the man pages, "[the manual] method may be used to define
 interfaces for which no configuration is done by default." After this
 we use the <cite>wpa-roam</cite> command to specify the location of the
 wpa_supplicant.conf file that we previously modified. The wireless
 ESSID and password are therefore not defined in interfaces, but rather
-reference wpa_supplicant.conf.</p>
+reference them inside wpa_supplicant.conf.</p>
 <p>In case you noticed that wpa-roam doesn't appear as an option in
 documentation on the interfaces file and were wondering why, it's
 because other programs like wpasupplicant may provide additional
@@ -207,6 +190,20 @@ Stretch</a>.</p>
 <p>Our Pi's hostname may be changed from the default (raspberrypi) by
 modifying the line in <strong>stage1/02-net-tweaks/files/hostname</strong>. See
 <a class="reference external" href="https://tools.ietf.org/html/rfc1178">RFC 1178</a> for tips on choosing a hostname.</p>
+<p>In addition to modifying the hostname file, we need to update
+<strong>stage1/02-net-tweaks/00-patches/01-hosts.diff</strong> and change
+raspberrypi to the new hostname:</p>
+<pre class="literal-block">
+Index: jessie-stage1/rootfs/etc/hosts
+===================================================================
+--- jessie-stage1.orig/rootfs/etc/hosts
++++ jessie-stage1/rootfs/etc/hosts
+@@ -3,3 +3,4 @@
+ ff02::1                ip6-allnodes
+ ff02::2                ip6-allrouters
+
++127.0.1.1      NEW_HOSTNAME_HERE
+</pre>
 </div>
 <div class="section" id="set-the-dns-servers">
 <h3>Set the DNS servers</h3>
@@ -233,15 +230,16 @@ Raspbian image. See here for more details:
 <h3>Configuring SSH keys (or not)</h3>
 <p>I decided after writing much of this tutorial that pi-gen was not
 necessarily the best tool for adding my public SSH keys. So long as I
-had network access and SSH simply enabled, I could add my keys using
-<code class="shell">ssh-copy-id</code> and by editing the file
-<strong>/etc/ssh/sshd_config</strong>. Furthermore, after following this tutorial,
+have network access and SSH enabled, I can easily add my keys using
+<code class="shell">ssh-copy-id</code>. Furthermore, after following this tutorial,
 there still remains a lot of setup and customization steps. These can
-more easily be performed manually over ssh or by server automation
-tools like <a class="reference external" href="http://www.fabfile.org/">Fabric</a> or <a class="reference external" href="https://www.ansible.com/">Ansible</a>.</p>
-<p>Therefore, I think this basic Raspbian setup suffices for creating a
-fresh working Pi that is already configured for our home network and
-that serves as a starting point for more complete customization.</p>
+more easily be performed manually or by server automation tools like
+<a class="reference external" href="http://www.fabfile.org/">Fabric</a> or <a class="reference external" href="https://www.ansible.com/">Ansible</a>.</p>
+<p>Therefore, I think that at this point we can stop with our
+customization of the image with pi-gen and move to a different
+tool. We have a basic Raspbian image that is already configured for
+our home network and that serves as a starting point for more complete
+customization.</p>
 </div>
 </div>
 <div class="section" id="conclusion">
@@ -249,7 +247,7 @@ that serves as a starting point for more complete customization.</p>
 <p>This tutorial and my <a class="reference external" href="create-a-custom-raspbian-image-with-pi-gen-part-1.html">previous post</a> demonstrated how to create a
 custom Raspbian image that is pre-configured for</p>
 <ul class="simple">
-<li>our home network</li>
+<li>our home wireless network</li>
 <li>our locale information</li>
 <li>ssh</li>
 </ul>
