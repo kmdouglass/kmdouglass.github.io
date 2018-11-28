@@ -233,6 +233,21 @@ the Python wrapper for Micro-Manager 2.0.) Inside each folder are the
 scripts and Dockerfiles that execute the various steps of the
 workflow.
 
+The final prerequisite is to register QEMU with the Docker build
+agent. First, install a few packages for QEMU. On Ubuntu, this looks
+like
+
+.. code-block:: shell
+
+   $ sudo apt update
+   $ sudo install qemu qemu-user-static qemu-user binfmt-support
+
+Finally, register the build agent with the command:
+
+.. code-block:: shell
+
+   $ docker run --rm --privileged multiarch/qemu-user-static:register --reset
+
 Step 1: Create the build image
 ------------------------------
 
