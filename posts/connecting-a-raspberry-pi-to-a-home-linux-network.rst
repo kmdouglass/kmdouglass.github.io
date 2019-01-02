@@ -54,7 +54,7 @@ To find the list of static IP's on my specific router, I clicked on
 the link entitled **Network** in my router's configuration page. The
 relevant information for me looks like that in the image below:
 
-.. image:: ../dhcp_addresses.png
+.. image:: /images/dhcp_addresses.png
    :alt: DHCP address pool
    :align: center
 
@@ -248,7 +248,7 @@ Pi, open a terminal and run the configuration utility:::
 
 We should see the following window appear.
 
-.. image:: ../pi-config-interface-options.png
+.. image:: /images/pi-config-interface-options.png
    :alt: The raspi-config menu with Interface Options highlighted.
    :align: center
 
@@ -259,7 +259,7 @@ as in the following image. Use the keyboard to highlight **P2 SSH**
 hit the Enter key to enable it. Once ssh is enabled, we can hit Esc or
 select the <Back> option to until we exit the configuration utility.
 
-.. image:: ../pi-config-ssh.png
+.. image:: /images/pi-config-ssh.png
    :alt: The raspi-config Interface Options menu with P2 SSH highlighted.
    :align: center
 

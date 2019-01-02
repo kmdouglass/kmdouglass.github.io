@@ -116,7 +116,7 @@ NAVIGATION_LINKS = {
     DEFAULT_LANG: (
         ("/categories/index.html", "Tags"),
         ("/archive.html", "Archive"),
-        ("/stories/contact.html", "Contact"),
+        ("/stories/contact/index.html", "Contact"),
     ),
 }
 
@@ -193,21 +193,19 @@ TIMEZONE = "Europe/Zurich"
 #
 
 POSTS = (
-    ("posts/*.org",   "posts", "post.tmpl"),
     ("posts/*.rst",   "posts", "post.tmpl"),
     ("posts/*.txt",   "posts", "post.tmpl"),
     ("posts/*.ipynb", "posts", "post.tmpl"),
 )
 PAGES = (
     ("stories/*.md",  "", "story.tmpl"),
-    ("stories/*.org", "stories", "story.tmpl"),
     ("stories/*.rst", "stories", "story.tmpl"),
 )
 
 # One or more folders containing files to be copied as-is into the output.
 # The format is a dictionary of "source" "relative destination".
 # Default is:
-# FILES_FOLDERS = {'files': '' }
+FILES_FOLDERS = {'files': '' }
 # Which means copy 'files' into 'output'
 
 # A mapping of languages to file-extensions that represent that language.
@@ -218,7 +216,6 @@ PAGES = (
 # 'markdown' is MarkDown
 # 'html' assumes the file is html and just copies it
 COMPILERS = {
-    "orgmode": ('.org',),
     "rest": ('.rst', '.txt'),
     "markdown": ('.md', '.mdown', '.markdown'),
     "wiki": ('.wiki',),
@@ -423,6 +420,20 @@ EXTRA_IMAGE_EXTENSIONS = []
 #
 # If set to False, it will sort by filename instead. Defaults to True
 GALLERY_SORT_BY_DATE = True
+
+# Folders containing images to be used in normal posts or pages.
+# IMAGE_FOLDERS is a dictionary of the form {"source": "destination"},
+# where "source" is the folder containing the images to be published, and
+# "destination" is the folder under OUTPUT_PATH containing the images copied
+# to the site. Thumbnail images will be created there as well.
+IMAGE_FOLDERS = {'images': 'images'}
+
+# Images will be scaled down according to IMAGE_THUMBNAIL_SIZE and MAX_IMAGE_SIZE
+# options, but will have to be referenced manually to be visible on the site
+# (the thumbnail has ``.thumbnail`` added before the file extension by default,
+# but a different naming template can be configured with IMAGE_THUMBNAIL_FORMAT).
+IMAGE_THUMBNAIL_SIZE = 400
+IMAGE_THUMBNAIL_FORMAT = '{name}.thumbnail{ext}'
 
 # #############################################################################
 # HTML fragments and diverse things that are used by the templates
@@ -745,7 +756,7 @@ EXTRA_HEAD_DATA = '''<script type="text/javascript" src="https://cdn.mathjax.org
 
 # If you hate "Filenames with Capital Letters and Spaces.md", you should
 # set this to true.
-UNSLUGIFY_TITLES = True
+FILE_METADATA_UNSLUGIFY_TITLES = True
 
 # Additional metadata that is added to a post when creating a new_post
 # ADDITIONAL_METADATA = {}

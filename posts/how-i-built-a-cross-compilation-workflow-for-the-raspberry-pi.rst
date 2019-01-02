@@ -132,7 +132,7 @@ let's look at the cross-compilation workflow. Below is a picture that
 provides a sense of the entire process, moving in general from
 left-to-right.
 
-.. image:: ../mm_docker_workflow.png
+.. image:: /images/mm_docker_workflow.png
    :alt: The cross-compilation workflow
    :align: center
 

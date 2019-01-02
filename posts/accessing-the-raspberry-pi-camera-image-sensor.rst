@@ -62,8 +62,7 @@ housing that is attached to the control board by a small ribbon cable
 (to its right) and a bit of two-sided sticky foam tape (underneath the
 sensor; not visible).
 
-.. image:: ../pi_camera_step0.jpg
-   :width: 400px
+.. image:: /images/pi_camera_step0.thumbnail.jpg
    :alt: The Raspberry Pi Camera Module V2
    :align: center
 
@@ -75,8 +74,7 @@ cable that attaches the module to the Pi. I did this by pulling on the
 black tabs on the two ends of the connecter until the cable is easily
 removed. I labeled the sides of the ribbon cable just in case.
 
-.. image:: ../pi_camera_step1.jpg
-   :width: 400px
+.. image:: /images/pi_camera_step1.thumbnail.jpg
    :alt: Remove the main ribbon cable from the control board
    :align: center
 
@@ -88,8 +86,7 @@ that attaches the sensor to the control board. I essentially applied a
 small torque to the bottom edge of the connector until it just
 "popped" up, as seen in the second image below.
 
-.. image:: ../pi_camera_step2.jpg
-   :width: 400px
+.. image:: /images/pi_camera_step2.thumbnail.jpg
    :alt: The small ribbon cable from the sensor is to the right.
    :align: center
 
@@ -100,8 +97,7 @@ In the third step, I used my thumbnail to gently pry the sensor from
 the control board. The sensor is attached with some two-sided sticky
 tape and may need a few minutes of work to come free.
 
-.. image:: ../pi_camera_step3.jpg
-   :width: 400px
+.. image:: /images/pi_camera_step3.thumbnail.jpg
    :alt: Pull the sensor off the control board.
    :align: center
 
@@ -116,16 +112,14 @@ housing and the sensor board, taking care not to let the blade go too
 far into the housing and possibly ruining one of the resistors or wire
 bonds.
 
-.. image:: ../pi_camera_step4.jpg
-   :width: 400px
+.. image:: /images/pi_camera_step4.thumbnail.jpg
    :alt: Cut carefully on one side of the housing.
    :align: center
 
 Once you get a knife between the two, try popping the housing off of
 the sensor.
 
-.. image:: ../pi_camera_step4b.jpg
-   :width: 400px
+.. image:: /images/pi_camera_step4b.thumbnail.jpg
    :alt: Once the edge is cut, pop the housing off.
    :align: center
 
@@ -136,8 +130,7 @@ the knife blade went too far into the housing. You can see this below
 and, at the same time, get an idea of the layout of the sensor board
 so you know where you can and can't cut.
 
-.. image:: ../pi_camera_step4c.png
-   :width: 400px
+.. image:: /images/pi_camera_step4c.thumbnail.png
    :alt: The resistor near the top of the board was damaged when
          cutting the housing.
    :align: center
@@ -145,8 +138,7 @@ so you know where you can and can't cut.
 If you have the normal version of the camera, then you can also find the IR blocking filter
 inside the housing.
 
-.. image:: ../pi_camera_step4d.jpg
-   :width: 400px
+.. image:: /images/pi_camera_step4d.thumbnail.jpg
    :alt: The IR blocking filter.
    :align: center
 
