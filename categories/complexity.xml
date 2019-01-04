@@ -1,86 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kyle M. Douglass (Posts about complexity)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link rel="self" href="http://kmdouglass.github.io/categories/complexity.xml" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Sun, 15 Jul 2018 14:58:42 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Overcoming complexity in biology</title><link>http://kmdouglass.github.io/posts/overcoming-complexity-in-biology.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;p&gt;
-I've been sitting in on a short lecture series presented by &lt;a href="http://markolab.bmbcb.northwestern.edu/marko/"&gt;Prof. John
-Marko&lt;/a&gt; here at the EPFL. The topic is on the biophysics of DNA and
-covers what is probably at least a 25 year span of research that has
-emerged on its mechanical and biochemical properties.
-&lt;/p&gt;
-
-&lt;p&gt;
-DNA amazes me in two different ways: relatively simple physical
-theories can explain &lt;i&gt;in vitro&lt;/i&gt; experiments, but establishing a
-complete understanding of the behavior of DNA and its associated
-proteins (collectively known as chromatin) &lt;i&gt;in vivo&lt;/i&gt; seems at this
-point almost hopeless.
-&lt;/p&gt;
-
-&lt;p&gt;
-So why do I think it's so difficult to establish a complete physical
-theory of the nucleus?
-&lt;/p&gt;
-
-&lt;p&gt;
-Certainly a lot of recent research has helped us to understand parts
-of what happens inside the nucleus. Take for example recent
-experiments that look at &lt;a href="http://en.wikipedia.org/wiki/Transcription_factor#Accessibility_of_DNA-binding_site"&gt;transcription factor&lt;/a&gt; (TF) binding and the
-nuclear architecture. TF binding experiments have helped us understand
-the mechanism of how a single transcription factor ``searches'' for a
-target site on a chromosome. It undergoes diffusion in the crowded
-nuclear environment, occasionally binding to the DNA non-specifically
-and sliding along it. We now know that this combined diffusion/sliding
-mechanism produces an optimum search strategy.
-&lt;/p&gt;
-
-&lt;p&gt;
-Studies of nuclear architecture attempt to understand how the long DNA
-polymer, which is on the order of &lt;i&gt;one meter&lt;/i&gt; long, is packaged into
-the nucleus, which is only about &lt;i&gt;five micrometers&lt;/i&gt; in diameter. This
-is nearly six orders of magnitude of compaction. Some current theories
-treat the DNA as a hierarchically packaged polymer or a fractal
-structure. Interestingly, the fractal model can &lt;a href="http://www.ncbi.nlm.nih.gov/pubmed/24380602"&gt;explain why TF's may
-diffuse optimally&lt;/a&gt; and when crowding can hinder their search.
-&lt;/p&gt;
-
-&lt;p&gt;
-Both of these examples represent a generalization of one particular
-phenomenon that occurs inside the nucleus. And even given the enormity
-of these works, I think this generalization can be dubious because it
-may not apply to all cell types and there may be differences between
-cultured cells and those found in an actual organism.
-&lt;/p&gt;
-
-&lt;p&gt;
-The problem in capturing complete physical models of the nucleus seems
-to lie with the philosophy of physics itself: find the most essential
-parts of the system and include those in your model, discarding all
-irrelevant details. Unfortunately, &lt;i&gt;in vitro&lt;/i&gt; experiments suggest that
-every detail seems to matter inside the nucleus. Local salt
-concentrations effect electrostatic interactions and entropic binding
-between proteins and DNA, the global nuclear architecture has an
-effect on single TF's diffusing inside the nucleus, there are a huge
-number of proteins that associate with DNA and control the
-conformation in &lt;a href="http://www.ncbi.nlm.nih.gov/pubmed/22495300"&gt;toplogically associating domains&lt;/a&gt;. The list goes on and
-on.
-&lt;/p&gt;
-
-&lt;p&gt;
-A common theme to this list that I have described above is that
-phenomena at one length scale tend to have a direct impact on those at
-another, like the global nuclear architecture affecting a single TF
-trajectory. These are hallmarks of complexity: a dependence on the
-details of a system and multiscale behavior.
-&lt;/p&gt;
-
-&lt;p&gt;
-I am currently of the opinion that a complete model of the nucleus,
-and probably of other biological systems, must therefore necessarily
-abandon one important part of physical theories: reduction to the
-simplest possible set of parameters to describe a system. We need to
-incorporate all the details across all length scales to reproduce what
-exactly is going on.
-&lt;/p&gt;
-
-&lt;p&gt;
-And if classical physics falls short of this goal, what other
-approaches do we then require?
-&lt;/p&gt;</description><category>biology</category><category>biophysics</category><category>complexity</category><guid>http://kmdouglass.github.io/posts/overcoming-complexity-in-biology.html</guid><pubDate>Wed, 21 Jan 2015 07:16:04 GMT</pubDate></item></channel></rss>
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kyle M. Douglass (Posts about complexity)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link href="http://kmdouglass.github.io/categories/complexity.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Fri, 04 Jan 2019 14:44:34 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Overcoming complexity in biology</title><link>http://kmdouglass.github.io/posts/overcoming-complexity-in-biology/</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;I've been sitting in on a short lecture series presented by &lt;a class="reference external" href="http://markolab.bmbcb.northwestern.edu/marko/"&gt;Prof. John Marko&lt;/a&gt; here at the EPFL. The topic is on the biophysics
+of DNA and covers what is probably at least a 25 year span of research that has emerged on its
+mechanical and biochemical properties.&lt;/p&gt;
+&lt;p&gt;DNA amazes me in two different ways: relatively simple physical theories can explain /in vitro/
+experiments, but establishing a complete understanding of the behavior of DNA and its associated
+proteins (collectively known as chromatin) /in vivo/ seems at this point almost hopeless.&lt;/p&gt;
+&lt;p&gt;So why do I think it's so difficult to establish a complete physical theory of the nucleus?&lt;/p&gt;
+&lt;p&gt;Certainly a lot of recent research has helped us to understand parts of what happens inside the
+nucleus. Take for example recent experiments that look at &lt;a class="reference external" href="http://en.wikipedia.org/wiki/Transcription_factor#Accessibility_of_DNA-binding_site"&gt;transcription factor&lt;/a&gt; (TF)
+binding and the nuclear architecture. TF binding experiments have helped us understand the
+mechanism of how a single transcription factor searches for a target site on a chromosome. It
+undergoes diffusion in the crowded nuclear environment, occasionally binding to the DNA
+non-specifically and sliding along it. We now know that this combined diffusion/sliding mechanism
+produces an optimum search strategy.&lt;/p&gt;
+&lt;p&gt;Studies of nuclear architecture attempt to understand how the long DNA polymer, which is on the
+order of /one meter/ long, is packaged into the nucleus, which is only about /five micrometers/ in
+diameter. This is nearly six orders of magnitude of compaction. Some current theories treat the DNA
+as a hierarchically packaged polymer or a fractal structure. Interestingly, the fractal model can
+&lt;a class="reference external" href="http://www.ncbi.nlm.nih.gov/pubmed/24380602"&gt;explain why TF's may diffuse optimally&lt;/a&gt; and when
+crowding can hinder their search.&lt;/p&gt;
+&lt;p&gt;Both of these examples represent a generalization of one particular phenomenon that occurs inside
+the nucleus. And even given the enormity of these works, I think this generalization can be dubious
+because it may not apply to all cell types and there may be differences between cultured cells and
+those found in an actual organism.&lt;/p&gt;
+&lt;p&gt;The problem in capturing complete physical models of the nucleus seems to lie with the philosophy
+of physics itself: find the most essential parts of the system and include those in your model,
+discarding all irrelevant details. Unfortunately, &lt;em&gt;in vitro&lt;/em&gt; experiments suggest that every detail
+seems to matter inside the nucleus. Local salt concentrations effect electrostatic interactions and
+entropic binding between proteins and DNA, the global nuclear architecture has an effect on single
+TF's diffusing inside the nucleus, there are a huge number of proteins that associate with DNA and
+control the conformation in &lt;a class="reference external" href="http://www.ncbi.nlm.nih.gov/pubmed/22495300"&gt;toplogically associating domains&lt;/a&gt;. The list goes on and on.&lt;/p&gt;
+&lt;p&gt;A common theme to this list that I have described above is that phenomena at one length scale tend
+to have a direct impact on those at another, like the global nuclear architecture affecting a
+single TF trajectory. These are hallmarks of complexity: a dependence on the details of a system
+and multiscale behavior.&lt;/p&gt;
+&lt;p&gt;I am currently of the opinion that a complete model of the nucleus, and probably of other
+biological systems, must therefore necessarily abandon one important part of physical theories:
+reduction to the simplest possible set of parameters to describe a system. We need to incorporate
+all the details across all length scales to reproduce what exactly is going on.&lt;/p&gt;
+&lt;p&gt;And if classical physics falls short of this goal, what other approaches do we then require?&lt;/p&gt;&lt;/div&gt;</description><category>biology</category><category>biophysics</category><category>complexity</category><guid>http://kmdouglass.github.io/posts/overcoming-complexity-in-biology/</guid><pubDate>Wed, 21 Jan 2015 07:16:04 GMT</pubDate></item></channel></rss>

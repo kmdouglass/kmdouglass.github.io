@@ -1,30 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kyle M. Douglass (Posts about blog)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link rel="self" href="http://kmdouglass.github.io/categories/blog.xml" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Sun, 15 Jul 2018 14:58:41 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Hello, world!</title><link>http://kmdouglass.github.io/posts/hello-world.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;p&gt;
-Well, I've finally got this site off the ground… more or less.
-&lt;/p&gt;
-
-&lt;p&gt;
-This website is the continuation of my blog, &lt;a href="http://quadrule.blogspot.com"&gt;My Quad-Ruled Life&lt;/a&gt;. On
-that site, I explored a number of topics as a graduate student in
-optics, while improving my writing as well. As the site progressed
-and I matured academically, I found that I was blogging less often,
-but still used the blog as a means of exploring ideas. Additionally,
-I desired a place to present notes and code to the public in an
-easily accessible and open manner.
-&lt;/p&gt;
-
-&lt;p&gt;
-So, after discovering &lt;a href="http://getnikola.com/"&gt;Nikola&lt;/a&gt; and &lt;a href="http://pages.github.com/"&gt;GitHub Pages&lt;/a&gt;, I quickly hashed
-together a fully homemade site that allowed me to keep writing blog
-posts and to present some of the fruits of my research freely on the
-internet.
-&lt;/p&gt;
-
-&lt;p&gt;
-I hope you'll find this site useful as a learning resource and as a
-means to get to know me better as a scientist.
-&lt;/p&gt;
-
-&lt;p&gt;
--Kyle
-&lt;/p&gt;</description><category>blog</category><guid>http://kmdouglass.github.io/posts/hello-world.html</guid><pubDate>Fri, 20 Dec 2013 23:00:00 GMT</pubDate></item></channel></rss>
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kyle M. Douglass (Posts about blog)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link href="http://kmdouglass.github.io/categories/blog.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Fri, 04 Jan 2019 14:44:30 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Hello, world!</title><link>http://kmdouglass.github.io/posts/hello-world/</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;Well, I've finally got this site off the ground... more or less.&lt;/p&gt;
+&lt;p&gt;This website is the continuation of my blog, &lt;a class="reference external" href="http://quadrule.blogspot.com"&gt;My Quad-Ruled Life&lt;/a&gt;. On that site, I explored a number of topics as a graduate student
+in optics, while improving my writing as well. As the site progressed and I matured academically, I
+found that I was blogging less often, but still used the blog as a means of exploring
+ideas. Additionally, I desired a place to present notes and code to the public in an easily
+accessible and open manner.&lt;/p&gt;
+&lt;p&gt;So, after discovering &lt;a class="reference external" href="http://getnikola.com/"&gt;Nikola&lt;/a&gt; and &lt;a class="reference external" href="http://pages.github.com/"&gt;GitHub Pages&lt;/a&gt;, I quickly hashed together a fully homemade site that allowed me to
+keep writing blog posts and to present some of the fruits of my research freely on the internet.&lt;/p&gt;
+&lt;p&gt;I hope you'll find this site useful as a learning resource and as a
+means to get to know me better as a scientist.&lt;/p&gt;
+&lt;p&gt;Kyle&lt;/p&gt;&lt;/div&gt;</description><category>blog</category><guid>http://kmdouglass.github.io/posts/hello-world/</guid><pubDate>Fri, 20 Dec 2013 23:00:00 GMT</pubDate></item></channel></rss>

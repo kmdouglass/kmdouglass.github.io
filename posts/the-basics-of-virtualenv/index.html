@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="These are the aboslute basics you need to get virtualenv working. ">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The basics of virtualenv | Kyle M. Douglass</title>
+<link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/ipython.min.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/nikola_ipython.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/custom_notebook.css" rel="stylesheet" type="text/css">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
+<link rel="alternate" type="application/rss+xml" title="RSS" hreflang="en" href="../../rss.xml">
+<link rel="canonical" href="http://kmdouglass.github.io/posts/the-basics-of-virtualenv/">
+<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><meta name="author" content="Kyle M. Douglass">
+<link rel="prev" href="../sending-arguments-to-python-decorators/" title="Sending arguments to Python decorators" type="text/html">
+<link rel="next" href="../reading-select-lines-from-a-text-file/" title="Reading select lines from a text file" type="text/html">
+<meta property="og:site_name" content="Kyle M. Douglass">
+<meta property="og:title" content="The basics of virtualenv">
+<meta property="og:url" content="http://kmdouglass.github.io/posts/the-basics-of-virtualenv/">
+<meta property="og:description" content="These are the aboslute basics you need to get virtualenv working. ">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2015-02-10T07:47:50+01:00">
+<meta property="article:tag" content="python">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Menubar -->
+
+<nav class="navbar navbar-default navbar-static-top"><div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://kmdouglass.github.io/">
+
+                <span id="blog-title">Kyle M. Douglass</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
+            <ul class="nav navbar-nav">
+<li>
+<a href="../../categories/index.html">Tags</a>
+                </li>
+<li>
+<a href="../../archive.html">Archive</a>
+                </li>
+<li>
+<a href="../../stories/contact/index.html">Contact</a>
+
+                
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+    <a href="index.rst" id="sourcelink">Source</a>
+    </li>
+
+                
+            </ul>
+</div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">The basics of virtualenv</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                    Kyle M. Douglass
+            </span></p>
+            <p class="dateline">
+            <a href="." rel="bookmark">
+            <time class="published dt-published" datetime="2015-02-10T07:47:50+01:00" itemprop="datePublished" title="2015-02-10 07:47">2015-02-10 07:47</time></a>
+            </p>
+                <p class="commentline">
+        
+    <a href="#disqus_thread" data-disqus-identifier="cache/posts/the-basics-of-virtualenv.html">Comments</a>
+
+
+            
+        </p>
+<p class="sourceline"><a href="index.rst" class="sourcelink">Source</a></p>
+
+        </div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<p>I use Python 3.4 in most of my data analyses and in some simulations. I like a lot of its features,
+like its implementation of generators, maps, and filters. However, much of the software on my
+Debian Wheezy system depends on Python 2.7 to run, such as <a class="reference external" href="http://www.mendeley.com/">Mendeley</a>. (It used to run just fine with Python 3.4, until I ran an automatic
+update and that was the end of that.)</p>
+<p>To run some Python 2.7 programs, I used to do the following:</p>
+<pre class="code shell"><a name="rest_code_571f3c6e86ce46c286c5eb91aa28fc21-1"></a>sudo rm /usr/bin/python
+<a name="rest_code_571f3c6e86ce46c286c5eb91aa28fc21-2"></a>sudo ln -s /usr/bin/python2.7 /usr/bin/python
+</pre>
+<p>I know. Ouch. Every single time I needed to run a program that depended on python2.7, I would
+delete the symlink in /usr/bin, make a new link to python2.7, and then run my program. When I
+needed to give various programs convenient access to python3.4, I would delete the symlink and
+create a new one to the newer version.</p>
+<p>This was dumb, because there is a convenient Python-based tool that can fix the problem of needing
+multiple versions of Python (and libraries!) on the same system. The solution to this problem is
+called <a class="reference external" href="https://virtualenv.pypa.io/en/latest/">virtualenv</a>.</p>
+<p>There are a lot of descriptions about what virtualenv is on the internet, so I won't bother going
+into details here. Instead, I will focus on just the very basics of its setup and use so that I can
+have a handy future reference for when I forget how something works and so that others can profit
+from what I have learned. Most everything I've done came from <a class="reference external" href="http://docs.python-guide.org/en/latest/">python-guide.org</a>, so I'm more-or-less putting <a class="reference external" href="http://docs.python-guide.org/en/latest/dev/virtualenvs/">what they have already
+said</a> into my own words.</p>
+<p>To start, I already have Python 2.7 and 3.4 installed on my system. In principle, you do not need
+them installed at the system level, but I already have done this so I will start from there. I
+first installed pip for Python 2.7 since I only had pip3 on my system to start. I did this because
+I want to keep Python 2.7 as my system's default Python environment.</p>
+<pre class="code shell"><a name="rest_code_550b2707f31d47ee8be7bd95d7e87c40-1"></a>sudo apt-get update
+<a name="rest_code_550b2707f31d47ee8be7bd95d7e87c40-2"></a>sudo apt-get install python-pip
+</pre>
+<p>Once installed, I used it to install virtualenv and <a class="reference external" href="https://virtualenvwrapper.readthedocs.org/en/latest">virtualenvwrapper</a>. The latter provides some nice features for
+working with virtualenv.</p>
+<pre class="code shell"><a name="rest_code_bfaa5a6d55a04e8bb0fa9132f2d3dcd1-1"></a>sudo pip install virtualenv
+<a name="rest_code_bfaa5a6d55a04e8bb0fa9132f2d3dcd1-2"></a>sudo pip install virtualenvwrapper
+</pre>
+<p>Now, virtualenvwrapper requires an environment variable to tell it where to store the folders for
+each virtual environment. This environment variable is called WORKON_HOME. First, I created the
+folder it will point to:</p>
+<pre class="code shell"><a name="rest_code_faa7bd3d5b054959ba482e4e15cacfda-1"></a>mkdir ~/Envs
+</pre>
+<p>Next, I edited my ~/.bashrc and added the following line:</p>
+<pre class="code shell"><a name="rest_code_5a624248ed8e43678e6ca6aff62765ca-1"></a><span class="nb">export</span> <span class="nv">WORKON_HOME</span><span class="o">=</span>~/Envs
+</pre>
+<p>All of my virtual environment files (except for the Python intepreters) will be stored in this
+folder. Finally, I restarted my terminal window so that the environment variable was assigned. You
+can check this by typing =echo $WORKON_HOME= in your new terminal window. If it returns the path to
+your new environments folder, then you should be fine.</p>
+<p>Next, I ran the virtualwrapper setup script. Note that I did not need sudo (in fact, sudo could not
+find a command called <cite>source</cite>) and that no output is returned when the script is run.</p>
+<pre class="code shell"><a name="rest_code_34a8f66a3fc74aea9292bb994272ad14-1"></a><span class="nb">source</span> /usr/local/bin/virtualenvwrapper.sh
+</pre>
+<p>Now virtualenvwrapper should be installed, so let's make a virtual environment. We can do this
+using the <cite>mkvirtualenv</cite> command, followed by a name for the environment. I will use the name venv
+in this example, like Kenneth Reitz did in his guide that I linked above.</p>
+<pre class="code shell"><a name="rest_code_9c746677de2449e489b256d7d1d5e0f2-1"></a>mkvirtualenv venv
+</pre>
+<p>To start the new virtual environment, type <cite>workon venv</cite> and note that change in the prompt,
+indicating which environment you are in. You now have a fresh Python environment to which you can
+add any library you wish. To leave the environment, type <cite>deactivate</cite> into your terminal.</p>
+<p>One simple test that you can do to see whether your Python environment really is clean is to run
+the Python interpreter from inside your environment and try importing a module that you know is in
+your system-wide site packages but not in your virtual environment. For example, inside venv I type
+=python= at the terminal prompt and tried importing numpy, which I had not yet installed in venv:</p>
+<pre class="code python"><a name="rest_code_ec646c15a455476a993d2e1d04483092-1"></a><span class="kn">import</span> <span class="nn">numpy</span>
+</pre>
+<p>This returned an <cite>ImportError: No module named numpy</cite>. Since I do have numpy installed on my system
+but not in this environment, it tells me that the environment is likely clean.</p>
+<p>To install new libraries, simply use pip or install them to the folder that was created for this
+environment in ~/Env. To delete a virtual environment entirely, use <cite>rmvirtual env</cite>.</p>
+<p>Now, how can I specify that I want the virtual environment to use the python3.4 interpreter in a
+virtual environment named python3-general? Doing so would solve my original problem. Simply
+make a new virtual environment like so:</p>
+<pre class="code python"><a name="rest_code_9d404579c1b249ed94a60888ab2e8e3b-1"></a><span class="n">mkvirtualenv</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python3</span><span class="o">.</span><span class="mi">4</span> <span class="n">python3</span><span class="o">-</span><span class="n">general</span>
+</pre>
+<p>Voilà. C'est tout. I hope this helps you get up and running with this great tool!</p>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../categories/python/" rel="tag">python</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../sending-arguments-to-python-decorators/" rel="prev" title="Sending arguments to Python decorators">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../reading-select-lines-from-a-text-file/" rel="next" title="Reading select lines from a text file">Next post</a>
+            </li>
+        </ul></nav></aside><section class="comments hidden-print"><h2>Comments</h2>
+        
+        
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="kmdouglass",
+            disqus_url="http://kmdouglass.github.io/posts/the-basics-of-virtualenv/",
+        disqus_title="The basics of virtualenv",
+        disqus_identifier="cache/posts/the-basics-of-virtualenv.html",
+        disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+        </section></article><script>var disqus_shortname="kmdouglass";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+</div>
+        <!--End of body content-->
+
+        <footer id="footer">
+            Contents © 2019         <a href="mailto:kyle.m.douglass@gmail.com">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
+            
+        </footer>
+</div>
+</div>
+
+
+            <script src="../../assets/js/all-nocdn.js"></script><!-- fancy dates --><script>
+    moment.locale("en");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates --><script>
+    baguetteBox.run('div#content', {
+        ignoreClass: 'islink',
+        captions: function(element) {
+            return element.getElementsByTagName('img')[0].alt;
+    }});
+    </script>
+</body>
+</html>

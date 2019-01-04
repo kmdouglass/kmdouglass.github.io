@@ -1,407 +1,250 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kyle M. Douglass (Posts about computing)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link rel="self" href="http://kmdouglass.github.io/categories/computing.xml" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Sun, 15 Jul 2018 14:58:43 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Learning Python's Multiprocessing Module</title><link>http://kmdouglass.github.io/posts/learning-pythons-multiprocessing-module.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;p&gt;
-I've been doing a bit of programming work lately that would greatly
-benefit from a speed boost using parallel/concurrent processing
-tools. Essentially, I'm doing a &lt;a href="http://www.mathworks.com/help/simulink/examples/parallel-simulations-using-parfor-parameter-sweep-in-normal-mode.html"&gt;parameter sweep&lt;/a&gt; where the values for
-two different simulation parameters are input into the simulation and
-allowed to run with the results being recorded to disk at the end. The
-point is to find out how the simulation results vary with the
-parameter values.
-&lt;/p&gt;
-
-&lt;p&gt;
-In my current code, a new simulation is initialized with each pair of
-parameter values inside one iteration of a for loop; each iteration of
-the loop is independent of the others. Spreading these iterations over
-the 12 cores on my workstation should result in about a 12x decrease
-in the amount of time the simulation takes to run.
-&lt;/p&gt;
-
-&lt;p&gt;
-I've had good success using the &lt;code&gt;parfor&lt;/code&gt; loop construct in Matlab in
-the past, but my simulation was written in Python and I want to learn
-more about Python's multiprocessing tools, so this post will explore
-that module in the context of performing parameter sweeps.
-&lt;/p&gt;
-
-&lt;div id="outline-container-sec-1" class="outline-2"&gt;
-&lt;h2 id="sec-1"&gt;Profile the code first to identify bottlenecks&lt;/h2&gt;
-&lt;div class="outline-text-2" id="text-1"&gt;
-&lt;p&gt;
-First, I profiled my code to identify where any slowdowns might be
-occurring in the serial program. I used a great tutorial at the &lt;a href="https://zapier.com/engineering/profiling-python-boss/"&gt;Zapier
-Engineering&lt;/a&gt; blog to write a decorator for profiling the main instance
-method of my class that was doing most of the work. Surprisingly, I
-found that a few numpy methods were taking the most time, namely
-&lt;b&gt;norm()&lt;/b&gt; and &lt;b&gt;cross()&lt;/b&gt;. To address this, I directly imported the
-Fortran BLAS &lt;b&gt;nrm2()&lt;/b&gt; function using scipy's &lt;b&gt;get_blas_funcs()&lt;/b&gt;
-function and hard-coded the cross product in pure Python inside the
-method; these two steps alone resulted in a 4x decrease in simulation
-time. I suspect the reason for this was because the overhead of
-calling functions on small arrays outweighs the increase in speed
-using Numpy's optimized C code. I was normalizing single vectors and
-taking cross products between two vectors at a time many times during
-each loop iteration.
-&lt;/p&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kyle M. Douglass (Posts about computing)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link href="http://kmdouglass.github.io/categories/computing.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Fri, 04 Jan 2019 14:44:34 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Learning Python's Multiprocessing Module</title><link>http://kmdouglass.github.io/posts/learning-pythons-multiprocessing-module/</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;I've been doing a bit of programming work lately that would greatly benefit from a speed boost
+using parallel/concurrent processing tools. Essentially, I'm doing a &lt;a class="reference external" href="http://www.mathworks.com/help/simulink/examples/parallel-simulations-using-parfor-parameter-sweep-in-normal-mode.html"&gt;parameter sweep&lt;/a&gt;
+where the values for two different simulation parameters are input into the simulation and allowed
+to run with the results being recorded to disk at the end. The point is to find out how the
+simulation results vary with the parameter values.&lt;/p&gt;
+&lt;p&gt;In my current code, a new simulation is initialized with each pair of parameter values inside one
+iteration of a for loop; each iteration of the loop is independent of the others. Spreading these
+iterations over the 12 cores on my workstation should result in about a 12x decrease in the amount
+of time the simulation takes to run.&lt;/p&gt;
+&lt;p&gt;I've had good success using the &lt;cite&gt;parfor&lt;/cite&gt; loop construct in Matlab in the past, but my simulation
+was written in Python and I want to learn more about Python's multiprocessing tools, so this post
+will explore that module in the context of performing parameter sweeps.&lt;/p&gt;
+&lt;div class="section" id="profile-the-code-first-to-identify-bottlenecks"&gt;
+&lt;h2&gt;Profile the code first to identify bottlenecks&lt;/h2&gt;
+&lt;p&gt;First, I profiled my code to identify where any slowdowns might be occurring in the serial
+program. I used a great tutorial at the &lt;a class="reference external" href="https://zapier.com/engineering/profiling-python-boss/"&gt;Zapier Engineering&lt;/a&gt; blog to write a decorator for profiling
+the main instance method of my class that was doing most of the work. Surprisingly, I found that a
+few numpy methods were taking the most time, namely &lt;cite&gt;norm()&lt;/cite&gt; and &lt;cite&gt;cross()&lt;/cite&gt;. To address this, I
+directly imported the Fortran BLAS &lt;cite&gt;nrm2()&lt;/cite&gt; function using scipy's &lt;cite&gt;get_blas_funcs()&lt;/cite&gt; function and
+hard-coded the cross product in pure Python inside the method; these two steps alone resulted in a
+4x decrease in simulation time. I suspect the reason for this was because the overhead of calling
+functions on small arrays outweighs the increase in speed using Numpy's optimized C code. I was
+normalizing single vectors and taking cross products between two vectors at a time many times
+during each loop iteration.&lt;/p&gt;
 &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div id="outline-container-sec-2" class="outline-2"&gt;
-&lt;h2 id="sec-2"&gt;A brief glance at Python's multiprocessing module&lt;/h2&gt;
-&lt;div class="outline-text-2" id="text-2"&gt;
-&lt;p&gt;
-&lt;a href="http://pymotw.com/2/multiprocessing/basics.html"&gt;PyMOTW&lt;/a&gt; has a good, minimal description of the main aspects of the
-multiprocessing module. They state that the simplest way to create
-tasks on different cores of a machine is to create new &lt;b&gt;Process&lt;/b&gt;
-objects with target functions. Each object is then set to execute by
-calling its &lt;b&gt;start()&lt;/b&gt; method.
-&lt;/p&gt;
-
-&lt;p&gt;
-The basic example from their site looks like this:
-&lt;/p&gt;
-
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;import multiprocessing
-
-def worker():
-    """worker function"""
-    print 'Worker'
-    return
-
-if __name__ == '__main__':
-    jobs = []
-    for i in range(5):
-        p = multiprocessing.Process(target=worker)
-        jobs.append(p)
-        p.start()
+&lt;div class="section" id="a-brief-glance-at-python-s-multiprocessing-module"&gt;
+&lt;h2&gt;A brief glance at Python's multiprocessing module&lt;/h2&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://pymotw.com/2/multiprocessing/basics.html"&gt;PyMOTW&lt;/a&gt; has a good, minimal description of the
+main aspects of the multiprocessing module. They state that the simplest way to create tasks on
+different cores of a machine is to create new &lt;cite&gt;Process&lt;/cite&gt; objects with target functions. Each object
+is then set to execute by calling its &lt;cite&gt;start()&lt;/cite&gt; method.&lt;/p&gt;
+&lt;p&gt;The basic example from their site looks like this:&lt;/p&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;multiprocessing&lt;/span&gt;
+&lt;a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-2"&gt;&lt;/a&gt;
+&lt;a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-3"&gt;&lt;/a&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;worker&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+&lt;a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-4"&gt;&lt;/a&gt;    &lt;span class="sd"&gt;"""worker function"""&lt;/span&gt;
+&lt;a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-5"&gt;&lt;/a&gt;    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s1"&gt;'Worker'&lt;/span&gt;
+&lt;a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-6"&gt;&lt;/a&gt;    &lt;span class="k"&gt;return&lt;/span&gt;
+&lt;a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-7"&gt;&lt;/a&gt;
+&lt;a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-8"&gt;&lt;/a&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;'__main__'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-9"&gt;&lt;/a&gt;    &lt;span class="n"&gt;jobs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+&lt;a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-10"&gt;&lt;/a&gt;    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-11"&gt;&lt;/a&gt;        &lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;multiprocessing&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Process&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;target&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;worker&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-12"&gt;&lt;/a&gt;        &lt;span class="n"&gt;jobs&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-13"&gt;&lt;/a&gt;        &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;start&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;In this example, it's important to create the Process instances inside the&lt;/p&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_de225704763a438e9afd670052d58ffc-1"&gt;&lt;/a&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;'__main__'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;section of the script because child processes import the script where the target function is
+contained. Placing the object instantiation in this section prevents an infinite, recursive string
+of such instantiations. A workaround to this is to define the function in a different script and
+import it into the namespace.&lt;/p&gt;
+&lt;p&gt;To send arguments to the function (&lt;cite&gt;worker()&lt;/cite&gt; in the example above), we can use the &lt;cite&gt;args&lt;/cite&gt; keyword
+in the Process object instantiation like&lt;/p&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_da3be8ef22d146c097c2da03d71cd10a-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;multiprocessing&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Process&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;target&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;worker&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;,))&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;A very important thing to note is that the arguments must be objects that can be pickled using
+Python's pickle module. If an argument is a class instance, this means that every attritube of that
+class must be pickleable.&lt;/p&gt;
+&lt;p&gt;An important class in the multiprocessing module is a &lt;cite&gt;Pool&lt;/cite&gt;. A &lt;a class="reference external" href="https://docs.python.org/3.4/library/multiprocessing.html#multiprocessing.pool.Pool"&gt;Pool&lt;/a&gt; object
+controls a pool of worker processes. Jobs can be submitted to the Pool, which then sends the jobs
+to the individual workers.&lt;/p&gt;
+&lt;p&gt;The &lt;cite&gt;Pool.map()&lt;/cite&gt; achieves the same functionality as Matlab's &lt;cite&gt;parfor&lt;/cite&gt; construct. This method
+essentially applies a function to each element in an iterable and returns the results. For example,
+if I wanted to square each number in a list of integers between 0 and 9 and perform the square
+operation on multiple processors, I would write a function for squaring an argument, and supply
+this function and the list of integers to &lt;cite&gt;Pool.map()&lt;/cite&gt;. The code looks like this:&lt;/p&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_80aa35699e8b42569c0122356f4aa6dd-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;multiprocessing&lt;/span&gt;
+&lt;a name="rest_code_80aa35699e8b42569c0122356f4aa6dd-2"&gt;&lt;/a&gt;
+&lt;a name="rest_code_80aa35699e8b42569c0122356f4aa6dd-3"&gt;&lt;/a&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;funSquare&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_80aa35699e8b42569c0122356f4aa6dd-4"&gt;&lt;/a&gt;    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;num&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;a name="rest_code_80aa35699e8b42569c0122356f4aa6dd-5"&gt;&lt;/a&gt;
+&lt;a name="rest_code_80aa35699e8b42569c0122356f4aa6dd-6"&gt;&lt;/a&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;'__main__'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;a name="rest_code_80aa35699e8b42569c0122356f4aa6dd-7"&gt;&lt;/a&gt;    &lt;span class="n"&gt;pool&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;multiprocessing&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Pool&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;a name="rest_code_80aa35699e8b42569c0122356f4aa6dd-8"&gt;&lt;/a&gt;    &lt;span class="n"&gt;results&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pool&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;map&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;funSquare&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;a name="rest_code_80aa35699e8b42569c0122356f4aa6dd-9"&gt;&lt;/a&gt;    &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;results&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;
-In this example, it's important to create the Process instances inside
-the
-&lt;/p&gt;
-
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;if __name__ == '__main__':
-&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;
-section of the script because child processes import the script where
-the target function is contained. Placing the object instantiation in
-this section prevents an infinite, recursive string of such
-instantiations. A workaround to this is to define the function in a
-different script and import it into the namespace.
-&lt;/p&gt;
-
-&lt;p&gt;
-To send arguments to the function (&lt;b&gt;worker()&lt;/b&gt; in the example above),
-we can use the &lt;b&gt;args&lt;/b&gt; keyword in the Process object instantiation like
-&lt;/p&gt;
-
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;p = multiprocessing.Process(target=worker, args=(i,))
-&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;
-A very important thing to note is that the arguments must be objects
-that can be pickled using Python's pickle module. If an argument is a
-class instance, this means that every attritube of that class must be
-pickleable.
-&lt;/p&gt;
-
-&lt;p&gt;
-An important class in the multiprocessing module is a &lt;b&gt;Pool&lt;/b&gt;. A &lt;a href="https://docs.python.org/3.4/library/multiprocessing.html#multiprocessing.pool.Pool"&gt;Pool&lt;/a&gt;
-object controls a pool of worker processes. Jobs can be submitted to
-the Pool, which then sends the jobs to the individual workers.
-&lt;/p&gt;
-
-&lt;p&gt;
-The &lt;b&gt;Pool.map()&lt;/b&gt; achieves the same functionality as Matlab's &lt;b&gt;parfor&lt;/b&gt;
-construct. This method essentially applies a function to each element
-in an iterable and returns the results. For example, if I wanted to
-square each number in a list of integers between 0 and 9 and perform
-the square operation on multiple processors, I would write a function
-for squaring an argument, and supply this function and the list of
-integers to &lt;b&gt;Pool.map()&lt;/b&gt;. The code looks like this:
-&lt;/p&gt;
-
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;import multiprocessing
-
-def funSquare(num):
-    return num ** 2
-
-if __name__ == '__main__':
-    pool = multiprocessing.Pool()
-    results = pool.map(funSquare, range(10))
-    print(results)
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div id="outline-container-sec-3" class="outline-2"&gt;
-&lt;h2 id="sec-3"&gt;Design the solution to the problem&lt;/h2&gt;
-&lt;div class="outline-text-2" id="text-3"&gt;
-&lt;p&gt;
-In my parameter sweep, I have two classes: one is an object that I'm
-simulating and the other acts as a controller that sends parameters to
-the structure and collects the results of the simulation. Everything
-was written in a serial fashion and I want to change it so the bulk of
-the work is performed in parallel.
-&lt;/p&gt;
-
-&lt;p&gt;
-After the bottlenecks were identified in the serial code, I began
-thinking about how the the problem of parameter sweeps could be
-addressed using the multiprocessing module.
-&lt;/p&gt;
-
-&lt;p&gt;
-The solution requirements I identified for my parameter sweep are as
-follows:
-&lt;/p&gt;
-
-&lt;ol class="org-ol"&gt;
-&lt;li&gt;Accept two values (one for each parameter) from the range of values
-to test as inputs to the simulation.
-&lt;/li&gt;
-&lt;li&gt;For each pair of values, run the simulation as an independent
-process.
-&lt;/li&gt;
-&lt;li&gt;Return the results of the simulation as as a list or Numpy array.
-&lt;/li&gt;
+&lt;div class="section" id="design-the-solution-to-the-problem"&gt;
+&lt;h2&gt;Design the solution to the problem&lt;/h2&gt;
+&lt;p&gt;In my parameter sweep, I have two classes: one is an object that I'm simulating and the other acts
+as a controller that sends parameters to the structure and collects the results of the
+simulation. Everything was written in a serial fashion and I want to change it so the bulk of the
+work is performed in parallel.&lt;/p&gt;
+&lt;p&gt;After the bottlenecks were identified in the serial code, I began thinking about how the the
+problem of parameter sweeps could be addressed using the multiprocessing module.&lt;/p&gt;
+&lt;p&gt;The solution requirements I identified for my parameter sweep are as follows:&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;Accept two values (one for each parameter) from the range of values to test as inputs to the
+simulation.&lt;/li&gt;
+&lt;li&gt;For each pair of values, run the simulation as an independent process.&lt;/li&gt;
+&lt;li&gt;Return the results of the simulation as as a list or Numpy array.&lt;/li&gt;
 &lt;/ol&gt;
-
-&lt;p&gt;
-I often choose to return the results as Numpy arrays since I can
-easily pickle them when saving to a disk. This may change depending on
-your specific problem.
-&lt;/p&gt;
+&lt;p&gt;I often choose to return the results as Numpy arrays since I can easily pickle them when saving to
+a disk. This may change depending on your specific problem.&lt;/p&gt;
 &lt;/div&gt;
+&lt;div class="section" id="implementation-of-the-solution"&gt;
+&lt;h2&gt;Implementation of the solution&lt;/h2&gt;
+&lt;p&gt;I'll now give a simplified example of how this solution to the parameter sweep can be implemented
+using Python's multiprocessing module. I won't use objects like in my real code, but will first
+demonstrate an example where &lt;cite&gt;Pool.map()&lt;/cite&gt; is applied to a list of numbers.&lt;/p&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;multiprocessing&lt;/span&gt;
+&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-2"&gt;&lt;/a&gt;
+&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-3"&gt;&lt;/a&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;runSimulation&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-4"&gt;&lt;/a&gt;    &lt;span class="sd"&gt;"""This is the main processing function. It will contain whatever&lt;/span&gt;
+&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-5"&gt;&lt;/a&gt;&lt;span class="sd"&gt;    code should be run on multiple processors.&lt;/span&gt;
+&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-6"&gt;&lt;/a&gt;
+&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-7"&gt;&lt;/a&gt;&lt;span class="sd"&gt;    """&lt;/span&gt;
+&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-8"&gt;&lt;/a&gt;    &lt;span class="n"&gt;param1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;param2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;params&lt;/span&gt;
+&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-9"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;# Example computation&lt;/span&gt;
+&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-10"&gt;&lt;/a&gt;    &lt;span class="n"&gt;processedData&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-11"&gt;&lt;/a&gt;    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;ctr&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1000000&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-12"&gt;&lt;/a&gt;        &lt;span class="n"&gt;processedData&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;param1&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;ctr&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;param2&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-13"&gt;&lt;/a&gt;
+&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-14"&gt;&lt;/a&gt;    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;processedData&lt;/span&gt;
+&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-15"&gt;&lt;/a&gt;
+&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-16"&gt;&lt;/a&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;'__main__'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-17"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;# Define the parameters to test&lt;/span&gt;
+&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-18"&gt;&lt;/a&gt;    &lt;span class="n"&gt;param1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-19"&gt;&lt;/a&gt;    &lt;span class="n"&gt;param2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;202&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-20"&gt;&lt;/a&gt;
+&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-21"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;# Zip the parameters because pool.map() takes only one iterable&lt;/span&gt;
+&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-22"&gt;&lt;/a&gt;    &lt;span class="n"&gt;params&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;zip&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;param1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;param2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-23"&gt;&lt;/a&gt;
+&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-24"&gt;&lt;/a&gt;    &lt;span class="n"&gt;pool&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;multiprocessing&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Pool&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-25"&gt;&lt;/a&gt;    &lt;span class="n"&gt;results&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pool&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;map&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;runSimulation&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;This is a rather silly example of a simulation, but I think it illustrates the point nicely. In the
+&lt;cite&gt;__main__&lt;/cite&gt; portion of the code, I first define two lists for each parameter value that I want to
+'simulate.' These parameters are zipped together in this example because &lt;cite&gt;Pool.map()&lt;/cite&gt; takes only
+one iterable as its argument. The pool is opened using with &lt;cite&gt;multiprocessing.Pool()&lt;/cite&gt;.&lt;/p&gt;
+&lt;p&gt;Most of the work is performed in the function &lt;cite&gt;runSimulation(params)&lt;/cite&gt;. It takes a tuple of two
+parameters which are unpacked. Then, these parameters are used in the for loop to build a list of
+simulated values which is eventually returned.&lt;/p&gt;
+&lt;p&gt;Returning to the &lt;cite&gt;__main__&lt;/cite&gt; section, each simulation is run on a different core of my machine using
+the &lt;cite&gt;Pool.map()&lt;/cite&gt; function. This applies the function called &lt;cite&gt;runSimulation()&lt;/cite&gt; to the values in the
+&lt;em&gt;params&lt;/em&gt; iterable. In other words, it calls the code described in &lt;cite&gt;runSimulation()&lt;/cite&gt; with a
+different pair of values in params.&lt;/p&gt;
+&lt;p&gt;All the results are eventually returned in a list in the same order as the parameter iterable. This
+means that the first element in the &lt;cite&gt;results&lt;/cite&gt; list corresponds to parameters of 0 and 2 in this
+example.&lt;/p&gt;
 &lt;/div&gt;
-
-&lt;div id="outline-container-sec-4" class="outline-2"&gt;
-&lt;h2 id="sec-4"&gt;Implementation of the solution&lt;/h2&gt;
-&lt;div class="outline-text-2" id="text-4"&gt;
-&lt;p&gt;
-I'll now give a simplified example of how this solution to the
-parameter sweep can be implemented using Python's multiprocessing
-module. I won't use objects like in my real code, but will first
-demonstrate an example where &lt;b&gt;Pool.map()&lt;/b&gt; is applied to a list of
-numbers.
-&lt;/p&gt;
-
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;import multiprocessing
-
-def runSimulation(params):
-    """This is the main processing function. It will contain whatever
-    code should be run on multiple processors.
-    
-    """
-    param1, param2 = params
-    # Example computation
-    processedData = []
-    for ctr in range(1000000):
-        processedData.append(param1 * ctr - param2 ** 2)
-
-    return processedData
-
-if __name__ == '__main__':
-    # Define the parameters to test
-    param1 = range(100)
-    param2 = range(2, 202, 2)
-
-    # Zip the parameters because pool.map() takes only one iterable
-    params = zip(param1, param2)
-    
-    pool = multiprocessing.Pool()
-    results = pool.map(runSimulation, params)
+&lt;div class="section" id="iterables-over-arbitrary-objects"&gt;
+&lt;h2&gt;Iterables over arbitrary objects&lt;/h2&gt;
+&lt;p&gt;In my real simulation code, I use a class to encapsulate a number of structural parameters and
+methods for simulating a polymer model. So long as instances of this class can be &lt;a class="reference external" href="https://docs.python.org/3/library/pickle.html"&gt;pickled&lt;/a&gt;, I can use them as the iterable in &lt;cite&gt;Pool.map()&lt;/cite&gt;,
+not just lists of floating point numbers.&lt;/p&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;multiprocessing&lt;/span&gt;
+&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-2"&gt;&lt;/a&gt;
+&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-3"&gt;&lt;/a&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;simObject&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-4"&gt;&lt;/a&gt;    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-5"&gt;&lt;/a&gt;        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;param1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;param2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;params&lt;/span&gt;
+&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-6"&gt;&lt;/a&gt;
+&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-7"&gt;&lt;/a&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;runSimulation&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;objInstance&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-8"&gt;&lt;/a&gt;    &lt;span class="sd"&gt;"""This is the main processing function. It will contain whatever&lt;/span&gt;
+&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-9"&gt;&lt;/a&gt;&lt;span class="sd"&gt;    code should be run on multiple processors.&lt;/span&gt;
+&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-10"&gt;&lt;/a&gt;
+&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-11"&gt;&lt;/a&gt;&lt;span class="sd"&gt;    """&lt;/span&gt;
+&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-12"&gt;&lt;/a&gt;    &lt;span class="n"&gt;param1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;param2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;objInstance&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;param1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;objInstance&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;param2&lt;/span&gt;
+&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-13"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;# Example computation&lt;/span&gt;
+&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-14"&gt;&lt;/a&gt;    &lt;span class="n"&gt;processedData&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-15"&gt;&lt;/a&gt;    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;ctr&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1000000&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-16"&gt;&lt;/a&gt;        &lt;span class="n"&gt;processedData&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;param1&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;ctr&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;param2&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-17"&gt;&lt;/a&gt;
+&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-18"&gt;&lt;/a&gt;    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;processedData&lt;/span&gt;
+&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-19"&gt;&lt;/a&gt;
+&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-20"&gt;&lt;/a&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;'__main__'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-21"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;# Define the parameters to test&lt;/span&gt;
+&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-22"&gt;&lt;/a&gt;    &lt;span class="n"&gt;param1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-23"&gt;&lt;/a&gt;    &lt;span class="n"&gt;param2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;202&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-24"&gt;&lt;/a&gt;
+&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-25"&gt;&lt;/a&gt;    &lt;span class="n"&gt;objList&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-26"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;# Create a list of objects to feed into pool.map()&lt;/span&gt;
+&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-27"&gt;&lt;/a&gt;    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;p1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;p2&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;zip&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;param1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;param2&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-28"&gt;&lt;/a&gt;        &lt;span class="n"&gt;objList&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;simObject&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;p1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;p2&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-29"&gt;&lt;/a&gt;
+&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-30"&gt;&lt;/a&gt;    &lt;span class="n"&gt;pool&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;multiprocessing&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Pool&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-31"&gt;&lt;/a&gt;    &lt;span class="n"&gt;results&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pool&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;map&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;runSimulation&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;objList&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;Again, this is a silly example, but it demonstrates that lists of objects can be used in the
+parameter sweep, allowing for easy parallelization of object-oriented code.&lt;/p&gt;
+&lt;p&gt;Instead of &lt;cite&gt;runSimulation()&lt;/cite&gt;, you may want to apply an instance method to a list in &lt;cite&gt;pool.map()&lt;/cite&gt;. A
+naïve way to do this is to replace &lt;em&gt;runSimulation&lt;/em&gt; with with the method name but this too causes
+problems. I won't go into the details here, but one solution is to use an instance's &lt;cite&gt;__call__()&lt;/cite&gt;
+method and pass the object instance into the pool. More details can be found &lt;a class="reference external" href="http://stackoverflow.com/questions/1816958/cant-pickle-type-instancemethod-when-using-pythons-multiprocessing-pool-ma"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="comparing-computation-times"&gt;
+&lt;h2&gt;Comparing computation times&lt;/h2&gt;
+&lt;p&gt;The following code makes a rough comparison between computation time for the parallel and serial
+versions of &lt;cite&gt;map()&lt;/cite&gt;:&lt;/p&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;multiprocessing&lt;/span&gt;
+&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-2"&gt;&lt;/a&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;time&lt;/span&gt;
+&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-3"&gt;&lt;/a&gt;
+&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-4"&gt;&lt;/a&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;runSimulation&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-5"&gt;&lt;/a&gt;    &lt;span class="sd"&gt;"""This is the main processing function. It will contain whatever&lt;/span&gt;
+&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-6"&gt;&lt;/a&gt;&lt;span class="sd"&gt;    code should be run on multiple processors.&lt;/span&gt;
+&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-7"&gt;&lt;/a&gt;
+&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-8"&gt;&lt;/a&gt;&lt;span class="sd"&gt;    """&lt;/span&gt;
+&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-9"&gt;&lt;/a&gt;    &lt;span class="n"&gt;param1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;param2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;params&lt;/span&gt;
+&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-10"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;# Example computation&lt;/span&gt;
+&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-11"&gt;&lt;/a&gt;    &lt;span class="n"&gt;processedData&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-12"&gt;&lt;/a&gt;    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;ctr&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1000000&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-13"&gt;&lt;/a&gt;        &lt;span class="n"&gt;processedData&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;param1&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;ctr&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;param2&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-14"&gt;&lt;/a&gt;
+&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-15"&gt;&lt;/a&gt;    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;processedData&lt;/span&gt;
+&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-16"&gt;&lt;/a&gt;
+&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-17"&gt;&lt;/a&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;'__main__'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-18"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;# Define the parameters to test&lt;/span&gt;
+&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-19"&gt;&lt;/a&gt;    &lt;span class="n"&gt;param1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-20"&gt;&lt;/a&gt;    &lt;span class="n"&gt;param2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;202&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-21"&gt;&lt;/a&gt;
+&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-22"&gt;&lt;/a&gt;    &lt;span class="n"&gt;params&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;zip&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;param1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;param2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-23"&gt;&lt;/a&gt;
+&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-24"&gt;&lt;/a&gt;    &lt;span class="n"&gt;pool&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;multiprocessing&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Pool&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-25"&gt;&lt;/a&gt;
+&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-26"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;# Parallel map&lt;/span&gt;
+&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-27"&gt;&lt;/a&gt;    &lt;span class="n"&gt;tic&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-28"&gt;&lt;/a&gt;    &lt;span class="n"&gt;results&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pool&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;map&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;runSimulation&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-29"&gt;&lt;/a&gt;    &lt;span class="n"&gt;toc&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-30"&gt;&lt;/a&gt;
+&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-31"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;# Serial map&lt;/span&gt;
+&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-32"&gt;&lt;/a&gt;    &lt;span class="n"&gt;tic2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-33"&gt;&lt;/a&gt;    &lt;span class="n"&gt;results&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;map&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;runSimulation&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-34"&gt;&lt;/a&gt;    &lt;span class="n"&gt;toc2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-35"&gt;&lt;/a&gt;
+&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-36"&gt;&lt;/a&gt;    &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Parallel processing time: &lt;/span&gt;&lt;span class="si"&gt;%r&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s1"&gt;Serial processing time: &lt;/span&gt;&lt;span class="si"&gt;%r&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt;
+&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-37"&gt;&lt;/a&gt;          &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;toc&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;tic&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;toc2&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;tic2&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;On my machine, &lt;cite&gt;pool.map()&lt;/cite&gt; ran in 9.6 seconds, but the serial version took 163.3 seconds. My
+laptop has 8 cores, so I would have expected the speedup to be a factor of 8, not a factor
+of 16. I'm not sure why it's 16, but I suspect part of the reason is that measuring system time
+using the &lt;cite&gt;time.time()&lt;/cite&gt; function is not wholly accurate.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="important-points"&gt;
+&lt;h2&gt;Important points&lt;/h2&gt;
+&lt;p&gt;I can verify that all the cores are being utilized on my machine while the code is running by using
+the &lt;a class="reference external" href="http://hisham.hm/htop/"&gt;htop&lt;/a&gt; console program. In some cases, Python modules like Numpy,
+scipy, etc. may limit processes in Python to running on only one core on Linux machines, which
+defeats the purpose of writing concurrent code in this case. (See for example &lt;a class="reference external" href="http://stackoverflow.com/questions/15639779/what-determines-whether-different-python-processes-are-assigned-to-the-same-or-d/15641148#15641148"&gt;this discussion&lt;/a&gt;.)
+To fix this, we can import Python's &lt;em&gt;os&lt;/em&gt; module to reset the task affinity in our code:&lt;/p&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_3d082ad6666c43b5a89a61046f1bd410-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;system&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"taskset -p 0xff &lt;/span&gt;&lt;span class="si"&gt;%d&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getpid&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;
-This is a rather silly example of a simulation, but I think it
-illustrates the point nicely. In the &lt;b&gt;&lt;span class="underline"&gt;&lt;span class="underline"&gt;main&lt;/span&gt;&lt;/span&gt;&lt;/b&gt; portion of the code, I
-first define two lists for each parameter value that I want to
-'simulate.' These parameters are zipped together in this example
-because &lt;b&gt;Pool.map()&lt;/b&gt; takes only one iterable as its argument. The pool
-is opened using with &lt;b&gt;multiprocessing.Pool()&lt;/b&gt;.
-&lt;/p&gt;
-
-&lt;p&gt;
-Most of the work is performed in the function
-&lt;b&gt;runSimulation(params)&lt;/b&gt;. It takes a tuple of two parameters which are
-unpacked. Then, these parameters are used in the for loop to build a
-list of simulated values which is eventually returned.
-&lt;/p&gt;
-
-&lt;p&gt;
-Returning to the &lt;b&gt;&lt;span class="underline"&gt;&lt;span class="underline"&gt;main&lt;/span&gt;&lt;/span&gt;&lt;/b&gt; section, each simulation is run on a
-different core of my machine using the &lt;b&gt;Pool.map()&lt;/b&gt; function. This
-applies the function called &lt;b&gt;runSimulation()&lt;/b&gt; to the values in the
-&lt;b&gt;params&lt;/b&gt; iterable. In other words, it calls the code described in
-&lt;b&gt;runSimulation()&lt;/b&gt; with a different pair of values in params.
-&lt;/p&gt;
-
-&lt;p&gt;
-All the results are eventually returned in a list in the same order as
-the parameter iterable. This means that the first element in the
-&lt;b&gt;results&lt;/b&gt; list corresponds to parameters of 0 and 2 in this example.
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div id="outline-container-sec-5" class="outline-2"&gt;
-&lt;h2 id="sec-5"&gt;Iterables over arbitrary objects&lt;/h2&gt;
-&lt;div class="outline-text-2" id="text-5"&gt;
-&lt;p&gt;
-In my real simulation code, I use a class to encapsulate a number of
-structural parameters and methods for simulating a polymer model. So
-long as instances of this class can be &lt;a href="https://docs.python.org/3/library/pickle.html"&gt;pickled&lt;/a&gt;, I can use them as the
-iterable in &lt;b&gt;Pool.map()&lt;/b&gt;, not just lists of floating point numbers.
-&lt;/p&gt;
-
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;import multiprocessing
-
-class simObject():
-    def __init__(self, params):
-        self.param1, self.param2 = params
-
-def runSimulation(objInstance):
-    """This is the main processing function. It will contain whatever
-    code should be run on multiple processors.
-    
-    """
-    param1, param2 = objInstance.param1, objInstance.param2
-    # Example computation
-    processedData = []
-    for ctr in range(1000000):
-        processedData.append(param1 * ctr - param2 ** 2)
-
-    return processedData
-
-if __name__ == '__main__':
-    # Define the parameters to test
-    param1 = range(100)
-    param2 = range(2, 202, 2)
-
-    objList = []
-    # Create a list of objects to feed into pool.map()
-    for p1, p2 in zip(param1, param2):
-        objList.append(simObject((p1, p2)))
-
-    pool = multiprocessing.Pool()
-    results = pool.map(runSimulation, objList)
-&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;
-Again, this is a silly example, but it demonstrates that lists of
-objects can be used in the parameter sweep, allowing for easy
-parallelization of object-oriented code.
-&lt;/p&gt;
-
-&lt;p&gt;
-Instead of &lt;b&gt;runSimulation()&lt;/b&gt;, you may want to apply an instance method
-to a list in &lt;b&gt;pool.map()&lt;/b&gt;. A naïve way to do this is to replace
-&lt;b&gt;runSimulation&lt;/b&gt; with with the method name but this too causes
-problems. I won't go into the details here, but one solution is to use
-an instance's &lt;b&gt;__call__()&lt;/b&gt; method and pass the object instance into
-the pool. More details can be found &lt;a href="http://stackoverflow.com/questions/1816958/cant-pickle-type-instancemethod-when-using-pythons-multiprocessing-pool-ma"&gt;here&lt;/a&gt;.
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div id="outline-container-sec-6" class="outline-2"&gt;
-&lt;h2 id="sec-6"&gt;Comparing computation times&lt;/h2&gt;
-&lt;div class="outline-text-2" id="text-6"&gt;
-&lt;p&gt;
-The following code makes a rough comparison between computation time
-for the parallel and serial versions of &lt;b&gt;map()&lt;/b&gt;:
-&lt;/p&gt;
-
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;import multiprocessing
-import time
-
-def runSimulation(params):
-    """This is the main processing function. It will contain whatever
-    code should be run on multiple processors.
-    
-    """
-    param1, param2 = params
-    # Example computation
-    processedData = []
-    for ctr in range(1000000):
-        processedData.append(param1 * ctr - param2 ** 2)
-
-    return processedData
-
-if __name__ == '__main__':
-    # Define the parameters to test
-    param1 = range(100)
-    param2 = range(2, 202, 2)
-
-    params = zip(param1, param2)
-
-    pool = multiprocessing.Pool()
-
-    # Parallel map
-    tic = time.time()
-    results = pool.map(runSimulation, params)
-    toc = time.time()
-
-    # Serial map
-    tic2 = time.time()
-    results = map(runSimulation, params)
-    toc2 = time.time()
-
-    print('Parallel processing time: %r\nSerial processing time: %r'
-          % (toc - tic, toc2 - tic2))
-&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;
-On my machine, &lt;b&gt;pool.map()&lt;/b&gt; ran in 9.6 seconds, but the serial version
-took 163.3 seconds. My laptop has 8 cores, so I would have expected
-the speedup to be a factor of 8, not a factor of 16. I'm not sure why
-it's 16, but I suspect part of the reason is that measuring system
-time using the &lt;b&gt;time.time()&lt;/b&gt; function is not wholly accurate.
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div id="outline-container-sec-7" class="outline-2"&gt;
-&lt;h2 id="sec-7"&gt;Important points&lt;/h2&gt;
-&lt;div class="outline-text-2" id="text-7"&gt;
-&lt;p&gt;
-I can verify that all the cores are being utilized on my machine while
-the code is running by using the &lt;a href="http://hisham.hm/htop/"&gt;htop&lt;/a&gt; console program. In some cases,
-Python modules like Numpy, scipy, etc. may limit processes in Python
-to running on only one core on Linux machines, which defeats the
-purpose of writing concurrent code in this case. (See for example &lt;a href="http://stackoverflow.com/questions/15639779/what-determines-whether-different-python-processes-are-assigned-to-the-same-or-d/15641148#15641148"&gt;this
-discussion&lt;/a&gt;.) To fix this, we can import Python's &lt;b&gt;os&lt;/b&gt; module to reset
-the task affinity in our code:
-&lt;/p&gt;
-
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;os.system("taskset -p 0xff %d" % os.getpid())
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div id="outline-container-sec-8" class="outline-2"&gt;
-&lt;h2 id="sec-8"&gt;Conclusions&lt;/h2&gt;
-&lt;div class="outline-text-2" id="text-8"&gt;
-&lt;p&gt;
-I think that Matlab's &lt;b&gt;parfor&lt;/b&gt; construct is easier to use because one
-doesn't have to consider the nuances of writing concurrent code. So
-long as each loop iteration is independent of the others, you simply
-write a &lt;b&gt;parfor&lt;/b&gt; instead of &lt;b&gt;for&lt;/b&gt; and you're set.
-&lt;/p&gt;
-
-&lt;p&gt;
-In Python, you have to prevent infinite, recursive function calls by
-placing your code in the &lt;b&gt;&lt;span class="underline"&gt;&lt;span class="underline"&gt;main&lt;/span&gt;&lt;/span&gt;&lt;/b&gt; section of your script or by
-placing the function in a different script and importing it. You also
-have to be sure that Numpy and other Python modules that use BLAS
-haven't reset the core affinity. What you gain over Matlab's
-implementation is the power of using Python as a general programming
-language with a lot of tools for scientific computing. This and the
-multiprocessing module is free; you have to have an institute license
-or pay for Matlab's &lt;a href="http://www.mathworks.com/products/parallel-computing/"&gt;Parallel Computing Toolbox&lt;/a&gt;.
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;</description><category>computing</category><category>python</category><guid>http://kmdouglass.github.io/posts/learning-pythons-multiprocessing-module.html</guid><pubDate>Mon, 29 Dec 2014 17:42:23 GMT</pubDate></item></channel></rss>
+&lt;div class="section" id="conclusions"&gt;
+&lt;h2&gt;Conclusions&lt;/h2&gt;
+&lt;p&gt;I think that Matlab's &lt;cite&gt;parfor&lt;/cite&gt; construct is easier to use because one doesn't have to consider the
+nuances of writing concurrent code. So long as each loop iteration is independent of the others,
+you simply write a &lt;cite&gt;parfor&lt;/cite&gt; instead of &lt;cite&gt;for&lt;/cite&gt; and you're set.&lt;/p&gt;
+&lt;p&gt;In Python, you have to prevent infinite, recursive function calls by placing your code in the
+&lt;cite&gt;__main__&lt;/cite&gt; section of your script or by placing the function in a different script and importing
+it. You also have to be sure that Numpy and other Python modules that use BLAS haven't reset the
+core affinity. What you gain over Matlab's implementation is the power of using Python as a general
+programming language with a lot of tools for scientific computing. This and the multiprocessing
+module is free; you have to have an institute license or pay for Matlab's &lt;a class="reference external" href="http://www.mathworks.com/products/parallel-computing/"&gt;Parallel Computing
+Toolbox&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;</description><category>computing</category><category>python</category><guid>http://kmdouglass.github.io/posts/learning-pythons-multiprocessing-module/</guid><pubDate>Mon, 29 Dec 2014 17:42:23 GMT</pubDate></item></channel></rss>

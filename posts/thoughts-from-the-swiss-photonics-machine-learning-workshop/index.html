@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="My thoughts from today's Machine Learning Workshop.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thoughts from the Swiss Photonics Machine Learning Workshop | Kyle M. Douglass</title>
+<link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/ipython.min.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/nikola_ipython.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/custom_notebook.css" rel="stylesheet" type="text/css">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
+<link rel="alternate" type="application/rss+xml" title="RSS" hreflang="en" href="../../rss.xml">
+<link rel="canonical" href="http://kmdouglass.github.io/posts/thoughts-from-the-swiss-photonics-machine-learning-workshop/">
+<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><meta name="author" content="Kyle M. Douglass">
+<link rel="prev" href="../approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft/" title="Approximating diffraction patterns of rectangular apertures with the FFT" type="text/html">
+<link rel="next" href="../correlated-noise-and-the-fft/" title="Correlated noise and the FFT" type="text/html">
+<meta property="og:site_name" content="Kyle M. Douglass">
+<meta property="og:title" content="Thoughts from the Swiss Photonics Machine Learning Workshop">
+<meta property="og:url" content="http://kmdouglass.github.io/posts/thoughts-from-the-swiss-photonics-machine-learning-workshop/">
+<meta property="og:description" content="My thoughts from today's Machine Learning Workshop.">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2016-02-04T18:31:32+01:00">
+<meta property="article:tag" content="machine learning">
+<meta property="article:tag" content="photonics">
+<meta property="article:tag" content="Switzerland">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Menubar -->
+
+<nav class="navbar navbar-default navbar-static-top"><div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://kmdouglass.github.io/">
+
+                <span id="blog-title">Kyle M. Douglass</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
+            <ul class="nav navbar-nav">
+<li>
+<a href="../../categories/index.html">Tags</a>
+                </li>
+<li>
+<a href="../../archive.html">Archive</a>
+                </li>
+<li>
+<a href="../../stories/contact/index.html">Contact</a>
+
+                
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+    <a href="index.rst" id="sourcelink">Source</a>
+    </li>
+
+                
+            </ul>
+</div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Thoughts from the Swiss Photonics Machine Learning Workshop</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                    Kyle M. Douglass
+            </span></p>
+            <p class="dateline">
+            <a href="." rel="bookmark">
+            <time class="published dt-published" datetime="2016-02-04T18:31:32+01:00" itemprop="datePublished" title="2016-02-04 18:31">2016-02-04 18:31</time></a>
+            </p>
+                <p class="commentline">
+        
+    <a href="#disqus_thread" data-disqus-identifier="cache/posts/thoughts-from-the-swiss-photonics-machine-learning-workshop.html">Comments</a>
+
+
+            
+        </p>
+<p class="sourceline"><a href="index.rst" class="sourcelink">Source</a></p>
+
+        </div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<p>Today I attended a <a class="reference external" href="http://www.swissphotonics.net/workshops/workshop-datenbank?2886">machine learning workshop hosted by Swiss Photonics</a>. The workshop was a small,
+day-long series of talks by industry experts in Neuchâtel, Switzerland, not far from Lausanne. I
+went to the workshop because a) I don't know much about machine learning and want to know more,
+and b) I wanted to connect with people within the Swiss Photonics circle. Most of the talks
+concerned deep learning for solving problems in industrial machine vision applications, such as
+quality control for the watch-making industry.</p>
+<p>Here are the main things I learned, which may or not be correct. I welcome any opinions or
+corrections in the comments:</p>
+<ul class="simple">
+<li>The term "learning" is used to mean "teaching a computer to recognize and classify patterns in
+data", such as finding people in images.</li>
+<li>Learning involves finding patterns in data. Once patterns are idenfitied, a set of them can be
+combined to form a model. A model makes predictions about what future data may look like. This
+means that a model may be used to see whether new data meets our expectations. An example would
+be using pictures of products from a production line and searching for defects, i.e. those
+products that don't fit our classification of "good" products.</li>
+<li>Learning applications require lots of training data to implement. This is where the primary cost
+of applying learning algorithms comes from.</li>
+<li>There are three categories of learning: supervised, reinforced, and unsupervised.</li>
+<li>The value in neural networks is their ability to make decisions in a way that is similar to
+humans. Other classification and decision algorithms work using strict programmatic rules and
+look for user-specified features. Neural networks do not require domain knowledge to establish
+features for a classifier. Their generality is their strength.</li>
+<li>
+<a class="reference external" href="https://en.wikipedia.org/wiki/Deep_learning">Deep learning</a> just refers to really big neural
+networks. Neural networks are not new; recent hardware advances like GPU-based computation and
+the availability of large datasets are what has enabled Deep learning.</li>
+</ul>
+<p>I did not hear much discussion about the tradeoffs and downsides to using neural networks or deep
+learning, other than that they require large amounts of training data. Notable talks were given by
+Reto Wyss of <a class="reference external" href="http://www.vidi-systems.com/company/about-us.html">ViDi</a> and Virginie Moser of
+<a class="reference external" href="CSEM">http://www.csem.ch/site/</a>. Wyss very eloquently explained why deep learning is useful for
+classification. Moser presented an extremely small and light-weight embedded machine vision system
+for traffic light control.</p>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../categories/machine-learning/" rel="tag">machine learning</a></li>
+            <li><a class="tag p-category" href="../../categories/photonics/" rel="tag">photonics</a></li>
+            <li><a class="tag p-category" href="../../categories/switzerland/" rel="tag">Switzerland</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft/" rel="prev" title="Approximating diffraction patterns of rectangular apertures with the FFT">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../correlated-noise-and-the-fft/" rel="next" title="Correlated noise and the FFT">Next post</a>
+            </li>
+        </ul></nav></aside><section class="comments hidden-print"><h2>Comments</h2>
+        
+        
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="kmdouglass",
+            disqus_url="http://kmdouglass.github.io/posts/thoughts-from-the-swiss-photonics-machine-learning-workshop/",
+        disqus_title="Thoughts from the Swiss Photonics Machine Learning Workshop",
+        disqus_identifier="cache/posts/thoughts-from-the-swiss-photonics-machine-learning-workshop.html",
+        disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+        </section></article><script>var disqus_shortname="kmdouglass";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+</div>
+        <!--End of body content-->
+
+        <footer id="footer">
+            Contents © 2019         <a href="mailto:kyle.m.douglass@gmail.com">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
+            
+        </footer>
+</div>
+</div>
+
+
+            <script src="../../assets/js/all-nocdn.js"></script><!-- fancy dates --><script>
+    moment.locale("en");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates --><script>
+    baguetteBox.run('div#content', {
+        ignoreClass: 'islink',
+        captions: function(element) {
+            return element.getElementsByTagName('img')[0].alt;
+    }});
+    </script>
+</body>
+</html>

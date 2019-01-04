@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="Paraxial optics solves the imaging problem in perfect systems.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paraxial Optics (2): What problem does it solve? | Kyle M. Douglass</title>
+<link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/ipython.min.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/nikola_ipython.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/custom_notebook.css" rel="stylesheet" type="text/css">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
+<link rel="alternate" type="application/rss+xml" title="RSS" hreflang="en" href="../../rss.xml">
+<link rel="canonical" href="http://kmdouglass.github.io/posts/paraxial-optics-2-what-problem-does-it-solve/">
+<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><meta name="author" content="Kyle M. Douglass">
+<link rel="prev" href="../can-my-beam-be-collimated/" title="Can my laser beam be collimated?" type="text/html">
+<link rel="next" href="../whats-the-difference-between-a-back-focal-plane-and-pupil-plane/" title="What's the difference between a back focal plane and pupil plane?" type="text/html">
+<meta property="og:site_name" content="Kyle M. Douglass">
+<meta property="og:title" content="Paraxial Optics (2): What problem does it solve?">
+<meta property="og:url" content="http://kmdouglass.github.io/posts/paraxial-optics-2-what-problem-does-it-solve/">
+<meta property="og:description" content="Paraxial optics solves the imaging problem in perfect systems.">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2015-05-31T15:37:13+02:00">
+<meta property="article:tag" content="optics">
+<meta property="article:tag" content="tutorials">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Menubar -->
+
+<nav class="navbar navbar-default navbar-static-top"><div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://kmdouglass.github.io/">
+
+                <span id="blog-title">Kyle M. Douglass</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
+            <ul class="nav navbar-nav">
+<li>
+<a href="../../categories/index.html">Tags</a>
+                </li>
+<li>
+<a href="../../archive.html">Archive</a>
+                </li>
+<li>
+<a href="../../stories/contact/index.html">Contact</a>
+
+                
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+    <a href="index.rst" id="sourcelink">Source</a>
+    </li>
+
+                
+            </ul>
+</div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Paraxial Optics (2): What problem does it solve?</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                    Kyle M. Douglass
+            </span></p>
+            <p class="dateline">
+            <a href="." rel="bookmark">
+            <time class="published dt-published" datetime="2015-05-31T15:37:13+02:00" itemprop="datePublished" title="2015-05-31 15:37">2015-05-31 15:37</time></a>
+            </p>
+                <p class="commentline">
+        
+    <a href="#disqus_thread" data-disqus-identifier="cache/posts/paraxial-optics-2-what-problem-does-it-solve.html">Comments</a>
+
+
+            
+        </p>
+<p class="sourceline"><a href="index.rst" class="sourcelink">Source</a></p>
+
+        </div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<div class="section" id="summary">
+<h2>Summary</h2>
+<ol class="arabic simple">
+<li>Paraxial optics is a tool to aid in building optical systems.</li>
+<li>Paraxial optics solves the imaging problem.</li>
+<li>The imaging problem concerns finding the location, size, and
+orientation of an image given an object and an optical system.</li>
+<li>An optical system is a collection of objects like lenses, mirrors,
+prisms, cameras, etc. that collects the light emitted or scattered
+by an object and delivers it to another location where it can be
+detected and processed for information.</li>
+<li>The rules of paraxial optics allow for a perfect imaging system,
+i.e. a system that creates a one-to-one correspondance between
+points in an object plane and an image plane.</li>
+</ol>
+</div>
+<div class="section" id="paraxial-optics-solves-the-imaging-problem">
+<h2>Paraxial optics solves the imaging problem</h2>
+<p>In this post I will use paraxial optics to mean paraxial geometrical optics. This is important
+since the paraxial approximation can also apply to the wave theory of light.</p>
+<p>When learning a new theory, I often find it most useful to first identify the problem that the
+theory was developed to solve. This approach is particularly pertinent for learning paraxial
+optics, since the theory is largely used as a tool to aid in the construction of optical
+systems. Unfortunately, the fact that paraxial optics can help solve problems often becomes lost on
+people because they never actually build anything for the purpose of imaging. And even if a someone
+never builds a camera or microscope, I think it is difficult for them to see what paraxial optics
+concepts--such as principle planes and aperture stops--can do for helping them troubleshoot their
+hardware when it is not working as expected.</p>
+<p>So, with this in mind, I will use this part in a series of blog posts to answer the following
+question: what is the problem that paraxial optics solves?</p>
+<p>Paraxial optics solves the imaging problem [1]. The imaging problem as I see it is simply this:
+<em>given an optical system, how can one arrange its components to form the image of an object at a
+desired</em> <em>position and with a predictable size and orientation?</em> This question has been asked by
+scientists, engineers, philosophers, and others since antiquity because we place enormous value in
+pictures.</p>
+<p>To better understand this problem, I am going to step through the parts of this statement and
+explain what I mean by each. First, I mention that the imaging problem involves the use of an
+<em>optical system</em>. I have to admit that I use this term partly because it is part of the jargon of
+the optical sciences, but I also think that the word "system" nicely captures the essence of what I
+would like to say. An optical system is a collection of components such as lenses, mirrors, and
+prisms taken together with their mechanical supports and arranged in a meaningful way to capture
+and channel light as it travels from one place to another. Below is one example of an optical
+system that most people know pretty well.</p>
+<img alt="A human eye is an optical system! From http://en.wikipedia.org/wiki/Eye#/media/File:Eye_iris.jpg, Peter Nóvak, Wikipedia." class="align-center" src="../../images/eye.jpg"><p>I have already mentioned that the components of an optical system can include things we commonly
+associate with optics, such as lenses and mirrors, but really no one such component is necessary to
+build an optical system so long as it captures and does something with light. For example, <a class="reference external" href="http://en.wikipedia.org/wiki/Pinhole_camera">the
+pinhole camera</a> uses nothing but a very small hole
+to form images; no lens is required! Still, we usually find some components like lenses much more
+frequently in optical systems than others, and the choice of which components to use really just
+depends on the specific type of imaging problem you are trying to solve.</p>
+<p>Next in the statement of the imaging problem I say that we will be forming an image by arranging
+the components of our optical system in a clever way. Though the intuitive notion of an image is
+quite clear, I think it is actually extremely difficult to formally define it. For the purpose of
+this tutorial, I think it is best at this point to rely on the intuitive idea of an image until I
+have developed enough concepts to define it in terms of optical theory [2].</p>
+<p>Finally, the imaging problem involves determining the location, size, and orientation of an image
+formed by the system. This means that rearrangement of our system's components is going to change
+these features of the image. Things such as the size of a CCD chip or the weight of a lens are
+going to place constraints on the values these properties can take.</p>
+</div>
+<div class="section" id="perfect-imaging-systems">
+<h2>Perfect imaging systems</h2>
+<p>At this point I should stress that paraxial optics is not the only theoretical tool for solving the
+imaging problem. We clearly can use non-paraxial geometrical optics or wave optics to determine the
+properties of an image formed by an optical system. However, what is interesting is that paraxial
+optics is one of very few theoretical frameworks in which a perfect image can be realized [3].</p>
+<img alt="Perfect optical system" class="align-center" src="../../images/im_perfectOpticalSystems.png"><p>The above figure, which is called a <a class="reference external" href="http://www.edmundoptics.com/TechSupport/resource_center/downloads/Anchor-Optics/GraphicalRayTracing.pdf">ray-trace diagram</a>,
+illustrates what I mean by a perfect imaging system. The system is represented as a "black box"
+that collects light coming from a two-dimensional plane (known as the object plane) and relays the
+light to another plane known as the image plane. The whole system is considered to be rotationally
+symmetric about a line called the optics axis so that I can represent it as a two-dimensional
+sketch instead of requiring a full, three-dimensional model. Finally, light is modeled as lines
+with arrows denoting the direction of propagation [4].</p>
+<p>Now comes the important point. Within the framework of paraxial optics theory, it is possible to
+show that, given an object plane and an image plane, one can construct an optical system consisting
+of components that redirect the light rays in such a way that all the rays leaving a point in the
+object plane are brought back together at a corresponding point in the image plane. <em>This means
+that the perfect optical system performs a one-to-one mapping of points in the object</em> <em>plane to
+points in the image plane</em>. What's more, the distance between every point in the image plane and
+the optics axis is proportional to the distance between their corresponding points and the axis in
+the object plane by a constant factor. This factor is known as the <em>magnification</em> of the system.</p>
+<p>The way this perfect imaging system is realized within the context of the theory is in the way the
+components redirect the rays coming from the object [5]. What differentiates /paraxial/ geometrical
+optics from plain old geometrical optics is the rules dictating how the redirection occurs.</p>
+<p>One other important point is to consider what happens in imperfect imaging systems. Once we violate
+the assumptions of paraxial optics so that we no longer have a system operating within its range of
+validity, we cannot perform a true, one-to-one mapping of points from the object plane to the image
+plane. Instead, we find that rays coming from a single point in the object plane cannot all be
+brought back together in any image plane [6]. We could say that the image plane is a concept that
+does not exist outside paraxial optics. And if the image plane does not exist, how are we to
+strictly define an image size and location?</p>
+<p>Of course, we can find planes in non-paraxial systems in which there are pretty good images, and
+these usually correspond to the image planes we find by applying the equations and simplifications
+of paraxial optics. So paraxial optics is often our first tool for modeling an imaging system. It
+tells us roughly where our images will be formed and how big they are, but it will not tell us
+about image quality.</p>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion</h2>
+<p>With this tutorial I hope to have provided you with a conceptual basis for understanding paraxial
+geometrical optics without including too many of its details. I think a conceptual basis such as
+this is much better than diving right into ray-trace diagrams with lenses and mirros. I think new
+students to optics often wonder what the importance is of paraxial optics and why it is needed when
+more complete optical descriptions exist. I hope that the discussion of the perfect imaging system
+and its existence only within the framework of paraxial geometrical optics helped to clarify its
+importance.</p>
+</div>
+<div class="section" id="footnotes">
+<h2>Footnotes</h2>
+<ol class="arabic simple">
+<li>You didn't expect me to give you the answer right away, didyou? :)</li>
+<li>
+<a class="reference external" href="http://en.wikipedia.org/wiki/Image">Even the Wikipedia entry on the concept of an Image</a> is a bit vague and philosophical.</li>
+<li>Maxwell's Fisheye lens is another, but it is a good deal more complicated and, to my knowledge,
+has not been demonstrated at optical wavelengths.</li>
+<li>It's important to realize that we are modeling the propagation of light as a ray; we are not
+saying that light is a ray. If light really was a ray and not an electromagnetic wave, then we
+would not need the wave theory of optics to explain phenomena like diffraction. Within the
+framework of the axioms of geometrical optics, a ray adequately describes how light propagates.</li>
+<li>More specifically, it lies in the linearization of Snell's law, but I won't get into that yet.</li>
+<li>This phenomenon is precisely what an optical aberration is within geometrical optics theory.</li>
+</ol>
+</div>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../categories/optics/" rel="tag">optics</a></li>
+            <li><a class="tag p-category" href="../../categories/tutorials/" rel="tag">tutorials</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../can-my-beam-be-collimated/" rel="prev" title="Can my laser beam be collimated?">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../whats-the-difference-between-a-back-focal-plane-and-pupil-plane/" rel="next" title="What's the difference between a back focal plane and pupil plane?">Next post</a>
+            </li>
+        </ul></nav></aside><section class="comments hidden-print"><h2>Comments</h2>
+        
+        
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="kmdouglass",
+            disqus_url="http://kmdouglass.github.io/posts/paraxial-optics-2-what-problem-does-it-solve/",
+        disqus_title="Paraxial Optics (2): What problem does it solve?",
+        disqus_identifier="cache/posts/paraxial-optics-2-what-problem-does-it-solve.html",
+        disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+        </section></article><script>var disqus_shortname="kmdouglass";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+</div>
+        <!--End of body content-->
+
+        <footer id="footer">
+            Contents © 2019         <a href="mailto:kyle.m.douglass@gmail.com">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
+            
+        </footer>
+</div>
+</div>
+
+
+            <script src="../../assets/js/all-nocdn.js"></script><!-- fancy dates --><script>
+    moment.locale("en");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates --><script>
+    baguetteBox.run('div#content', {
+        ignoreClass: 'islink',
+        captions: function(element) {
+            return element.getElementsByTagName('img')[0].alt;
+    }});
+    </script>
+</body>
+</html>

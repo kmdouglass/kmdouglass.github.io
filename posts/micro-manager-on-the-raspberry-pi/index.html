@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="How I compiled Micro-Manager 2.0 on the Raspberry Pi">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Micro-Manager on the Raspberry Pi | Kyle M. Douglass</title>
+<link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/ipython.min.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/nikola_ipython.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/custom_notebook.css" rel="stylesheet" type="text/css">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
+<link rel="alternate" type="application/rss+xml" title="RSS" hreflang="en" href="../../rss.xml">
+<link rel="canonical" href="http://kmdouglass.github.io/posts/micro-manager-on-the-raspberry-pi/">
+<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><meta name="author" content="Kyle M. Douglass">
+<link rel="prev" href="../connecting-a-raspberry-pi-to-a-home-linux-network/" title="Connecting a Raspberry Pi to a home Linux network" type="text/html">
+<link rel="next" href="../simulating-inline-holograms/" title="Simulating Inline Holograms" type="text/html">
+<meta property="og:site_name" content="Kyle M. Douglass">
+<meta property="og:title" content="Micro-Manager on the Raspberry Pi">
+<meta property="og:url" content="http://kmdouglass.github.io/posts/micro-manager-on-the-raspberry-pi/">
+<meta property="og:description" content="How I compiled Micro-Manager 2.0 on the Raspberry Pi">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2017-02-10T19:31:57+01:00">
+<meta property="article:tag" content="micro-manager">
+<meta property="article:tag" content="microscopy">
+<meta property="article:tag" content="open source">
+<meta property="article:tag" content="raspberry pi">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Menubar -->
+
+<nav class="navbar navbar-default navbar-static-top"><div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://kmdouglass.github.io/">
+
+                <span id="blog-title">Kyle M. Douglass</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
+            <ul class="nav navbar-nav">
+<li>
+<a href="../../categories/index.html">Tags</a>
+                </li>
+<li>
+<a href="../../archive.html">Archive</a>
+                </li>
+<li>
+<a href="../../stories/contact/index.html">Contact</a>
+
+                
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+    <a href="index.rst" id="sourcelink">Source</a>
+    </li>
+
+                
+            </ul>
+</div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Micro-Manager on the Raspberry Pi</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                    Kyle M. Douglass
+            </span></p>
+            <p class="dateline">
+            <a href="." rel="bookmark">
+            <time class="published dt-published" datetime="2017-02-10T19:31:57+01:00" itemprop="datePublished" title="2017-02-10 19:31">2017-02-10 19:31</time></a>
+            </p>
+                <p class="commentline">
+        
+    <a href="#disqus_thread" data-disqus-identifier="cache/posts/micro-manager-on-the-raspberry-pi.html">Comments</a>
+
+
+            
+        </p>
+<p class="sourceline"><a href="index.rst" class="sourcelink">Source</a></p>
+
+        </div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<p><a class="reference external" href="https://micro-manager.org/">Micro-Manager</a> is an open source platform for controlling microscope
+hardware, automating image acquisition, and tracking metadata about
+how images are acquired. In biomedical imaging research, it serves as
+an incredibly important tool because it is free and open source, which
+means that scientists can benefit from the contributions of others to
+the software without paying costly licensing fees.</p>
+<p>I recently managed to compile Micro-Manager version 2.0 on the
+Raspberry Pi. I did this for a small hobby project I am working on to
+build a cheap yet effective tool for <a class="reference external" href="https://hackaday.io/project/19677-basic-lensless-imaging-for-low-cost-microscopy">at-home microscope projects and
+hacking</a>. Though I am not yet convinced that Micro-Manager will be
+the best tool for this particular job given it's relatively heavy
+footprint on the Pi's slower hardware, I thought that I would post my
+notes so that others could benefit from my experience.</p>
+<div class="section" id="software-versions">
+<h2>Software versions</h2>
+<p>I am working with a Raspberry Pi 3 Model B:</p>
+<pre class="literal-block">
+pi@raspberrypi:~ $ uname -a &amp; gcc -dumpversion &amp; make -v &amp; ldd --version
+Linux raspberrypi 4.4.38-v7+ #938 SMP Thu Dec 15 15:22:21 GMT 2016 armv7l GNU/Linux
+
+pi@raspberrypi:~ $ gcc -dumpversion
+4.9.2
+
+pi@raspberrypi:~ $ make -v
+GNU Make 4.0
+
+pi@raspberrypi:~ $ ldd --version
+ldd (Debian GLIBC 2.19-18+deb8u7) 2.19
+</pre>
+</div>
+<div class="section" id="setup-a-network-share-for-3rd-party-libraries">
+<h2>Setup a network share for 3rd party libraries</h2>
+<p>We need to compile Micro-Manager because binares for the Pi's ARM
+processor are not distributed by the Micro-Manager team (probably
+because too few people have ever wanted them). To compile
+Micro-Manager, we need to checkout a rather large set of 3rd party
+libraries. When I last checked, these libraries occupied 6.7 GB of
+space on my laptop, a size which can be prohibitive when using the
+Micro-SD cards that provide storage for the Pi.</p>
+<p>To circumvent this problem, I checked out the <strong>3rdpartypublic</strong> SVN
+repository onto my laptop and created a network share from this
+directory. Then, I mounted the share on my Pi in the directory just
+above that containing the Micro-Manager source code.</p>
+<p>To get started, first have a look at my post on connecting a Pi to a
+Linux home network for ideas if you haven't already connected the Pi
+to your other machines at home:
+<a class="reference external" href="http://kmdouglass.github.io/posts/connecting-a-raspberry-pi-to-a-home-linux-network.html">http://kmdouglass.github.io/posts/connecting-a-raspberry-pi-to-a-home-linux-network.html</a></p>
+<p>Once the Pi and the laptop are on the same network, checkout the SVN
+3rdpartypublic repository onto your laptop or home server. You may
+need to do this a few times until completion because the downloads can
+timeout after a few minutes:</p>
+<pre class="literal-block">
+svn checkout https://valelab4.ucsf.edu/svn/3rdpartypublic/
+</pre>
+<p>Next, we need to setup the network share. If your laptop or server is
+running Windows, then you will probably need to setup <a class="reference external" href="https://www.samba.org/samba/what_is_samba.html">Samba</a> on the
+Pi to share files between them. I however am running a Linux home
+network, so I decided to use <a class="reference external" href="https://en.wikipedia.org/wiki/Network_File_System">NFS</a> (Network File Sharing) to share
+the directory between my laptop--which runs Debian Linux--and the
+Pi. I installed NFS on my laptop with:</p>
+<pre class="literal-block">
+sudo apt-get install nfs-kernel-server nfs-common
+</pre>
+<p>Once installed, I added the following line to the newly created
+/etc/exports file:</p>
+<pre class="literal-block">
+/home/kmdouglass/src/micro-manager/3rdpartypublic 192.168.0.2/24(ro)
+</pre>
+<p>The first part is the directory to share, i.e. where the
+3rdpartypublic directory is stored on my laptop. The second part
+contains the static IP address of the Pi on my home network. The /24
+was REQUIRED for my client (the Pi) to mount the share. /24 simply
+denotes a network mask of 255.255.255.0; if you have a different mask
+on your network, then you can find a good discussion on this topic
+here: <a class="reference external" href="https://arstechnica.com/civis/viewtopic.php?t=751834">https://arstechnica.com/civis/viewtopic.php?t=751834</a> Finally,
+(...)  specifies shared options and <strong>ro</strong> means read only.</p>
+<p>After editing the file, export the folder and restart the NFS server:</p>
+<pre class="literal-block">
+sudo exportfs -arv
+sudo /etc/init.d/nfs-kernel-server restart
+</pre>
+<p>On the client (the Pi), the NFS client software was already
+installed. However, I had to restart the rpcbind service before I
+could mount the share:</p>
+<pre class="literal-block">
+sudo /etc/init.d/rpcbind restart
+</pre>
+<p>Finally, I added a line to the <strong>/etc/fstab</strong> file on the Pi to make
+mounting the 3rdpartypublic share easier:</p>
+<pre class="literal-block">
+192.168.0.102:/home/kmdouglass/src/micro-manager/3rdpartypublic /home/pi/src/micro-manager/3rdpartypublic nfs user,noauto 0 0
+</pre>
+<p>The first part indicates the IP of the laptop and the share to
+mount. The second part, <strong>/home/pi/src/micro-manager/3rdpartypublic</strong>
+is the directory on the Pi where the share will be mounted. I placed
+this one directory above where the MM source code is,
+(<strong>/home/pi/src/micro-manager/micro-manager</strong> on my machine). <strong>nfs</strong>
+indicates the type of share to mount, and <strong>user,noauto</strong> permits any
+user to mount the share (not just root), though this share will not be
+automatically mounted when the Pi starts. The final two zeros are
+explained in the fstab comments but aren't really important for us. To
+mount the share, type the following on the Pi:</p>
+<pre class="literal-block">
+sudo mount /home/pi/src/micro-manager/3rdpartypublic
+</pre>
+<p>In case you're interested in learning more about the intricacies of
+Linux home networking, I found the following sources of information to
+be incredibly helpful.</p>
+<ol class="arabic simple">
+<li><a class="reference external" href="https://www.howtoforge.com/install_nfs_server_and_client_on_debian_wheezy">https://www.howtoforge.com/install_nfs_server_and_client_on_debian_wheezy</a></li>
+<li><a class="reference external" href="https://www.youtube.com/watch?v=luqq8DUqqCw">https://www.youtube.com/watch?v=luqq8DUqqCw</a></li>
+<li><a class="reference external" href="http://nfs.sourceforge.net/nfs-howto/ar01s03.html#config_server_setup">http://nfs.sourceforge.net/nfs-howto/ar01s03.html#config_server_setup</a></li>
+<li><a class="reference external" href="http://www.tecmint.com/how-to-setup-nfs-server-in-linux/">http://www.tecmint.com/how-to-setup-nfs-server-in-linux/</a></li>
+</ol>
+</div>
+<div class="section" id="building-mm">
+<h2>Building MM</h2>
+<p>Once I was able to mount the share containing 3rd party libraries, I
+installed the following packages on the Pi and checked out the
+Micro-Manager source code:</p>
+<pre class="literal-block">
+sudo apt-get install autoconf automake libtool pkg-config swig ant libboost-dev libboost-all-dev
+cd ~/src/micro-manager
+git clone https://github.com/micro-manager/micro-manager.git
+cd micro-manager
+git checkout mm2
+</pre>
+<p>The last command switches to the mm2 branch where the Micro-Manager
+2.0 source code is found. Note that it may not be necessary to install
+all of the boost libraries with <code>sudo apt-get install
+libboost-all-dev</code>, but I did this anyway because I encountered
+multiple errors due to missing boost library files the first few times
+I tried compiling.</p>
+<p>The next step follows the normal Micro-Manager build routine using
+make, with the exception of the configuration step. From inside the
+Micro-Manager source code directory on the Pi, run the following
+commands one at a time:</p>
+<pre class="literal-block">
+./autogen.sh
+PYTHON=/usr/bin/python3 ./configure --prefix=/opt/micro-manager --with-ij-jar=/usr/share/java/ij.jar --with-python=/usr/include/python3.4 --with-boost-libdir=/usr/lib/arm-linux-gnueabihf --with-boost=/usr/include/boost
+make fetchdeps
+make
+sudo make install
+</pre>
+<p>In the configuration step, I set the Python interpreter to Python 3
+because I greatly prefer it over Python 2. This is done by setting the
+<strong>PYTHON</strong> environment variable before running
+configure. <strong>--prefix=/opt/micro-manager/</strong> indicates the preferred
+installation directory of
+Micro-Manager. <strong>--with-ij-jar=/usr/share/java/ij.jar</strong> is the path to
+the ImageJ Java library, though I am uncertain whether this was
+necessary. (I installed ImageJ with a <code>sudo apt-get install
+imagej</code> a while ago.) <strong>--with-python=/usr/include/python3.4</strong> should
+point to the directory containing the <strong>Python.h</strong> header file for the
+version of Python you are compiling against. <strong>with-boost-libdir</strong>
+should point to the directory containing the boost libraries (.so
+files). This was critical for getting MM2 to build. If you are unsure
+where they are located, you can search for them with <code>sudo find
+/ -name "libboost*"</code>. Finally, the last option, <strong>with-boost</strong>, may or
+may not be necessary. I set it to the directory containing the boost
+headers but never checked to see whether MM compiles without it.</p>
+<p>If all goes well, Micro-Manager will compile and install without
+problems. Compilation time on my Pi took around one hour.</p>
+<div class="section" id="set-the-maximum-amount-of-direct-memory">
+<h3>Set the maximum amount of direct memory</h3>
+<p>In the next step, we need to make a minor edit to the Micro-Manager
+Linux start script. Edit the script
+(/opt/micro-manager/bin/micromanager) to reduce the maximum direct
+memory to something reasonable:</p>
+<pre class="literal-block">
+/usr/lib/jvm/jdk-8-oracle-arm32-vfp-hflt/bin/java -Xmx1024M \
+  -XX:MaxDirectMemorySize=1000G \
+   -classpath "$CLASSPATH" \
+   -Dmmcorej.library.loading.stderr.log=yes \
+   -Dmmcorej.library.path="/opt/micro-manager/lib/micro-manager" \
+   -Dorg.micromanager.plugin.path="/opt/micro-manager/share/micro-manager/mmplugins" \
+</pre>
+<p>Change 1000G to 512M or 256M; otherwise the Pi will complain that the
+MaxDirectMemorySize of 1000G is too large. You can start Micro-Manager
+by running this modified script.</p>
+</div>
+</div>
+<div class="section" id="what-s-next">
+<h2>What's next?</h2>
+<p>Though Micro-Manager compiles and runs on the Pi, I have not yet
+tested it thoroughly acquisitions. I am currently waiting on a camera
+board to arrive in the mail, and when it does, I will attempt to
+interface with it through Micro-Manager. Though I could write my own
+Python library, Micro-Manager is appealing because it can save a lot
+of time by providing a ready-made means to annotate, process, and
+store imaging data.</p>
+<p>Running Micro-Manager on the Pi also raises the possibility of a fully
+open, embedded biomedical imaging platform, though I am uncertain at
+the moment whether the hardware on the Pi is up to the task. If you
+manage to do anything cool with Micro-Manager and the Raspberry Pi,
+please let me know in the comments!</p>
+</div>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../categories/micro-manager/" rel="tag">micro-manager</a></li>
+            <li><a class="tag p-category" href="../../categories/microscopy/" rel="tag">microscopy</a></li>
+            <li><a class="tag p-category" href="../../categories/open-source/" rel="tag">open source</a></li>
+            <li><a class="tag p-category" href="../../categories/raspberry-pi/" rel="tag">raspberry pi</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../connecting-a-raspberry-pi-to-a-home-linux-network/" rel="prev" title="Connecting a Raspberry Pi to a home Linux network">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../simulating-inline-holograms/" rel="next" title="Simulating Inline Holograms">Next post</a>
+            </li>
+        </ul></nav></aside><section class="comments hidden-print"><h2>Comments</h2>
+        
+        
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="kmdouglass",
+            disqus_url="http://kmdouglass.github.io/posts/micro-manager-on-the-raspberry-pi/",
+        disqus_title="Micro-Manager on the Raspberry Pi",
+        disqus_identifier="cache/posts/micro-manager-on-the-raspberry-pi.html",
+        disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+        </section></article><script>var disqus_shortname="kmdouglass";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+</div>
+        <!--End of body content-->
+
+        <footer id="footer">
+            Contents © 2019         <a href="mailto:kyle.m.douglass@gmail.com">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
+            
+        </footer>
+</div>
+</div>
+
+
+            <script src="../../assets/js/all-nocdn.js"></script><!-- fancy dates --><script>
+    moment.locale("en");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates --><script>
+    baguetteBox.run('div#content', {
+        ignoreClass: 'islink',
+        captions: function(element) {
+            return element.getElementsByTagName('img')[0].alt;
+    }});
+    </script>
+</body>
+</html>

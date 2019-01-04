@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0"><channel><title>Kyle M. Douglass (Posts about computational optics)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link rel="self" type="application/rss+xml" href="http://kmdouglass.github.io/categories/cat_computational-optics.xml"></atom:link><language>en</language><lastBuildDate>Wed, 28 Nov 2018 05:33:14 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Modeling noise for image simulations</title><link>http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div tabindex="-1" id="notebook" class="border-box-sizing"&gt;
-    &lt;div class="container" id="notebook-container"&gt;
-
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kyle M. Douglass (Posts about computational optics)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link href="http://kmdouglass.github.io/categories/cat_computational-optics.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Fri, 04 Jan 2019 14:44:32 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Modeling noise for image simulations</title><link>http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations/</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;&lt;a href="http://kmdouglass.github.io/posts/simulating-inline-holograms.html"&gt;In my previous post&lt;/a&gt;, I described a method for simulating inline holography images. The ultimate purpose of doing this was to generate holography data that could be used to test the performance of different reconstruction algorithms. Since I would know the input object, I could apply the reconstruction algorithm to the holograms and see how closely the reconstructed object matched the known input.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations/simulating-inline-holograms.html"&gt;In my previous post&lt;/a&gt;, I described a method for simulating inline holography images. The ultimate purpose of doing this was to generate holography data that could be used to test the performance of different reconstruction algorithms. Since I would know the input object, I could apply the reconstruction algorithm to the holograms and see how closely the reconstructed object matched the known input.&lt;/p&gt;
 &lt;p&gt;My modeling however ignored an important aspect about the holographic process, namely the acquisition of digital images and the assoicated noise that would accompany the raw data. This is important because holographic reconstruction algorithms need to be robust against the uncertainty that will inevitably be introduced by recording the hologram with a digital camera.&lt;/p&gt;
 
 &lt;/div&gt;
@@ -32,7 +28,7 @@
 &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Scipy version:&lt;/span&gt;&lt;span class="se"&gt;\t\t&lt;/span&gt;&lt;span class="si"&gt;{}&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;scipy&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;__version__&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -42,7 +38,7 @@
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stdout output_text"&gt;
@@ -63,14 +59,13 @@ Scipy version:		0.19.0
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="A-Mathematical-Model-for-Camera-Noise"&gt;A Mathematical Model for Camera Noise&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations.html#A-Mathematical-Model-for-Camera-Noise"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;One of the best descriptions of camera noise that I have ever found may be the &lt;a href="http://www.emva.org/standards-technology/emva-1288/"&gt;EMVA 1288 Standard&lt;/a&gt;. This document details a standard set of models and procedures to characterize CMOS and CCD cameras and light sensors. From its website:&lt;/p&gt;
+&lt;h2 id="A-Mathematical-Model-for-Camera-Noise"&gt;A Mathematical Model for Camera Noise&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations/#A-Mathematical-Model-for-Camera-Noise"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;One of the best descriptions of camera noise that I have ever found may be the &lt;a href="http://www.emva.org/standards-technology/emva-1288/"&gt;EMVA 1288 Standard&lt;/a&gt;. This document details a standard set of models and procedures to characterize CMOS and CCD cameras and light sensors. From its website:&lt;/p&gt;
 &lt;blockquote&gt;&lt;p&gt;EMVA launched the initiative to define a unified method to measure, compute and present specification parameters for cameras and image sensors used for machine vision applications... [The EMVA Standard] creates transparency by defining reliable and exact measurement procedures as well as data presentation guidelines and makes the comparison of cameras and image sensors much easier.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;In particular, chapters 2 and 3 of the Standard provide a very clear and concise description the mathematical model for CCD/CMOS camera noise. Below, I have adapted the image of the mathematical model presented at the beginning of chapter 2.&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://kmdouglass.github.io/camera_noise_model.png" alt="Optical system with pupils"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://kmdouglass.github.io/images/camera_noise_model.png" alt="Optical system with pupils"&gt;&lt;/p&gt;
 &lt;p&gt;In this model, the camera/sensor is a single pixel that takes an input (a number of photons) and transforms this number to an output (a digital value in analog-to-digital units, or ADU). In performing this transformation, various sources of noise are added to the signal so that, given a camera's output in ADU, we can only make probabilisitic inferences about the actual number of photons impinging upon it. There are also a few assumptions in this model that, when taken together, constitute what's called an &lt;em&gt;ideal image sensor&lt;/em&gt;. They are:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;the numer of photons collected by the pixel depends on the product of irradiance $ E \, \left[ W / m^2 \right] $ and the exposure time $ t_{exp} \, \left[ s \right] $;&lt;/li&gt;
@@ -80,26 +75,23 @@ Scipy version:		0.19.0
 &lt;li&gt;and only the dark current depends on the temperature.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;From these five assumptions, the laws of quantum mechanics, and the laws of probability, expressions for the mean output, $ \mu_y $, the variance of the output $ \sigma_y^2 $, and the signal-to-noise ratio ($SNR $) may be derived.&lt;/p&gt;
-&lt;p&gt;\begin{equation*}
+\begin{equation*}
 \mu_y = K \mu_d + K \eta \mu_p \\
 \sigma_y^2 = K^2 \sigma_d^2 + K \left( \mu_y - K \mu_d \right) \\
 SNR = \frac{\eta \mu_p}{\sqrt{\sigma_d^2 + \sigma_q^2/K^2 + \eta \mu_p}}
-\end{equation*}&lt;/p&gt;
-&lt;p&gt;In these expressions, $\mu$ and $\sigma^2$ represent the mean and variance of the number of photons hitting the camera ($p$), the dark noise ($d$), and the output signal in ADU's ($y$). The number of electrons $ \mu_e $ generated by $\mu_p$ photons hitting the active area of the sensor is obtained from the expression for the quantum efficiency $\eta$, an engineered property of the camera that in general depends on the wavelength.&lt;/p&gt;
-&lt;p&gt;\begin{equation*}
+\end{equation*}&lt;p&gt;In these expressions, $\mu$ and $\sigma^2$ represent the mean and variance of the number of photons hitting the camera ($p$), the dark noise ($d$), and the output signal in ADU's ($y$). The number of electrons $ \mu_e $ generated by $\mu_p$ photons hitting the active area of the sensor is obtained from the expression for the quantum efficiency $\eta$, an engineered property of the camera that in general depends on the wavelength.&lt;/p&gt;
+\begin{equation*}
 \eta \left( \lambda \right) = \frac{\mu_e}{\mu_p}
-\end{equation*}&lt;/p&gt;
-&lt;p&gt;The sensitivity of the camera $K \, \left[ ADU / e^- \right] $ represents the amplification of the voltage in the pixel from the photoelectrons and is also a property of the camera. Finally, $ \sigma_q^2 $ represents the noise introduced by digitzing the continous voltage signal into a digital one.&lt;/p&gt;
+\end{equation*}&lt;p&gt;The sensitivity of the camera $K \, \left[ ADU / e^- \right] $ represents the amplification of the voltage in the pixel from the photoelectrons and is also a property of the camera. Finally, $ \sigma_q^2 $ represents the noise introduced by digitzing the continous voltage signal into a digital one.&lt;/p&gt;
 &lt;p&gt;The EMVA 1288 Standard explains how to derive these expressions from the assumptions and known physical laws, so I will not go into their derivations in this post. Instead, I will focus on explaining how we can use this model to simulate the effects of camera noise in our holograms.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="From-Model-to-Simulation"&gt;From Model to Simulation&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations.html#From-Model-to-Simulation"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The goal of the simulation will be to take a simulated hologram as input and convert it into an image that might be captured by a digital camera. This means that the final image should contain noise that is realistic and follows the rules of the model.&lt;/p&gt;
+&lt;h2 id="From-Model-to-Simulation"&gt;From Model to Simulation&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations/#From-Model-to-Simulation"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The goal of the simulation will be to take a simulated hologram as input and convert it into an image that might be captured by a digital camera. This means that the final image should contain noise that is realistic and follows the rules of the model.&lt;/p&gt;
 &lt;p&gt;The model will depend on five free parameters that vary from camera-to-camera. They are:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;the total quantum efficiency $ \eta $;&lt;/li&gt;
@@ -109,11 +101,10 @@ SNR = \frac{\eta \mu_p}{\sqrt{\sigma_d^2 + \sigma_q^2/K^2 + \eta \mu_p}}
 &lt;li&gt;and the bit-depth of the camera $k$.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;The dark noise $ \sigma_d^2 $ is actually comprised of two separate noise sources, i.e. the read noise $ \sigma_r^2 $ and the dark current $ \mu_I $. Because the noise sources are independent, we can write&lt;/p&gt;
-&lt;p&gt;\begin{equation*}
+\begin{equation*}
 \sigma_d^2 = \sigma_r^2 + \sigma_I^2 \\
 \sigma_d^2 = \sigma_r^2 + \mu_I t_{exp}
-\end{equation*}&lt;/p&gt;
-&lt;p&gt;where the last step relies on the fact that the generation of thermal electrons is a Poisson process whose mean is equal to its variance. The units of $\mu_I$ are $e^- / s $ and values for $ \mu_I $ are often provided on camera spec. sheets. Likewise, the read noise $\sigma_r^2$ is also provided on spec. sheets, although in my experience the units are likely to be in root-mean-square electrons or median electrons and not electrons-squared.&lt;/p&gt;
+\end{equation*}&lt;p&gt;where the last step relies on the fact that the generation of thermal electrons is a Poisson process whose mean is equal to its variance. The units of $\mu_I$ are $e^- / s $ and values for $ \mu_I $ are often provided on camera spec. sheets. Likewise, the read noise $\sigma_r^2$ is also provided on spec. sheets, although in my experience the units are likely to be in root-mean-square electrons or median electrons and not electrons-squared.&lt;/p&gt;
 &lt;p&gt;Other than the inputs, we do not need to provide values for the other numbers in the model because they are related to the free parameters by various physical and mathematical laws.&lt;/p&gt;
 &lt;p&gt;Finally, let's ignore spatial noise sources in these simulations because it's difficult to characterize them with a single number. Spatial noise is a variation in the free parameters of the camera from pixel to pixel. An example of a common type of spatial noise is photon response non-uniformity and is manifest in a sensitivity $ K $ that varies between pixels. Ignoring spatial noise in the simulations simply means that values for the read noise, dark current, quantum efficiency, and sensitivty are the same for all pixels.&lt;/p&gt;
 
@@ -121,31 +112,27 @@ SNR = \frac{\eta \mu_p}{\sqrt{\sigma_d^2 + \sigma_q^2/K^2 + \eta \mu_p}}
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h3 id="Step-0:-Convert-the-electric-field-to-photons"&gt;Step 0: Convert the electric field to photons&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations.html#Step-0:-Convert-the-electric-field-to-photons"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Before doing anything, we need to take the electric field from our Fourier optics simulations and convert it to units of photons. If it isn't clear how you would first get an electric field, you can refer to my &lt;a href="http://kmdouglass.github.io/posts/simulating-inline-holograms.html"&gt;previous post&lt;/a&gt; on calculating the hologram of a thin, circular phase-only object. Typically, the calcuation of the electric field will follow from the laws of diffraction and serve as an input for the camera model.&lt;/p&gt;
+&lt;h3 id="Step-0:-Convert-the-electric-field-to-photons"&gt;Step 0: Convert the electric field to photons&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations/#Step-0:-Convert-the-electric-field-to-photons"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Before doing anything, we need to take the electric field from our Fourier optics simulations and convert it to units of photons. If it isn't clear how you would first get an electric field, you can refer to my &lt;a href="http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations/simulating-inline-holograms.html"&gt;previous post&lt;/a&gt; on calculating the hologram of a thin, circular phase-only object. Typically, the calcuation of the electric field will follow from the laws of diffraction and serve as an input for the camera model.&lt;/p&gt;
 &lt;p&gt;To get the number of photons, we first compute the irradiance of the field using the magnitude of the time-averaged &lt;a href="https://en.wikipedia.org/wiki/Poynting_vector#Plane_waves"&gt;Poynting vector&lt;/a&gt; of a linearly-polarzed electromagnetic wave in free space, which is&lt;/p&gt;
-&lt;p&gt;\begin{equation*}
+\begin{equation*}
 E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
-\end{equation*}&lt;/p&gt;
-&lt;p&gt;Here, $E \left( x, y \right) $ is the irradiance at point $ \left( x, y \right) $, $U \left( x, y \right) $ is the scalar electric field at the same point, and $Z_0 \\approx 377 \, \Omega $ is the &lt;a href="https://en.wikipedia.org/wiki/Wave_impedance"&gt;impedance of free space&lt;/a&gt;. We would change the value for the impedance if we were imaging in a medium other than vacuum. The units of the field are $ V / m $ which, when squared and divided by the units of the impedance (Ohms), gives units of power per area, or $ W / m^2 $. It's also worth mentioning that we are implicitly assuming the field varies smoothly on the length scale of a pixel. This is why we can use the expression for the Poynting vector of a plane wave.&lt;/p&gt;
+\end{equation*}&lt;p&gt;Here, $E \left( x, y \right) $ is the irradiance at point $ \left( x, y \right) $, $U \left( x, y \right) $ is the scalar electric field at the same point, and $Z_0 = 377 \, \Omega $ is the &lt;a href="https://en.wikipedia.org/wiki/Wave_impedance"&gt;impedance of free space&lt;/a&gt;. We would change the value for the impedance if we were imaging in a medium other than vacuum. The units of the field are $ V / m $ which, when squared and divided by the units of the impedance (Ohms), gives units of power per area, or $ W / m^2 $. It's also worth mentioning that we are implicitly assuming the field varies smoothly on the length scale of a pixel. This is why we can use the expression for the Poynting vector of a plane wave.&lt;/p&gt;
 &lt;p&gt;The mean number of photons is obtained from the irradiance by the expression&lt;/p&gt;
-&lt;p&gt;\begin{align*}
+\begin{align*}
 \mu_p &amp;amp;= \frac{\lambda A}{hc}Et_{exp} \\
 &amp;amp;= \frac{\lambda A}{2hcZ_0} \left| U \right|^2 t_{exp}
-\end{align*}&lt;/p&gt;
-&lt;p&gt;where $ A $ is the pixel's area and $ \frac{hc}{\lambda} $ is the energy per photon in units of Joules, with $hc \approx 2 \times 10^{-25} \, J \cdot m $.&lt;/p&gt;
+\end{align*}&lt;p&gt;where $ A $ is the pixel's area and $ \frac{hc}{\lambda} $ is the energy per photon in units of Joules, with $hc = 2 \times 10^{-25} \, J \cdot m $.&lt;/p&gt;
 &lt;p&gt;This step is a bit cumbersome, and in the rest of what follows I will skip this step and will use a set number of photons directly as the input to the simulations, rather than a scalar field.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h3 id="Step-1:-Compute-the-photon-shot-noise"&gt;Step 1: Compute the photon shot noise&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations.html#Step-1:-Compute-the-photon-shot-noise"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;For the sake of simplicity, let's start by assuming that we have a camera with $ 256 \times 256 $ pixels and a mean incident photon flux of 500 photons on each pixel. This would produce an image that looks like this:&lt;/p&gt;
+&lt;h3 id="Step-1:-Compute-the-photon-shot-noise"&gt;Step 1: Compute the photon shot noise&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations/#Step-1:-Compute-the-photon-shot-noise"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;For the sake of simplicity, let's start by assuming that we have a camera with $ 256 \times 256 $ pixels and a mean incident photon flux of 500 photons on each pixel. This would produce an image that looks like this:&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -171,7 +158,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -181,7 +168,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -197,8 +184,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Shot_noise"&gt;Photon shot noise&lt;/a&gt; arises from the fact that the incident number of photons is not deterministic but rather a random process whose statistics are Poissonian. In a Poisson process, the variance of the noise $ \sigma_p^2 $ is equal to the mean number of photons $ \mu_p $.&lt;/p&gt;
 &lt;p&gt;Poisson random numbers are easy to generate with NumPy. First, we set a seed so that we can reproducibly generate the same random numbers each time and initialize a &lt;a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.random.RandomState.html#numpy.random.RandomState"&gt;RandomState&lt;/a&gt; instance with it. Using this RandomState instance, we call the &lt;code&gt;poisson&lt;/code&gt; method with a mean of &lt;code&gt;num_photons&lt;/code&gt; and a size &lt;code&gt;(num_pixels, num_pixels)&lt;/code&gt;. Finally, we plot the image and compare it to the one where no shot noise is present.&lt;/p&gt;
@@ -239,7 +225,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -249,7 +235,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -276,7 +262,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -286,7 +272,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -302,10 +288,9 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h3 id="Step-2:-Compute-the-number-of-photoelectrons"&gt;Step 2: Compute the number of photoelectrons&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations.html#Step-2:-Compute-the-number-of-photoelectrons"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;At this point we're going to need some numbers for our camera. For this example, I chose a camera using the popular Sony IMX264 CMOS chip, the &lt;a href="https://www.ptgrey.com/chameleon3-50-mp-mono-usb3-vision-sonyimx264"&gt;FLIR Chamleon 3&lt;/a&gt; (part number CM3-U3-50S5M-CS). Here are some of the key &lt;a href="https://www.ptgrey.com/support/downloads/10430"&gt;specs&lt;/a&gt; for our modeling:&lt;/p&gt;
+&lt;h3 id="Step-2:-Compute-the-number-of-photoelectrons"&gt;Step 2: Compute the number of photoelectrons&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations/#Step-2:-Compute-the-number-of-photoelectrons"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;At this point we're going to need some numbers for our camera. For this example, I chose a camera using the popular Sony IMX264 CMOS chip, the &lt;a href="https://www.ptgrey.com/chameleon3-50-mp-mono-usb3-vision-sonyimx264"&gt;FLIR Chamleon 3&lt;/a&gt; (part number CM3-U3-50S5M-CS). Here are some of the key &lt;a href="https://www.ptgrey.com/support/downloads/10430"&gt;specs&lt;/a&gt; for our modeling:&lt;/p&gt;
 &lt;table&gt;
 &lt;tr&gt;
   &lt;th&gt;Spec&lt;/th&gt;
@@ -373,7 +358,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -383,7 +368,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -399,10 +384,9 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h3 id="Step-3:-Simulate-read-noise-and-dark-current"&gt;Step 3: Simulate read noise and dark current&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations.html#Step-3:-Simulate-read-noise-and-dark-current"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Following the schematic of the camera model above, we see that we next need to add the dark noise. Dark noise (not to be confused with dark current) refers to the noise in the pixels when there is no light on the camera. Typically we deal with two sources of dark noise: readout (or just "read") noise and dark current. The camera specs in our example only provide us with the total dark noise, which is not surprising since dark current is not very significant in microscopy or machine vision. (It is however significant in astronomy because of the very long exposure times of several seconds or more, which allows appreciable dark current electrons to accumulate during the exposure.)&lt;/p&gt;
+&lt;h3 id="Step-3:-Simulate-read-noise-and-dark-current"&gt;Step 3: Simulate read noise and dark current&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations/#Step-3:-Simulate-read-noise-and-dark-current"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Following the schematic of the camera model above, we see that we next need to add the dark noise. Dark noise (not to be confused with dark current) refers to the noise in the pixels when there is no light on the camera. Typically we deal with two sources of dark noise: readout (or just "read") noise and dark current. The camera specs in our example only provide us with the total dark noise, which is not surprising since dark current is not very significant in microscopy or machine vision. (It is however significant in astronomy because of the very long exposure times of several seconds or more, which allows appreciable dark current electrons to accumulate during the exposure.)&lt;/p&gt;
 &lt;p&gt;To the best of my knowledge, when dark noise is primarily read noise we may well model it as a Gaussian distribution whose standard deviation is equivalent to the dark noise spec of the camera. This modeling approach is taken, for example, in the &lt;a href="http://bigwww.epfl.ch/smlm/challenge2016/index.html?p=methods#4"&gt;2016 SMLMS Challenge&lt;/a&gt;, a community-driven competition to identify the best reconstruction algorithms for single molecule localization microscopy. Please note that the noise model employed in the challenge was for an electron multiplying CCD (EMCCD), so you may find that it differs slightly from what I am discussing here.&lt;/p&gt;
 
 &lt;/div&gt;
@@ -440,7 +424,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -450,7 +434,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -483,7 +467,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -493,7 +477,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -509,10 +493,9 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h3 id="Step-4:-Convert-from-$-e^--$-to-ADU"&gt;Step 4: Convert from $ e^- $ to ADU&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations.html#Step-4:-Convert-from-%24-e%5E--%24-to-ADU"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Now we need to convert the value of each pixel from electrons to ADU, or analog-to-digital units. ADU's are the units of grey scale that are output by monochrome cameras. To do this, we multiply the number of electrons after the addition of read noise by the sensitivity. We also need to ensure that the final ADU count is discrete and to set the maximum upper value of ADU's to the $ 2^k - 1 $ where $ k $ is the camera's bit-depth. The latter operation ensures that saturation of the pixels is correctly modeled.&lt;/p&gt;
+&lt;h3 id="Step-4:-Convert-from-$-e^--$-to-ADU"&gt;Step 4: Convert from $ e^- $ to ADU&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations/#Step-4:-Convert-from-%24-e%5E--%24-to-ADU"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Now we need to convert the value of each pixel from electrons to ADU, or analog-to-digital units. ADU's are the units of grey scale that are output by monochrome cameras. To do this, we multiply the number of electrons after the addition of read noise by the sensitivity. We also need to ensure that the final ADU count is discrete and to set the maximum upper value of ADU's to the $ 2^k - 1 $ where $ k $ is the camera's bit-depth. The latter operation ensures that saturation of the pixels is correctly modeled.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -539,7 +522,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -549,7 +532,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -565,10 +548,9 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h3 id="Step-5:-Add-a-basline"&gt;Step 5: Add a basline&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations.html#Step-5:-Add-a-basline"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Many cameras have a built-in baseline ADU value. This prevents the number of ADU's from becoming negative at low input signal. The &lt;a href="http://www.andor.com/scientific-cameras/neo-and-zyla-scmos-cameras/zyla-42-plus-scmos"&gt;Andor Zyla 4.2&lt;/a&gt;, for example, has a baseline value of 100 ADU. If you take a large number of dark frames and compute the average of each pixel in a Zyla, the average values will very nearly be 100.&lt;/p&gt;
+&lt;h3 id="Step-5:-Add-a-basline"&gt;Step 5: Add a basline&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations/#Step-5:-Add-a-basline"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Many cameras have a built-in baseline ADU value. This prevents the number of ADU's from becoming negative at low input signal. The &lt;a href="http://www.andor.com/scientific-cameras/neo-and-zyla-scmos-cameras/zyla-42-plus-scmos"&gt;Andor Zyla 4.2&lt;/a&gt;, for example, has a baseline value of 100 ADU. If you take a large number of dark frames and compute the average of each pixel in a Zyla, the average values will very nearly be 100.&lt;/p&gt;
 &lt;p&gt;We don't have baseline information for this camera, but 100 seems like a reasonable assumption. Here's what our final image will look like if we had a constant average of 500 photons incident on each pixel.&lt;/p&gt;
 
 &lt;/div&gt;
@@ -593,7 +575,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -603,7 +585,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -619,11 +601,10 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Adding-noise-to-a-simulated-hologram"&gt;Adding noise to a simulated hologram&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations.html#Adding-noise-to-a-simulated-hologram"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Let's see how the hologram from my last post will look like if I add camera noise to it. I'm going to assume that we are using the same camera as in my example to record the hologram. First, we'll setup the Fourier optics code &lt;a href="http://kmdouglass.github.io/posts/simulating-inline-holograms.html"&gt;as before to make the hologram&lt;/a&gt;. Then, we'll write a function that adds the noise and, in each frame of the animation, call it with the calculated field as an input.&lt;/p&gt;
-&lt;p&gt;This first part more-or-less repeats the essential bits of my last post. We make a circular object that doesn't absorb any light but which has a refractive index which causes a constant phase shift of 0.75 radians. We then use Fourier optics to compute the scattered field in the same plane as the object; this will be the starting frame of the animation. &lt;a href="http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations.html#Step-0:-Convert-the-electric-field-to-photons"&gt;Instead of directly computing the number of photons per pixel from the field&lt;/a&gt;, we simply renormalize it so that the maximum value is 100 photons. 100 photons might seem like a weak signal, but this is actually quite a good camera and we will need to make the signal weak so that we can see the noise in the movie. In fact, the spec sheet for the camera reports an absolute minimum detectable signal of about 4 photons per pixel.&lt;/p&gt;
+&lt;h2 id="Adding-noise-to-a-simulated-hologram"&gt;Adding noise to a simulated hologram&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations/#Adding-noise-to-a-simulated-hologram"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Let's see how the hologram from my last post will look like if I add camera noise to it. I'm going to assume that we are using the same camera as in my example to record the hologram. First, we'll setup the Fourier optics code &lt;a href="http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations/simulating-inline-holograms.html"&gt;as before to make the hologram&lt;/a&gt;. Then, we'll write a function that adds the noise and, in each frame of the animation, call it with the calculated field as an input.&lt;/p&gt;
+&lt;p&gt;This first part more-or-less repeats the essential bits of my last post. We make a circular object that doesn't absorb any light but which has a refractive index which causes a constant phase shift of 0.75 radians. We then use Fourier optics to compute the scattered field in the same plane as the object; this will be the starting frame of the animation. &lt;a href="http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations/#Step-0:-Convert-the-electric-field-to-photons"&gt;Instead of directly computing the number of photons per pixel from the field&lt;/a&gt;, we simply renormalize it so that the maximum value is 100 photons. 100 photons might seem like a weak signal, but this is actually quite a good camera and we will need to make the signal weak so that we can see the noise in the movie. In fact, the spec sheet for the camera reports an absolute minimum detectable signal of about 4 photons per pixel.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -671,14 +652,13 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 &lt;span class="n"&gt;norm&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;max&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;abs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;gt_prime&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Next we create a Python function which takes as input a map of photons per pixel from our Fourier optics calculations and our camera specs. Since it doesn't have a large effect, I am skipping the explicit rounding of continuous numbers at each step and saving it until the end when the ADU's are calculated. I also added a random number generator to the inputs in case you want to reproduce previous results, but this isn't too important for this post.&lt;/p&gt;
 
@@ -713,14 +693,13 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;adu&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Finally, we create our animation of the simulated digital images of an inline planewave hologram from the object at axial planes between $ 0 $ and $ 100 \, \mu m $ away from the object. It's true that some of the noise you will see in the video is due to the compression artifacts, but a lot of it is also due to the temporal noise in each individual pixel. Pay close to attention the regions of low signal to see it.&lt;/p&gt;
 
@@ -783,7 +762,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;close&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -793,7 +772,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stderr output_text"&gt;
@@ -807,18 +786,16 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;video controls src="http://kmdouglass.github.io/propagating_hologram_with_noise.mp4" type="video/mp4"&gt;&lt;/video&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Simulated-holograms-on-a-poor-camera"&gt;Simulated holograms on a poor camera&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations.html#Simulated-holograms-on-a-poor-camera"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;As I mentioned, the FLIR Chameleon camera is actually quite good. In fact, a similar camera with the Sony IMX265 chip has been successfully used for &lt;a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5431525/"&gt;single molecule localization microscopy&lt;/a&gt;, which means that the noise floor is low enough and the quantum efficiency is high enough to detect the fluorescence from single molecules. Here's what another hologram might look like if the dark noise was worse, say 20 electrons. (For comparison, many sensors in digital cameras have read noise values around or below 10 electrons. Thanks &lt;a href="https://twitter.com/kD3AN/status/885602631091179521"&gt;@kD3AN&lt;/a&gt; for this &lt;a href="http://www.clarkvision.com/articles/digital.sensor.performance.summary/#read_noise"&gt;link&lt;/a&gt;.)&lt;/p&gt;
+&lt;h2 id="Simulated-holograms-on-a-poor-camera"&gt;Simulated holograms on a poor camera&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations/#Simulated-holograms-on-a-poor-camera"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;As I mentioned, the FLIR Chameleon camera is actually quite good. In fact, a similar camera with the Sony IMX265 chip has been successfully used for &lt;a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5431525/"&gt;single molecule localization microscopy&lt;/a&gt;, which means that the noise floor is low enough and the quantum efficiency is high enough to detect the fluorescence from single molecules. Here's what another hologram might look like if the dark noise was worse, say 20 electrons. (For comparison, many sensors in digital cameras have read noise values around or below 10 electrons. Thanks &lt;a href="https://twitter.com/kD3AN/status/885602631091179521"&gt;@kD3AN&lt;/a&gt; for this &lt;a href="http://www.clarkvision.com/articles/digital.sensor.performance.summary/#read_noise"&gt;link&lt;/a&gt;.)&lt;/p&gt;
 &lt;p&gt;Notice how many of the features of the hologram--especially those away from the center--become much more difficult to detect due to increased dark noise of the sensor. In particular, try pausing both movies around a distance of $ 40 \, \mu m $ and notice how much clearer the rings are for the low noise camera.&lt;/p&gt;
 
 &lt;/div&gt;
@@ -880,7 +857,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;close&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -890,7 +867,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stderr output_text"&gt;
@@ -904,36 +881,27 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;video controls src="http://kmdouglass.github.io/propagating_hologram_with_noise_poor.mp4" type="video/mp4"&gt;&lt;/video&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Discussion"&gt;Discussion&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations.html#Discussion"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The addition of realistic camera noise to the hologram simulations is an important part of the simulation framework. It's impossible to record a digital hologram without noise, so any good holographic reconstruction algorithm needs to be capable of making estimates of the original object in the presence of shot noise and noise from the camera.&lt;/p&gt;
+&lt;h2 id="Discussion"&gt;Discussion&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations/#Discussion"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The addition of realistic camera noise to the hologram simulations is an important part of the simulation framework. It's impossible to record a digital hologram without noise, so any good holographic reconstruction algorithm needs to be capable of making estimates of the original object in the presence of shot noise and noise from the camera.&lt;/p&gt;
 &lt;p&gt;One source of noise that we did not model was noise associated with pixel non-uniformities. This sort of effect represents a pixel-dependent sensitivity, quantum efficiency, and dark noise. Non-uniformities are very often important take into account in image analysis but difficult to both measure and model. They're difficult to measure because you need a &lt;strong&gt;very&lt;/strong&gt; stable light source that is &lt;strong&gt;very&lt;/strong&gt; flat to a degree that is better than 99% across the camera chip. Believe me when I say that creating such a flat illumination pattern is extremely difficult, even with incoherent light. (The way to do it is to use an &lt;a href="https://en.wikipedia.org/wiki/Integrating_sphere"&gt;integrating sphere&lt;/a&gt; that directly faces the camera chip. The f-number of exit port of the sphere is recommended to be F/# = 8 in the EMVA 1288 standard.) They're difficult to model because they cannot be represented by a single number the way, for example, dark noise or quantum efficiency can.&lt;/p&gt;
 &lt;p&gt;The type of noise we modeled is called temporal noise because it deals with pixel-to-pixel variations in the output of the grey values. This is an important but often over-looked distinction when discussing camera noise.&lt;/p&gt;
 &lt;p&gt;Finally, the code I developed above should serve as a great tool to help you test cameras before you buy them. Most manufacturers will provide all the numbers used in the model on their websites, especially if they follow the EMVA 1288 Standard. Look up the numbers, plug them into the &lt;code&gt;add_camera_noise&lt;/code&gt; function, and simulate a few frames to get a rough idea of how your images are going to look.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-</description><category>Fourier optics</category><category>holography</category><category>photonics</category><category>sensing</category><guid>http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations.html</guid><pubDate>Fri, 14 Jul 2017 06:14:00 GMT</pubDate></item><item><title>Simulating Inline Holograms</title><link>http://kmdouglass.github.io/posts/simulating-inline-holograms.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div tabindex="-1" id="notebook" class="border-box-sizing"&gt;
-    &lt;div class="container" id="notebook-container"&gt;
-
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;/div&gt;</description><category>Fourier optics</category><category>holography</category><category>photonics</category><category>sensing</category><guid>http://kmdouglass.github.io/posts/modeling-noise-for-image-simulations/</guid><pubDate>Fri, 14 Jul 2017 06:14:00 GMT</pubDate></item><item><title>Simulating Inline Holograms</title><link>http://kmdouglass.github.io/posts/simulating-inline-holograms/</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Software has played a big role in digital holographic imaging, arguably starting from the publication in which &lt;a href="http://aip.scitation.org/doi/10.1063/1.1755043"&gt;Goodman and Lawrence generated images from electronically recorded holograms&lt;/a&gt;. One of the things I would like to do for my &lt;a href="https://hackaday.io/kmdouglass"&gt;lensless imager project&lt;/a&gt; is to develop a small set of tools to simulate various types of digital holograms. My reason for wanting to do this is that it will help in developing the algorithms that will actually perform the reconstructions from real holograms. In this post, I will explore a simple method for simulating holograms that is explained in an excellent publication I recently found: &lt;a href="https://arxiv.org/abs/1412.3674"&gt;Tatiana Latychevskaia and Hans-Werner Fink, " Practical algorithms for simulation and reconstruction of digital in-line holograms," arXiv 1412.3674 (2016)&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id="Inline-holography-with-plane-waves"&gt;Inline holography with plane waves&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-inline-holograms.html#Inline-holography-with-plane-waves"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;h3 id="Create-the-ground-truth"&gt;Create the ground truth&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-inline-holograms.html#Create-the-ground-truth"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The first step in the simulation of a digital hologram is to create a ground truth object, i.e. a an object whose optical properties we know &lt;em&gt;a priori&lt;/em&gt;. Rather than try to infer an object from a hologram--which is what the lensless imager should do--the simulations should work in the opposite sense and create a realistic hologram from the ground truth. Later, we can use the simulated holograms to test different reconstruction algorithms and see which ones come closest to reproducing the known objects.&lt;/p&gt;
+&lt;h2 id="Inline-holography-with-plane-waves"&gt;Inline holography with plane waves&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-inline-holograms/#Inline-holography-with-plane-waves"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;h3 id="Create-the-ground-truth"&gt;Create the ground truth&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-inline-holograms/#Create-the-ground-truth"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The first step in the simulation of a digital hologram is to create a ground truth object, i.e. a an object whose optical properties we know &lt;em&gt;a priori&lt;/em&gt;. Rather than try to infer an object from a hologram--which is what the lensless imager should do--the simulations should work in the opposite sense and create a realistic hologram from the ground truth. Later, we can use the simulated holograms to test different reconstruction algorithms and see which ones come closest to reproducing the known objects.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -958,7 +926,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Scipy version:&lt;/span&gt;&lt;span class="se"&gt;\t\t&lt;/span&gt;&lt;span class="si"&gt;{}&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;scipy&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;__version__&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -968,7 +936,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stdout output_text"&gt;
@@ -989,8 +957,7 @@ Scipy version:		0.19.0
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;For the first simulation, I will start by making a relatively simple object: a non-absorbing circle with a constant phase. In holography, objects are represented by a position-dependent amplitude and phase. The amplitude determines how much the object absorbs the incident light and the phase determines by how much the light inside the object is slowed-down relative to the light that passes outside the object.&lt;/p&gt;
 &lt;p&gt;To create a non-absorbing circle, I create a square array of pixels whose values are all equal to one. What's neat about this is that this array already represents what is perhaps the simplest object to simulate: nothing at all! If every pixel is equal to one, it means that the light is neither being absorbed nor slowed down anywhere.&lt;/p&gt;
@@ -1015,14 +982,13 @@ Scipy version:		0.19.0
 &lt;span class="n"&gt;gt&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;gtMask&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exp&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;gtPhase&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;The last line of the code above, &lt;code&gt;gt[gtMask] = np.exp(1j * gtPhase)&lt;/code&gt;, sets all the values in the &lt;code&gt;gt&lt;/code&gt; array that are inside the circular mask to the complex phasor $ \exp \left( j \phi \right) $, where $ \phi $ is the value of the phase imparted onto the light by the object. For real objects, this phase would be equal to the optical path length of the object, which is the product of the object's refractive index by its real size.&lt;/p&gt;
 &lt;p&gt;Let's now go ahead and visualize the object to make sure we created it correctly.&lt;/p&gt;
@@ -1062,7 +1028,7 @@ Scipy version:		0.19.0
     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;fig&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;amp&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;phase&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;cb_amp&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;cb_phase&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1077,7 +1043,7 @@ Scipy version:		0.19.0
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1087,7 +1053,7 @@ Scipy version:		0.19.0
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -1103,15 +1069,14 @@ Scipy version:		0.19.0
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;As you can see, the amplitude remains equal to 1 everywhere, which is what we would expect for a non-absorbing object. In the plot of the phase you can see the faint circle at the center of the image. I plotted the phase on a scale of $ \left[ 0, 2 \pi \right] $ for two reasons:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;to emphasize that the object only weakly perturbs the light;&lt;/li&gt;
 &lt;li&gt;because one complete rotation of the phasor in the complex plane is $2 \pi $ radians. Any value outside the range $ \left[ 0, 2 \pi \right] $ can be mapped back onto a value in this range.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h4 id="Set-the-physical-dimensions"&gt;Set the physical dimensions&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-inline-holograms.html#Set-the-physical-dimensions"&gt;¶&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;The final step in the object creation is to set up the physical dimensions of the problem. There are a few ways we can do this, but I typically like to set the number of pixels that sample the object and the pixel size independently. Then, the physical radius of the object is equivalent to &lt;code&gt;gtRadius * pixelSize&lt;/code&gt; and the total array size is equal to &lt;code&gt;numPixels * pixelSize&lt;/code&gt;. What's more, because the array is square, we can create just one coordinate vector for both directions.&lt;/p&gt;
+&lt;h4 id="Set-the-physical-dimensions"&gt;Set the physical dimensions&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-inline-holograms/#Set-the-physical-dimensions"&gt;¶&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;The final step in the object creation is to set up the physical dimensions of the problem. There are a few ways we can do this, but I typically like to set the number of pixels that sample the object and the pixel size independently. Then, the physical radius of the object is equivalent to &lt;code&gt;gtRadius * pixelSize&lt;/code&gt; and the total array size is equal to &lt;code&gt;numPixels * pixelSize&lt;/code&gt;. What's more, because the array is square, we can create just one coordinate vector for both directions.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -1128,7 +1093,7 @@ Scipy version:		0.19.0
 &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'The physical radius is:  &lt;/span&gt;&lt;span class="si"&gt;{}&lt;/span&gt;&lt;span class="s1"&gt; microns'&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;physicalRadius&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1138,7 +1103,7 @@ Scipy version:		0.19.0
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stdout output_text"&gt;
@@ -1152,8 +1117,7 @@ Scipy version:		0.19.0
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;The computational tool that I will use to propagate the wave fronts is known as the angular spectrum propagator. This tool requires two Fourier transforms and therefore requires that I setup the arrays that denote the spatial frequencies as well. As I discussed in a &lt;a href="http://kmdouglass.github.io/posts/simple-pupil-function-calculations.html"&gt;previous post&lt;/a&gt;, this can be done like so:&lt;/p&gt;
 
@@ -1171,18 +1135,17 @@ Scipy version:		0.19.0
 &lt;span class="n"&gt;fx&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;arange&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fS&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;fS&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;step&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;# Spatial frequency, inverse microns&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;&lt;code&gt;dx&lt;/code&gt; is the sampling period in the object space, whose inverse &lt;code&gt;fS&lt;/code&gt; is the sampling frequency. The maximum information content in the object's Fourier transform is found at the Nyquist frequency, or &lt;code&gt;fS / 2&lt;/code&gt;.&lt;/p&gt;
-&lt;h3 id="Compute-the-hologram"&gt;Compute the hologram&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-inline-holograms.html#Compute-the-hologram"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Two common ways to generate a hologram in a real experiment are to illuminate the object with a plane wave and with a spherical wave. In this simulation, I will assume a plane wave illumination because this is somewhat simpler and an easy first case to deal with.&lt;/p&gt;
-&lt;h4 id="Step-1:-Find-the-Fourier-transform-of-the-object"&gt;Step 1: Find the Fourier transform of the object&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-inline-holograms.html#Step-1:-Find-the-Fourier-transform-of-the-object"&gt;¶&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;According to the publication by &lt;a href="https://arxiv.org/abs/1412.3674"&gt;Latychevskaia and Fink&lt;/a&gt;, we first need to compute the Fourier transform of the object.&lt;/p&gt;
+&lt;h3 id="Compute-the-hologram"&gt;Compute the hologram&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-inline-holograms/#Compute-the-hologram"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Two common ways to generate a hologram in a real experiment are to illuminate the object with a plane wave and with a spherical wave. In this simulation, I will assume a plane wave illumination because this is somewhat simpler and an easy first case to deal with.&lt;/p&gt;
+&lt;h4 id="Step-1:-Find-the-Fourier-transform-of-the-object"&gt;Step 1: Find the Fourier transform of the object&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-inline-holograms/#Step-1:-Find-the-Fourier-transform-of-the-object"&gt;¶&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;According to the publication by &lt;a href="https://arxiv.org/abs/1412.3674"&gt;Latychevskaia and Fink&lt;/a&gt;, we first need to compute the Fourier transform of the object.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -1211,7 +1174,7 @@ Scipy version:		0.19.0
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1221,7 +1184,7 @@ Scipy version:		0.19.0
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -1237,8 +1200,7 @@ Scipy version:		0.19.0
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;We cannot really see much in the amplitude plot, so let's put it on a log-scale.&lt;/p&gt;
 
@@ -1264,7 +1226,7 @@ Scipy version:		0.19.0
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1274,7 +1236,7 @@ Scipy version:		0.19.0
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -1290,10 +1252,9 @@ Scipy version:		0.19.0
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h4 id="Step-2:-Verify-that-the-Fourier-transform-is-correct"&gt;Step 2: Verify that the Fourier transform is correct&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-inline-holograms.html#Step-2:-Verify-that-the-Fourier-transform-is-correct"&gt;¶&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;We can verify that we did everything correctly by computing the discrete integral of the absolute squares of the field passing through the original object and its Fourier transform. By &lt;a href="https://en.wikipedia.org/wiki/Parseval's_theorem"&gt;Parseval's theorem&lt;/a&gt;, these should be equivalent. Though it may seem a bit mysterious, Parseval's theorem is just restating the well-known law about the conservation of energy. Simply put, the energy in the field passing through the object should be equal to the energy carried by its Fourier transform.&lt;/p&gt;
+&lt;h4 id="Step-2:-Verify-that-the-Fourier-transform-is-correct"&gt;Step 2: Verify that the Fourier transform is correct&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-inline-holograms/#Step-2:-Verify-that-the-Fourier-transform-is-correct"&gt;¶&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;We can verify that we did everything correctly by computing the discrete integral of the absolute squares of the field passing through the original object and its Fourier transform. By &lt;a href="https://en.wikipedia.org/wiki/Parseval's_theorem"&gt;Parseval's theorem&lt;/a&gt;, these should be equivalent. Though it may seem a bit mysterious, Parseval's theorem is just restating the well-known law about the conservation of energy. Simply put, the energy in the field passing through the object should be equal to the energy carried by its Fourier transform.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -1309,7 +1270,7 @@ Scipy version:		0.19.0
 &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Integral, Fourier transform of object: &lt;/span&gt;&lt;span class="si"&gt;{:.4f}&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;GT_int&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1319,7 +1280,7 @@ Scipy version:		0.19.0
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stdout output_text"&gt;
@@ -1334,8 +1295,7 @@ Integral, Fourier transform of object: 2631.7081
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Notice that there's an error here between the sum of squares of the object and its Fourier transform. In this case, the percent error is:&lt;/p&gt;
 
@@ -1351,7 +1311,7 @@ Integral, Fourier transform of object: 2631.7081
 &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Percent error: &lt;/span&gt;&lt;span class="si"&gt;{:.2f}&lt;/span&gt;&lt;span class="s1"&gt;%'&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;error&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1361,7 +1321,7 @@ Integral, Fourier transform of object: 2631.7081
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stdout output_text"&gt;
@@ -1375,19 +1335,16 @@ Integral, Fourier transform of object: 2631.7081
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;The error is not large, but it does make you wonder where exactly it comes from. Let's do one more sanity check before going any farther. Another property of Fourier transforms is that the DC component (the value of the Fourier transform at a frequency of zero) should be equal to the average of the original signal.&lt;/p&gt;
 &lt;p&gt;The average of a two-dimensional discrete signal whose samples are equally spaced is expressed as&lt;/p&gt;
-&lt;p&gt;\begin{equation*}
+\begin{equation*}
 \bar{f} = \frac{1}{XY}\sum_{i=0}^{M-1}\sum_{j=0}^{N-1} f \left( i, j \right) \Delta x \Delta y
-\end{equation*}&lt;/p&gt;
-&lt;p&gt;Here, $ X $ and $ Y $ are the physical lengths of the array representing the signal and $ \Delta x $ and $ \Delta y $ are the spacings between each array element. Furthermore, the array has a number of pixels $ M $ and $ N $ in the $ x $ and $ y $ directions, respectively. In our case the arrays are square and equally sampled in both directions, so $ X = Y $ and $ \Delta X = \Delta Y $. Additionally, the number of pixels is just $ M = \frac{X}{\Delta X} $, which means that the above expression may be simplified to&lt;/p&gt;
-&lt;p&gt;\begin{equation*}
+\end{equation*}&lt;p&gt;Here, $ X $ and $ Y $ are the physical lengths of the array representing the signal and $ \Delta x $ and $ \Delta y $ are the spacings between each array element. Furthermore, the array has a number of pixels $ M $ and $ N $ in the $ x $ and $ y $ directions, respectively. In our case the arrays are square and equally sampled in both directions, so $ X = Y $ and $ \Delta X = \Delta Y $. Additionally, the number of pixels is just $ M = \frac{X}{\Delta X} $, which means that the above expression may be simplified to&lt;/p&gt;
+\begin{equation*}
 \bar{f} = \frac{1}{M^2}\sum_{i=0}^{M-1}\sum_{j=0}^{M-1} f \left( i, j \right)
-\end{equation*}&lt;/p&gt;
-
+\end{equation*}
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -1401,7 +1358,7 @@ Integral, Fourier transform of object: 2631.7081
 &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Average of the object field: &lt;/span&gt;&lt;span class="si"&gt;{:.4f}&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;gt_avg&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1411,7 +1368,7 @@ Integral, Fourier transform of object: 2631.7081
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stdout output_text"&gt;
@@ -1425,8 +1382,7 @@ Integral, Fourier transform of object: 2631.7081
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;As for the DC term, we need to extract the zero-frequency value which lies at the center of the &lt;code&gt;GT&lt;/code&gt; array. There is one caveat here: &lt;strong&gt;the values in the arrays are densities&lt;/strong&gt;. We therefore need to multiply by the area of the pixel in the array's center, which is simply &lt;code&gt;df**2&lt;/code&gt;.&lt;/p&gt;
 
@@ -1442,7 +1398,7 @@ Integral, Fourier transform of object: 2631.7081
 &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'DC term: &lt;/span&gt;&lt;span class="si"&gt;{:.4f}&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dc_term&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1452,7 +1408,7 @@ Integral, Fourier transform of object: 2631.7081
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stdout output_text"&gt;
@@ -1466,15 +1422,13 @@ Integral, Fourier transform of object: 2631.7081
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;As you can see, there is also a slight difference between the average of the input field and the DC term of the input's Fourier transform. Since both sanity checks are relatively close, however, I suspect that the differences are due to numerical rounding errors.&lt;/p&gt;
-&lt;h4 id="Step-3:-Create-the-angular-spectrum-propagator"&gt;Step 3: Create the angular spectrum propagator&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-inline-holograms.html#Step-3:-Create-the-angular-spectrum-propagator"&gt;¶&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;The reason we computed the Fourier transform of the object was to determine its angular spectrum, i.e. the array of plane waves traveling at different directions to the axis that coherently combine to form the object. Computing the field at another axial plane means advancing the phase of each of these plane waves by an amount that depends on the wavelength of the light and the angle at which the plane wave is traveling relative to the optical axis. We can do this by multiplying the Fourier transform of the object by what's known as the &lt;strong&gt;transfer function of free space&lt;/strong&gt;:&lt;/p&gt;
-&lt;p&gt;\begin{equation*}
+&lt;h4 id="Step-3:-Create-the-angular-spectrum-propagator"&gt;Step 3: Create the angular spectrum propagator&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-inline-holograms/#Step-3:-Create-the-angular-spectrum-propagator"&gt;¶&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;The reason we computed the Fourier transform of the object was to determine its angular spectrum, i.e. the array of plane waves traveling at different directions to the axis that coherently combine to form the object. Computing the field at another axial plane means advancing the phase of each of these plane waves by an amount that depends on the wavelength of the light and the angle at which the plane wave is traveling relative to the optical axis. We can do this by multiplying the Fourier transform of the object by what's known as the &lt;strong&gt;transfer function of free space&lt;/strong&gt;:&lt;/p&gt;
+\begin{equation*}
 H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 - \left( \lambda f_x \right)^2 - \left( \lambda f_y \right)^2 } \right]
-\end{equation*}&lt;/p&gt;
-&lt;p&gt;$ z $ is a free parameter and is the distance from the object plane in which we wish to compute the field. To get the field from the object in a plane $ z $, we multiply the Fourier transform of the field by this transfer function and then compute the inverse Fourier transform of the product. This is essentially the operation I performed in a &lt;a href="http://kmdouglass.github.io/posts/simulating-microscope-pupil-functions.html"&gt;previous post where I computed the defocused image of an isotropic point emitter in a microscope&lt;/a&gt;.&lt;/p&gt;
+\end{equation*}&lt;p&gt;$ z $ is a free parameter and is the distance from the object plane in which we wish to compute the field. To get the field from the object in a plane $ z $, we multiply the Fourier transform of the field by this transfer function and then compute the inverse Fourier transform of the product. This is essentially the operation I performed in a &lt;a href="http://kmdouglass.github.io/posts/simulating-microscope-pupil-functions.html"&gt;previous post where I computed the defocused image of an isotropic point emitter in a microscope&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Here's what the phase angle the transfer function looks like for propagation over $ 10 \, \mu m $:&lt;/p&gt;
 
 &lt;/div&gt;
@@ -1506,7 +1460,7 @@ H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 -
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1516,7 +1470,7 @@ H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 -
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stderr output_text"&gt;
@@ -1528,7 +1482,7 @@ H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 -
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -1544,8 +1498,7 @@ H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 -
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;And the amplitude:&lt;/p&gt;
 
@@ -1571,7 +1524,7 @@ H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 -
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1581,7 +1534,7 @@ H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 -
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stderr output_text"&gt;
@@ -1593,7 +1546,7 @@ H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 -
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -1609,12 +1562,11 @@ H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 -
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;You can see right away that the transfer function appears circular. The reason for this is that the argument inside the square root becomes negative for large spatial frequencies, which makes the whole transfer function in this region into a decaying exponential. These spatial frequencies correspond to plane waves that exponentially decay as they propagate away from the sample; they are so-called "evanescent" waves.&lt;/p&gt;
 &lt;p&gt;For distances much larger than a wavelength of light, the amplitude of the transfer function in this area is effectively zero.&lt;/p&gt;
-&lt;h4 id="Step-4:-Propagate-the-field-and-create-the-hologram"&gt;Step 4: Propagate the field and create the hologram&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-inline-holograms.html#Step-4:-Propagate-the-field-and-create-the-hologram"&gt;¶&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;Let's now compute the field in the new plane at some distance from the sample. We do this by multiplying the Fourier transform of the ground truth by the transfer function and computing this product's inverse Fourier transform.&lt;/p&gt;
+&lt;h4 id="Step-4:-Propagate-the-field-and-create-the-hologram"&gt;Step 4: Propagate the field and create the hologram&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-inline-holograms/#Step-4:-Propagate-the-field-and-create-the-hologram"&gt;¶&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;Let's now compute the field in the new plane at some distance from the sample. We do this by multiplying the Fourier transform of the ground truth by the transfer function and computing this product's inverse Fourier transform.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -1630,7 +1582,7 @@ H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 -
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1640,7 +1592,7 @@ H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 -
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stderr output_text"&gt;
@@ -1652,7 +1604,7 @@ H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 -
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -1681,7 +1633,7 @@ H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 -
 &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Integral, hologram plane: &lt;/span&gt;&lt;span class="si"&gt;{:.4f}&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;gt_prime_int&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1691,7 +1643,7 @@ H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 -
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stdout output_text"&gt;
@@ -1707,8 +1659,7 @@ Integral, hologram plane: 2621.0387
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Because our hologram will be recorded with a normal camera that is insensitiveto to the phase of the light, we take the absolute square to obtain the final simulated image of the hologram.&lt;/p&gt;
 
@@ -1734,7 +1685,7 @@ Integral, hologram plane: 2621.0387
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1744,7 +1695,7 @@ Integral, hologram plane: 2621.0387
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -1760,10 +1711,9 @@ Integral, hologram plane: 2621.0387
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Movie-of-propagating-hologram"&gt;Movie of propagating hologram&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-inline-holograms.html#Movie-of-propagating-hologram"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Here I've made a movie of the hologram propagating along the axial direction between $z = 0 \, \mu m $ and $z = 100 \, \mu m $.&lt;/p&gt;
+&lt;h2 id="Movie-of-propagating-hologram"&gt;Movie of propagating hologram&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-inline-holograms/#Movie-of-propagating-hologram"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Here I've made a movie of the hologram propagating along the axial direction between $z = 0 \, \mu m $ and $z = 100 \, \mu m $.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -1776,7 +1726,7 @@ Integral, hologram plane: 2621.0387
 &lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;matplotlib&lt;/span&gt; &lt;span class="k"&gt;import&lt;/span&gt; &lt;span class="n"&gt;animation&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1831,7 +1781,7 @@ Integral, hologram plane: 2621.0387
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;close&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1841,7 +1791,7 @@ Integral, hologram plane: 2621.0387
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stderr output_text"&gt;
@@ -1856,18 +1806,16 @@ Integral, hologram plane: 2621.0387
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;video controls src="http://kmdouglass.github.io/propagating_hologram.mp4" type="video/mp4"&gt;&lt;/video&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Interactively-propagate-the-hologram"&gt;Interactively propagate the hologram&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-inline-holograms.html#Interactively-propagate-the-hologram"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Below I've used Jupyter's interactive plotting features to allow me to scan through the axial direction and observe how the hologram changes as a function of distance from the sample.&lt;/p&gt;
+&lt;h2 id="Interactively-propagate-the-hologram"&gt;Interactively propagate the hologram&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-inline-holograms/#Interactively-propagate-the-hologram"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Below I've used Jupyter's interactive plotting features to allow me to scan through the axial direction and observe how the hologram changes as a function of distance from the sample.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;To use this feature, you will need to download this notebook and run it on your own a Jupyter notebook server.&lt;/strong&gt;&lt;/p&gt;
 
 &lt;/div&gt;
@@ -1910,7 +1858,7 @@ Integral, hologram plane: 2621.0387
     &lt;span class="n"&gt;txt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_text&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'z = &lt;/span&gt;&lt;span class="si"&gt;{:.1f}&lt;/span&gt;&lt;span class="s1"&gt; $\mu m$'&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;z&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;   
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1920,16 +1868,16 @@ Integral, hologram plane: 2621.0387
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
 
 
-&lt;div id="45e521f4-f092-4c48-8867-179f3bb8ad1e"&gt;&lt;/div&gt;
+&lt;div id="6f933f85-fa57-4edc-a964-118f4c87e9a8"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#45e521f4-f092-4c48-8867-179f3bb8ad1e');
+var element = $('#6f933f85-fa57-4edc-a964-118f4c87e9a8');
 /* Put everything inside the global mpl namespace */
 window.mpl = {};
 
@@ -2704,7 +2652,7 @@ if (IPython.notebook.kernel != null) {
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -2727,7 +2675,7 @@ if (IPython.notebook.kernel != null) {
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -2737,7 +2685,7 @@ if (IPython.notebook.kernel != null) {
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stderr output_text"&gt;
@@ -2752,23 +2700,15 @@ if (IPython.notebook.kernel != null) {
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Summary"&gt;Summary&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-inline-holograms.html#Summary"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Simulating an inline hologram with plane wave illumination requires a few steps: generating a ground-truth object, computing its angular spectrum, and propagating this spectrum to a new axial plane using the transfer function of free space. Two Fourier transforms are required: one for finding the object's angular spectrum and the other to convert the propagated spectrum back to real space.&lt;/p&gt;
+&lt;h2 id="Summary"&gt;Summary&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-inline-holograms/#Summary"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Simulating an inline hologram with plane wave illumination requires a few steps: generating a ground-truth object, computing its angular spectrum, and propagating this spectrum to a new axial plane using the transfer function of free space. Two Fourier transforms are required: one for finding the object's angular spectrum and the other to convert the propagated spectrum back to real space.&lt;/p&gt;
 &lt;p&gt;If you have spherical wave illumination rather than plane wave illumination, then you will need to use the Fresnel propagator. This will make for a later discussion.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-</description><category>Fourier optics</category><category>holography</category><guid>http://kmdouglass.github.io/posts/simulating-inline-holograms.html</guid><pubDate>Sat, 29 Apr 2017 09:25:01 GMT</pubDate></item><item><title>Simple pupile function calculations</title><link>http://kmdouglass.github.io/posts/simple-pupil-function-calculations.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div tabindex="-1" id="notebook" class="border-box-sizing"&gt;
-    &lt;div class="container" id="notebook-container"&gt;
-
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;/div&gt;</description><category>Fourier optics</category><category>holography</category><guid>http://kmdouglass.github.io/posts/simulating-inline-holograms/</guid><pubDate>Sat, 29 Apr 2017 09:25:01 GMT</pubDate></item><item><title>Simple pupile function calculations</title><link>http://kmdouglass.github.io/posts/simple-pupil-function-calculations/</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;&lt;em&gt;Note: This is a remake of my original post on pupil functions. I decided to write this remake to fix what I perceived to be some errors in thinking and to better address the problem of units in some of the physical quantitities. For the original, click &lt;a href="http://kmdouglass.github.io/posts/simulating-microscope-pupil-functions.html"&gt;here&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;A pupil function is a theoretical tool for characterizing an imaging system. In simple terms, it is a mathematical model for any general arrangement of lenses and mirrors used to collect light from an object and form an image of that object in some other plane. A few of the reasons why pupil functions are useful include:&lt;/p&gt;
@@ -2783,39 +2723,34 @@ if (IPython.notebook.kernel != null) {
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Theoretical-background"&gt;Theoretical background&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simple-pupil-function-calculations.html#Theoretical-background"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;In scalar diffraction theory, light is represented as a three-dimensional function known as the scalar field. At every point in space $ \mathbf{r} $, the scalar field $ u \left( \mathbf{r} \right) $ is a single, complex value that represents the electric field at that point. The physical laws of diffraction require that the scalar field be described by two numbers, an &lt;strong&gt;amplitude&lt;/strong&gt; and a &lt;strong&gt;phase&lt;/strong&gt;, that are derived from the field's real and the imaginary parts, $ \text{Re} \left[ u \left( \mathbf{r} \right) \right] $ and $ \text{Im} \left[ u \left( \mathbf{r} \right) \right] $:&lt;/p&gt;
-&lt;p&gt;\begin{align*}
+&lt;h2 id="Theoretical-background"&gt;Theoretical background&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simple-pupil-function-calculations/#Theoretical-background"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;In scalar diffraction theory, light is represented as a three-dimensional function known as the scalar field. At every point in space $ \mathbf{r} $, the scalar field $ u \left( \mathbf{r} \right) $ is a single, complex value that represents the electric field at that point. The physical laws of diffraction require that the scalar field be described by two numbers, an &lt;strong&gt;amplitude&lt;/strong&gt; and a &lt;strong&gt;phase&lt;/strong&gt;, that are derived from the field's real and the imaginary parts, $ \text{Re} \left[ u \left( \mathbf{r} \right) \right] $ and $ \text{Im} \left[ u \left( \mathbf{r} \right) \right] $:&lt;/p&gt;
+\begin{align*}
 A &amp;amp;= \sqrt{\text{Re} \left[ u \left( \mathbf{r} \right) \right]^2 + \text{Im} \left[ u \left( \mathbf{r} \right) \right]^2 } \\
 \phi &amp;amp;= \arctan \left( \frac{\text{Im} \left[ u \left( \mathbf{r} \right) \right]}{\text{Re} \left[ u \left( \mathbf{r} \right) \right]} \right)
-\end{align*}&lt;/p&gt;
-&lt;p&gt;If we know the amplitude and phase at a given point, then we know the scalar field at that point. Despite the fact that scalar diffraction theory ignores the polarization of light, it does wonderfully well at describing a large range of optical phenomena.&lt;/p&gt;
+\end{align*}&lt;p&gt;If we know the amplitude and phase at a given point, then we know the scalar field at that point. Despite the fact that scalar diffraction theory ignores the polarization of light, it does wonderfully well at describing a large range of optical phenomena.&lt;/p&gt;
 &lt;p&gt;For most problems in imaging, we don't really need to know the three-dimensional distribution of the field in all of space. Instead, we simplify the problem by asking how an optical system transforms the field in some two-dimensional &lt;em&gt;object plane&lt;/em&gt; into a new field distribution in the &lt;em&gt;image plane&lt;/em&gt; (see the figure below). Any changes in scale between these two planes are caused by the system's magnification; any blurring or distortion is caused by diffraction and possibly aberrations.&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://kmdouglass.github.io/optical_system_with_pupils.png" alt="Optical system with pupils"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://kmdouglass.github.io/images/optical_system_with_pupils.png" alt="Optical system with pupils"&gt;&lt;/p&gt;
 &lt;p&gt;The &lt;strong&gt;pupil function&lt;/strong&gt; is the two-dimensional Fourier transform of the scalar field in the image plane when the object is a point source emitting light equally in all directions, i.e. an &lt;em&gt;isotropic&lt;/em&gt; point source. Mathematically, the pupil function is written as&lt;/p&gt;
-&lt;p&gt;\begin{equation*}
+\begin{equation*}
 P \left(f_x, f_y \right) = \frac{1}{A}\iint_{-\infty}^{\infty} \text{PSF}_A \left( x, y \right) \exp \left[ -j 2 \pi \left( f_x x + f_y y\right) \right] \, dx \, dy
-\end{equation*}&lt;/p&gt;
-&lt;p&gt;where $ A $ is a normalizing constant, $ f_x $ and $ f_y $ represent spatial frequencies in the x- and y-directions, and $ j $ is the imaginary number. $ \text{PSF}_A \left( x, y \right) $ is known as the &lt;strong&gt;amplitude point spread function&lt;/strong&gt;. Despite the intimidating name, $ \text{PSF}_A \left( x, y \right) $ is just the scalar field from the isotropic point source in the image plane. The pupil function and the amplitude point spread function form a Fourier transform pair, so we can also write&lt;/p&gt;
-&lt;p&gt;\begin{equation*}
+\end{equation*}&lt;p&gt;where $ A $ is a normalizing constant, $ f_x $ and $ f_y $ represent spatial frequencies in the x- and y-directions, and $ j $ is the imaginary number. $ \text{PSF}_A \left( x, y \right) $ is known as the &lt;strong&gt;amplitude point spread function&lt;/strong&gt;. Despite the intimidating name, $ \text{PSF}_A \left( x, y \right) $ is just the scalar field from the isotropic point source in the image plane. The pupil function and the amplitude point spread function form a Fourier transform pair, so we can also write&lt;/p&gt;
+\begin{equation*}
 \text{PSF}_A \left(x, y \right) = A \iint_{-\infty}^{\infty} P \left( f_x, f_y \right) \exp \left[ j 2 \pi \left( f_x x + f_y y\right) \right] \, df_x \, df_y
-\end{equation*}&lt;/p&gt;
-&lt;p&gt;What all of this means is that we can compute the image of an on-axis, isotropic point source if we know the pupil function that describes the system: compute the two-dimensional Fourier transform of the pupil function and voilà, you have the image (or at least the field that will form the image).&lt;/p&gt;
-&lt;h3 id="The-pupil-punction-is-dimensionless;-$-\text{PSF}_A-$-is-a-field"&gt;The pupil punction is dimensionless; $ \text{PSF}_A $ is a field&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simple-pupil-function-calculations.html#The-pupil-punction-is-dimensionless;-%24-%5Ctext%7BPSF%7D_A-%24-is-a-field"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;By convention the pupil function is a dimensionless complex number and has a magnitude between 0 and 1. The amplitude PSF, however, has units of electric field, or Volts per distance, $ V / m $.&lt;/p&gt;
+\end{equation*}&lt;p&gt;What all of this means is that we can compute the image of an on-axis, isotropic point source if we know the pupil function that describes the system: compute the two-dimensional Fourier transform of the pupil function and voilà, you have the image (or at least the field that will form the image).&lt;/p&gt;
+&lt;h3 id="The-pupil-punction-is-dimensionless;-$-\text{PSF}_A-$-is-a-field"&gt;The pupil punction is dimensionless; $ \text{PSF}_A $ is a field&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simple-pupil-function-calculations/#The-pupil-punction-is-dimensionless;-%24-%5Ctext%7BPSF%7D_A-%24-is-a-field"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;By convention the pupil function is a dimensionless complex number and has a magnitude between 0 and 1. The amplitude PSF, however, has units of electric field, or Volts per distance, $ V / m $.&lt;/p&gt;
 &lt;p&gt;If you perform a dimensional analysis on the Fourier transform expressions above, you can see that the normalizing constant $ A $ has to have units of $ V \times m $. For example, if $ \text{PSF}_A $ has units of $ V / m $ and $ dx $ and $ dy $ both have units of $ m $, then $ A $ has units of $ V \times m $ and the pupil function is therefore dimensionless. Sometimes in the literature you will find that units or a normalizing constant are ignored or, worse, that the reader can sort of "fill them in" later. I prefer to be explicit and to define the $ \text{PSF}_A $ to be a field.&lt;/p&gt;
-&lt;h3 id="Pupil-functions-are-not-entrance-or-exit-pupils"&gt;Pupil functions are not entrance or exit pupils&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simple-pupil-function-calculations.html#Pupil-functions-are-not-entrance-or-exit-pupils"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The pupil function and the pupil planes of a system are not the same thing. The entrance and exit pupils--which together are known as the pupil planes--are the planes in which the images of the system's &lt;a href="http://hyperphysics.phy-astr.gsu.edu/hbase/geoopt/stop.html"&gt;aperture stop&lt;/a&gt; are located. The pupil function, however, is not an image of the aperture stop of the system; it's a 2D Fourier transform of a field.&lt;/p&gt;
+&lt;h3 id="Pupil-functions-are-not-entrance-or-exit-pupils"&gt;Pupil functions are not entrance or exit pupils&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simple-pupil-function-calculations/#Pupil-functions-are-not-entrance-or-exit-pupils"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The pupil function and the pupil planes of a system are not the same thing. The entrance and exit pupils--which together are known as the pupil planes--are the planes in which the images of the system's &lt;a href="http://hyperphysics.phy-astr.gsu.edu/hbase/geoopt/stop.html"&gt;aperture stop&lt;/a&gt; are located. The pupil function, however, is not an image of the aperture stop of the system; it's a 2D Fourier transform of a field.&lt;/p&gt;
 &lt;p&gt;There is never-the-less a relationship between the pupil function and the plane of the exit pupil. The pupil function represents the relative amplitude and phase of the field on the surface of a so-called &lt;a href="http://www.optics4kids.org/home/content/what-is-optics/refraction/aberrations/"&gt;reference sphere&lt;/a&gt; that intersects the optics axis in the plane of the system's exit pupil.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Pupil-function-simulations-in-python"&gt;Pupil function simulations in python&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simple-pupil-function-calculations.html#Pupil-function-simulations-in-python"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The goal of this simulation will be simple: given a pupil function, a single wavelength, an optical system with a numerical aperture NA, and an amount of power that passes through the image plane, compute the image of an on-axis isotropic point source.&lt;/p&gt;
+&lt;h2 id="Pupil-function-simulations-in-python"&gt;Pupil function simulations in python&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simple-pupil-function-calculations/#Pupil-function-simulations-in-python"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The goal of this simulation will be simple: given a pupil function, a single wavelength, an optical system with a numerical aperture NA, and an amount of power that passes through the image plane, compute the image of an on-axis isotropic point source.&lt;/p&gt;
 &lt;p&gt;There are only a few steps needed to achieve our goal:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;define the simulation's input parameters;&lt;/li&gt;
@@ -2852,7 +2787,7 @@ P \left(f_x, f_y \right) = \frac{1}{A}\iint_{-\infty}^{\infty} \text{PSF}_A \lef
 &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Seaborn version:&lt;/span&gt;&lt;span class="se"&gt;\t&lt;/span&gt;&lt;span class="si"&gt;{}&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sns&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;__version__&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -2862,7 +2797,7 @@ P \left(f_x, f_y \right) = \frac{1}{A}\iint_{-\infty}^{\infty} \text{PSF}_A \lef
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stdout output_text"&gt;
@@ -2884,10 +2819,9 @@ Seaborn version:	0.7.1
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Step-1:-Define-the-input-parameters"&gt;Step 1: Define the input parameters&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simple-pupil-function-calculations.html#Step-1:-Define-the-input-parameters"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Next, we need to define a few parameters that will determine the output of the simulations. These parameters are:&lt;/p&gt;
+&lt;h2 id="Step-1:-Define-the-input-parameters"&gt;Step 1: Define the input parameters&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simple-pupil-function-calculations/#Step-1:-Define-the-input-parameters"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Next, we need to define a few parameters that will determine the output of the simulations. These parameters are:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;strong&gt;wavelength&lt;/strong&gt; Units are $ \mu m $.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;NA&lt;/strong&gt; Numerical aperture of the system. No units.&lt;/li&gt;
@@ -2898,10 +2832,9 @@ Seaborn version:	0.7.1
 &lt;p&gt;Note that pixel size is defined as the size of a pixel in the &lt;em&gt;object space&lt;/em&gt;. Defining it like this is often more intuitive than defining the pixel size in the image space. For example, when you see a scale bar on a microscopy image, the distances correspond to object space distances, not the actual distance that the image spans on the piece of paper or computer screen. Furthermore, there is no problem with working with an object space pixel size in the image plane since the coordinate systems in the object and image planes of our perfect optical system can be easily mapped onto one another by a linear scaling by the system's magnification.&lt;/p&gt;
 &lt;p&gt;We don't neccessarily need to use a camera as the detector. Since we are limited to working with discrete arrays in the computer, though, it's convenient to say that we have a camera as a detector since each pixel is a discrete sample of the field.&lt;/p&gt;
 &lt;p&gt;In addition to the above parameters, we'll assume that the object, the imaging system, and the image plane are all in air. We'll define a constant $ Z_0 = 376.73 \, \Omega $ which is known as the &lt;a href="https://en.wikipedia.org/wiki/Wave_impedance"&gt;impedance of free space&lt;/a&gt; or the vacuum impedance. This is the constant of proportionality between the power carried by the scalar field and the integral of its absolute square in the image plane:&lt;/p&gt;
-&lt;p&gt;\begin{equation*}
+\begin{equation*}
 P_0 = \frac{1}{Z_0} \iint_{-\infty}^{\infty} \left| \text{PSF}_A \left( x, y \right) \right|^2 \, dx \, dy
-\end{equation*}&lt;/p&gt;
-&lt;p&gt;Of course, air does not really have the same impedance as vacuum, but the two values are close enough. I have also used $ P_0 $ to denote the power because I already used $ P \left( f_x, f_y \right) $ to denote the pupil function.&lt;/p&gt;
+\end{equation*}&lt;p&gt;Of course, air does not really have the same impedance as vacuum, but the two values are close enough. I have also used $ P_0 $ to denote the power because I already used $ P \left( f_x, f_y \right) $ to denote the pupil function.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -2920,16 +2853,15 @@ P_0 = \frac{1}{Z_0} \iint_{-\infty}^{\infty} \left| \text{PSF}_A \left( x, y \ri
 &lt;span class="n"&gt;Z0&lt;/span&gt;         &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;376.73&lt;/span&gt; &lt;span class="c1"&gt;# Ohms; impedance of free space&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Step-2:-Create-the-image-and-pupil-plane-coordinate-systems"&gt;Step 2: Create the image and pupil plane coordinate systems&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simple-pupil-function-calculations.html#Step-2:-Create-the-image-and-pupil-plane-coordinate-systems"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Our simulation will transform the values in a two-dimensional square array of complex numbers (the pupil function) into a new two-dimensional array of complex numbers of the same size. Before we do this, however, let's first determine the coordinates of each pixel.&lt;/p&gt;
+&lt;h2 id="Step-2:-Create-the-image-and-pupil-plane-coordinate-systems"&gt;Step 2: Create the image and pupil plane coordinate systems&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simple-pupil-function-calculations/#Step-2:-Create-the-image-and-pupil-plane-coordinate-systems"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Our simulation will transform the values in a two-dimensional square array of complex numbers (the pupil function) into a new two-dimensional array of complex numbers of the same size. Before we do this, however, let's first determine the coordinates of each pixel.&lt;/p&gt;
 &lt;p&gt;Since we specified the pixel size and the number of pixels, it's easiest to start with the image plane coordinates. We will define the origin of our coordinate system to lie at the center of the array, which, for an even number of pixels and array indexes that start at zero, lies halfway between the pixels $ \left( \frac{\text{numPixels}}{2} \right) - 1 $ and $ \left( \frac{\text{numPixels}}{2} \right) $ in both the horizontal and vertical directions.&lt;/p&gt;
 
 &lt;/div&gt;
@@ -2944,14 +2876,13 @@ P_0 = \frac{1}{Z_0} \iint_{-\infty}^{\infty} \left| \text{PSF}_A \left( x, y \ri
 &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;linspace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;pixelSize&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;numPixels&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;pixelSize&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;numPixels&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;num&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;numPixels&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;endpoint&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;We only need to create a single, one-dimensional array to represent the coordinates because our image and pupil plane arrays will be square; we can use the same array to represent the coordinates in both the horizontal and vertical directions.&lt;/p&gt;
 &lt;p&gt;With the image plane coordinates taken care of, the next question is: what are the pupil plane coordinates? This question is a frequent source of frustration for students (and full-time scientists). I won't go into the details in this post, but instead will just tell you the two rules you need to remember for Fourier optics simulations&lt;/p&gt;
@@ -2976,16 +2907,15 @@ P_0 = \frac{1}{Z_0} \iint_{-\infty}^{\infty} \left| \text{PSF}_A \left( x, y \ri
 &lt;span class="n"&gt;fx&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;arange&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fS&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;fS&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;step&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;# Spatial frequency, inverse microns&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Step-3:-Create-the-pupil-function"&gt;Step 3: Create the pupil function&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simple-pupil-function-calculations.html#Step-3:-Create-the-pupil-function"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;In nearly all imaging systems, the pupil is circular because its optical elements are circular. The radius of the pupil function is the ratio of the system's numerical aperture to the wavelength of the light, $ \frac{\text{NA}}{\lambda} $ (&lt;a href="http://onlinelibrary.wiley.com/doi/10.1111/j.0022-2720.2004.01393.x/full"&gt;Hanser, 2004&lt;/a&gt;). Perfect systems like the one we are modeling here have a pupil with a constant value everywhere inside this circle and zero outside of it.&lt;/p&gt;
+&lt;h2 id="Step-3:-Create-the-pupil-function"&gt;Step 3: Create the pupil function&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simple-pupil-function-calculations/#Step-3:-Create-the-pupil-function"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;In nearly all imaging systems, the pupil is circular because its optical elements are circular. The radius of the pupil function is the ratio of the system's numerical aperture to the wavelength of the light, $ \frac{\text{NA}}{\lambda} $ (&lt;a href="http://onlinelibrary.wiley.com/doi/10.1111/j.0022-2720.2004.01393.x/full"&gt;Hanser, 2004&lt;/a&gt;). Perfect systems like the one we are modeling here have a pupil with a constant value everywhere inside this circle and zero outside of it.&lt;/p&gt;
 &lt;p&gt;We can simulate such a pupil by making a circular mask with a radius of $ \frac{\text{NA}}{\lambda} $. The mask is one inside the circle and zero outside of it.&lt;/p&gt;
 
 &lt;/div&gt;
@@ -3004,21 +2934,19 @@ P_0 = \frac{1}{Z_0} \iint_{-\infty}^{\infty} \left| \text{PSF}_A \left( x, y \ri
 &lt;span class="n"&gt;pupilMask&lt;/span&gt;       &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sqrt&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;W&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;pupilCenter&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;H&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;pupilCenter&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;pupilRadius&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h3 id="Define-the-power-carried-by-the-scalar-field"&gt;Define the power carried by the scalar field&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simple-pupil-function-calculations.html#Define-the-power-carried-by-the-scalar-field"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;I mentioned in the theoretical background above that the total optical power carried by the field is the two dimensional integral of the absolute square of the field divided by the impedance. If we want to set the power as an input of the simulation, we need to first normalize our pupil values by this integral.&lt;/p&gt;
+&lt;h3 id="Define-the-power-carried-by-the-scalar-field"&gt;Define the power carried by the scalar field&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simple-pupil-function-calculations/#Define-the-power-carried-by-the-scalar-field"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;I mentioned in the theoretical background above that the total optical power carried by the field is the two dimensional integral of the absolute square of the field divided by the impedance. If we want to set the power as an input of the simulation, we need to first normalize our pupil values by this integral.&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Parseval's_theorem"&gt;Parseval's theorem&lt;/a&gt; tells us that we can integrate over $ \text{PSF}_A \left( x, y \right) $ and $ A \times P \left( f_x, f_y \right) $, i.e. the image plane field or the normalized pupil, respectively, and get the same number:&lt;/p&gt;
-&lt;p&gt;\begin{equation*}
+\begin{equation*}
 \iint_{-\infty}^{\infty} \left| \text{PSF}_A \left( x, y \right) \right|^2 \, dx \, dy = A^2 \iint_{-\infty}^{\infty} \left| P \left( f_x, f_y \right) \right|^2 \, df_x \, df_y
-\end{equation*}&lt;/p&gt;
-&lt;p&gt;Now that we have the pupil, we can perform a numerical integration over it using Simpson's rule to find the normalizing constant. We then multiply the pupil by the square root of this constant times our desired value for the power to set the total power carried by the field.&lt;/p&gt;
+\end{equation*}&lt;p&gt;Now that we have the pupil, we can perform a numerical integration over it using Simpson's rule to find the normalizing constant. We then multiply the pupil by the square root of this constant times our desired value for the power to set the total power carried by the field.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -3041,7 +2969,7 @@ P_0 = \frac{1}{Z_0} \iint_{-\infty}^{\infty} \left| \text{PSF}_A \left( x, y \ri
 &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Power now carried by field:&lt;/span&gt;&lt;span class="se"&gt;\t&lt;/span&gt;&lt;span class="si"&gt;{:.4f}&lt;/span&gt;&lt;span class="s1"&gt; W'&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;new_power&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -3051,7 +2979,7 @@ P_0 = \frac{1}{Z_0} \iint_{-\infty}^{\infty} \left| \text{PSF}_A \left( x, y \ri
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stdout output_text"&gt;
@@ -3085,7 +3013,7 @@ Power now carried by field:	0.1000 W
 &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Power in pupil plane: &lt;/span&gt;&lt;span class="si"&gt;{:.4f}&lt;/span&gt;&lt;span class="s1"&gt; W'&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;power_pupil&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -3095,7 +3023,7 @@ Power now carried by field:	0.1000 W
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -3108,7 +3036,7 @@ Power now carried by field:	0.1000 W
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stdout output_text"&gt;
@@ -3122,10 +3050,9 @@ Power now carried by field:	0.1000 W
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Step-4:-Compute-the-image-of-the-point-source"&gt;Step 4: Compute the image of the point source&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simple-pupil-function-calculations.html#Step-4:-Compute-the-image-of-the-point-source"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;With the pupil and coordinate systems established, we are now ready to compute the image of the isotropic point source that this system produces.&lt;/p&gt;
+&lt;h2 id="Step-4:-Compute-the-image-of-the-point-source"&gt;Step 4: Compute the image of the point source&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simple-pupil-function-calculations/#Step-4:-Compute-the-image-of-the-point-source"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;With the pupil and coordinate systems established, we are now ready to compute the image of the isotropic point source that this system produces.&lt;/p&gt;
 &lt;p&gt;To do this, we need to perform a few easy but important steps. In the first step, we will shift the origin of the pupil from the center of the array to the array indexes $ \left( 0, 0 \right) $ using the &lt;code&gt;ifftshift()&lt;/code&gt; function. The reason we do this is that &lt;code&gt;fft2()&lt;/code&gt; expects that the zero frequency value lies at the origin of the array. The two-dimensional FFT of the shifted pupil is then computed, producing a new array with the zero frequency at array indexes $ \left( 0, 0 \right) $ and the Nyquist frequency $ f_S / 2 $ in the middle of the array's axes (&lt;a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.fft.fft2.html"&gt;numpy.fft.fft2 - NumPy v1.11 Manual, accessed on 2016-11-15&lt;/a&gt;). We finish by shifting the origin back to the center of the array using &lt;code&gt;fftshift()&lt;/code&gt; so that it makes sense when we visualize the results.&lt;/p&gt;
 &lt;p&gt;The final step is to multiply the result by the square of the spacing between frequency coordinates. This step ensures that the power is preserved during the FFT operation (&lt;a href="http://spie.org/Publications/Book/866274"&gt;Schmidt, 2010, pp. 15-18&lt;/a&gt;).&lt;/p&gt;
 &lt;p&gt;Chaining the functions together, these steps look like:&lt;/p&gt;
@@ -3159,7 +3086,7 @@ Power now carried by field:	0.1000 W
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -3169,7 +3096,7 @@ Power now carried by field:	0.1000 W
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -3185,8 +3112,7 @@ Power now carried by field:	0.1000 W
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Above you can see the image of an isotropic point source. The image is not a point but rather a blurred spot in the center of the image plane due to diffraction at the pupil.&lt;/p&gt;
 
@@ -3194,10 +3120,9 @@ Power now carried by field:	0.1000 W
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Verify-the-results"&gt;Verify the results&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simple-pupil-function-calculations.html#Verify-the-results"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The first thing we can do to check whether the above result is correct is compute the power over the image above. By Parseval's theorem, it should be the same as the integral of the normalized pupil function divided by the vacuum impedance.&lt;/p&gt;
+&lt;h2 id="Verify-the-results"&gt;Verify the results&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simple-pupil-function-calculations/#Verify-the-results"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The first thing we can do to check whether the above result is correct is compute the power over the image above. By Parseval's theorem, it should be the same as the integral of the normalized pupil function divided by the vacuum impedance.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -3212,7 +3137,7 @@ Power now carried by field:	0.1000 W
 &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Power in object plane: &lt;/span&gt;&lt;span class="si"&gt;{:.4f}&lt;/span&gt;&lt;span class="s1"&gt; W'&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;power_image&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -3222,7 +3147,7 @@ Power now carried by field:	0.1000 W
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stdout output_text"&gt;
@@ -3237,14 +3162,12 @@ Power in object plane: 0.1000 W
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;So far so good. The next thing that we can do to verify these results is to calculate the sampled values of the analytical solution to this problem. Scalar diffraction theory predicts that the solution for the irradiance of the field diffracted by a circular aperture is an &lt;a href="https://en.wikipedia.org/wiki/Airy_disk"&gt;Airy disk&lt;/a&gt;:&lt;/p&gt;
-&lt;p&gt;\begin{equation*}
+\begin{equation*}
 I \left( r \right) = I_0 \left[ \frac{2 J_1 \left( X \right)}{X} \right]^2
-\end{equation*}&lt;/p&gt;
-&lt;p&gt;where $X = \frac{2 \pi r \, \text{NA}}{\lambda} $, $ r = \sqrt{x^2 + y^2} $ is the radial coordinate, and $ J_1 \left( r \right) $ is called the first-order Bessel function of the first kind (&lt;a href="https://en.wikipedia.org/wiki/Irradiance"&gt;Weisstein, Mathworld, accessed on 2016-11-16&lt;/a&gt;). This function does not exist inside Python's scientific libraries, so we will need to create it.&lt;/p&gt;
+\end{equation*}&lt;p&gt;where $X = \frac{2 \pi r \, \text{NA}}{\lambda} $, $ r = \sqrt{x^2 + y^2} $ is the radial coordinate, and $ J_1 \left( r \right) $ is called the first-order Bessel function of the first kind (&lt;a href="https://en.wikipedia.org/wiki/Irradiance"&gt;Weisstein, Mathworld, accessed on 2016-11-16&lt;/a&gt;). This function does not exist inside Python's scientific libraries, so we will need to create it.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -3287,14 +3210,13 @@ I \left( r \right) = I_0 \left[ \frac{2 J_1 \left( X \right)}{X} \right]^2
     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Now we can go ahead and visually compare our image plane calculations with the airy disk. If we subtract one from the other, we should get all zeros.&lt;/p&gt;
 
@@ -3309,7 +3231,7 @@ I \left( r \right) = I_0 \left[ \frac{2 J_1 \left( X \right)}{X} \right]^2
 &lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;mpl_toolkits.axes_grid1&lt;/span&gt; &lt;span class="k"&gt;import&lt;/span&gt; &lt;span class="n"&gt;make_axes_locatable&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -3359,7 +3281,7 @@ I \left( r \right) = I_0 \left[ \frac{2 J_1 \left( X \right)}{X} \right]^2
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -3369,7 +3291,7 @@ I \left( r \right) = I_0 \left[ \frac{2 J_1 \left( X \right)}{X} \right]^2
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stderr output_text"&gt;
@@ -3380,7 +3302,7 @@ I \left( r \right) = I_0 \left[ \frac{2 J_1 \left( X \right)}{X} \right]^2
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -3416,7 +3338,7 @@ I \left( r \right) = I_0 \left[ \frac{2 J_1 \left( X \right)}{X} \right]^2
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -3426,7 +3348,7 @@ I \left( r \right) = I_0 \left[ \frac{2 J_1 \left( X \right)}{X} \right]^2
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stderr output_text"&gt;
@@ -3437,7 +3359,7 @@ I \left( r \right) = I_0 \left[ \frac{2 J_1 \left( X \right)}{X} \right]^2
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -3453,8 +3375,7 @@ I \left( r \right) = I_0 \left[ \frac{2 J_1 \left( X \right)}{X} \right]^2
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;From the plots above you can see that the simulations perform pretty well at finding the image of the point source. In fact, the differences in the final irradiance values differ by at most a small fraction of a percent.&lt;/p&gt;
 &lt;p&gt;However, the pattern in the difference image is not random, so these differences are probably not round-off errors. In fact, they come from the minor but important detail that we are calculating a discrete Fourier transform with the FFT command, whereas the theory predicts that the point spread function is a continuous Fourier transform of the pupil.&lt;/p&gt;
@@ -3463,24 +3384,16 @@ I \left( r \right) = I_0 \left[ \frac{2 J_1 \left( X \right)}{X} \right]^2
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Final-remarks"&gt;Final remarks&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simple-pupil-function-calculations.html#Final-remarks"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The calculations I discussed here rely on quite a few simplifying assumptions. The first is that they are based on scalar diffraction theory. The real electromagnetic field is polarized and is described not by a scalar but by a three dimensional, complex-valued vector. The theory of vector diffraction describes how such a field propagates through an optical system; naturally, it is more complicated than scalar diffraction theory.&lt;/p&gt;
+&lt;h2 id="Final-remarks"&gt;Final remarks&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simple-pupil-function-calculations/#Final-remarks"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The calculations I discussed here rely on quite a few simplifying assumptions. The first is that they are based on scalar diffraction theory. The real electromagnetic field is polarized and is described not by a scalar but by a three dimensional, complex-valued vector. The theory of vector diffraction describes how such a field propagates through an optical system; naturally, it is more complicated than scalar diffraction theory.&lt;/p&gt;
 &lt;p&gt;Isotropic point sources are also an idealization of reality. Single fluorescent molecules, for instance, do not emit light equally in all directions but rather in a pattern known as &lt;a href="https://www.youtube.com/watch?v=Lx7LNVtQvTs"&gt;dipole radiation&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Finally, the optical system as modeled here was a linear, shift-invariant system. This means that the same pupil function can actually be used to compute the image of any off-axis point source as well; we would only need to apply a linear phase ramp to the pupil to account for this. Real optical systems are only approximatley linear and shift-invariant, which means that a more complete model would assign a different pupil function to each object point. This then allows for aberrations that vary as a function of object position, but requires more information to fully describe the system.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-</description><category>Fourier optics</category><guid>http://kmdouglass.github.io/posts/simple-pupil-function-calculations.html</guid><pubDate>Sun, 04 Dec 2016 09:45:56 GMT</pubDate></item><item><title>Approximating diffraction patterns of rectangular apertures with the FFT</title><link>http://kmdouglass.github.io/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div tabindex="-1" id="notebook" class="border-box-sizing"&gt;
-    &lt;div class="container" id="notebook-container"&gt;
-
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;/div&gt;</description><category>Fourier optics</category><guid>http://kmdouglass.github.io/posts/simple-pupil-function-calculations/</guid><pubDate>Sun, 04 Dec 2016 09:45:56 GMT</pubDate></item><item><title>Approximating diffraction patterns of rectangular apertures with the FFT</title><link>http://kmdouglass.github.io/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft/</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;A very common problem encountered by people learning Fourier optics or diffraction theory is the determination of the far field diffraction pattern from a rectangular aperture. This problem has a clean, analytical solution. Those who are familiar with MATLAB or a similar language may try to write computer code that calculates this diffraction pattern based on &lt;a href="http://mathworld.wolfram.com/FastFourierTransform.html"&gt;fast Fourier transform (FFT)&lt;/a&gt; implementations. Unfortunately, the output of the is code not, strictly speaking, the same as predicted by the analytical solution for a few reasons:&lt;/p&gt;
 &lt;ol&gt;
@@ -3507,7 +3420,7 @@ I \left( r \right) = I_0 \left[ \frac{2 J_1 \left( X \right)}{X} \right]^2
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;scipy.fftpack&lt;/span&gt; &lt;span class="k"&gt;import&lt;/span&gt; &lt;span class="n"&gt;fftshift&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ifftshift&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -3517,7 +3430,7 @@ I \left( r \right) = I_0 \left[ \frac{2 J_1 \left( X \right)}{X} \right]^2
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stdout output_text"&gt;
@@ -3532,21 +3445,15 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Scalar-diffraction-theory-for-a-1D-slit"&gt;Scalar diffraction theory for a 1D slit&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html#Scalar-diffraction-theory-for-a-1D-slit"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;a href="https://books.google.ch/books/about/Introduction_to_Fourier_Optics.html?id=ow5xs_Rtt9AC&amp;amp;redir_esc=y"&gt;Goodman&lt;/a&gt; and &lt;a href="https://en.wikipedia.org/wiki/Fraunhofer_diffraction_%28mathematics%29#Examples_of_Fraunhofer_diffraction_with_a_normally_incident_monochromatic_plane_wave"&gt;many others&lt;/a&gt; have shown that the far-field (also known as Fraunhofer) solution to the diffracted electric field from a rectangular aperture is proportional to the Fourier transform of the field distribution in the aperture. This fact follows directly from applying the Fraunhofer approximation to the diffraction integral developed by Huygens and Fresnel (&lt;a href="https://books.google.ch/books/about/Introduction_to_Fourier_Optics.html?id=ow5xs_Rtt9AC&amp;amp;redir_esc=y"&gt;Goodman&lt;/a&gt;).&lt;/p&gt;
+&lt;h2 id="Scalar-diffraction-theory-for-a-1D-slit"&gt;Scalar diffraction theory for a 1D slit&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft/#Scalar-diffraction-theory-for-a-1D-slit"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;a href="https://books.google.ch/books/about/Introduction_to_Fourier_Optics.html?id=ow5xs_Rtt9AC&amp;amp;redir_esc=y"&gt;Goodman&lt;/a&gt; and &lt;a href="https://en.wikipedia.org/wiki/Fraunhofer_diffraction_%28mathematics%29#Examples_of_Fraunhofer_diffraction_with_a_normally_incident_monochromatic_plane_wave"&gt;many others&lt;/a&gt; have shown that the far-field (also known as Fraunhofer) solution to the diffracted electric field from a rectangular aperture is proportional to the Fourier transform of the field distribution in the aperture. This fact follows directly from applying the Fraunhofer approximation to the diffraction integral developed by Huygens and Fresnel (&lt;a href="https://books.google.ch/books/about/Introduction_to_Fourier_Optics.html?id=ow5xs_Rtt9AC&amp;amp;redir_esc=y"&gt;Goodman&lt;/a&gt;).&lt;/p&gt;
 &lt;p&gt;For both convenience and numerical efficiency, I will focus on the one-dimensional analog to this problem: diffraction from an infinitely-long slit with width $ a $. If there is an incident monochromatic plane wave with amplitude $E_0$ traveling in the z-direction perpendicular to a slit in the $z=0$ plane, then the Fraunhofer diffraction pattern for the field is expressed by the equation&lt;/p&gt;
-&lt;p&gt;$$U \left(x', z \right) = \frac{e^{jkz} e^{ jk\frac{x'^2}{2z} }}{\sqrt{j \lambda z}} \int_{-\infty}^{\infty} u \left( x, z = 0 \right) \exp \left( -j \frac{2 \pi}{\lambda z} xx'\right) dx $$&lt;/p&gt;
-&lt;p&gt;with $u \left( x, z = 0 \right) = E_0 $ denoting the incident field, $ k = \frac{2 \pi}{\lambda} $ representing the freespace wavenumber, $ x = 0 $ and $ x' = 0 $ the center planes of the slit and diffraction patterns, respectively, and $ j $ the imaginary number. The factor $ \sqrt{j \lambda z} $ comes from &lt;a href="https://www.kth.se/polopoly_fs/1.569752!/Gaussian%20beams.pdf"&gt;separating the solution to the 2D Huygens-Fresnel integral into two, 1D solutions&lt;/a&gt;. The irradiance in the z-planes after the slit is &lt;a href="https://en.wikipedia.org/wiki/Poynting_vector"&gt;proportional to the absolute square of the field&lt;/a&gt;,&lt;/p&gt;
-&lt;p&gt;$$I \left( x', z \right) \propto \left| U \left( x', z \right) \right|^2$$&lt;/p&gt;
-&lt;p&gt;Taking the absolute square eliminates the complex exponentials preceding the integral so that the irradiance profile becomes&lt;/p&gt;
-&lt;p&gt;$$I \left( x', z \right) \propto \frac{1}{\lambda z} \left| \int_{-\infty}^{\infty} u \left( x \right) \exp \left( -j \frac{2 \pi}{\lambda z} xx'\right) dx \right|^2 = \frac{1}{\lambda z} \left| \mathcal{F} \left[ u \left( x, z \right) \right] \left( \frac{x'}{\lambda z}\right) \right|^2 $$&lt;/p&gt;
-&lt;p&gt;This expression means that the irradiance describing the Fraunhofer diffraction pattern from slit is proportional to the absolute square of the Fourier transform of the field at the aperture evaluted at spatial frequencies $ f_{x} = x' / \lambda z$. To arrive at the analytical solution, we perform the integration over a region where the slit is not opaque, $ \left[ -a/2, a/2 \right] $. Inside this region, the field is simply $ u \left( x \right) = E_0 $ because we have a monochromatic plane wave with this amplitude.&lt;/p&gt;
-&lt;p&gt;$$ \mathcal{F}\left[ u \left( x, z \right) \right] = \int_{-a/2}^{a/2} E_0 \exp \left( -j \frac{2 \pi}{\lambda z} xx'\right) dx $$&lt;/p&gt;
-&lt;p&gt;The analytical solution to this integral is&lt;/p&gt;
-&lt;p&gt;$$ \mathcal{F}\left[ u \left( x, z \right) \right] = a E_0 \text{sinc} \left( \frac{ax'}{\lambda z} \right) $$&lt;/p&gt;
-&lt;p&gt;where $ \text{sinc} \left( x \right) = \frac{\sin{\pi x}}{\pi x}$. The far-field irradiance is therefore the absolute square of this quantity divided by the product of the wavelength and the propagation distance.&lt;/p&gt;
+$$U \left(x', z \right) = \frac{e^{jkz} e^{ jk\frac{x'^2}{2z} }}{\sqrt{j \lambda z}} \int_{-\infty}^{\infty} u \left( x, z = 0 \right) \exp \left( -j \frac{2 \pi}{\lambda z} xx'\right) dx $$&lt;p&gt;with $u \left( x, z = 0 \right) = E_0 $ denoting the incident field, $ k = \frac{2 \pi}{\lambda} $ representing the freespace wavenumber, $ x = 0 $ and $ x' = 0 $ the center planes of the slit and diffraction patterns, respectively, and $ j $ the imaginary number. The factor $ \sqrt{j \lambda z} $ comes from &lt;a href="https://www.kth.se/polopoly_fs/1.569752!/Gaussian%20beams.pdf"&gt;separating the solution to the 2D Huygens-Fresnel integral into two, 1D solutions&lt;/a&gt;. The irradiance in the z-planes after the slit is &lt;a href="https://en.wikipedia.org/wiki/Poynting_vector"&gt;proportional to the absolute square of the field&lt;/a&gt;,&lt;/p&gt;
+$$I \left( x', z \right) \propto \left| U \left( x', z \right) \right|^2$$&lt;p&gt;Taking the absolute square eliminates the complex exponentials preceding the integral so that the irradiance profile becomes&lt;/p&gt;
+$$I \left( x', z \right) \propto \frac{1}{\lambda z} \left| \int_{-\infty}^{\infty} u \left( x \right) \exp \left( -j \frac{2 \pi}{\lambda z} xx'\right) dx \right|^2 = \frac{1}{\lambda z} \left| \mathcal{F} \left[ u \left( x, z \right) \right] \left( \frac{x'}{\lambda z}\right) \right|^2 $$&lt;p&gt;This expression means that the irradiance describing the Fraunhofer diffraction pattern from slit is proportional to the absolute square of the Fourier transform of the field at the aperture evaluted at spatial frequencies $ f_{x} = x' / \lambda z$. To arrive at the analytical solution, we perform the integration over a region where the slit is not opaque, $ \left[ -a/2, a/2 \right] $. Inside this region, the field is simply $ u \left( x \right) = E_0 $ because we have a monochromatic plane wave with this amplitude.&lt;/p&gt;
+$$ \mathcal{F}\left[ u \left( x, z \right) \right] = \int_{-a/2}^{a/2} E_0 \exp \left( -j \frac{2 \pi}{\lambda z} xx'\right) dx $$&lt;p&gt;The analytical solution to this integral is&lt;/p&gt;
+$$ \mathcal{F}\left[ u \left( x, z \right) \right] = a E_0 \text{sinc} \left( \frac{ax'}{\lambda z} \right) $$&lt;p&gt;where $ \text{sinc} \left( x \right) = \frac{\sin{\pi x}}{\pi x}$. The far-field irradiance is therefore the absolute square of this quantity divided by the product of the wavelength and the propagation distance.&lt;/p&gt;
 &lt;p&gt;Let's plot the analytically-determined irradiance profile of the diffraction pattern:&lt;/p&gt;
 
 &lt;/div&gt;
@@ -3583,7 +3490,7 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -3593,7 +3500,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -3609,19 +3516,14 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;We can also verify a few key properties of the Fourier transform and ensure that our units are correct. The most important property is the conservation of energy, which in signal processing is often known as &lt;a href="https://en.wikipedia.org/wiki/Parseval%27s_theorem"&gt;Parseval's theorem&lt;/a&gt;. In our case, conservation of energy means that the integral of the field over the slit must equal the integral of the field in any arbitrary z-plane.&lt;/p&gt;
-&lt;p&gt;$$\int_{-\infty}^{\infty} \left| u \left( x, z = 0 \right) \right|^2 dx = \int_{-\infty}^{\infty} \left| U \left( x', z \right) \right|^2 dx'$$&lt;/p&gt;
-&lt;p&gt;where the spatial frequency is $ f_{x} = \frac{x'}{\lambda z} $. Because the incident field is a plane wave, the integral over the slit is just the square of the plane wave amplitude multiplied by the slit width:&lt;/p&gt;
-&lt;p&gt;$$\int_{-a/2}^{a/2} E_0^2 dx = aE_0^2$$&lt;/p&gt;
-&lt;p&gt;We need the square integral to be proportional to units of power, which will be true if the field has units of $ \frac{\text{Volts}}{\sqrt{\mu m}} $ and not the more familiar $ \frac{\text{Volts}}{\mu m} $. This peculiarity stems from the fact that we're looking at a somewhat synthetic 1D case. With this in mind, the square integral has units of $ \text{Volts}^2 $ and is proportional to the power delivered by the plane wave.&lt;/p&gt;
+$$\int_{-\infty}^{\infty} \left| u \left( x, z = 0 \right) \right|^2 dx = \int_{-\infty}^{\infty} \left| U \left( x', z \right) \right|^2 dx'$$&lt;p&gt;where the spatial frequency is $ f_{x} = \frac{x'}{\lambda z} $. Because the incident field is a plane wave, the integral over the slit is just the square of the plane wave amplitude multiplied by the slit width:&lt;/p&gt;
+$$\int_{-a/2}^{a/2} E_0^2 dx = aE_0^2$$&lt;p&gt;We need the square integral to be proportional to units of power, which will be true if the field has units of $ \frac{\text{Volts}}{\sqrt{\mu m}} $ and not the more familiar $ \frac{\text{Volts}}{\mu m} $. This peculiarity stems from the fact that we're looking at a somewhat synthetic 1D case. With this in mind, the square integral has units of $ \text{Volts}^2 $ and is proportional to the power delivered by the plane wave.&lt;/p&gt;
 &lt;p&gt;The absolute square of the diffracted field is&lt;/p&gt;
-&lt;p&gt;$$ \left| U \left( x', z \right) \right|^2 = \frac{a^2 E_0^2}{\lambda z} \text{sinc}^2 \left( \frac{a x'}{\lambda z} \right)$$&lt;/p&gt;
-&lt;p&gt;The integral of $ \text{sinc}^2 \left( x \right) $ with my definition of $ \text{sinc} \left( x \right) $ &lt;a href="http://math.stackexchange.com/questions/903117/integral-of-sinc-function-squared-over-the-real-line"&gt;over the real number line&lt;/a&gt; is just 1, so&lt;/p&gt;
-&lt;p&gt;$$ \int_{-\infty}^{\infty} \left| U \left( x', z \right) \right|^2 dx' = \frac{a^2 E_0^2}{\lambda z} \times \frac{\lambda z}{a} = aE_0^2$$&lt;/p&gt;
-&lt;p&gt;All of this is essentially a verification that our units and prefactors have most likely been handled correctly. Most Fourier optics texts drop a lot of prefactors in their derivations, so it's always good to check that they've done everything correctly :)&lt;/p&gt;
+$$ \left| U \left( x', z \right) \right|^2 = \frac{a^2 E_0^2}{\lambda z} \text{sinc}^2 \left( \frac{a x'}{\lambda z} \right)$$&lt;p&gt;The integral of $ \text{sinc}^2 \left( x \right) $ with my definition of $ \text{sinc} \left( x \right) $ &lt;a href="http://math.stackexchange.com/questions/903117/integral-of-sinc-function-squared-over-the-real-line"&gt;over the real number line&lt;/a&gt; is just 1, so&lt;/p&gt;
+$$ \int_{-\infty}^{\infty} \left| U \left( x', z \right) \right|^2 dx' = \frac{a^2 E_0^2}{\lambda z} \times \frac{\lambda z}{a} = aE_0^2$$&lt;p&gt;All of this is essentially a verification that our units and prefactors have most likely been handled correctly. Most Fourier optics texts drop a lot of prefactors in their derivations, so it's always good to check that they've done everything correctly :)&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -3643,7 +3545,7 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'The input power is &lt;/span&gt;&lt;span class="si"&gt;{0:.4f}&lt;/span&gt;&lt;span class="s1"&gt; square Volts. The output power is &lt;/span&gt;&lt;span class="si"&gt;{1:.4f}&lt;/span&gt;&lt;span class="s1"&gt; square Volts'&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;powerIn&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;powerOut&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -3653,7 +3555,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stdout output_text"&gt;
@@ -3667,10 +3569,9 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Simulating-slit-diffraction-with-the-FFT"&gt;Simulating slit diffraction with the FFT&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html#Simulating-slit-diffraction-with-the-FFT"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Can we simply use the FFT in Python's Scipy or in MATLAB to arrive at the same solution as above, skipping the math in the process? Let's try it.&lt;/p&gt;
+&lt;h2 id="Simulating-slit-diffraction-with-the-FFT"&gt;Simulating slit diffraction with the FFT&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft/#Simulating-slit-diffraction-with-the-FFT"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Can we simply use the FFT in Python's Scipy or in MATLAB to arrive at the same solution as above, skipping the math in the process? Let's try it.&lt;/p&gt;
 &lt;p&gt;We'll start by defining a square slit centered at the origin with the same width as above. The incident field is a plane wave with amplitude $E_0 = 1 \, V / \sqrt{m} $.&lt;/p&gt;
 
 &lt;/div&gt;
@@ -3694,7 +3595,7 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -3704,7 +3605,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -3720,8 +3621,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Now, it's important to really understand that this slit is represented in computer memory as a discrete sequence of field samples, &lt;em&gt;not&lt;/em&gt; a continous curve. If we zoom in on the slit, we can better appreciate this:&lt;/p&gt;
 
@@ -3742,7 +3642,7 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -3752,7 +3652,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -3768,12 +3668,10 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Let's go ahead now and compute the FFT of this sequence of field samples. We first need to figure out what the units of the FFT are going to be. The sampling frequency $f_S$ for this field is simply 1 divided by the distance between each sample. The FFT outputs an array of numbers from spatial frequency 0 up to $ \left( \frac{N-1}{N} \right) f_S $. By default, the length of the output array $ N $ is the same as the length of the input. In Python, array indexes start from 0, so the relationship between index $ i $ and spatial frequency is&lt;/p&gt;
-&lt;p&gt;$$ f_{x} = \frac{f_S}{N} i $$&lt;/p&gt;
-&lt;p&gt;(&lt;a href="http://scholarsarchive.jwu.edu/cgi/viewcontent.cgi?article=1006&amp;amp;context=engineering_fac"&gt;In MATLAB&lt;/a&gt;, array indexes start at 1 so $i$ above should be replaced by $i - 1$ .)&lt;/p&gt;
+$$ f_{x} = \frac{f_S}{N} i $$&lt;p&gt;(&lt;a href="http://scholarsarchive.jwu.edu/cgi/viewcontent.cgi?article=1006&amp;amp;context=engineering_fac"&gt;In MATLAB&lt;/a&gt;, array indexes start at 1 so $i$ above should be replaced by $i - 1$ .)&lt;/p&gt;
 &lt;p&gt;We also need to do two other things when computing the numerical Fourier transform. First, we need to shift the input field using the &lt;code&gt;fftshift&lt;/code&gt; command for arrays with an even number of elements and &lt;code&gt;ifftshift&lt;/code&gt; for arrays with an odd number of elements. This will shift the elements of the array so that the point corresponding to x = 0 lies in the first element of the array (index 0).&lt;/p&gt;
 &lt;p&gt;The second thing we must do is multiply the fft results by the grid spacing &lt;code&gt;dx&lt;/code&gt; to ensure that the scaling on the y-axis is correct.&lt;/p&gt;
 
@@ -3800,7 +3698,7 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -3810,7 +3708,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -3826,8 +3724,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;OK, so far so good. Let's now put the results in a format that is more easily compared to the analytical theory for the diffracted irradiance. We'll shift the FFT results back so that the peak is in the center using &lt;code&gt;fftshift&lt;/code&gt;. (We also need to use &lt;code&gt;fftshift&lt;/code&gt; here for arrays with an odd number of elements; typically, the order for odd elements is &lt;code&gt;ifftshift&lt;/code&gt; -&amp;gt; &lt;code&gt;fft&lt;/code&gt; -&amp;gt; &lt;code&gt;fftshift&lt;/code&gt;.) We'll also rescale the x-axis by multiplying by $ \lambda z $ to get $x'$ and plot the theoretical result on top.&lt;/p&gt;
 
@@ -3855,7 +3752,7 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -3865,7 +3762,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stderr output_text"&gt;
@@ -3877,7 +3774,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -3893,8 +3790,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Not too bad! It looks like the simulation and the FFT agree pretty well. But, if we zoom in to some regions of the curve, you can see some discrepancies:&lt;/p&gt;
 
@@ -3928,7 +3824,7 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -3938,7 +3834,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -3954,8 +3850,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Considering the discrepancy between the results and the theory, the following question comes to mind:&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Is the discrepancy between the theoretical and FFT results due to numerical rounding errors, how we defined the slit, or something else?&lt;/strong&gt;&lt;/p&gt;
@@ -3964,10 +3859,9 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="How-well-do-the-theory-and-FFT-results-agree?"&gt;How well do the theory and FFT results agree?&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html#How-well-do-the-theory-and-FFT-results-agree?"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Let's start to answer this question by plotting the percent error between the theory and the FFT results.&lt;/p&gt;
+&lt;h2 id="How-well-do-the-theory-and-FFT-results-agree?"&gt;How well do the theory and FFT results agree?&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft/#How-well-do-the-theory-and-FFT-results-agree?"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Let's start to answer this question by plotting the percent error between the theory and the FFT results.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -3987,7 +3881,7 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -3997,7 +3891,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -4013,8 +3907,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Now &lt;em&gt;that's&lt;/em&gt; interesting. The percent error varies wildly and spans nearly six orders of magnitude! Furthermore, it appears like the error actually gets slightly worse near the edge of the range, as evidenced by the upwards trend in the positive peaks. Finally, the fact that the percent error appears to have some sort of periodicity suggests that the discrepancies are not due to round-off errors but rather something else.&lt;/p&gt;
 
@@ -4022,10 +3915,9 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Does-aliasing-cause-the-disagreement?"&gt;Does aliasing cause the disagreement?&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html#Does-aliasing-cause-the-disagreement?"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Let's first see whether &lt;a href="https://en.wikipedia.org/wiki/Aliasing"&gt;aliasing&lt;/a&gt; is causing a problem. The slit is not bandlimited, which means that its Fourier spectrum is infinite in extent. For this reason, we can never sample the slit at high-enough frequencies to and calculate its spectrum without aliasing artifacts. We can however, see if fidelity improves by increasing the sampling rate.&lt;/p&gt;
+&lt;h2 id="Does-aliasing-cause-the-disagreement?"&gt;Does aliasing cause the disagreement?&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft/#Does-aliasing-cause-the-disagreement?"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Let's first see whether &lt;a href="https://en.wikipedia.org/wiki/Aliasing"&gt;aliasing&lt;/a&gt; is causing a problem. The slit is not bandlimited, which means that its Fourier spectrum is infinite in extent. For this reason, we can never sample the slit at high-enough frequencies to and calculate its spectrum without aliasing artifacts. We can however, see if fidelity improves by increasing the sampling rate.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -4049,7 +3941,7 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -4059,7 +3951,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -4100,7 +3992,7 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -4110,7 +4002,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stderr output_text"&gt;
@@ -4121,7 +4013,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -4137,8 +4029,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Now the agreement looks much better! Here's the new percent error with $ 2^{20} $ samples compared to the old one with $ 2^{10} $.&lt;/p&gt;
 
@@ -4162,7 +4053,7 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -4172,7 +4063,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -4188,8 +4079,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Here we see that increasing the sampling rate by nearly three orders of magnitude (1024 samples vs. 1,048,576) improves the relative error at the origin and at the points where the error was already low to begin with. However, it does nothing to improve the error at the peaks in the plot, the first two peaks lying approximately 1000 microns on either side of the origin.&lt;/p&gt;
 
@@ -4197,21 +4087,18 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Just-aliasing,-or-something-more?"&gt;Just aliasing, or something more?&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html#Just-aliasing,-or-something-more?"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;We can begin to better understand the differences between the computational solution and the analytical solution by first underlining these two facts:&lt;/p&gt;
+&lt;h2 id="Just-aliasing,-or-something-more?"&gt;Just aliasing, or something more?&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft/#Just-aliasing,-or-something-more?"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;We can begin to better understand the differences between the computational solution and the analytical solution by first underlining these two facts:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;The diffracted far-field is a &lt;strong&gt;continous Fourier transform&lt;/strong&gt; of the continuous field distribution in the aperture.&lt;/li&gt;
 &lt;li&gt;The FFT produces a &lt;strong&gt;discrete Fourier transform (DFT)&lt;/strong&gt; of the sampled field in the aperture.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;Since the analytical solution and the FFT solution come from two related but different mathematical operations, should we have expected to get the right answer in the first place? &lt;a href="http://ch.mathworks.com/matlabcentral/newsreader/view_thread/294772"&gt;As others have pointed out&lt;/a&gt;, the discrete time Fourier transform (DTFT) of a square function is a ratio of two sines, not a sinc. Furthermore, the DFT (and equivalently the FFT result) is simply a sampled version of the DTFT. Therefore, we might expect that sampling the DTFT solution for a square wave will produce the same results as the FFT solution. Let's go ahead and try it.&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Discrete-time_Fourier_transform#Table_of_discrete-time_Fourier_transforms"&gt;According to Wikipedia&lt;/a&gt;, and changing variables to agree with my notation above, the DTFT solution of the square wave is&lt;/p&gt;
-&lt;p&gt;$$F \left( f_{x} \right) = \frac{\sin \left[ \pi f_{x} \left( M + 1 \right) \right] }{\sin \left( \pi f_{x} \right) } e^{ -j \pi f_{x} M }, \, M \in \mathbb{Z} $$&lt;/p&gt;
-&lt;p&gt;where $ M $ is an integer and $ f\_{x} $ is the spatial frequency. An important property of the DTFT  is that it is periodic between 0 and 1. If I had used the angular spatial frequency $ k\_{x} = 2 \pi f\_{x} $ the periodicity would be between 0 and $ 2 \pi $. With this information, we can map our spatial frequency vector onto the appropriate range for the DTFT.&lt;/p&gt;
+$$F \left( f_{x} \right) = \frac{\sin \left[ \pi f_{x} \left( M + 1 \right) \right] }{\sin \left( \pi f_{x} \right) } e^{ -j \pi f_{x} M }, \, M \in \mathbb{Z} $$&lt;p&gt;where $ M $ is an integer and $ f\_{x} $ is the spatial frequency. An important property of the DTFT  is that it is periodic between 0 and 1. If I had used the angular spatial frequency $ k\_{x} = 2 \pi f\_{x} $ the periodicity would be between 0 and $ 2 \pi $. With this information, we can map our spatial frequency vector onto the appropriate range for the DTFT.&lt;/p&gt;
 &lt;p&gt;The square function corresponding to this DTFT solution is defined with the left edge of the square starting at the origin:&lt;/p&gt;
-&lt;p&gt;$$ f \left( x \right) = \text{rect} \left( \frac{n - M/2}{M} \right) , \, M \in \mathbb{Z}, \, n = 0, 1, \ldots, N - 1$$&lt;/p&gt;
-&lt;p&gt;$ n $ is the index of the samples taken from the square and $ M $ denotes the center of the square. So, to use this expression for the DTFT of the square, we will first need to shift our original input so that the left edge of the square is at the origin.&lt;/p&gt;
+$$ f \left( x \right) = \text{rect} \left( \frac{n - M/2}{M} \right) , \, M \in \mathbb{Z}, \, n = 0, 1, \ldots, N - 1$$&lt;p&gt;$ n $ is the index of the samples taken from the square and $ M $ denotes the center of the square. So, to use this expression for the DTFT of the square, we will first need to shift our original input so that the left edge of the square is at the origin.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -4238,7 +4125,7 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'M is &lt;/span&gt;&lt;span class="si"&gt;{0:.0f}&lt;/span&gt;&lt;span class="s1"&gt;.'&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;M&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -4248,7 +4135,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -4261,7 +4148,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stdout output_text"&gt;
@@ -4311,7 +4198,7 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -4321,7 +4208,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -4337,8 +4224,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;I placed the x- and y-axes to display a similar range as the equivalent plot above. We see that the DTFT result, which is the ratio of two sine waves, is also in good agreement with the FFT. So now we have the FFT &lt;em&gt;and&lt;/em&gt; the DTFT of the field at the aperture modeling the diffraction pattern reasonably well.&lt;/p&gt;
 &lt;p&gt;How well does the DTFT match the analytical results? Let's look at their percent error and compare it to the one between the analytical theory and the FFT for $ 2^{20} $ samples.&lt;/p&gt;
@@ -4365,7 +4251,7 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -4375,7 +4261,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -4391,8 +4277,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;What the above plot shows is that &lt;strong&gt;the error between the analytical theory and both the FFT and DTFT predictions are practically the same&lt;/strong&gt;. This means that the FFT is computing the DTFT of the field at the aperture and not the continuous Fourier transform. The DTFT result is therefore inherently including the aliasing artifacts that prevent accurate computation of the diffracted field with the FFT.&lt;/p&gt;
 &lt;p&gt;Despite the large relative errors, we still get pretty good results with both the FFT and DTFT predictions around the origin so long as the sampling frequency is large, or, equivalently, the grid spacing is small:&lt;/p&gt;
@@ -4414,7 +4299,7 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -4424,7 +4309,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stderr output_text"&gt;
@@ -4436,7 +4321,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -4452,10 +4337,9 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Summary"&gt;Summary&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html#Summary"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;This entire exercise effectively showed that it is impossible to compute an exact diffraction pattern from a slit with a straight-forward approach based on the fast Fourier transform. There are two ways of looking at why this is, though they are both effectively based in the same underlying ideas.&lt;/p&gt;
+&lt;h2 id="Summary"&gt;Summary&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft/#Summary"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;This entire exercise effectively showed that it is impossible to compute an exact diffraction pattern from a slit with a straight-forward approach based on the fast Fourier transform. There are two ways of looking at why this is, though they are both effectively based in the same underlying ideas.&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;The spectrum of a slit is not band limited, so aliasing will always distort the FFT calculation.&lt;/li&gt;
 &lt;li&gt;The FFT is computing the discrete time Fourier transform, not the continuous Fourier transform.&lt;/li&gt;
@@ -4466,7 +4350,4 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-</description><category>Fourier optics</category><category>microscopy</category><category>optics</category><guid>http://kmdouglass.github.io/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html</guid><pubDate>Mon, 01 Feb 2016 09:54:23 GMT</pubDate></item></channel></rss>
+&lt;/div&gt;&lt;/div&gt;</description><category>Fourier optics</category><category>microscopy</category><category>optics</category><guid>http://kmdouglass.github.io/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft/</guid><pubDate>Mon, 01 Feb 2016 09:54:23 GMT</pubDate></item></channel></rss>

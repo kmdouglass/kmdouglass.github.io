@@ -124,3 +124,20 @@
 .highlight .vg { color: #19177C } /* Name.Variable.Global */
 .highlight .vi { color: #19177C } /* Name.Variable.Instance */
 .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+
+/* Universally increase the font size. */
+body {
+  font-size: 16px;
+}
+
+/* Reduce the size of the main content container on large and medium screens. */
+@media (min-width: 992px) {
+  .container {
+    width: 890px;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    width: 890px;
+  }
+}

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="description" content="Optics, programming, and science.">
@@ -8,9 +8,10 @@
 <link href="assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
 <link href="assets/css/ipython.min.css" rel="stylesheet" type="text/css">
 <link href="assets/css/nikola_ipython.css" rel="stylesheet" type="text/css">
+<link href="assets/css/custom_notebook.css" rel="stylesheet" type="text/css">
 <meta name="theme-color" content="#5670d4">
 <meta name="generator" content="Nikola (getnikola.com)">
-<link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml">
+<link rel="alternate" type="application/rss+xml" title="RSS" hreflang="en" href="rss.xml">
 <link rel="canonical" href="http://kmdouglass.github.io/index-1.html">
 <link rel="prev" href="index-2.html" type="text/html">
 <!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
@@ -44,7 +45,7 @@
 <a href="archive.html">Archive</a>
                 </li>
 <li>
-<a href="stories/contact.html">Contact</a>
+<a href="stories/contact/index.html">Contact</a>
 
                 
             </li>
@@ -66,1177 +67,769 @@
 
     
 <div class="postindex">
-    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/sending-arguments-to-python-decorators.html" class="u-url">Sending arguments to Python decorators</a></h1>
+    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/sending-arguments-to-python-decorators/" class="u-url">Sending arguments to Python decorators</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
-            <p class="dateline"><a href="posts/sending-arguments-to-python-decorators.html" rel="bookmark"><time class="published dt-published" datetime="2015-01-24T08:45:38+01:00" title="2015-01-24 08:45">2015-01-24 08:45</time></a></p>
+            <p class="dateline">
+            <a href="posts/sending-arguments-to-python-decorators/" rel="bookmark">
+            <time class="published dt-published" datetime="2015-01-24T08:45:38+01:00" itemprop="datePublished" title="2015-01-24 08:45">2015-01-24 08:45</time></a>
+            </p>
                 <p class="commentline">
         
-    <a href="posts/sending-arguments-to-python-decorators.html#disqus_thread" data-disqus-identifier="cache/posts/sending-arguments-to-python-decorators.html">Comments</a>
+    <a href="posts/sending-arguments-to-python-decorators/#disqus_thread" data-disqus-identifier="cache/posts/sending-arguments-to-python-decorators.html">Comments</a>
 
 
         </p>
 </div>
     </header><div class="p-summary entry-summary">
-    <p>
-<a href="http://simeonfranklin.com/blog/2012/jul/1/python-decorators-in-12-steps/">Python's decorators</a> are tools for changing the behavior of a function
-without completely recoding it. When we apply a decorator to a
-function, we say that the function has been decorated. Strictly
-speaking, when we decorate a function, we send it to a wrapper that
-returns another function. It's as simple as that.
-</p>
-
-<p>
-I was having trouble understanding exactly to which function, the
-original or the decorated one, the arguments are sent in a Python
-decorated function call. I wrote the following script to better
-understand this process (I use Python 3.4):
-</p>
-
-<div class="highlight"><pre><span></span>def wrapper(inFunction):
-    def outFunction(**kwargs):
-        print('The input arguments were:')
-        for key, value in kwargs.items():
-            print('%r : %r' % (key, value))
-
-        # Return the original function
-        return inFunction(**kwargs)
-
-    return outFunction
-
-def add(x = 1, y = 2):
-    return x + y
-</pre></div>
-
-<p>
-<code>wrapper(inFunction)</code> is a function that accepts another function as
-an argument. It returns a function that simply prints the keyword
-arguments of <i>inFunction()</i>, and calls <i>inFunction()</i> like normal.
-</p>
-
-<p>
-To decorate the function <i>add(x = 1, y = 2)</i> so that its arguments are
-printed without recoding it, we normally would place <code>@wrapper</code> before
-its definition. However, let's make the decorator in a way that's
-closer to how <i>@</i> works under the hood:
-</p>
-
-<div class="highlight"><pre><span></span>In [22]: decoratedAdd = wrapper(add)
-In [23]: decoratedAdd(x = 1, y = 24)
-The input arguments were:
-'y' : 24
-'x' : 1
-Out[23]: 25
-</pre></div>
-
-<p>
-When we call <i>decoratedAdd(x = 1, y = 24)</i>, the arguments are printed
-to the screen and we still get the same functionality of <i>add()</i>. What
-I wanted to know was this: are the keyword arguments x = 1, y = 24
-bound in the namespace of <i>wrapper()</i> or in the namespace of
-<i>outFunction()</i>? <b>In otherwords, does <i>wrapper()</i> at any point know
-what the arguments are that I send to the decorated function?</b>
-</p>
-
-<p>
-The answer, as it turns out, is no in this case. This is because the
-<i>wrapper()</i> function first returns the decorated function, and then
-the arguments are passed into the decorated function. If this order of
-operations were flipped, <i>wrapper()</i> should know that I set x to 1 and
-y to 24, but really it doesn't know these details at all.
-</p>
-
-<div class="highlight"><pre><span></span>In [24]: wrapper(add)(x = 1, y = 24)
-The input arguments were:
-'y' : 24
-'x' : 1
-Out[24]: 25
-</pre></div>
-
-<p>
-So, when I call <i>wrapper(add)(x = 1, y = 24)</i>, first <i>wrapper(add)</i> is
-called, which returns <i>outFunction()</i>, and then these arguments are
-passed to <i>outFunction()</i>.
-</p>
-
-<p>
-Now what happens when I call <code>wrapper(add(x = 1, y = 24))</code>? When I try
-this, the arguments are first passed into add, but then <i>outFunction</i>
-is returned without any arguments applied to it.
-</p>
-
-<p>
-This example can give us an idea about the working order of operations
-in Python. Here, this example reveals that function calls in Python
-are left-associative.
-</p>
+    <div>
+<p><a class="reference external" href="http://simeonfranklin.com/blog/2012/jul/1/python-decorators-in-12-steps/">Python's decorators</a>
+are tools for changing the behavior of a function without completely recoding it. When we apply a
+decorator to a function, we say that the function has been decorated. Strictly speaking, when we
+decorate a function, we send it to a wrapper that returns another function. It's as simple as that.</p>
+<p>I was having trouble understanding exactly to which function, the original or the decorated one,
+the arguments are sent in a Python decorated function call. I wrote the following script to better
+understand this process (I use Python 3.4):</p>
+<pre class="code python"><a name="rest_code_feef6382548c4f36b35de9d92b49477d-1"></a><span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">inFunction</span><span class="p">):</span>
+<a name="rest_code_feef6382548c4f36b35de9d92b49477d-2"></a>    <span class="k">def</span> <span class="nf">outFunction</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<a name="rest_code_feef6382548c4f36b35de9d92b49477d-3"></a>        <span class="k">print</span><span class="p">(</span><span class="s1">'The input arguments were:'</span><span class="p">)</span>
+<a name="rest_code_feef6382548c4f36b35de9d92b49477d-4"></a>        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<a name="rest_code_feef6382548c4f36b35de9d92b49477d-5"></a>            <span class="k">print</span><span class="p">(</span><span class="s1">'</span><span class="si">%r</span><span class="s1"> : </span><span class="si">%r</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+<a name="rest_code_feef6382548c4f36b35de9d92b49477d-6"></a>
+<a name="rest_code_feef6382548c4f36b35de9d92b49477d-7"></a>        <span class="c1"># Return the original function</span>
+<a name="rest_code_feef6382548c4f36b35de9d92b49477d-8"></a>        <span class="k">return</span> <span class="n">inFunction</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<a name="rest_code_feef6382548c4f36b35de9d92b49477d-9"></a>
+<a name="rest_code_feef6382548c4f36b35de9d92b49477d-10"></a>    <span class="k">return</span> <span class="n">outFunction</span>
+<a name="rest_code_feef6382548c4f36b35de9d92b49477d-11"></a>
+<a name="rest_code_feef6382548c4f36b35de9d92b49477d-12"></a><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
+<a name="rest_code_feef6382548c4f36b35de9d92b49477d-13"></a>    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+</pre>
+<p><cite>wrapper(inFunction)</cite> is a function that accepts another function as an argument. It returns a
+function that simply prints the keyword arguments of <cite>inFunction()</cite>, and calls <cite>inFunction()</cite> like
+normal.</p>
+<p>To decorate the function <cite>add(x = 1, y = 2)</cite> so that its arguments are printed without recoding it,
+we normally would place <cite>@wrapper</cite> before its definition. However, let's make the decorator in a
+way that's closer to how <cite>@</cite> works under the hood:</p>
+<pre class="code shell"><a name="rest_code_b39a212a7c0d4158b19cd1474dc6b1bd-1"></a>In <span class="o">[</span><span class="m">22</span><span class="o">]</span>: <span class="nv">decoratedAdd</span> <span class="o">=</span> wrapper<span class="o">(</span>add<span class="o">)</span>
+<a name="rest_code_b39a212a7c0d4158b19cd1474dc6b1bd-2"></a>In <span class="o">[</span><span class="m">23</span><span class="o">]</span>: decoratedAdd<span class="o">(</span><span class="nv">x</span> <span class="o">=</span> <span class="m">1</span>, <span class="nv">y</span> <span class="o">=</span> <span class="m">24</span><span class="o">)</span>
+<a name="rest_code_b39a212a7c0d4158b19cd1474dc6b1bd-3"></a>The input arguments were:
+<a name="rest_code_b39a212a7c0d4158b19cd1474dc6b1bd-4"></a><span class="s1">'y'</span> : <span class="m">24</span>
+<a name="rest_code_b39a212a7c0d4158b19cd1474dc6b1bd-5"></a><span class="s1">'x'</span> : <span class="m">1</span>
+<a name="rest_code_b39a212a7c0d4158b19cd1474dc6b1bd-6"></a>Out<span class="o">[</span><span class="m">23</span><span class="o">]</span>: <span class="m">25</span>
+</pre>
+<p>When we call <cite>decoratedAdd(x = 1, y = 24)</cite>, the arguments are printed to the screen and we still
+get the same functionality of <cite>add()</cite>. What I wanted to know was this: are the keyword arguments x
+= 1, y = 24 bound in the namespace of <cite>wrapper()</cite> or in the namespace of <cite>outFunction()</cite>? <em>In
+otherwords, does wrapper() at any point know what the arguments are that I send to the decorated
+function?</em></p>
+<p>The answer, as it turns out, is no in this case. This is because the <cite>wrapper()</cite> function first
+returns the decorated function, and then the arguments are passed into the decorated function. If
+this order of operations were flipped, <cite>wrapper()</cite> should know that I set x to 1 and y to 24, but
+really it doesn't know these details at all.</p>
+<pre class="code shell"><a name="rest_code_8b7e24df9eff49b58cfc003b35651f16-1"></a>In <span class="o">[</span><span class="m">24</span><span class="o">]</span>: wrapper<span class="o">(</span>add<span class="o">)(</span><span class="nv">x</span> <span class="o">=</span> <span class="m">1</span>, <span class="nv">y</span> <span class="o">=</span> <span class="m">24</span><span class="o">)</span>
+<a name="rest_code_8b7e24df9eff49b58cfc003b35651f16-2"></a>The input arguments were:
+<a name="rest_code_8b7e24df9eff49b58cfc003b35651f16-3"></a><span class="s1">'y'</span> : <span class="m">24</span>
+<a name="rest_code_8b7e24df9eff49b58cfc003b35651f16-4"></a><span class="s1">'x'</span> : <span class="m">1</span>
+<a name="rest_code_8b7e24df9eff49b58cfc003b35651f16-5"></a>Out<span class="o">[</span><span class="m">24</span><span class="o">]</span>: <span class="m">25</span>
+</pre>
+<p>So, when I call <cite>wrapper(add)(x = 1, y = 24)</cite>, first <cite>wrapper(add)</cite> is called, which returns
+<cite>outFunction()</cite>, and then these arguments are passed to <cite>outFunction()</cite>.</p>
+<p>Now what happens when I call <cite>wrapper(add(x = 1, y = 24))</cite>? When I try this, the arguments are
+first passed into add, but then <cite>outFunction</cite> is returned without any arguments applied to it.</p>
+<p>This example can give us an idea about the working order of operations in Python. Here, this
+example reveals that function calls in Python are left-associative.</p>
+</div>
     </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/overcoming-complexity-in-biology.html" class="u-url">Overcoming complexity in biology</a></h1>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/overcoming-complexity-in-biology/" class="u-url">Overcoming complexity in biology</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
-            <p class="dateline"><a href="posts/overcoming-complexity-in-biology.html" rel="bookmark"><time class="published dt-published" datetime="2015-01-21T08:16:04+01:00" title="2015-01-21 08:16">2015-01-21 08:16</time></a></p>
+            <p class="dateline">
+            <a href="posts/overcoming-complexity-in-biology/" rel="bookmark">
+            <time class="published dt-published" datetime="2015-01-21T08:16:04+01:00" itemprop="datePublished" title="2015-01-21 08:16">2015-01-21 08:16</time></a>
+            </p>
                 <p class="commentline">
         
-    <a href="posts/overcoming-complexity-in-biology.html#disqus_thread" data-disqus-identifier="cache/posts/overcoming-complexity-in-biology.html">Comments</a>
+    <a href="posts/overcoming-complexity-in-biology/#disqus_thread" data-disqus-identifier="cache/posts/overcoming-complexity-in-biology.html">Comments</a>
 
 
         </p>
 </div>
     </header><div class="p-summary entry-summary">
-    <p>
-I've been sitting in on a short lecture series presented by <a href="http://markolab.bmbcb.northwestern.edu/marko/">Prof. John
-Marko</a> here at the EPFL. The topic is on the biophysics of DNA and
-covers what is probably at least a 25 year span of research that has
-emerged on its mechanical and biochemical properties.
-</p>
-
-<p>
-DNA amazes me in two different ways: relatively simple physical
-theories can explain <i>in vitro</i> experiments, but establishing a
-complete understanding of the behavior of DNA and its associated
-proteins (collectively known as chromatin) <i>in vivo</i> seems at this
-point almost hopeless.
-</p>
-
-<p>
-So why do I think it's so difficult to establish a complete physical
-theory of the nucleus?
-</p>
-
-<p>
-Certainly a lot of recent research has helped us to understand parts
-of what happens inside the nucleus. Take for example recent
-experiments that look at <a href="http://en.wikipedia.org/wiki/Transcription_factor#Accessibility_of_DNA-binding_site">transcription factor</a> (TF) binding and the
-nuclear architecture. TF binding experiments have helped us understand
-the mechanism of how a single transcription factor ``searches'' for a
-target site on a chromosome. It undergoes diffusion in the crowded
-nuclear environment, occasionally binding to the DNA non-specifically
-and sliding along it. We now know that this combined diffusion/sliding
-mechanism produces an optimum search strategy.
-</p>
-
-<p>
-Studies of nuclear architecture attempt to understand how the long DNA
-polymer, which is on the order of <i>one meter</i> long, is packaged into
-the nucleus, which is only about <i>five micrometers</i> in diameter. This
-is nearly six orders of magnitude of compaction. Some current theories
-treat the DNA as a hierarchically packaged polymer or a fractal
-structure. Interestingly, the fractal model can <a href="http://www.ncbi.nlm.nih.gov/pubmed/24380602">explain why TF's may
-diffuse optimally</a> and when crowding can hinder their search.
-</p>
-
-<p>
-Both of these examples represent a generalization of one particular
-phenomenon that occurs inside the nucleus. And even given the enormity
-of these works, I think this generalization can be dubious because it
-may not apply to all cell types and there may be differences between
-cultured cells and those found in an actual organism.
-</p>
-
-<p>
-The problem in capturing complete physical models of the nucleus seems
-to lie with the philosophy of physics itself: find the most essential
-parts of the system and include those in your model, discarding all
-irrelevant details. Unfortunately, <i>in vitro</i> experiments suggest that
-every detail seems to matter inside the nucleus. Local salt
-concentrations effect electrostatic interactions and entropic binding
-between proteins and DNA, the global nuclear architecture has an
-effect on single TF's diffusing inside the nucleus, there are a huge
-number of proteins that associate with DNA and control the
-conformation in <a href="http://www.ncbi.nlm.nih.gov/pubmed/22495300">toplogically associating domains</a>. The list goes on and
-on.
-</p>
-
-<p>
-A common theme to this list that I have described above is that
-phenomena at one length scale tend to have a direct impact on those at
-another, like the global nuclear architecture affecting a single TF
-trajectory. These are hallmarks of complexity: a dependence on the
-details of a system and multiscale behavior.
-</p>
-
-<p>
-I am currently of the opinion that a complete model of the nucleus,
-and probably of other biological systems, must therefore necessarily
-abandon one important part of physical theories: reduction to the
-simplest possible set of parameters to describe a system. We need to
-incorporate all the details across all length scales to reproduce what
-exactly is going on.
-</p>
-
-<p>
-And if classical physics falls short of this goal, what other
-approaches do we then require?
-</p>
+    <div>
+<p>I've been sitting in on a short lecture series presented by <a class="reference external" href="http://markolab.bmbcb.northwestern.edu/marko/">Prof. John Marko</a> here at the EPFL. The topic is on the biophysics
+of DNA and covers what is probably at least a 25 year span of research that has emerged on its
+mechanical and biochemical properties.</p>
+<p>DNA amazes me in two different ways: relatively simple physical theories can explain /in vitro/
+experiments, but establishing a complete understanding of the behavior of DNA and its associated
+proteins (collectively known as chromatin) /in vivo/ seems at this point almost hopeless.</p>
+<p>So why do I think it's so difficult to establish a complete physical theory of the nucleus?</p>
+<p>Certainly a lot of recent research has helped us to understand parts of what happens inside the
+nucleus. Take for example recent experiments that look at <a class="reference external" href="http://en.wikipedia.org/wiki/Transcription_factor#Accessibility_of_DNA-binding_site">transcription factor</a> (TF)
+binding and the nuclear architecture. TF binding experiments have helped us understand the
+mechanism of how a single transcription factor searches for a target site on a chromosome. It
+undergoes diffusion in the crowded nuclear environment, occasionally binding to the DNA
+non-specifically and sliding along it. We now know that this combined diffusion/sliding mechanism
+produces an optimum search strategy.</p>
+<p>Studies of nuclear architecture attempt to understand how the long DNA polymer, which is on the
+order of /one meter/ long, is packaged into the nucleus, which is only about /five micrometers/ in
+diameter. This is nearly six orders of magnitude of compaction. Some current theories treat the DNA
+as a hierarchically packaged polymer or a fractal structure. Interestingly, the fractal model can
+<a class="reference external" href="http://www.ncbi.nlm.nih.gov/pubmed/24380602">explain why TF's may diffuse optimally</a> and when
+crowding can hinder their search.</p>
+<p>Both of these examples represent a generalization of one particular phenomenon that occurs inside
+the nucleus. And even given the enormity of these works, I think this generalization can be dubious
+because it may not apply to all cell types and there may be differences between cultured cells and
+those found in an actual organism.</p>
+<p>The problem in capturing complete physical models of the nucleus seems to lie with the philosophy
+of physics itself: find the most essential parts of the system and include those in your model,
+discarding all irrelevant details. Unfortunately, <em>in vitro</em> experiments suggest that every detail
+seems to matter inside the nucleus. Local salt concentrations effect electrostatic interactions and
+entropic binding between proteins and DNA, the global nuclear architecture has an effect on single
+TF's diffusing inside the nucleus, there are a huge number of proteins that associate with DNA and
+control the conformation in <a class="reference external" href="http://www.ncbi.nlm.nih.gov/pubmed/22495300">toplogically associating domains</a>. The list goes on and on.</p>
+<p>A common theme to this list that I have described above is that phenomena at one length scale tend
+to have a direct impact on those at another, like the global nuclear architecture affecting a
+single TF trajectory. These are hallmarks of complexity: a dependence on the details of a system
+and multiscale behavior.</p>
+<p>I am currently of the opinion that a complete model of the nucleus, and probably of other
+biological systems, must therefore necessarily abandon one important part of physical theories:
+reduction to the simplest possible set of parameters to describe a system. We need to incorporate
+all the details across all length scales to reproduce what exactly is going on.</p>
+<p>And if classical physics falls short of this goal, what other approaches do we then require?</p>
+</div>
     </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/learning-pythons-multiprocessing-module.html" class="u-url">Learning Python's Multiprocessing Module</a></h1>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/learning-pythons-multiprocessing-module/" class="u-url">Learning Python's Multiprocessing Module</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
-            <p class="dateline"><a href="posts/learning-pythons-multiprocessing-module.html" rel="bookmark"><time class="published dt-published" datetime="2014-12-29T18:42:23+01:00" title="2014-12-29 18:42">2014-12-29 18:42</time></a></p>
+            <p class="dateline">
+            <a href="posts/learning-pythons-multiprocessing-module/" rel="bookmark">
+            <time class="published dt-published" datetime="2014-12-29T18:42:23+01:00" itemprop="datePublished" title="2014-12-29 18:42">2014-12-29 18:42</time></a>
+            </p>
                 <p class="commentline">
         
-    <a href="posts/learning-pythons-multiprocessing-module.html#disqus_thread" data-disqus-identifier="cache/posts/learning-pythons-multiprocessing-module.html">Comments</a>
+    <a href="posts/learning-pythons-multiprocessing-module/#disqus_thread" data-disqus-identifier="cache/posts/learning-pythons-multiprocessing-module.html">Comments</a>
 
 
         </p>
 </div>
     </header><div class="p-summary entry-summary">
-    <p>
-I've been doing a bit of programming work lately that would greatly
-benefit from a speed boost using parallel/concurrent processing
-tools. Essentially, I'm doing a <a href="http://www.mathworks.com/help/simulink/examples/parallel-simulations-using-parfor-parameter-sweep-in-normal-mode.html">parameter sweep</a> where the values for
-two different simulation parameters are input into the simulation and
-allowed to run with the results being recorded to disk at the end. The
-point is to find out how the simulation results vary with the
-parameter values.
-</p>
-
-<p>
-In my current code, a new simulation is initialized with each pair of
-parameter values inside one iteration of a for loop; each iteration of
-the loop is independent of the others. Spreading these iterations over
-the 12 cores on my workstation should result in about a 12x decrease
-in the amount of time the simulation takes to run.
-</p>
-
-<p>
-I've had good success using the <code>parfor</code> loop construct in Matlab in
-the past, but my simulation was written in Python and I want to learn
-more about Python's multiprocessing tools, so this post will explore
-that module in the context of performing parameter sweeps.
-</p>
-
-<div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1">Profile the code first to identify bottlenecks</h2>
-<div class="outline-text-2" id="text-1">
-<p>
-First, I profiled my code to identify where any slowdowns might be
-occurring in the serial program. I used a great tutorial at the <a href="https://zapier.com/engineering/profiling-python-boss/">Zapier
-Engineering</a> blog to write a decorator for profiling the main instance
-method of my class that was doing most of the work. Surprisingly, I
-found that a few numpy methods were taking the most time, namely
-<b>norm()</b> and <b>cross()</b>. To address this, I directly imported the
-Fortran BLAS <b>nrm2()</b> function using scipy's <b>get_blas_funcs()</b>
-function and hard-coded the cross product in pure Python inside the
-method; these two steps alone resulted in a 4x decrease in simulation
-time. I suspect the reason for this was because the overhead of
-calling functions on small arrays outweighs the increase in speed
-using Numpy's optimized C code. I was normalizing single vectors and
-taking cross products between two vectors at a time many times during
-each loop iteration.
-</p>
+    <div>
+<p>I've been doing a bit of programming work lately that would greatly benefit from a speed boost
+using parallel/concurrent processing tools. Essentially, I'm doing a <a class="reference external" href="http://www.mathworks.com/help/simulink/examples/parallel-simulations-using-parfor-parameter-sweep-in-normal-mode.html">parameter sweep</a>
+where the values for two different simulation parameters are input into the simulation and allowed
+to run with the results being recorded to disk at the end. The point is to find out how the
+simulation results vary with the parameter values.</p>
+<p>In my current code, a new simulation is initialized with each pair of parameter values inside one
+iteration of a for loop; each iteration of the loop is independent of the others. Spreading these
+iterations over the 12 cores on my workstation should result in about a 12x decrease in the amount
+of time the simulation takes to run.</p>
+<p>I've had good success using the <cite>parfor</cite> loop construct in Matlab in the past, but my simulation
+was written in Python and I want to learn more about Python's multiprocessing tools, so this post
+will explore that module in the context of performing parameter sweeps.</p>
+<div class="section" id="profile-the-code-first-to-identify-bottlenecks">
+<h2>Profile the code first to identify bottlenecks</h2>
+<p>First, I profiled my code to identify where any slowdowns might be occurring in the serial
+program. I used a great tutorial at the <a class="reference external" href="https://zapier.com/engineering/profiling-python-boss/">Zapier Engineering</a> blog to write a decorator for profiling
+the main instance method of my class that was doing most of the work. Surprisingly, I found that a
+few numpy methods were taking the most time, namely <cite>norm()</cite> and <cite>cross()</cite>. To address this, I
+directly imported the Fortran BLAS <cite>nrm2()</cite> function using scipy's <cite>get_blas_funcs()</cite> function and
+hard-coded the cross product in pure Python inside the method; these two steps alone resulted in a
+4x decrease in simulation time. I suspect the reason for this was because the overhead of calling
+functions on small arrays outweighs the increase in speed using Numpy's optimized C code. I was
+normalizing single vectors and taking cross products between two vectors at a time many times
+during each loop iteration.</p>
 </div>
+<div class="section" id="a-brief-glance-at-python-s-multiprocessing-module">
+<h2>A brief glance at Python's multiprocessing module</h2>
+<p><a class="reference external" href="http://pymotw.com/2/multiprocessing/basics.html">PyMOTW</a> has a good, minimal description of the
+main aspects of the multiprocessing module. They state that the simplest way to create tasks on
+different cores of a machine is to create new <cite>Process</cite> objects with target functions. Each object
+is then set to execute by calling its <cite>start()</cite> method.</p>
+<p>The basic example from their site looks like this:</p>
+<pre class="code python"><a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-1"></a><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-2"></a>
+<a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-3"></a><span class="k">def</span> <span class="nf">worker</span><span class="p">():</span>
+<a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-4"></a>    <span class="sd">"""worker function"""</span>
+<a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-5"></a>    <span class="k">print</span> <span class="s1">'Worker'</span>
+<a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-6"></a>    <span class="k">return</span>
+<a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-7"></a>
+<a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-8"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
+<a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-9"></a>    <span class="n">jobs</span> <span class="o">=</span> <span class="p">[]</span>
+<a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-10"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+<a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-11"></a>        <span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">worker</span><span class="p">)</span>
+<a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-12"></a>        <span class="n">jobs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-13"></a>        <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre>
+<p>In this example, it's important to create the Process instances inside the</p>
+<pre class="code python"><a name="rest_code_de225704763a438e9afd670052d58ffc-1"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
+</pre>
+<p>section of the script because child processes import the script where the target function is
+contained. Placing the object instantiation in this section prevents an infinite, recursive string
+of such instantiations. A workaround to this is to define the function in a different script and
+import it into the namespace.</p>
+<p>To send arguments to the function (<cite>worker()</cite> in the example above), we can use the <cite>args</cite> keyword
+in the Process object instantiation like</p>
+<pre class="code python"><a name="rest_code_da3be8ef22d146c097c2da03d71cd10a-1"></a><span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">worker</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">i</span><span class="p">,))</span>
+</pre>
+<p>A very important thing to note is that the arguments must be objects that can be pickled using
+Python's pickle module. If an argument is a class instance, this means that every attritube of that
+class must be pickleable.</p>
+<p>An important class in the multiprocessing module is a <cite>Pool</cite>. A <a class="reference external" href="https://docs.python.org/3.4/library/multiprocessing.html#multiprocessing.pool.Pool">Pool</a> object
+controls a pool of worker processes. Jobs can be submitted to the Pool, which then sends the jobs
+to the individual workers.</p>
+<p>The <cite>Pool.map()</cite> achieves the same functionality as Matlab's <cite>parfor</cite> construct. This method
+essentially applies a function to each element in an iterable and returns the results. For example,
+if I wanted to square each number in a list of integers between 0 and 9 and perform the square
+operation on multiple processors, I would write a function for squaring an argument, and supply
+this function and the list of integers to <cite>Pool.map()</cite>. The code looks like this:</p>
+<pre class="code python"><a name="rest_code_80aa35699e8b42569c0122356f4aa6dd-1"></a><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<a name="rest_code_80aa35699e8b42569c0122356f4aa6dd-2"></a>
+<a name="rest_code_80aa35699e8b42569c0122356f4aa6dd-3"></a><span class="k">def</span> <span class="nf">funSquare</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+<a name="rest_code_80aa35699e8b42569c0122356f4aa6dd-4"></a>    <span class="k">return</span> <span class="n">num</span> <span class="o">**</span> <span class="mi">2</span>
+<a name="rest_code_80aa35699e8b42569c0122356f4aa6dd-5"></a>
+<a name="rest_code_80aa35699e8b42569c0122356f4aa6dd-6"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
+<a name="rest_code_80aa35699e8b42569c0122356f4aa6dd-7"></a>    <span class="n">pool</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Pool</span><span class="p">()</span>
+<a name="rest_code_80aa35699e8b42569c0122356f4aa6dd-8"></a>    <span class="n">results</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">funSquare</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<a name="rest_code_80aa35699e8b42569c0122356f4aa6dd-9"></a>    <span class="k">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</pre>
 </div>
-
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2">A brief glance at Python's multiprocessing module</h2>
-<div class="outline-text-2" id="text-2">
-<p>
-<a href="http://pymotw.com/2/multiprocessing/basics.html">PyMOTW</a> has a good, minimal description of the main aspects of the
-multiprocessing module. They state that the simplest way to create
-tasks on different cores of a machine is to create new <b>Process</b>
-objects with target functions. Each object is then set to execute by
-calling its <b>start()</b> method.
-</p>
-
-<p>
-The basic example from their site looks like this:
-</p>
-
-<div class="highlight"><pre><span></span>import multiprocessing
-
-def worker():
-    """worker function"""
-    print 'Worker'
-    return
-
-if __name__ == '__main__':
-    jobs = []
-    for i in range(5):
-        p = multiprocessing.Process(target=worker)
-        jobs.append(p)
-        p.start()
-</pre></div>
-
-<p>
-In this example, it's important to create the Process instances inside
-the
-</p>
-
-<div class="highlight"><pre><span></span>if __name__ == '__main__':
-</pre></div>
-
-<p>
-section of the script because child processes import the script where
-the target function is contained. Placing the object instantiation in
-this section prevents an infinite, recursive string of such
-instantiations. A workaround to this is to define the function in a
-different script and import it into the namespace.
-</p>
-
-<p>
-To send arguments to the function (<b>worker()</b> in the example above),
-we can use the <b>args</b> keyword in the Process object instantiation like
-</p>
-
-<div class="highlight"><pre><span></span>p = multiprocessing.Process(target=worker, args=(i,))
-</pre></div>
-
-<p>
-A very important thing to note is that the arguments must be objects
-that can be pickled using Python's pickle module. If an argument is a
-class instance, this means that every attritube of that class must be
-pickleable.
-</p>
-
-<p>
-An important class in the multiprocessing module is a <b>Pool</b>. A <a href="https://docs.python.org/3.4/library/multiprocessing.html#multiprocessing.pool.Pool">Pool</a>
-object controls a pool of worker processes. Jobs can be submitted to
-the Pool, which then sends the jobs to the individual workers.
-</p>
-
-<p>
-The <b>Pool.map()</b> achieves the same functionality as Matlab's <b>parfor</b>
-construct. This method essentially applies a function to each element
-in an iterable and returns the results. For example, if I wanted to
-square each number in a list of integers between 0 and 9 and perform
-the square operation on multiple processors, I would write a function
-for squaring an argument, and supply this function and the list of
-integers to <b>Pool.map()</b>. The code looks like this:
-</p>
-
-<div class="highlight"><pre><span></span>import multiprocessing
-
-def funSquare(num):
-    return num ** 2
-
-if __name__ == '__main__':
-    pool = multiprocessing.Pool()
-    results = pool.map(funSquare, range(10))
-    print(results)
-</pre></div>
-</div>
-</div>
-
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3">Design the solution to the problem</h2>
-<div class="outline-text-2" id="text-3">
-<p>
-In my parameter sweep, I have two classes: one is an object that I'm
-simulating and the other acts as a controller that sends parameters to
-the structure and collects the results of the simulation. Everything
-was written in a serial fashion and I want to change it so the bulk of
-the work is performed in parallel.
-</p>
-
-<p>
-After the bottlenecks were identified in the serial code, I began
-thinking about how the the problem of parameter sweeps could be
-addressed using the multiprocessing module.
-</p>
-
-<p>
-The solution requirements I identified for my parameter sweep are as
-follows:
-</p>
-
-<ol class="org-ol">
-<li>Accept two values (one for each parameter) from the range of values
-to test as inputs to the simulation.
-</li>
-<li>For each pair of values, run the simulation as an independent
-process.
-</li>
-<li>Return the results of the simulation as as a list or Numpy array.
-</li>
+<div class="section" id="design-the-solution-to-the-problem">
+<h2>Design the solution to the problem</h2>
+<p>In my parameter sweep, I have two classes: one is an object that I'm simulating and the other acts
+as a controller that sends parameters to the structure and collects the results of the
+simulation. Everything was written in a serial fashion and I want to change it so the bulk of the
+work is performed in parallel.</p>
+<p>After the bottlenecks were identified in the serial code, I began thinking about how the the
+problem of parameter sweeps could be addressed using the multiprocessing module.</p>
+<p>The solution requirements I identified for my parameter sweep are as follows:</p>
+<ol class="arabic simple">
+<li>Accept two values (one for each parameter) from the range of values to test as inputs to the
+simulation.</li>
+<li>For each pair of values, run the simulation as an independent process.</li>
+<li>Return the results of the simulation as as a list or Numpy array.</li>
 </ol>
-<p>
-I often choose to return the results as Numpy arrays since I can
-easily pickle them when saving to a disk. This may change depending on
-your specific problem.
-</p>
+<p>I often choose to return the results as Numpy arrays since I can easily pickle them when saving to
+a disk. This may change depending on your specific problem.</p>
 </div>
+<div class="section" id="implementation-of-the-solution">
+<h2>Implementation of the solution</h2>
+<p>I'll now give a simplified example of how this solution to the parameter sweep can be implemented
+using Python's multiprocessing module. I won't use objects like in my real code, but will first
+demonstrate an example where <cite>Pool.map()</cite> is applied to a list of numbers.</p>
+<pre class="code python"><a name="rest_code_2985231f1c784cab9f50ab707280e43f-1"></a><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<a name="rest_code_2985231f1c784cab9f50ab707280e43f-2"></a>
+<a name="rest_code_2985231f1c784cab9f50ab707280e43f-3"></a><span class="k">def</span> <span class="nf">runSimulation</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
+<a name="rest_code_2985231f1c784cab9f50ab707280e43f-4"></a>    <span class="sd">"""This is the main processing function. It will contain whatever</span>
+<a name="rest_code_2985231f1c784cab9f50ab707280e43f-5"></a><span class="sd">    code should be run on multiple processors.</span>
+<a name="rest_code_2985231f1c784cab9f50ab707280e43f-6"></a>
+<a name="rest_code_2985231f1c784cab9f50ab707280e43f-7"></a><span class="sd">    """</span>
+<a name="rest_code_2985231f1c784cab9f50ab707280e43f-8"></a>    <span class="n">param1</span><span class="p">,</span> <span class="n">param2</span> <span class="o">=</span> <span class="n">params</span>
+<a name="rest_code_2985231f1c784cab9f50ab707280e43f-9"></a>    <span class="c1"># Example computation</span>
+<a name="rest_code_2985231f1c784cab9f50ab707280e43f-10"></a>    <span class="n">processedData</span> <span class="o">=</span> <span class="p">[]</span>
+<a name="rest_code_2985231f1c784cab9f50ab707280e43f-11"></a>    <span class="k">for</span> <span class="n">ctr</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000000</span><span class="p">):</span>
+<a name="rest_code_2985231f1c784cab9f50ab707280e43f-12"></a>        <span class="n">processedData</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">param1</span> <span class="o">*</span> <span class="n">ctr</span> <span class="o">-</span> <span class="n">param2</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+<a name="rest_code_2985231f1c784cab9f50ab707280e43f-13"></a>
+<a name="rest_code_2985231f1c784cab9f50ab707280e43f-14"></a>    <span class="k">return</span> <span class="n">processedData</span>
+<a name="rest_code_2985231f1c784cab9f50ab707280e43f-15"></a>
+<a name="rest_code_2985231f1c784cab9f50ab707280e43f-16"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
+<a name="rest_code_2985231f1c784cab9f50ab707280e43f-17"></a>    <span class="c1"># Define the parameters to test</span>
+<a name="rest_code_2985231f1c784cab9f50ab707280e43f-18"></a>    <span class="n">param1</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<a name="rest_code_2985231f1c784cab9f50ab707280e43f-19"></a>    <span class="n">param2</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">202</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<a name="rest_code_2985231f1c784cab9f50ab707280e43f-20"></a>
+<a name="rest_code_2985231f1c784cab9f50ab707280e43f-21"></a>    <span class="c1"># Zip the parameters because pool.map() takes only one iterable</span>
+<a name="rest_code_2985231f1c784cab9f50ab707280e43f-22"></a>    <span class="n">params</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">param1</span><span class="p">,</span> <span class="n">param2</span><span class="p">)</span>
+<a name="rest_code_2985231f1c784cab9f50ab707280e43f-23"></a>
+<a name="rest_code_2985231f1c784cab9f50ab707280e43f-24"></a>    <span class="n">pool</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Pool</span><span class="p">()</span>
+<a name="rest_code_2985231f1c784cab9f50ab707280e43f-25"></a>    <span class="n">results</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">runSimulation</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+</pre>
+<p>This is a rather silly example of a simulation, but I think it illustrates the point nicely. In the
+<cite>__main__</cite> portion of the code, I first define two lists for each parameter value that I want to
+'simulate.' These parameters are zipped together in this example because <cite>Pool.map()</cite> takes only
+one iterable as its argument. The pool is opened using with <cite>multiprocessing.Pool()</cite>.</p>
+<p>Most of the work is performed in the function <cite>runSimulation(params)</cite>. It takes a tuple of two
+parameters which are unpacked. Then, these parameters are used in the for loop to build a list of
+simulated values which is eventually returned.</p>
+<p>Returning to the <cite>__main__</cite> section, each simulation is run on a different core of my machine using
+the <cite>Pool.map()</cite> function. This applies the function called <cite>runSimulation()</cite> to the values in the
+<em>params</em> iterable. In other words, it calls the code described in <cite>runSimulation()</cite> with a
+different pair of values in params.</p>
+<p>All the results are eventually returned in a list in the same order as the parameter iterable. This
+means that the first element in the <cite>results</cite> list corresponds to parameters of 0 and 2 in this
+example.</p>
 </div>
-
-<div id="outline-container-sec-4" class="outline-2">
-<h2 id="sec-4">Implementation of the solution</h2>
-<div class="outline-text-2" id="text-4">
-<p>
-I'll now give a simplified example of how this solution to the
-parameter sweep can be implemented using Python's multiprocessing
-module. I won't use objects like in my real code, but will first
-demonstrate an example where <b>Pool.map()</b> is applied to a list of
-numbers.
-</p>
-
-<div class="highlight"><pre><span></span>import multiprocessing
-
-def runSimulation(params):
-    """This is the main processing function. It will contain whatever
-    code should be run on multiple processors.
-    
-    """
-    param1, param2 = params
-    # Example computation
-    processedData = []
-    for ctr in range(1000000):
-        processedData.append(param1 * ctr - param2 ** 2)
-
-    return processedData
-
-if __name__ == '__main__':
-    # Define the parameters to test
-    param1 = range(100)
-    param2 = range(2, 202, 2)
-
-    # Zip the parameters because pool.map() takes only one iterable
-    params = zip(param1, param2)
-    
-    pool = multiprocessing.Pool()
-    results = pool.map(runSimulation, params)
-</pre></div>
-
-<p>
-This is a rather silly example of a simulation, but I think it
-illustrates the point nicely. In the <b><span class="underline"><span class="underline">main</span></span></b> portion of the code, I
-first define two lists for each parameter value that I want to
-'simulate.' These parameters are zipped together in this example
-because <b>Pool.map()</b> takes only one iterable as its argument. The pool
-is opened using with <b>multiprocessing.Pool()</b>.
-</p>
-
-<p>
-Most of the work is performed in the function
-<b>runSimulation(params)</b>. It takes a tuple of two parameters which are
-unpacked. Then, these parameters are used in the for loop to build a
-list of simulated values which is eventually returned.
-</p>
-
-<p>
-Returning to the <b><span class="underline"><span class="underline">main</span></span></b> section, each simulation is run on a
-different core of my machine using the <b>Pool.map()</b> function. This
-applies the function called <b>runSimulation()</b> to the values in the
-<b>params</b> iterable. In other words, it calls the code described in
-<b>runSimulation()</b> with a different pair of values in params.
-</p>
-
-<p>
-All the results are eventually returned in a list in the same order as
-the parameter iterable. This means that the first element in the
-<b>results</b> list corresponds to parameters of 0 and 2 in this example.
-</p>
+<div class="section" id="iterables-over-arbitrary-objects">
+<h2>Iterables over arbitrary objects</h2>
+<p>In my real simulation code, I use a class to encapsulate a number of structural parameters and
+methods for simulating a polymer model. So long as instances of this class can be <a class="reference external" href="https://docs.python.org/3/library/pickle.html">pickled</a>, I can use them as the iterable in <cite>Pool.map()</cite>,
+not just lists of floating point numbers.</p>
+<pre class="code python"><a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-1"></a><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-2"></a>
+<a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-3"></a><span class="k">class</span> <span class="nc">simObject</span><span class="p">():</span>
+<a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-4"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+<a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-5"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">param1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">param2</span> <span class="o">=</span> <span class="n">params</span>
+<a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-6"></a>
+<a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-7"></a><span class="k">def</span> <span class="nf">runSimulation</span><span class="p">(</span><span class="n">objInstance</span><span class="p">):</span>
+<a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-8"></a>    <span class="sd">"""This is the main processing function. It will contain whatever</span>
+<a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-9"></a><span class="sd">    code should be run on multiple processors.</span>
+<a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-10"></a>
+<a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-11"></a><span class="sd">    """</span>
+<a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-12"></a>    <span class="n">param1</span><span class="p">,</span> <span class="n">param2</span> <span class="o">=</span> <span class="n">objInstance</span><span class="o">.</span><span class="n">param1</span><span class="p">,</span> <span class="n">objInstance</span><span class="o">.</span><span class="n">param2</span>
+<a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-13"></a>    <span class="c1"># Example computation</span>
+<a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-14"></a>    <span class="n">processedData</span> <span class="o">=</span> <span class="p">[]</span>
+<a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-15"></a>    <span class="k">for</span> <span class="n">ctr</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000000</span><span class="p">):</span>
+<a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-16"></a>        <span class="n">processedData</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">param1</span> <span class="o">*</span> <span class="n">ctr</span> <span class="o">-</span> <span class="n">param2</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+<a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-17"></a>
+<a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-18"></a>    <span class="k">return</span> <span class="n">processedData</span>
+<a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-19"></a>
+<a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-20"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
+<a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-21"></a>    <span class="c1"># Define the parameters to test</span>
+<a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-22"></a>    <span class="n">param1</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-23"></a>    <span class="n">param2</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">202</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-24"></a>
+<a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-25"></a>    <span class="n">objList</span> <span class="o">=</span> <span class="p">[]</span>
+<a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-26"></a>    <span class="c1"># Create a list of objects to feed into pool.map()</span>
+<a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-27"></a>    <span class="k">for</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">param1</span><span class="p">,</span> <span class="n">param2</span><span class="p">):</span>
+<a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-28"></a>        <span class="n">objList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">simObject</span><span class="p">((</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">)))</span>
+<a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-29"></a>
+<a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-30"></a>    <span class="n">pool</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Pool</span><span class="p">()</span>
+<a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-31"></a>    <span class="n">results</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">runSimulation</span><span class="p">,</span> <span class="n">objList</span><span class="p">)</span>
+</pre>
+<p>Again, this is a silly example, but it demonstrates that lists of objects can be used in the
+parameter sweep, allowing for easy parallelization of object-oriented code.</p>
+<p>Instead of <cite>runSimulation()</cite>, you may want to apply an instance method to a list in <cite>pool.map()</cite>. A
+naïve way to do this is to replace <em>runSimulation</em> with with the method name but this too causes
+problems. I won't go into the details here, but one solution is to use an instance's <cite>__call__()</cite>
+method and pass the object instance into the pool. More details can be found <a class="reference external" href="http://stackoverflow.com/questions/1816958/cant-pickle-type-instancemethod-when-using-pythons-multiprocessing-pool-ma">here</a>.</p>
 </div>
+<div class="section" id="comparing-computation-times">
+<h2>Comparing computation times</h2>
+<p>The following code makes a rough comparison between computation time for the parallel and serial
+versions of <cite>map()</cite>:</p>
+<pre class="code python"><a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-1"></a><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-2"></a><span class="kn">import</span> <span class="nn">time</span>
+<a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-3"></a>
+<a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-4"></a><span class="k">def</span> <span class="nf">runSimulation</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
+<a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-5"></a>    <span class="sd">"""This is the main processing function. It will contain whatever</span>
+<a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-6"></a><span class="sd">    code should be run on multiple processors.</span>
+<a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-7"></a>
+<a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-8"></a><span class="sd">    """</span>
+<a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-9"></a>    <span class="n">param1</span><span class="p">,</span> <span class="n">param2</span> <span class="o">=</span> <span class="n">params</span>
+<a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-10"></a>    <span class="c1"># Example computation</span>
+<a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-11"></a>    <span class="n">processedData</span> <span class="o">=</span> <span class="p">[]</span>
+<a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-12"></a>    <span class="k">for</span> <span class="n">ctr</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000000</span><span class="p">):</span>
+<a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-13"></a>        <span class="n">processedData</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">param1</span> <span class="o">*</span> <span class="n">ctr</span> <span class="o">-</span> <span class="n">param2</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+<a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-14"></a>
+<a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-15"></a>    <span class="k">return</span> <span class="n">processedData</span>
+<a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-16"></a>
+<a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-17"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
+<a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-18"></a>    <span class="c1"># Define the parameters to test</span>
+<a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-19"></a>    <span class="n">param1</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-20"></a>    <span class="n">param2</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">202</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-21"></a>
+<a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-22"></a>    <span class="n">params</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">param1</span><span class="p">,</span> <span class="n">param2</span><span class="p">)</span>
+<a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-23"></a>
+<a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-24"></a>    <span class="n">pool</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Pool</span><span class="p">()</span>
+<a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-25"></a>
+<a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-26"></a>    <span class="c1"># Parallel map</span>
+<a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-27"></a>    <span class="n">tic</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-28"></a>    <span class="n">results</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">runSimulation</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+<a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-29"></a>    <span class="n">toc</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-30"></a>
+<a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-31"></a>    <span class="c1"># Serial map</span>
+<a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-32"></a>    <span class="n">tic2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-33"></a>    <span class="n">results</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">runSimulation</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+<a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-34"></a>    <span class="n">toc2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-35"></a>
+<a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-36"></a>    <span class="k">print</span><span class="p">(</span><span class="s1">'Parallel processing time: </span><span class="si">%r</span><span class="se">\n</span><span class="s1">Serial processing time: </span><span class="si">%r</span><span class="s1">'</span>
+<a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-37"></a>          <span class="o">%</span> <span class="p">(</span><span class="n">toc</span> <span class="o">-</span> <span class="n">tic</span><span class="p">,</span> <span class="n">toc2</span> <span class="o">-</span> <span class="n">tic2</span><span class="p">))</span>
+</pre>
+<p>On my machine, <cite>pool.map()</cite> ran in 9.6 seconds, but the serial version took 163.3 seconds. My
+laptop has 8 cores, so I would have expected the speedup to be a factor of 8, not a factor
+of 16. I'm not sure why it's 16, but I suspect part of the reason is that measuring system time
+using the <cite>time.time()</cite> function is not wholly accurate.</p>
 </div>
-
-<div id="outline-container-sec-5" class="outline-2">
-<h2 id="sec-5">Iterables over arbitrary objects</h2>
-<div class="outline-text-2" id="text-5">
-<p>
-In my real simulation code, I use a class to encapsulate a number of
-structural parameters and methods for simulating a polymer model. So
-long as instances of this class can be <a href="https://docs.python.org/3/library/pickle.html">pickled</a>, I can use them as the
-iterable in <b>Pool.map()</b>, not just lists of floating point numbers.
-</p>
-
-<div class="highlight"><pre><span></span>import multiprocessing
-
-class simObject():
-    def __init__(self, params):
-        self.param1, self.param2 = params
-
-def runSimulation(objInstance):
-    """This is the main processing function. It will contain whatever
-    code should be run on multiple processors.
-    
-    """
-    param1, param2 = objInstance.param1, objInstance.param2
-    # Example computation
-    processedData = []
-    for ctr in range(1000000):
-        processedData.append(param1 * ctr - param2 ** 2)
-
-    return processedData
-
-if __name__ == '__main__':
-    # Define the parameters to test
-    param1 = range(100)
-    param2 = range(2, 202, 2)
-
-    objList = []
-    # Create a list of objects to feed into pool.map()
-    for p1, p2 in zip(param1, param2):
-        objList.append(simObject((p1, p2)))
-
-    pool = multiprocessing.Pool()
-    results = pool.map(runSimulation, objList)
-</pre></div>
-
-<p>
-Again, this is a silly example, but it demonstrates that lists of
-objects can be used in the parameter sweep, allowing for easy
-parallelization of object-oriented code.
-</p>
-
-<p>
-Instead of <b>runSimulation()</b>, you may want to apply an instance method
-to a list in <b>pool.map()</b>. A naïve way to do this is to replace
-<b>runSimulation</b> with with the method name but this too causes
-problems. I won't go into the details here, but one solution is to use
-an instance's <b>__call__()</b> method and pass the object instance into
-the pool. More details can be found <a href="http://stackoverflow.com/questions/1816958/cant-pickle-type-instancemethod-when-using-pythons-multiprocessing-pool-ma">here</a>.
-</p>
+<div class="section" id="important-points">
+<h2>Important points</h2>
+<p>I can verify that all the cores are being utilized on my machine while the code is running by using
+the <a class="reference external" href="http://hisham.hm/htop/">htop</a> console program. In some cases, Python modules like Numpy,
+scipy, etc. may limit processes in Python to running on only one core on Linux machines, which
+defeats the purpose of writing concurrent code in this case. (See for example <a class="reference external" href="http://stackoverflow.com/questions/15639779/what-determines-whether-different-python-processes-are-assigned-to-the-same-or-d/15641148#15641148">this discussion</a>.)
+To fix this, we can import Python's <em>os</em> module to reset the task affinity in our code:</p>
+<pre class="code python"><a name="rest_code_3d082ad6666c43b5a89a61046f1bd410-1"></a><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">"taskset -p 0xff </span><span class="si">%d</span><span class="s2">"</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">())</span>
+</pre>
 </div>
-</div>
-
-<div id="outline-container-sec-6" class="outline-2">
-<h2 id="sec-6">Comparing computation times</h2>
-<div class="outline-text-2" id="text-6">
-<p>
-The following code makes a rough comparison between computation time
-for the parallel and serial versions of <b>map()</b>:
-</p>
-
-<div class="highlight"><pre><span></span>import multiprocessing
-import time
-
-def runSimulation(params):
-    """This is the main processing function. It will contain whatever
-    code should be run on multiple processors.
-    
-    """
-    param1, param2 = params
-    # Example computation
-    processedData = []
-    for ctr in range(1000000):
-        processedData.append(param1 * ctr - param2 ** 2)
-
-    return processedData
-
-if __name__ == '__main__':
-    # Define the parameters to test
-    param1 = range(100)
-    param2 = range(2, 202, 2)
-
-    params = zip(param1, param2)
-
-    pool = multiprocessing.Pool()
-
-    # Parallel map
-    tic = time.time()
-    results = pool.map(runSimulation, params)
-    toc = time.time()
-
-    # Serial map
-    tic2 = time.time()
-    results = map(runSimulation, params)
-    toc2 = time.time()
-
-    print('Parallel processing time: %r\nSerial processing time: %r'
-          % (toc - tic, toc2 - tic2))
-</pre></div>
-
-<p>
-On my machine, <b>pool.map()</b> ran in 9.6 seconds, but the serial version
-took 163.3 seconds. My laptop has 8 cores, so I would have expected
-the speedup to be a factor of 8, not a factor of 16. I'm not sure why
-it's 16, but I suspect part of the reason is that measuring system
-time using the <b>time.time()</b> function is not wholly accurate.
-</p>
-</div>
-</div>
-
-<div id="outline-container-sec-7" class="outline-2">
-<h2 id="sec-7">Important points</h2>
-<div class="outline-text-2" id="text-7">
-<p>
-I can verify that all the cores are being utilized on my machine while
-the code is running by using the <a href="http://hisham.hm/htop/">htop</a> console program. In some cases,
-Python modules like Numpy, scipy, etc. may limit processes in Python
-to running on only one core on Linux machines, which defeats the
-purpose of writing concurrent code in this case. (See for example <a href="http://stackoverflow.com/questions/15639779/what-determines-whether-different-python-processes-are-assigned-to-the-same-or-d/15641148#15641148">this
-discussion</a>.) To fix this, we can import Python's <b>os</b> module to reset
-the task affinity in our code:
-</p>
-
-<div class="highlight"><pre><span></span>os.system("taskset -p 0xff %d" % os.getpid())
-</pre></div>
-</div>
-</div>
-
-<div id="outline-container-sec-8" class="outline-2">
-<h2 id="sec-8">Conclusions</h2>
-<div class="outline-text-2" id="text-8">
-<p>
-I think that Matlab's <b>parfor</b> construct is easier to use because one
-doesn't have to consider the nuances of writing concurrent code. So
-long as each loop iteration is independent of the others, you simply
-write a <b>parfor</b> instead of <b>for</b> and you're set.
-</p>
-
-<p>
-In Python, you have to prevent infinite, recursive function calls by
-placing your code in the <b><span class="underline"><span class="underline">main</span></span></b> section of your script or by
-placing the function in a different script and importing it. You also
-have to be sure that Numpy and other Python modules that use BLAS
-haven't reset the core affinity. What you gain over Matlab's
-implementation is the power of using Python as a general programming
-language with a lot of tools for scientific computing. This and the
-multiprocessing module is free; you have to have an institute license
-or pay for Matlab's <a href="http://www.mathworks.com/products/parallel-computing/">Parallel Computing Toolbox</a>.
-</p>
+<div class="section" id="conclusions">
+<h2>Conclusions</h2>
+<p>I think that Matlab's <cite>parfor</cite> construct is easier to use because one doesn't have to consider the
+nuances of writing concurrent code. So long as each loop iteration is independent of the others,
+you simply write a <cite>parfor</cite> instead of <cite>for</cite> and you're set.</p>
+<p>In Python, you have to prevent infinite, recursive function calls by placing your code in the
+<cite>__main__</cite> section of your script or by placing the function in a different script and importing
+it. You also have to be sure that Numpy and other Python modules that use BLAS haven't reset the
+core affinity. What you gain over Matlab's implementation is the power of using Python as a general
+programming language with a lot of tools for scientific computing. This and the multiprocessing
+module is free; you have to have an institute license or pay for Matlab's <a class="reference external" href="http://www.mathworks.com/products/parallel-computing/">Parallel Computing
+Toolbox</a>.</p>
 </div>
 </div>
     </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/measurements.html" class="u-url">Measurements as processes</a></h1>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/measurements/" class="u-url">Measurements as processes</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
-            <p class="dateline"><a href="posts/measurements.html" rel="bookmark"><time class="published dt-published" datetime="2014-12-19T00:00:00+01:00" title="2014-12-19 00:00">2014-12-19 00:00</time></a></p>
+            <p class="dateline">
+            <a href="posts/measurements/" rel="bookmark">
+            <time class="published dt-published" datetime="2014-12-19T00:00:00+01:00" itemprop="datePublished" title="2014-12-19 00:00">2014-12-19 00:00</time></a>
+            </p>
                 <p class="commentline">
         
-    <a href="posts/measurements.html#disqus_thread" data-disqus-identifier="cache/posts/measurements.html">Comments</a>
+    <a href="posts/measurements/#disqus_thread" data-disqus-identifier="cache/posts/measurements.html">Comments</a>
 
 
         </p>
 </div>
     </header><div class="p-summary entry-summary">
-    <p>
-I work in microscopy, which is one form of optical sensing. In the
-sensing field, we are often concerned with making measurements on
-some structure so as to learn what it is. Often, I think the word
-measurement refers to the dataset that's produced.
-</p>
-
-<p>
-I think it can be more effective to think of a measurement as a
-process that transforms the structure into the dataset. Why is this
-so? Well, to understand what the original structure was, we have to
-look at our data and make an inference. If we understand the steps
-in the process that took the original structure and turned it into
-data, we can apply the inverse of those steps in reverse order to
-get the original structure.
-</p>
-
-<p>
-Of course, our dataset may only capture some limited aspects of the
-original structure, so we may only be able to make probabilistic
-statements about what the original structure was.
-</p>
-
-<p>
-Take, for example, super-resolution microscopy experiments (SR). In
-SR, some feature of a cell is labeled with a discrete number of
-fluorescent molecules, then these molecules are localized to a high
-precision. The centroids of all the molecules are then convolved
-with a Gaussian function (or something similar) with a width equal
-to the localization precision to produce a rendered, super-resolved
-image of the structure. The measurement process can be thought of
-like this:
-</p>
-
-<ol class="org-ol">
-<li>Attach fluorescent molecules to every macromolecule (or randomly
-to a subset of macromolecules) in the structure of interest.
-</li>
-<li>For every molecule that emits photons during the time of
-acqusition by one camera frame, record its true coordinate
-positions and the number of detected photons. This can create
-multiple localizations that correspond to the same molecule in
-multiple camera frames.
-</li>
-<li>Remove molecules from the lis that emitted less than some
-threshold number of photons. These correspond to molecules with a
-signal-to-noise ratio that is too low to be detected.
-</li>
-<li>Randomly bump the molecule positions according to a Gaussian
-distribution with width equal to the localization precision in
-each direction.
-</li>
+    <div>
+<p>I work in microscopy, which is one form of optical sensing. In the sensing field, we are often
+concerned with making measurements on some structure so as to learn what it is. Often, I think the
+word measurement refers to the dataset that's produced.</p>
+<p>I think it can be more effective to think of a measurement as a process that transforms the
+structure into the dataset. Why is this so? Well, to understand what the original structure was, we
+have to look at our data and make an inference. If we understand the steps in the process that took
+the original structure and turned it into data, we can apply the inverse of those steps in reverse
+order to get the original structure.</p>
+<p>Of course, our dataset may only capture some limited aspects of the original structure, so we may
+only be able to make probabilistic statements about what the original structure was.</p>
+<p>Take, for example, super-resolution microscopy experiments (SR). In SR, some feature of a cell is
+labeled with a discrete number of fluorescent molecules, then these molecules are localized to a
+high precision. The centroids of all the molecules are then convolved with a Gaussian function (or
+something similar) with a width equal to the localization precision to produce a rendered,
+super-resolved image of the structure. The measurement process can be thought of like this:</p>
+<ol class="arabic simple">
+<li>Attach fluorescent molecules to every macromolecule (or randomly to a subset of macromolecules)
+in the structure of interest.</li>
+<li>For every molecule that emits photons during the time of acqusition by one camera frame, record
+its true coordinate positions and the number of detected photons. This can create multiple
+localizations that correspond to the same molecule in multiple camera frames.</li>
+<li>Remove molecules from the lis that emitted less than some threshold number of photons. These
+correspond to molecules with a signal-to-noise ratio that is too low to be detected.</li>
+<li>Randomly bump the molecule positions according to a Gaussian distribution with width equal to
+the localization precision in each direction.</li>
 </ol>
-<p>
-This process results in a list of molecule positions that originally
-were located on the structure of interest, but were eventually
-displaced randomly and filtered out due to various sources of
-noise. To understand what the original structure was, we have to
-"undo" each of these steps to the best of our abilities.
-</p>
-
-<p>
-I think it's interesting to note that everytime a random change to
-the original molecule positions occurred, we lose some information
-about the structure.
-</p>
+<p>This process results in a list of molecule positions that originally were located on the structure
+of interest, but were eventually displaced randomly and filtered out due to various sources of
+noise. To understand what the original structure was, we have to "undo" each of these steps to the
+best of our abilities.</p>
+<p>I think it's interesting to note that everytime a random change to the original molecule positions
+occurred, we lose some information about the structure.</p>
+</div>
     </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/confocal-by-scattering.html" class="u-url">Parallelized confocal microscopy with multiply scattered light</a></h1>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/confocal-by-scattering/" class="u-url">Parallelized confocal microscopy with multiply scattered light</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
-            <p class="dateline"><a href="posts/confocal-by-scattering.html" rel="bookmark"><time class="published dt-published" datetime="2014-10-09T00:00:00+02:00" title="2014-10-09 00:00">2014-10-09 00:00</time></a></p>
+            <p class="dateline">
+            <a href="posts/confocal-by-scattering/" rel="bookmark">
+            <time class="published dt-published" datetime="2014-10-09T00:00:00+02:00" itemprop="datePublished" title="2014-10-09 00:00">2014-10-09 00:00</time></a>
+            </p>
                 <p class="commentline">
         
-    <a href="posts/confocal-by-scattering.html#disqus_thread" data-disqus-identifier="cache/posts/confocal-by-scattering.html">Comments</a>
+    <a href="posts/confocal-by-scattering/#disqus_thread" data-disqus-identifier="cache/posts/confocal-by-scattering.html">Comments</a>
 
 
         </p>
 </div>
     </header><div class="p-summary entry-summary">
-    <p>
-My PhD work dealt with the topic of sensing and imaging using light
+    <div>
+<p>My PhD work dealt with the topic of sensing and imaging using light
 that had been transmitted through a random medium. This topic is
 often applied to practical problems such as imaging through a
 turbulent atmosphere or detecting objects, like a tumor, buried
 beneath an opaque substance, like skin and muscle tissue. Though I
 don't necessarily work in this field anymore, I still follow its
-developments occasionally.
-</p>
-
-<p>
-A few articles appeared within the last week in journals like <a href="http://www.nature.com/nphoton/journal/v8/n10/full/nphoton.2014.189.html">Nature</a>
-Photonics]] about the problem of imaging through walls. This problem
-has been studied since the late 1980's in a number of papers,
-including the notable <a href="http://journals.aps.org/prl/abstract/10.1103/PhysRevLett.61.834">Feng, Kane, Lee, and Stone</a> paper and <a href="http://www.sciencedirect.com/science/article/pii/037596019090615U#">Freund's
-discussion</a> of using cross-correlating two speckle patterns, one of
-which is a reference wave, to do a sort of holographic imaging. The
-recent work continues from these original ideas and applies them to
-microscopy.
-</p>
-
-<p>
-One article appeared on the arXiv and is from the <a href="http://arxiv.org/abs/1410.2079">Mosk and Lagendijk</a>
-camp. In this article, they exploit the optical memory effect,
-whereby a speckle pattern generated by the multiple scattering of a
-plane wave by a random slab is simply translated as the angle of
-incidence of the plane wave is varied. If a thin fluorescent target
-is placed directly on the opposite face of the scattering slab, it
-will be excited by the speckle pattern and emit a fluorescence
-signal that can be captured by an objective. Changing the angle of
-incidence of the plane wave then allows for multiple points to scan
-the sample in parallel. Ultimately, a number of images are taken
-with the sample illuminated by several transversally shifted speckle
-patterns and the resulting 4D data cube (corresponding to the
-sample's x-y dimensions and the two tilt angles of the incident
-plane wave) is used to render an image with improved resolution.
-</p>
-
-<p>
-As stated in the article's title, the resolution improvement is
-relative to that of a widefield microscope. They obtain an effective
-point spread function of about 140 nm and a field of view of 10
-microns by 10 microns.
-</p>
-
-<p>
-So how does the technique work? My first thought was that the memory
-effect is simply another way of saying that the speckle pattern acts
-as a number of confocal-like point sources, which essentially means
-this is something of a parallelized confocal microscope. However,
-I'm not sure this is correct for two reasons: 1) there is no
-detection pin hole, and 2) the angle of incidence of the plane wave
-is scanned over a small angular range so that the speckle pattern is
-simply translated. If the angle of incidence is so great that the
-linear change in phase of the plane wave is greater than roughly the
-size of the scattering slab, the speckle pattern is no longer simply
-translated but changes completely.
-</p>
-
-<p>
-In reality, the ultimate resolution of this technique is the average
-speckle grain size, which can't be less than about half the
-wavelength. This suggests that the angular spectrum of the speckle
-pattern is what determines the resolution improvement.
-</p>
-
-<p>
-The speckle pattern in a region bounded by the maximum extent of the
-memory effect has a fixed angular spectrum and translating the
-speckle pattern only changes the phase of the spectrum. So, scanning
-a target with a speckle pattern produces beat patterns containing
-high spatial frequency information that can propgate on the low
-spatial frequency waves that reach the objective. Translating the
-speckle pattern then performs a sort of phase-shifting
-interferometry that allows for both intensity and phase retrieval of
-the object.
-</p>
-
-<p>
-Importantly, if the speckle pattern is scanned outside the range of
-the memory effect, the speckle's angular spectrum within the region
-changes completely so that the original reference wave is lost. The
-fact that the object is fluorescent and not simply scattering the
-light shouldn't matter if the fluorescence intensity is linear with
-the excitation light intensity. However, if the fluorescence has
-saturated at the average intensity of the speckle pattern, then I'm
-not exactly sure that this technique will work (though maybe some
-sort of nonlinear structured illumination microscopy could be
-achieved).
-</p>
-
-<p>
-Overall it's a neat demonstration and worth the exercise to
-understand it, though I'm doubtful that at this point it would be
-useful for applications in the life sciences. This is because the
-resolution isn't that much better than a spinning disk confocal
-microscope, which has a larger field of view and would arguably be
-easier to use by biologists.
-</p>
+developments occasionally.</p>
+<p>A few articles appeared within the last week in journals like <a class="reference external" href="http://www.nature.com/nphoton/journal/v8/n10/full/nphoton.2014.189.html">Nature Photonics</a> about the problem
+of imaging through walls. This problem has been studied since the late 1980's in a number of
+papers, including the notable paper by <a class="reference external" href="http://journals.aps.org/prl/abstract/10.1103/PhysRevLett.61.834">Feng, Kane, Lee, and Stone</a> and <a class="reference external" href="http://www.sciencedirect.com/science/article/pii/037596019090615U#">Freund's discussion</a> of
+using cross-correlating two speckle patterns, one of which is a reference wave, to do a sort of
+holographic imaging. The recent work continues from these original ideas and applies them to
+microscopy.</p>
+<p>One article appeared on the arXiv and is from the <a class="reference external" href="http://arxiv.org/abs/1410.2079">Mosk and Lagendijk</a> camp. In this article, they
+exploit the optical memory effect, whereby a speckle pattern generated by the multiple scattering
+of a plane wave by a random slab is simply translated as the angle of incidence of the plane wave
+is varied. If a thin fluorescent target is placed directly on the opposite face of the scattering
+slab, it will be excited by the speckle pattern and emit a fluorescence signal that can be captured
+by an objective. Changing the angle of incidence of the plane wave then allows for multiple points
+to scan the sample in parallel. Ultimately, a number of images are taken with the sample
+illuminated by several transversally shifted speckle patterns and the resulting 4D data cube
+(corresponding to the sample's x-y dimensions and the two tilt angles of the incident plane wave)
+is used to render an image with improved resolution.</p>
+<p>As stated in the article's title, the resolution improvement is relative to that of a widefield
+microscope. They obtain an effective point spread function of about 140 nm and a field of view of
+10 microns by 10 microns.</p>
+<p>So how does the technique work? My first thought was that the memory effect is simply another way
+of saying that the speckle pattern acts as a number of confocal-like point sources, which
+essentially means this is something of a parallelized confocal microscope. However, I'm not sure
+this is correct for two reasons: 1) there is no detection pin hole, and 2) the angle of incidence
+of the plane wave is scanned over a small angular range so that the speckle pattern is simply
+translated. If the angle of incidence is so great that the linear change in phase of the plane wave
+is greater than roughly the size of the scattering slab, the speckle pattern is no longer simply
+translated but changes completely.</p>
+<p>In reality, the ultimate resolution of this technique is the average speckle grain size, which
+can't be less than about half the wavelength. This suggests that the angular spectrum of the
+speckle pattern is what determines the resolution improvement.</p>
+<p>The speckle pattern in a region bounded by the maximum extent of the memory effect has a fixed
+angular spectrum and translating the speckle pattern only changes the phase of the spectrum. So,
+scanning a target with a speckle pattern produces beat patterns containing high spatial frequency
+information that can propgate on the low spatial frequency waves that reach the
+objective. Translating the speckle pattern then performs a sort of phase-shifting interferometry
+that allows for both intensity and phase retrieval of the object.</p>
+<p>Importantly, if the speckle pattern is scanned outside the range of the memory effect, the
+speckle's angular spectrum within the region changes completely so that the original reference wave
+is lost. The fact that the object is fluorescent and not simply scattering the light shouldn't
+matter if the fluorescence intensity is linear with the excitation light intensity. However, if the
+fluorescence has saturated at the average intensity of the speckle pattern, then I'm not exactly
+sure that this technique will work (though maybe some sort of nonlinear structured illumination
+microscopy could be achieved).</p>
+<p>Overall it's a neat demonstration and worth the exercise to understand it, though I'm doubtful that
+at this point it would be useful for applications in the life sciences. This is because the
+resolution isn't that much better than a spinning disk confocal microscope, which has a larger
+field of view and would arguably be easier to use by biologists.</p>
+</div>
     </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/half-wave%20plate.html" class="u-url">An accidental half-wave plate</a></h1>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/half-wave%20plate/" class="u-url">An accidental half-wave plate</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
-            <p class="dateline"><a href="posts/half-wave%20plate.html" rel="bookmark"><time class="published dt-published" datetime="2014-08-06T00:00:00+02:00" title="2014-08-06 00:00">2014-08-06 00:00</time></a></p>
+            <p class="dateline">
+            <a href="posts/half-wave%20plate/" rel="bookmark">
+            <time class="published dt-published" datetime="2014-08-06T00:00:00+02:00" itemprop="datePublished" title="2014-08-06 00:00">2014-08-06 00:00</time></a>
+            </p>
                 <p class="commentline">
         
-    <a href="posts/half-wave%20plate.html#disqus_thread" data-disqus-identifier="cache/posts/half-wave plate.html">Comments</a>
+    <a href="posts/half-wave%20plate/#disqus_thread" data-disqus-identifier="cache/posts/half-wave plate.html">Comments</a>
 
 
         </p>
 </div>
     </header><div class="p-summary entry-summary">
-    <p>
-Recently in the lab we made a seemingly minor change to one of our
-microscopes that led to a minor problem that lasted for about a
-week. Briefly, we introduced a mirror following a periscope that
-raises the plane that the laser beams travel in parallel to the
-table. The periscope is necessary to bringthe beams out of the plane
-containing the beam-combining optics and into the TIRF module port
-on our Zeiss inverted microscope for epi-illumination.
-</p>
-
-<p>
-We had introduced the mirror to give us one more degree of freedom
-for steering the beam, but to do so we had to move the periscope and
-turn one of the mirrors by 90 degrees. Unfortunately, after doing
-this we found that the optical power leaving the microscope
-objective had dropped by a factor of 10, which was insufficient to
-do STORM imaging.
-</p>
-
-<p>
-We eventually determined that the Zeiss TIRF module contained a
-polarizing beam splitter that combined the laser beams with white
-light from another port at 90 degrees to the beam path. In the
-newsetup, we placed a broadband halfwave plate before the TIRF
-module, rotated it while watching a power meter, and were finally
-able to get even more power leaving the objective than with the old
-setup.
-</p>
-
-<p>
-So what had happened to cause the decrease in power by adding
-another mirror, and why did introducing the halfwave plate fix the
-problem? As it turns out, you can rotate the polarization by 90
-degrees using only a pair of mirrors to redirect the beam into a
-plane parallel to its original plane of travel but into a direction
-perpendicular to its original one. This was what we were doing
-before we introduced the mirror. After the new mirror was put in
-place, we rotated a mirror of the periscope, which effectively
-rotated the laser beam's polarization back into its original
-orientation. And, since there was a polarizing beam splitter inside
-the TIRF module, the new beam polarization was transmitted through
-the module instead of being reflected towards the objective.
-</p>
-
-<p>
-The picture below describes how this can happen. Note that the final
-beam trajectory is in the direction pointing <i>into</i> the screen.
-</p>
-
-
-<div class="figure">
-<p><img src="images/polarization_rotator.png" alt="polarization_rotator.png"></p>
+    <div>
+<p>Recently in the lab we made a seemingly minor change to one of our microscopes that led to a minor
+problem that lasted for about a week. Briefly, we introduced a mirror following a periscope that
+raises the plane that the laser beams travel in parallel to the table. The periscope is necessary
+to bringthe beams out of the plane containing the beam-combining optics and into the TIRF module
+port on our Zeiss inverted microscope for epi-illumination.</p>
+<p>We had introduced the mirror to give us one more degree of freedom for steering the beam, but to do
+so we had to move the periscope and turn one of the mirrors by 90 degrees. Unfortunately, after
+doing this we found that the optical power leaving the microscope objective had dropped by a factor
+of 10, which was insufficient to do STORM imaging.</p>
+<p>We eventually determined that the Zeiss TIRF module contained a polarizing beam splitter that
+combined the laser beams with white light from another port at 90 degrees to the beam path. In the
+newsetup, we placed a broadband halfwave plate before the TIRF module, rotated it while watching a
+power meter, and were finally able to get even more power leaving the objective than with the old
+setup.</p>
+<p>So what had happened to cause the decrease in power by adding another mirror, and why did
+introducing the halfwave plate fix the problem? As it turns out, you can rotate the polarization by
+90 degrees using only a pair of mirrors to redirect the beam into a plane parallel to its original
+plane of travel but into a direction perpendicular to its original one. This was what we were doing
+before we introduced the mirror. After the new mirror was put in place, we rotated a mirror of the
+periscope, which effectively rotated the laser beam's polarization back into its original
+orientation. And, since there was a polarizing beam splitter inside the TIRF module, the new beam
+polarization was transmitted through the module instead of being reflected towards the objective.</p>
+<p>The picture below describes how this can happen. Note that the final beam trajectory is in the
+direction pointing /into/ the screen.</p>
+<img alt="The polarization rotator" class="align-center" src="images/polarization_rotator.png">
 </div>
     </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/omics.html" class="u-url">The philosophy of -omics studies</a></h1>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/omics/" class="u-url">The philosophy of -omics studies</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
-            <p class="dateline"><a href="posts/omics.html" rel="bookmark"><time class="published dt-published" datetime="2014-04-01T00:00:00+02:00" title="2014-04-01 00:00">2014-04-01 00:00</time></a></p>
+            <p class="dateline">
+            <a href="posts/omics/" rel="bookmark">
+            <time class="published dt-published" datetime="2014-04-01T00:00:00+02:00" itemprop="datePublished" title="2014-04-01 00:00">2014-04-01 00:00</time></a>
+            </p>
                 <p class="commentline">
         
-    <a href="posts/omics.html#disqus_thread" data-disqus-identifier="cache/posts/omics.html">Comments</a>
+    <a href="posts/omics/#disqus_thread" data-disqus-identifier="cache/posts/omics.html">Comments</a>
 
 
         </p>
 </div>
     </header><div class="p-summary entry-summary">
-    <p>
-As a physcist, I'm a relative newcomer to the biological
-sciences. As a result, many approaches to doing science within these
-fields are new and really interesting to me.
-</p>
-
-<p>
-One such idea is the <i>-omics</i> approach to science. Sonja Prohaska
-and Peter Stadler provide an insightful and sometimes amusing
-intrepetation of <i>-omics</i> studies in an article in the book
-<i>Bioinformatics for Omics Data.</i> (The PubMed link to the article is
-<a href="http://www.ncbi.nlm.nih.gov/pubmed/21370084">here</a>, but you can find a pdf by Googling "The use and abuse of
--omes.") According to them, <i>-omics</i> refers to the research field of
-digesting the pile of data coming from measurements of a particular
-<i>-ome</i>, such as the "genome" or "transcriptome." The goal is to
-relate the collection of parts within the <i>-ome</i> to biological
-function, or at least to determine function by comparing <i>-omes</i> of
-two different organisms.
-</p>
-
-<p>
-The authors explain that <i>-omics</i> approaches have three components,
-which I quote from their article:
-</p>
-
-<ol class="org-ol">
-<li>A suite of (typically high-throughput) technologies address a
-well-defined collection of biological objects, the pertinent
-<i>-ome</i>.
-</li>
-<li>Both technologically and conceptually there is a cataloging
-effort to enumerate and characterize the individual
-objects–hopefully coupled with an initiative to make this
-catalog available as a database.
-</li>
-<li>Beyond the enumeration of objects, one strives to cover the
-quantitative aspects of the <i>-ome</i> at hand.
-</li>
+    <div>
+<p>As a physcist, I'm a relative newcomer to the biological sciences. As a result, many approaches to
+doing science within these fields are new and really interesting to me.</p>
+<p>One such idea is the <em>-omics</em> approach to science. Sonja Prohaska and Peter Stadler provide an
+insightful and sometimes amusing intrepetation of <em>-omics</em> studies in an article in the book
+<em>Bioinformatics for Omics Data.</em> (The PubMed link to the article is <a class="reference external" href="http://www.ncbi.nlm.nih.gov/pubmed/21370084">here</a>, but you can find a pdf by Googling "The use and
+abuse of -omes.") According to them, <em>-omics</em> refers to the research field of digesting the pile of
+data coming from measurements of a particular <em>-ome</em>, such as the "genome" or "transcriptome." The
+goal is to relate the collection of parts within the <em>-ome</em> to biological function, or at least to
+determine function by comparing <em>-omes</em> of two different organisms.</p>
+<p>The authors explain that <em>-omics</em> approaches have three components, which I quote from their
+article:</p>
+<ol class="arabic simple">
+<li>A suite of (typically high-throughput) technologies address a well-defined collection of
+biological objects, the pertinent <em>-ome</em>.</li>
+<li>Both technologically and conceptually there is a cataloging effort to enumerate and characterize
+the individual objects--hopefully coupled with an initiative to make this catalog available as a
+database.</li>
+<li>Beyond the enumeration of objects, one strives to cover the quantitative aspects of the <em>-ome</em>
+at hand.</li>
 </ol>
-<p>
-While grand in scope, these approaches carry difficulties that to me
-appear unique. As stated above, <i>-omic</i> information is acquired
-through high-throughput techniques, which means that they generate
-very large amounts of data. Of major concern is actually linking
-this data to biological function. In other words, scientists must
-answer whether the correlations in the data actually allow us to
-predict the behavior of a cell or tissue. As might be expected,
-generating a complex data set such as is found in <i>-omics</i> studies
-can be quite impressive at first glance. But this complexity may
-hide the fact that no biologically relevant conclusions can be drawn
-from it.
-</p>
-
-<p>
-The authors specifically enumerate four limitations that could
-adversely affect <i>-omics</i> studies:
-</p>
-
-<ol class="org-ol">
-<li>Technical limitations
-</li>
-<li>Limitations in the experimental design (such as heavy reliance on
-assumptions)
-</li>
-<li>Conceptual limitations
-</li>
-<li>Limitations in the analysis
-</li>
+<p>While grand in scope, these approaches carry difficulties that to me appear unique. As stated
+above, <em>-omic</em> information is acquired through high-throughput techniques, which means that they
+generate very large amounts of data. Of major concern is actually linking this data to biological
+function. In other words, scientists must answer whether the correlations in the data actually
+allow us to predict the behavior of a cell or tissue. As might be expected, generating a complex
+data set such as is found in <em>-omics</em> studies can be quite impressive at first glance. But this
+complexity may hide the fact that no biologically relevant conclusions can be drawn from it.</p>
+<p>The authors specifically enumerate four limitations that could adversely affect <em>-omics</em> studies:</p>
+<ol class="arabic simple">
+<li>Technical limitations</li>
+<li>Limitations in the experimental design (such as heavy reliance on assumptions)</li>
+<li>Conceptual limitations</li>
+<li>Limitations in the analysis</li>
 </ol>
-<p>
-Particularly, the conceptual limitations struck me as
-intriguing. The authors offered the example of genomics studies in
-which the notion of a "gene" is not currently a well-defined
-concept. When the concepts underpinning an entire collection of
-measurements is unclear, we should question whether the measured
-data has the meaning that we think it does.
-</p>
-
-<p>
-Overall, I found that this commentary provided an interesting and
-sobering view of one particular approach to studying biology. It's
-interesting because I suspect that many important biological
-questions in the near future will come from taking an integrated and
-systems perspective. This perspective will require high-throughput
-techniques that carry the same limitations that <i>-omics</i> studies
-have.
-</p>
+<p>Particularly, the conceptual limitations struck me as intriguing. The authors offered the example
+of genomics studies in which the notion of a "gene" is not currently a well-defined concept. When
+the concepts underpinning an entire collection of measurements is unclear, we should question
+whether the measured data has the meaning that we think it does.</p>
+<p>Overall, I found that this commentary provided an interesting and sobering view of one particular
+approach to studying biology. It's interesting because I suspect that many important biological
+questions in the near future will come from taking an integrated and systems perspective. This
+perspective will require high-throughput techniques that carry the same limitations that <em>-omics</em>
+studies have.</p>
+</div>
     </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/wikibooks.html" class="u-url">Customized Wikibooks are awesome</a></h1>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/wikibooks/" class="u-url">Customized Wikibooks are awesome</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
-            <p class="dateline"><a href="posts/wikibooks.html" rel="bookmark"><time class="published dt-published" datetime="2014-02-15T00:00:00+01:00" title="2014-02-15 00:00">2014-02-15 00:00</time></a></p>
+            <p class="dateline">
+            <a href="posts/wikibooks/" rel="bookmark">
+            <time class="published dt-published" datetime="2014-02-15T00:00:00+01:00" itemprop="datePublished" title="2014-02-15 00:00">2014-02-15 00:00</time></a>
+            </p>
                 <p class="commentline">
         
-    <a href="posts/wikibooks.html#disqus_thread" data-disqus-identifier="cache/posts/wikibooks.html">Comments</a>
+    <a href="posts/wikibooks/#disqus_thread" data-disqus-identifier="cache/posts/wikibooks.html">Comments</a>
 
 
         </p>
 </div>
     </header><div class="p-summary entry-summary">
-    <p>
-Last night the internet failed in our apartment and is still
-down. Because of this, I ran into the office today (a Saturday) to
-download a bunch of files to do some much-needed background reading
-on some topics.
-</p>
-
-<p>
-This lead me to an interesting question, one which I had not yet
-thought of: how can I download Wikipedia pages in a format that
-makes for easy offline access?
-</p>
-
-<p>
-A very quick Google search gave me a surprising answer: make your
-own book from Wikipedia pages!
-</p>
-
-<p>
-Here's how it works. (I'll skip the actual details and <a href="https://en.wikipedia.org/wiki/Help:Books">let you read
-it straight from Wikipedia's help files</a>. However, I will explain the
-process of making your own book.) After you activate the book
-creater, you simply navigate to any Wikipedia page and click the
-button on the top of the page that asks if you want to add the
-current page to your book. Do this for as many pages as you'd like.
-</p>
-
-<p>
-When you're ready to access your book, you can do it online, or
-export it to a number of formats for offline viewing, such as PDF or
-an Open Document format. I thought that the PDF was beautufilly
-rendered. It even included all reference information.
-</p>
-
-<p>
-There are other options with this tool too, such as sorting your
-articles into chapters or naming your book. I believe that you can
-share it with others as well.
-</p>
-
-<p>
-Cheers to you, Wikipedia, for creating an awesome and useful
-feature!
-</p>
+    <div>
+<p>Last night the internet failed in our apartment and is still down. Because of this, I ran into the
+office today (a Saturday) to download a bunch of files to do some much-needed background reading on
+some topics.</p>
+<p>This lead me to an interesting question, one which I had not yet thought of: how can I download
+Wikipedia pages in a format that makes for easy offline access?</p>
+<p>A very quick Google search gave me a surprising answer: make your own book from Wikipedia pages!</p>
+<p>Here's how it works. (I'll skip the actual details and <a class="reference external" href="https://en.wikipedia.org/wiki/Help:Books">let you read it straight from Wikipedia's
+help files</a>. However, I will explain the process of making your own book.) After you activate the
+book creater, you simply navigate to any Wikipedia page and click the button on the top of the page
+that asks if you want to add the current page to your book. Do this for as many pages as you'd
+like.</p>
+<p>When you're ready to access your book, you can do it online, or export it to a number of formats
+for offline viewing, such as PDF or an Open Document format. I thought that the PDF was beautufilly
+rendered. It even included all reference information.</p>
+<p>There are other options with this tool too, such as sorting your articles into chapters or naming
+your book. I believe that you can share it with others as well.</p>
+<p>Cheers to you, Wikipedia, for creating an awesome and useful feature!</p>
+</div>
     </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/alignment.html" class="u-url">The art of alignment</a></h1>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/alignment/" class="u-url">The art of alignment</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
-            <p class="dateline"><a href="posts/alignment.html" rel="bookmark"><time class="published dt-published" datetime="2014-01-27T00:00:00+01:00" title="2014-01-27 00:00">2014-01-27 00:00</time></a></p>
+            <p class="dateline">
+            <a href="posts/alignment/" rel="bookmark">
+            <time class="published dt-published" datetime="2014-01-27T00:00:00+01:00" itemprop="datePublished" title="2014-01-27 00:00">2014-01-27 00:00</time></a>
+            </p>
                 <p class="commentline">
         
-    <a href="posts/alignment.html#disqus_thread" data-disqus-identifier="cache/posts/alignment.html">Comments</a>
+    <a href="posts/alignment/#disqus_thread" data-disqus-identifier="cache/posts/alignment.html">Comments</a>
 
 
         </p>
 </div>
     </header><div class="p-summary entry-summary">
-    <p>
-I've been working on realigning one of our STORM microscopy setups
-and moving the other over the past couple weeks. As a result, I've
-been doing a lot more alignment lately than I normally do, which has
-got me thinking about alignment in general.
-</p>
-
-<p>
-I've worked in optics labs for nearly ten years now, but I was never
-systematically taught how to do alignments. Eventually, I just
-figured it out from asking and watching lots of others do it. This
-part of experimental optics seems to be something that's passed down
-and shared across generations of PhD students and post-docs, like
-some sort of cultural heritage preserved by spoken word.
-</p>
-
-<p>
-Unfortunately, this fact means that written tutorials or alternative
-resources on alignment are scarce. This in turn leads to frustration
-for new students who can't easily find someone to show them how to
-align a system. I was lucky in my training because both my
-undergraduate and graduate programs were in centers dedicated to the
-study of optics and optical engineering. Resources were
-plentiful. But for a biologist working with a custom microscope
-using multiple laser lines, finding someone who is competent in
-optics to help realign their system can be highly unlikely.
-</p>
-
-<p>
-So how can people who don't have a background in optics be trained
-in alignment? I'm certain that written tutorials are <i>not</i> the best
-tool, since aligning an optics setup is a very hands-on job. But, a
-tutorial that makes explicit the principles of alignment might make
-a good starting point for others.
-</p>
-
-<p>
-What are these principles? Below is my rough, initial list that
-applies to aligning laser beams. Aligning incoherent systems is
-another beast altogether.
-</p>
-
-<ol class="org-ol">
-<li>The angle of the beam propagation is just as important as the
-position of the beam in a plane perpendicular to the table. In
-other words, just because a beam is going through a stopped-down
-iris doesn't mean it's traveling where you think it is.
-</li>
-<li>You need to measure the beam position in two planes to determine
-its angle of propagation.
-</li>
-<li>Use "layers of abstraction" to divide sections of the setup into
-independent units.
-</li>
-<li>Use paired mirrors to get enough degrees of freedom to establish
-these abstraction layers.
-</li>
-<li>Design feedback mechanisms into the system. In other words, keep
-some irises or alignment marks on the walls in place to aid in
-future realignments.
-</li>
+    <div>
+<p>I've been working on realigning one of our STORM microscopy setups and moving the other over the
+past couple weeks. As a result, I've been doing a lot more alignment lately than I normally do,
+which has got me thinking about alignment in general.</p>
+<p>I've worked in optics labs for nearly ten years now, but I was never systematically taught how to
+do alignments. Eventually, I just figured it out from asking and watching lots of others do
+it. This part of experimental optics seems to be something that's passed down and shared across
+generations of PhD students and post-docs, like some sort of cultural heritage preserved by spoken
+word.</p>
+<p>Unfortunately, this fact means that written tutorials or alternative resources on alignment are
+scarce. This in turn leads to frustration for new students who can't easily find someone to show
+them how to align a system. I was lucky in my training because both my undergraduate and graduate
+programs were in centers dedicated to the study of optics and optical engineering. Resources were
+plentiful. But for a biologist working with a custom microscope using multiple laser lines, finding
+someone who is competent in optics to help realign their system can be highly unlikely.</p>
+<p>So how can people who don't have a background in optics be trained in alignment? I'm certain that
+written tutorials are <em>not</em> the best tool, since aligning an optics setup is a very hands-on
+job. But, a tutorial that makes explicit the principles of alignment might make a good starting
+point for others.</p>
+<p>What are these principles? Below is my rough, initial list that applies to aligning lasner
+beams. Aligning incoherent systems is another beast altogether.</p>
+<ol class="arabic simple">
+<li>The angle of the beam propagation is just as important as the position of the beam in a plane
+perpendicular to the table. In other words, just because a beam is going through a stopped-down
+iris doesn't mean it's traveling where you think it is.</li>
+<li>You need to measure the beam position in two planes to determine its angle of propagation.</li>
+<li>Use "layers of abstraction" to divide sections of the setup into independent units.</li>
+<li>Use paired mirrors to get enough degrees of freedom to establish these abstraction layers.</li>
+<li>Design feedback mechanisms into the system. In other words, keep some irises or alignment marks
+on the walls in place to aid in future realignments.</li>
 </ol>
 </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/hello-world.html" class="u-url">Hello, world!</a></h1>
+    </div>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/hello-world/" class="u-url">Hello, world!</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
-            <p class="dateline"><a href="posts/hello-world.html" rel="bookmark"><time class="published dt-published" datetime="2013-12-21T00:00:00+01:00" title="2013-12-21 00:00">2013-12-21 00:00</time></a></p>
+            <p class="dateline">
+            <a href="posts/hello-world/" rel="bookmark">
+            <time class="published dt-published" datetime="2013-12-21T00:00:00+01:00" itemprop="datePublished" title="2013-12-21 00:00">2013-12-21 00:00</time></a>
+            </p>
                 <p class="commentline">
         
-    <a href="posts/hello-world.html#disqus_thread" data-disqus-identifier="cache/posts/hello-world.html">Comments</a>
+    <a href="posts/hello-world/#disqus_thread" data-disqus-identifier="cache/posts/hello-world.html">Comments</a>
 
 
         </p>
 </div>
     </header><div class="p-summary entry-summary">
-    <p>
-Well, I've finally got this site off the ground… more or less.
-</p>
-
-<p>
-This website is the continuation of my blog, <a href="http://quadrule.blogspot.com">My Quad-Ruled Life</a>. On
-that site, I explored a number of topics as a graduate student in
-optics, while improving my writing as well. As the site progressed
-and I matured academically, I found that I was blogging less often,
-but still used the blog as a means of exploring ideas. Additionally,
-I desired a place to present notes and code to the public in an
-easily accessible and open manner.
-</p>
-
-<p>
-So, after discovering <a href="http://getnikola.com/">Nikola</a> and <a href="http://pages.github.com/">GitHub Pages</a>, I quickly hashed
-together a fully homemade site that allowed me to keep writing blog
-posts and to present some of the fruits of my research freely on the
-internet.
-</p>
-
-<p>
-I hope you'll find this site useful as a learning resource and as a
-means to get to know me better as a scientist.
-</p>
-
-<p>
--Kyle
-</p>
+    <div>
+<p>Well, I've finally got this site off the ground... more or less.</p>
+<p>This website is the continuation of my blog, <a class="reference external" href="http://quadrule.blogspot.com">My Quad-Ruled Life</a>. On that site, I explored a number of topics as a graduate student
+in optics, while improving my writing as well. As the site progressed and I matured academically, I
+found that I was blogging less often, but still used the blog as a means of exploring
+ideas. Additionally, I desired a place to present notes and code to the public in an easily
+accessible and open manner.</p>
+<p>So, after discovering <a class="reference external" href="http://getnikola.com/">Nikola</a> and <a class="reference external" href="http://pages.github.com/">GitHub Pages</a>, I quickly hashed together a fully homemade site that allowed me to
+keep writing blog posts and to present some of the fruits of my research freely on the internet.</p>
+<p>I hope you'll find this site useful as a learning resource and as a
+means to get to know me better as a scientist.</p>
+<p>Kyle</p>
+</div>
     </div>
     </article>
 </div>
@@ -1250,16 +843,22 @@ means to get to know me better as a scientist.
         <!--End of body content-->
 
         <footer id="footer">
-            Contents © 2018         <a href="mailto:kyle.m.douglass@gmail.com">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
+            Contents © 2019         <a href="mailto:kyle.m.douglass@gmail.com">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
             
         </footer>
 </div>
 </div>
 
 
-            <script src="assets/js/all-nocdn.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+            <script src="assets/js/all-nocdn.js"></script><!-- fancy dates --><script>
     moment.locale("en");
     fancydates(0, "YYYY-MM-DD HH:mm");
-    </script><!-- end fancy dates -->
+    </script><!-- end fancy dates --><script>
+    baguetteBox.run('div#content', {
+        ignoreClass: 'islink',
+        captions: function(element) {
+            return element.getElementsByTagName('img')[0].alt;
+    }});
+    </script>
 </body>
 </html>

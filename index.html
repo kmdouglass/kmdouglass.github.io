@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="description" content="Optics, programming, and science.">
@@ -8,12 +8,13 @@
 <link href="assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
 <link href="assets/css/ipython.min.css" rel="stylesheet" type="text/css">
 <link href="assets/css/nikola_ipython.css" rel="stylesheet" type="text/css">
+<link href="assets/css/custom_notebook.css" rel="stylesheet" type="text/css">
 <meta name="theme-color" content="#5670d4">
 <meta name="generator" content="Nikola (getnikola.com)">
-<link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml">
-<link rel="canonical" href="http://kmdouglass.github.io/index.html">
+<link rel="alternate" type="application/rss+xml" title="RSS" hreflang="en" href="rss.xml">
+<link rel="canonical" href="http://kmdouglass.github.io/">
 <link rel="next" href="index-3.html" type="text/html">
-<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><link rel="prefetch" href="posts/create-a-custom-raspbian-image-with-pi-gen-part-2.html" type="text/html">
+<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><link rel="prefetch" href="posts/create-a-custom-raspbian-image-with-pi-gen-part-2/" type="text/html">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -44,7 +45,7 @@
 <a href="archive.html">Archive</a>
                 </li>
 <li>
-<a href="stories/contact.html">Contact</a>
+<a href="stories/contact/index.html">Contact</a>
 
                 
             </li>
@@ -66,22 +67,25 @@
 
     
 <div class="postindex">
-    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/create-a-custom-raspbian-image-with-pi-gen-part-2.html" class="u-url">Create a custom Raspbian image with pi-gen: part 2</a></h1>
+    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/create-a-custom-raspbian-image-with-pi-gen-part-2/" class="u-url">Create a custom Raspbian image with pi-gen: part 2</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
-            <p class="dateline"><a href="posts/create-a-custom-raspbian-image-with-pi-gen-part-2.html" rel="bookmark"><time class="published dt-published" datetime="2018-07-24T18:25:26+02:00" title="2018-07-24 18:25">2018-07-24 18:25</time></a></p>
+            <p class="dateline">
+            <a href="posts/create-a-custom-raspbian-image-with-pi-gen-part-2/" rel="bookmark">
+            <time class="published dt-published" datetime="2018-07-24T18:25:26+02:00" itemprop="datePublished" title="2018-07-24 18:25">2018-07-24 18:25</time></a>
+            </p>
                 <p class="commentline">
         
-    <a href="posts/create-a-custom-raspbian-image-with-pi-gen-part-2.html#disqus_thread" data-disqus-identifier="cache/posts/create-a-custom-raspbian-image-with-pi-gen-part-2.html">Comments</a>
+    <a href="posts/create-a-custom-raspbian-image-with-pi-gen-part-2/#disqus_thread" data-disqus-identifier="cache/posts/create-a-custom-raspbian-image-with-pi-gen-part-2.html">Comments</a>
 
 
         </p>
 </div>
     </header><div class="p-summary entry-summary">
     <div>
-<p>In my <a class="reference external" href="posts/create-a-custom-raspbian-image-with-pi-gen-part-1.html">previous post</a>, I discussed how to setup user accounts and
+<p>In my <a class="reference external" href="posts/create-a-custom-raspbian-image-with-pi-gen-part-1/">previous post</a>, I discussed how to setup user accounts and
 locales in a custom Raspbian image using pi-gen. In this follow-up
 post, I will discuss the main problems that I want to solve:
 automatically configuring the wireless network and ssh on a new
@@ -105,7 +109,7 @@ network, which includes its name and the password. For security
 reasons that I hope are obvious, we should not store the password in
 this file. Instead, we create a hash of the password and put that
 inside the file. The command to create the password hash is</p>
-<pre class="code shell"><a name="rest_code_941cf4b3bd3048be881817ea8d892f54-1"></a>wpa_passphrase ESSID PASSWORD &gt; psk
+<pre class="code shell"><a name="rest_code_ae6bae2fc9fd41d598cd17a6c4999550-1"></a>wpa_passphrase ESSID PASSWORD &gt; psk
 </pre>
 <p>where ESSID is our wireless network's name. Note that I also used a
 space before the <code class="shell">wpa_passphrase</code> command to prevent the
@@ -126,7 +130,7 @@ network={
 <h3>Configure the wireless network interfaces</h3>
 <p>After having configured the supplicant, we next move on to configuring
 the network interfaces used by Raspbian. The appropriate file is found
-in <strong>stage1/02-net-tweaks/files/interfaces</strong>. In my post <a class="reference external" href="posts/connecting-a-raspberry-pi-to-a-home-linux-network.html">Connecting a
+in <strong>stage1/02-net-tweaks/files/interfaces</strong>. In my post <a class="reference external" href="posts/connecting-a-raspberry-pi-to-a-home-linux-network/">Connecting a
 Raspberry Pi to a Home Linux Network</a> I described how to set up the
 network interfaces by editing <strong>/etc/network/interfaces</strong>. Much of the
 information presented in that post has now been superseded in Raspbian
@@ -229,7 +233,7 @@ customization.</p>
 </div>
 <div class="section" id="conclusion">
 <h2>Conclusion</h2>
-<p>This tutorial and my <a class="reference external" href="posts/create-a-custom-raspbian-image-with-pi-gen-part-1.html">previous post</a> demonstrated how to create a
+<p>This tutorial and my <a class="reference external" href="posts/create-a-custom-raspbian-image-with-pi-gen-part-1/">previous post</a> demonstrated how to create a
 custom Raspbian image that is pre-configured for</p>
 <ul class="simple">
 <li>our home wireless network</li>
@@ -243,15 +247,18 @@ configure its most basic functionality. Happy Pi'ing!</p>
 </div>
 </div>
     </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/create-a-custom-raspbian-image-with-pi-gen-part-1.html" class="u-url">Create a custom Raspbian image with pi-gen: part 1</a></h1>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/create-a-custom-raspbian-image-with-pi-gen-part-1/" class="u-url">Create a custom Raspbian image with pi-gen: part 1</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
-            <p class="dateline"><a href="posts/create-a-custom-raspbian-image-with-pi-gen-part-1.html" rel="bookmark"><time class="published dt-published" datetime="2018-07-21T12:31:28+02:00" title="2018-07-21 12:31">2018-07-21 12:31</time></a></p>
+            <p class="dateline">
+            <a href="posts/create-a-custom-raspbian-image-with-pi-gen-part-1/" rel="bookmark">
+            <time class="published dt-published" datetime="2018-07-21T12:31:28+02:00" itemprop="datePublished" title="2018-07-21 12:31">2018-07-21 12:31</time></a>
+            </p>
                 <p class="commentline">
         
-    <a href="posts/create-a-custom-raspbian-image-with-pi-gen-part-1.html#disqus_thread" data-disqus-identifier="cache/posts/create-a-custom-raspbian-image-with-pi-gen-part-1.html">Comments</a>
+    <a href="posts/create-a-custom-raspbian-image-with-pi-gen-part-1/#disqus_thread" data-disqus-identifier="cache/posts/create-a-custom-raspbian-image-with-pi-gen-part-1.html">Comments</a>
 
 
         </p>
@@ -260,7 +267,7 @@ configure its most basic functionality. Happy Pi'ing!</p>
     <div>
 <p>Docker has been an amazing tool for improving my development
 efficiency on the Raspberry Pi. For example, I recently used it to
-<a class="reference external" href="posts/how-i-built-a-cross-compilation-workflow-for-the-raspberry-pi.html">cross-compile a large C++ and Python library</a> for the Pi's ARM
+<a class="reference external" href="posts/how-i-built-a-cross-compilation-workflow-for-the-raspberry-pi/">cross-compile a large C++ and Python library</a> for the Pi's ARM
 architecture on my x86_64 laptop. However, in that post I took it for
 granted that I had already set up my Raspberry Pi with user accounts,
 packages, ssh keys, etc. Performing these steps manually on a fresh
@@ -278,7 +285,7 @@ sure to check them out for another take on modifying Raspbian images.</em></p>
 <div class="section" id="clone-the-pi-gen-repository">
 <h2>Clone the pi-gen repository</h2>
 <p>This is as easy as cloning the git repository.</p>
-<pre class="code shell"><a name="rest_code_a09427de8d874d7eb8f0a42dcd924d68-1"></a>git clone git@github.com:RPi-Distro/pi-gen.git
+<pre class="code shell"><a name="rest_code_a90b8858a38843cb97e1d4d100c6ae28-1"></a>git clone git@github.com:RPi-Distro/pi-gen.git
 </pre>
 <p>Alternatively, you can use the https address instead of ssh, which is
 <a class="reference external" href="https://github.com/RPi-Distro/pi-gen.git">https://github.com/RPi-Distro/pi-gen.git</a>.</p>
@@ -305,13 +312,13 @@ edition.</p>
 build. To do this, we assign a name to a variable called <strong>IMG_NAME</strong>
 inside a file called <strong>config</strong> that is located inside the root pi-gen
 folder.</p>
-<pre class="code shell"><a name="rest_code_f76c9c1e71fd442b947b5fd9d3c00d9c-1"></a><span class="nb">echo</span> <span class="s2">"IMG_NAME=my_name"</span> &gt; config
+<pre class="code shell"><a name="rest_code_6048b669363642dbb4801b2ede51702e-1"></a><span class="nb">echo</span> <span class="s2">"IMG_NAME=my_name"</span> &gt; config
 </pre>
 </div>
 <div class="section" id="build-the-default-image">
 <h3>Build the default image</h3>
 <p>Once we've named our image, we can go ahead and run the build script.</p>
-<pre class="code shell"><a name="rest_code_848051b3862c489eb3e83feb5681ca8e-1"></a>./build-docker.sh
+<pre class="code shell"><a name="rest_code_e5d55b17b437426493ca700e72265e41-1"></a>./build-docker.sh
 </pre>
 <p>Be prepared to wait a while when running this script; the full build
 took well over half an hour on my laptop and with the Docker volume
@@ -325,7 +332,7 @@ installing a Debian package.</p>
 <p>We can resume a failed build from the point of failure by assigning
 the value 1 to the CONTINUE variable when calling build-docker.sh
 again.</p>
-<pre class="code shell"><a name="rest_code_7f4dde1cf20f4ce6ba71397635f4ec9e-1"></a><span class="nv">CONTINUE</span><span class="o">=</span><span class="m">1</span> ./build-docker.sh
+<pre class="code shell"><a name="rest_code_64bc9d78e5354923a6ce6c3c0978549f-1"></a><span class="nv">CONTINUE</span><span class="o">=</span><span class="m">1</span> ./build-docker.sh
 </pre>
 <p>If we don't want to run previously built stages, we can simply place a
 file inside the corresponding folder named SKIP. For example, if our
@@ -343,7 +350,7 @@ the <strong>deploy</strong> folder of the pi-gen directory. These may then be
 written onto a SD card and used as a standard Raspbian image.</p>
 <p>We can ensure that the build container is preserved even after successful
 builds using</p>
-<pre class="code shell"><a name="rest_code_6e652a1c973540c59d5e8f1d1f6599b7-1"></a><span class="nv">PRESERVE_CONTAINER</span><span class="o">=</span><span class="m">1</span> ./build-docker.sh
+<pre class="code shell"><a name="rest_code_c14690d1cd9544ed891325aa8934dd14-1"></a><span class="nv">PRESERVE_CONTAINER</span><span class="o">=</span><span class="m">1</span> ./build-docker.sh
 </pre>
 </div>
 </div>
@@ -384,8 +391,8 @@ stages. We also disable the explicit creation of images by adding an
 empty file called <strong>SKIP_IMAGES</strong> to stages 4 and 5. (We don't need to
 add a SKIP_IMAGES file to the stage3 folder because no image is
 produced at this stage.)</p>
-<pre class="code shell"><a name="rest_code_9a04110c0e7d4aff9643ffc0e307ae91-1"></a>touch ./stage3/SKIP ./stage4/SKIP ./stage5/SKIP
-<a name="rest_code_9a04110c0e7d4aff9643ffc0e307ae91-2"></a>touch ./stage4/SKIP_IMAGES ./stage5/SKIP_IMAGES
+<pre class="code shell"><a name="rest_code_1d99a66f8e724d3e9cfdbf349a076ccc-1"></a>touch ./stage3/SKIP ./stage4/SKIP ./stage5/SKIP
+<a name="rest_code_1d99a66f8e724d3e9cfdbf349a076ccc-2"></a>touch ./stage4/SKIP_IMAGES ./stage5/SKIP_IMAGES
 </pre>
 <p>Now, when we run build-docker.sh, pi-gen will only build and produce
 one image for Raspbian Lite in the deploy directory.</p>
@@ -398,13 +405,13 @@ account is not very secure because it and its password, <em>raspberry</em>,
 are the well-known defaults in Raspbian. Let's go ahead and change
 them.</p>
 <p>The relevant lines in the script look like this:</p>
-<pre class="code shell"><a name="rest_code_c99c3cf36cc5437db56a9c0f29e09c44-1"></a>on_chroot <span class="s">&lt;&lt; EOF</span>
-<a name="rest_code_c99c3cf36cc5437db56a9c0f29e09c44-2"></a><span class="s">if ! id -u pi &gt;/dev/null 2&gt;&amp;1; then</span>
-<a name="rest_code_c99c3cf36cc5437db56a9c0f29e09c44-3"></a><span class="s">     adduser --disabled-password --gecos "" pi</span>
-<a name="rest_code_c99c3cf36cc5437db56a9c0f29e09c44-4"></a><span class="s">fi</span>
-<a name="rest_code_c99c3cf36cc5437db56a9c0f29e09c44-5"></a><span class="s">echo "pi:raspberry" | chpasswd</span>
-<a name="rest_code_c99c3cf36cc5437db56a9c0f29e09c44-6"></a><span class="s">echo "root:root" | chpasswd</span>
-<a name="rest_code_c99c3cf36cc5437db56a9c0f29e09c44-7"></a><span class="s">EOF</span>
+<pre class="code shell"><a name="rest_code_c4c06946084d470f9045d7d2b1605e18-1"></a>on_chroot <span class="s">&lt;&lt; EOF</span>
+<a name="rest_code_c4c06946084d470f9045d7d2b1605e18-2"></a><span class="s">if ! id -u pi &gt;/dev/null 2&gt;&amp;1; then</span>
+<a name="rest_code_c4c06946084d470f9045d7d2b1605e18-3"></a><span class="s">     adduser --disabled-password --gecos "" pi</span>
+<a name="rest_code_c4c06946084d470f9045d7d2b1605e18-4"></a><span class="s">fi</span>
+<a name="rest_code_c4c06946084d470f9045d7d2b1605e18-5"></a><span class="s">echo "pi:raspberry" | chpasswd</span>
+<a name="rest_code_c4c06946084d470f9045d7d2b1605e18-6"></a><span class="s">echo "root:root" | chpasswd</span>
+<a name="rest_code_c4c06946084d470f9045d7d2b1605e18-7"></a><span class="s">EOF</span>
 </pre>
 <p>The user pi is created with the line
 <code class="shell">adduser --disabled-password --gecos <span class="s2">""</span> pi</code> if it doesn't
@@ -422,28 +429,28 @@ let's change its name to alphapi. For the password, we will generate a
 <strong>temporary, random</strong> password and write it to a file in the deploy
 directory. We'll do the same for root. The modifications look like the
 following:</p>
-<pre class="code shell"><a name="rest_code_8259f5e6862b465fbfeff630f20b7b56-1"></a><span class="nv">user_passwd</span><span class="o">=</span><span class="k">$(</span>&lt; /dev/urandom tr -dc _A-Z-a-z-0-9 <span class="p">|</span> head -c<span class="si">${</span><span class="nv">1</span><span class="k">:-</span><span class="nv">8</span><span class="si">}</span><span class="k">)</span>
-<a name="rest_code_8259f5e6862b465fbfeff630f20b7b56-2"></a><span class="nv">root_passwd</span><span class="o">=</span><span class="k">$(</span>&lt; /dev/urandom tr -dc _A-Z-a-z-0-9 <span class="p">|</span> head -c<span class="si">${</span><span class="nv">1</span><span class="k">:-</span><span class="nv">8</span><span class="si">}</span><span class="k">)</span>
-<a name="rest_code_8259f5e6862b465fbfeff630f20b7b56-3"></a>
-<a name="rest_code_8259f5e6862b465fbfeff630f20b7b56-4"></a><span class="c1"># Write passwords to a file.</span>
-<a name="rest_code_8259f5e6862b465fbfeff630f20b7b56-5"></a>cat <span class="s">&lt;&lt;EOF &gt; /pi-gen/deploy/users</span>
-<a name="rest_code_8259f5e6862b465fbfeff630f20b7b56-6"></a><span class="s">${user_passwd}</span>
-<a name="rest_code_8259f5e6862b465fbfeff630f20b7b56-7"></a><span class="s">${root_passwd}</span>
-<a name="rest_code_8259f5e6862b465fbfeff630f20b7b56-8"></a><span class="s">EOF</span>
-<a name="rest_code_8259f5e6862b465fbfeff630f20b7b56-9"></a>
-<a name="rest_code_8259f5e6862b465fbfeff630f20b7b56-10"></a>on_chroot <span class="s">&lt;&lt; EOF</span>
-<a name="rest_code_8259f5e6862b465fbfeff630f20b7b56-11"></a><span class="s">if ! id -u alphapi &gt;/dev/null 2&gt;&amp;1; then</span>
-<a name="rest_code_8259f5e6862b465fbfeff630f20b7b56-12"></a><span class="s">     adduser --disabled-password --gecos "" alphapi</span>
-<a name="rest_code_8259f5e6862b465fbfeff630f20b7b56-13"></a><span class="s">fi</span>
-<a name="rest_code_8259f5e6862b465fbfeff630f20b7b56-14"></a><span class="s">echo "alphapi:${user_passwd}" | chpasswd</span>
-<a name="rest_code_8259f5e6862b465fbfeff630f20b7b56-15"></a><span class="s">echo "root:${root_passwd}" | chpasswd</span>
-<a name="rest_code_8259f5e6862b465fbfeff630f20b7b56-16"></a><span class="s">EOF</span>
+<pre class="code shell"><a name="rest_code_567f427285a7488d971c07e00a9541e6-1"></a><span class="nv">user_passwd</span><span class="o">=</span><span class="k">$(</span>&lt; /dev/urandom tr -dc _A-Z-a-z-0-9 <span class="p">|</span> head -c<span class="si">${</span><span class="nv">1</span><span class="k">:-</span><span class="nv">8</span><span class="si">}</span><span class="k">)</span>
+<a name="rest_code_567f427285a7488d971c07e00a9541e6-2"></a><span class="nv">root_passwd</span><span class="o">=</span><span class="k">$(</span>&lt; /dev/urandom tr -dc _A-Z-a-z-0-9 <span class="p">|</span> head -c<span class="si">${</span><span class="nv">1</span><span class="k">:-</span><span class="nv">8</span><span class="si">}</span><span class="k">)</span>
+<a name="rest_code_567f427285a7488d971c07e00a9541e6-3"></a>
+<a name="rest_code_567f427285a7488d971c07e00a9541e6-4"></a><span class="c1"># Write passwords to a file.</span>
+<a name="rest_code_567f427285a7488d971c07e00a9541e6-5"></a>cat <span class="s">&lt;&lt;EOF &gt; /pi-gen/deploy/users</span>
+<a name="rest_code_567f427285a7488d971c07e00a9541e6-6"></a><span class="s">${user_passwd}</span>
+<a name="rest_code_567f427285a7488d971c07e00a9541e6-7"></a><span class="s">${root_passwd}</span>
+<a name="rest_code_567f427285a7488d971c07e00a9541e6-8"></a><span class="s">EOF</span>
+<a name="rest_code_567f427285a7488d971c07e00a9541e6-9"></a>
+<a name="rest_code_567f427285a7488d971c07e00a9541e6-10"></a>on_chroot <span class="s">&lt;&lt; EOF</span>
+<a name="rest_code_567f427285a7488d971c07e00a9541e6-11"></a><span class="s">if ! id -u alphapi &gt;/dev/null 2&gt;&amp;1; then</span>
+<a name="rest_code_567f427285a7488d971c07e00a9541e6-12"></a><span class="s">     adduser --disabled-password --gecos "" alphapi</span>
+<a name="rest_code_567f427285a7488d971c07e00a9541e6-13"></a><span class="s">fi</span>
+<a name="rest_code_567f427285a7488d971c07e00a9541e6-14"></a><span class="s">echo "alphapi:${user_passwd}" | chpasswd</span>
+<a name="rest_code_567f427285a7488d971c07e00a9541e6-15"></a><span class="s">echo "root:${root_passwd}" | chpasswd</span>
+<a name="rest_code_567f427285a7488d971c07e00a9541e6-16"></a><span class="s">EOF</span>
 </pre>
 <p>The first two lines create random alphanumeric passwords for the users
 alphapi and root. They should be changed immediately when the image is
 first run.</p>
-<pre class="code shell"><a name="rest_code_9c258dd9d26d478d92b54cddca4684f2-1"></a><span class="nv">user_passwd</span><span class="o">=</span><span class="k">$(</span>&lt; /dev/urandom tr -dc _A-Z-a-z-0-9 <span class="p">|</span> head -c<span class="si">${</span><span class="nv">1</span><span class="k">:-</span><span class="nv">8</span><span class="si">}</span><span class="k">)</span>
-<a name="rest_code_9c258dd9d26d478d92b54cddca4684f2-2"></a><span class="nv">root_passwd</span><span class="o">=</span><span class="k">$(</span>&lt; /dev/urandom tr -dc _A-Z-a-z-0-9 <span class="p">|</span> head -c<span class="si">${</span><span class="nv">1</span><span class="k">:-</span><span class="nv">8</span><span class="si">}</span><span class="k">)</span>
+<pre class="code shell"><a name="rest_code_9585e14fd25544c08c532dbd5933654a-1"></a><span class="nv">user_passwd</span><span class="o">=</span><span class="k">$(</span>&lt; /dev/urandom tr -dc _A-Z-a-z-0-9 <span class="p">|</span> head -c<span class="si">${</span><span class="nv">1</span><span class="k">:-</span><span class="nv">8</span><span class="si">}</span><span class="k">)</span>
+<a name="rest_code_9585e14fd25544c08c532dbd5933654a-2"></a><span class="nv">root_passwd</span><span class="o">=</span><span class="k">$(</span>&lt; /dev/urandom tr -dc _A-Z-a-z-0-9 <span class="p">|</span> head -c<span class="si">${</span><span class="nv">1</span><span class="k">:-</span><span class="nv">8</span><span class="si">}</span><span class="k">)</span>
 </pre>
 <p>This way of password generation works by reading random bytes from
 /dev/urandom and redirecting them to the standard input of the tr
@@ -452,11 +459,11 @@ remain. Next, the output is piped to the head command, which outputs
 only the first eight alphanumeric characters produced in this fashion.</p>
 <p>The passwords are then written to a file named <strong>users</strong> inside the
 deploy directory where the outputs will eventually be placed.</p>
-<pre class="code shell"><a name="rest_code_14eb0cd2aaf043a88624fa11aae73a96-1"></a><span class="c1"># Write passwords to a file.</span>
-<a name="rest_code_14eb0cd2aaf043a88624fa11aae73a96-2"></a>cat <span class="s">&lt;&lt;EOF &gt; /pi-gen/deploy/users</span>
-<a name="rest_code_14eb0cd2aaf043a88624fa11aae73a96-3"></a><span class="s">${user_passwd}</span>
-<a name="rest_code_14eb0cd2aaf043a88624fa11aae73a96-4"></a><span class="s">${root_passwd}</span>
-<a name="rest_code_14eb0cd2aaf043a88624fa11aae73a96-5"></a><span class="s">EOF</span>
+<pre class="code shell"><a name="rest_code_1c21bd5913d34b7c852f6b466f113ac7-1"></a><span class="c1"># Write passwords to a file.</span>
+<a name="rest_code_1c21bd5913d34b7c852f6b466f113ac7-2"></a>cat <span class="s">&lt;&lt;EOF &gt; /pi-gen/deploy/users</span>
+<a name="rest_code_1c21bd5913d34b7c852f6b466f113ac7-3"></a><span class="s">${user_passwd}</span>
+<a name="rest_code_1c21bd5913d34b7c852f6b466f113ac7-4"></a><span class="s">${root_passwd}</span>
+<a name="rest_code_1c21bd5913d34b7c852f6b466f113ac7-5"></a><span class="s">EOF</span>
 </pre>
 <p>The remaining parts of the script are more-or-less the same as before,
 except I changed pi to alphapi and used variable substitution for the
@@ -466,9 +473,9 @@ because it's at this stage where the user pi is added to the various
 groups on the system. We therefore need to open
 <strong>stage2/01-sys-tweaks/01-run.sh</strong> and modify the following lines,
 replacing pi with alphapi.</p>
-<pre class="code shell"><a name="rest_code_762b2d33ac28417fb93c81cb45d05d41-1"></a><span class="k">for</span> GRP in adm dialout cdrom audio users sudo video games plugdev input gpio spi i2c netdev<span class="p">;</span> <span class="k">do</span>
-<a name="rest_code_762b2d33ac28417fb93c81cb45d05d41-2"></a>    adduser alphapi <span class="nv">$GRP</span>
-<a name="rest_code_762b2d33ac28417fb93c81cb45d05d41-3"></a><span class="k">done</span>
+<pre class="code shell"><a name="rest_code_926772cc847b46218eee35faa23a057a-1"></a><span class="k">for</span> GRP in adm dialout cdrom audio users sudo video games plugdev input gpio spi i2c netdev<span class="p">;</span> <span class="k">do</span>
+<a name="rest_code_926772cc847b46218eee35faa23a057a-2"></a>    adduser alphapi <span class="nv">$GRP</span>
+<a name="rest_code_926772cc847b46218eee35faa23a057a-3"></a><span class="k">done</span>
 </pre>
 </div>
 <div class="section" id="set-the-locale-information">
@@ -477,12 +484,12 @@ replacing pi with alphapi.</p>
 as follows. Open <strong>stage0/01-locale/00-debconf</strong>. I personally changed
 every occurence of en_GB.UTF-8 to en_US.UTF-8, but you can set your
 locale accordingly.</p>
-<pre class="code shell"><a name="rest_code_438f43f5c7774e8182480b72eaf1e5f7-1"></a><span class="c1"># Locales to be generated:</span>
-<a name="rest_code_438f43f5c7774e8182480b72eaf1e5f7-2"></a><span class="c1"># Choices: All locales, aa_DJ ISO-8859-1, aa_DJ.UTF-8 UTF-8, ...</span>
-<a name="rest_code_438f43f5c7774e8182480b72eaf1e5f7-3"></a>locales locales/locales_to_be_generated multiselect en_US.UTF-8 UTF-8
-<a name="rest_code_438f43f5c7774e8182480b72eaf1e5f7-4"></a><span class="c1"># Default locale for the system environment:</span>
-<a name="rest_code_438f43f5c7774e8182480b72eaf1e5f7-5"></a><span class="c1"># Choices: None, C.UTF-8, en_US.UTF-8</span>
-<a name="rest_code_438f43f5c7774e8182480b72eaf1e5f7-6"></a>locales locales/default_environment_locale   <span class="k">select</span>  en_US.UTF-8
+<pre class="code shell"><a name="rest_code_4e5a0f08eade4b228cedda905c8d35e7-1"></a><span class="c1"># Locales to be generated:</span>
+<a name="rest_code_4e5a0f08eade4b228cedda905c8d35e7-2"></a><span class="c1"># Choices: All locales, aa_DJ ISO-8859-1, aa_DJ.UTF-8 UTF-8, ...</span>
+<a name="rest_code_4e5a0f08eade4b228cedda905c8d35e7-3"></a>locales locales/locales_to_be_generated multiselect en_US.UTF-8 UTF-8
+<a name="rest_code_4e5a0f08eade4b228cedda905c8d35e7-4"></a><span class="c1"># Default locale for the system environment:</span>
+<a name="rest_code_4e5a0f08eade4b228cedda905c8d35e7-5"></a><span class="c1"># Choices: None, C.UTF-8, en_US.UTF-8</span>
+<a name="rest_code_4e5a0f08eade4b228cedda905c8d35e7-6"></a>locales locales/default_environment_locale   <span class="k">select</span>  en_US.UTF-8
 </pre>
 <p>Next, we open <strong>stage2/01-sys-tweaks/00-debconf</strong>. I currently live in
 Europe, so I made the following changes:</p>
@@ -491,8 +498,8 @@ tzdata        tzdata/Areas    select  Europe
 </pre>
 <p>I also made the following changes to switch from the default British
 English to American English:</p>
-<pre class="code shell"><a name="rest_code_7dd02fbe77794b5aa3f323b446a715ce-1"></a>keyboard-configuration keyboard-configuration/xkb-keymap <span class="k">select</span> us
-<a name="rest_code_7dd02fbe77794b5aa3f323b446a715ce-2"></a>keyboard-configuration keyboard-configuration/fvariant  <span class="k">select</span>  English <span class="o">(</span>US<span class="o">)</span> - English <span class="o">(</span>US<span class="se">\,</span> international with dead keys<span class="o">)</span>
+<pre class="code shell"><a name="rest_code_df1c647737634d8d947abfbae882ab87-1"></a>keyboard-configuration keyboard-configuration/xkb-keymap <span class="k">select</span> us
+<a name="rest_code_df1c647737634d8d947abfbae882ab87-2"></a>keyboard-configuration keyboard-configuration/fvariant  <span class="k">select</span>  English <span class="o">(</span>US<span class="o">)</span> - English <span class="o">(</span>US<span class="se">\,</span> international with dead keys<span class="o">)</span>
 </pre>
 <p>Note that the comment in 00-debconf above the
 keyboard-configuration/xkb-keymap line erroneously states that
@@ -515,7 +522,7 @@ laptop). Once I get its device name, I use the Linux <code class="shell">dd</cod
 command to copy the contents of the image onto the card. (Be sure to
 change /dev/mccblk0 to match the name that your system gives to your
 SD card device.)</p>
-<pre class="code shell"><a name="rest_code_1323598e5cbe4aa3b3a92444edcb01ab-1"></a>sudo dd <span class="k">if</span><span class="o">=</span><span class="m">2018</span>-07-21-my_name-lite.img <span class="nv">of</span><span class="o">=</span>/dev/mmcblk0 <span class="nv">bs</span><span class="o">=</span><span class="m">4096</span><span class="p">;</span> sync
+<pre class="code shell"><a name="rest_code_ffee8982eac34db3947700a80bb5882e-1"></a>sudo dd <span class="k">if</span><span class="o">=</span><span class="m">2018</span>-07-21-my_name-lite.img <span class="nv">of</span><span class="o">=</span>/dev/mmcblk0 <span class="nv">bs</span><span class="o">=</span><span class="m">4096</span><span class="p">;</span> sync
 </pre>
 <p><strong>Please be EXTREMELY careful that you get the device name right.</strong>
 It's not very difficult to write the contents of the image file over
@@ -532,15 +539,18 @@ terminal.</p>
 </div>
 </div>
     </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/how-i-built-a-cross-compilation-workflow-for-the-raspberry-pi.html" class="u-url">How I built a cross-compilation workflow for the Raspberry Pi</a></h1>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/how-i-built-a-cross-compilation-workflow-for-the-raspberry-pi/" class="u-url">How I built a cross-compilation workflow for the Raspberry Pi</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
-            <p class="dateline"><a href="posts/how-i-built-a-cross-compilation-workflow-for-the-raspberry-pi.html" rel="bookmark"><time class="published dt-published" datetime="2018-04-29T12:10:26+02:00" title="2018-04-29 12:10">2018-04-29 12:10</time></a></p>
+            <p class="dateline">
+            <a href="posts/how-i-built-a-cross-compilation-workflow-for-the-raspberry-pi/" rel="bookmark">
+            <time class="published dt-published" datetime="2018-04-29T12:10:26+02:00" itemprop="datePublished" title="2018-04-29 12:10">2018-04-29 12:10</time></a>
+            </p>
                 <p class="commentline">
         
-    <a href="posts/how-i-built-a-cross-compilation-workflow-for-the-raspberry-pi.html#disqus_thread" data-disqus-identifier="cache/posts/how-i-built-a-cross-compilation-workflow-for-the-raspberry-pi.html">Comments</a>
+    <a href="posts/how-i-built-a-cross-compilation-workflow-for-the-raspberry-pi/#disqus_thread" data-disqus-identifier="cache/posts/how-i-built-a-cross-compilation-workflow-for-the-raspberry-pi.html">Comments</a>
 
 
         </p>
@@ -657,7 +667,7 @@ container is not running.</li>
 let's look at the cross-compilation workflow. Below is a picture that
 provides a sense of the entire process, moving in general from
 left-to-right.</p>
-<img alt="The cross-compilation workflow" class="align-center" src="mm_docker_workflow.png"><p>The process involves two Docker containers: one for building
+<img alt="The cross-compilation workflow" class="align-center" src="images/mm_docker_workflow.png"><p>The process involves two Docker containers: one for building
 Micro-Manager and the other for running the application. The build
 dependencies and the QEMU emulator are both located inside the build
 container, having been specified when its image was created. These
@@ -749,68 +759,68 @@ workflow.</p>
 <p>The final prerequisite is to register QEMU with the Docker build
 agent. First, install a few packages for QEMU. On Ubuntu, this looks
 like</p>
-<pre class="code shell"><a name="rest_code_03d1e7a866fe4f48a37b1fcd85e8d45b-1"></a>$ sudo apt update
-<a name="rest_code_03d1e7a866fe4f48a37b1fcd85e8d45b-2"></a>$ sudo install qemu qemu-user-static qemu-user binfmt-support
+<pre class="code shell"><a name="rest_code_a076efc11fbb4a489225db330c63a849-1"></a>$ sudo apt update
+<a name="rest_code_a076efc11fbb4a489225db330c63a849-2"></a>$ sudo install qemu qemu-user-static qemu-user binfmt-support
 </pre>
 <p>Finally, register the build agent with the command:</p>
-<pre class="code shell"><a name="rest_code_8937ba143e0043428cfcbedf5428ee3a-1"></a>$ docker run --rm --privileged multiarch/qemu-user-static:register --reset
+<pre class="code shell"><a name="rest_code_5d8e47bcc1c54554aadcd9c7c26e9f7b-1"></a>$ docker run --rm --privileged multiarch/qemu-user-static:register --reset
 </pre>
 </div>
 <div class="section" id="step-1-create-the-build-image">
 <h3>Step 1: Create the build image</h3>
 <p>Inside the build folder, I have a file called Dockerfile. Here are its
 contents.</p>
-<pre class="code shell"><a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-1"></a><span class="c1"># Copyright (C) 2018 Kyle M. Douglass</span>
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-2"></a><span class="c1">#</span>
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-3"></a><span class="c1"># Defines a build environment for Micro-Manager on the Raspberry Pi.</span>
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-4"></a><span class="c1">#</span>
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-5"></a><span class="c1"># Usage: docker build \</span>
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-6"></a><span class="c1">#          -t NAME:TAG \</span>
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-7"></a><span class="c1">#         .</span>
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-8"></a><span class="c1">#</span>
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-9"></a>
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-10"></a>FROM resin/raspberrypi3-debian:stretch
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-11"></a>MAINTAINER Kyle M. Douglass &lt;kyle.m.douglass@gmail.com&gt;
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-12"></a>
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-13"></a>RUN <span class="o">[</span> <span class="s2">"cross-build-start"</span> <span class="o">]</span>
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-14"></a>
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-15"></a><span class="c1"># Get the build dependencies.</span>
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-16"></a>RUN apt-get update <span class="o">&amp;&amp;</span> apt-get -y install --no-install-recommends <span class="se">\</span>
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-17"></a>autoconf <span class="se">\</span>
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-18"></a>automake <span class="se">\</span>
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-19"></a>build-essential <span class="se">\</span>
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-20"></a>git <span class="se">\</span>
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-21"></a>libatlas-base-dev <span class="se">\</span>
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-22"></a>libboost-dev <span class="se">\</span>
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-23"></a>libboost-all-dev <span class="se">\</span>
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-24"></a>libtool <span class="se">\</span>
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-25"></a>patch <span class="se">\</span>
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-26"></a>pkg-config <span class="se">\</span>
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-27"></a>python3-dev <span class="se">\</span>
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-28"></a>python3-pip <span class="se">\</span>
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-29"></a>python3-setuptools <span class="se">\</span>
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-30"></a>python3-wheel <span class="se">\</span>
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-31"></a>swig <span class="se">\</span>
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-32"></a><span class="o">&amp;&amp;</span> apt-get clean <span class="o">&amp;&amp;</span> rm -rf /var/lib/apt/lists/* <span class="se">\</span>
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-33"></a><span class="o">&amp;&amp;</span> pip3 install numpy
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-34"></a>
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-35"></a>RUN <span class="o">[</span> <span class="s2">"cross-build-end"</span> <span class="o">]</span>
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-36"></a>
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-37"></a><span class="c1"># Set up the mount point for the source files and setup script.</span>
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-38"></a>ADD setup /micro-manager/
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-39"></a>VOLUME /micro-manager/src
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-40"></a>
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-41"></a>WORKDIR /micro-manager/src
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-42"></a>ENTRYPOINT <span class="o">[</span> <span class="s2">"/sbin/tini"</span>, <span class="s2">"-s"</span>, <span class="s2">"--"</span> <span class="o">]</span>
-<a name="rest_code_be6b60bcd0494702addfb5b53b9dd469-43"></a>CMD <span class="o">[</span> <span class="s2">"/micro-manager/setup"</span> <span class="o">]</span>
+<pre class="code shell"><a name="rest_code_de51814b403846d6a2c58bc5fca1c523-1"></a><span class="c1"># Copyright (C) 2018 Kyle M. Douglass</span>
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-2"></a><span class="c1">#</span>
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-3"></a><span class="c1"># Defines a build environment for Micro-Manager on the Raspberry Pi.</span>
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-4"></a><span class="c1">#</span>
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-5"></a><span class="c1"># Usage: docker build \</span>
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-6"></a><span class="c1">#          -t NAME:TAG \</span>
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-7"></a><span class="c1">#         .</span>
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-8"></a><span class="c1">#</span>
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-9"></a>
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-10"></a>FROM resin/raspberrypi3-debian:stretch
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-11"></a>MAINTAINER Kyle M. Douglass &lt;kyle.m.douglass@gmail.com&gt;
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-12"></a>
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-13"></a>RUN <span class="o">[</span> <span class="s2">"cross-build-start"</span> <span class="o">]</span>
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-14"></a>
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-15"></a><span class="c1"># Get the build dependencies.</span>
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-16"></a>RUN apt-get update <span class="o">&amp;&amp;</span> apt-get -y install --no-install-recommends <span class="se">\</span>
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-17"></a>autoconf <span class="se">\</span>
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-18"></a>automake <span class="se">\</span>
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-19"></a>build-essential <span class="se">\</span>
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-20"></a>git <span class="se">\</span>
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-21"></a>libatlas-base-dev <span class="se">\</span>
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-22"></a>libboost-dev <span class="se">\</span>
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-23"></a>libboost-all-dev <span class="se">\</span>
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-24"></a>libtool <span class="se">\</span>
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-25"></a>patch <span class="se">\</span>
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-26"></a>pkg-config <span class="se">\</span>
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-27"></a>python3-dev <span class="se">\</span>
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-28"></a>python3-pip <span class="se">\</span>
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-29"></a>python3-setuptools <span class="se">\</span>
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-30"></a>python3-wheel <span class="se">\</span>
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-31"></a>swig <span class="se">\</span>
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-32"></a><span class="o">&amp;&amp;</span> apt-get clean <span class="o">&amp;&amp;</span> rm -rf /var/lib/apt/lists/* <span class="se">\</span>
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-33"></a><span class="o">&amp;&amp;</span> pip3 install numpy
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-34"></a>
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-35"></a>RUN <span class="o">[</span> <span class="s2">"cross-build-end"</span> <span class="o">]</span>
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-36"></a>
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-37"></a><span class="c1"># Set up the mount point for the source files and setup script.</span>
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-38"></a>ADD setup /micro-manager/
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-39"></a>VOLUME /micro-manager/src
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-40"></a>
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-41"></a>WORKDIR /micro-manager/src
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-42"></a>ENTRYPOINT <span class="o">[</span> <span class="s2">"/sbin/tini"</span>, <span class="s2">"-s"</span>, <span class="s2">"--"</span> <span class="o">]</span>
+<a name="rest_code_de51814b403846d6a2c58bc5fca1c523-43"></a>CMD <span class="o">[</span> <span class="s2">"/micro-manager/setup"</span> <span class="o">]</span>
 </pre>
 <p>A Dockerfile defines the steps in building an image -- in this case,
 the build image. Let's break this file down into pieces. In the first
 two lines that follow the comments, I specify that my image is based
 on the resin/raspberrypi3-debian:stretch image and that I am the
 maintainer.</p>
-<pre class="code shell"><a name="rest_code_73a7b4b16b004ac5bfb3975be943c7c8-1"></a>FROM resin/raspberrypi3-debian:stretch
-<a name="rest_code_73a7b4b16b004ac5bfb3975be943c7c8-2"></a>MAINTAINER Kyle M. Douglass &lt;kyle.m.douglass@gmail.com&gt;
+<pre class="code shell"><a name="rest_code_a84e3104e3c445dfb6f90043358dbb68-1"></a>FROM resin/raspberrypi3-debian:stretch
+<a name="rest_code_a84e3104e3c445dfb6f90043358dbb68-2"></a>MAINTAINER Kyle M. Douglass &lt;kyle.m.douglass@gmail.com&gt;
 </pre>
 <p>Images from <a class="reference external" href="https://hub.docker.com/u/resin/">Resin</a> are freely
 available and already have the QEMU emulator installed. Next, I
@@ -832,9 +842,9 @@ This command is just telling the image to expect a folder to be
 mounted at this location when the container is run.</p>
 <p>The last three lines set the working directory, the entrypoint and the
 default container command, respectively.</p>
-<pre class="code shell"><a name="rest_code_dfc12bbd3c324a0397276575f89aea0a-1"></a>WORKDIR /micro-manager/src
-<a name="rest_code_dfc12bbd3c324a0397276575f89aea0a-2"></a>ENTRYPOINT <span class="o">[</span> <span class="s2">"/sbin/tini"</span>, <span class="s2">"-s"</span>, <span class="s2">"--"</span> <span class="o">]</span>
-<a name="rest_code_dfc12bbd3c324a0397276575f89aea0a-3"></a>CMD <span class="o">[</span> <span class="s2">"/micro-manager/setup"</span> <span class="o">]</span>
+<pre class="code shell"><a name="rest_code_8e912d8964ab4e08aed4b928533ae6e4-1"></a>WORKDIR /micro-manager/src
+<a name="rest_code_8e912d8964ab4e08aed4b928533ae6e4-2"></a>ENTRYPOINT <span class="o">[</span> <span class="s2">"/sbin/tini"</span>, <span class="s2">"-s"</span>, <span class="s2">"--"</span> <span class="o">]</span>
+<a name="rest_code_8e912d8964ab4e08aed4b928533ae6e4-3"></a>CMD <span class="o">[</span> <span class="s2">"/micro-manager/setup"</span> <span class="o">]</span>
 </pre>
 <p>This specific entrypoint tells Docker that any containers built from
 this image should first run Tini, which is a lightweight init system
@@ -852,15 +862,15 @@ you can choose not to run the setup script but instead to enter the
 container through a Bash shell, for example.</p>
 <p>To build the image, I use the following build script located in the
 same directory as the Dockerfile for convenience.</p>
-<pre class="code shell"><a name="rest_code_83379a478aef455b88842a5dec1c5f16-1"></a><span class="ch">#!/bin/bash</span>
-<a name="rest_code_83379a478aef455b88842a5dec1c5f16-2"></a><span class="c1"># Copyright (C) 2018 Kyle M. Douglass</span>
-<a name="rest_code_83379a478aef455b88842a5dec1c5f16-3"></a><span class="c1">#</span>
-<a name="rest_code_83379a478aef455b88842a5dec1c5f16-4"></a><span class="c1"># Usage: ./build</span>
-<a name="rest_code_83379a478aef455b88842a5dec1c5f16-5"></a><span class="c1">#</span>
-<a name="rest_code_83379a478aef455b88842a5dec1c5f16-6"></a>
-<a name="rest_code_83379a478aef455b88842a5dec1c5f16-7"></a>docker build <span class="se">\</span>
-<a name="rest_code_83379a478aef455b88842a5dec1c5f16-8"></a>       -t localhost:5000/rpi-micromanager:build <span class="se">\</span>
-<a name="rest_code_83379a478aef455b88842a5dec1c5f16-9"></a>       .
+<pre class="code shell"><a name="rest_code_b1376fa4927245f796faf495828c2d84-1"></a><span class="ch">#!/bin/bash</span>
+<a name="rest_code_b1376fa4927245f796faf495828c2d84-2"></a><span class="c1"># Copyright (C) 2018 Kyle M. Douglass</span>
+<a name="rest_code_b1376fa4927245f796faf495828c2d84-3"></a><span class="c1">#</span>
+<a name="rest_code_b1376fa4927245f796faf495828c2d84-4"></a><span class="c1"># Usage: ./build</span>
+<a name="rest_code_b1376fa4927245f796faf495828c2d84-5"></a><span class="c1">#</span>
+<a name="rest_code_b1376fa4927245f796faf495828c2d84-6"></a>
+<a name="rest_code_b1376fa4927245f796faf495828c2d84-7"></a>docker build <span class="se">\</span>
+<a name="rest_code_b1376fa4927245f796faf495828c2d84-8"></a>       -t localhost:5000/rpi-micromanager:build <span class="se">\</span>
+<a name="rest_code_b1376fa4927245f796faf495828c2d84-9"></a>       .
 </pre>
 <p>By using <tt class="docutils literal"><span class="pre">-t</span> <span class="pre">localhost:5000/rpi-micromanager:build</span></tt> argument I am
 giving the image a name of <em>rpi-micromanager</em>, a tag of <em>build</em>, and
@@ -873,36 +883,36 @@ don't worry. I'll explain it in the next section.</p>
 <h3>Step 2: Compile Micro-Manager</h3>
 <p>After the image is built, I create a container and use it to compile
 Micro-Manager. For this, I use the run script in the build directory.</p>
-<pre class="code shell"><a name="rest_code_f307c38802f44be98292fc760fb73be8-1"></a><span class="ch">#!/bin/bash</span>
-<a name="rest_code_f307c38802f44be98292fc760fb73be8-2"></a><span class="c1"># Copyright (C) 2018 Kyle M. Douglass</span>
-<a name="rest_code_f307c38802f44be98292fc760fb73be8-3"></a><span class="c1">#</span>
-<a name="rest_code_f307c38802f44be98292fc760fb73be8-4"></a><span class="c1"># Usage: ./run DIR CONFIGURE</span>
-<a name="rest_code_f307c38802f44be98292fc760fb73be8-5"></a><span class="c1">#</span>
-<a name="rest_code_f307c38802f44be98292fc760fb73be8-6"></a><span class="c1"># DIR is the parent folder containing the micro-manager Git</span>
-<a name="rest_code_f307c38802f44be98292fc760fb73be8-7"></a><span class="c1"># repository, the 3rdpartypublic Subversion repository, and any</span>
-<a name="rest_code_f307c38802f44be98292fc760fb73be8-8"></a><span class="c1"># additional build resources.</span>
-<a name="rest_code_f307c38802f44be98292fc760fb73be8-9"></a><span class="c1">#</span>
-<a name="rest_code_f307c38802f44be98292fc760fb73be8-10"></a><span class="c1"># If CONFIGURE=true, the build system is remade and the configure</span>
-<a name="rest_code_f307c38802f44be98292fc760fb73be8-11"></a><span class="c1"># script is rerun before running 'make' and 'make install'. If</span>
-<a name="rest_code_f307c38802f44be98292fc760fb73be8-12"></a><span class="c1"># CONFIGURE=false, only 'make' and 'make install' are run.</span>
-<a name="rest_code_f307c38802f44be98292fc760fb73be8-13"></a><span class="c1">#</span>
-<a name="rest_code_f307c38802f44be98292fc760fb73be8-14"></a><span class="c1"># The compiled program files are stored in a bind mount volume so that</span>
-<a name="rest_code_f307c38802f44be98292fc760fb73be8-15"></a><span class="c1"># they may be copied into the deployment container.</span>
-<a name="rest_code_f307c38802f44be98292fc760fb73be8-16"></a><span class="c1">#</span>
-<a name="rest_code_f307c38802f44be98292fc760fb73be8-17"></a>
-<a name="rest_code_f307c38802f44be98292fc760fb73be8-18"></a><span class="nv">src_dir</span><span class="o">=</span><span class="nv">$1</span>
-<a name="rest_code_f307c38802f44be98292fc760fb73be8-19"></a><span class="nv">cmd</span><span class="o">=</span><span class="s2">"/micro-manager/setup </span><span class="nv">$2</span><span class="s2">"</span>
-<a name="rest_code_f307c38802f44be98292fc760fb73be8-20"></a>
-<a name="rest_code_f307c38802f44be98292fc760fb73be8-21"></a><span class="c1"># Remove the build artifacts from previous builds.</span>
-<a name="rest_code_f307c38802f44be98292fc760fb73be8-22"></a><span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$2</span><span class="s2">"</span> <span class="o">==</span> <span class="nb">true</span> <span class="o">]</span> <span class="o">||</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$2</span><span class="s2">"</span> <span class="o">==</span> <span class="nb">false</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-<a name="rest_code_f307c38802f44be98292fc760fb73be8-23"></a>    rm -rf <span class="si">${</span><span class="nv">src_dir</span><span class="si">}</span>/build <span class="o">||</span> <span class="nb">true</span>
-<a name="rest_code_f307c38802f44be98292fc760fb73be8-24"></a><span class="k">fi</span>
-<a name="rest_code_f307c38802f44be98292fc760fb73be8-25"></a>
-<a name="rest_code_f307c38802f44be98292fc760fb73be8-26"></a>docker run --rm <span class="se">\</span>
-<a name="rest_code_f307c38802f44be98292fc760fb73be8-27"></a>       -v <span class="si">${</span><span class="nv">src_dir</span><span class="si">}</span>:/micro-manager/src <span class="se">\</span>
-<a name="rest_code_f307c38802f44be98292fc760fb73be8-28"></a>       --name mm-build <span class="se">\</span>
-<a name="rest_code_f307c38802f44be98292fc760fb73be8-29"></a>       localhost:5000/rpi-micromanager:build <span class="se">\</span>
-<a name="rest_code_f307c38802f44be98292fc760fb73be8-30"></a>       <span class="si">${</span><span class="nv">cmd</span><span class="si">}</span>
+<pre class="code shell"><a name="rest_code_30bc509a24774b13b3e4f0b3cfc69fda-1"></a><span class="ch">#!/bin/bash</span>
+<a name="rest_code_30bc509a24774b13b3e4f0b3cfc69fda-2"></a><span class="c1"># Copyright (C) 2018 Kyle M. Douglass</span>
+<a name="rest_code_30bc509a24774b13b3e4f0b3cfc69fda-3"></a><span class="c1">#</span>
+<a name="rest_code_30bc509a24774b13b3e4f0b3cfc69fda-4"></a><span class="c1"># Usage: ./run DIR CONFIGURE</span>
+<a name="rest_code_30bc509a24774b13b3e4f0b3cfc69fda-5"></a><span class="c1">#</span>
+<a name="rest_code_30bc509a24774b13b3e4f0b3cfc69fda-6"></a><span class="c1"># DIR is the parent folder containing the micro-manager Git</span>
+<a name="rest_code_30bc509a24774b13b3e4f0b3cfc69fda-7"></a><span class="c1"># repository, the 3rdpartypublic Subversion repository, and any</span>
+<a name="rest_code_30bc509a24774b13b3e4f0b3cfc69fda-8"></a><span class="c1"># additional build resources.</span>
+<a name="rest_code_30bc509a24774b13b3e4f0b3cfc69fda-9"></a><span class="c1">#</span>
+<a name="rest_code_30bc509a24774b13b3e4f0b3cfc69fda-10"></a><span class="c1"># If CONFIGURE=true, the build system is remade and the configure</span>
+<a name="rest_code_30bc509a24774b13b3e4f0b3cfc69fda-11"></a><span class="c1"># script is rerun before running 'make' and 'make install'. If</span>
+<a name="rest_code_30bc509a24774b13b3e4f0b3cfc69fda-12"></a><span class="c1"># CONFIGURE=false, only 'make' and 'make install' are run.</span>
+<a name="rest_code_30bc509a24774b13b3e4f0b3cfc69fda-13"></a><span class="c1">#</span>
+<a name="rest_code_30bc509a24774b13b3e4f0b3cfc69fda-14"></a><span class="c1"># The compiled program files are stored in a bind mount volume so that</span>
+<a name="rest_code_30bc509a24774b13b3e4f0b3cfc69fda-15"></a><span class="c1"># they may be copied into the deployment container.</span>
+<a name="rest_code_30bc509a24774b13b3e4f0b3cfc69fda-16"></a><span class="c1">#</span>
+<a name="rest_code_30bc509a24774b13b3e4f0b3cfc69fda-17"></a>
+<a name="rest_code_30bc509a24774b13b3e4f0b3cfc69fda-18"></a><span class="nv">src_dir</span><span class="o">=</span><span class="nv">$1</span>
+<a name="rest_code_30bc509a24774b13b3e4f0b3cfc69fda-19"></a><span class="nv">cmd</span><span class="o">=</span><span class="s2">"/micro-manager/setup </span><span class="nv">$2</span><span class="s2">"</span>
+<a name="rest_code_30bc509a24774b13b3e4f0b3cfc69fda-20"></a>
+<a name="rest_code_30bc509a24774b13b3e4f0b3cfc69fda-21"></a><span class="c1"># Remove the build artifacts from previous builds.</span>
+<a name="rest_code_30bc509a24774b13b3e4f0b3cfc69fda-22"></a><span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$2</span><span class="s2">"</span> <span class="o">==</span> <span class="nb">true</span> <span class="o">]</span> <span class="o">||</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$2</span><span class="s2">"</span> <span class="o">==</span> <span class="nb">false</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+<a name="rest_code_30bc509a24774b13b3e4f0b3cfc69fda-23"></a>    rm -rf <span class="si">${</span><span class="nv">src_dir</span><span class="si">}</span>/build <span class="o">||</span> <span class="nb">true</span>
+<a name="rest_code_30bc509a24774b13b3e4f0b3cfc69fda-24"></a><span class="k">fi</span>
+<a name="rest_code_30bc509a24774b13b3e4f0b3cfc69fda-25"></a>
+<a name="rest_code_30bc509a24774b13b3e4f0b3cfc69fda-26"></a>docker run --rm <span class="se">\</span>
+<a name="rest_code_30bc509a24774b13b3e4f0b3cfc69fda-27"></a>       -v <span class="si">${</span><span class="nv">src_dir</span><span class="si">}</span>:/micro-manager/src <span class="se">\</span>
+<a name="rest_code_30bc509a24774b13b3e4f0b3cfc69fda-28"></a>       --name mm-build <span class="se">\</span>
+<a name="rest_code_30bc509a24774b13b3e4f0b3cfc69fda-29"></a>       localhost:5000/rpi-micromanager:build <span class="se">\</span>
+<a name="rest_code_30bc509a24774b13b3e4f0b3cfc69fda-30"></a>       <span class="si">${</span><span class="nv">cmd</span><span class="si">}</span>
 </pre>
 <p>The script takes two arguments. The first is the path to the folder
 containing all the source code (see below for details). The second
@@ -932,57 +942,57 @@ I checkout the mm2 branch because I am interested in developing my
 application for Micro-Manager 2.0.</p>
 <p>The setup script that is run inside the container and mentioned in the
 previous section looks like this.</p>
-<pre class="code shell"><a name="rest_code_9d42865743c54a2ba51eb7b443d51166-1"></a><span class="ch">#!/bin/bash</span>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-2"></a><span class="c1">#</span>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-3"></a><span class="c1"># # Copyright (C) 2018 Kyle M. Douglass</span>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-4"></a><span class="c1">#</span>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-5"></a><span class="c1"># Builds Micro-Manager.</span>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-6"></a><span class="c1">#</span>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-7"></a><span class="c1"># Usage: ./setup CONFIGURE</span>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-8"></a><span class="c1">#</span>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-9"></a><span class="c1"># If CONFIGURE=true, the build system is remade and the configure</span>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-10"></a><span class="c1"># script is rerun before running 'make' and 'make install'. If</span>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-11"></a><span class="c1"># CONFIGURE=false, only 'make' and 'make install' or run.</span>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-12"></a><span class="c1">#</span>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-13"></a><span class="c1"># Kyle M. Douglass, 2018</span>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-14"></a><span class="c1">#</span>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-15"></a>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-16"></a><span class="c1"># Move into the source directory.</span>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-17"></a><span class="nb">cd</span> micro-manager
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-18"></a>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-19"></a><span class="c1"># Undo any previous patches.</span>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-20"></a>git checkout -- DeviceAdapters/WieneckeSinske/CAN29.cpp
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-21"></a>git checkout -- DeviceAdapters/WieneckeSinske/WieneckeSinske.cpp
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-22"></a>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-23"></a><span class="c1"># Patch the broken WieneckeSinske device adapter.</span>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-24"></a>patch DeviceAdapters/WieneckeSinske/CAN29.cpp &lt; ../patches/CAN29.cpp.diff <span class="se">\</span>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-25"></a><span class="o">&amp;&amp;</span> patch DeviceAdapters/WieneckeSinske/WieneckeSinske.cpp &lt; ../patches/WieneckeSinske.cpp.diff
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-26"></a>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-27"></a><span class="c1"># Compile MM2.</span>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-28"></a><span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> <span class="o">=</span> <span class="nb">true</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-29"></a>    <span class="c1"># Remake the entire build system, then compile from scratch.</span>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-30"></a>    ./autogen.sh
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-31"></a>    <span class="nv">PYTHON</span><span class="o">=</span><span class="s2">"/usr/bin/python3"</span> ./configure <span class="se">\</span>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-32"></a>        --prefix<span class="o">=</span><span class="s2">"/micro-manager/src/build"</span> <span class="se">\</span>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-33"></a>        --with-python<span class="o">=</span><span class="s2">"/usr/include/python3.5"</span> <span class="se">\</span>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-34"></a>        --with-boost-libdir<span class="o">=</span><span class="s2">"/usr/lib/arm-linux-gnueabihf"</span> <span class="se">\</span>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-35"></a>        --with-boost<span class="o">=</span><span class="s2">"/usr/include/boost"</span> <span class="se">\</span>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-36"></a>        --disable-java-app <span class="se">\</span>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-37"></a>        --disable-install-dependency-jars <span class="se">\</span>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-38"></a>        --with-java<span class="o">=</span><span class="s2">"no"</span>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-39"></a>    make
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-40"></a>    make install
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-41"></a>    chmod -R a+w /micro-manager/src/build
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-42"></a><span class="k">elif</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> <span class="o">=</span> <span class="nb">false</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-43"></a>    <span class="c1"># Only recompile changed source files.</span>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-44"></a>    make
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-45"></a>    make install
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-46"></a>    chmod -R a+w /micro-manager/src/build
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-47"></a><span class="k">else</span>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-48"></a>    <span class="nb">echo</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2"> : Unrecognized argument."</span>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-49"></a>    <span class="nb">echo</span> <span class="s2">"Pass \"true\" to run the full build process."</span>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-50"></a>    <span class="nb">echo</span> <span class="s2">"Pass \"false\" to run only \"make\" and \"make install\"."</span>
-<a name="rest_code_9d42865743c54a2ba51eb7b443d51166-51"></a><span class="k">fi</span>
+<pre class="code shell"><a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-1"></a><span class="ch">#!/bin/bash</span>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-2"></a><span class="c1">#</span>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-3"></a><span class="c1"># # Copyright (C) 2018 Kyle M. Douglass</span>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-4"></a><span class="c1">#</span>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-5"></a><span class="c1"># Builds Micro-Manager.</span>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-6"></a><span class="c1">#</span>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-7"></a><span class="c1"># Usage: ./setup CONFIGURE</span>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-8"></a><span class="c1">#</span>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-9"></a><span class="c1"># If CONFIGURE=true, the build system is remade and the configure</span>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-10"></a><span class="c1"># script is rerun before running 'make' and 'make install'. If</span>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-11"></a><span class="c1"># CONFIGURE=false, only 'make' and 'make install' or run.</span>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-12"></a><span class="c1">#</span>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-13"></a><span class="c1"># Kyle M. Douglass, 2018</span>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-14"></a><span class="c1">#</span>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-15"></a>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-16"></a><span class="c1"># Move into the source directory.</span>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-17"></a><span class="nb">cd</span> micro-manager
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-18"></a>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-19"></a><span class="c1"># Undo any previous patches.</span>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-20"></a>git checkout -- DeviceAdapters/WieneckeSinske/CAN29.cpp
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-21"></a>git checkout -- DeviceAdapters/WieneckeSinske/WieneckeSinske.cpp
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-22"></a>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-23"></a><span class="c1"># Patch the broken WieneckeSinske device adapter.</span>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-24"></a>patch DeviceAdapters/WieneckeSinske/CAN29.cpp &lt; ../patches/CAN29.cpp.diff <span class="se">\</span>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-25"></a><span class="o">&amp;&amp;</span> patch DeviceAdapters/WieneckeSinske/WieneckeSinske.cpp &lt; ../patches/WieneckeSinske.cpp.diff
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-26"></a>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-27"></a><span class="c1"># Compile MM2.</span>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-28"></a><span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> <span class="o">=</span> <span class="nb">true</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-29"></a>    <span class="c1"># Remake the entire build system, then compile from scratch.</span>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-30"></a>    ./autogen.sh
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-31"></a>    <span class="nv">PYTHON</span><span class="o">=</span><span class="s2">"/usr/bin/python3"</span> ./configure <span class="se">\</span>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-32"></a>        --prefix<span class="o">=</span><span class="s2">"/micro-manager/src/build"</span> <span class="se">\</span>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-33"></a>        --with-python<span class="o">=</span><span class="s2">"/usr/include/python3.5"</span> <span class="se">\</span>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-34"></a>        --with-boost-libdir<span class="o">=</span><span class="s2">"/usr/lib/arm-linux-gnueabihf"</span> <span class="se">\</span>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-35"></a>        --with-boost<span class="o">=</span><span class="s2">"/usr/include/boost"</span> <span class="se">\</span>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-36"></a>        --disable-java-app <span class="se">\</span>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-37"></a>        --disable-install-dependency-jars <span class="se">\</span>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-38"></a>        --with-java<span class="o">=</span><span class="s2">"no"</span>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-39"></a>    make
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-40"></a>    make install
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-41"></a>    chmod -R a+w /micro-manager/src/build
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-42"></a><span class="k">elif</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> <span class="o">=</span> <span class="nb">false</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-43"></a>    <span class="c1"># Only recompile changed source files.</span>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-44"></a>    make
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-45"></a>    make install
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-46"></a>    chmod -R a+w /micro-manager/src/build
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-47"></a><span class="k">else</span>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-48"></a>    <span class="nb">echo</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2"> : Unrecognized argument."</span>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-49"></a>    <span class="nb">echo</span> <span class="s2">"Pass \"true\" to run the full build process."</span>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-50"></a>    <span class="nb">echo</span> <span class="s2">"Pass \"false\" to run only \"make\" and \"make install\"."</span>
+<a name="rest_code_b1cb693e602b4210a411230e24cfe0ca-51"></a><span class="k">fi</span>
 </pre>
 <p>Most important in this script is the call to <tt class="docutils literal">configure</tt>. You can
 see that the compiled libraries and Python wrapper will be written to
@@ -996,55 +1006,55 @@ stopped.</p>
 image that contains only the essentials for running Micro-Manager.</p>
 <p>For this, I use a separate Dockerfile inside the 2.0-python
 directory.</p>
-<pre class="code shell"><a name="rest_code_98dd46375df74eb5bed32568594bf144-1"></a><span class="c1"># Copyright (C) 2018 Kyle M. Douglass</span>
-<a name="rest_code_98dd46375df74eb5bed32568594bf144-2"></a><span class="c1">#</span>
-<a name="rest_code_98dd46375df74eb5bed32568594bf144-3"></a><span class="c1"># Builds the Micro-Manager 2.0 Python wrapper for the Raspberry Pi.</span>
-<a name="rest_code_98dd46375df74eb5bed32568594bf144-4"></a><span class="c1">#</span>
-<a name="rest_code_98dd46375df74eb5bed32568594bf144-5"></a><span class="c1"># Usage: docker build \</span>
-<a name="rest_code_98dd46375df74eb5bed32568594bf144-6"></a><span class="c1">#          -t NAME:TAG \</span>
-<a name="rest_code_98dd46375df74eb5bed32568594bf144-7"></a><span class="c1">#          .</span>
-<a name="rest_code_98dd46375df74eb5bed32568594bf144-8"></a><span class="c1">#</span>
-<a name="rest_code_98dd46375df74eb5bed32568594bf144-9"></a>
-<a name="rest_code_98dd46375df74eb5bed32568594bf144-10"></a>FROM resin/raspberrypi3-debian:stretch
-<a name="rest_code_98dd46375df74eb5bed32568594bf144-11"></a>MAINTAINER Kyle M. Douglass &lt;kyle.m.douglass@gmail.com&gt;
-<a name="rest_code_98dd46375df74eb5bed32568594bf144-12"></a>
-<a name="rest_code_98dd46375df74eb5bed32568594bf144-13"></a>RUN <span class="o">[</span> <span class="s2">"cross-build-start"</span> <span class="o">]</span>
-<a name="rest_code_98dd46375df74eb5bed32568594bf144-14"></a>
-<a name="rest_code_98dd46375df74eb5bed32568594bf144-15"></a><span class="c1"># Install the run-time dependencies.</span>
-<a name="rest_code_98dd46375df74eb5bed32568594bf144-16"></a>RUN apt-get update <span class="o">&amp;&amp;</span> apt-get -y install --no-install-recommends <span class="se">\</span>
-<a name="rest_code_98dd46375df74eb5bed32568594bf144-17"></a>    libatlas-base-dev <span class="se">\</span>
-<a name="rest_code_98dd46375df74eb5bed32568594bf144-18"></a>    libboost-all-dev <span class="se">\</span>
-<a name="rest_code_98dd46375df74eb5bed32568594bf144-19"></a>    python3-pip <span class="se">\</span>
-<a name="rest_code_98dd46375df74eb5bed32568594bf144-20"></a>    python3-setuptools <span class="se">\</span>
-<a name="rest_code_98dd46375df74eb5bed32568594bf144-21"></a>    python3-wheel <span class="se">\</span>
-<a name="rest_code_98dd46375df74eb5bed32568594bf144-22"></a>    <span class="o">&amp;&amp;</span> pip3 install numpy <span class="se">\</span>
-<a name="rest_code_98dd46375df74eb5bed32568594bf144-23"></a>    <span class="o">&amp;&amp;</span> apt-get clean <span class="o">&amp;&amp;</span> rm -rf /var/lib/apt/lists/*
-<a name="rest_code_98dd46375df74eb5bed32568594bf144-24"></a>
-<a name="rest_code_98dd46375df74eb5bed32568594bf144-25"></a><span class="c1"># Copy in the Micro-Manager source files.</span>
-<a name="rest_code_98dd46375df74eb5bed32568594bf144-26"></a>RUN useradd -ms /bin/bash micro-manager
-<a name="rest_code_98dd46375df74eb5bed32568594bf144-27"></a>WORKDIR /home/micro-manager/app
-<a name="rest_code_98dd46375df74eb5bed32568594bf144-28"></a>COPY --chown<span class="o">=</span>micro-manager:micro-manager . .
-<a name="rest_code_98dd46375df74eb5bed32568594bf144-29"></a>
-<a name="rest_code_98dd46375df74eb5bed32568594bf144-30"></a>RUN <span class="o">[</span> <span class="s2">"cross-build-end"</span> <span class="o">]</span>
-<a name="rest_code_98dd46375df74eb5bed32568594bf144-31"></a>
-<a name="rest_code_98dd46375df74eb5bed32568594bf144-32"></a><span class="c1"># Final environment configuration.</span>
-<a name="rest_code_98dd46375df74eb5bed32568594bf144-33"></a>USER micro-manager:micro-manager
-<a name="rest_code_98dd46375df74eb5bed32568594bf144-34"></a>ENV PYTHONPATH /home/micro-manager/app/lib/micro-manager
-<a name="rest_code_98dd46375df74eb5bed32568594bf144-35"></a>ENTRYPOINT <span class="o">[</span><span class="s2">"/sbin/tini"</span>, <span class="s2">"-s"</span>, <span class="s2">"--"</span><span class="o">]</span>
-<a name="rest_code_98dd46375df74eb5bed32568594bf144-36"></a>CMD <span class="o">[</span><span class="s2">"/usr/bin/python3"</span><span class="o">]</span>
+<pre class="code shell"><a name="rest_code_26f58d0998114f4f8702fbbc7498b049-1"></a><span class="c1"># Copyright (C) 2018 Kyle M. Douglass</span>
+<a name="rest_code_26f58d0998114f4f8702fbbc7498b049-2"></a><span class="c1">#</span>
+<a name="rest_code_26f58d0998114f4f8702fbbc7498b049-3"></a><span class="c1"># Builds the Micro-Manager 2.0 Python wrapper for the Raspberry Pi.</span>
+<a name="rest_code_26f58d0998114f4f8702fbbc7498b049-4"></a><span class="c1">#</span>
+<a name="rest_code_26f58d0998114f4f8702fbbc7498b049-5"></a><span class="c1"># Usage: docker build \</span>
+<a name="rest_code_26f58d0998114f4f8702fbbc7498b049-6"></a><span class="c1">#          -t NAME:TAG \</span>
+<a name="rest_code_26f58d0998114f4f8702fbbc7498b049-7"></a><span class="c1">#          .</span>
+<a name="rest_code_26f58d0998114f4f8702fbbc7498b049-8"></a><span class="c1">#</span>
+<a name="rest_code_26f58d0998114f4f8702fbbc7498b049-9"></a>
+<a name="rest_code_26f58d0998114f4f8702fbbc7498b049-10"></a>FROM resin/raspberrypi3-debian:stretch
+<a name="rest_code_26f58d0998114f4f8702fbbc7498b049-11"></a>MAINTAINER Kyle M. Douglass &lt;kyle.m.douglass@gmail.com&gt;
+<a name="rest_code_26f58d0998114f4f8702fbbc7498b049-12"></a>
+<a name="rest_code_26f58d0998114f4f8702fbbc7498b049-13"></a>RUN <span class="o">[</span> <span class="s2">"cross-build-start"</span> <span class="o">]</span>
+<a name="rest_code_26f58d0998114f4f8702fbbc7498b049-14"></a>
+<a name="rest_code_26f58d0998114f4f8702fbbc7498b049-15"></a><span class="c1"># Install the run-time dependencies.</span>
+<a name="rest_code_26f58d0998114f4f8702fbbc7498b049-16"></a>RUN apt-get update <span class="o">&amp;&amp;</span> apt-get -y install --no-install-recommends <span class="se">\</span>
+<a name="rest_code_26f58d0998114f4f8702fbbc7498b049-17"></a>    libatlas-base-dev <span class="se">\</span>
+<a name="rest_code_26f58d0998114f4f8702fbbc7498b049-18"></a>    libboost-all-dev <span class="se">\</span>
+<a name="rest_code_26f58d0998114f4f8702fbbc7498b049-19"></a>    python3-pip <span class="se">\</span>
+<a name="rest_code_26f58d0998114f4f8702fbbc7498b049-20"></a>    python3-setuptools <span class="se">\</span>
+<a name="rest_code_26f58d0998114f4f8702fbbc7498b049-21"></a>    python3-wheel <span class="se">\</span>
+<a name="rest_code_26f58d0998114f4f8702fbbc7498b049-22"></a>    <span class="o">&amp;&amp;</span> pip3 install numpy <span class="se">\</span>
+<a name="rest_code_26f58d0998114f4f8702fbbc7498b049-23"></a>    <span class="o">&amp;&amp;</span> apt-get clean <span class="o">&amp;&amp;</span> rm -rf /var/lib/apt/lists/*
+<a name="rest_code_26f58d0998114f4f8702fbbc7498b049-24"></a>
+<a name="rest_code_26f58d0998114f4f8702fbbc7498b049-25"></a><span class="c1"># Copy in the Micro-Manager source files.</span>
+<a name="rest_code_26f58d0998114f4f8702fbbc7498b049-26"></a>RUN useradd -ms /bin/bash micro-manager
+<a name="rest_code_26f58d0998114f4f8702fbbc7498b049-27"></a>WORKDIR /home/micro-manager/app
+<a name="rest_code_26f58d0998114f4f8702fbbc7498b049-28"></a>COPY --chown<span class="o">=</span>micro-manager:micro-manager . .
+<a name="rest_code_26f58d0998114f4f8702fbbc7498b049-29"></a>
+<a name="rest_code_26f58d0998114f4f8702fbbc7498b049-30"></a>RUN <span class="o">[</span> <span class="s2">"cross-build-end"</span> <span class="o">]</span>
+<a name="rest_code_26f58d0998114f4f8702fbbc7498b049-31"></a>
+<a name="rest_code_26f58d0998114f4f8702fbbc7498b049-32"></a><span class="c1"># Final environment configuration.</span>
+<a name="rest_code_26f58d0998114f4f8702fbbc7498b049-33"></a>USER micro-manager:micro-manager
+<a name="rest_code_26f58d0998114f4f8702fbbc7498b049-34"></a>ENV PYTHONPATH /home/micro-manager/app/lib/micro-manager
+<a name="rest_code_26f58d0998114f4f8702fbbc7498b049-35"></a>ENTRYPOINT <span class="o">[</span><span class="s2">"/sbin/tini"</span>, <span class="s2">"-s"</span>, <span class="s2">"--"</span><span class="o">]</span>
+<a name="rest_code_26f58d0998114f4f8702fbbc7498b049-36"></a>CMD <span class="o">[</span><span class="s2">"/usr/bin/python3"</span><span class="o">]</span>
 </pre>
 <p>As before, I use a clean resin base image. However, this time I only
 install the essential software to run Micro-Manager.</p>
 <p>After apt-getting and pip-installing everything, I create a new user
 called <strong>micro-manager</strong> and a new folder called <strong>app</strong> inside this
 user's home directory.</p>
-<pre class="code shell"><a name="rest_code_031a0542023744f095ba44eca8943ade-1"></a><span class="c1"># Copy in the Micro-Manager source files.</span>
-<a name="rest_code_031a0542023744f095ba44eca8943ade-2"></a>RUN useradd -ms /bin/bash micro-manager
-<a name="rest_code_031a0542023744f095ba44eca8943ade-3"></a>WORKDIR /home/micro-manager/app
+<pre class="code shell"><a name="rest_code_a80688fe167140c1ae9e8279f01d1a5f-1"></a><span class="c1"># Copy in the Micro-Manager source files.</span>
+<a name="rest_code_a80688fe167140c1ae9e8279f01d1a5f-2"></a>RUN useradd -ms /bin/bash micro-manager
+<a name="rest_code_a80688fe167140c1ae9e8279f01d1a5f-3"></a>WORKDIR /home/micro-manager/app
 </pre>
 <p>Next, I directly copy the compiled libraries into the image with the
 COPY command.</p>
-<pre class="code shell"><a name="rest_code_fa0c9f5d654b47728b70b3909425d4ed-1"></a>COPY --chown<span class="o">=</span>micro-manager:micro-manager . .
+<pre class="code shell"><a name="rest_code_7ce6c14393ec4778a8f719e24aab345f-1"></a>COPY --chown<span class="o">=</span>micro-manager:micro-manager . .
 </pre>
 <p>The two periods (.) mean that I copy the current host directory's
 contents into the container's current working directory
@@ -1056,23 +1066,23 @@ Dockerfile by saying that I switch the USER so that I do not run the
 container as root, add the library to the PYTHONPATH environment
 variable, and setup the default command as the python3 interpreter.</p>
 <p>To build this image, I use the following build script.</p>
-<pre class="code shell"><a name="rest_code_aad5cc7931c14af597ca8ed10cd435ce-1"></a><span class="ch">#!/bin/bash</span>
-<a name="rest_code_aad5cc7931c14af597ca8ed10cd435ce-2"></a><span class="c1"># Copyright (C) 2018 Kyle M. Douglass</span>
-<a name="rest_code_aad5cc7931c14af597ca8ed10cd435ce-3"></a><span class="c1">#</span>
-<a name="rest_code_aad5cc7931c14af597ca8ed10cd435ce-4"></a><span class="c1"># Usage: ./build DIR</span>
-<a name="rest_code_aad5cc7931c14af597ca8ed10cd435ce-5"></a><span class="c1">#</span>
-<a name="rest_code_aad5cc7931c14af597ca8ed10cd435ce-6"></a><span class="c1"># DIR is the root directory containing the Micro-Manager build</span>
-<a name="rest_code_aad5cc7931c14af597ca8ed10cd435ce-7"></a><span class="c1"># artifacts. These artifacts will be added to the Docker image.</span>
-<a name="rest_code_aad5cc7931c14af597ca8ed10cd435ce-8"></a><span class="c1">#</span>
-<a name="rest_code_aad5cc7931c14af597ca8ed10cd435ce-9"></a>
-<a name="rest_code_aad5cc7931c14af597ca8ed10cd435ce-10"></a><span class="nv">src_dir</span><span class="o">=</span><span class="nv">$1</span>
-<a name="rest_code_aad5cc7931c14af597ca8ed10cd435ce-11"></a>
-<a name="rest_code_aad5cc7931c14af597ca8ed10cd435ce-12"></a>cp Dockerfile <span class="si">${</span><span class="nv">src_dir</span><span class="si">}</span>
-<a name="rest_code_aad5cc7931c14af597ca8ed10cd435ce-13"></a><span class="nb">cd</span> <span class="si">${</span><span class="nv">src_dir</span><span class="si">}</span>
-<a name="rest_code_aad5cc7931c14af597ca8ed10cd435ce-14"></a>
-<a name="rest_code_aad5cc7931c14af597ca8ed10cd435ce-15"></a>docker build <span class="se">\</span>
-<a name="rest_code_aad5cc7931c14af597ca8ed10cd435ce-16"></a>       -t localhost:5000/rpi-micromanager:2.0-python <span class="se">\</span>
-<a name="rest_code_aad5cc7931c14af597ca8ed10cd435ce-17"></a>       .
+<pre class="code shell"><a name="rest_code_24db17c6f0a84fd29b22d8544ee404c9-1"></a><span class="ch">#!/bin/bash</span>
+<a name="rest_code_24db17c6f0a84fd29b22d8544ee404c9-2"></a><span class="c1"># Copyright (C) 2018 Kyle M. Douglass</span>
+<a name="rest_code_24db17c6f0a84fd29b22d8544ee404c9-3"></a><span class="c1">#</span>
+<a name="rest_code_24db17c6f0a84fd29b22d8544ee404c9-4"></a><span class="c1"># Usage: ./build DIR</span>
+<a name="rest_code_24db17c6f0a84fd29b22d8544ee404c9-5"></a><span class="c1">#</span>
+<a name="rest_code_24db17c6f0a84fd29b22d8544ee404c9-6"></a><span class="c1"># DIR is the root directory containing the Micro-Manager build</span>
+<a name="rest_code_24db17c6f0a84fd29b22d8544ee404c9-7"></a><span class="c1"># artifacts. These artifacts will be added to the Docker image.</span>
+<a name="rest_code_24db17c6f0a84fd29b22d8544ee404c9-8"></a><span class="c1">#</span>
+<a name="rest_code_24db17c6f0a84fd29b22d8544ee404c9-9"></a>
+<a name="rest_code_24db17c6f0a84fd29b22d8544ee404c9-10"></a><span class="nv">src_dir</span><span class="o">=</span><span class="nv">$1</span>
+<a name="rest_code_24db17c6f0a84fd29b22d8544ee404c9-11"></a>
+<a name="rest_code_24db17c6f0a84fd29b22d8544ee404c9-12"></a>cp Dockerfile <span class="si">${</span><span class="nv">src_dir</span><span class="si">}</span>
+<a name="rest_code_24db17c6f0a84fd29b22d8544ee404c9-13"></a><span class="nb">cd</span> <span class="si">${</span><span class="nv">src_dir</span><span class="si">}</span>
+<a name="rest_code_24db17c6f0a84fd29b22d8544ee404c9-14"></a>
+<a name="rest_code_24db17c6f0a84fd29b22d8544ee404c9-15"></a>docker build <span class="se">\</span>
+<a name="rest_code_24db17c6f0a84fd29b22d8544ee404c9-16"></a>       -t localhost:5000/rpi-micromanager:2.0-python <span class="se">\</span>
+<a name="rest_code_24db17c6f0a84fd29b22d8544ee404c9-17"></a>       .
 </pre>
 <p>This script takes one argument, which is the <strong>build</strong> directory
 containing the compiled source code. The script first copies the
@@ -1116,10 +1126,10 @@ called certs inside my workstation home directory and then use openssl
 to make the cerficate. During the prompts, I press ENTER at every step
 except the FQDN (fully qualified domain name). For the FQDN, I enter
 the same IP address as above.</p>
-<pre class="code shell"><a name="rest_code_fd541d7e101645f5995f87dbfe9ed555-1"></a>mkdir certs
-<a name="rest_code_fd541d7e101645f5995f87dbfe9ed555-2"></a>openssl req -newkey rsa:4096 -nodes -sha256 <span class="se">\</span>
-<a name="rest_code_fd541d7e101645f5995f87dbfe9ed555-3"></a>-keyout certs/domain.key -x509 -days <span class="m">365</span> <span class="se">\</span>
-<a name="rest_code_fd541d7e101645f5995f87dbfe9ed555-4"></a>-config /etc/ssl/openssl.cnf -out certs/domain.crt
+<pre class="code shell"><a name="rest_code_57b6c06b9eee4660831ed570e2802a26-1"></a>mkdir certs
+<a name="rest_code_57b6c06b9eee4660831ed570e2802a26-2"></a>openssl req -newkey rsa:4096 -nodes -sha256 <span class="se">\</span>
+<a name="rest_code_57b6c06b9eee4660831ed570e2802a26-3"></a>-keyout certs/domain.key -x509 -days <span class="m">365</span> <span class="se">\</span>
+<a name="rest_code_57b6c06b9eee4660831ed570e2802a26-4"></a>-config /etc/ssl/openssl.cnf -out certs/domain.crt
 </pre>
 <p><strong>I had to add the ``-config /etc/ssl/openssl.cnf`` argument for the
 subject alternative name to be added to the certificate.</strong> This part
@@ -1133,13 +1143,13 @@ cannot validate certificate for 192.168.XXX.XXX because it doesn't contain any I
 <p>After the domain.key and domain.crt files have been created, I run the
 official registry server container. (See how handy Docker containers
 are? There's no messy installation beyond grabbing the container.)</p>
-<pre class="code shell"><a name="rest_code_c7316ae68d9d405392252de2c76548cb-1"></a>docker run -d -p <span class="m">5000</span>:5000 <span class="se">\</span>
-<a name="rest_code_c7316ae68d9d405392252de2c76548cb-2"></a>  --restart<span class="o">=</span>always <span class="se">\</span>
-<a name="rest_code_c7316ae68d9d405392252de2c76548cb-3"></a>  --name registry <span class="se">\</span>
-<a name="rest_code_c7316ae68d9d405392252de2c76548cb-4"></a>  -v <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/certs:/certs <span class="se">\</span>
-<a name="rest_code_c7316ae68d9d405392252de2c76548cb-5"></a>  -e <span class="nv">REGISTRY_HTTP_TLS_CERTIFICATE</span><span class="o">=</span>/certs/domain.crt <span class="se">\</span>
-<a name="rest_code_c7316ae68d9d405392252de2c76548cb-6"></a>  -e <span class="nv">REGISTRY_HTTP_TLS_KEY</span><span class="o">=</span>/certs/domain.key <span class="se">\</span>
-<a name="rest_code_c7316ae68d9d405392252de2c76548cb-7"></a>  registry:2
+<pre class="code shell"><a name="rest_code_d55ae8984a2b499db5bd84c5827b3107-1"></a>docker run -d -p <span class="m">5000</span>:5000 <span class="se">\</span>
+<a name="rest_code_d55ae8984a2b499db5bd84c5827b3107-2"></a>  --restart<span class="o">=</span>always <span class="se">\</span>
+<a name="rest_code_d55ae8984a2b499db5bd84c5827b3107-3"></a>  --name registry <span class="se">\</span>
+<a name="rest_code_d55ae8984a2b499db5bd84c5827b3107-4"></a>  -v <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/certs:/certs <span class="se">\</span>
+<a name="rest_code_d55ae8984a2b499db5bd84c5827b3107-5"></a>  -e <span class="nv">REGISTRY_HTTP_TLS_CERTIFICATE</span><span class="o">=</span>/certs/domain.crt <span class="se">\</span>
+<a name="rest_code_d55ae8984a2b499db5bd84c5827b3107-6"></a>  -e <span class="nv">REGISTRY_HTTP_TLS_KEY</span><span class="o">=</span>/certs/domain.key <span class="se">\</span>
+<a name="rest_code_d55ae8984a2b499db5bd84c5827b3107-7"></a>  registry:2
 </pre>
 <p>If the registry:2 image is not already downloaded, then it will be
 downloaded for automatically when running the container. Note that
@@ -1150,7 +1160,7 @@ certs directory is relative to the current directory because I use the
 your setup.</p>
 <p>Let's go ahead and push the application image to the server now that
 it's running.</p>
-<pre class="code shell"><a name="rest_code_0e935f6ed8644b22ab3b094b6598860b-1"></a>docker push localhost:5000/rpi-micromanager:2.0-python
+<pre class="code shell"><a name="rest_code_31db0de96b3a4e3498108a9568129ac2-1"></a>docker push localhost:5000/rpi-micromanager:2.0-python
 </pre>
 </div>
 <div class="section" id="setup-the-pi">
@@ -1160,21 +1170,21 @@ Docker</a> on
 it and know how to communicate with it via ssh and copy files to it
 using scp.</p>
 <p>I copy the certificate from the host with scp.</p>
-<pre class="code shell"><a name="rest_code_ed1a001049384795bf94b5e12bc13742-1"></a>sudo mkdir -p /etc/docker/certs.d/192.168.XXX.XXX:5000/
-<a name="rest_code_ed1a001049384795bf94b5e12bc13742-2"></a>sudo scp kmdouglass@192.168.XXX.XXX:/home/kmdouglass/certs/domain.crt /etc/docker/certs.d/192.168.XXX.XXX:5000/ca.crt
+<pre class="code shell"><a name="rest_code_9b3c8bd04d9b41e293716d72cbe8f656-1"></a>sudo mkdir -p /etc/docker/certs.d/192.168.XXX.XXX:5000/
+<a name="rest_code_9b3c8bd04d9b41e293716d72cbe8f656-2"></a>sudo scp kmdouglass@192.168.XXX.XXX:/home/kmdouglass/certs/domain.crt /etc/docker/certs.d/192.168.XXX.XXX:5000/ca.crt
 </pre>
 <p>The IP address that I am using is the one to the machine where the
 registry server is running. After this step, I make the operating
 system trust the certificate.</p>
-<pre class="code shell"><a name="rest_code_23f8d286f0de4339bdeae853efa68a20-1"></a>sudo scp kmdouglass@192.168.XXX.XXX:/home/kmdouglass/certs/domain.crt /usr/local/share/ca-certificates/192.168.XXX.XXX.crt
-<a name="rest_code_23f8d286f0de4339bdeae853efa68a20-2"></a>sudo update-ca-certifications
+<pre class="code shell"><a name="rest_code_6ab2d9f14a474addab2dfb11e3e23aad-1"></a>sudo scp kmdouglass@192.168.XXX.XXX:/home/kmdouglass/certs/domain.crt /usr/local/share/ca-certificates/192.168.XXX.XXX.crt
+<a name="rest_code_6ab2d9f14a474addab2dfb11e3e23aad-2"></a>sudo update-ca-certifications
 </pre>
 <p>Finally, I restart the Docker daemon.</p>
-<pre class="code shell"><a name="rest_code_64a1f9edf44348bf956486969fdf6b19-1"></a>sudo service docker restart
+<pre class="code shell"><a name="rest_code_a4e90c79da21485ba5b10e544a37ec50-1"></a>sudo service docker restart
 </pre>
 <p>If everything is working, then I should be able to pull the image from
 your network's registry server.</p>
-<pre class="code shell"><a name="rest_code_3ed78a5390c542adba3c9894c32a6be9-1"></a>docker pull <span class="m">192</span>.168.XXX.XXX:5000/rpi-micromanager:python2.0
+<pre class="code shell"><a name="rest_code_f1cf3df563e54a9cb7c9ffe74d29be19-1"></a>docker pull <span class="m">192</span>.168.XXX.XXX:5000/rpi-micromanager:python2.0
 </pre>
 </div>
 </div>
@@ -1183,15 +1193,15 @@ your network's registry server.</p>
 <p>And now the moment of truth: running the application container. Since
 it's setup to run Python automatically, I use a pretty simple <tt class="docutils literal">docker
 run</tt> command.</p>
-<pre class="code shell"><a name="rest_code_1d8a2f2b7c9d42f6aed48f45ece57f08-1"></a>docker run -it --rm <span class="se">\</span>
-<a name="rest_code_1d8a2f2b7c9d42f6aed48f45ece57f08-2"></a>     --name micro-manager <span class="se">\</span>
-<a name="rest_code_1d8a2f2b7c9d42f6aed48f45ece57f08-3"></a>     <span class="m">192</span>.168.XXX.XXX:5000/rpi-micromanager:2.0-python
+<pre class="code shell"><a name="rest_code_40bbe1e533864659b0aa3755d34a38fd-1"></a>docker run -it --rm <span class="se">\</span>
+<a name="rest_code_40bbe1e533864659b0aa3755d34a38fd-2"></a>     --name micro-manager <span class="se">\</span>
+<a name="rest_code_40bbe1e533864659b0aa3755d34a38fd-3"></a>     <span class="m">192</span>.168.XXX.XXX:5000/rpi-micromanager:2.0-python
 </pre>
 <p>I verify that the Micro-Manager Python wrapper is working by trying to
 import it and run <a class="reference external" href="https://micro-manager.org/wiki/Using_the_Micro-Manager_python_library">a few basic commands</a>.</p>
-<pre class="code python"><a name="rest_code_466a4f44c0734adfa8339bbf6fb98143-1"></a><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">MMCorePy</span>
-<a name="rest_code_466a4f44c0734adfa8339bbf6fb98143-2"></a><span class="o">&gt;&gt;&gt;</span> <span class="n">mmc</span> <span class="o">=</span> <span class="n">MMCorePy</span><span class="o">.</span><span class="n">CMMCore</span><span class="p">()</span>
-<a name="rest_code_466a4f44c0734adfa8339bbf6fb98143-3"></a><span class="o">&gt;&gt;&gt;</span> <span class="n">mmc</span><span class="o">.</span><span class="n">getVersionInfo</span><span class="p">()</span>
+<pre class="code python"><a name="rest_code_2c1f9106426a4fceb232a539fe6a4ca0-1"></a><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">MMCorePy</span>
+<a name="rest_code_2c1f9106426a4fceb232a539fe6a4ca0-2"></a><span class="o">&gt;&gt;&gt;</span> <span class="n">mmc</span> <span class="o">=</span> <span class="n">MMCorePy</span><span class="o">.</span><span class="n">CMMCore</span><span class="p">()</span>
+<a name="rest_code_2c1f9106426a4fceb232a539fe6a4ca0-3"></a><span class="o">&gt;&gt;&gt;</span> <span class="n">mmc</span><span class="o">.</span><span class="n">getVersionInfo</span><span class="p">()</span>
 </pre>
 <p>If these work without error, then congratulations! You're now ready to
 start building your embedded microscopy system ;)</p>
@@ -1227,30 +1237,31 @@ programming!</p>
 </div>
 </div>
     </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python.html" class="u-url">Implementing a fast Gibson-Lanni PSF solver in Python</a></h1>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/" class="u-url">Implementing a fast Gibson-Lanni PSF solver in Python</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
-            <p class="dateline"><a href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python.html" rel="bookmark"><time class="published dt-published" datetime="2017-10-20T07:25:54+02:00" title="2017-10-20 07:25">2017-10-20 07:25</time></a></p>
+            <p class="dateline">
+            <a href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/" rel="bookmark">
+            <time class="published dt-published" datetime="2017-10-20T07:25:54+02:00" itemprop="datePublished" title="2017-10-20 07:25">2017-10-20 07:25</time></a>
+            </p>
                 <p class="commentline">
         
-    <a href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python.html#disqus_thread" data-disqus-identifier="cache/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python.html">Comments</a>
+    <a href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/#disqus_thread" data-disqus-identifier="cache/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python.html">Comments</a>
 
 
         </p>
 </div>
     </header><div class="p-summary entry-summary">
-    <div tabindex="-1" id="notebook" class="border-box-sizing">
-    <div class="container" id="notebook-container">
-
+    <div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Many techniques in modern fluorescence microscopy--such as deconvolution and single molecule localization microscopy--rely on the computation of accurate microscope point spread functions (PSFs). Several models exist for these purposes with varying degrees of accuracy and generality. One such model, the so-called Gibson-Lanni model, approximates the PSF of an immersion microscope objective by accounting for the different refractive indexes of the immersion medium, coverslip, and sample, as well as variations in the thicknesses of the different layers. This post describes a Python implementation of a fast computational approach to the G&amp;L PSF that was presented in <strong>Fast and accurate three-dimensional point spread function computation for fluorescence microscopy</strong> by Li, Xue, and Blu. The approach is fast because it avoids the need to perform any explicit integration of the Kirchhoff diffraction integral, such as is done in <a href="http://bigwww.epfl.ch/algorithms/psfgenerator/">PSF Generator</a>. The prototype is based on the manuscript and the associated MATLAB code at <a href="http://www.ee.cuhk.edu.hk/~tblu/monsite/phps/fastPSF.php">http://www.ee.cuhk.edu.hk/~tblu/monsite/phps/fastPSF.php</a></p>
-<h2 id="References">References<a class="anchor-link" href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python.html#References">¶</a>
+<h2 id="References">References<a class="anchor-link" href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/#References">¶</a>
 </h2>
 <ul>
 <li><a href="https://www.osapublishing.org/josaa/abstract.cfm?uri=josaa-9-1-154">Gibson, S. F., &amp; Lanni, F. (1992). Experimental test of an analytical model of aberration in an oil-immersion objective lens used in three-dimensional light microscopy. JOSA A, 9(1), 154-166.</a></li>
@@ -1280,7 +1291,7 @@ programming!</p>
 <span class="nb">print</span><span class="p">(</span><span class="s1">'SciPy</span><span class="se">\t\t</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">scipy</span><span class="o">.</span><span class="n">__version__</span><span class="p">))</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1290,7 +1301,7 @@ programming!</p>
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -1314,9 +1325,9 @@ SciPy		0.19.1
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Simulation-setup">Simulation setup<a class="anchor-link" href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python.html#Simulation-setup">¶</a>
+<h2 id="Simulation-setup">Simulation setup<a class="anchor-link" href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/#Simulation-setup">¶</a>
 </h2>
-<h3 id="Define-the-simulation-parameters">Define the simulation parameters<a class="anchor-link" href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python.html#Define-the-simulation-parameters">¶</a>
+<h3 id="Define-the-simulation-parameters">Define the simulation parameters<a class="anchor-link" href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/#Define-the-simulation-parameters">¶</a>
 </h3>
 <p>The Gibson-Lanni PSF model accounts for differences between design parameters and real parameters that describe the fluorescence microscope, such as the refractive indexes and thicknesses of the immersion medium, coverslip, and sample. For more information, please see the above references or, if you do not have access to the publications, the description of the model here: <a href="http://bigwww.epfl.ch/algorithms/psfgenerator/">http://bigwww.epfl.ch/algorithms/psfgenerator/</a></p>
 
@@ -1360,7 +1371,7 @@ SciPy		0.19.1
 <span class="n">scaling_factor</span> <span class="o">=</span> <span class="n">NA</span> <span class="o">*</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_basis</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">min_wavelength</span> <span class="o">/</span> <span class="n">wavelength</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1370,7 +1381,7 @@ SciPy		0.19.1
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Create-the-coordinate-systems">Create the coordinate systems<a class="anchor-link" href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python.html#Create-the-coordinate-systems">¶</a>
+<h3 id="Create-the-coordinate-systems">Create the coordinate systems<a class="anchor-link" href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/#Create-the-coordinate-systems">¶</a>
 </h3>
 </div>
 </div>
@@ -1399,7 +1410,7 @@ SciPy		0.19.1
 <span class="n">z</span> <span class="o">=</span> <span class="n">res_axial</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">size_z</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">size_z</span> <span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">res_axial</span> <span class="o">/</span> <span class="mi">2</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1409,14 +1420,13 @@ SciPy		0.19.1
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-1:-Approximate-the-pupil-phase-with-a-Fourier-Bessel-series">Step 1: Approximate the pupil phase with a Fourier-Bessel series<a class="anchor-link" href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python.html#Step-1:-Approximate-the-pupil-phase-with-a-Fourier-Bessel-series">¶</a>
+<h2 id="Step-1:-Approximate-the-pupil-phase-with-a-Fourier-Bessel-series">Step 1: Approximate the pupil phase with a Fourier-Bessel series<a class="anchor-link" href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/#Step-1:-Approximate-the-pupil-phase-with-a-Fourier-Bessel-series">¶</a>
 </h2>
 <p><code>z.reshape(-1,1)</code> flips <code>z</code> from a row array to a column array so that it may be broadcast across <code>rho</code>.</p>
 <p>The coefficients <code>C</code> are found by a least-squares solution to the equation</p>
-<p>\begin{equation*}
+\begin{equation*}
 \mathbf{\phi} \left( \rho , z \right)= \mathbf{J} \left( \rho \right) \mathbf{c} \left( z \right)
-\end{equation*}</p>
-<p>$ \mathbf{c} $ has dimensions <code>num_basis</code> $ \times $ <code>len(z)</code>. The <code>J</code> array has dimensions <code>num_basis</code> $ \times $ <code>len(rho)</code> and the <code>phase</code> array has dimensions <code>len(z)</code> $ \times $ <code>len(rho)</code>. The <code>J</code> and <code>phase</code> arrays are therefore transposed to get the dimensions right in the call to <code>np.linalg.lstsq</code>.</p>
+\end{equation*}<p>$ \mathbf{c} $ has dimensions <code>num_basis</code> $ \times $ <code>len(z)</code>. The <code>J</code> array has dimensions <code>num_basis</code> $ \times $ <code>len(rho)</code> and the <code>phase</code> array has dimensions <code>len(z)</code> $ \times $ <code>len(rho)</code>. The <code>J</code> and <code>phase</code> arrays are therefore transposed to get the dimensions right in the call to <code>np.linalg.lstsq</code>.</p>
 
 </div>
 </div>
@@ -1447,7 +1457,7 @@ SciPy		0.19.1
 <span class="n">C</span><span class="p">,</span> <span class="n">residuals</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">lstsq</span><span class="p">(</span><span class="n">J</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">phase</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1457,7 +1467,7 @@ SciPy		0.19.1
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Compare-the-function-to-its-Fourier-Bessel-expansion">Compare the function to its Fourier-Bessel expansion<a class="anchor-link" href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python.html#Compare-the-function-to-its-Fourier-Bessel-expansion">¶</a>
+<h3 id="Compare-the-function-to-its-Fourier-Bessel-expansion">Compare the function to its Fourier-Bessel expansion<a class="anchor-link" href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/#Compare-the-function-to-its-Fourier-Bessel-expansion">¶</a>
 </h3>
 </div>
 </div>
@@ -1489,7 +1499,7 @@ SciPy		0.19.1
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1499,7 +1509,7 @@ SciPy		0.19.1
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -1519,13 +1529,12 @@ SciPy		0.19.1
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-2:-Compute-the-PSF">Step 2: Compute the PSF<a class="anchor-link" href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python.html#Step-2:-Compute-the-PSF">¶</a>
+<h2 id="Step-2:-Compute-the-PSF">Step 2: Compute the PSF<a class="anchor-link" href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/#Step-2:-Compute-the-PSF">¶</a>
 </h2>
 <p>Here, we use the Fourier-Bessel series expansion of the phase function and a Bessel integral identity to compute the approximate PSF. Each coefficient $ c_{m} \left( z \right) $ needs to be multiplied by</p>
-<p>\begin{equation*}
+\begin{equation*}
 R \left(r; \mathbf{p} \right) = \frac{\sigma_m J_1 \left( \sigma_m a \right) J_0 \left( \beta a \right)a - \beta J_0 \left( \sigma_m a \right) J_1 \left( \beta a \right)a }{\sigma_m^2 - \beta^2}
-\end{equation*}</p>
-<p>and the resulting products summed over the number of basis functions. $ \mathbf{p} $ is the parameter vector for the Gibson-Lanni model, $ \sigma_m $ is the scaling factor for the argument to the $ m'th $ Bessel basis function, and $ \beta = kr\text{NA} $.</p>
+\end{equation*}<p>and the resulting products summed over the number of basis functions. $ \mathbf{p} $ is the parameter vector for the Gibson-Lanni model, $ \sigma_m $ is the scaling factor for the argument to the $ m'th $ Bessel basis function, and $ \beta = kr\text{NA} $.</p>
 <p><code>b</code> is defined such that <code>R</code> has dimensions of <code>len(r)</code> $ \times $ <code>len(rho)</code>.</p>
 
 </div>
@@ -1548,7 +1557,7 @@ R \left(r; \mathbf{p} \right) = \frac{\sigma_m J_1 \left( \sigma_m a \right) J_0
 <span class="n">R</span> <span class="o">/=</span> <span class="n">denom</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1559,10 +1568,9 @@ R \left(r; \mathbf{p} \right) = \frac{\sigma_m J_1 \left( \sigma_m a \right) J_0
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Now compute the point-spread function via</p>
-<p>\begin{equation*}
+\begin{equation*}
 PSF \left( r, z; z_p, \mathbf{p} \right) = \left| \mathbf{R} \left( r; \mathbf{p} \right) \mathbf{c} \left( z \right) \right|^2
-\end{equation*}</p>
-
+\end{equation*}
 </div>
 </div>
 </div>
@@ -1579,7 +1587,7 @@ PSF \left( r, z; z_p, \mathbf{p} \right) = \left| \mathbf{R} \left( r; \mathbf{p
 <span class="n">PSF_rz</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">PSF_rz</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1589,7 +1597,7 @@ PSF \left( r, z; z_p, \mathbf{p} \right) = \left| \mathbf{R} \left( r; \mathbf{p
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Profile-in-r-and-z">Profile in r and z<a class="anchor-link" href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python.html#Profile-in-r-and-z">¶</a>
+<h3 id="Profile-in-r-and-z">Profile in r and z<a class="anchor-link" href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/#Profile-in-r-and-z">¶</a>
 </h3>
 </div>
 </div>
@@ -1610,7 +1618,7 @@ PSF \left( r, z; z_p, \mathbf{p} \right) = \left| \mathbf{R} \left( r; \mathbf{p
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1620,7 +1628,7 @@ PSF \left( r, z; z_p, \mathbf{p} \right) = \left| \mathbf{R} \left( r; \mathbf{p
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -1641,7 +1649,7 @@ PSF \left( r, z; z_p, \mathbf{p} \right) = \left| \mathbf{R} \left( r; \mathbf{p
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>z is the stage <em>displacement</em> in an inverted microscope. So, negative z's correspond to moving "up" in the sample.</p>
-<h2 id="Step-3:-Resample-the-PSF-onto-a-rotationally-symmetric-Cartesian-grid">Step 3: Resample the PSF onto a rotationally-symmetric Cartesian grid<a class="anchor-link" href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python.html#Step-3:-Resample-the-PSF-onto-a-rotationally-symmetric-Cartesian-grid">¶</a>
+<h2 id="Step-3:-Resample-the-PSF-onto-a-rotationally-symmetric-Cartesian-grid">Step 3: Resample the PSF onto a rotationally-symmetric Cartesian grid<a class="anchor-link" href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/#Step-3:-Resample-the-PSF-onto-a-rotationally-symmetric-Cartesian-grid">¶</a>
 </h2>
 <p>Here we generate a two dimensional grid where the value at each grid point is the distance of the point from the center of the grid. These values are supplied to an interpolation function computed from <code>PSF_rz</code> to produce a rotationally-symmetric 2D PSF at each z-position.</p>
 
@@ -1667,7 +1675,7 @@ PSF \left( r, z; z_p, \mathbf{p} \right) = \left| \mathbf{R} \left( r; \mathbf{p
     <span class="n">PSF</span><span class="p">[:,:,</span> <span class="n">z_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">PSF_interp</span><span class="p">(</span><span class="n">r_pixel</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">size_y</span><span class="p">,</span> <span class="n">size_x</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1677,7 +1685,7 @@ PSF \left( r, z; z_p, \mathbf{p} \right) = \left| \mathbf{R} \left( r; \mathbf{p
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Save-z-stack-to-a-movie">Save z-stack to a movie<a class="anchor-link" href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python.html#Save-z-stack-to-a-movie">¶</a>
+<h2 id="Save-z-stack-to-a-movie">Save z-stack to a movie<a class="anchor-link" href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/#Save-z-stack-to-a-movie">¶</a>
 </h2>
 </div>
 </div>
@@ -1731,7 +1739,7 @@ PSF \left( r, z; z_p, \mathbf{p} \right) = \left| \mathbf{R} \left( r; \mathbf{p
 <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1750,7 +1758,7 @@ PSF \left( r, z; z_p, \mathbf{p} \right) = \left| \mathbf{R} \left( r; \mathbf{p
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Summary">Summary<a class="anchor-link" href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python.html#Summary">¶</a>
+<h2 id="Summary">Summary<a class="anchor-link" href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/#Summary">¶</a>
 </h2>
 <p>In summary, this method for calculating the Gibson-Lanni PSF is fast because it reduces the problem to a numer of matrix operations, rather than a numerical integration of the Kirchhoff diffraction integral. I especially find the Fourier-Bessel approximation of the phase function very clever, since this enables us to apply the integral identity described above. Moreover, it seems like the approach can extend to computing PSFs from other wavefront aberrations, though at the moment I do not know how it might handle non-rotationally symmetric pupils. (I am referring to the <code>W</code> variable above.)</p>
 <p>I would like to thank the first author of the work, <a href="http://www.ee.cuhk.edu.hk/~jzli/">Jizhou Li</a>, for encouraging me to write this as a blog post and for providing feedback on the implementation presented here.</p>
@@ -1758,19 +1766,20 @@ PSF \left( r, z; z_p, \mathbf{p} \right) = \left| \mathbf{R} \left( r; \mathbf{p
 </div>
 </div>
 </div>
+</div>
     </div>
-  </div>
-
-    </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/accessing-the-raspberry-pi-camera-image-sensor.html" class="u-url">Accessing the Raspberry Pi camera image sensor</a></h1>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/accessing-the-raspberry-pi-camera-image-sensor/" class="u-url">Accessing the Raspberry Pi camera image sensor</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
-            <p class="dateline"><a href="posts/accessing-the-raspberry-pi-camera-image-sensor.html" rel="bookmark"><time class="published dt-published" datetime="2017-08-26T23:33:07+02:00" title="2017-08-26 23:33">2017-08-26 23:33</time></a></p>
+            <p class="dateline">
+            <a href="posts/accessing-the-raspberry-pi-camera-image-sensor/" rel="bookmark">
+            <time class="published dt-published" datetime="2017-08-26T23:33:07+02:00" itemprop="datePublished" title="2017-08-26 23:33">2017-08-26 23:33</time></a>
+            </p>
                 <p class="commentline">
         
-    <a href="posts/accessing-the-raspberry-pi-camera-image-sensor.html#disqus_thread" data-disqus-identifier="cache/posts/accessing-the-raspberry-pi-camera-image-sensor.html">Comments</a>
+    <a href="posts/accessing-the-raspberry-pi-camera-image-sensor/#disqus_thread" data-disqus-identifier="cache/posts/accessing-the-raspberry-pi-camera-image-sensor.html">Comments</a>
 
 
         </p>
@@ -1821,7 +1830,7 @@ immediately behind it. The sensor is inside the small gray rectangular
 housing that is attached to the control board by a small ribbon cable
 (to its right) and a bit of two-sided sticky foam tape (underneath the
 sensor; not visible).</p>
-<img alt="The Raspberry Pi Camera Module V2" class="align-center" src="pi_camera_step0.jpg" style="width: 400px;">
+<img alt="The Raspberry Pi Camera Module V2" class="align-center" src="images/pi_camera_step0.thumbnail.jpg">
 </div>
 <div class="section" id="step-1-remove-the-main-ribbon-cable">
 <h2>Step 1: Remove the main ribbon cable</h2>
@@ -1829,7 +1838,7 @@ sensor; not visible).</p>
 cable that attaches the module to the Pi. I did this by pulling on the
 black tabs on the two ends of the connecter until the cable is easily
 removed. I labeled the sides of the ribbon cable just in case.</p>
-<img alt="Remove the main ribbon cable from the control board" class="align-center" src="pi_camera_step1.jpg" style="width: 400px;">
+<img alt="Remove the main ribbon cable from the control board" class="align-center" src="images/pi_camera_step1.thumbnail.jpg">
 </div>
 <div class="section" id="step-2-detach-the-sensor-s-ribbon-cable">
 <h2>Step 2: Detach the sensor's ribbon cable</h2>
@@ -1837,14 +1846,14 @@ removed. I labeled the sides of the ribbon cable just in case.</p>
 that attaches the sensor to the control board. I essentially applied a
 small torque to the bottom edge of the connector until it just
 "popped" up, as seen in the second image below.</p>
-<img alt="The small ribbon cable from the sensor is to the right." class="align-center" src="pi_camera_step2.jpg" style="width: 400px;">
+<img alt="The small ribbon cable from the sensor is to the right." class="align-center" src="images/pi_camera_step2.thumbnail.jpg">
 </div>
 <div class="section" id="step-3-remove-the-sensor-from-the-control-board">
 <h2>Step 3: Remove the sensor from the control board</h2>
 <p>In the third step, I used my thumbnail to gently pry the sensor from
 the control board. The sensor is attached with some two-sided sticky
 tape and may need a few minutes of work to come free.</p>
-<img alt="Pull the sensor off the control board." class="align-center" src="pi_camera_step3.jpg" style="width: 400px;">
+<img alt="Pull the sensor off the control board." class="align-center" src="images/pi_camera_step3.thumbnail.jpg">
 </div>
 <div class="section" id="step-4-remove-the-rectangular-housing">
 <h2>Step 4: Remove the rectangular housing</h2>
@@ -1854,17 +1863,17 @@ gently work a knife (or, better yet, a thin screw driver) between the
 housing and the sensor board, taking care not to let the blade go too
 far into the housing and possibly ruining one of the resistors or wire
 bonds.</p>
-<img alt="Cut carefully on one side of the housing." class="align-center" src="pi_camera_step4.jpg" style="width: 400px;"><p>Once you get a knife between the two, try popping the housing off of
+<img alt="Cut carefully on one side of the housing." class="align-center" src="images/pi_camera_step4.thumbnail.jpg"><p>Once you get a knife between the two, try popping the housing off of
 the sensor.</p>
-<img alt="Once the edge is cut, pop the housing off." class="align-center" src="pi_camera_step4b.jpg" style="width: 400px;"><p>When I did this I cut on three sides of the housing, but in retrospect
+<img alt="Once the edge is cut, pop the housing off." class="align-center" src="images/pi_camera_step4b.thumbnail.jpg"><p>When I did this I cut on three sides of the housing, but in retrospect
 I should have only cut on the side opposite the ribbon cable and pried
 the other sides loose. This is because I damaged a small resistor when
 the knife blade went too far into the housing. You can see this below
 and, at the same time, get an idea of the layout of the sensor board
 so you know where you can and can't cut.</p>
-<img alt="The resistor near the top of the board was damaged when cutting the housing." class="align-center" src="pi_camera_step4c.png" style="width: 400px;"><p>If you have the normal version of the camera, then you can also find the IR blocking filter
+<img alt="The resistor near the top of the board was damaged when cutting the housing." class="align-center" src="images/pi_camera_step4c.thumbnail.png"><p>If you have the normal version of the camera, then you can also find the IR blocking filter
 inside the housing.</p>
-<img alt="The IR blocking filter." class="align-center" src="pi_camera_step4d.jpg" style="width: 400px;"><p>Fortunately for me the camera still works, despite the damaged
+<img alt="The IR blocking filter." class="align-center" src="images/pi_camera_step4d.thumbnail.jpg"><p>Fortunately for me the camera still works, despite the damaged
 resistor. I can now place samples directly on the sensor if I wanted
 to, though the wire bonds from the sensor to its control board appear
 quite fragile. For this reason, it may make more sense to build a
@@ -1874,29 +1883,30 @@ different methods for mounting the sample.</p>
 </div>
 </div>
     </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/modeling-noise-for-image-simulations.html" class="u-url">Modeling noise for image simulations</a></h1>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/modeling-noise-for-image-simulations/" class="u-url">Modeling noise for image simulations</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
-            <p class="dateline"><a href="posts/modeling-noise-for-image-simulations.html" rel="bookmark"><time class="published dt-published" datetime="2017-07-14T08:14:00+02:00" title="2017-07-14 08:14">2017-07-14 08:14</time></a></p>
+            <p class="dateline">
+            <a href="posts/modeling-noise-for-image-simulations/" rel="bookmark">
+            <time class="published dt-published" datetime="2017-07-14T08:14:00+02:00" itemprop="datePublished" title="2017-07-14 08:14">2017-07-14 08:14</time></a>
+            </p>
                 <p class="commentline">
         
-    <a href="posts/modeling-noise-for-image-simulations.html#disqus_thread" data-disqus-identifier="cache/posts/modeling-noise-for-image-simulations.html">Comments</a>
+    <a href="posts/modeling-noise-for-image-simulations/#disqus_thread" data-disqus-identifier="cache/posts/modeling-noise-for-image-simulations.html">Comments</a>
 
 
         </p>
 </div>
     </header><div class="p-summary entry-summary">
-    <div tabindex="-1" id="notebook" class="border-box-sizing">
-    <div class="container" id="notebook-container">
-
+    <div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><a href="posts/simulating-inline-holograms.html">In my previous post</a>, I described a method for simulating inline holography images. The ultimate purpose of doing this was to generate holography data that could be used to test the performance of different reconstruction algorithms. Since I would know the input object, I could apply the reconstruction algorithm to the holograms and see how closely the reconstructed object matched the known input.</p>
+<p><a href="posts/modeling-noise-for-image-simulations/simulating-inline-holograms.html">In my previous post</a>, I described a method for simulating inline holography images. The ultimate purpose of doing this was to generate holography data that could be used to test the performance of different reconstruction algorithms. Since I would know the input object, I could apply the reconstruction algorithm to the holograms and see how closely the reconstructed object matched the known input.</p>
 <p>My modeling however ignored an important aspect about the holographic process, namely the acquisition of digital images and the assoicated noise that would accompany the raw data. This is important because holographic reconstruction algorithms need to be robust against the uncertainty that will inevitably be introduced by recording the hologram with a digital camera.</p>
 
 </div>
@@ -1922,7 +1932,7 @@ different methods for mounting the sample.</p>
 <span class="nb">print</span><span class="p">(</span><span class="s1">'Scipy version:</span><span class="se">\t\t</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">scipy</span><span class="o">.</span><span class="n">__version__</span><span class="p">))</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1932,7 +1942,7 @@ different methods for mounting the sample.</p>
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -1957,14 +1967,14 @@ Scipy version:		0.19.0
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="A-Mathematical-Model-for-Camera-Noise">A Mathematical Model for Camera Noise<a class="anchor-link" href="posts/modeling-noise-for-image-simulations.html#A-Mathematical-Model-for-Camera-Noise">¶</a>
+<h2 id="A-Mathematical-Model-for-Camera-Noise">A Mathematical Model for Camera Noise<a class="anchor-link" href="posts/modeling-noise-for-image-simulations/#A-Mathematical-Model-for-Camera-Noise">¶</a>
 </h2>
 <p>One of the best descriptions of camera noise that I have ever found may be the <a href="http://www.emva.org/standards-technology/emva-1288/">EMVA 1288 Standard</a>. This document details a standard set of models and procedures to characterize CMOS and CCD cameras and light sensors. From its website:</p>
 <blockquote>
 <p>EMVA launched the initiative to define a unified method to measure, compute and present specification parameters for cameras and image sensors used for machine vision applications... [The EMVA Standard] creates transparency by defining reliable and exact measurement procedures as well as data presentation guidelines and makes the comparison of cameras and image sensors much easier.</p>
 </blockquote>
 <p>In particular, chapters 2 and 3 of the Standard provide a very clear and concise description the mathematical model for CCD/CMOS camera noise. Below, I have adapted the image of the mathematical model presented at the beginning of chapter 2.</p>
-<p><img src="camera_noise_model.png" alt="Optical system with pupils"></p>
+<p><img src="images/camera_noise_model.png" alt="Optical system with pupils"></p>
 <p>In this model, the camera/sensor is a single pixel that takes an input (a number of photons) and transforms this number to an output (a digital value in analog-to-digital units, or ADU). In performing this transformation, various sources of noise are added to the signal so that, given a camera's output in ADU, we can only make probabilisitic inferences about the actual number of photons impinging upon it. There are also a few assumptions in this model that, when taken together, constitute what's called an <em>ideal image sensor</em>. They are:</p>
 <ol>
 <li>the numer of photons collected by the pixel depends on the product of irradiance $ E \, \left[ W / m^2 \right] $ and the exposure time $ t_{exp} \, \left[ s \right] $;</li>
@@ -1974,16 +1984,14 @@ Scipy version:		0.19.0
 <li>and only the dark current depends on the temperature.</li>
 </ol>
 <p>From these five assumptions, the laws of quantum mechanics, and the laws of probability, expressions for the mean output, $ \mu_y $, the variance of the output $ \sigma_y^2 $, and the signal-to-noise ratio ($SNR $) may be derived.</p>
-<p>\begin{equation*}
+\begin{equation*}
 \mu_y = K \mu_d + K \eta \mu_p \\
 \sigma_y^2 = K^2 \sigma_d^2 + K \left( \mu_y - K \mu_d \right) \\
 SNR = \frac{\eta \mu_p}{\sqrt{\sigma_d^2 + \sigma_q^2/K^2 + \eta \mu_p}}
-\end{equation*}</p>
-<p>In these expressions, $\mu$ and $\sigma^2$ represent the mean and variance of the number of photons hitting the camera ($p$), the dark noise ($d$), and the output signal in ADU's ($y$). The number of electrons $ \mu_e $ generated by $\mu_p$ photons hitting the active area of the sensor is obtained from the expression for the quantum efficiency $\eta$, an engineered property of the camera that in general depends on the wavelength.</p>
-<p>\begin{equation*}
+\end{equation*}<p>In these expressions, $\mu$ and $\sigma^2$ represent the mean and variance of the number of photons hitting the camera ($p$), the dark noise ($d$), and the output signal in ADU's ($y$). The number of electrons $ \mu_e $ generated by $\mu_p$ photons hitting the active area of the sensor is obtained from the expression for the quantum efficiency $\eta$, an engineered property of the camera that in general depends on the wavelength.</p>
+\begin{equation*}
 \eta \left( \lambda \right) = \frac{\mu_e}{\mu_p}
-\end{equation*}</p>
-<p>The sensitivity of the camera $K \, \left[ ADU / e^- \right] $ represents the amplification of the voltage in the pixel from the photoelectrons and is also a property of the camera. Finally, $ \sigma_q^2 $ represents the noise introduced by digitzing the continous voltage signal into a digital one.</p>
+\end{equation*}<p>The sensitivity of the camera $K \, \left[ ADU / e^- \right] $ represents the amplification of the voltage in the pixel from the photoelectrons and is also a property of the camera. Finally, $ \sigma_q^2 $ represents the noise introduced by digitzing the continous voltage signal into a digital one.</p>
 <p>The EMVA 1288 Standard explains how to derive these expressions from the assumptions and known physical laws, so I will not go into their derivations in this post. Instead, I will focus on explaining how we can use this model to simulate the effects of camera noise in our holograms.</p>
 
 </div>
@@ -1994,7 +2002,7 @@ SNR = \frac{\eta \mu_p}{\sqrt{\sigma_d^2 + \sigma_q^2/K^2 + \eta \mu_p}}
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="From-Model-to-Simulation">From Model to Simulation<a class="anchor-link" href="posts/modeling-noise-for-image-simulations.html#From-Model-to-Simulation">¶</a>
+<h2 id="From-Model-to-Simulation">From Model to Simulation<a class="anchor-link" href="posts/modeling-noise-for-image-simulations/#From-Model-to-Simulation">¶</a>
 </h2>
 <p>The goal of the simulation will be to take a simulated hologram as input and convert it into an image that might be captured by a digital camera. This means that the final image should contain noise that is realistic and follows the rules of the model.</p>
 <p>The model will depend on five free parameters that vary from camera-to-camera. They are:</p>
@@ -2006,11 +2014,10 @@ SNR = \frac{\eta \mu_p}{\sqrt{\sigma_d^2 + \sigma_q^2/K^2 + \eta \mu_p}}
 <li>and the bit-depth of the camera $k$.</li>
 </ol>
 <p>The dark noise $ \sigma_d^2 $ is actually comprised of two separate noise sources, i.e. the read noise $ \sigma_r^2 $ and the dark current $ \mu_I $. Because the noise sources are independent, we can write</p>
-<p>\begin{equation*}
+\begin{equation*}
 \sigma_d^2 = \sigma_r^2 + \sigma_I^2 \\
 \sigma_d^2 = \sigma_r^2 + \mu_I t_{exp}
-\end{equation*}</p>
-<p>where the last step relies on the fact that the generation of thermal electrons is a Poisson process whose mean is equal to its variance. The units of $\mu_I$ are $e^- / s $ and values for $ \mu_I $ are often provided on camera spec. sheets. Likewise, the read noise $\sigma_r^2$ is also provided on spec. sheets, although in my experience the units are likely to be in root-mean-square electrons or median electrons and not electrons-squared.</p>
+\end{equation*}<p>where the last step relies on the fact that the generation of thermal electrons is a Poisson process whose mean is equal to its variance. The units of $\mu_I$ are $e^- / s $ and values for $ \mu_I $ are often provided on camera spec. sheets. Likewise, the read noise $\sigma_r^2$ is also provided on spec. sheets, although in my experience the units are likely to be in root-mean-square electrons or median electrons and not electrons-squared.</p>
 <p>Other than the inputs, we do not need to provide values for the other numbers in the model because they are related to the free parameters by various physical and mathematical laws.</p>
 <p>Finally, let's ignore spatial noise sources in these simulations because it's difficult to characterize them with a single number. Spatial noise is a variation in the free parameters of the camera from pixel to pixel. An example of a common type of spatial noise is photon response non-uniformity and is manifest in a sensitivity $ K $ that varies between pixels. Ignoring spatial noise in the simulations simply means that values for the read noise, dark current, quantum efficiency, and sensitivty are the same for all pixels.</p>
 
@@ -2022,20 +2029,18 @@ SNR = \frac{\eta \mu_p}{\sqrt{\sigma_d^2 + \sigma_q^2/K^2 + \eta \mu_p}}
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Step-0:-Convert-the-electric-field-to-photons">Step 0: Convert the electric field to photons<a class="anchor-link" href="posts/modeling-noise-for-image-simulations.html#Step-0:-Convert-the-electric-field-to-photons">¶</a>
+<h3 id="Step-0:-Convert-the-electric-field-to-photons">Step 0: Convert the electric field to photons<a class="anchor-link" href="posts/modeling-noise-for-image-simulations/#Step-0:-Convert-the-electric-field-to-photons">¶</a>
 </h3>
-<p>Before doing anything, we need to take the electric field from our Fourier optics simulations and convert it to units of photons. If it isn't clear how you would first get an electric field, you can refer to my <a href="posts/simulating-inline-holograms.html">previous post</a> on calculating the hologram of a thin, circular phase-only object. Typically, the calcuation of the electric field will follow from the laws of diffraction and serve as an input for the camera model.</p>
+<p>Before doing anything, we need to take the electric field from our Fourier optics simulations and convert it to units of photons. If it isn't clear how you would first get an electric field, you can refer to my <a href="posts/modeling-noise-for-image-simulations/simulating-inline-holograms.html">previous post</a> on calculating the hologram of a thin, circular phase-only object. Typically, the calcuation of the electric field will follow from the laws of diffraction and serve as an input for the camera model.</p>
 <p>To get the number of photons, we first compute the irradiance of the field using the magnitude of the time-averaged <a href="https://en.wikipedia.org/wiki/Poynting_vector#Plane_waves">Poynting vector</a> of a linearly-polarzed electromagnetic wave in free space, which is</p>
-<p>\begin{equation*}
+\begin{equation*}
 E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
-\end{equation*}</p>
-<p>Here, $E \left( x, y \right) $ is the irradiance at point $ \left( x, y \right) $, $U \left( x, y \right) $ is the scalar electric field at the same point, and $Z_0 \\approx 377 \, \Omega $ is the <a href="https://en.wikipedia.org/wiki/Wave_impedance">impedance of free space</a>. We would change the value for the impedance if we were imaging in a medium other than vacuum. The units of the field are $ V / m $ which, when squared and divided by the units of the impedance (Ohms), gives units of power per area, or $ W / m^2 $. It's also worth mentioning that we are implicitly assuming the field varies smoothly on the length scale of a pixel. This is why we can use the expression for the Poynting vector of a plane wave.</p>
+\end{equation*}<p>Here, $E \left( x, y \right) $ is the irradiance at point $ \left( x, y \right) $, $U \left( x, y \right) $ is the scalar electric field at the same point, and $Z_0 = 377 \, \Omega $ is the <a href="https://en.wikipedia.org/wiki/Wave_impedance">impedance of free space</a>. We would change the value for the impedance if we were imaging in a medium other than vacuum. The units of the field are $ V / m $ which, when squared and divided by the units of the impedance (Ohms), gives units of power per area, or $ W / m^2 $. It's also worth mentioning that we are implicitly assuming the field varies smoothly on the length scale of a pixel. This is why we can use the expression for the Poynting vector of a plane wave.</p>
 <p>The mean number of photons is obtained from the irradiance by the expression</p>
-<p>\begin{align*}
+\begin{align*}
 \mu_p &amp;= \frac{\lambda A}{hc}Et_{exp} \\
 &amp;= \frac{\lambda A}{2hcZ_0} \left| U \right|^2 t_{exp}
-\end{align*}</p>
-<p>where $ A $ is the pixel's area and $ \frac{hc}{\lambda} $ is the energy per photon in units of Joules, with $hc \approx 2 \times 10^{-25} \, J \cdot m $.</p>
+\end{align*}<p>where $ A $ is the pixel's area and $ \frac{hc}{\lambda} $ is the energy per photon in units of Joules, with $hc = 2 \times 10^{-25} \, J \cdot m $.</p>
 <p>This step is a bit cumbersome, and in the rest of what follows I will skip this step and will use a set number of photons directly as the input to the simulations, rather than a scalar field.</p>
 
 </div>
@@ -2046,7 +2051,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Step-1:-Compute-the-photon-shot-noise">Step 1: Compute the photon shot noise<a class="anchor-link" href="posts/modeling-noise-for-image-simulations.html#Step-1:-Compute-the-photon-shot-noise">¶</a>
+<h3 id="Step-1:-Compute-the-photon-shot-noise">Step 1: Compute the photon shot noise<a class="anchor-link" href="posts/modeling-noise-for-image-simulations/#Step-1:-Compute-the-photon-shot-noise">¶</a>
 </h3>
 <p>For the sake of simplicity, let's start by assuming that we have a camera with $ 256 \times 256 $ pixels and a mean incident photon flux of 500 photons on each pixel. This would produce an image that looks like this:</p>
 
@@ -2074,7 +2079,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -2084,7 +2089,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -2143,7 +2148,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -2153,7 +2158,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -2180,7 +2185,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -2190,7 +2195,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -2210,7 +2215,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Step-2:-Compute-the-number-of-photoelectrons">Step 2: Compute the number of photoelectrons<a class="anchor-link" href="posts/modeling-noise-for-image-simulations.html#Step-2:-Compute-the-number-of-photoelectrons">¶</a>
+<h3 id="Step-2:-Compute-the-number-of-photoelectrons">Step 2: Compute the number of photoelectrons<a class="anchor-link" href="posts/modeling-noise-for-image-simulations/#Step-2:-Compute-the-number-of-photoelectrons">¶</a>
 </h3>
 <p>At this point we're going to need some numbers for our camera. For this example, I chose a camera using the popular Sony IMX264 CMOS chip, the <a href="https://www.ptgrey.com/chameleon3-50-mp-mono-usb3-vision-sonyimx264">FLIR Chamleon 3</a> (part number CM3-U3-50S5M-CS). Here are some of the key <a href="https://www.ptgrey.com/support/downloads/10430">specs</a> for our modeling:</p>
 <table>
@@ -2276,7 +2281,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -2286,7 +2291,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -2306,7 +2311,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Step-3:-Simulate-read-noise-and-dark-current">Step 3: Simulate read noise and dark current<a class="anchor-link" href="posts/modeling-noise-for-image-simulations.html#Step-3:-Simulate-read-noise-and-dark-current">¶</a>
+<h3 id="Step-3:-Simulate-read-noise-and-dark-current">Step 3: Simulate read noise and dark current<a class="anchor-link" href="posts/modeling-noise-for-image-simulations/#Step-3:-Simulate-read-noise-and-dark-current">¶</a>
 </h3>
 <p>Following the schematic of the camera model above, we see that we next need to add the dark noise. Dark noise (not to be confused with dark current) refers to the noise in the pixels when there is no light on the camera. Typically we deal with two sources of dark noise: readout (or just "read") noise and dark current. The camera specs in our example only provide us with the total dark noise, which is not surprising since dark current is not very significant in microscopy or machine vision. (It is however significant in astronomy because of the very long exposure times of several seconds or more, which allows appreciable dark current electrons to accumulate during the exposure.)</p>
 <p>To the best of my knowledge, when dark noise is primarily read noise we may well model it as a Gaussian distribution whose standard deviation is equivalent to the dark noise spec of the camera. This modeling approach is taken, for example, in the <a href="http://bigwww.epfl.ch/smlm/challenge2016/index.html?p=methods#4">2016 SMLMS Challenge</a>, a community-driven competition to identify the best reconstruction algorithms for single molecule localization microscopy. Please note that the noise model employed in the challenge was for an electron multiplying CCD (EMCCD), so you may find that it differs slightly from what I am discussing here.</p>
@@ -2346,7 +2351,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -2356,7 +2361,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -2389,7 +2394,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -2399,7 +2404,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -2419,7 +2424,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Step-4:-Convert-from-$-e^--$-to-ADU">Step 4: Convert from $ e^- $ to ADU<a class="anchor-link" href="posts/modeling-noise-for-image-simulations.html#Step-4:-Convert-from-%24-e%5E--%24-to-ADU">¶</a>
+<h3 id="Step-4:-Convert-from-$-e^--$-to-ADU">Step 4: Convert from $ e^- $ to ADU<a class="anchor-link" href="posts/modeling-noise-for-image-simulations/#Step-4:-Convert-from-%24-e%5E--%24-to-ADU">¶</a>
 </h3>
 <p>Now we need to convert the value of each pixel from electrons to ADU, or analog-to-digital units. ADU's are the units of grey scale that are output by monochrome cameras. To do this, we multiply the number of electrons after the addition of read noise by the sensitivity. We also need to ensure that the final ADU count is discrete and to set the maximum upper value of ADU's to the $ 2^k - 1 $ where $ k $ is the camera's bit-depth. The latter operation ensures that saturation of the pixels is correctly modeled.</p>
 
@@ -2448,7 +2453,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -2458,7 +2463,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -2478,7 +2483,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Step-5:-Add-a-basline">Step 5: Add a basline<a class="anchor-link" href="posts/modeling-noise-for-image-simulations.html#Step-5:-Add-a-basline">¶</a>
+<h3 id="Step-5:-Add-a-basline">Step 5: Add a basline<a class="anchor-link" href="posts/modeling-noise-for-image-simulations/#Step-5:-Add-a-basline">¶</a>
 </h3>
 <p>Many cameras have a built-in baseline ADU value. This prevents the number of ADU's from becoming negative at low input signal. The <a href="http://www.andor.com/scientific-cameras/neo-and-zyla-scmos-cameras/zyla-42-plus-scmos">Andor Zyla 4.2</a>, for example, has a baseline value of 100 ADU. If you take a large number of dark frames and compute the average of each pixel in a Zyla, the average values will very nearly be 100.</p>
 <p>We don't have baseline information for this camera, but 100 seems like a reasonable assumption. Here's what our final image will look like if we had a constant average of 500 photons incident on each pixel.</p>
@@ -2505,7 +2510,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -2515,7 +2520,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -2535,10 +2540,10 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Adding-noise-to-a-simulated-hologram">Adding noise to a simulated hologram<a class="anchor-link" href="posts/modeling-noise-for-image-simulations.html#Adding-noise-to-a-simulated-hologram">¶</a>
+<h2 id="Adding-noise-to-a-simulated-hologram">Adding noise to a simulated hologram<a class="anchor-link" href="posts/modeling-noise-for-image-simulations/#Adding-noise-to-a-simulated-hologram">¶</a>
 </h2>
-<p>Let's see how the hologram from my last post will look like if I add camera noise to it. I'm going to assume that we are using the same camera as in my example to record the hologram. First, we'll setup the Fourier optics code <a href="posts/simulating-inline-holograms.html">as before to make the hologram</a>. Then, we'll write a function that adds the noise and, in each frame of the animation, call it with the calculated field as an input.</p>
-<p>This first part more-or-less repeats the essential bits of my last post. We make a circular object that doesn't absorb any light but which has a refractive index which causes a constant phase shift of 0.75 radians. We then use Fourier optics to compute the scattered field in the same plane as the object; this will be the starting frame of the animation. <a href="posts/modeling-noise-for-image-simulations.html#Step-0:-Convert-the-electric-field-to-photons">Instead of directly computing the number of photons per pixel from the field</a>, we simply renormalize it so that the maximum value is 100 photons. 100 photons might seem like a weak signal, but this is actually quite a good camera and we will need to make the signal weak so that we can see the noise in the movie. In fact, the spec sheet for the camera reports an absolute minimum detectable signal of about 4 photons per pixel.</p>
+<p>Let's see how the hologram from my last post will look like if I add camera noise to it. I'm going to assume that we are using the same camera as in my example to record the hologram. First, we'll setup the Fourier optics code <a href="posts/modeling-noise-for-image-simulations/simulating-inline-holograms.html">as before to make the hologram</a>. Then, we'll write a function that adds the noise and, in each frame of the animation, call it with the calculated field as an input.</p>
+<p>This first part more-or-less repeats the essential bits of my last post. We make a circular object that doesn't absorb any light but which has a refractive index which causes a constant phase shift of 0.75 radians. We then use Fourier optics to compute the scattered field in the same plane as the object; this will be the starting frame of the animation. <a href="posts/modeling-noise-for-image-simulations/#Step-0:-Convert-the-electric-field-to-photons">Instead of directly computing the number of photons per pixel from the field</a>, we simply renormalize it so that the maximum value is 100 photons. 100 photons might seem like a weak signal, but this is actually quite a good camera and we will need to make the signal weak so that we can see the noise in the movie. In fact, the spec sheet for the camera reports an absolute minimum detectable signal of about 4 photons per pixel.</p>
 
 </div>
 </div>
@@ -2586,7 +2591,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 <span class="n">norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">gt_prime</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -2629,7 +2634,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
     <span class="k">return</span> <span class="n">adu</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -2700,7 +2705,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -2710,7 +2715,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stderr output_text">
@@ -2737,7 +2742,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Simulated-holograms-on-a-poor-camera">Simulated holograms on a poor camera<a class="anchor-link" href="posts/modeling-noise-for-image-simulations.html#Simulated-holograms-on-a-poor-camera">¶</a>
+<h2 id="Simulated-holograms-on-a-poor-camera">Simulated holograms on a poor camera<a class="anchor-link" href="posts/modeling-noise-for-image-simulations/#Simulated-holograms-on-a-poor-camera">¶</a>
 </h2>
 <p>As I mentioned, the FLIR Chameleon camera is actually quite good. In fact, a similar camera with the Sony IMX265 chip has been successfully used for <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5431525/">single molecule localization microscopy</a>, which means that the noise floor is low enough and the quantum efficiency is high enough to detect the fluorescence from single molecules. Here's what another hologram might look like if the dark noise was worse, say 20 electrons. (For comparison, many sensors in digital cameras have read noise values around or below 10 electrons. Thanks <a href="https://twitter.com/kD3AN/status/885602631091179521">@kD3AN</a> for this <a href="http://www.clarkvision.com/articles/digital.sensor.performance.summary/#read_noise">link</a>.)</p>
 <p>Notice how many of the features of the hologram--especially those away from the center--become much more difficult to detect due to increased dark noise of the sensor. In particular, try pausing both movies around a distance of $ 40 \, \mu m $ and notice how much clearer the rings are for the low noise camera.</p>
@@ -2801,7 +2806,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -2811,7 +2816,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stderr output_text">
@@ -2838,7 +2843,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Discussion">Discussion<a class="anchor-link" href="posts/modeling-noise-for-image-simulations.html#Discussion">¶</a>
+<h2 id="Discussion">Discussion<a class="anchor-link" href="posts/modeling-noise-for-image-simulations/#Discussion">¶</a>
 </h2>
 <p>The addition of realistic camera noise to the hologram simulations is an important part of the simulation framework. It's impossible to record a digital hologram without noise, so any good holographic reconstruction algorithm needs to be capable of making estimates of the original object in the presence of shot noise and noise from the camera.</p>
 <p>One source of noise that we did not model was noise associated with pixel non-uniformities. This sort of effect represents a pixel-dependent sensitivity, quantum efficiency, and dark noise. Non-uniformities are very often important take into account in image analysis but difficult to both measure and model. They're difficult to measure because you need a <strong>very</strong> stable light source that is <strong>very</strong> flat to a degree that is better than 99% across the camera chip. Believe me when I say that creating such a flat illumination pattern is extremely difficult, even with incoherent light. (The way to do it is to use an <a href="https://en.wikipedia.org/wiki/Integrating_sphere">integrating sphere</a> that directly faces the camera chip. The f-number of exit port of the sphere is recommended to be F/# = 8 in the EMVA 1288 standard.) They're difficult to model because they cannot be represented by a single number the way, for example, dark noise or quantum efficiency can.</p>
@@ -2848,36 +2853,35 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 </div>
 </div>
 </div>
+</div>
     </div>
-  </div>
-
-    </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/simulating-inline-holograms.html" class="u-url">Simulating Inline Holograms</a></h1>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/simulating-inline-holograms/" class="u-url">Simulating Inline Holograms</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
-            <p class="dateline"><a href="posts/simulating-inline-holograms.html" rel="bookmark"><time class="published dt-published" datetime="2017-04-29T11:25:01+02:00" title="2017-04-29 11:25">2017-04-29 11:25</time></a></p>
+            <p class="dateline">
+            <a href="posts/simulating-inline-holograms/" rel="bookmark">
+            <time class="published dt-published" datetime="2017-04-29T11:25:01+02:00" itemprop="datePublished" title="2017-04-29 11:25">2017-04-29 11:25</time></a>
+            </p>
                 <p class="commentline">
         
-    <a href="posts/simulating-inline-holograms.html#disqus_thread" data-disqus-identifier="cache/posts/simulating-inline-holograms.html">Comments</a>
+    <a href="posts/simulating-inline-holograms/#disqus_thread" data-disqus-identifier="cache/posts/simulating-inline-holograms.html">Comments</a>
 
 
         </p>
 </div>
     </header><div class="p-summary entry-summary">
-    <div tabindex="-1" id="notebook" class="border-box-sizing">
-    <div class="container" id="notebook-container">
-
+    <div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Software has played a big role in digital holographic imaging, arguably starting from the publication in which <a href="http://aip.scitation.org/doi/10.1063/1.1755043">Goodman and Lawrence generated images from electronically recorded holograms</a>. One of the things I would like to do for my <a href="https://hackaday.io/kmdouglass">lensless imager project</a> is to develop a small set of tools to simulate various types of digital holograms. My reason for wanting to do this is that it will help in developing the algorithms that will actually perform the reconstructions from real holograms. In this post, I will explore a simple method for simulating holograms that is explained in an excellent publication I recently found: <a href="https://arxiv.org/abs/1412.3674">Tatiana Latychevskaia and Hans-Werner Fink, " Practical algorithms for simulation and reconstruction of digital in-line holograms," arXiv 1412.3674 (2016)</a>.</p>
-<h2 id="Inline-holography-with-plane-waves">Inline holography with plane waves<a class="anchor-link" href="posts/simulating-inline-holograms.html#Inline-holography-with-plane-waves">¶</a>
+<h2 id="Inline-holography-with-plane-waves">Inline holography with plane waves<a class="anchor-link" href="posts/simulating-inline-holograms/#Inline-holography-with-plane-waves">¶</a>
 </h2>
-<h3 id="Create-the-ground-truth">Create the ground truth<a class="anchor-link" href="posts/simulating-inline-holograms.html#Create-the-ground-truth">¶</a>
+<h3 id="Create-the-ground-truth">Create the ground truth<a class="anchor-link" href="posts/simulating-inline-holograms/#Create-the-ground-truth">¶</a>
 </h3>
 <p>The first step in the simulation of a digital hologram is to create a ground truth object, i.e. a an object whose optical properties we know <em>a priori</em>. Rather than try to infer an object from a hologram--which is what the lensless imager should do--the simulations should work in the opposite sense and create a realistic hologram from the ground truth. Later, we can use the simulated holograms to test different reconstruction algorithms and see which ones come closest to reproducing the known objects.</p>
 
@@ -2904,7 +2908,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 <span class="nb">print</span><span class="p">(</span><span class="s1">'Scipy version:</span><span class="se">\t\t</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">scipy</span><span class="o">.</span><span class="n">__version__</span><span class="p">))</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -2914,7 +2918,7 @@ E \left(x, y \right) = \frac{1}{2Z_o} \left| U\left(x, y \right) \right|^2
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -2962,7 +2966,7 @@ Scipy version:		0.19.0
 <span class="n">gt</span><span class="p">[</span><span class="n">gtMask</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">gtPhase</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -3010,7 +3014,7 @@ Scipy version:		0.19.0
     <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">amp</span><span class="p">,</span> <span class="n">phase</span><span class="p">,</span> <span class="n">cb_amp</span><span class="p">,</span> <span class="n">cb_phase</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -3025,7 +3029,7 @@ Scipy version:		0.19.0
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -3035,7 +3039,7 @@ Scipy version:		0.19.0
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -3060,7 +3064,7 @@ Scipy version:		0.19.0
 <li>to emphasize that the object only weakly perturbs the light;</li>
 <li>because one complete rotation of the phasor in the complex plane is $2 \pi $ radians. Any value outside the range $ \left[ 0, 2 \pi \right] $ can be mapped back onto a value in this range.</li>
 </ol>
-<h4 id="Set-the-physical-dimensions">Set the physical dimensions<a class="anchor-link" href="posts/simulating-inline-holograms.html#Set-the-physical-dimensions">¶</a>
+<h4 id="Set-the-physical-dimensions">Set the physical dimensions<a class="anchor-link" href="posts/simulating-inline-holograms/#Set-the-physical-dimensions">¶</a>
 </h4>
 <p>The final step in the object creation is to set up the physical dimensions of the problem. There are a few ways we can do this, but I typically like to set the number of pixels that sample the object and the pixel size independently. Then, the physical radius of the object is equivalent to <code>gtRadius * pixelSize</code> and the total array size is equal to <code>numPixels * pixelSize</code>. What's more, because the array is square, we can create just one coordinate vector for both directions.</p>
 
@@ -3079,7 +3083,7 @@ Scipy version:		0.19.0
 <span class="nb">print</span><span class="p">(</span><span class="s1">'The physical radius is:  </span><span class="si">{}</span><span class="s1"> microns'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">physicalRadius</span><span class="p">))</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -3089,7 +3093,7 @@ Scipy version:		0.19.0
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -3123,7 +3127,7 @@ Scipy version:		0.19.0
 <span class="n">fx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">fS</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">fS</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="n">df</span><span class="p">)</span> <span class="c1"># Spatial frequency, inverse microns</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -3134,10 +3138,10 @@ Scipy version:		0.19.0
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><code>dx</code> is the sampling period in the object space, whose inverse <code>fS</code> is the sampling frequency. The maximum information content in the object's Fourier transform is found at the Nyquist frequency, or <code>fS / 2</code>.</p>
-<h3 id="Compute-the-hologram">Compute the hologram<a class="anchor-link" href="posts/simulating-inline-holograms.html#Compute-the-hologram">¶</a>
+<h3 id="Compute-the-hologram">Compute the hologram<a class="anchor-link" href="posts/simulating-inline-holograms/#Compute-the-hologram">¶</a>
 </h3>
 <p>Two common ways to generate a hologram in a real experiment are to illuminate the object with a plane wave and with a spherical wave. In this simulation, I will assume a plane wave illumination because this is somewhat simpler and an easy first case to deal with.</p>
-<h4 id="Step-1:-Find-the-Fourier-transform-of-the-object">Step 1: Find the Fourier transform of the object<a class="anchor-link" href="posts/simulating-inline-holograms.html#Step-1:-Find-the-Fourier-transform-of-the-object">¶</a>
+<h4 id="Step-1:-Find-the-Fourier-transform-of-the-object">Step 1: Find the Fourier transform of the object<a class="anchor-link" href="posts/simulating-inline-holograms/#Step-1:-Find-the-Fourier-transform-of-the-object">¶</a>
 </h4>
 <p>According to the publication by <a href="https://arxiv.org/abs/1412.3674">Latychevskaia and Fink</a>, we first need to compute the Fourier transform of the object.</p>
 
@@ -3168,7 +3172,7 @@ Scipy version:		0.19.0
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -3178,7 +3182,7 @@ Scipy version:		0.19.0
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -3222,7 +3226,7 @@ Scipy version:		0.19.0
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -3232,7 +3236,7 @@ Scipy version:		0.19.0
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -3252,7 +3256,7 @@ Scipy version:		0.19.0
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Step-2:-Verify-that-the-Fourier-transform-is-correct">Step 2: Verify that the Fourier transform is correct<a class="anchor-link" href="posts/simulating-inline-holograms.html#Step-2:-Verify-that-the-Fourier-transform-is-correct">¶</a>
+<h4 id="Step-2:-Verify-that-the-Fourier-transform-is-correct">Step 2: Verify that the Fourier transform is correct<a class="anchor-link" href="posts/simulating-inline-holograms/#Step-2:-Verify-that-the-Fourier-transform-is-correct">¶</a>
 </h4>
 <p>We can verify that we did everything correctly by computing the discrete integral of the absolute squares of the field passing through the original object and its Fourier transform. By <a href="https://en.wikipedia.org/wiki/Parseval's_theorem">Parseval's theorem</a>, these should be equivalent. Though it may seem a bit mysterious, Parseval's theorem is just restating the well-known law about the conservation of energy. Simply put, the energy in the field passing through the object should be equal to the energy carried by its Fourier transform.</p>
 
@@ -3270,7 +3274,7 @@ Scipy version:		0.19.0
 <span class="nb">print</span><span class="p">(</span><span class="s1">'Integral, Fourier transform of object: </span><span class="si">{:.4f}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">GT_int</span><span class="p">))</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -3280,7 +3284,7 @@ Scipy version:		0.19.0
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -3313,7 +3317,7 @@ Integral, Fourier transform of object: 2631.7081
 <span class="nb">print</span><span class="p">(</span><span class="s1">'Percent error: </span><span class="si">{:.2f}</span><span class="s1">%'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">error</span><span class="p">))</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -3323,7 +3327,7 @@ Integral, Fourier transform of object: 2631.7081
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -3343,14 +3347,12 @@ Integral, Fourier transform of object: 2631.7081
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The error is not large, but it does make you wonder where exactly it comes from. Let's do one more sanity check before going any farther. Another property of Fourier transforms is that the DC component (the value of the Fourier transform at a frequency of zero) should be equal to the average of the original signal.</p>
 <p>The average of a two-dimensional discrete signal whose samples are equally spaced is expressed as</p>
-<p>\begin{equation*}
+\begin{equation*}
 \bar{f} = \frac{1}{XY}\sum_{i=0}^{M-1}\sum_{j=0}^{N-1} f \left( i, j \right) \Delta x \Delta y
-\end{equation*}</p>
-<p>Here, $ X $ and $ Y $ are the physical lengths of the array representing the signal and $ \Delta x $ and $ \Delta y $ are the spacings between each array element. Furthermore, the array has a number of pixels $ M $ and $ N $ in the $ x $ and $ y $ directions, respectively. In our case the arrays are square and equally sampled in both directions, so $ X = Y $ and $ \Delta X = \Delta Y $. Additionally, the number of pixels is just $ M = \frac{X}{\Delta X} $, which means that the above expression may be simplified to</p>
-<p>\begin{equation*}
+\end{equation*}<p>Here, $ X $ and $ Y $ are the physical lengths of the array representing the signal and $ \Delta x $ and $ \Delta y $ are the spacings between each array element. Furthermore, the array has a number of pixels $ M $ and $ N $ in the $ x $ and $ y $ directions, respectively. In our case the arrays are square and equally sampled in both directions, so $ X = Y $ and $ \Delta X = \Delta Y $. Additionally, the number of pixels is just $ M = \frac{X}{\Delta X} $, which means that the above expression may be simplified to</p>
+\begin{equation*}
 \bar{f} = \frac{1}{M^2}\sum_{i=0}^{M-1}\sum_{j=0}^{M-1} f \left( i, j \right)
-\end{equation*}</p>
-
+\end{equation*}
 </div>
 </div>
 </div>
@@ -3364,7 +3366,7 @@ Integral, Fourier transform of object: 2631.7081
 <span class="nb">print</span><span class="p">(</span><span class="s1">'Average of the object field: </span><span class="si">{:.4f}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">gt_avg</span><span class="p">))</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -3374,7 +3376,7 @@ Integral, Fourier transform of object: 2631.7081
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -3406,7 +3408,7 @@ Integral, Fourier transform of object: 2631.7081
 <span class="nb">print</span><span class="p">(</span><span class="s1">'DC term: </span><span class="si">{:.4f}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dc_term</span><span class="p">))</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -3416,7 +3418,7 @@ Integral, Fourier transform of object: 2631.7081
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -3435,13 +3437,12 @@ Integral, Fourier transform of object: 2631.7081
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>As you can see, there is also a slight difference between the average of the input field and the DC term of the input's Fourier transform. Since both sanity checks are relatively close, however, I suspect that the differences are due to numerical rounding errors.</p>
-<h4 id="Step-3:-Create-the-angular-spectrum-propagator">Step 3: Create the angular spectrum propagator<a class="anchor-link" href="posts/simulating-inline-holograms.html#Step-3:-Create-the-angular-spectrum-propagator">¶</a>
+<h4 id="Step-3:-Create-the-angular-spectrum-propagator">Step 3: Create the angular spectrum propagator<a class="anchor-link" href="posts/simulating-inline-holograms/#Step-3:-Create-the-angular-spectrum-propagator">¶</a>
 </h4>
 <p>The reason we computed the Fourier transform of the object was to determine its angular spectrum, i.e. the array of plane waves traveling at different directions to the axis that coherently combine to form the object. Computing the field at another axial plane means advancing the phase of each of these plane waves by an amount that depends on the wavelength of the light and the angle at which the plane wave is traveling relative to the optical axis. We can do this by multiplying the Fourier transform of the object by what's known as the <strong>transfer function of free space</strong>:</p>
-<p>\begin{equation*}
+\begin{equation*}
 H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 - \left( \lambda f_x \right)^2 - \left( \lambda f_y \right)^2 } \right]
-\end{equation*}</p>
-<p>$ z $ is a free parameter and is the distance from the object plane in which we wish to compute the field. To get the field from the object in a plane $ z $, we multiply the Fourier transform of the field by this transfer function and then compute the inverse Fourier transform of the product. This is essentially the operation I performed in a <a href="http://kmdouglass.github.io/posts/simulating-microscope-pupil-functions.html">previous post where I computed the defocused image of an isotropic point emitter in a microscope</a>.</p>
+\end{equation*}<p>$ z $ is a free parameter and is the distance from the object plane in which we wish to compute the field. To get the field from the object in a plane $ z $, we multiply the Fourier transform of the field by this transfer function and then compute the inverse Fourier transform of the product. This is essentially the operation I performed in a <a href="http://kmdouglass.github.io/posts/simulating-microscope-pupil-functions.html">previous post where I computed the defocused image of an isotropic point emitter in a microscope</a>.</p>
 <p>Here's what the phase angle the transfer function looks like for propagation over $ 10 \, \mu m $:</p>
 
 </div>
@@ -3473,7 +3474,7 @@ H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 -
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -3483,7 +3484,7 @@ H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 -
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stderr output_text">
@@ -3495,7 +3496,7 @@ H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 -
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -3539,7 +3540,7 @@ H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 -
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -3549,7 +3550,7 @@ H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 -
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stderr output_text">
@@ -3561,7 +3562,7 @@ H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 -
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -3583,7 +3584,7 @@ H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 -
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>You can see right away that the transfer function appears circular. The reason for this is that the argument inside the square root becomes negative for large spatial frequencies, which makes the whole transfer function in this region into a decaying exponential. These spatial frequencies correspond to plane waves that exponentially decay as they propagate away from the sample; they are so-called "evanescent" waves.</p>
 <p>For distances much larger than a wavelength of light, the amplitude of the transfer function in this area is effectively zero.</p>
-<h4 id="Step-4:-Propagate-the-field-and-create-the-hologram">Step 4: Propagate the field and create the hologram<a class="anchor-link" href="posts/simulating-inline-holograms.html#Step-4:-Propagate-the-field-and-create-the-hologram">¶</a>
+<h4 id="Step-4:-Propagate-the-field-and-create-the-hologram">Step 4: Propagate the field and create the hologram<a class="anchor-link" href="posts/simulating-inline-holograms/#Step-4:-Propagate-the-field-and-create-the-hologram">¶</a>
 </h4>
 <p>Let's now compute the field in the new plane at some distance from the sample. We do this by multiplying the Fourier transform of the ground truth by the transfer function and computing this product's inverse Fourier transform.</p>
 
@@ -3601,7 +3602,7 @@ H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 -
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -3611,7 +3612,7 @@ H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 -
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stderr output_text">
@@ -3623,7 +3624,7 @@ H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 -
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -3652,7 +3653,7 @@ H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 -
 <span class="nb">print</span><span class="p">(</span><span class="s1">'Integral, hologram plane: </span><span class="si">{:.4f}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">gt_prime_int</span><span class="p">))</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -3662,7 +3663,7 @@ H \left( f_x, f_y; z \right) = \exp \left[ j \frac{2 \pi z}{\lambda } \sqrt{ 1 -
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -3706,7 +3707,7 @@ Integral, hologram plane: 2621.0387
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -3716,7 +3717,7 @@ Integral, hologram plane: 2621.0387
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -3736,7 +3737,7 @@ Integral, hologram plane: 2621.0387
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Movie-of-propagating-hologram">Movie of propagating hologram<a class="anchor-link" href="posts/simulating-inline-holograms.html#Movie-of-propagating-hologram">¶</a>
+<h2 id="Movie-of-propagating-hologram">Movie of propagating hologram<a class="anchor-link" href="posts/simulating-inline-holograms/#Movie-of-propagating-hologram">¶</a>
 </h2>
 <p>Here I've made a movie of the hologram propagating along the axial direction between $z = 0 \, \mu m $ and $z = 100 \, \mu m $.</p>
 
@@ -3751,7 +3752,7 @@ Integral, hologram plane: 2621.0387
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="k">import</span> <span class="n">animation</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -3806,7 +3807,7 @@ Integral, hologram plane: 2621.0387
 <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -3816,7 +3817,7 @@ Integral, hologram plane: 2621.0387
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stderr output_text">
@@ -3844,7 +3845,7 @@ Integral, hologram plane: 2621.0387
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Interactively-propagate-the-hologram">Interactively propagate the hologram<a class="anchor-link" href="posts/simulating-inline-holograms.html#Interactively-propagate-the-hologram">¶</a>
+<h2 id="Interactively-propagate-the-hologram">Interactively propagate the hologram<a class="anchor-link" href="posts/simulating-inline-holograms/#Interactively-propagate-the-hologram">¶</a>
 </h2>
 <p>Below I've used Jupyter's interactive plotting features to allow me to scan through the axial direction and observe how the hologram changes as a function of distance from the sample.</p>
 <p><strong>To use this feature, you will need to download this notebook and run it on your own a Jupyter notebook server.</strong></p>
@@ -3889,7 +3890,7 @@ Integral, hologram plane: 2621.0387
     <span class="n">txt</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="s1">'z = </span><span class="si">{:.1f}</span><span class="s1"> $\mu m$'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">z</span><span class="p">))</span>   
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -3899,16 +3900,16 @@ Integral, hologram plane: 2621.0387
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
 
 
-<div id="45e521f4-f092-4c48-8867-179f3bb8ad1e"></div>
+<div id="6f933f85-fa57-4edc-a964-118f4c87e9a8"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#45e521f4-f092-4c48-8867-179f3bb8ad1e');
+var element = $('#6f933f85-fa57-4edc-a964-118f4c87e9a8');
 /* Put everything inside the global mpl namespace */
 window.mpl = {};
 
@@ -4683,7 +4684,7 @@ if (IPython.notebook.kernel != null) {
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -4706,7 +4707,7 @@ if (IPython.notebook.kernel != null) {
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -4716,7 +4717,7 @@ if (IPython.notebook.kernel != null) {
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stderr output_text">
@@ -4735,7 +4736,7 @@ if (IPython.notebook.kernel != null) {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Summary">Summary<a class="anchor-link" href="posts/simulating-inline-holograms.html#Summary">¶</a>
+<h2 id="Summary">Summary<a class="anchor-link" href="posts/simulating-inline-holograms/#Summary">¶</a>
 </h2>
 <p>Simulating an inline hologram with plane wave illumination requires a few steps: generating a ground-truth object, computing its angular spectrum, and propagating this spectrum to a new axial plane using the transfer function of free space. Two Fourier transforms are required: one for finding the object's angular spectrum and the other to convert the propagated spectrum back to real space.</p>
 <p>If you have spherical wave illumination rather than plane wave illumination, then you will need to use the Fresnel propagator. This will make for a later discussion.</p>
@@ -4743,19 +4744,20 @@ if (IPython.notebook.kernel != null) {
 </div>
 </div>
 </div>
+</div>
     </div>
-  </div>
-
-    </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/micro-manager-on-the-raspberry-pi.html" class="u-url">Micro-Manager on the Raspberry Pi</a></h1>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/micro-manager-on-the-raspberry-pi/" class="u-url">Micro-Manager on the Raspberry Pi</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
-            <p class="dateline"><a href="posts/micro-manager-on-the-raspberry-pi.html" rel="bookmark"><time class="published dt-published" datetime="2017-02-10T19:31:57+01:00" title="2017-02-10 19:31">2017-02-10 19:31</time></a></p>
+            <p class="dateline">
+            <a href="posts/micro-manager-on-the-raspberry-pi/" rel="bookmark">
+            <time class="published dt-published" datetime="2017-02-10T19:31:57+01:00" itemprop="datePublished" title="2017-02-10 19:31">2017-02-10 19:31</time></a>
+            </p>
                 <p class="commentline">
         
-    <a href="posts/micro-manager-on-the-raspberry-pi.html#disqus_thread" data-disqus-identifier="cache/posts/micro-manager-on-the-raspberry-pi.html">Comments</a>
+    <a href="posts/micro-manager-on-the-raspberry-pi/#disqus_thread" data-disqus-identifier="cache/posts/micro-manager-on-the-raspberry-pi.html">Comments</a>
 
 
         </p>
@@ -4961,15 +4963,18 @@ please let me know in the comments!</p>
 </div>
 </div>
     </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/connecting-a-raspberry-pi-to-a-home-linux-network.html" class="u-url">Connecting a Raspberry Pi to a home Linux network</a></h1>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/connecting-a-raspberry-pi-to-a-home-linux-network/" class="u-url">Connecting a Raspberry Pi to a home Linux network</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
-            <p class="dateline"><a href="posts/connecting-a-raspberry-pi-to-a-home-linux-network.html" rel="bookmark"><time class="published dt-published" datetime="2017-02-05T10:28:17+01:00" title="2017-02-05 10:28">2017-02-05 10:28</time></a></p>
+            <p class="dateline">
+            <a href="posts/connecting-a-raspberry-pi-to-a-home-linux-network/" rel="bookmark">
+            <time class="published dt-published" datetime="2017-02-05T10:28:17+01:00" itemprop="datePublished" title="2017-02-05 10:28">2017-02-05 10:28</time></a>
+            </p>
                 <p class="commentline">
         
-    <a href="posts/connecting-a-raspberry-pi-to-a-home-linux-network.html#disqus_thread" data-disqus-identifier="cache/posts/connecting-a-raspberry-pi-to-a-home-linux-network.html">Comments</a>
+    <a href="posts/connecting-a-raspberry-pi-to-a-home-linux-network/#disqus_thread" data-disqus-identifier="cache/posts/connecting-a-raspberry-pi-to-a-home-linux-network.html">Comments</a>
 
 
         </p>
@@ -5017,7 +5022,7 @@ that the router dynamically assigns.</p>
 <p>To find the list of static IP's on my specific router, I clicked on
 the link entitled <strong>Network</strong> in my router's configuration page. The
 relevant information for me looks like that in the image below:</p>
-<img alt="DHCP address pool" class="align-center" src="dhcp_addresses.png"><p>This information is telling us that the router is reserving addresses
+<img alt="DHCP address pool" class="align-center" src="images/dhcp_addresses.png"><p>This information is telling us that the router is reserving addresses
 192.168.0.10 to 192.168.0.254 for the DHCP server. We can therefore
 most probably use 192.168.0.2 through 9 for static IP's. (Remember
 that 192.168.0.1 is already taken; it's the address of the router.) I
@@ -5182,13 +5187,13 @@ Pi, open a terminal and run the configuration utility::</p>
 sudo raspi-config
 </pre>
 <p>We should see the following window appear.</p>
-<img alt="The raspi-config menu with Interface Options highlighted." class="align-center" src="pi-config-interface-options.png"><p>Use the keyboard to highlight <strong>Interface Options</strong> and tap the Enter
+<img alt="The raspi-config menu with Interface Options highlighted." class="align-center" src="images/pi-config-interface-options.png"><p>Use the keyboard to highlight <strong>Interface Options</strong> and tap the Enter
 key. In the following menu, we now should see an option to enable ssh
 as in the following image. Use the keyboard to highlight <strong>P2 SSH</strong>
 (or the relevant menu item if the name is different on your Pi) and
 hit the Enter key to enable it. Once ssh is enabled, we can hit Esc or
 select the &lt;Back&gt; option to until we exit the configuration utility.</p>
-<img alt="The raspi-config Interface Options menu with P2 SSH highlighted." class="align-center" src="pi-config-ssh.png"><p>If you'e following along, you may need to restart your Pi for these
+<img alt="The raspi-config Interface Options menu with P2 SSH highlighted." class="align-center" src="images/pi-config-ssh.png"><p>If you'e following along, you may need to restart your Pi for these
 changes to take effect.</p>
 </div>
 <div class="section" id="log-onto-the-pi-from-the-laptop">
@@ -5234,15 +5239,18 @@ Pi. <a class="reference external" href="https://www.raspberrypi.org/documentatio
 </div>
 </div>
     </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/fifi-parts-list.html" class="u-url">FIFI Parts List</a></h1>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/fifi-parts-list/" class="u-url">FIFI Parts List</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
-            <p class="dateline"><a href="posts/fifi-parts-list.html" rel="bookmark"><time class="published dt-published" datetime="2017-01-19T07:32:43+01:00" title="2017-01-19 07:32">2017-01-19 07:32</time></a></p>
+            <p class="dateline">
+            <a href="posts/fifi-parts-list/" rel="bookmark">
+            <time class="published dt-published" datetime="2017-01-19T07:32:43+01:00" itemprop="datePublished" title="2017-01-19 07:32">2017-01-19 07:32</time></a>
+            </p>
                 <p class="commentline">
         
-    <a href="posts/fifi-parts-list.html#disqus_thread" data-disqus-identifier="cache/posts/fifi-parts-list.html">Comments</a>
+    <a href="posts/fifi-parts-list/#disqus_thread" data-disqus-identifier="cache/posts/fifi-parts-list.html">Comments</a>
 
 
         </p>
@@ -5291,16 +5299,22 @@ MathJax.Hub.Config({
         <!--End of body content-->
 
         <footer id="footer">
-            Contents © 2018         <a href="mailto:kyle.m.douglass@gmail.com">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
+            Contents © 2019         <a href="mailto:kyle.m.douglass@gmail.com">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
             
         </footer>
 </div>
 </div>
 
 
-            <script src="assets/js/all-nocdn.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+            <script src="assets/js/all-nocdn.js"></script><!-- fancy dates --><script>
     moment.locale("en");
     fancydates(0, "YYYY-MM-DD HH:mm");
-    </script><!-- end fancy dates -->
+    </script><!-- end fancy dates --><script>
+    baguetteBox.run('div#content', {
+        ignoreClass: 'islink',
+        captions: function(element) {
+            return element.getElementsByTagName('img')[0].alt;
+    }});
+    </script>
 </body>
 </html>

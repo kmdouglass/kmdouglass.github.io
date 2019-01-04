@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="I describe how removed the housing around the sensor of a Raspberry Pi camera.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Accessing the Raspberry Pi camera image sensor | Kyle M. Douglass</title>
+<link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/ipython.min.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/nikola_ipython.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/custom_notebook.css" rel="stylesheet" type="text/css">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
+<link rel="alternate" type="application/rss+xml" title="RSS" hreflang="en" href="../../rss.xml">
+<link rel="canonical" href="http://kmdouglass.github.io/posts/accessing-the-raspberry-pi-camera-image-sensor/">
+<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><meta name="author" content="Kyle M. Douglass">
+<link rel="prev" href="../modeling-noise-for-image-simulations/" title="Modeling noise for image simulations" type="text/html">
+<link rel="next" href="../implementing-a-fast-gibson-lanni-psf-solver-in-python/" title="Implementing a fast Gibson-Lanni PSF solver in Python" type="text/html">
+<meta property="og:site_name" content="Kyle M. Douglass">
+<meta property="og:title" content="Accessing the Raspberry Pi camera image sensor">
+<meta property="og:url" content="http://kmdouglass.github.io/posts/accessing-the-raspberry-pi-camera-image-sensor/">
+<meta property="og:description" content="I describe how removed the housing around the sensor of a Raspberry Pi camera.">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2017-08-26T23:33:07+02:00">
+<meta property="article:tag" content="optics">
+<meta property="article:tag" content="photonics">
+<meta property="article:tag" content="raspberry pi">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Menubar -->
+
+<nav class="navbar navbar-default navbar-static-top"><div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://kmdouglass.github.io/">
+
+                <span id="blog-title">Kyle M. Douglass</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
+            <ul class="nav navbar-nav">
+<li>
+<a href="../../categories/index.html">Tags</a>
+                </li>
+<li>
+<a href="../../archive.html">Archive</a>
+                </li>
+<li>
+<a href="../../stories/contact/index.html">Contact</a>
+
+                
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+    <a href="index.rst" id="sourcelink">Source</a>
+    </li>
+
+                
+            </ul>
+</div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Accessing the Raspberry Pi camera image sensor</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                    Kyle M. Douglass
+            </span></p>
+            <p class="dateline">
+            <a href="." rel="bookmark">
+            <time class="published dt-published" datetime="2017-08-26T23:33:07+02:00" itemprop="datePublished" title="2017-08-26 23:33">2017-08-26 23:33</time></a>
+            </p>
+                <p class="commentline">
+        
+    <a href="#disqus_thread" data-disqus-identifier="cache/posts/accessing-the-raspberry-pi-camera-image-sensor.html">Comments</a>
+
+
+            
+        </p>
+<p class="sourceline"><a href="index.rst" class="sourcelink">Source</a></p>
+
+        </div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<p><strong>WARNING</strong> You can easily ruin your Raspberry Pi camera module by
+following the steps in this post. Proceed with caution.</p>
+<p>Over the past half year I have been making slow but steady progress on
+<a class="reference external" href="https://hackaday.io/project/19677-basic-lensless-imaging-for-low-cost-microscopy">my lensless imager project</a>. The
+purpose, aside from having a bit of fun, is to create an imaging
+system for basic cell biology that doesn't use an expensive microscope
+objective.</p>
+<p>A lensless imager works just as its name implies: an image sensor
+records the scattered light from a microscopic, transparent object and
+computationally reconstructs an image of that object, all without a
+lens. The best resolutions are achieved when the object is relatively
+close to the image sensor. Ideally, the separation between the object
+and the sensor's pixels would be at most about one millimeter. <a class="reference external" href="http://innovate.ee.ucla.edu/wp-content/uploads/2016/01/annurev-bioeng-092515-010849.pdf">This
+limit is partly determined by the light source's spatial coherence</a>,
+but also by the fact that high resolution is achieved by recording the
+scattered light at very large angles, which is possible only when the
+sample is close to the sensor.</p>
+<p>Today I had a bit of free time so I decided to see whether I could
+remove the housing that surrounds the Raspberry Pi camera's
+sensor. The <a class="reference external" href="https://www.raspberrypi.org/products/camera-module-v2/">Raspberry Pi Camera Module version 2</a> sensor is a
+Sony IMX219 color chip. Directly above the sensor is a filter, a lens,
+and the housing for both of these that prevent me from placing
+anything closer than about half a centimeter from the sensor plane. If
+I would want to use this camera for the lensless imager, then the
+housing would have to go.</p>
+<p>Now, even without the housing the Raspberry Pi camera is not
+necessarily the best option for the project because the IMX219 is a
+color sensor. This means that there is a Bayer filter over its pixels,
+which would cut the resolution of the imager since I would be using a
+very narrow band light source. Effectively, only a quarter of the
+pixels would be receiving any light. Regardless, I had a spare second
+camera and it interfaces well with the Raspberry Pi, so I figured it
+would make for a good prototype.</p>
+<p>As you will see, I did slightly damage my sensor, though it seems to
+still work. <strong>You can easily ruin your camera module or cut your
+finger by following these steps, so proceed at your own risk.</strong></p>
+<div class="section" id="step-0-the-raspberry-pi-camera-module-v2">
+<h2>Step 0: The Raspberry Pi Camera Module V2</h2>
+<p>In the picture below you see my Raspberry Pi Camera Module. From
+above, you can see the small circular aperture with the lens
+immediately behind it. The sensor is inside the small gray rectangular
+housing that is attached to the control board by a small ribbon cable
+(to its right) and a bit of two-sided sticky foam tape (underneath the
+sensor; not visible).</p>
+<img alt="The Raspberry Pi Camera Module V2" class="align-center" src="../../images/pi_camera_step0.thumbnail.jpg">
+</div>
+<div class="section" id="step-1-remove-the-main-ribbon-cable">
+<h2>Step 1: Remove the main ribbon cable</h2>
+<p>To make working on the board a bit easier, I removed the white ribbon
+cable that attaches the module to the Pi. I did this by pulling on the
+black tabs on the two ends of the connecter until the cable is easily
+removed. I labeled the sides of the ribbon cable just in case.</p>
+<img alt="Remove the main ribbon cable from the control board" class="align-center" src="../../images/pi_camera_step1.thumbnail.jpg">
+</div>
+<div class="section" id="step-2-detach-the-sensor-s-ribbon-cable">
+<h2>Step 2: Detach the sensor's ribbon cable</h2>
+<p>Next, I used my finger and thumb nail to remove the small ribbon cable
+that attaches the sensor to the control board. I essentially applied a
+small torque to the bottom edge of the connector until it just
+"popped" up, as seen in the second image below.</p>
+<img alt="The small ribbon cable from the sensor is to the right." class="align-center" src="../../images/pi_camera_step2.thumbnail.jpg">
+</div>
+<div class="section" id="step-3-remove-the-sensor-from-the-control-board">
+<h2>Step 3: Remove the sensor from the control board</h2>
+<p>In the third step, I used my thumbnail to gently pry the sensor from
+the control board. The sensor is attached with some two-sided sticky
+tape and may need a few minutes of work to come free.</p>
+<img alt="Pull the sensor off the control board." class="align-center" src="../../images/pi_camera_step3.thumbnail.jpg">
+</div>
+<div class="section" id="step-4-remove-the-rectangular-housing">
+<h2>Step 4: Remove the rectangular housing</h2>
+<p><strong>In this step you risk cutting your finger, so please be careful.</strong></p>
+<p>The housing around the sensor is glued. To remove it, you will need to
+gently work a knife (or, better yet, a thin screw driver) between the
+housing and the sensor board, taking care not to let the blade go too
+far into the housing and possibly ruining one of the resistors or wire
+bonds.</p>
+<img alt="Cut carefully on one side of the housing." class="align-center" src="../../images/pi_camera_step4.thumbnail.jpg"><p>Once you get a knife between the two, try popping the housing off of
+the sensor.</p>
+<img alt="Once the edge is cut, pop the housing off." class="align-center" src="../../images/pi_camera_step4b.thumbnail.jpg"><p>When I did this I cut on three sides of the housing, but in retrospect
+I should have only cut on the side opposite the ribbon cable and pried
+the other sides loose. This is because I damaged a small resistor when
+the knife blade went too far into the housing. You can see this below
+and, at the same time, get an idea of the layout of the sensor board
+so you know where you can and can't cut.</p>
+<img alt="The resistor near the top of the board was damaged when cutting the housing." class="align-center" src="../../images/pi_camera_step4c.thumbnail.png"><p>If you have the normal version of the camera, then you can also find the IR blocking filter
+inside the housing.</p>
+<img alt="The IR blocking filter." class="align-center" src="../../images/pi_camera_step4d.thumbnail.jpg"><p>Fortunately for me the camera still works, despite the damaged
+resistor. I can now place samples directly on the sensor if I wanted
+to, though the wire bonds from the sensor to its control board appear
+quite fragile. For this reason, it may make more sense to build a
+slide holder that holds a sample just above the surface without
+touching it. For now, I can use this exposed sensor to prototype
+different methods for mounting the sample.</p>
+</div>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../categories/optics/" rel="tag">optics</a></li>
+            <li><a class="tag p-category" href="../../categories/photonics/" rel="tag">photonics</a></li>
+            <li><a class="tag p-category" href="../../categories/raspberry-pi/" rel="tag">raspberry pi</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../modeling-noise-for-image-simulations/" rel="prev" title="Modeling noise for image simulations">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../implementing-a-fast-gibson-lanni-psf-solver-in-python/" rel="next" title="Implementing a fast Gibson-Lanni PSF solver in Python">Next post</a>
+            </li>
+        </ul></nav></aside><section class="comments hidden-print"><h2>Comments</h2>
+        
+        
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="kmdouglass",
+            disqus_url="http://kmdouglass.github.io/posts/accessing-the-raspberry-pi-camera-image-sensor/",
+        disqus_title="Accessing the Raspberry Pi camera image sensor",
+        disqus_identifier="cache/posts/accessing-the-raspberry-pi-camera-image-sensor.html",
+        disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+        </section></article><script>var disqus_shortname="kmdouglass";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+</div>
+        <!--End of body content-->
+
+        <footer id="footer">
+            Contents © 2019         <a href="mailto:kyle.m.douglass@gmail.com">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
+            
+        </footer>
+</div>
+</div>
+
+
+            <script src="../../assets/js/all-nocdn.js"></script><!-- fancy dates --><script>
+    moment.locale("en");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates --><script>
+    baguetteBox.run('div#content', {
+        ignoreClass: 'islink',
+        captions: function(element) {
+            return element.getElementsByTagName('img')[0].alt;
+    }});
+    </script>
+</body>
+</html>

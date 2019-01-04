@@ -1,0 +1,23 @@
+div.text_cell_render {
+  padding: 0px;
+  color: #c8c8c8;
+}
+
+.rendered_html :link:hover {
+  text-decoration: underline;
+}
+
+div.output_area pre {
+  color: #ffffff;
+  font-size: 13px;
+}
+
+/* Remove colored boxes around prompts */
+div.prompt {
+  background-color: #272b30;
+  color: #c8c8c8;
+}
+
+div.input {
+  border: none;
+}

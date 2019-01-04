@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="description" content="Optics, programming, and science.">
@@ -8,9 +8,10 @@
 <link href="assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
 <link href="assets/css/ipython.min.css" rel="stylesheet" type="text/css">
 <link href="assets/css/nikola_ipython.css" rel="stylesheet" type="text/css">
+<link href="assets/css/custom_notebook.css" rel="stylesheet" type="text/css">
 <meta name="theme-color" content="#5670d4">
 <meta name="generator" content="Nikola (getnikola.com)">
-<link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml">
+<link rel="alternate" type="application/rss+xml" title="RSS" hreflang="en" href="rss.xml">
 <link rel="canonical" href="http://kmdouglass.github.io/index-2.html">
 <link rel="prev" href="index-3.html" type="text/html">
 <link rel="next" href="index-1.html" type="text/html">
@@ -45,7 +46,7 @@
 <a href="archive.html">Archive</a>
                 </li>
 <li>
-<a href="stories/contact.html">Contact</a>
+<a href="stories/contact/index.html">Contact</a>
 
                 
             </li>
@@ -67,97 +68,78 @@
 
     
 <div class="postindex">
-    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/thoughts-from-the-swiss-photonics-machine-learning-workshop.html" class="u-url">Thoughts from the Swiss Photonics Machine Learning Workshop</a></h1>
+    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/thoughts-from-the-swiss-photonics-machine-learning-workshop/" class="u-url">Thoughts from the Swiss Photonics Machine Learning Workshop</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
-            <p class="dateline"><a href="posts/thoughts-from-the-swiss-photonics-machine-learning-workshop.html" rel="bookmark"><time class="published dt-published" datetime="2016-02-04T18:31:32+01:00" title="2016-02-04 18:31">2016-02-04 18:31</time></a></p>
+            <p class="dateline">
+            <a href="posts/thoughts-from-the-swiss-photonics-machine-learning-workshop/" rel="bookmark">
+            <time class="published dt-published" datetime="2016-02-04T18:31:32+01:00" itemprop="datePublished" title="2016-02-04 18:31">2016-02-04 18:31</time></a>
+            </p>
                 <p class="commentline">
         
-    <a href="posts/thoughts-from-the-swiss-photonics-machine-learning-workshop.html#disqus_thread" data-disqus-identifier="cache/posts/thoughts-from-the-swiss-photonics-machine-learning-workshop.html">Comments</a>
+    <a href="posts/thoughts-from-the-swiss-photonics-machine-learning-workshop/#disqus_thread" data-disqus-identifier="cache/posts/thoughts-from-the-swiss-photonics-machine-learning-workshop.html">Comments</a>
 
 
         </p>
 </div>
     </header><div class="p-summary entry-summary">
-    <p>
-Today I attended a <a href="http://www.swissphotonics.net/workshops/workshop-datenbank?2886">machine learning workshop hosted by Swiss
-Photonics</a>. The workshop was a small, day-long series of talks by
-industry experts in Neuchâtel, Switzerland, not far from Lausanne. I
-went to the workshop because a) I don't know much about machine
-learning and want to know more, and b) I wanted to connect with people
-within the Swiss Photonics circle. Most of the talks concerned deep
-learning for solving problems in industrial machine vision
-applications, such as quality control for the watch-making industry.
-</p>
-
-<p>
-Here are the main things I learned, which may or not be correct. I
-welcome any opinions or corrections in the comments:
-</p>
-
-<ul class="org-ul">
-<li>The term "learning" is used to mean "teaching a computer to
-recognize and classify patterns in data", such as finding people in
-images.
-</li>
-<li>Learning involves finding patterns in data. Once patterns are
-idenfitied, a set of them can be combined to form a model. A model
-makes predictions about what future data may look like. This means
-that a model may be used to see whether new data meets our
-expectations. An example would be using pictures of products from a
-production line and searching for defects, i.e. those products that
-don't fit our classification of "good" products.
-</li>
-<li>Learning applications require lots of training data to
-implement. This is where the primary cost of applying learning
-algorithms comes from.
-</li>
-<li>There are three categories of learning: supervised, reinforced, and
-unsupervised.
-</li>
-<li>The value in neural networks is their ability to make decisions in a
-way that is similar to humans. Other classification and decision
-algorithms work using strict programmatic rules and look for
-user-specified features. Neural networks do not require domain
-knowledge to establish features for a classifier. Their generality
-is their strength.
-</li>
+    <div>
+<p>Today I attended a <a class="reference external" href="http://www.swissphotonics.net/workshops/workshop-datenbank?2886">machine learning workshop hosted by Swiss Photonics</a>. The workshop was a small,
+day-long series of talks by industry experts in Neuchâtel, Switzerland, not far from Lausanne. I
+went to the workshop because a) I don't know much about machine learning and want to know more,
+and b) I wanted to connect with people within the Swiss Photonics circle. Most of the talks
+concerned deep learning for solving problems in industrial machine vision applications, such as
+quality control for the watch-making industry.</p>
+<p>Here are the main things I learned, which may or not be correct. I welcome any opinions or
+corrections in the comments:</p>
+<ul class="simple">
+<li>The term "learning" is used to mean "teaching a computer to recognize and classify patterns in
+data", such as finding people in images.</li>
+<li>Learning involves finding patterns in data. Once patterns are idenfitied, a set of them can be
+combined to form a model. A model makes predictions about what future data may look like. This
+means that a model may be used to see whether new data meets our expectations. An example would
+be using pictures of products from a production line and searching for defects, i.e. those
+products that don't fit our classification of "good" products.</li>
+<li>Learning applications require lots of training data to implement. This is where the primary cost
+of applying learning algorithms comes from.</li>
+<li>There are three categories of learning: supervised, reinforced, and unsupervised.</li>
+<li>The value in neural networks is their ability to make decisions in a way that is similar to
+humans. Other classification and decision algorithms work using strict programmatic rules and
+look for user-specified features. Neural networks do not require domain knowledge to establish
+features for a classifier. Their generality is their strength.</li>
 <li>
-<a href="https://en.wikipedia.org/wiki/Deep_learning">Deep learning</a> just refers to really big neural networks. Neural
-networks are not new; recent hardware advances like GPU-based
-computation and the availability of large datasets are what has
-enabled Deep learning.
-</li>
+<a class="reference external" href="https://en.wikipedia.org/wiki/Deep_learning">Deep learning</a> just refers to really big neural
+networks. Neural networks are not new; recent hardware advances like GPU-based computation and
+the availability of large datasets are what has enabled Deep learning.</li>
 </ul>
-<p>
-I did not hear much discussion about the tradeoffs and downsides to
-using neural networks or deep learning, other than that they require
-large amounts of training data. Notable talks were given by Reto Wyss
-of <a href="http://www.vidi-systems.com/company/about-us.html">ViDi</a> and Virginie Moser of <a href="http://www.csem.ch/site/">CSEM</a>. Wyss very eloquently explained
-why deep learning is useful for classification. Moser presented an
-extremely small and light-weight embedded machine vision system for
-traffic light control.
-</p>
+<p>I did not hear much discussion about the tradeoffs and downsides to using neural networks or deep
+learning, other than that they require large amounts of training data. Notable talks were given by
+Reto Wyss of <a class="reference external" href="http://www.vidi-systems.com/company/about-us.html">ViDi</a> and Virginie Moser of
+<a class="reference external" href="posts/thoughts-from-the-swiss-photonics-machine-learning-workshop/CSEM">http://www.csem.ch/site/</a>. Wyss very eloquently explained why deep learning is useful for
+classification. Moser presented an extremely small and light-weight embedded machine vision system
+for traffic light control.</p>
+</div>
     </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html" class="u-url">Approximating diffraction patterns of rectangular apertures with the FFT</a></h1>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft/" class="u-url">Approximating diffraction patterns of rectangular apertures with the FFT</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
-            <p class="dateline"><a href="posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html" rel="bookmark"><time class="published dt-published" datetime="2016-02-01T10:54:23+01:00" title="2016-02-01 10:54">2016-02-01 10:54</time></a></p>
+            <p class="dateline">
+            <a href="posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft/" rel="bookmark">
+            <time class="published dt-published" datetime="2016-02-01T10:54:23+01:00" itemprop="datePublished" title="2016-02-01 10:54">2016-02-01 10:54</time></a>
+            </p>
                 <p class="commentline">
         
-    <a href="posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html#disqus_thread" data-disqus-identifier="cache/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html">Comments</a>
+    <a href="posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft/#disqus_thread" data-disqus-identifier="cache/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html">Comments</a>
 
 
         </p>
 </div>
     </header><div class="p-summary entry-summary">
-    <div tabindex="-1" id="notebook" class="border-box-sizing">
-    <div class="container" id="notebook-container">
-
+    <div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -188,7 +170,7 @@ traffic light control.
 <span class="kn">from</span> <span class="nn">scipy.fftpack</span> <span class="k">import</span> <span class="n">fftshift</span><span class="p">,</span> <span class="n">ifftshift</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -198,7 +180,7 @@ traffic light control.
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -217,20 +199,15 @@ Populating the interactive namespace from numpy and matplotlib
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Scalar-diffraction-theory-for-a-1D-slit">Scalar diffraction theory for a 1D slit<a class="anchor-link" href="posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html#Scalar-diffraction-theory-for-a-1D-slit">¶</a>
+<h2 id="Scalar-diffraction-theory-for-a-1D-slit">Scalar diffraction theory for a 1D slit<a class="anchor-link" href="posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft/#Scalar-diffraction-theory-for-a-1D-slit">¶</a>
 </h2>
 <p><a href="https://books.google.ch/books/about/Introduction_to_Fourier_Optics.html?id=ow5xs_Rtt9AC&amp;redir_esc=y">Goodman</a> and <a href="https://en.wikipedia.org/wiki/Fraunhofer_diffraction_%28mathematics%29#Examples_of_Fraunhofer_diffraction_with_a_normally_incident_monochromatic_plane_wave">many others</a> have shown that the far-field (also known as Fraunhofer) solution to the diffracted electric field from a rectangular aperture is proportional to the Fourier transform of the field distribution in the aperture. This fact follows directly from applying the Fraunhofer approximation to the diffraction integral developed by Huygens and Fresnel (<a href="https://books.google.ch/books/about/Introduction_to_Fourier_Optics.html?id=ow5xs_Rtt9AC&amp;redir_esc=y">Goodman</a>).</p>
 <p>For both convenience and numerical efficiency, I will focus on the one-dimensional analog to this problem: diffraction from an infinitely-long slit with width $ a $. If there is an incident monochromatic plane wave with amplitude $E_0$ traveling in the z-direction perpendicular to a slit in the $z=0$ plane, then the Fraunhofer diffraction pattern for the field is expressed by the equation</p>
-<p>$$U \left(x', z \right) = \frac{e^{jkz} e^{ jk\frac{x'^2}{2z} }}{\sqrt{j \lambda z}} \int_{-\infty}^{\infty} u \left( x, z = 0 \right) \exp \left( -j \frac{2 \pi}{\lambda z} xx'\right) dx $$</p>
-<p>with $u \left( x, z = 0 \right) = E_0 $ denoting the incident field, $ k = \frac{2 \pi}{\lambda} $ representing the freespace wavenumber, $ x = 0 $ and $ x' = 0 $ the center planes of the slit and diffraction patterns, respectively, and $ j $ the imaginary number. The factor $ \sqrt{j \lambda z} $ comes from <a href="https://www.kth.se/polopoly_fs/1.569752!/Gaussian%20beams.pdf">separating the solution to the 2D Huygens-Fresnel integral into two, 1D solutions</a>. The irradiance in the z-planes after the slit is <a href="https://en.wikipedia.org/wiki/Poynting_vector">proportional to the absolute square of the field</a>,</p>
-<p>$$I \left( x', z \right) \propto \left| U \left( x', z \right) \right|^2$$</p>
-<p>Taking the absolute square eliminates the complex exponentials preceding the integral so that the irradiance profile becomes</p>
-<p>$$I \left( x', z \right) \propto \frac{1}{\lambda z} \left| \int_{-\infty}^{\infty} u \left( x \right) \exp \left( -j \frac{2 \pi}{\lambda z} xx'\right) dx \right|^2 = \frac{1}{\lambda z} \left| \mathcal{F} \left[ u \left( x, z \right) \right] \left( \frac{x'}{\lambda z}\right) \right|^2 $$</p>
-<p>This expression means that the irradiance describing the Fraunhofer diffraction pattern from slit is proportional to the absolute square of the Fourier transform of the field at the aperture evaluted at spatial frequencies $ f_{x} = x' / \lambda z$. To arrive at the analytical solution, we perform the integration over a region where the slit is not opaque, $ \left[ -a/2, a/2 \right] $. Inside this region, the field is simply $ u \left( x \right) = E_0 $ because we have a monochromatic plane wave with this amplitude.</p>
-<p>$$ \mathcal{F}\left[ u \left( x, z \right) \right] = \int_{-a/2}^{a/2} E_0 \exp \left( -j \frac{2 \pi}{\lambda z} xx'\right) dx $$</p>
-<p>The analytical solution to this integral is</p>
-<p>$$ \mathcal{F}\left[ u \left( x, z \right) \right] = a E_0 \text{sinc} \left( \frac{ax'}{\lambda z} \right) $$</p>
-<p>where $ \text{sinc} \left( x \right) = \frac{\sin{\pi x}}{\pi x}$. The far-field irradiance is therefore the absolute square of this quantity divided by the product of the wavelength and the propagation distance.</p>
+$$U \left(x', z \right) = \frac{e^{jkz} e^{ jk\frac{x'^2}{2z} }}{\sqrt{j \lambda z}} \int_{-\infty}^{\infty} u \left( x, z = 0 \right) \exp \left( -j \frac{2 \pi}{\lambda z} xx'\right) dx $$<p>with $u \left( x, z = 0 \right) = E_0 $ denoting the incident field, $ k = \frac{2 \pi}{\lambda} $ representing the freespace wavenumber, $ x = 0 $ and $ x' = 0 $ the center planes of the slit and diffraction patterns, respectively, and $ j $ the imaginary number. The factor $ \sqrt{j \lambda z} $ comes from <a href="https://www.kth.se/polopoly_fs/1.569752!/Gaussian%20beams.pdf">separating the solution to the 2D Huygens-Fresnel integral into two, 1D solutions</a>. The irradiance in the z-planes after the slit is <a href="https://en.wikipedia.org/wiki/Poynting_vector">proportional to the absolute square of the field</a>,</p>
+$$I \left( x', z \right) \propto \left| U \left( x', z \right) \right|^2$$<p>Taking the absolute square eliminates the complex exponentials preceding the integral so that the irradiance profile becomes</p>
+$$I \left( x', z \right) \propto \frac{1}{\lambda z} \left| \int_{-\infty}^{\infty} u \left( x \right) \exp \left( -j \frac{2 \pi}{\lambda z} xx'\right) dx \right|^2 = \frac{1}{\lambda z} \left| \mathcal{F} \left[ u \left( x, z \right) \right] \left( \frac{x'}{\lambda z}\right) \right|^2 $$<p>This expression means that the irradiance describing the Fraunhofer diffraction pattern from slit is proportional to the absolute square of the Fourier transform of the field at the aperture evaluted at spatial frequencies $ f_{x} = x' / \lambda z$. To arrive at the analytical solution, we perform the integration over a region where the slit is not opaque, $ \left[ -a/2, a/2 \right] $. Inside this region, the field is simply $ u \left( x \right) = E_0 $ because we have a monochromatic plane wave with this amplitude.</p>
+$$ \mathcal{F}\left[ u \left( x, z \right) \right] = \int_{-a/2}^{a/2} E_0 \exp \left( -j \frac{2 \pi}{\lambda z} xx'\right) dx $$<p>The analytical solution to this integral is</p>
+$$ \mathcal{F}\left[ u \left( x, z \right) \right] = a E_0 \text{sinc} \left( \frac{ax'}{\lambda z} \right) $$<p>where $ \text{sinc} \left( x \right) = \frac{\sin{\pi x}}{\pi x}$. The far-field irradiance is therefore the absolute square of this quantity divided by the product of the wavelength and the propagation distance.</p>
 <p>Let's plot the analytically-determined irradiance profile of the diffraction pattern:</p>
 
 </div>
@@ -267,7 +244,7 @@ Populating the interactive namespace from numpy and matplotlib
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -277,7 +254,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -298,15 +275,11 @@ Populating the interactive namespace from numpy and matplotlib
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We can also verify a few key properties of the Fourier transform and ensure that our units are correct. The most important property is the conservation of energy, which in signal processing is often known as <a href="https://en.wikipedia.org/wiki/Parseval%27s_theorem">Parseval's theorem</a>. In our case, conservation of energy means that the integral of the field over the slit must equal the integral of the field in any arbitrary z-plane.</p>
-<p>$$\int_{-\infty}^{\infty} \left| u \left( x, z = 0 \right) \right|^2 dx = \int_{-\infty}^{\infty} \left| U \left( x', z \right) \right|^2 dx'$$</p>
-<p>where the spatial frequency is $ f_{x} = \frac{x'}{\lambda z} $. Because the incident field is a plane wave, the integral over the slit is just the square of the plane wave amplitude multiplied by the slit width:</p>
-<p>$$\int_{-a/2}^{a/2} E_0^2 dx = aE_0^2$$</p>
-<p>We need the square integral to be proportional to units of power, which will be true if the field has units of $ \frac{\text{Volts}}{\sqrt{\mu m}} $ and not the more familiar $ \frac{\text{Volts}}{\mu m} $. This peculiarity stems from the fact that we're looking at a somewhat synthetic 1D case. With this in mind, the square integral has units of $ \text{Volts}^2 $ and is proportional to the power delivered by the plane wave.</p>
+$$\int_{-\infty}^{\infty} \left| u \left( x, z = 0 \right) \right|^2 dx = \int_{-\infty}^{\infty} \left| U \left( x', z \right) \right|^2 dx'$$<p>where the spatial frequency is $ f_{x} = \frac{x'}{\lambda z} $. Because the incident field is a plane wave, the integral over the slit is just the square of the plane wave amplitude multiplied by the slit width:</p>
+$$\int_{-a/2}^{a/2} E_0^2 dx = aE_0^2$$<p>We need the square integral to be proportional to units of power, which will be true if the field has units of $ \frac{\text{Volts}}{\sqrt{\mu m}} $ and not the more familiar $ \frac{\text{Volts}}{\mu m} $. This peculiarity stems from the fact that we're looking at a somewhat synthetic 1D case. With this in mind, the square integral has units of $ \text{Volts}^2 $ and is proportional to the power delivered by the plane wave.</p>
 <p>The absolute square of the diffracted field is</p>
-<p>$$ \left| U \left( x', z \right) \right|^2 = \frac{a^2 E_0^2}{\lambda z} \text{sinc}^2 \left( \frac{a x'}{\lambda z} \right)$$</p>
-<p>The integral of $ \text{sinc}^2 \left( x \right) $ with my definition of $ \text{sinc} \left( x \right) $ <a href="http://math.stackexchange.com/questions/903117/integral-of-sinc-function-squared-over-the-real-line">over the real number line</a> is just 1, so</p>
-<p>$$ \int_{-\infty}^{\infty} \left| U \left( x', z \right) \right|^2 dx' = \frac{a^2 E_0^2}{\lambda z} \times \frac{\lambda z}{a} = aE_0^2$$</p>
-<p>All of this is essentially a verification that our units and prefactors have most likely been handled correctly. Most Fourier optics texts drop a lot of prefactors in their derivations, so it's always good to check that they've done everything correctly :)</p>
+$$ \left| U \left( x', z \right) \right|^2 = \frac{a^2 E_0^2}{\lambda z} \text{sinc}^2 \left( \frac{a x'}{\lambda z} \right)$$<p>The integral of $ \text{sinc}^2 \left( x \right) $ with my definition of $ \text{sinc} \left( x \right) $ <a href="http://math.stackexchange.com/questions/903117/integral-of-sinc-function-squared-over-the-real-line">over the real number line</a> is just 1, so</p>
+$$ \int_{-\infty}^{\infty} \left| U \left( x', z \right) \right|^2 dx' = \frac{a^2 E_0^2}{\lambda z} \times \frac{\lambda z}{a} = aE_0^2$$<p>All of this is essentially a verification that our units and prefactors have most likely been handled correctly. Most Fourier optics texts drop a lot of prefactors in their derivations, so it's always good to check that they've done everything correctly :)</p>
 
 </div>
 </div>
@@ -328,7 +301,7 @@ Populating the interactive namespace from numpy and matplotlib
 <span class="nb">print</span><span class="p">(</span><span class="s1">'The input power is </span><span class="si">{0:.4f}</span><span class="s1"> square Volts. The output power is </span><span class="si">{1:.4f}</span><span class="s1"> square Volts'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">powerIn</span><span class="p">,</span> <span class="n">powerOut</span><span class="p">))</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -338,7 +311,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -356,7 +329,7 @@ Populating the interactive namespace from numpy and matplotlib
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Simulating-slit-diffraction-with-the-FFT">Simulating slit diffraction with the FFT<a class="anchor-link" href="posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html#Simulating-slit-diffraction-with-the-FFT">¶</a>
+<h2 id="Simulating-slit-diffraction-with-the-FFT">Simulating slit diffraction with the FFT<a class="anchor-link" href="posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft/#Simulating-slit-diffraction-with-the-FFT">¶</a>
 </h2>
 <p>Can we simply use the FFT in Python's Scipy or in MATLAB to arrive at the same solution as above, skipping the math in the process? Let's try it.</p>
 <p>We'll start by defining a square slit centered at the origin with the same width as above. The incident field is a plane wave with amplitude $E_0 = 1 \, V / \sqrt{m} $.</p>
@@ -382,7 +355,7 @@ Populating the interactive namespace from numpy and matplotlib
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -392,7 +365,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -431,7 +404,7 @@ Populating the interactive namespace from numpy and matplotlib
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -441,7 +414,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -462,8 +435,7 @@ Populating the interactive namespace from numpy and matplotlib
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Let's go ahead now and compute the FFT of this sequence of field samples. We first need to figure out what the units of the FFT are going to be. The sampling frequency $f_S$ for this field is simply 1 divided by the distance between each sample. The FFT outputs an array of numbers from spatial frequency 0 up to $ \left( \frac{N-1}{N} \right) f_S $. By default, the length of the output array $ N $ is the same as the length of the input. In Python, array indexes start from 0, so the relationship between index $ i $ and spatial frequency is</p>
-<p>$$ f_{x} = \frac{f_S}{N} i $$</p>
-<p>(<a href="http://scholarsarchive.jwu.edu/cgi/viewcontent.cgi?article=1006&amp;context=engineering_fac">In MATLAB</a>, array indexes start at 1 so $i$ above should be replaced by $i - 1$ .)</p>
+$$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/viewcontent.cgi?article=1006&amp;context=engineering_fac">In MATLAB</a>, array indexes start at 1 so $i$ above should be replaced by $i - 1$ .)</p>
 <p>We also need to do two other things when computing the numerical Fourier transform. First, we need to shift the input field using the <code>fftshift</code> command for arrays with an even number of elements and <code>ifftshift</code> for arrays with an odd number of elements. This will shift the elements of the array so that the point corresponding to x = 0 lies in the first element of the array (index 0).</p>
 <p>The second thing we must do is multiply the fft results by the grid spacing <code>dx</code> to ensure that the scaling on the y-axis is correct.</p>
 
@@ -490,7 +462,7 @@ Populating the interactive namespace from numpy and matplotlib
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -500,7 +472,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -546,7 +518,7 @@ Populating the interactive namespace from numpy and matplotlib
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -556,7 +528,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stderr output_text">
@@ -568,7 +540,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -620,7 +592,7 @@ Populating the interactive namespace from numpy and matplotlib
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -630,7 +602,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -661,7 +633,7 @@ Populating the interactive namespace from numpy and matplotlib
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="How-well-do-the-theory-and-FFT-results-agree?">How well do the theory and FFT results agree?<a class="anchor-link" href="posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html#How-well-do-the-theory-and-FFT-results-agree?">¶</a>
+<h2 id="How-well-do-the-theory-and-FFT-results-agree?">How well do the theory and FFT results agree?<a class="anchor-link" href="posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft/#How-well-do-the-theory-and-FFT-results-agree?">¶</a>
 </h2>
 <p>Let's start to answer this question by plotting the percent error between the theory and the FFT results.</p>
 
@@ -683,7 +655,7 @@ Populating the interactive namespace from numpy and matplotlib
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -693,7 +665,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -723,7 +695,7 @@ Populating the interactive namespace from numpy and matplotlib
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Does-aliasing-cause-the-disagreement?">Does aliasing cause the disagreement?<a class="anchor-link" href="posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html#Does-aliasing-cause-the-disagreement?">¶</a>
+<h2 id="Does-aliasing-cause-the-disagreement?">Does aliasing cause the disagreement?<a class="anchor-link" href="posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft/#Does-aliasing-cause-the-disagreement?">¶</a>
 </h2>
 <p>Let's first see whether <a href="https://en.wikipedia.org/wiki/Aliasing">aliasing</a> is causing a problem. The slit is not bandlimited, which means that its Fourier spectrum is infinite in extent. For this reason, we can never sample the slit at high-enough frequencies to and calculate its spectrum without aliasing artifacts. We can however, see if fidelity improves by increasing the sampling rate.</p>
 
@@ -749,7 +721,7 @@ Populating the interactive namespace from numpy and matplotlib
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -759,7 +731,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -800,7 +772,7 @@ Populating the interactive namespace from numpy and matplotlib
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -810,7 +782,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stderr output_text">
@@ -821,7 +793,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -863,7 +835,7 @@ Populating the interactive namespace from numpy and matplotlib
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -873,7 +845,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -903,7 +875,7 @@ Populating the interactive namespace from numpy and matplotlib
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Just-aliasing,-or-something-more?">Just aliasing, or something more?<a class="anchor-link" href="posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html#Just-aliasing,-or-something-more?">¶</a>
+<h2 id="Just-aliasing,-or-something-more?">Just aliasing, or something more?<a class="anchor-link" href="posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft/#Just-aliasing,-or-something-more?">¶</a>
 </h2>
 <p>We can begin to better understand the differences between the computational solution and the analytical solution by first underlining these two facts:</p>
 <ol>
@@ -912,11 +884,9 @@ Populating the interactive namespace from numpy and matplotlib
 </ol>
 <p>Since the analytical solution and the FFT solution come from two related but different mathematical operations, should we have expected to get the right answer in the first place? <a href="http://ch.mathworks.com/matlabcentral/newsreader/view_thread/294772">As others have pointed out</a>, the discrete time Fourier transform (DTFT) of a square function is a ratio of two sines, not a sinc. Furthermore, the DFT (and equivalently the FFT result) is simply a sampled version of the DTFT. Therefore, we might expect that sampling the DTFT solution for a square wave will produce the same results as the FFT solution. Let's go ahead and try it.</p>
 <p><a href="https://en.wikipedia.org/wiki/Discrete-time_Fourier_transform#Table_of_discrete-time_Fourier_transforms">According to Wikipedia</a>, and changing variables to agree with my notation above, the DTFT solution of the square wave is</p>
-<p>$$F \left( f_{x} \right) = \frac{\sin \left[ \pi f_{x} \left( M + 1 \right) \right] }{\sin \left( \pi f_{x} \right) } e^{ -j \pi f_{x} M }, \, M \in \mathbb{Z} $$</p>
-<p>where $ M $ is an integer and $ f\_{x} $ is the spatial frequency. An important property of the DTFT  is that it is periodic between 0 and 1. If I had used the angular spatial frequency $ k\_{x} = 2 \pi f\_{x} $ the periodicity would be between 0 and $ 2 \pi $. With this information, we can map our spatial frequency vector onto the appropriate range for the DTFT.</p>
+$$F \left( f_{x} \right) = \frac{\sin \left[ \pi f_{x} \left( M + 1 \right) \right] }{\sin \left( \pi f_{x} \right) } e^{ -j \pi f_{x} M }, \, M \in \mathbb{Z} $$<p>where $ M $ is an integer and $ f\_{x} $ is the spatial frequency. An important property of the DTFT  is that it is periodic between 0 and 1. If I had used the angular spatial frequency $ k\_{x} = 2 \pi f\_{x} $ the periodicity would be between 0 and $ 2 \pi $. With this information, we can map our spatial frequency vector onto the appropriate range for the DTFT.</p>
 <p>The square function corresponding to this DTFT solution is defined with the left edge of the square starting at the origin:</p>
-<p>$$ f \left( x \right) = \text{rect} \left( \frac{n - M/2}{M} \right) , \, M \in \mathbb{Z}, \, n = 0, 1, \ldots, N - 1$$</p>
-<p>$ n $ is the index of the samples taken from the square and $ M $ denotes the center of the square. So, to use this expression for the DTFT of the square, we will first need to shift our original input so that the left edge of the square is at the origin.</p>
+$$ f \left( x \right) = \text{rect} \left( \frac{n - M/2}{M} \right) , \, M \in \mathbb{Z}, \, n = 0, 1, \ldots, N - 1$$<p>$ n $ is the index of the samples taken from the square and $ M $ denotes the center of the square. So, to use this expression for the DTFT of the square, we will first need to shift our original input so that the left edge of the square is at the origin.</p>
 
 </div>
 </div>
@@ -943,7 +913,7 @@ Populating the interactive namespace from numpy and matplotlib
 <span class="nb">print</span><span class="p">(</span><span class="s1">'M is </span><span class="si">{0:.0f}</span><span class="s1">.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">M</span><span class="p">))</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -953,7 +923,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -966,7 +936,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -1016,7 +986,7 @@ Populating the interactive namespace from numpy and matplotlib
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1026,7 +996,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -1071,7 +1041,7 @@ Populating the interactive namespace from numpy and matplotlib
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1081,7 +1051,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -1121,7 +1091,7 @@ Populating the interactive namespace from numpy and matplotlib
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1131,7 +1101,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stderr output_text">
@@ -1143,7 +1113,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -1163,7 +1133,7 @@ Populating the interactive namespace from numpy and matplotlib
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Summary">Summary<a class="anchor-link" href="posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html#Summary">¶</a>
+<h2 id="Summary">Summary<a class="anchor-link" href="posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft/#Summary">¶</a>
 </h2>
 <p>This entire exercise effectively showed that it is impossible to compute an exact diffraction pattern from a slit with a straight-forward approach based on the fast Fourier transform. There are two ways of looking at why this is, though they are both effectively based in the same underlying ideas.</p>
 <ol>
@@ -1177,34 +1147,33 @@ Populating the interactive namespace from numpy and matplotlib
 </div>
 </div>
 </div>
+</div>
     </div>
-  </div>
-
-    </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/simulating-microscope-pupil-functions.html" class="u-url">Simulating microscope pupil functions</a></h1>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/simulating-microscope-pupil-functions/" class="u-url">Simulating microscope pupil functions</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
-            <p class="dateline"><a href="posts/simulating-microscope-pupil-functions.html" rel="bookmark"><time class="published dt-published" datetime="2016-01-24T15:13:40+01:00" title="2016-01-24 15:13">2016-01-24 15:13</time></a></p>
+            <p class="dateline">
+            <a href="posts/simulating-microscope-pupil-functions/" rel="bookmark">
+            <time class="published dt-published" datetime="2016-01-24T15:13:40+01:00" itemprop="datePublished" title="2016-01-24 15:13">2016-01-24 15:13</time></a>
+            </p>
                 <p class="commentline">
         
-    <a href="posts/simulating-microscope-pupil-functions.html#disqus_thread" data-disqus-identifier="cache/posts/simulating-microscope-pupil-functions.html">Comments</a>
+    <a href="posts/simulating-microscope-pupil-functions/#disqus_thread" data-disqus-identifier="cache/posts/simulating-microscope-pupil-functions.html">Comments</a>
 
 
         </p>
 </div>
     </header><div class="p-summary entry-summary">
-    <div tabindex="-1" id="notebook" class="border-box-sizing">
-    <div class="container" id="notebook-container">
-
+    <div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>*Note: I remade this post to address minor inconsistencies and what I perceived to be a lack of attention to units of some of the physical quantities. The updated post may be found <a href="posts/simple-pupil-function-calculations.html">here</a>.</p>
-<h2 id="Simple-simulations-of-microscope-pupil-functions">Simple simulations of microscope pupil functions<a class="anchor-link" href="posts/simulating-microscope-pupil-functions.html#Simple-simulations-of-microscope-pupil-functions">¶</a>
+<p>*Note: I remade this post to address minor inconsistencies and what I perceived to be a lack of attention to units of some of the physical quantities. The updated post may be found <a href="posts/simulating-microscope-pupil-functions/simple-pupil-function-calculations.html">here</a>.</p>
+<h2 id="Simple-simulations-of-microscope-pupil-functions">Simple simulations of microscope pupil functions<a class="anchor-link" href="posts/simulating-microscope-pupil-functions/#Simple-simulations-of-microscope-pupil-functions">¶</a>
 </h2>
 <p><a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0142949">In one of my recent publications</a>, my co-authors and I investigated an aberration that is especially pernicious for 3D localization microscopies such as <a href="https://en.wikipedia.org/wiki/Super-resolution_microscopy#STORM.2C_PALM_and_FPALM">STORM and PALM</a>. This aberration results in a dependence of the perceived position of a single, fluorescent molecule on its axial position within the focal plane of a microscope. To identify a possible source for this aberration, I employed a phase retrieval algorithm to obtain the pupil function of the microscope. I then decomposed the pupil function into a number of orthogonal polynomial terms and identified the specific terms that led to the aberration that we observed. In this case, terms associated with <a href="https://en.wikipedia.org/wiki/Coma_%28optics%29">coma</a> were the culprits.</p>
 <p>So why exactly is coma bad for 3D localization microscopy? Unfortunately, we did not have time to go into the subtleties question in the publication due deadlines on the revisions. Luckily, the internet is a wonderful tool for explaining some of these ideas outside of the formal structure of an academic paper, which is what I will do here.</p>
@@ -1218,19 +1187,16 @@ Populating the interactive namespace from numpy and matplotlib
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Pupil-Function-Basics">Pupil Function Basics<a class="anchor-link" href="posts/simulating-microscope-pupil-functions.html#Pupil-Function-Basics">¶</a>
+<h3 id="Pupil-Function-Basics">Pupil Function Basics<a class="anchor-link" href="posts/simulating-microscope-pupil-functions/#Pupil-Function-Basics">¶</a>
 </h3>
 <p>The pupil function of a microscope (and really, of any optical system) is an important tool for analyzing the aberrations present in the system. The pupil function is defined as the two dimensional Fourier transform of the image of an isotropic point source. <a href="http://mathworld.wolfram.com/FourierTransform.html">The two dimensional Fourier transform</a> of a function of two variables x and y is expressed as</p>
-<p>$$F \left( k_x, k_y \right) = \iint f \left( x, y \right) \exp \left[ -j \left( k_{x}x + k_{y}y \right) \right] dx dy$$</p>
-<p>(I was originally trained as an engineer, so I tend to use 'j' for the imaginary number more than 'i'.) The inverse Fourier transform converts $F \left( k_x, k_y \right)$ back into $f \left( x, y \right)$ and is given by</p>
-<p>$$f \left( x, y \right) = \iint F \left( k_x, k_y \right) \exp \left[ j \left( k_{x}x + k_{y}y \right) \right] dk_x dk_y$$</p>
-<p>In this case, $x$ and $y$ are variables representing 2D coordinates in the image plane and $k_x$ and $k_y$ are the spatial frequencies. $f \left( x, y \right)$ and $F \left( k_x, k_y \right)$ are known as Fourier transform pairs.</p>
+$$F \left( k_x, k_y \right) = \iint f \left( x, y \right) \exp \left[ -j \left( k_{x}x + k_{y}y \right) \right] dx dy$$<p>(I was originally trained as an engineer, so I tend to use 'j' for the imaginary number more than 'i'.) The inverse Fourier transform converts $F \left( k_x, k_y \right)$ back into $f \left( x, y \right)$ and is given by</p>
+$$f \left( x, y \right) = \iint F \left( k_x, k_y \right) \exp \left[ j \left( k_{x}x + k_{y}y \right) \right] dk_x dk_y$$<p>In this case, $x$ and $y$ are variables representing 2D coordinates in the image plane and $k_x$ and $k_y$ are the spatial frequencies. $f \left( x, y \right)$ and $F \left( k_x, k_y \right)$ are known as Fourier transform pairs.</p>
 <p>An isotropic point source is an idealized source of electromagnetic radiation that emits an equal intensity in all directions. Strictly speaking, real sources such as atoms and molecules are dipoles and not isotropic emitters. This assumption is however a good model for collections of many fluorescent molecules possessing dipole moments that are all pointing in different directions and that are smaller than the wavelength of light because the molecules' individual emission patterns average out. It is also a good approximation for a dipole whose moment is randomly reorienting in many directions during an image acquisition due to thermally-induced rotational diffusion.</p>
 <p>The image of a point source is known as the <a href="https://en.wikipedia.org/wiki/Point_spread_function">point spread function (PSF)</a> of the microscope. In signal processing, it's known as a two dimensional impulse response.</p>
 <p><a href="http://www.msg.ucsf.edu/agard/Publications/148-Agard-JMicrosc-2004.pdf">The equation</a> that relates the image of the isotropic point source to the pupil function $P \left( k_x, k_y \right)$ is</p>
-<p>$$\text{PSF}_{\text{A}} \left( x, y \right) = \iint P \left( k_x, k_y \right) \exp \left[ -j \left( k_{x}x + k_{y}y \right) \right] dx dy$$</p>
-<p>The subscript <code>A</code> on the PSF stands for <em>amplitude</em> and means that we are working with the electric field, not the <a href="https://en.wikipedia.org/wiki/Irradiance">irradiance</a>. The irradiance, which is what a camera or your eye measures, is proportional to the absolute square of $\text{PSF}_{\text{A}}$. In words, the above equation restates the definition above: the pupil function and the amplitude PSF are Fourier transform pairs.</p>
-<h3 id="Simulating-Diffraction-Limited-Pupil-Functions-and-PSF's">Simulating Diffraction Limited Pupil Functions and PSF's<a class="anchor-link" href="posts/simulating-microscope-pupil-functions.html#Simulating-Diffraction-Limited-Pupil-Functions-and-PSF's">¶</a>
+$$\text{PSF}_{\text{A}} \left( x, y \right) = \iint P \left( k_x, k_y \right) \exp \left[ -j \left( k_{x}x + k_{y}y \right) \right] dx dy$$<p>The subscript <code>A</code> on the PSF stands for <em>amplitude</em> and means that we are working with the electric field, not the <a href="https://en.wikipedia.org/wiki/Irradiance">irradiance</a>. The irradiance, which is what a camera or your eye measures, is proportional to the absolute square of $\text{PSF}_{\text{A}}$. In words, the above equation restates the definition above: the pupil function and the amplitude PSF are Fourier transform pairs.</p>
+<h3 id="Simulating-Diffraction-Limited-Pupil-Functions-and-PSF's">Simulating Diffraction Limited Pupil Functions and PSF's<a class="anchor-link" href="posts/simulating-microscope-pupil-functions/#Simulating-Diffraction-Limited-Pupil-Functions-and-PSF's">¶</a>
 </h3>
 <p>We can simulate how an aberration affects the image of a point source by simulating an aberrated pupil function and computing the Fourier transform above to get the amplitude PSF. The easiest model to simulate is based on scalar diffraction theory, which means that we ignore the fact that the electromagnetic radiation is polarized (i.e. a vector) and treat it as a scalar quantity instead. Even though this is an approximation, it still can give us a good idea about the fundamental physics involved.</p>
 <p>To perform the simulation, we must first discretize the continuous quantities in the Fourier transform. We'll model $\text{PSF}_{\text{A}}$ and $P \left( k_x, k_y \right)$ as discrete scalar quantities on 2D grids and perform a <a href="https://en.wikipedia.org/wiki/Fast_Fourier_transform">fast Fourier transform</a> to turn the pupil function into the PSF.</p>
@@ -1250,7 +1216,7 @@ Populating the interactive namespace from numpy and matplotlib
 <span class="kn">from</span> <span class="nn">scipy.fftpack</span> <span class="k">import</span> <span class="n">fftshift</span><span class="p">,</span> <span class="n">ifftshift</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1260,7 +1226,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -1283,7 +1249,7 @@ Populating the interactive namespace from numpy and matplotlib
 <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">'image.cmap'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'plasma'</span> 
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1306,7 +1272,7 @@ Populating the interactive namespace from numpy and matplotlib
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">imgSize</span> <span class="o">=</span> <span class="mi">513</span> <span class="c1"># Choose an odd number to ensure rotational symmetry about the center</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1332,7 +1298,7 @@ Populating the interactive namespace from numpy and matplotlib
 <span class="n">pixelSize</span>  <span class="o">=</span> <span class="mf">0.1</span>  <span class="c1"># microns, typical for microscopes with 60X--100X magnifications</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1357,7 +1323,7 @@ Populating the interactive namespace from numpy and matplotlib
 <span class="n">dk</span>   <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">/</span> <span class="p">(</span><span class="n">imgSize</span> <span class="o">*</span> <span class="n">pixelSize</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1391,7 +1357,7 @@ Populating the interactive namespace from numpy and matplotlib
 <span class="nb">print</span><span class="p">(</span><span class="s1">'Size of kx : </span><span class="si">{0}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">kx</span><span class="o">.</span><span class="n">size</span><span class="p">))</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1401,7 +1367,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -1443,7 +1409,7 @@ Size of kx : 513
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1453,7 +1419,7 @@ Size of kx : 513
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -1488,7 +1454,7 @@ Size of kx : 513
 <span class="n">pupil</span> <span class="o">=</span> <span class="n">amp</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">phase</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1510,7 +1476,7 @@ Size of kx : 513
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1520,7 +1486,7 @@ Size of kx : 513
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -1565,7 +1531,7 @@ Size of kx : 513
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1575,7 +1541,7 @@ Size of kx : 513
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -1607,8 +1573,7 @@ Size of kx : 513
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Let's see how a line profile through the center of the image looks relative to the profile of the <a href="https://en.wikipedia.org/wiki/Airy_disk">Airy disk</a>, which is the mathematical solution to the diffraction pattern from a circular aperture in scalar diffraction theory. The Airy disk is given by</p>
-<p>$$I \left( X \right) = I_{0} \left[ \frac{2J_{1} \left( X \right)}{X} \right]^2$$</p>
-<p>where $J_{1} \left( X \right) $ is the Bessel function of the first kind and order 1 and $ X = \frac{2 \pi r  (\text{NA})}{\lambda} $. Here, $r$ is the distance from the center of the image plane, so we can easily convert it to pixels.</p>
+$$I \left( X \right) = I_{0} \left[ \frac{2J_{1} \left( X \right)}{X} \right]^2$$<p>where $J_{1} \left( X \right) $ is the Bessel function of the first kind and order 1 and $ X = \frac{2 \pi r  (\text{NA})}{\lambda} $. Here, $r$ is the distance from the center of the image plane, so we can easily convert it to pixels.</p>
 <p>Because the pupil of the microscope is circular and unaberrated, it is also the solution for PSF of the microscope.</p>
 
 </div>
@@ -1638,7 +1603,7 @@ Size of kx : 513
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1648,7 +1613,7 @@ Size of kx : 513
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stderr output_text">
@@ -1659,7 +1624,7 @@ Size of kx : 513
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -1689,13 +1654,12 @@ Size of kx : 513
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Defocus">Defocus<a class="anchor-link" href="posts/simulating-microscope-pupil-functions.html#Defocus">¶</a>
+<h3 id="Defocus">Defocus<a class="anchor-link" href="posts/simulating-microscope-pupil-functions/#Defocus">¶</a>
 </h3>
 <p>Now that we can simulate the diffraction-limited image of an <em>in-focus</em> isotropic point source, let's add some defocus to demonstrate what the PSF would look like as the camera or sample is scanned along the axial direction.</p>
 <p>Defocus can be added in numerous ways. One is to multiply our pupil function by the phase aberration for defocus, which is usually modeled as a parabolic phase aberration in the pupil coordinates. However, <a href="http://kmdouglass.github.io/posts/beware-the-paraxial-approximation-in-microscopy.html">as I explained in a previous post</a>, this is an approximate model for defocus and fails for large numerical apertures.</p>
 <p>Another simple way is to propagate the plane wave angular spectrum in the image plane to nearby planes. This relatively easy method is used in a well-known microscopy paper (<a href="http://onlinelibrary.wiley.com/doi/10.1111/j.0022-2720.2004.01393.x/abstract">Hanser, 2004</a>) and involves multiplying the pupil function by a defocus kernel before performing the Fourier transform.</p>
-<p>$$\text{PSF}_{\text{A}} \left( x, y, z \right) = \iint P \left( k_x, k_y \right) \exp \left( j k_{z} z \right) \exp \left[ -j \left( k_{x}x + k_{y}y \right) \right] dx dy$$</p>
-<p>Here, $k_z = \sqrt{\left( 2 \pi n / \lambda \right)^2 - k_x^2 - k_y^2}$. The defocus kernel essentially shifts the phase of each plane wave with pupil coordinates $\left( k_x, k_y \right)$ by an amount that depends on its coordinates and the distance from the image plane $z$.</p>
+$$\text{PSF}_{\text{A}} \left( x, y, z \right) = \iint P \left( k_x, k_y \right) \exp \left( j k_{z} z \right) \exp \left[ -j \left( k_{x}x + k_{y}y \right) \right] dx dy$$<p>Here, $k_z = \sqrt{\left( 2 \pi n / \lambda \right)^2 - k_x^2 - k_y^2}$. The defocus kernel essentially shifts the phase of each plane wave with pupil coordinates $\left( k_x, k_y \right)$ by an amount that depends on its coordinates and the distance from the image plane $z$.</p>
 <p>The above equation means that we can model the PSF behavior as we scan through the focal plane by computing the defocus kernel for different distances from focus. Then, we multiply our perfect pupil by this defocus kernel and compute its Fourier transform to get the amplitude and irradiance PSF's.</p>
 
 </div>
@@ -1719,7 +1683,7 @@ Size of kx : 513
     <span class="n">defocusPSF</span><span class="p">[:,:,</span><span class="n">ctr</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">defocusPSFA</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">conj</span><span class="p">(</span><span class="n">defocusPSFA</span><span class="p">))</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1764,7 +1728,7 @@ Size of kx : 513
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1774,7 +1738,7 @@ Size of kx : 513
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -1800,975 +1764,577 @@ Size of kx : 513
 </div>
 </div>
 </div>
+</div>
     </div>
-  </div>
-
-    </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/beware-the-paraxial-approximation-in-microscopy.html" class="u-url">Beware the paraxial approximation in microscopy</a></h1>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/beware-the-paraxial-approximation-in-microscopy/" class="u-url">Beware the paraxial approximation in microscopy</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
-            <p class="dateline"><a href="posts/beware-the-paraxial-approximation-in-microscopy.html" rel="bookmark"><time class="published dt-published" datetime="2015-09-09T19:40:00+02:00" title="2015-09-09 19:40">2015-09-09 19:40</time></a></p>
+            <p class="dateline">
+            <a href="posts/beware-the-paraxial-approximation-in-microscopy/" rel="bookmark">
+            <time class="published dt-published" datetime="2015-09-09T19:40:00+02:00" itemprop="datePublished" title="2015-09-09 19:40">2015-09-09 19:40</time></a>
+            </p>
                 <p class="commentline">
         
-    <a href="posts/beware-the-paraxial-approximation-in-microscopy.html#disqus_thread" data-disqus-identifier="cache/posts/beware-the-paraxial-approximation-in-microscopy.html">Comments</a>
+    <a href="posts/beware-the-paraxial-approximation-in-microscopy/#disqus_thread" data-disqus-identifier="cache/posts/beware-the-paraxial-approximation-in-microscopy.html">Comments</a>
 
 
         </p>
 </div>
     </header><div class="p-summary entry-summary">
-    <p>
-I have had a difficult time resolving what originally seemed to be an
-inconsistency between a 2004 research article about estimating
-microscope pupil functions and the body of knowledge concerning the
-theory of aberrations in optical systems.
-</p>
-
-<p>
-In the article by Hanser, et al.<sup><a id="fnr.1" name="fnr.1" class="footref" href="posts/beware-the-paraxial-approximation-in-microscopy.html#fn.1">1</a></sup>, the authors utilize an imaging model
-for calculating the amplitude point-spread function of an optical
-system that incorporates defocus as an exponential term inside the
-Fourier transform integral:
-</p>
-
+    <div>
+<p>I have had a difficult time resolving what originally seemed to be an inconsistency between a 2004
+research article about estimating microscope pupil functions and the body of knowledge concerning
+the theory of aberrations in optical systems.</p>
+<p>In the article by Hanser, et al.[1], the authors utilize an imaging model for calculating the
+amplitude point-spread function of an optical system that incorporates defocus as an exponential
+term inside the Fourier transform integral:</p>
+<div class="math">
 \begin{equation*}
 \text{PSF}_{\text{A}} \left( x, y, z \right) = \iint_{pupil} P \left( k_x, k_y \right) e^{i k_z z} e^{i \left( k_{x}x + k_{y}y \right)} dk_x dk_y
 \end{equation*}
-
-<p>
-where \(k_z = \sqrt{\left( 2 \pi n / \lambda \right)^2 - \left( k_x^2 +
-k_y^2 \right)}\). (I changed the notation of some variables used in the
-text because the authors confusingly use \(k\) to represent spatial
-frequency in units of <i>cycles per distance</i> instead of the much more
-common <i>radians per distance</i>.) In the image plane at \(z = 0\), there
-is no defocus and we get the amplitude point spread function (PSF) as
-the Fourier transform of the pupil function \(P \left( k_x, k_y
-\right)\) just like we would expect (see Goodman<sup><a id="fnr.2" name="fnr.2" class="footref" href="posts/beware-the-paraxial-approximation-in-microscopy.html#fn.2">2</a></sup>, Chapter 6,
-pp. 129-131).
-</p>
-
-<p>
-The problem arises when I try to verify this model when \(z\) is not
-equal to zero by computing the defocused PSF using the wavefront error
-for defocus. From the scalar diffraction theory of aberrations, the
-defocused PSF is the Fourier transform of the pupil function
-multiplied by a phase factor whose phase angle is proportional to the
-wavefront error \(W \left( k_x, k_y \right)\)
-</p>
-
+</div>
+<p>where <span class="math">\(k_z = \sqrt{\left( 2 \pi n / \lambda \right)^2 - \left( k_x^2 + k_y^2 \right)}\)</span>. (I
+changed the notation of some variables used in the text because the authors confusingly use
+<span class="math">\(k\)</span> to represent spatial frequency in units of /cycles per distance/ instead of the much more
+common <em>radians per distance</em>.) In the image plane at <span class="math">\(z = 0\)</span>, there is no defocus and we get
+the amplitude point spread function (PSF) as the Fourier transform of the pupil function <span class="math">\(P
+\left( k_x, k_y \right)\)</span> just like we would expect (see Goodman[2], Chapter 6, pp. 129-131).</p>
+<p>The problem arises when I try to verify this model when <span class="math">\(z\)</span> is not equal to zero by computing
+the defocused PSF using the wavefront error for defocus. From the scalar diffraction theory of
+aberrations, the defocused PSF is the Fourier transform of the pupil function multiplied by a phase
+factor whose phase angle is proportional to the wavefront error <span class="math">\(W \left( k_x, k_y \right)\)</span></p>
+<div class="math">
 \begin{equation*}
 \text{PSF}_{\text{A}} \left( x, y, z \right) = \iint_{pupil} P \left( k_x, k_y \right) e^{i k W \left( k_x, k_y \right)} e^{i \left( k_{x}x + k_{y}y \right)} dk_x dk_y
 \end{equation*}
-
-<p>
-Any textbook discussing Seidel aberrations will tell you that the
-defocused wavefront error \(W\) is quadratic in the pupil plane
-coordinates, i.e. \(W \sim k_x^2 + k_y^2\). Goodman even states this
-with little justification later in Chapter 6 on p. 149 when discussing
-defocus <sup><a id="fnr.2.100" name="fnr.2.100" class="footref" href="posts/beware-the-paraxial-approximation-in-microscopy.html#fn.2">2</a></sup>. So how can I reconcile the first equation in which the
-defocus goes as the square root of a constant minus the squared pupil
-coordinates with the second equation that is quadratic in pupil
-coordinates?
-</p>
-
-<p>
-The answer, as you might have guessed from the title of this post, is
-that <i>the Seidel polynomial term for defocus is a result of applying
-the paraxial approximation when computing the wavefront error</i>. You
-can see this by calculating the phase of a spherical wave in the pupil
-plane that is centered on the axis in the image plane; Goodman states
-it is quadratic without justification, but this is only true near the
-axis. Mahajan offers a geometrical interpretation of \(W\) on p. 148,
-where he notes that the path length difference for defocus "is
-approximately equal to the difference of <a href="http://liutaiomottola.com/formulae/sag.htm">sags</a> of the reference sphere
-and the wavefront.<sup><a id="fnr.3" name="fnr.3" class="footref" href="posts/beware-the-paraxial-approximation-in-microscopy.html#fn.3">3</a></sup>" He then goes on to derive the same expression
-for \(W\) that Goodman gets; he states the approximation that he uses,
-whereas Goodman implicitly assumes a quadratic phase front in the
-pupil. Hanser et al., on the other hand, are essentially propagating
-the plane wave angular spectrum from the image plane to nearby planes
-to model defocus. I think that this should be rigorously correct since
-no approximation is applied. For me, it is unfortunate that this was
-not made clear in their paper because I spent quite a bit of time
-trying to reconcile the two results.
-</p>
-
-<p>
-The lesson of this story is to be sure you know about the
-approximations that go into a "standard" result found in textbooks. I
-falsely assumed that the Seidel aberrations were exact and that
-Hanser, et al. were suspect when in fact it was the other way
-around. Because the paraxial approximation is so widespread in optics
-theory, it can often lie hidden behind an equation and its effects can
-easily be taken for granted. This is a problem for the large NA
-systems used in microscopy where the results of the paraxial
-approximation are not often valid.
-</p>
-<div id="footnotes">
-<h2 class="footnotes">Footnotes: </h2>
-<div id="text-footnotes">
-
-<div class="footdef">
-<sup><a id="fn.1" name="fn.1" class="footnum" href="posts/beware-the-paraxial-approximation-in-microscopy.html#fnr.1">1</a></sup><p class="footpara">
-<a href="http://onlinelibrary.wiley.com/doi/10.1111/j.0022-2720.2004.01393.x/abstract;jsessionid=946CF30FA7FA65F1DB4C638D0C4DF00F.f02t04">http://onlinelibrary.wiley.com/doi/10.1111/j.0022-2720.2004.01393.x/abstract;jsessionid=946CF30FA7FA65F1DB4C638D0C4DF00F.f02t04</a>
-</p>
 </div>
-
-<div class="footdef">
-<sup><a id="fn.2" name="fn.2" class="footnum" href="posts/beware-the-paraxial-approximation-in-microscopy.html#fnr.2">2</a></sup><p class="footpara">
-<a href="https://books.google.ch/books/about/Introduction_to_Fourier_optics.html?id=ow5xs_Rtt9AC&amp;redir_esc=y">https://books.google.ch/books/about/Introduction_to_Fourier_optics.html?id=ow5xs_Rtt9AC&amp;redir_esc=y</a>
-</p>
-</div>
-
-<div class="footdef">
-<sup><a id="fn.3" name="fn.3" class="footnum" href="posts/beware-the-paraxial-approximation-in-microscopy.html#fnr.3">3</a></sup><p class="footpara">
-<a href="https://books.google.ch/books/about/Optical_Imaging_and_Aberrations_Ray_geom.html?id=I_1AAQAAIAAJ&amp;redir_esc=y">https://books.google.ch/books/about/Optical_Imaging_and_Aberrations_Ray_geom.html?id=I_1AAQAAIAAJ&amp;redir_esc=y</a>
-</p>
-</div>
-
-
+<p>Any textbook discussing Seidel aberrations will tell you that the defocused wavefront error
+<span class="math">\(W\)</span> is quadratic in the pupil plane coordinates, i.e. <span class="math">\(W \sim k_x^2 + k_y^2\)</span>. Goodman
+even states this with little justification later in Chapter 6 on p. 149 when discussing defocus
+[2]. So how can I reconcile the first equation in which the defocus goes as the square root of a
+constant minus the squared pupil coordinates with the second equation that is quadratic in pupil
+coordinates?</p>
+<p>The answer, as you might have guessed from the title of this post, is that /the Seidel polynomial
+term for defocus is a result of applying the paraxial approximation when computing the wavefront
+error/. You can see this by calculating the phase of a spherical wave in the pupil plane that is
+centered on the axis in the image plane; Goodman states it is quadratic without justification, but
+this is only true near the axis. Mahajan offers a geometrical interpretation of <span class="math">\(W\)</span>
+on p. 148, where he notes that the path length difference for defocus "is approximately equal to
+the difference of <a class="reference external" href="http://liutaiomottola.com/formulae/sag.htm">sags</a> of the reference sphere and
+the wavefront.[3]" He then goes on to derive the same expression for <span class="math">\(W\)</span> that Goodman gets;
+he states the approximation that he uses, whereas Goodman implicitly assumes a quadratic phase
+front in the pupil. Hanser et al., on the other hand, are essentially propagating the plane wave
+angular spectrum from the image plane to nearby planes to model defocus. I think that this should
+be rigorously correct since no approximation is applied. For me, it is unfortunate that this was
+not made clear in their paper because I spent quite a bit of time trying to reconcile the two
+results.</p>
+<p>The lesson of this story is to be sure you know about the approximations that go into a "standard"
+result found in textbooks. I falsely assumed that the Seidel aberrations were exact and that
+Hanser, et al. were suspect when in fact it was the other way around. Because the paraxial
+approximation is so widespread in optics theory, it can often lie hidden behind an equation and its
+effects can easily be taken for granted. This is a problem for the large NA systems used in
+microscopy where the results of the paraxial approximation are not often valid.</p>
+<div class="section" id="footnotes">
+<h2>Footnotes</h2>
+<ol class="arabic simple">
+<li><a class="reference external" href="http://onlinelibrary.wiley.com/doi/10.1111/j.0022-2720.2004.01393.x/abstract;jsessionid=946CF30FA7FA65F1DB4C638D0C4DF00F.f02t04">http://onlinelibrary.wiley.com/doi/10.1111/j.0022-2720.2004.01393.x/abstract;jsessionid=946CF30FA7FA65F1DB4C638D0C4DF00F.f02t04</a></li>
+<li><a class="reference external" href="https://books.google.ch/books/about/Introduction_to_Fourier_optics.html?id=ow5xs_Rtt9AC&amp;redir_esc=y">https://books.google.ch/books/about/Introduction_to_Fourier_optics.html?id=ow5xs_Rtt9AC&amp;redir_esc=y</a></li>
+<li><a class="reference external" href="https://books.google.ch/books/about/Optical_Imaging_and_Aberrations_Ray_geom.html?id=I_1AAQAAIAAJ&amp;redir_esc=y">https://books.google.ch/books/about/Optical_Imaging_and_Aberrations_Ray_geom.html?id=I_1AAQAAIAAJ&amp;redir_esc=y</a></li>
+</ol>
 </div>
 </div>
     </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/whats-the-difference-between-a-back-focal-plane-and-pupil-plane.html" class="u-url">What's the difference between a back focal plane and pupil plane?</a></h1>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/whats-the-difference-between-a-back-focal-plane-and-pupil-plane/" class="u-url">What's the difference between a back focal plane and pupil plane?</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
-            <p class="dateline"><a href="posts/whats-the-difference-between-a-back-focal-plane-and-pupil-plane.html" rel="bookmark"><time class="published dt-published" datetime="2015-08-26T08:49:13+02:00" title="2015-08-26 08:49">2015-08-26 08:49</time></a></p>
+            <p class="dateline">
+            <a href="posts/whats-the-difference-between-a-back-focal-plane-and-pupil-plane/" rel="bookmark">
+            <time class="published dt-published" datetime="2015-08-26T08:49:13+02:00" itemprop="datePublished" title="2015-08-26 08:49">2015-08-26 08:49</time></a>
+            </p>
                 <p class="commentline">
         
-    <a href="posts/whats-the-difference-between-a-back-focal-plane-and-pupil-plane.html#disqus_thread" data-disqus-identifier="cache/posts/whats-the-difference-between-a-back-focal-plane-and-pupil-plane.html">Comments</a>
+    <a href="posts/whats-the-difference-between-a-back-focal-plane-and-pupil-plane/#disqus_thread" data-disqus-identifier="cache/posts/whats-the-difference-between-a-back-focal-plane-and-pupil-plane.html">Comments</a>
 
 
         </p>
 </div>
     </header><div class="p-summary entry-summary">
-    <p>
-Yesterday in the lab I asked one of my colleagues whether she knew
+    <div>
+<p>Yesterday in the lab I asked one of my colleagues whether she knew
 what the pupil plane of a microscope objective was. Her answer was
 no. I then unknowingly proceeded to give her a description which I now
 realize was false. I said that the pupil plane is the plane near the
 backside of the objective where the light intensity is proportional to
 the Fourier transform of the image. Later that evening, I realized
 that this explanation was, in fact, wrong. I had described to her what
-is the <i>back focal plane</i> for an infinity-corrected objective.
-</p>
-
-<p>
-Don't worry, I will correct myself when I see her later
+is the /back focal plane/ for an infinity-corrected objective.</p>
+<p>Don't worry, I will correct myself when I see her later
 today. However, this experience does raise one important question that
 I have never seriously considered in optics: what is the meaningful
 difference between the pupil plane of an optical system and its back
-focal plane?
-</p>
-
-<p>
-First, I should point out that there is no difference between a <i>back</i>
+focal plane?</p>
+<p>First, I should point out that there is no difference between a /back/
 focal plane and one of the two focal planes of an objective; these are
 merely semantics that reflect the fact that we think of the sample as
 being in front of the objective. The back focal plane is therefore the
 focal plane of the objective located on the side opposite the
 sample. Now, everyone who has taken a Fourier optics class has
-probably learned the following mantra:
-</p>
-
-<div align="center">
-
-<p>
-<b>The focal plane of a lens contains the Fourier transform of the
-object.</b>
-</p>
-
+probably learned the following mantra:</p>
+<blockquote>
+<strong>The focal plane of a lens contains the Fourier transform of the
+object.</strong>
+</blockquote>
+<p>Of course, this statement is usually what we remember, but in fact it
+should look more like this:</p>
+<blockquote>
+<strong>The focal plane of a lens contains the Fourier transform of the
+object, except for every other detail we ignore in the math.</strong>
+</blockquote>
+<p>While it's true that the light intensity here reflects the sample's two-dimensional Fourier
+transform, the general case often contains additional phase factors and expressions to account for
+the pupil size and apodization (see <a class="reference external" href="https://books.google.ch/books?id=ow5xs_Rtt9AC&amp;printsec=frontcover&amp;dq=goodman+fourier+optics&amp;hl=en&amp;sa=X&amp;ved=0CB0Q6AEwAGoVChMI-5vjt5jGxwIVCMUUCh37ogzP#v=onepage&amp;q=goodman%20fourier%20optics&amp;f=false">Goodman</a>, section 5.2). Regardless, it is in the back focal
+plane where the light intensity cpontains information on the angular spectrum that makes up the
+object.</p>
+<p>In contrast, the pupil plane contains either the image of the objective's aperture stop or the
+physical stop itself, depending on what sets the limit on the numerical aperture of the objective
+in the infinity space (again, see <a class="reference external" href="https://books.google.ch/books?id=ow5xs_Rtt9AC&amp;printsec=frontcover&amp;dq=goodman+fourier+optics&amp;hl=en&amp;sa=X&amp;ved=0CB0Q6AEwAGoVChMI-5vjt5jGxwIVCMUUCh37ogzP#v=onepage&amp;q=goodman%20fourier%20optics&amp;f=false">Goodman</a>, appendix B). Moreover, the pupil plane is also used
+as the reference plane for quantifying the objective's aberrations. This is because, for a
+diffraction-limited system, the wavefront in the (exit) pupil plane will be a spherical wave
+converging towards the image of a point source and truncated by the aperture stop <a class="reference external" href="https://books.google.ch/books?id=ow5xs_Rtt9AC&amp;printsec=frontcover&amp;dq=goodman+fourier+optics&amp;hl=en&amp;sa=X&amp;ved=0CB0Q6AEwAGoVChMI-5vjt5jGxwIVCMUUCh37ogzP#v=onepage&amp;q=goodman%20fourier%20optics&amp;f=false">Goodman</a> again
+discusses this in section 6.1). Deviations from the spherical reference wave serve as the means to
+quantify the aberrations in a system.</p>
+<p>From an experimental point of view, the back focal plane is interesting because it is used in
+Fourier microscopy, for which many setups have been devised to image it (see Figure 1 in <a class="reference external" href="http://arxiv.org/abs/1507.04037">this
+excellent arXiv submission</a>.) What I really am wondering now is how one would go about imaging the
+pupil plane as a means of exploring an objective's aberrations, and whether this is at all
+feasible.</p>
 </div>
-
-<p>
-Of course, this statement is usually what we remember, but in fact it
-should look more like this:
-</p>
-
-<div align="center">
-
-
-<p>
-<b>The focal plane of a lens contains the Fourier transform of the
-object, except for every other detail we ignore in the math.</b>
-</p>
-
-</div>
-
-
-<p>
-While it's true that the light intensity here reflects the sample's
-two-dimensional Fourier transform, the general case often contains
-additional phase factors and expressions to account for the pupil size
-and apodization (see <a href="https://books.google.ch/books?id=ow5xs_Rtt9AC&amp;printsec=frontcover&amp;dq=goodman+fourier+optics&amp;hl=en&amp;sa=X&amp;ved=0CB0Q6AEwAGoVChMI-5vjt5jGxwIVCMUUCh37ogzP#v=onepage&amp;q=goodman%20fourier%20optics&amp;f=false">Goodman</a>, section 5.2). Regardless, it is in the
-back focal plane where the light intensity contains information on the
-angular spectrum that makes up the object.
-</p>
-
-<p>
-In contrast, the pupil plane contains either the image of the
-objective's aperture stop or the physical stop itself, depending on
-what sets the limit on the numerical aperture of the objective in the
-infinity space (again, see <a href="https://books.google.ch/books?id=ow5xs_Rtt9AC&amp;printsec=frontcover&amp;dq=goodman+fourier+optics&amp;hl=en&amp;sa=X&amp;ved=0CB0Q6AEwAGoVChMI-5vjt5jGxwIVCMUUCh37ogzP#v=onepage&amp;q=goodman%20fourier%20optics&amp;f=false">Goodman</a>, appendix B). Moreover, the pupil
-plane is also used as the reference plane for quantifying the
-objective's aberrations. This is because, for a diffraction-limited
-system, the wavefront in the (exit) pupil plane will be a spherical
-wave converging towards the image of a point source and truncated by
-the aperture stop (<a href="https://books.google.ch/books?id=ow5xs_Rtt9AC&amp;printsec=frontcover&amp;dq=goodman+fourier+optics&amp;hl=en&amp;sa=X&amp;ved=0CB0Q6AEwAGoVChMI-5vjt5jGxwIVCMUUCh37ogzP#v=onepage&amp;q=goodman%20fourier%20optics&amp;f=false">Goodman</a> again discusses this in section
-6.1). Deviations from the spherical reference wave serve as the means
-to quantify the aberrations in a system.
-</p>
-
-<p>
-From an experimental point of view, the back focal plane is
-interesting because it is used in Fourier microscopy, for which many
-setups have been devised to image it (see Figure 1 in <a href="http://arxiv.org/abs/1507.04037">this excellent
-arXiv submission</a>.) What I really am wondering now is how one would go
-about imaging the pupil plane as a means of exploring an objective's
-aberrations, and whether this is at all feasible.
-</p>
     </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/paraxial-optics-2-what-problem-does-it-solve.html" class="u-url">Paraxial Optics (2): What problem does it solve?</a></h1>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/paraxial-optics-2-what-problem-does-it-solve/" class="u-url">Paraxial Optics (2): What problem does it solve?</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
-            <p class="dateline"><a href="posts/paraxial-optics-2-what-problem-does-it-solve.html" rel="bookmark"><time class="published dt-published" datetime="2015-05-31T15:37:13+02:00" title="2015-05-31 15:37">2015-05-31 15:37</time></a></p>
+            <p class="dateline">
+            <a href="posts/paraxial-optics-2-what-problem-does-it-solve/" rel="bookmark">
+            <time class="published dt-published" datetime="2015-05-31T15:37:13+02:00" itemprop="datePublished" title="2015-05-31 15:37">2015-05-31 15:37</time></a>
+            </p>
                 <p class="commentline">
         
-    <a href="posts/paraxial-optics-2-what-problem-does-it-solve.html#disqus_thread" data-disqus-identifier="cache/posts/paraxial-optics-2-what-problem-does-it-solve.html">Comments</a>
+    <a href="posts/paraxial-optics-2-what-problem-does-it-solve/#disqus_thread" data-disqus-identifier="cache/posts/paraxial-optics-2-what-problem-does-it-solve.html">Comments</a>
 
 
         </p>
 </div>
     </header><div class="p-summary entry-summary">
-    <div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1">Summary</h2>
-<div class="outline-text-2" id="text-1">
-<ol class="org-ol">
-<li>Paraxial optics is a tool to aid in building optical systems.
-</li>
-<li>Paraxial optics solves the imaging problem.
-</li>
+    <div>
+<div class="section" id="summary">
+<h2>Summary</h2>
+<ol class="arabic simple">
+<li>Paraxial optics is a tool to aid in building optical systems.</li>
+<li>Paraxial optics solves the imaging problem.</li>
 <li>The imaging problem concerns finding the location, size, and
-orientation of an image given an object and an optical system.
-</li>
+orientation of an image given an object and an optical system.</li>
 <li>An optical system is a collection of objects like lenses, mirrors,
 prisms, cameras, etc. that collects the light emitted or scattered
 by an object and delivers it to another location where it can be
-detected and processed for information.
-</li>
+detected and processed for information.</li>
 <li>The rules of paraxial optics allow for a perfect imaging system,
 i.e. a system that creates a one-to-one correspondance between
-points in an object plane and an image plane.
-</li>
+points in an object plane and an image plane.</li>
+</ol>
+</div>
+<div class="section" id="paraxial-optics-solves-the-imaging-problem">
+<h2>Paraxial optics solves the imaging problem</h2>
+<p>In this post I will use paraxial optics to mean paraxial geometrical optics. This is important
+since the paraxial approximation can also apply to the wave theory of light.</p>
+<p>When learning a new theory, I often find it most useful to first identify the problem that the
+theory was developed to solve. This approach is particularly pertinent for learning paraxial
+optics, since the theory is largely used as a tool to aid in the construction of optical
+systems. Unfortunately, the fact that paraxial optics can help solve problems often becomes lost on
+people because they never actually build anything for the purpose of imaging. And even if a someone
+never builds a camera or microscope, I think it is difficult for them to see what paraxial optics
+concepts--such as principle planes and aperture stops--can do for helping them troubleshoot their
+hardware when it is not working as expected.</p>
+<p>So, with this in mind, I will use this part in a series of blog posts to answer the following
+question: what is the problem that paraxial optics solves?</p>
+<p>Paraxial optics solves the imaging problem [1]. The imaging problem as I see it is simply this:
+<em>given an optical system, how can one arrange its components to form the image of an object at a
+desired</em> <em>position and with a predictable size and orientation?</em> This question has been asked by
+scientists, engineers, philosophers, and others since antiquity because we place enormous value in
+pictures.</p>
+<p>To better understand this problem, I am going to step through the parts of this statement and
+explain what I mean by each. First, I mention that the imaging problem involves the use of an
+<em>optical system</em>. I have to admit that I use this term partly because it is part of the jargon of
+the optical sciences, but I also think that the word "system" nicely captures the essence of what I
+would like to say. An optical system is a collection of components such as lenses, mirrors, and
+prisms taken together with their mechanical supports and arranged in a meaningful way to capture
+and channel light as it travels from one place to another. Below is one example of an optical
+system that most people know pretty well.</p>
+<img alt="A human eye is an optical system! From http://en.wikipedia.org/wiki/Eye#/media/File:Eye_iris.jpg, Peter Nóvak, Wikipedia." class="align-center" src="images/eye.jpg"><p>I have already mentioned that the components of an optical system can include things we commonly
+associate with optics, such as lenses and mirrors, but really no one such component is necessary to
+build an optical system so long as it captures and does something with light. For example, <a class="reference external" href="http://en.wikipedia.org/wiki/Pinhole_camera">the
+pinhole camera</a> uses nothing but a very small hole
+to form images; no lens is required! Still, we usually find some components like lenses much more
+frequently in optical systems than others, and the choice of which components to use really just
+depends on the specific type of imaging problem you are trying to solve.</p>
+<p>Next in the statement of the imaging problem I say that we will be forming an image by arranging
+the components of our optical system in a clever way. Though the intuitive notion of an image is
+quite clear, I think it is actually extremely difficult to formally define it. For the purpose of
+this tutorial, I think it is best at this point to rely on the intuitive idea of an image until I
+have developed enough concepts to define it in terms of optical theory [2].</p>
+<p>Finally, the imaging problem involves determining the location, size, and orientation of an image
+formed by the system. This means that rearrangement of our system's components is going to change
+these features of the image. Things such as the size of a CCD chip or the weight of a lens are
+going to place constraints on the values these properties can take.</p>
+</div>
+<div class="section" id="perfect-imaging-systems">
+<h2>Perfect imaging systems</h2>
+<p>At this point I should stress that paraxial optics is not the only theoretical tool for solving the
+imaging problem. We clearly can use non-paraxial geometrical optics or wave optics to determine the
+properties of an image formed by an optical system. However, what is interesting is that paraxial
+optics is one of very few theoretical frameworks in which a perfect image can be realized [3].</p>
+<img alt="Perfect optical system" class="align-center" src="images/im_perfectOpticalSystems.png"><p>The above figure, which is called a <a class="reference external" href="http://www.edmundoptics.com/TechSupport/resource_center/downloads/Anchor-Optics/GraphicalRayTracing.pdf">ray-trace diagram</a>,
+illustrates what I mean by a perfect imaging system. The system is represented as a "black box"
+that collects light coming from a two-dimensional plane (known as the object plane) and relays the
+light to another plane known as the image plane. The whole system is considered to be rotationally
+symmetric about a line called the optics axis so that I can represent it as a two-dimensional
+sketch instead of requiring a full, three-dimensional model. Finally, light is modeled as lines
+with arrows denoting the direction of propagation [4].</p>
+<p>Now comes the important point. Within the framework of paraxial optics theory, it is possible to
+show that, given an object plane and an image plane, one can construct an optical system consisting
+of components that redirect the light rays in such a way that all the rays leaving a point in the
+object plane are brought back together at a corresponding point in the image plane. <em>This means
+that the perfect optical system performs a one-to-one mapping of points in the object</em> <em>plane to
+points in the image plane</em>. What's more, the distance between every point in the image plane and
+the optics axis is proportional to the distance between their corresponding points and the axis in
+the object plane by a constant factor. This factor is known as the <em>magnification</em> of the system.</p>
+<p>The way this perfect imaging system is realized within the context of the theory is in the way the
+components redirect the rays coming from the object [5]. What differentiates /paraxial/ geometrical
+optics from plain old geometrical optics is the rules dictating how the redirection occurs.</p>
+<p>One other important point is to consider what happens in imperfect imaging systems. Once we violate
+the assumptions of paraxial optics so that we no longer have a system operating within its range of
+validity, we cannot perform a true, one-to-one mapping of points from the object plane to the image
+plane. Instead, we find that rays coming from a single point in the object plane cannot all be
+brought back together in any image plane [6]. We could say that the image plane is a concept that
+does not exist outside paraxial optics. And if the image plane does not exist, how are we to
+strictly define an image size and location?</p>
+<p>Of course, we can find planes in non-paraxial systems in which there are pretty good images, and
+these usually correspond to the image planes we find by applying the equations and simplifications
+of paraxial optics. So paraxial optics is often our first tool for modeling an imaging system. It
+tells us roughly where our images will be formed and how big they are, but it will not tell us
+about image quality.</p>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion</h2>
+<p>With this tutorial I hope to have provided you with a conceptual basis for understanding paraxial
+geometrical optics without including too many of its details. I think a conceptual basis such as
+this is much better than diving right into ray-trace diagrams with lenses and mirros. I think new
+students to optics often wonder what the importance is of paraxial optics and why it is needed when
+more complete optical descriptions exist. I hope that the discussion of the perfect imaging system
+and its existence only within the framework of paraxial geometrical optics helped to clarify its
+importance.</p>
+</div>
+<div class="section" id="footnotes">
+<h2>Footnotes</h2>
+<ol class="arabic simple">
+<li>You didn't expect me to give you the answer right away, didyou? :)</li>
+<li>
+<a class="reference external" href="http://en.wikipedia.org/wiki/Image">Even the Wikipedia entry on the concept of an Image</a> is a bit vague and philosophical.</li>
+<li>Maxwell's Fisheye lens is another, but it is a good deal more complicated and, to my knowledge,
+has not been demonstrated at optical wavelengths.</li>
+<li>It's important to realize that we are modeling the propagation of light as a ray; we are not
+saying that light is a ray. If light really was a ray and not an electromagnetic wave, then we
+would not need the wave theory of optics to explain phenomena like diffraction. Within the
+framework of the axioms of geometrical optics, a ray adequately describes how light propagates.</li>
+<li>More specifically, it lies in the linearization of Snell's law, but I won't get into that yet.</li>
+<li>This phenomenon is precisely what an optical aberration is within geometrical optics theory.</li>
 </ol>
 </div>
 </div>
-
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2">Paraxial optics solves the imaging problem</h2>
-<div class="outline-text-2" id="text-2">
-<p>
-<i>In this post I will use paraxial optics to mean paraxial geometrical
-optics. This is important since the paraxial approximation can also</i>
-<i>apply to the wave theory of light.</i>
-</p>
-
-<p>
-When learning a new theory, I often find it most useful to first
-identify the problem that the theory was developed to solve. This
-approach is particularly pertinent for learning paraxial optics, since
-the theory is largely used as a tool to aid in the construction of
-optical systems. Unfortunately, the fact that paraxial optics can help
-solve problems often becomes lost on people because they never
-actually build anything for the purpose of imaging. And even if a
-someone never builds a camera or microscope, I think it is difficult
-for them to see what paraxial optics concepts–such as principle
-planes and aperture stops–can do for helping them troubleshoot their
-hardware when it is not working as expected.
-</p>
-
-<p>
-So, with this in mind, I will use this part in a series of blog posts
-to answer the following question: what is the problem that paraxial
-optics solves?
-</p>
-
-<p>
-Paraxial optics solves the imaging problem <sup><a id="fnr.1" name="fnr.1" class="footref" href="posts/paraxial-optics-2-what-problem-does-it-solve.html#fn.1">1</a></sup>. The imaging problem as
-I see it is simply this: <b>given an optical system, how can one arrange
-its components to form the image of an object at a desired</b> <b>position
-and with a predictable size and orientation?</b> This question has been
-asked by scientists, engineers, philosophers, and others since
-antiquity because we place enormous value in pictures.
-</p>
-
-<p>
-To better understand this problem, I am going to step through the
-parts of this statement and explain what I mean by each. First, I
-mention that the imaging problem involves the use of an <b>optical
-system</b>. I have to admit that I use this term partly because it is
-part of the jargon of the optical sciences, but I also think that the
-word "system" nicely captures the essence of what I would like to
-say. An optical system is a collection of components such as lenses,
-mirrors, and prisms taken together with their mechanical supports and
-arranged in a meaningful way to capture and channel light as it
-travels from one place to another. Below is one example of an optical
-system that most people know pretty well.
-</p>
-
-<div align="center">
-
-
-<div class="figure">
-<p><img src="eye.jpg" alt="eye.jpg"></p>
-</div>
-
-  A human eye is an optical system! From <a href="http://en.wikipedia.org/wiki/Eye#/media/File:Eye_iris.jpg">
-  Peter Nóvak, Wikipedia</a>.
-</div>
-
-<p>
-I have already mentioned that the components of an optical system can
-include things we commonly associate with optics, such as lenses and
-mirrors, but really no one such component is necessary to build an
-optical system so long as it captures and does something with
-light. For example, <a href="http://en.wikipedia.org/wiki/Pinhole_camera">the pinhole camera</a> uses nothing but a very small
-hole to form images; no lens is required! Still, we usually find some
-components like lenses much more frequently in optical systems than
-others, and the choice of which components to use really just depends
-on the specific type of imaging problem you are trying to solve.
-</p>
-
-<p>
-Next in the statement of the imaging problem I say that we will be
-forming an image by arranging the components of our optical system in
-a clever way. Though the intuitive notion of an image is quite clear,
-I think it is actually extremely difficult to formally define it. For
-the purpose of this tutorial, I think it is best at this point to rely
-on the intuitive idea of an image until I have developed enough
-concepts to define it in terms of optical theory <sup><a id="fnr.2" name="fnr.2" class="footref" href="posts/paraxial-optics-2-what-problem-does-it-solve.html#fn.2">2</a></sup>.
-</p>
-
-<p>
-Finally, the imaging problem involves determining the location, size,
-and orientation of an image formed by the system. This means that
-rearrangement of our system's components is going to change these
-features of the image. Things such as the size of a CCD chip or the
-weight of a lens are going to place constraints on the values these
-properties can take.
-</p>
-</div>
-</div>
-
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3">Perfect imaging systems</h2>
-<div class="outline-text-2" id="text-3">
-<p>
-At this point I should stress that paraxial optics is not the only
-theoretical tool for solving the imaging problem. We clearly can use
-non-paraxial geometrical optics or wave optics to determine the
-properties of an image formed by an optical system. However, what is
-interesting is that paraxial optics is one of very few theoretical
-frameworks in which a perfect image can be realized <sup><a id="fnr.3" name="fnr.3" class="footref" href="posts/paraxial-optics-2-what-problem-does-it-solve.html#fn.3">3</a></sup>.
-</p>
-
-<div align="center">
-
-
-<div class="figure">
-<p><img src="im_perfectOpticalSystems.png" alt="im_perfectOpticalSystems.png"></p>
-</div>
-
-</div>
-
-<p>
-The above figure, which is called a <a href="http://www.edmundoptics.com/TechSupport/resource_center/downloads/Anchor-Optics/GraphicalRayTracing.pdf">ray-trace diagram</a>, illustrates
-what I mean by a perfect imaging system. The system is represented as
-a "black box" that collects light coming from a two-dimensional plane
-(known as the object plane) and relays the light to another plane
-known as the image plane. The whole system is considered to be
-rotationally symmetric about a line called the optics axis so that I
-can represent it as a two-dimensional sketch instead of requiring a
-full, three-dimensional model. Finally, light is modeled as lines with
-arrows denoting the direction of propagation <sup><a id="fnr.4" name="fnr.4" class="footref" href="posts/paraxial-optics-2-what-problem-does-it-solve.html#fn.4">4</a></sup>.
-</p>
-
-<p>
-Now comes the important point. Within the framework of paraxial optics
-theory, it is possible to show that, given an object plane and an
-image plane, one can construct an optical system consisting of
-components that redirect the light rays in such a way that all the
-rays leaving a point in the object plane are brought back together at
-a corresponding point in the image plane. <b>This means that the perfect
-optical system performs a one-to-one mapping of points in the object</b>
-<b>plane to points in the image plane</b>. What's more, the distance
-between every point in the image plane and the optics axis is
-proportional to the distance between their corresponding points and
-the axis in the object plane by a constant factor. This factor is
-known as the <b>magnification</b> of the system.
-</p>
-
-<p>
-The way this perfect imaging system is realized within the context of
-the theory is in the way the components redirect the rays coming from
-the object <sup><a id="fnr.5" name="fnr.5" class="footref" href="posts/paraxial-optics-2-what-problem-does-it-solve.html#fn.5">5</a></sup>. What differentiates <i>paraxial</i> geometrical optics from
-plain old geometrical optics is the rules dictating how the
-redirection occurs.
-</p>
-
-<p>
-One other important point is to consider what happens in imperfect
-imaging systems. Once we violate the assumptions of paraxial optics so
-that we no longer have a system operating within its range of
-validity, we cannot perform a true, one-to-one mapping of points from
-the object plane to the image plane. Instead, we find that rays coming
-from a single point in the object plane cannot all be brought back
-together in any image plane <sup><a id="fnr.6" name="fnr.6" class="footref" href="posts/paraxial-optics-2-what-problem-does-it-solve.html#fn.6">6</a></sup>. We could say that the image plane is
-a concept that does not exist outside paraxial optics. And if the
-image plane does not exist, how are we to strictly define an image
-size and location?
-</p>
-
-<p>
-Of course, we can find planes in non-paraxial systems in which there
-are pretty good images, and these usually correspond to the image
-planes we find by applying the equations and simplifications of
-paraxial optics. So paraxial optics is often our first tool for
-modeling an imaging system. It tells us roughly where our images will
-be formed and how big they are, but it will not tell us about image
-quality.
-</p>
-</div>
-</div>
-
-<div id="outline-container-sec-4" class="outline-2">
-<h2 id="sec-4">Conclusion</h2>
-<div class="outline-text-2" id="text-4">
-<p>
-With this tutorial I hope to have provided you with a conceptual basis
-for understanding paraxial geometrical optics without including too
-many of its details. I think a conceptual basis such as this is much
-better than diving right into ray-trace diagrams with lenses and
-mirros. I think new students to optics often wonder what the
-importance is of paraxial optics and why it is needed when more
-complete optical descriptions exist. I hope that the discussion of the
-perfect imaging system and its existence only within the framework of
-paraxial geometrical optics helped to clarify its importance.
-</p>
-</div>
-</div>
-<div id="footnotes">
-<h2 class="footnotes">Footnotes: </h2>
-<div id="text-footnotes">
-
-<div class="footdef">
-<sup><a id="fn.1" name="fn.1" class="footnum" href="posts/paraxial-optics-2-what-problem-does-it-solve.html#fnr.1">1</a></sup><p class="footpara">
-You didn't expect me to give you the answer right away, did
-you? :)
-</p>
-</div>
-
-<div class="footdef">
-<sup><a id="fn.2" name="fn.2" class="footnum" href="posts/paraxial-optics-2-what-problem-does-it-solve.html#fnr.2">2</a></sup><p class="footpara">
-<a href="http://en.wikipedia.org/wiki/Image">Even the Wikipedia entry on the concept of an Image</a> is a bit vague
-and philosophical.
-</p>
-</div>
-
-<div class="footdef">
-<sup><a id="fn.3" name="fn.3" class="footnum" href="posts/paraxial-optics-2-what-problem-does-it-solve.html#fnr.3">3</a></sup><p class="footpara">
-Maxwell's Fisheye lens is another, but it is a good deal more
-complicated and, to my knowledge, has not been demonstrated at optical
-wavelengths.
-</p>
-</div>
-
-<div class="footdef">
-<sup><a id="fn.4" name="fn.4" class="footnum" href="posts/paraxial-optics-2-what-problem-does-it-solve.html#fnr.4">4</a></sup><p class="footpara">
-It's important to realize that we are modeling the propagation of
-light as a ray; we are not saying that light <i>is</i> a ray. If light
-really was a ray and not an electromagnetic wave, then we would not
-need the wave theory of optics to explain phenomena like
-diffraction. Within the framework of the axioms of geometrical optics,
-a ray adequately describes how light propagates.
-</p>
-</div>
-
-<div class="footdef">
-<sup><a id="fn.5" name="fn.5" class="footnum" href="posts/paraxial-optics-2-what-problem-does-it-solve.html#fnr.5">5</a></sup><p class="footpara">
-More specifically, it lies in the linearization of Snell's law,
-but I won't get into that yet.
-</p>
-</div>
-
-<div class="footdef">
-<sup><a id="fn.6" name="fn.6" class="footnum" href="posts/paraxial-optics-2-what-problem-does-it-solve.html#fnr.6">6</a></sup><p class="footpara">
-This phenomenon is precisely what an optical aberration is within
-geometrical optics theory.
-</p>
-</div>
-
-
-</div>
-</div>
     </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/can-my-beam-be-collimated.html" class="u-url">Can my laser beam be collimated?</a></h1>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/can-my-beam-be-collimated/" class="u-url">Can my laser beam be collimated?</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
-            <p class="dateline"><a href="posts/can-my-beam-be-collimated.html" rel="bookmark"><time class="published dt-published" datetime="2015-05-04T09:44:42+02:00" title="2015-05-04 09:44">2015-05-04 09:44</time></a></p>
+            <p class="dateline">
+            <a href="posts/can-my-beam-be-collimated/" rel="bookmark">
+            <time class="published dt-published" datetime="2015-05-04T09:44:42+02:00" itemprop="datePublished" title="2015-05-04 09:44">2015-05-04 09:44</time></a>
+            </p>
                 <p class="commentline">
         
-    <a href="posts/can-my-beam-be-collimated.html#disqus_thread" data-disqus-identifier="cache/posts/can-my-beam-be-collimated.html">Comments</a>
+    <a href="posts/can-my-beam-be-collimated/#disqus_thread" data-disqus-identifier="cache/posts/can-my-beam-be-collimated.html">Comments</a>
 
 
         </p>
 </div>
     </header><div class="p-summary entry-summary">
-    <p>
-The fluorescence microscopy setup in my lab requires quite a bit of
-power. The minimum irradiance requirement is greater than 1 kW per
-square centimeter, and this must cover an area spanning a few tens of
-microns across after focusing through the objective. When I was
-designing the setup, the highest priority was placed on finding a
-cheap laser with as much power as possible at a wavelength of 647 nm;
-I considered all other qualities of the laser of secondary importance.
-</p>
-
-<p>
-Just like everything else in science, I have learned a very good
-lesson from this experience. The laser I decided to purchase is a <a href="http://www.omicron-laser.de/english/lasers/diode-lasers/brixx-lasers/brixx-diode-lasers.html">800
-mW BrixX laser from Omicron</a>. The cost is under $10,000, which I
-consider to be a pretty good deal for the amount of power it puts
-out. There is no fiber-coupled version, but all of our lasers are free
-space anyway so I did not consider this to be a big problem. The beam
-is astigmatic, which is to be expected from a high power laser diode.
-</p>
-
-<p>
-The astigmatism is not necessarily a big problem for me, though. What
-is surprising to me is how difficult it is to keep the beam <a href="http://en.wikipedia.org/wiki/Collimated_light">collimated</a>
-over large distances, that is, to keep it roughly the same size as it
-propagates. My application requires a fairly small beam size since the
-exit pupil of the objective is only 6 millimeters in diameter. With
-<a href="http://en.wikipedia.org/wiki/M_squared">M-squared</a> values direct from the laser of 12 and 25, it is quite
-difficult to keep the beam collimated for a long enough distance to
-steer the beam through all the optics and to keep it small enough to
-prevent overfilling the objective's exit pupil and losing power.
-</p>
-
-<p>
-What I have learned from this is that free-space diode lasers, and
-more generally multimode laser beams, require extra consideration to
-ensure that they will stay collimated in long setups.
-</p>
-
-<p>
-So, how can I predict the distance over which my beam can stay
-collimated to better judge how well it will work for my setup? The
-first thing to realize is that no beam can stay collimated
-forever. Real laser beams experience diffraction, which causes them to
-spread as they propagate. This means that the first thing I should do
-is to consider the distances spanned by the beam paths. In a
-microscopy setup, this path will probably not be longer than a couple
-meters. In mine, it's roughly two meters since I am combining a number
-of laser beams together and need the extra space.
-</p>
-
-<p>
-Once I identify the length scale over which the beam should stay
-collimated, I need to examine the beam parameter that is best
-associated with collimation. For a pure Gaussian beam, this parameter
-is the <a href="http://en.wikipedia.org/wiki/Rayleigh_length">Rayleigh range</a>. The Rayleigh range is the distance between the
-beam waist and the point where the cross-sectional area of the beam
-has doubled, or, equivalently, to the point where the radius of the
-beam has increased over the waist radius by a factor of the
-\(\sqrt{2}\). For a pure Gaussian beam with a waist radius of \(w_0\) and
-a wavelength of \(\lambda\), the Rayleigh range is given by the equation
-</p>
-
-
+    <div>
+<p>The fluorescence microscopy setup in my lab requires quite a bit of power. The minimum irradiance
+requirement is greater than 1 kW per square centimeter, and this must cover an area spanning a few
+tens of microns across after focusing through the objective. When I was designing the setup, the
+highest priority was placed on finding a cheap laser with as much power as possible at a wavelength
+of 647 nm; I considered all other qualities of the laser of secondary importance.</p>
+<p>Just like everything else in science, I have learned a very good lesson from this experience. The
+laser I decided to purchase is a <a class="reference external" href="http://www.omicron-laser.de/english/lasers/diode-lasers/brixx-lasers/brixx-diode-lasers.html">800 mW BrixX laser from Omicron</a>. The
+cost is under $10,000, which I consider to be a pretty good deal for the amount of power it puts
+out. There is no fiber-coupled version, but all of our lasers are free space anyway so I did not
+consider this to be a big problem. The beam is astigmatic, which is to be expected from a high
+power laser diode.</p>
+<p>The astigmatism is not necessarily a big problem for me, though. What is surprising to me is how
+difficult it is to keep the beam <a class="reference external" href="http://en.wikipedia.org/wiki/Collimated_light">collimated</a> over
+large distances, that is, to keep it roughly the same size as it propagates. My application
+requires a fairly small beam size since the exit pupil of the objective is only 6 millimeters in
+diameter. With <a class="reference external" href="http://en.wikipedia.org/wiki/M_squared">M-squared</a> values direct from the laser
+of 12 and 25, it is quite difficult to keep the beam collimated for a long enough distance to steer
+the beam through all the optics and to keep it small enough to prevent overfilling the objective's
+exit pupil and losing power.</p>
+<p>What I have learned from this is that free-space diode lasers, and more generally multimode laser
+beams, require extra consideration to ensure that they will stay collimated in long setups.</p>
+<p>So, how can I predict the distance over which my beam can stay collimated to better judge how well
+it will work for my setup? The first thing to realize is that no beam can stay collimated
+forever. Real laser beams experience diffraction, which causes them to spread as they
+propagate. This means that the first thing I should do is to consider the distances spanned by the
+beam paths. In a microscopy setup, this path will probably not be longer than a couple meters. In
+mine, it's roughly two meters since I am combining a number of laser beams together and need the
+extra space.</p>
+<p>Once I identify the length scale over which the beam should stay collimated, I need to examine the
+beam parameter that is best associated with collimation. For a pure Gaussian beam, this parameter
+is the <a class="reference external" href="http://en.wikipedia.org/wiki/Rayleigh_length">Rayleigh range</a>. The Rayleigh range is the
+distance between the beam waist and the point where the cross-sectional area of the beam has
+doubled, or, equivalently, to the point where the radius of the beam has increased over the waist
+radius by a factor of the <span class="math">\(\sqrt{2}\)</span>. For a pure Gaussian beam with a waist radius of
+<span class="math">\(w_0\)</span> and a wavelength of <span class="math">\(\lambda\)</span>, the Rayleigh range is given by the equation</p>
+<div class="math">
 \begin{equation*}
 z_R = \frac{\pi w_0^2}{\lambda}
 \end{equation*}
-
-<p>
-It is represented by the symbol <i>z<sub>R</sub></i> in the figure below from
-Wikipedia. The total distance over which the beam will stay collimated
-is represented by <i>b</i> and is just twice the Rayleigh range.
-</p>
-
-<div align="center">
-
-
-<div class="figure">
-<p><img src="GaussianBeamWaist.png" alt="GaussianBeamWaist.png"></p>
 </div>
-
+<p>It is represented by the symbol <span class="math">\(z_R\)</span> in the figure below from Wikipedia. The total distance
+over which the beam will stay collimated is represented by <span class="math">\(b\)</span> and is just twice the Rayleigh
+range.</p>
+<img alt="Gaussian beam waist" class="align-center" src="images/GaussianBeamWaist.png"><p>The Rayleigh range of a Gaussian laser beam should therefore be larger than the characteristic
+distance of my setup that I identified in the previous step. But what about multimode beams like
+the one from my laser diode? This is where the concept of an "embedded Gaussian" comes into
+play. (For more information about this idea, see <a class="reference external" href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.177.3400&amp;rep=rep1&amp;type=pdf">this tutorial by Tony Siegman</a>.) I can
+predict the collimated distance by computing the Rayleigh range of an ideal Gaussian beam, and then
+divide it by the <span class="math">\(M^2\)</span> parameter for the beam.</p>
+<p>Let's take an example using numbers from my own laser. I will first pretend there are no
+collimating optics in the laser, which is not true but will serve as a good example as to why diode
+lasers without collimating optics are not good for free space setups. From the laser's spec sheet,
+I know that the <span class="math">\(M^2\)</span> value in the bad direction is 25 and that its waist size, which is
+probably half the size of the diode in one principle direction, is 107 microns. Using the above
+equation, I get a value of 56 centimeters, which means that an ideal Gaussian beam with these specs
+will stay collimated over about half a meter.</p>
+<p>However, my real multimode beam will have a Rayleigh range that is smaller than this value by a
+factor of 25, which is only about 2 centimeters. For this reason, diode laser beams almost always
+have collimating optics; the beam from the diode itself is highly divergent.</p>
+<p>Returning to my own setup, if I resize the beam using a telescope to have a waist radius of 2
+millimeters so it almost entirely fits inside the objective's exit pupil, the Rayleigh range of the
+embedded Gaussian beam will be almost <em>20 meters</em>, which is pretty long. The real beam, however,
+will have a Rayleigh range of about 780 millimeters meters due to the high <span class="math">\(M^2\)</span>
+value. <em>Practically, this means I have about one meter of collimated laser beam</em> with which to work
+since I have double the Rayleigh range of collimated distance, but really I want the beam to travel
+less distance than this.</p>
+<p>Fortunately I can shrink the beam path enough that this should not be a problem, but it does serve
+as a very good lesson when looking for lasers for a microscopy application.</p>
 </div>
-
-<p>
-The Rayleigh range of a Gaussian laser beam should therefore be larger
-than the characteristic distance of my setup that I identified in the
-previous step. But what about multimode beams like the one from my
-laser diode? This is where the concept of an "embedded Gaussian" comes
-into play. (For more information about this idea, see <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.177.3400&amp;rep=rep1&amp;type=pdf">this tutorial by
-Tony Siegman</a>.) I can predict the collimated distance by computing the
-Rayleigh range of an ideal Gaussian beam, and then divide it by the
-M<sup>2</sup> parameter for the beam.
-</p>
-
-<p>
-Let's take an example using numbers from my own laser. I will first
-pretend there are no collimating optics in the laser, which is not
-true but will serve as a good example as to why diode lasers without
-collimating optics are not good for free space setups. From the
-laser's spec sheet, I know that the M<sup>2</sup> value in the ``bad'' direction
-is 25 and that its waist size, which is probably half the size of the
-diode in one principle direction, is 107 microns. Using the above
-equation, I get a value of 56 centimeters, which means that an ideal
-Gaussian beam with these specs will stay collimated over about half a
-meter.
-</p>
-
-<p>
-However, my real multimode beam will have a Rayleigh range that is
-smaller than this value by a factor of 25, which is only about 2
-centimeters. For this reason, diode laser beams almost always have
-collimating optics; the beam from the diode itself is highly
-divergent.
-</p>
-
-<p>
-Returning to my own setup, if I resize the beam using a telescope to
-have a waist radius of 2 millimeters so it almost entirely fits inside
-the objective's exit pupil, the Rayleigh range of the embedded
-Gaussian beam will be almost <i>20 meters</i>, which is pretty long. The
-real beam, however, will have a Rayleigh range of about 780
-millimeters meters due to the high M<sup>2</sup> value. <b>Practically, this means
-I have about one meter of collimated laser beam</b> with which to work
-since I have double the Rayleigh range of collimated distance, but
-really I want the beam to travel less distance than this.
-</p>
-
-<p>
-Fortunately I can shrink the beam path enough that this should not be
-a problem, but it does serve as a very good lesson when looking for
-lasers for a microscopy application.
-</p>
     </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/relearning-paraxial-optics.html" class="u-url">Relearning paraxial optics</a></h1>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/relearning-paraxial-optics/" class="u-url">Relearning paraxial optics</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
-            <p class="dateline"><a href="posts/relearning-paraxial-optics.html" rel="bookmark"><time class="published dt-published" datetime="2015-04-19T11:05:21+02:00" title="2015-04-19 11:05">2015-04-19 11:05</time></a></p>
+            <p class="dateline">
+            <a href="posts/relearning-paraxial-optics/" rel="bookmark">
+            <time class="published dt-published" datetime="2015-04-19T11:05:21+02:00" itemprop="datePublished" title="2015-04-19 11:05">2015-04-19 11:05</time></a>
+            </p>
                 <p class="commentline">
         
-    <a href="posts/relearning-paraxial-optics.html#disqus_thread" data-disqus-identifier="cache/posts/relearning-paraxial-optics.html">Comments</a>
+    <a href="posts/relearning-paraxial-optics/#disqus_thread" data-disqus-identifier="cache/posts/relearning-paraxial-optics.html">Comments</a>
 
 
         </p>
 </div>
     </header><div class="p-summary entry-summary">
-    <p>
-As a microscopist who designs and builds custom microscopes, I often
-find that first order ray tracing is one of the most useful tools I
-have. It is most useful to me when I am starting a design or for
-checking that I have not made any serious logical blunders when
-working at the bench. I also find it to be a good teaching tool and
-excellent for communicating my designs to others.
-</p>
-
-<p>
-Since I have recently made a lot of back-of-the-envelope ray trace
-designs for a microscope I am building at work, I have begun to
-critically think about why ray tracing works so well and how it fits
-inside the structure of the physical theories of optics.
-</p>
-
-<p>
-Ray tracing is a technique derived from <b>paraxial geometrical optics</b>
-and really is just a consequence of the axioms and assumptions in the
-development of the theory. When I think back to when I first learned
-about paraxial optics, however, I am reminded of severe assumptions
-that place limits on the scope of its validity. So how can a theory
-that makes such an enormous simplification by treating the
-electromagnetic waves described by Maxwell's equations as lines
-obeying the rules of geometry still be so useful?
-</p>
-
-<p>
-In this next series of blog posts, I want to explore this question and
-take the time to relearn paraxial optics with the benefit of
-hindsight. Physicists typically learn paraxial optics as their first
-theory of optics because it is relatively easy as compared to
-electromagnetism and quantum optics. I am curious what aspects of the
-theory I can appreciate now that I am familiar with the more advanced
-optical theories.
-</p>
-
-<p>
-The picture below might also provide a bit of motivation for why this
-interests me: we physicists learn about optics theories in a direction
-of increasing complexity during our education. However, this approach
-also means that we learn the most general theories last, so it is not
-obvious why assumptions and approximations are made in the theories we
-learn first. The result, I think, leads to a bit of logical
-discordance in our minds that can prevent a clear understanding of the
-subject. With this series of posts I hope to remove this cognitive
-dissonance and improve my understanding of the field I work in.
-</p>
-
-
-<div class="figure">
-<p><img src="order_of_optics_theories.png" alt="order_of_optics_theories.png"></p>
+    <div>
+<p>As a microscopist who designs and builds custom microscopes, I often find that first order ray
+tracing is one of the most useful tools I have. It is most useful to me when I am starting a design
+or for checking that I have not made any serious logical blunders when working at the bench. I also
+find it to be a good teaching tool and excellent for communicating my designs to others.</p>
+<p>Since I have recently made a lot of back-of-the-envelope ray trace designs for a microscope I am
+building at work, I have begun to critically think about why ray tracing works so well and how it
+fits inside the structure of the physical theories of optics.</p>
+<p>Ray tracing is a technique derived from <em>paraxial geometrical optics</em> and really is just a
+consequence of the axioms and assumptions in the development of the theory. When I think back to
+when I first learned about paraxial optics, however, I am reminded of severe assumptions that place
+limits on the scope of its validity. So how can a theory that makes such an enormous simplification
+by treating the electromagnetic waves described by Maxwell's equations as lines obeying the rules
+of geometry still be so useful?</p>
+<p>In this next series of blog posts, I want to explore this question and take the time to relearn
+paraxial optics with the benefit of hindsight. Physicists typically learn paraxial optics as their
+first theory of optics because it is relatively easy as compared to electromagnetism and quantum
+optics. I am curious what aspects of the theory I can appreciate now that I am familiar with the
+more advanced optical theories.</p>
+<p>The picture below might also provide a bit of motivation for why this interests me: we physicists
+learn about optics theories in a direction of increasing complexity during our education. However,
+this approach also means that we learn the most general theories last, so it is not obvious why
+assumptions and approximations are made in the theories we learn first. The result, I think, leads
+to a bit of logical discordance in our minds that can prevent a clear understanding of the
+subject. With this series of posts I hope to remove this cognitive dissonance and improve my
+understanding of the field I work in.</p>
+<img alt="The order of optics theories" class="align-center" src="images/order_of_optics_theories.png">
 </div>
     </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/reading-select-lines-from-a-text-file.html" class="u-url">Reading select lines from a text file</a></h1>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/reading-select-lines-from-a-text-file/" class="u-url">Reading select lines from a text file</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
-            <p class="dateline"><a href="posts/reading-select-lines-from-a-text-file.html" rel="bookmark"><time class="published dt-published" datetime="2015-03-18T08:27:50+01:00" title="2015-03-18 08:27">2015-03-18 08:27</time></a></p>
+            <p class="dateline">
+            <a href="posts/reading-select-lines-from-a-text-file/" rel="bookmark">
+            <time class="published dt-published" datetime="2015-03-18T08:27:50+01:00" itemprop="datePublished" title="2015-03-18 08:27">2015-03-18 08:27</time></a>
+            </p>
                 <p class="commentline">
         
-    <a href="posts/reading-select-lines-from-a-text-file.html#disqus_thread" data-disqus-identifier="cache/posts/reading-select-lines-from-a-text-file.html">Comments</a>
+    <a href="posts/reading-select-lines-from-a-text-file/#disqus_thread" data-disqus-identifier="cache/posts/reading-select-lines-from-a-text-file.html">Comments</a>
 
 
         </p>
 </div>
     </header><div class="p-summary entry-summary">
-    <p>
-<a href="https://gist.github.com/kmdouglass/507717d339bc82f850ce">I just created a Python Gist</a> for reading select lines from a text file
-into memory. I came up with this Gist when I needed to parse the core
-log from our <a href="https://www.micro-manager.org/">microscope control software (Micro-Manager)</a>. One of our
-devices was continously sending its statistics to the computer, which
-would then be recorded to the log. I wanted to find only lines that
-contained the statistics by searching for the <b>STATS</b> identifier,
-which was unique to these lines.
-</p>
-
-<p>
-The problem was a bit more difficult than reading just the lines
-containing this string because I wanted the statistics only for times
-when the software was acquiring a time series of images. Luckily, the
-core log also contains lines with unique strings indicating when a
-time series was initiated and stopped. All lines in the log are
-time-stamped.
-</p>
-
-<p>
-Below is the Gist I used to solve this problem. The lines that will be
-retained in memory will contain the strings in the list lineFilters. I
-then define a function named stringIsIn that will return a list of
-bool indicating whether each string is present in the line.
-</p>
-
-<p>
-At the bottom of the Gist, I use a list comprehension to loop over
-each line in the file. The line is appended to a growing list called
-outputLines if the line contains <i>any</i> of the strings I defined. Note
-that it's not necessary to use a separate definition for stringIsIn;
-the list comprehension over lineFilters could have been placed inline
-with the primary list comprension over lines in the file. I do think
-it is more readable the way it is presented below, however.
-</p>
-
-<p>
-I welcome any comments or suggestions, especially on the <a href="https://gist.github.com/kmdouglass/507717d339bc82f850ce">Gist website</a>
-where others may be more likely to find it.
-</p>
-
-<div class="highlight"><pre><span></span><span class="n">filename</span>    <span class="o">=</span> <span class="s1">'myFile.txt'</span>
-<span class="n">outputLines</span> <span class="o">=</span> <span class="p">[]</span>
-
-<span class="c1"># Keep all lines containing ANY of the following list of strings.</span>
-<span class="n">lineFilters</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'line 1'</span><span class="p">,</span>
-	       <span class="s1">'line 2'</span><span class="p">,</span>
-	       <span class="s1">'line 3'</span><span class="p">]</span>
-<span class="n">stringIsIn</span>  <span class="o">=</span> <span class="k">lambda</span> <span class="n">line</span><span class="p">:</span> <span class="p">[</span><span class="nb">filter</span> <span class="ow">in</span> <span class="n">line</span> <span class="k">for</span> <span class="nb">filter</span> <span class="ow">in</span> <span class="n">lineFilters</span><span class="p">]</span>
-
-
-<span class="c1"># Read only lines containing one of the strings into memory.</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">file</span><span class="p">:</span>
-    <span class="p">[</span><span class="n">outputLines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">file</span> <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">stringIsIn</span><span class="p">(</span><span class="n">line</span><span class="p">))]</span>
-</pre></div>
+    <div>
+<p><a class="reference external" href="https://gist.github.com/kmdouglass/507717d339bc82f850ce">I just created a Python Gist</a> for
+reading select lines from a text file into memory. I came up with this Gist when I needed to parse
+the core log from our <a class="reference external" href="https://www.micro-manager.org/">microscope control software (Micro-Manager)</a>. One of our devices was continously sending its statistics to
+the computer, which would then be recorded to the log. I wanted to find only lines that contained
+the statistics by searching for the <em>STATS</em> identifier, which was unique to these lines.</p>
+<p>The problem was a bit more difficult than reading just the lines containing this string because I
+wanted the statistics only for times when the software was acquiring a time series of
+images. Luckily, the core log also contains lines with unique strings indicating when a time series
+was initiated and stopped. All lines in the log are time-stamped.</p>
+<p>Below is the Gist I used to solve this problem. The lines that will be retained in memory will
+contain the strings in the list lineFilters. I then define a function named stringIsIn that will
+return a list of bool indicating whether each string is present in the line.</p>
+<p>At the bottom of the Gist, I use a list comprehension to loop over each line in the file. The line
+is appended to a growing list called outputLines if the line contains <em>any</em> of the strings I
+defined. Note that it's not necessary to use a separate definition for <cite>stringIsIn</cite>; the list
+comprehension over lineFilters could have been placed inline with the primary list comprension over
+lines in the file. I do think it is more readable the way it is presented below, however.</p>
+<p>I welcome any comments or suggestions, especially on the <a class="reference external" href="https://gist.github.com/kmdouglass/507717d339bc82f850ce">Gist website</a> where others may be more likely to find
+it.</p>
+<pre class="code python"><a name="rest_code_24d56600bd694bbfa55cba81a4acf165-1"></a><span class="n">filename</span>    <span class="o">=</span> <span class="s1">'myFile.txt'</span>
+<a name="rest_code_24d56600bd694bbfa55cba81a4acf165-2"></a><span class="n">outputLines</span> <span class="o">=</span> <span class="p">[]</span>
+<a name="rest_code_24d56600bd694bbfa55cba81a4acf165-3"></a>
+<a name="rest_code_24d56600bd694bbfa55cba81a4acf165-4"></a><span class="c1"># Keep all lines containing ANY of the following list of strings.</span>
+<a name="rest_code_24d56600bd694bbfa55cba81a4acf165-5"></a><span class="n">lineFilters</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'line 1'</span><span class="p">,</span>
+<a name="rest_code_24d56600bd694bbfa55cba81a4acf165-6"></a>               <span class="s1">'line 2'</span><span class="p">,</span>
+<a name="rest_code_24d56600bd694bbfa55cba81a4acf165-7"></a>               <span class="s1">'line 3'</span><span class="p">]</span>
+<a name="rest_code_24d56600bd694bbfa55cba81a4acf165-8"></a><span class="n">stringIsIn</span>  <span class="o">=</span> <span class="k">lambda</span> <span class="n">line</span><span class="p">:</span> <span class="p">[</span><span class="nb">filter</span> <span class="ow">in</span> <span class="n">line</span> <span class="k">for</span> <span class="nb">filter</span> <span class="ow">in</span> <span class="n">lineFilters</span><span class="p">]</span>
+<a name="rest_code_24d56600bd694bbfa55cba81a4acf165-9"></a>
+<a name="rest_code_24d56600bd694bbfa55cba81a4acf165-10"></a>
+<a name="rest_code_24d56600bd694bbfa55cba81a4acf165-11"></a><span class="c1"># Read only lines containing one of the strings into memory.</span>
+<a name="rest_code_24d56600bd694bbfa55cba81a4acf165-12"></a><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">file</span><span class="p">:</span>
+<a name="rest_code_24d56600bd694bbfa55cba81a4acf165-13"></a>    <span class="p">[</span><span class="n">outputLines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">file</span> <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">stringIsIn</span><span class="p">(</span><span class="n">line</span><span class="p">))]</span>
+</pre>
+</div>
     </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/the-basics-of-virtualenv.html" class="u-url">The basics of virtualenv</a></h1>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/the-basics-of-virtualenv/" class="u-url">The basics of virtualenv</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Kyle M. Douglass
             </span></p>
-            <p class="dateline"><a href="posts/the-basics-of-virtualenv.html" rel="bookmark"><time class="published dt-published" datetime="2015-02-10T07:47:50+01:00" title="2015-02-10 07:47">2015-02-10 07:47</time></a></p>
+            <p class="dateline">
+            <a href="posts/the-basics-of-virtualenv/" rel="bookmark">
+            <time class="published dt-published" datetime="2015-02-10T07:47:50+01:00" itemprop="datePublished" title="2015-02-10 07:47">2015-02-10 07:47</time></a>
+            </p>
                 <p class="commentline">
         
-    <a href="posts/the-basics-of-virtualenv.html#disqus_thread" data-disqus-identifier="cache/posts/the-basics-of-virtualenv.html">Comments</a>
+    <a href="posts/the-basics-of-virtualenv/#disqus_thread" data-disqus-identifier="cache/posts/the-basics-of-virtualenv.html">Comments</a>
 
 
         </p>
 </div>
     </header><div class="p-summary entry-summary">
-    <p>
-I use Python 3.4 in most of my data analyses and in some
-simulations. I like a lot of its features, like its implementation of
-generators, maps, and filters. However, much of the software on my
-Debian Wheezy system depends on Python 2.7 to run, such as
-<a href="http://www.mendeley.com/">Mendeley</a>. (It used to run just fine with Python 3.4, until I ran an
-automatic update and that was the end of that.)
-</p>
-
-<p>
-To run some Python 2.7 programs, I used to do the following:
-</p>
-
-<div class="highlight"><pre><span></span>sudo rm /usr/bin/python 
-sudo ln -s /usr/bin/python2.7 /usr/bin/python
-</pre></div>
-
-<p>
-I know. Ouch. Every single time I needed to run a program that
-depended on python2.7, I would delete the symlink in /usr/bin, make a
-new link to python2.7, and then run my program. When I needed to give
-various programs convenient access to python3.4, I would delete the
-symlink and create a new one to the newer version.
-</p>
-
-<p>
-This was dumb, because there is a convenient Python-based tool that
-can fix the problem of needing multiple versions of Python (and
-libraries!) on the same system. The solution to this problem is called
-<a href="https://virtualenv.pypa.io/en/latest/">virtualenv</a>.
-</p>
-
-<p>
-There are a lot of descriptions about what virtualenv is on the
-internet, so I won't bother going into details here. Instead, I will
-focus on just the very basics of its setup and use so that I can have
-a handy future reference for when I forget how something works and so
-that others can profit from what I have learned. Most everything I've
-done came from <a href="http://docs.python-guide.org/en/latest/">python-guide.org</a>, so I'm more-or-less putting <a href="http://docs.python-guide.org/en/latest/dev/virtualenvs/">what they
-have already said</a> into my own words.
-</p>
-
-<p>
-To start, I already have Python 2.7 and 3.4 installed on my system. In
-principle, you do not need them installed at the system level, but I
-already have done this so I will start from there. I first installed
-pip for Python 2.7 since I only had pip3 on my system to start. I did
-this because I want to keep Python 2.7 as my system's default Python
-environment.
-</p>
-
-<div class="highlight"><pre><span></span>sudo apt-get update
-sudo apt-get install python-pip
-</pre></div>
-
-<p>
-Once installed, I used it to install virtualenv and
-<a href="https://virtualenvwrapper.readthedocs.org/en/latest/">virtualenvwrapper</a>. The latter provides some nice features for working
-with virtualenv.
-</p>
-
-<div class="highlight"><pre><span></span>sudo pip install virtualenv
-sudo pip install virtualenvwrapper
-</pre></div>
-
-<p>
-Now, virtualenvwrapper requires an environment variable to tell it
-where to store the folders for each virtual environment. This
-environment variable is called WORKON_HOME. First, I created the
-folder it will point to:
-</p>
-
-<div class="highlight"><pre><span></span>mkdir ~/Envs
-</pre></div>
-
-<p>
-Next, I edited my ~/.bashrc and added the following line:
-</p>
-
-<div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">WORKON_HOME</span><span class="o">=</span>~/Envs
-</pre></div>
-
-<p>
-All of my virtual environment files (except for the Python
-intepreters) will be stored in this folder. Finally, I restarted my
-terminal window so that the environment variable was assigned. You can
-check this by typing <code>echo $WORKON_HOME</code> in your new terminal
-window. If it returns the path to your new environments folder, then
-you should be fine.
-</p>
-
-<p>
-Next, I ran the virtualwrapper setup script. Note that I did not need
-sudo (in fact, sudo could not find a command called ``source'') and
-that no output is returned when the script is run.
-</p>
-
-<div class="highlight"><pre><span></span><span class="nb">source</span> /usr/local/bin/virtualenvwrapper.sh
-</pre></div>
-
-<p>
-Now virtualenvwrapper should be installed, so let's make a virtual
-environment. We can do this using the <code>mkvirtualenv</code> command, followed
-by a name for the environment. I will use the name ``venv'' in this
-example, like Kenneth Reitz did in his guide that I linked above.
-</p>
-
-<div class="highlight"><pre><span></span>mkvirtualenv venv
-</pre></div>
-
-<p>
-To start the new virtual environment, type <code>workon venv</code> and note that
-change in the prompt, indicating which environment you are in. You now
-have a fresh Python environment to which you can add any library you
-wish. To leave the environment, type <code>deactivate</code> into your terminal.
-</p>
-
-<p>
-One simple test that you can do to see whether your Python environment
-really is clean is to run the Python interpreter from inside your
-environment and try importing a module that you know is in your
-system-wide site packages but not in your virtual environment. For
-example, inside venv I type <code>python</code> at the terminal prompt and tried
-importing numpy, which I had not yet installed in venv:
-</p>
-
-<div class="highlight"><pre><span></span>import numpy
-</pre></div>
-
-<p>
-This returned an <b>ImportError: No module named numpy</b>. Since I do have
-numpy installed on my system but not in this environment, it tells me
-that the environment is likely clean.
-</p>
-
-<p>
-To install new libraries, simply use pip or install them to the folder
-that was created for this environment in ~/Env. To delete a virtual
-environment entirely, use <code>rmvirtual env</code>.
-</p>
-
-<p>
-Now, how can I specify that I want the virtual environment to use the
-python3.4 interpreter in a virtual environment named
-``python3-general''? Doing so would solve my original problem. Simply
-make a new virtual environment like so:
-</p>
-
-<div class="highlight"><pre><span></span>mkvirtualenv -p /usr/bin/python3.4 python3-general
-</pre></div>
-
-<p>
-Voilà. C'est tout. I hope this helps you get up and running with this
-great tool!
-</p>
+    <div>
+<p>I use Python 3.4 in most of my data analyses and in some simulations. I like a lot of its features,
+like its implementation of generators, maps, and filters. However, much of the software on my
+Debian Wheezy system depends on Python 2.7 to run, such as <a class="reference external" href="http://www.mendeley.com/">Mendeley</a>. (It used to run just fine with Python 3.4, until I ran an automatic
+update and that was the end of that.)</p>
+<p>To run some Python 2.7 programs, I used to do the following:</p>
+<pre class="code shell"><a name="rest_code_571f3c6e86ce46c286c5eb91aa28fc21-1"></a>sudo rm /usr/bin/python
+<a name="rest_code_571f3c6e86ce46c286c5eb91aa28fc21-2"></a>sudo ln -s /usr/bin/python2.7 /usr/bin/python
+</pre>
+<p>I know. Ouch. Every single time I needed to run a program that depended on python2.7, I would
+delete the symlink in /usr/bin, make a new link to python2.7, and then run my program. When I
+needed to give various programs convenient access to python3.4, I would delete the symlink and
+create a new one to the newer version.</p>
+<p>This was dumb, because there is a convenient Python-based tool that can fix the problem of needing
+multiple versions of Python (and libraries!) on the same system. The solution to this problem is
+called <a class="reference external" href="https://virtualenv.pypa.io/en/latest/">virtualenv</a>.</p>
+<p>There are a lot of descriptions about what virtualenv is on the internet, so I won't bother going
+into details here. Instead, I will focus on just the very basics of its setup and use so that I can
+have a handy future reference for when I forget how something works and so that others can profit
+from what I have learned. Most everything I've done came from <a class="reference external" href="http://docs.python-guide.org/en/latest/">python-guide.org</a>, so I'm more-or-less putting <a class="reference external" href="http://docs.python-guide.org/en/latest/dev/virtualenvs/">what they have already
+said</a> into my own words.</p>
+<p>To start, I already have Python 2.7 and 3.4 installed on my system. In principle, you do not need
+them installed at the system level, but I already have done this so I will start from there. I
+first installed pip for Python 2.7 since I only had pip3 on my system to start. I did this because
+I want to keep Python 2.7 as my system's default Python environment.</p>
+<pre class="code shell"><a name="rest_code_550b2707f31d47ee8be7bd95d7e87c40-1"></a>sudo apt-get update
+<a name="rest_code_550b2707f31d47ee8be7bd95d7e87c40-2"></a>sudo apt-get install python-pip
+</pre>
+<p>Once installed, I used it to install virtualenv and <a class="reference external" href="https://virtualenvwrapper.readthedocs.org/en/latest">virtualenvwrapper</a>. The latter provides some nice features for
+working with virtualenv.</p>
+<pre class="code shell"><a name="rest_code_bfaa5a6d55a04e8bb0fa9132f2d3dcd1-1"></a>sudo pip install virtualenv
+<a name="rest_code_bfaa5a6d55a04e8bb0fa9132f2d3dcd1-2"></a>sudo pip install virtualenvwrapper
+</pre>
+<p>Now, virtualenvwrapper requires an environment variable to tell it where to store the folders for
+each virtual environment. This environment variable is called WORKON_HOME. First, I created the
+folder it will point to:</p>
+<pre class="code shell"><a name="rest_code_faa7bd3d5b054959ba482e4e15cacfda-1"></a>mkdir ~/Envs
+</pre>
+<p>Next, I edited my ~/.bashrc and added the following line:</p>
+<pre class="code shell"><a name="rest_code_5a624248ed8e43678e6ca6aff62765ca-1"></a><span class="nb">export</span> <span class="nv">WORKON_HOME</span><span class="o">=</span>~/Envs
+</pre>
+<p>All of my virtual environment files (except for the Python intepreters) will be stored in this
+folder. Finally, I restarted my terminal window so that the environment variable was assigned. You
+can check this by typing =echo $WORKON_HOME= in your new terminal window. If it returns the path to
+your new environments folder, then you should be fine.</p>
+<p>Next, I ran the virtualwrapper setup script. Note that I did not need sudo (in fact, sudo could not
+find a command called <cite>source</cite>) and that no output is returned when the script is run.</p>
+<pre class="code shell"><a name="rest_code_34a8f66a3fc74aea9292bb994272ad14-1"></a><span class="nb">source</span> /usr/local/bin/virtualenvwrapper.sh
+</pre>
+<p>Now virtualenvwrapper should be installed, so let's make a virtual environment. We can do this
+using the <cite>mkvirtualenv</cite> command, followed by a name for the environment. I will use the name venv
+in this example, like Kenneth Reitz did in his guide that I linked above.</p>
+<pre class="code shell"><a name="rest_code_9c746677de2449e489b256d7d1d5e0f2-1"></a>mkvirtualenv venv
+</pre>
+<p>To start the new virtual environment, type <cite>workon venv</cite> and note that change in the prompt,
+indicating which environment you are in. You now have a fresh Python environment to which you can
+add any library you wish. To leave the environment, type <cite>deactivate</cite> into your terminal.</p>
+<p>One simple test that you can do to see whether your Python environment really is clean is to run
+the Python interpreter from inside your environment and try importing a module that you know is in
+your system-wide site packages but not in your virtual environment. For example, inside venv I type
+=python= at the terminal prompt and tried importing numpy, which I had not yet installed in venv:</p>
+<pre class="code python"><a name="rest_code_ec646c15a455476a993d2e1d04483092-1"></a><span class="kn">import</span> <span class="nn">numpy</span>
+</pre>
+<p>This returned an <cite>ImportError: No module named numpy</cite>. Since I do have numpy installed on my system
+but not in this environment, it tells me that the environment is likely clean.</p>
+<p>To install new libraries, simply use pip or install them to the folder that was created for this
+environment in ~/Env. To delete a virtual environment entirely, use <cite>rmvirtual env</cite>.</p>
+<p>Now, how can I specify that I want the virtual environment to use the python3.4 interpreter in a
+virtual environment named python3-general? Doing so would solve my original problem. Simply
+make a new virtual environment like so:</p>
+<pre class="code python"><a name="rest_code_9d404579c1b249ed94a60888ab2e8e3b-1"></a><span class="n">mkvirtualenv</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python3</span><span class="o">.</span><span class="mi">4</span> <span class="n">python3</span><span class="o">-</span><span class="n">general</span>
+</pre>
+<p>Voilà. C'est tout. I hope this helps you get up and running with this great tool!</p>
+</div>
     </div>
     </article>
 </div>
@@ -2792,16 +2358,22 @@ MathJax.Hub.Config({
         <!--End of body content-->
 
         <footer id="footer">
-            Contents © 2018         <a href="mailto:kyle.m.douglass@gmail.com">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
+            Contents © 2019         <a href="mailto:kyle.m.douglass@gmail.com">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
             
         </footer>
 </div>
 </div>
 
 
-            <script src="assets/js/all-nocdn.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+            <script src="assets/js/all-nocdn.js"></script><!-- fancy dates --><script>
     moment.locale("en");
     fancydates(0, "YYYY-MM-DD HH:mm");
-    </script><!-- end fancy dates -->
+    </script><!-- end fancy dates --><script>
+    baguetteBox.run('div#content', {
+        ignoreClass: 'islink',
+        captions: function(element) {
+            return element.getElementsByTagName('img')[0].alt;
+    }});
+    </script>
 </body>
 </html>

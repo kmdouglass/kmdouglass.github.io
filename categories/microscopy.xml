@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Kyle M. Douglass (Posts about microscopy)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link type="application/rss+xml" rel="self" href="http://kmdouglass.github.io/categories/microscopy.xml"></atom:link><language>en</language><lastBuildDate>Sat, 21 Jul 2018 10:49:25 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Implementing a fast Gibson-Lanni PSF solver in Python</title><link>http://kmdouglass.github.io/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div tabindex="-1" id="notebook" class="border-box-sizing"&gt;
-    &lt;div class="container" id="notebook-container"&gt;
-
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kyle M. Douglass (Posts about microscopy)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link href="http://kmdouglass.github.io/categories/microscopy.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Fri, 04 Jan 2019 14:44:34 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Implementing a fast Gibson-Lanni PSF solver in Python</title><link>http://kmdouglass.github.io/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Many techniques in modern fluorescence microscopy--such as deconvolution and single molecule localization microscopy--rely on the computation of accurate microscope point spread functions (PSFs). Several models exist for these purposes with varying degrees of accuracy and generality. One such model, the so-called Gibson-Lanni model, approximates the PSF of an immersion microscope objective by accounting for the different refractive indexes of the immersion medium, coverslip, and sample, as well as variations in the thicknesses of the different layers. This post describes a Python implementation of a fast computational approach to the G&amp;amp;L PSF that was presented in &lt;strong&gt;Fast and accurate three-dimensional point spread function computation for fluorescence microscopy&lt;/strong&gt; by Li, Xue, and Blu. The approach is fast because it avoids the need to perform any explicit integration of the Kirchhoff diffraction integral, such as is done in &lt;a href="http://bigwww.epfl.ch/algorithms/psfgenerator/"&gt;PSF Generator&lt;/a&gt;. The prototype is based on the manuscript and the associated MATLAB code at &lt;a href="http://www.ee.cuhk.edu.hk/~tblu/monsite/phps/fastPSF.php"&gt;http://www.ee.cuhk.edu.hk/~tblu/monsite/phps/fastPSF.php&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id="References"&gt;References&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python.html#References"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;h2 id="References"&gt;References&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/#References"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href="https://www.osapublishing.org/josaa/abstract.cfm?uri=josaa-9-1-154"&gt;Gibson, S. F., &amp;amp; Lanni, F. (1992). Experimental test of an analytical model of aberration in an oil-immersion objective lens used in three-dimensional light microscopy. JOSA A, 9(1), 154-166.&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://www.osapublishing.org/josaa/fulltext.cfm?uri=josaa-34-6-1029&amp;amp;id=367116"&gt;Li, J., Xue, F., &amp;amp; Blu, T. (2017). Fast and accurate three-dimensional point spread function computation for fluorescence microscopy. JOSA A, 34(6), 1029-1034.&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://bigwww.epfl.ch/algorithms/psfgenerator/"&gt;Kirshner, H. &amp;amp; Sage, D. (Accessed on October 20, 2017) PSF Generator&lt;/a&gt;&lt;/li&gt;
@@ -36,7 +32,7 @@
 &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'SciPy&lt;/span&gt;&lt;span class="se"&gt;\t\t&lt;/span&gt;&lt;span class="si"&gt;{}&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;scipy&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;__version__&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -46,7 +42,7 @@
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stdout output_text"&gt;
@@ -66,10 +62,9 @@ SciPy		0.19.1
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Simulation-setup"&gt;Simulation setup&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python.html#Simulation-setup"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;h3 id="Define-the-simulation-parameters"&gt;Define the simulation parameters&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python.html#Define-the-simulation-parameters"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The Gibson-Lanni PSF model accounts for differences between design parameters and real parameters that describe the fluorescence microscope, such as the refractive indexes and thicknesses of the immersion medium, coverslip, and sample. For more information, please see the above references or, if you do not have access to the publications, the description of the model here: &lt;a href="http://bigwww.epfl.ch/algorithms/psfgenerator/"&gt;http://bigwww.epfl.ch/algorithms/psfgenerator/&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="Simulation-setup"&gt;Simulation setup&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/#Simulation-setup"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;h3 id="Define-the-simulation-parameters"&gt;Define the simulation parameters&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/#Define-the-simulation-parameters"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The Gibson-Lanni PSF model accounts for differences between design parameters and real parameters that describe the fluorescence microscope, such as the refractive indexes and thicknesses of the immersion medium, coverslip, and sample. For more information, please see the above references or, if you do not have access to the publications, the description of the model here: &lt;a href="http://bigwww.epfl.ch/algorithms/psfgenerator/"&gt;http://bigwww.epfl.ch/algorithms/psfgenerator/&lt;/a&gt;&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -111,16 +106,15 @@ SciPy		0.19.1
 &lt;span class="n"&gt;scaling_factor&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;NA&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;arange&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;num_basis&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;min_wavelength&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="n"&gt;wavelength&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h3 id="Create-the-coordinate-systems"&gt;Create the coordinate systems&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python.html#Create-the-coordinate-systems"&gt;¶&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id="Create-the-coordinate-systems"&gt;Create the coordinate systems&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/#Create-the-coordinate-systems"&gt;¶&lt;/a&gt;&lt;/h3&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -148,21 +142,19 @@ SciPy		0.19.1
 &lt;span class="n"&gt;z&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;res_axial&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;arange&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;size_z&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;size_z&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;res_axial&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Step-1:-Approximate-the-pupil-phase-with-a-Fourier-Bessel-series"&gt;Step 1: Approximate the pupil phase with a Fourier-Bessel series&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python.html#Step-1:-Approximate-the-pupil-phase-with-a-Fourier-Bessel-series"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;code&gt;z.reshape(-1,1)&lt;/code&gt; flips &lt;code&gt;z&lt;/code&gt; from a row array to a column array so that it may be broadcast across &lt;code&gt;rho&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id="Step-1:-Approximate-the-pupil-phase-with-a-Fourier-Bessel-series"&gt;Step 1: Approximate the pupil phase with a Fourier-Bessel series&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/#Step-1:-Approximate-the-pupil-phase-with-a-Fourier-Bessel-series"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;code&gt;z.reshape(-1,1)&lt;/code&gt; flips &lt;code&gt;z&lt;/code&gt; from a row array to a column array so that it may be broadcast across &lt;code&gt;rho&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;The coefficients &lt;code&gt;C&lt;/code&gt; are found by a least-squares solution to the equation&lt;/p&gt;
-&lt;p&gt;\begin{equation*}
+\begin{equation*}
 \mathbf{\phi} \left( \rho , z \right)= \mathbf{J} \left( \rho \right) \mathbf{c} \left( z \right)
-\end{equation*}&lt;/p&gt;
-&lt;p&gt;$ \mathbf{c} $ has dimensions &lt;code&gt;num_basis&lt;/code&gt; $ \times $ &lt;code&gt;len(z)&lt;/code&gt;. The &lt;code&gt;J&lt;/code&gt; array has dimensions &lt;code&gt;num_basis&lt;/code&gt; $ \times $ &lt;code&gt;len(rho)&lt;/code&gt; and the &lt;code&gt;phase&lt;/code&gt; array has dimensions &lt;code&gt;len(z)&lt;/code&gt; $ \times $ &lt;code&gt;len(rho)&lt;/code&gt;. The &lt;code&gt;J&lt;/code&gt; and &lt;code&gt;phase&lt;/code&gt; arrays are therefore transposed to get the dimensions right in the call to &lt;code&gt;np.linalg.lstsq&lt;/code&gt;.&lt;/p&gt;
+\end{equation*}&lt;p&gt;$ \mathbf{c} $ has dimensions &lt;code&gt;num_basis&lt;/code&gt; $ \times $ &lt;code&gt;len(z)&lt;/code&gt;. The &lt;code&gt;J&lt;/code&gt; array has dimensions &lt;code&gt;num_basis&lt;/code&gt; $ \times $ &lt;code&gt;len(rho)&lt;/code&gt; and the &lt;code&gt;phase&lt;/code&gt; array has dimensions &lt;code&gt;len(z)&lt;/code&gt; $ \times $ &lt;code&gt;len(rho)&lt;/code&gt;. The &lt;code&gt;J&lt;/code&gt; and &lt;code&gt;phase&lt;/code&gt; arrays are therefore transposed to get the dimensions right in the call to &lt;code&gt;np.linalg.lstsq&lt;/code&gt;.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -193,16 +185,15 @@ SciPy		0.19.1
 &lt;span class="n"&gt;C&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;residuals&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;_&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;linalg&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;lstsq&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;J&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;T&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;phase&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;T&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h3 id="Compare-the-function-to-its-Fourier-Bessel-expansion"&gt;Compare the function to its Fourier-Bessel expansion&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python.html#Compare-the-function-to-its-Fourier-Bessel-expansion"&gt;¶&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id="Compare-the-function-to-its-Fourier-Bessel-expansion"&gt;Compare the function to its Fourier-Bessel expansion&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/#Compare-the-function-to-its-Fourier-Bessel-expansion"&gt;¶&lt;/a&gt;&lt;/h3&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -233,7 +224,7 @@ SciPy		0.19.1
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -243,7 +234,7 @@ SciPy		0.19.1
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -259,14 +250,12 @@ SciPy		0.19.1
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Step-2:-Compute-the-PSF"&gt;Step 2: Compute the PSF&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python.html#Step-2:-Compute-the-PSF"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Here, we use the Fourier-Bessel series expansion of the phase function and a Bessel integral identity to compute the approximate PSF. Each coefficient $ c_{m} \left( z \right) $ needs to be multiplied by&lt;/p&gt;
-&lt;p&gt;\begin{equation*}
+&lt;h2 id="Step-2:-Compute-the-PSF"&gt;Step 2: Compute the PSF&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/#Step-2:-Compute-the-PSF"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Here, we use the Fourier-Bessel series expansion of the phase function and a Bessel integral identity to compute the approximate PSF. Each coefficient $ c_{m} \left( z \right) $ needs to be multiplied by&lt;/p&gt;
+\begin{equation*}
 R \left(r; \mathbf{p} \right) = \frac{\sigma_m J_1 \left( \sigma_m a \right) J_0 \left( \beta a \right)a - \beta J_0 \left( \sigma_m a \right) J_1 \left( \beta a \right)a }{\sigma_m^2 - \beta^2}
-\end{equation*}&lt;/p&gt;
-&lt;p&gt;and the resulting products summed over the number of basis functions. $ \mathbf{p} $ is the parameter vector for the Gibson-Lanni model, $ \sigma_m $ is the scaling factor for the argument to the $ m'th $ Bessel basis function, and $ \beta = kr\text{NA} $.&lt;/p&gt;
+\end{equation*}&lt;p&gt;and the resulting products summed over the number of basis functions. $ \mathbf{p} $ is the parameter vector for the Gibson-Lanni model, $ \sigma_m $ is the scaling factor for the argument to the $ m'th $ Bessel basis function, and $ \beta = kr\text{NA} $.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;b&lt;/code&gt; is defined such that &lt;code&gt;R&lt;/code&gt; has dimensions of &lt;code&gt;len(r)&lt;/code&gt; $ \times $ &lt;code&gt;len(rho)&lt;/code&gt;.&lt;/p&gt;
 
 &lt;/div&gt;
@@ -289,20 +278,18 @@ R \left(r; \mathbf{p} \right) = \frac{\sigma_m J_1 \left( \sigma_m a \right) J_0
 &lt;span class="n"&gt;R&lt;/span&gt; &lt;span class="o"&gt;/=&lt;/span&gt; &lt;span class="n"&gt;denom&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Now compute the point-spread function via&lt;/p&gt;
-&lt;p&gt;\begin{equation*}
+\begin{equation*}
 PSF \left( r, z; z_p, \mathbf{p} \right) = \left| \mathbf{R} \left( r; \mathbf{p} \right) \mathbf{c} \left( z \right) \right|^2
-\end{equation*}&lt;/p&gt;
-
+\end{equation*}
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -319,16 +306,15 @@ PSF \left( r, z; z_p, \mathbf{p} \right) = \left| \mathbf{R} \left( r; \mathbf{p
 &lt;span class="n"&gt;PSF_rz&lt;/span&gt; &lt;span class="o"&gt;/=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;max&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;PSF_rz&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h3 id="Profile-in-r-and-z"&gt;Profile in r and z&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python.html#Profile-in-r-and-z"&gt;¶&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id="Profile-in-r-and-z"&gt;Profile in r and z&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/#Profile-in-r-and-z"&gt;¶&lt;/a&gt;&lt;/h3&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -348,7 +334,7 @@ PSF \left( r, z; z_p, \mathbf{p} \right) = \left| \mathbf{R} \left( r; \mathbf{p
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -358,7 +344,7 @@ PSF \left( r, z; z_p, \mathbf{p} \right) = \left| \mathbf{R} \left( r; \mathbf{p
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -374,11 +360,10 @@ PSF \left( r, z; z_p, \mathbf{p} \right) = \left| \mathbf{R} \left( r; \mathbf{p
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;z is the stage &lt;em&gt;displacement&lt;/em&gt; in an inverted microscope. So, negative z's correspond to moving "up" in the sample.&lt;/p&gt;
-&lt;h2 id="Step-3:-Resample-the-PSF-onto-a-rotationally-symmetric-Cartesian-grid"&gt;Step 3: Resample the PSF onto a rotationally-symmetric Cartesian grid&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python.html#Step-3:-Resample-the-PSF-onto-a-rotationally-symmetric-Cartesian-grid"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Here we generate a two dimensional grid where the value at each grid point is the distance of the point from the center of the grid. These values are supplied to an interpolation function computed from &lt;code&gt;PSF_rz&lt;/code&gt; to produce a rotationally-symmetric 2D PSF at each z-position.&lt;/p&gt;
+&lt;h2 id="Step-3:-Resample-the-PSF-onto-a-rotationally-symmetric-Cartesian-grid"&gt;Step 3: Resample the PSF onto a rotationally-symmetric Cartesian grid&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/#Step-3:-Resample-the-PSF-onto-a-rotationally-symmetric-Cartesian-grid"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Here we generate a two dimensional grid where the value at each grid point is the distance of the point from the center of the grid. These values are supplied to an interpolation function computed from &lt;code&gt;PSF_rz&lt;/code&gt; to produce a rotationally-symmetric 2D PSF at each z-position.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -402,16 +387,15 @@ PSF \left( r, z; z_p, \mathbf{p} \right) = \left| \mathbf{R} \left( r; \mathbf{p
     &lt;span class="n"&gt;PSF&lt;/span&gt;&lt;span class="p"&gt;[:,:,&lt;/span&gt; &lt;span class="n"&gt;z_index&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;PSF_interp&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;r_pixel&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ravel&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;reshape&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;size_y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;size_x&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Save-z-stack-to-a-movie"&gt;Save z-stack to a movie&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python.html#Save-z-stack-to-a-movie"&gt;¶&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id="Save-z-stack-to-a-movie"&gt;Save z-stack to a movie&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/#Save-z-stack-to-a-movie"&gt;¶&lt;/a&gt;&lt;/h2&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -464,32 +448,27 @@ PSF \left( r, z; z_p, \mathbf{p} \right) = \left| \mathbf{R} \left( r; \mathbf{p
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;close&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;video controls src="http://kmdouglass.github.io/gibson-lanni.mp4" type="video/mp4"&gt;&lt;/video&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Summary"&gt;Summary&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python.html#Summary"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;In summary, this method for calculating the Gibson-Lanni PSF is fast because it reduces the problem to a numer of matrix operations, rather than a numerical integration of the Kirchhoff diffraction integral. I especially find the Fourier-Bessel approximation of the phase function very clever, since this enables us to apply the integral identity described above. Moreover, it seems like the approach can extend to computing PSFs from other wavefront aberrations, though at the moment I do not know how it might handle non-rotationally symmetric pupils. (I am referring to the &lt;code&gt;W&lt;/code&gt; variable above.)&lt;/p&gt;
+&lt;h2 id="Summary"&gt;Summary&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/#Summary"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;In summary, this method for calculating the Gibson-Lanni PSF is fast because it reduces the problem to a numer of matrix operations, rather than a numerical integration of the Kirchhoff diffraction integral. I especially find the Fourier-Bessel approximation of the phase function very clever, since this enables us to apply the integral identity described above. Moreover, it seems like the approach can extend to computing PSFs from other wavefront aberrations, though at the moment I do not know how it might handle non-rotationally symmetric pupils. (I am referring to the &lt;code&gt;W&lt;/code&gt; variable above.)&lt;/p&gt;
 &lt;p&gt;I would like to thank the first author of the work, &lt;a href="http://www.ee.cuhk.edu.hk/~jzli/"&gt;Jizhou Li&lt;/a&gt;, for encouraging me to write this as a blog post and for providing feedback on the implementation presented here.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-</description><category>microscopy</category><category>optics</category><guid>http://kmdouglass.github.io/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python.html</guid><pubDate>Fri, 20 Oct 2017 05:25:54 GMT</pubDate></item><item><title>Micro-Manager on the Raspberry Pi</title><link>http://kmdouglass.github.io/posts/micro-manager-on-the-raspberry-pi.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;&lt;a class="reference external" href="https://micro-manager.org/"&gt;Micro-Manager&lt;/a&gt; is an open source platform for controlling microscope
+&lt;/div&gt;&lt;/div&gt;</description><category>microscopy</category><category>optics</category><guid>http://kmdouglass.github.io/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/</guid><pubDate>Fri, 20 Oct 2017 05:25:54 GMT</pubDate></item><item><title>Micro-Manager on the Raspberry Pi</title><link>http://kmdouglass.github.io/posts/micro-manager-on-the-raspberry-pi/</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;&lt;a class="reference external" href="https://micro-manager.org/"&gt;Micro-Manager&lt;/a&gt; is an open source platform for controlling microscope
 hardware, automating image acquisition, and tracking metadata about
 how images are acquired. In biomedical imaging research, it serves as
 an incredibly important tool because it is free and open source, which
@@ -685,7 +664,7 @@ open, embedded biomedical imaging platform, though I am uncertain at
 the moment whether the hardware on the Pi is up to the task. If you
 manage to do anything cool with Micro-Manager and the Raspberry Pi,
 please let me know in the comments!&lt;/p&gt;
-&lt;/div&gt;&lt;/div&gt;</description><category>micro-manager</category><category>microscopy</category><category>open source</category><category>raspberry pi</category><guid>http://kmdouglass.github.io/posts/micro-manager-on-the-raspberry-pi.html</guid><pubDate>Fri, 10 Feb 2017 18:31:57 GMT</pubDate></item><item><title>FIFI Parts List</title><link>http://kmdouglass.github.io/posts/fifi-parts-list.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;Many people have been writing to Suliana or I recently and asking for
+&lt;/div&gt;&lt;/div&gt;</description><category>micro-manager</category><category>microscopy</category><category>open source</category><category>raspberry pi</category><guid>http://kmdouglass.github.io/posts/micro-manager-on-the-raspberry-pi/</guid><pubDate>Fri, 10 Feb 2017 18:31:57 GMT</pubDate></item><item><title>FIFI Parts List</title><link>http://kmdouglass.github.io/posts/fifi-parts-list/</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;Many people have been writing to Suliana or I recently and asking for
 a parts list for FIFI, the flat-field illuminator I developed for
 large field-of-view localization microscopy. (&lt;a class="reference external" href="http://www.nature.com/nphoton/journal/v10/n11/full/nphoton.2016.200.html"&gt;The manuscript may be
 found here&lt;/a&gt;.)&lt;/p&gt;
@@ -705,12 +684,8 @@ hesitate to contact me. It is highly recommended that you perform the
 initial design of the illuminator for your setup before buying any
 parts to avoid making costly mistakes.&lt;/p&gt;
 &lt;p&gt;The parts list is &lt;a class="reference external" href="https://github.com/kmdouglass/fifi_parts_list/blob/master/LICENSE"&gt;MIT licensed&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;&lt;/div&gt;</description><category>microscopy</category><category>super-resolution</category><guid>http://kmdouglass.github.io/posts/fifi-parts-list.html</guid><pubDate>Thu, 19 Jan 2017 06:32:43 GMT</pubDate></item><item><title>Approximating diffraction patterns of rectangular apertures with the FFT</title><link>http://kmdouglass.github.io/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div tabindex="-1" id="notebook" class="border-box-sizing"&gt;
-    &lt;div class="container" id="notebook-container"&gt;
-
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;/div&gt;</description><category>microscopy</category><category>super-resolution</category><guid>http://kmdouglass.github.io/posts/fifi-parts-list/</guid><pubDate>Thu, 19 Jan 2017 06:32:43 GMT</pubDate></item><item><title>Approximating diffraction patterns of rectangular apertures with the FFT</title><link>http://kmdouglass.github.io/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft/</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;A very common problem encountered by people learning Fourier optics or diffraction theory is the determination of the far field diffraction pattern from a rectangular aperture. This problem has a clean, analytical solution. Those who are familiar with MATLAB or a similar language may try to write computer code that calculates this diffraction pattern based on &lt;a href="http://mathworld.wolfram.com/FastFourierTransform.html"&gt;fast Fourier transform (FFT)&lt;/a&gt; implementations. Unfortunately, the output of the is code not, strictly speaking, the same as predicted by the analytical solution for a few reasons:&lt;/p&gt;
 &lt;ol&gt;
@@ -737,7 +712,7 @@ parts to avoid making costly mistakes.&lt;/p&gt;
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;scipy.fftpack&lt;/span&gt; &lt;span class="k"&gt;import&lt;/span&gt; &lt;span class="n"&gt;fftshift&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ifftshift&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -747,7 +722,7 @@ parts to avoid making costly mistakes.&lt;/p&gt;
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stdout output_text"&gt;
@@ -762,21 +737,15 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Scalar-diffraction-theory-for-a-1D-slit"&gt;Scalar diffraction theory for a 1D slit&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html#Scalar-diffraction-theory-for-a-1D-slit"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;a href="https://books.google.ch/books/about/Introduction_to_Fourier_Optics.html?id=ow5xs_Rtt9AC&amp;amp;redir_esc=y"&gt;Goodman&lt;/a&gt; and &lt;a href="https://en.wikipedia.org/wiki/Fraunhofer_diffraction_%28mathematics%29#Examples_of_Fraunhofer_diffraction_with_a_normally_incident_monochromatic_plane_wave"&gt;many others&lt;/a&gt; have shown that the far-field (also known as Fraunhofer) solution to the diffracted electric field from a rectangular aperture is proportional to the Fourier transform of the field distribution in the aperture. This fact follows directly from applying the Fraunhofer approximation to the diffraction integral developed by Huygens and Fresnel (&lt;a href="https://books.google.ch/books/about/Introduction_to_Fourier_Optics.html?id=ow5xs_Rtt9AC&amp;amp;redir_esc=y"&gt;Goodman&lt;/a&gt;).&lt;/p&gt;
+&lt;h2 id="Scalar-diffraction-theory-for-a-1D-slit"&gt;Scalar diffraction theory for a 1D slit&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft/#Scalar-diffraction-theory-for-a-1D-slit"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;a href="https://books.google.ch/books/about/Introduction_to_Fourier_Optics.html?id=ow5xs_Rtt9AC&amp;amp;redir_esc=y"&gt;Goodman&lt;/a&gt; and &lt;a href="https://en.wikipedia.org/wiki/Fraunhofer_diffraction_%28mathematics%29#Examples_of_Fraunhofer_diffraction_with_a_normally_incident_monochromatic_plane_wave"&gt;many others&lt;/a&gt; have shown that the far-field (also known as Fraunhofer) solution to the diffracted electric field from a rectangular aperture is proportional to the Fourier transform of the field distribution in the aperture. This fact follows directly from applying the Fraunhofer approximation to the diffraction integral developed by Huygens and Fresnel (&lt;a href="https://books.google.ch/books/about/Introduction_to_Fourier_Optics.html?id=ow5xs_Rtt9AC&amp;amp;redir_esc=y"&gt;Goodman&lt;/a&gt;).&lt;/p&gt;
 &lt;p&gt;For both convenience and numerical efficiency, I will focus on the one-dimensional analog to this problem: diffraction from an infinitely-long slit with width $ a $. If there is an incident monochromatic plane wave with amplitude $E_0$ traveling in the z-direction perpendicular to a slit in the $z=0$ plane, then the Fraunhofer diffraction pattern for the field is expressed by the equation&lt;/p&gt;
-&lt;p&gt;$$U \left(x', z \right) = \frac{e^{jkz} e^{ jk\frac{x'^2}{2z} }}{\sqrt{j \lambda z}} \int_{-\infty}^{\infty} u \left( x, z = 0 \right) \exp \left( -j \frac{2 \pi}{\lambda z} xx'\right) dx $$&lt;/p&gt;
-&lt;p&gt;with $u \left( x, z = 0 \right) = E_0 $ denoting the incident field, $ k = \frac{2 \pi}{\lambda} $ representing the freespace wavenumber, $ x = 0 $ and $ x' = 0 $ the center planes of the slit and diffraction patterns, respectively, and $ j $ the imaginary number. The factor $ \sqrt{j \lambda z} $ comes from &lt;a href="https://www.kth.se/polopoly_fs/1.569752!/Gaussian%20beams.pdf"&gt;separating the solution to the 2D Huygens-Fresnel integral into two, 1D solutions&lt;/a&gt;. The irradiance in the z-planes after the slit is &lt;a href="https://en.wikipedia.org/wiki/Poynting_vector"&gt;proportional to the absolute square of the field&lt;/a&gt;,&lt;/p&gt;
-&lt;p&gt;$$I \left( x', z \right) \propto \left| U \left( x', z \right) \right|^2$$&lt;/p&gt;
-&lt;p&gt;Taking the absolute square eliminates the complex exponentials preceding the integral so that the irradiance profile becomes&lt;/p&gt;
-&lt;p&gt;$$I \left( x', z \right) \propto \frac{1}{\lambda z} \left| \int_{-\infty}^{\infty} u \left( x \right) \exp \left( -j \frac{2 \pi}{\lambda z} xx'\right) dx \right|^2 = \frac{1}{\lambda z} \left| \mathcal{F} \left[ u \left( x, z \right) \right] \left( \frac{x'}{\lambda z}\right) \right|^2 $$&lt;/p&gt;
-&lt;p&gt;This expression means that the irradiance describing the Fraunhofer diffraction pattern from slit is proportional to the absolute square of the Fourier transform of the field at the aperture evaluted at spatial frequencies $ f_{x} = x' / \lambda z$. To arrive at the analytical solution, we perform the integration over a region where the slit is not opaque, $ \left[ -a/2, a/2 \right] $. Inside this region, the field is simply $ u \left( x \right) = E_0 $ because we have a monochromatic plane wave with this amplitude.&lt;/p&gt;
-&lt;p&gt;$$ \mathcal{F}\left[ u \left( x, z \right) \right] = \int_{-a/2}^{a/2} E_0 \exp \left( -j \frac{2 \pi}{\lambda z} xx'\right) dx $$&lt;/p&gt;
-&lt;p&gt;The analytical solution to this integral is&lt;/p&gt;
-&lt;p&gt;$$ \mathcal{F}\left[ u \left( x, z \right) \right] = a E_0 \text{sinc} \left( \frac{ax'}{\lambda z} \right) $$&lt;/p&gt;
-&lt;p&gt;where $ \text{sinc} \left( x \right) = \frac{\sin{\pi x}}{\pi x}$. The far-field irradiance is therefore the absolute square of this quantity divided by the product of the wavelength and the propagation distance.&lt;/p&gt;
+$$U \left(x', z \right) = \frac{e^{jkz} e^{ jk\frac{x'^2}{2z} }}{\sqrt{j \lambda z}} \int_{-\infty}^{\infty} u \left( x, z = 0 \right) \exp \left( -j \frac{2 \pi}{\lambda z} xx'\right) dx $$&lt;p&gt;with $u \left( x, z = 0 \right) = E_0 $ denoting the incident field, $ k = \frac{2 \pi}{\lambda} $ representing the freespace wavenumber, $ x = 0 $ and $ x' = 0 $ the center planes of the slit and diffraction patterns, respectively, and $ j $ the imaginary number. The factor $ \sqrt{j \lambda z} $ comes from &lt;a href="https://www.kth.se/polopoly_fs/1.569752!/Gaussian%20beams.pdf"&gt;separating the solution to the 2D Huygens-Fresnel integral into two, 1D solutions&lt;/a&gt;. The irradiance in the z-planes after the slit is &lt;a href="https://en.wikipedia.org/wiki/Poynting_vector"&gt;proportional to the absolute square of the field&lt;/a&gt;,&lt;/p&gt;
+$$I \left( x', z \right) \propto \left| U \left( x', z \right) \right|^2$$&lt;p&gt;Taking the absolute square eliminates the complex exponentials preceding the integral so that the irradiance profile becomes&lt;/p&gt;
+$$I \left( x', z \right) \propto \frac{1}{\lambda z} \left| \int_{-\infty}^{\infty} u \left( x \right) \exp \left( -j \frac{2 \pi}{\lambda z} xx'\right) dx \right|^2 = \frac{1}{\lambda z} \left| \mathcal{F} \left[ u \left( x, z \right) \right] \left( \frac{x'}{\lambda z}\right) \right|^2 $$&lt;p&gt;This expression means that the irradiance describing the Fraunhofer diffraction pattern from slit is proportional to the absolute square of the Fourier transform of the field at the aperture evaluted at spatial frequencies $ f_{x} = x' / \lambda z$. To arrive at the analytical solution, we perform the integration over a region where the slit is not opaque, $ \left[ -a/2, a/2 \right] $. Inside this region, the field is simply $ u \left( x \right) = E_0 $ because we have a monochromatic plane wave with this amplitude.&lt;/p&gt;
+$$ \mathcal{F}\left[ u \left( x, z \right) \right] = \int_{-a/2}^{a/2} E_0 \exp \left( -j \frac{2 \pi}{\lambda z} xx'\right) dx $$&lt;p&gt;The analytical solution to this integral is&lt;/p&gt;
+$$ \mathcal{F}\left[ u \left( x, z \right) \right] = a E_0 \text{sinc} \left( \frac{ax'}{\lambda z} \right) $$&lt;p&gt;where $ \text{sinc} \left( x \right) = \frac{\sin{\pi x}}{\pi x}$. The far-field irradiance is therefore the absolute square of this quantity divided by the product of the wavelength and the propagation distance.&lt;/p&gt;
 &lt;p&gt;Let's plot the analytically-determined irradiance profile of the diffraction pattern:&lt;/p&gt;
 
 &lt;/div&gt;
@@ -813,7 +782,7 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -823,7 +792,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -839,19 +808,14 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;We can also verify a few key properties of the Fourier transform and ensure that our units are correct. The most important property is the conservation of energy, which in signal processing is often known as &lt;a href="https://en.wikipedia.org/wiki/Parseval%27s_theorem"&gt;Parseval's theorem&lt;/a&gt;. In our case, conservation of energy means that the integral of the field over the slit must equal the integral of the field in any arbitrary z-plane.&lt;/p&gt;
-&lt;p&gt;$$\int_{-\infty}^{\infty} \left| u \left( x, z = 0 \right) \right|^2 dx = \int_{-\infty}^{\infty} \left| U \left( x', z \right) \right|^2 dx'$$&lt;/p&gt;
-&lt;p&gt;where the spatial frequency is $ f_{x} = \frac{x'}{\lambda z} $. Because the incident field is a plane wave, the integral over the slit is just the square of the plane wave amplitude multiplied by the slit width:&lt;/p&gt;
-&lt;p&gt;$$\int_{-a/2}^{a/2} E_0^2 dx = aE_0^2$$&lt;/p&gt;
-&lt;p&gt;We need the square integral to be proportional to units of power, which will be true if the field has units of $ \frac{\text{Volts}}{\sqrt{\mu m}} $ and not the more familiar $ \frac{\text{Volts}}{\mu m} $. This peculiarity stems from the fact that we're looking at a somewhat synthetic 1D case. With this in mind, the square integral has units of $ \text{Volts}^2 $ and is proportional to the power delivered by the plane wave.&lt;/p&gt;
+$$\int_{-\infty}^{\infty} \left| u \left( x, z = 0 \right) \right|^2 dx = \int_{-\infty}^{\infty} \left| U \left( x', z \right) \right|^2 dx'$$&lt;p&gt;where the spatial frequency is $ f_{x} = \frac{x'}{\lambda z} $. Because the incident field is a plane wave, the integral over the slit is just the square of the plane wave amplitude multiplied by the slit width:&lt;/p&gt;
+$$\int_{-a/2}^{a/2} E_0^2 dx = aE_0^2$$&lt;p&gt;We need the square integral to be proportional to units of power, which will be true if the field has units of $ \frac{\text{Volts}}{\sqrt{\mu m}} $ and not the more familiar $ \frac{\text{Volts}}{\mu m} $. This peculiarity stems from the fact that we're looking at a somewhat synthetic 1D case. With this in mind, the square integral has units of $ \text{Volts}^2 $ and is proportional to the power delivered by the plane wave.&lt;/p&gt;
 &lt;p&gt;The absolute square of the diffracted field is&lt;/p&gt;
-&lt;p&gt;$$ \left| U \left( x', z \right) \right|^2 = \frac{a^2 E_0^2}{\lambda z} \text{sinc}^2 \left( \frac{a x'}{\lambda z} \right)$$&lt;/p&gt;
-&lt;p&gt;The integral of $ \text{sinc}^2 \left( x \right) $ with my definition of $ \text{sinc} \left( x \right) $ &lt;a href="http://math.stackexchange.com/questions/903117/integral-of-sinc-function-squared-over-the-real-line"&gt;over the real number line&lt;/a&gt; is just 1, so&lt;/p&gt;
-&lt;p&gt;$$ \int_{-\infty}^{\infty} \left| U \left( x', z \right) \right|^2 dx' = \frac{a^2 E_0^2}{\lambda z} \times \frac{\lambda z}{a} = aE_0^2$$&lt;/p&gt;
-&lt;p&gt;All of this is essentially a verification that our units and prefactors have most likely been handled correctly. Most Fourier optics texts drop a lot of prefactors in their derivations, so it's always good to check that they've done everything correctly :)&lt;/p&gt;
+$$ \left| U \left( x', z \right) \right|^2 = \frac{a^2 E_0^2}{\lambda z} \text{sinc}^2 \left( \frac{a x'}{\lambda z} \right)$$&lt;p&gt;The integral of $ \text{sinc}^2 \left( x \right) $ with my definition of $ \text{sinc} \left( x \right) $ &lt;a href="http://math.stackexchange.com/questions/903117/integral-of-sinc-function-squared-over-the-real-line"&gt;over the real number line&lt;/a&gt; is just 1, so&lt;/p&gt;
+$$ \int_{-\infty}^{\infty} \left| U \left( x', z \right) \right|^2 dx' = \frac{a^2 E_0^2}{\lambda z} \times \frac{\lambda z}{a} = aE_0^2$$&lt;p&gt;All of this is essentially a verification that our units and prefactors have most likely been handled correctly. Most Fourier optics texts drop a lot of prefactors in their derivations, so it's always good to check that they've done everything correctly :)&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -873,7 +837,7 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'The input power is &lt;/span&gt;&lt;span class="si"&gt;{0:.4f}&lt;/span&gt;&lt;span class="s1"&gt; square Volts. The output power is &lt;/span&gt;&lt;span class="si"&gt;{1:.4f}&lt;/span&gt;&lt;span class="s1"&gt; square Volts'&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;powerIn&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;powerOut&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -883,7 +847,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stdout output_text"&gt;
@@ -897,10 +861,9 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Simulating-slit-diffraction-with-the-FFT"&gt;Simulating slit diffraction with the FFT&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html#Simulating-slit-diffraction-with-the-FFT"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Can we simply use the FFT in Python's Scipy or in MATLAB to arrive at the same solution as above, skipping the math in the process? Let's try it.&lt;/p&gt;
+&lt;h2 id="Simulating-slit-diffraction-with-the-FFT"&gt;Simulating slit diffraction with the FFT&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft/#Simulating-slit-diffraction-with-the-FFT"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Can we simply use the FFT in Python's Scipy or in MATLAB to arrive at the same solution as above, skipping the math in the process? Let's try it.&lt;/p&gt;
 &lt;p&gt;We'll start by defining a square slit centered at the origin with the same width as above. The incident field is a plane wave with amplitude $E_0 = 1 \, V / \sqrt{m} $.&lt;/p&gt;
 
 &lt;/div&gt;
@@ -924,7 +887,7 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -934,7 +897,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -950,8 +913,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Now, it's important to really understand that this slit is represented in computer memory as a discrete sequence of field samples, &lt;em&gt;not&lt;/em&gt; a continous curve. If we zoom in on the slit, we can better appreciate this:&lt;/p&gt;
 
@@ -972,7 +934,7 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -982,7 +944,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -998,12 +960,10 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Let's go ahead now and compute the FFT of this sequence of field samples. We first need to figure out what the units of the FFT are going to be. The sampling frequency $f_S$ for this field is simply 1 divided by the distance between each sample. The FFT outputs an array of numbers from spatial frequency 0 up to $ \left( \frac{N-1}{N} \right) f_S $. By default, the length of the output array $ N $ is the same as the length of the input. In Python, array indexes start from 0, so the relationship between index $ i $ and spatial frequency is&lt;/p&gt;
-&lt;p&gt;$$ f_{x} = \frac{f_S}{N} i $$&lt;/p&gt;
-&lt;p&gt;(&lt;a href="http://scholarsarchive.jwu.edu/cgi/viewcontent.cgi?article=1006&amp;amp;context=engineering_fac"&gt;In MATLAB&lt;/a&gt;, array indexes start at 1 so $i$ above should be replaced by $i - 1$ .)&lt;/p&gt;
+$$ f_{x} = \frac{f_S}{N} i $$&lt;p&gt;(&lt;a href="http://scholarsarchive.jwu.edu/cgi/viewcontent.cgi?article=1006&amp;amp;context=engineering_fac"&gt;In MATLAB&lt;/a&gt;, array indexes start at 1 so $i$ above should be replaced by $i - 1$ .)&lt;/p&gt;
 &lt;p&gt;We also need to do two other things when computing the numerical Fourier transform. First, we need to shift the input field using the &lt;code&gt;fftshift&lt;/code&gt; command for arrays with an even number of elements and &lt;code&gt;ifftshift&lt;/code&gt; for arrays with an odd number of elements. This will shift the elements of the array so that the point corresponding to x = 0 lies in the first element of the array (index 0).&lt;/p&gt;
 &lt;p&gt;The second thing we must do is multiply the fft results by the grid spacing &lt;code&gt;dx&lt;/code&gt; to ensure that the scaling on the y-axis is correct.&lt;/p&gt;
 
@@ -1030,7 +990,7 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1040,7 +1000,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -1056,8 +1016,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;OK, so far so good. Let's now put the results in a format that is more easily compared to the analytical theory for the diffracted irradiance. We'll shift the FFT results back so that the peak is in the center using &lt;code&gt;fftshift&lt;/code&gt;. (We also need to use &lt;code&gt;fftshift&lt;/code&gt; here for arrays with an odd number of elements; typically, the order for odd elements is &lt;code&gt;ifftshift&lt;/code&gt; -&amp;gt; &lt;code&gt;fft&lt;/code&gt; -&amp;gt; &lt;code&gt;fftshift&lt;/code&gt;.) We'll also rescale the x-axis by multiplying by $ \lambda z $ to get $x'$ and plot the theoretical result on top.&lt;/p&gt;
 
@@ -1085,7 +1044,7 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1095,7 +1054,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stderr output_text"&gt;
@@ -1107,7 +1066,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -1123,8 +1082,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Not too bad! It looks like the simulation and the FFT agree pretty well. But, if we zoom in to some regions of the curve, you can see some discrepancies:&lt;/p&gt;
 
@@ -1158,7 +1116,7 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1168,7 +1126,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -1184,8 +1142,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Considering the discrepancy between the results and the theory, the following question comes to mind:&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Is the discrepancy between the theoretical and FFT results due to numerical rounding errors, how we defined the slit, or something else?&lt;/strong&gt;&lt;/p&gt;
@@ -1194,10 +1151,9 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="How-well-do-the-theory-and-FFT-results-agree?"&gt;How well do the theory and FFT results agree?&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html#How-well-do-the-theory-and-FFT-results-agree?"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Let's start to answer this question by plotting the percent error between the theory and the FFT results.&lt;/p&gt;
+&lt;h2 id="How-well-do-the-theory-and-FFT-results-agree?"&gt;How well do the theory and FFT results agree?&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft/#How-well-do-the-theory-and-FFT-results-agree?"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Let's start to answer this question by plotting the percent error between the theory and the FFT results.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -1217,7 +1173,7 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1227,7 +1183,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -1243,8 +1199,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Now &lt;em&gt;that's&lt;/em&gt; interesting. The percent error varies wildly and spans nearly six orders of magnitude! Furthermore, it appears like the error actually gets slightly worse near the edge of the range, as evidenced by the upwards trend in the positive peaks. Finally, the fact that the percent error appears to have some sort of periodicity suggests that the discrepancies are not due to round-off errors but rather something else.&lt;/p&gt;
 
@@ -1252,10 +1207,9 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Does-aliasing-cause-the-disagreement?"&gt;Does aliasing cause the disagreement?&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html#Does-aliasing-cause-the-disagreement?"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Let's first see whether &lt;a href="https://en.wikipedia.org/wiki/Aliasing"&gt;aliasing&lt;/a&gt; is causing a problem. The slit is not bandlimited, which means that its Fourier spectrum is infinite in extent. For this reason, we can never sample the slit at high-enough frequencies to and calculate its spectrum without aliasing artifacts. We can however, see if fidelity improves by increasing the sampling rate.&lt;/p&gt;
+&lt;h2 id="Does-aliasing-cause-the-disagreement?"&gt;Does aliasing cause the disagreement?&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft/#Does-aliasing-cause-the-disagreement?"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Let's first see whether &lt;a href="https://en.wikipedia.org/wiki/Aliasing"&gt;aliasing&lt;/a&gt; is causing a problem. The slit is not bandlimited, which means that its Fourier spectrum is infinite in extent. For this reason, we can never sample the slit at high-enough frequencies to and calculate its spectrum without aliasing artifacts. We can however, see if fidelity improves by increasing the sampling rate.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -1279,7 +1233,7 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1289,7 +1243,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -1330,7 +1284,7 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1340,7 +1294,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stderr output_text"&gt;
@@ -1351,7 +1305,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -1367,8 +1321,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Now the agreement looks much better! Here's the new percent error with $ 2^{20} $ samples compared to the old one with $ 2^{10} $.&lt;/p&gt;
 
@@ -1392,7 +1345,7 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1402,7 +1355,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -1418,8 +1371,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Here we see that increasing the sampling rate by nearly three orders of magnitude (1024 samples vs. 1,048,576) improves the relative error at the origin and at the points where the error was already low to begin with. However, it does nothing to improve the error at the peaks in the plot, the first two peaks lying approximately 1000 microns on either side of the origin.&lt;/p&gt;
 
@@ -1427,21 +1379,18 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Just-aliasing,-or-something-more?"&gt;Just aliasing, or something more?&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html#Just-aliasing,-or-something-more?"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;We can begin to better understand the differences between the computational solution and the analytical solution by first underlining these two facts:&lt;/p&gt;
+&lt;h2 id="Just-aliasing,-or-something-more?"&gt;Just aliasing, or something more?&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft/#Just-aliasing,-or-something-more?"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;We can begin to better understand the differences between the computational solution and the analytical solution by first underlining these two facts:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;The diffracted far-field is a &lt;strong&gt;continous Fourier transform&lt;/strong&gt; of the continuous field distribution in the aperture.&lt;/li&gt;
 &lt;li&gt;The FFT produces a &lt;strong&gt;discrete Fourier transform (DFT)&lt;/strong&gt; of the sampled field in the aperture.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;Since the analytical solution and the FFT solution come from two related but different mathematical operations, should we have expected to get the right answer in the first place? &lt;a href="http://ch.mathworks.com/matlabcentral/newsreader/view_thread/294772"&gt;As others have pointed out&lt;/a&gt;, the discrete time Fourier transform (DTFT) of a square function is a ratio of two sines, not a sinc. Furthermore, the DFT (and equivalently the FFT result) is simply a sampled version of the DTFT. Therefore, we might expect that sampling the DTFT solution for a square wave will produce the same results as the FFT solution. Let's go ahead and try it.&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Discrete-time_Fourier_transform#Table_of_discrete-time_Fourier_transforms"&gt;According to Wikipedia&lt;/a&gt;, and changing variables to agree with my notation above, the DTFT solution of the square wave is&lt;/p&gt;
-&lt;p&gt;$$F \left( f_{x} \right) = \frac{\sin \left[ \pi f_{x} \left( M + 1 \right) \right] }{\sin \left( \pi f_{x} \right) } e^{ -j \pi f_{x} M }, \, M \in \mathbb{Z} $$&lt;/p&gt;
-&lt;p&gt;where $ M $ is an integer and $ f\_{x} $ is the spatial frequency. An important property of the DTFT  is that it is periodic between 0 and 1. If I had used the angular spatial frequency $ k\_{x} = 2 \pi f\_{x} $ the periodicity would be between 0 and $ 2 \pi $. With this information, we can map our spatial frequency vector onto the appropriate range for the DTFT.&lt;/p&gt;
+$$F \left( f_{x} \right) = \frac{\sin \left[ \pi f_{x} \left( M + 1 \right) \right] }{\sin \left( \pi f_{x} \right) } e^{ -j \pi f_{x} M }, \, M \in \mathbb{Z} $$&lt;p&gt;where $ M $ is an integer and $ f\_{x} $ is the spatial frequency. An important property of the DTFT  is that it is periodic between 0 and 1. If I had used the angular spatial frequency $ k\_{x} = 2 \pi f\_{x} $ the periodicity would be between 0 and $ 2 \pi $. With this information, we can map our spatial frequency vector onto the appropriate range for the DTFT.&lt;/p&gt;
 &lt;p&gt;The square function corresponding to this DTFT solution is defined with the left edge of the square starting at the origin:&lt;/p&gt;
-&lt;p&gt;$$ f \left( x \right) = \text{rect} \left( \frac{n - M/2}{M} \right) , \, M \in \mathbb{Z}, \, n = 0, 1, \ldots, N - 1$$&lt;/p&gt;
-&lt;p&gt;$ n $ is the index of the samples taken from the square and $ M $ denotes the center of the square. So, to use this expression for the DTFT of the square, we will first need to shift our original input so that the left edge of the square is at the origin.&lt;/p&gt;
+$$ f \left( x \right) = \text{rect} \left( \frac{n - M/2}{M} \right) , \, M \in \mathbb{Z}, \, n = 0, 1, \ldots, N - 1$$&lt;p&gt;$ n $ is the index of the samples taken from the square and $ M $ denotes the center of the square. So, to use this expression for the DTFT of the square, we will first need to shift our original input so that the left edge of the square is at the origin.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -1468,7 +1417,7 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'M is &lt;/span&gt;&lt;span class="si"&gt;{0:.0f}&lt;/span&gt;&lt;span class="s1"&gt;.'&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;M&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1478,7 +1427,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -1491,7 +1440,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stdout output_text"&gt;
@@ -1541,7 +1490,7 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1551,7 +1500,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -1567,8 +1516,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;I placed the x- and y-axes to display a similar range as the equivalent plot above. We see that the DTFT result, which is the ratio of two sine waves, is also in good agreement with the FFT. So now we have the FFT &lt;em&gt;and&lt;/em&gt; the DTFT of the field at the aperture modeling the diffraction pattern reasonably well.&lt;/p&gt;
 &lt;p&gt;How well does the DTFT match the analytical results? Let's look at their percent error and compare it to the one between the analytical theory and the FFT for $ 2^{20} $ samples.&lt;/p&gt;
@@ -1595,7 +1543,7 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1605,7 +1553,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -1621,8 +1569,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;What the above plot shows is that &lt;strong&gt;the error between the analytical theory and both the FFT and DTFT predictions are practically the same&lt;/strong&gt;. This means that the FFT is computing the DTFT of the field at the aperture and not the continuous Fourier transform. The DTFT result is therefore inherently including the aliasing artifacts that prevent accurate computation of the diffracted field with the FFT.&lt;/p&gt;
 &lt;p&gt;Despite the large relative errors, we still get pretty good results with both the FFT and DTFT predictions around the origin so long as the sampling frequency is large, or, equivalently, the grid spacing is small:&lt;/p&gt;
@@ -1644,7 +1591,7 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1654,7 +1601,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stderr output_text"&gt;
@@ -1666,7 +1613,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -1682,10 +1629,9 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Summary"&gt;Summary&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html#Summary"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;This entire exercise effectively showed that it is impossible to compute an exact diffraction pattern from a slit with a straight-forward approach based on the fast Fourier transform. There are two ways of looking at why this is, though they are both effectively based in the same underlying ideas.&lt;/p&gt;
+&lt;h2 id="Summary"&gt;Summary&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft/#Summary"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;This entire exercise effectively showed that it is impossible to compute an exact diffraction pattern from a slit with a straight-forward approach based on the fast Fourier transform. There are two ways of looking at why this is, though they are both effectively based in the same underlying ideas.&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;The spectrum of a slit is not band limited, so aliasing will always distort the FFT calculation.&lt;/li&gt;
 &lt;li&gt;The FFT is computing the discrete time Fourier transform, not the continuous Fourier transform.&lt;/li&gt;
@@ -1696,18 +1642,11 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-</description><category>Fourier optics</category><category>microscopy</category><category>optics</category><guid>http://kmdouglass.github.io/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft.html</guid><pubDate>Mon, 01 Feb 2016 09:54:23 GMT</pubDate></item><item><title>Simulating microscope pupil functions</title><link>http://kmdouglass.github.io/posts/simulating-microscope-pupil-functions.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div tabindex="-1" id="notebook" class="border-box-sizing"&gt;
-    &lt;div class="container" id="notebook-container"&gt;
-
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;/div&gt;</description><category>Fourier optics</category><category>microscopy</category><category>optics</category><guid>http://kmdouglass.github.io/posts/approximating-diffraction-patterns-of-rectangular-apertures-with-the-fft/</guid><pubDate>Mon, 01 Feb 2016 09:54:23 GMT</pubDate></item><item><title>Simulating microscope pupil functions</title><link>http://kmdouglass.github.io/posts/simulating-microscope-pupil-functions/</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;*Note: I remade this post to address minor inconsistencies and what I perceived to be a lack of attention to units of some of the physical quantities. The updated post may be found &lt;a href="http://kmdouglass.github.io/posts/simple-pupil-function-calculations.html"&gt;here&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id="Simple-simulations-of-microscope-pupil-functions"&gt;Simple simulations of microscope pupil functions&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-microscope-pupil-functions.html#Simple-simulations-of-microscope-pupil-functions"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0142949"&gt;In one of my recent publications&lt;/a&gt;, my co-authors and I investigated an aberration that is especially pernicious for 3D localization microscopies such as &lt;a href="https://en.wikipedia.org/wiki/Super-resolution_microscopy#STORM.2C_PALM_and_FPALM"&gt;STORM and PALM&lt;/a&gt;. This aberration results in a dependence of the perceived position of a single, fluorescent molecule on its axial position within the focal plane of a microscope. To identify a possible source for this aberration, I employed a phase retrieval algorithm to obtain the pupil function of the microscope. I then decomposed the pupil function into a number of orthogonal polynomial terms and identified the specific terms that led to the aberration that we observed. In this case, terms associated with &lt;a href="https://en.wikipedia.org/wiki/Coma_%28optics%29"&gt;coma&lt;/a&gt; were the culprits.&lt;/p&gt;
+&lt;p&gt;*Note: I remade this post to address minor inconsistencies and what I perceived to be a lack of attention to units of some of the physical quantities. The updated post may be found &lt;a href="http://kmdouglass.github.io/posts/simulating-microscope-pupil-functions/simple-pupil-function-calculations.html"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id="Simple-simulations-of-microscope-pupil-functions"&gt;Simple simulations of microscope pupil functions&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-microscope-pupil-functions/#Simple-simulations-of-microscope-pupil-functions"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0142949"&gt;In one of my recent publications&lt;/a&gt;, my co-authors and I investigated an aberration that is especially pernicious for 3D localization microscopies such as &lt;a href="https://en.wikipedia.org/wiki/Super-resolution_microscopy#STORM.2C_PALM_and_FPALM"&gt;STORM and PALM&lt;/a&gt;. This aberration results in a dependence of the perceived position of a single, fluorescent molecule on its axial position within the focal plane of a microscope. To identify a possible source for this aberration, I employed a phase retrieval algorithm to obtain the pupil function of the microscope. I then decomposed the pupil function into a number of orthogonal polynomial terms and identified the specific terms that led to the aberration that we observed. In this case, terms associated with &lt;a href="https://en.wikipedia.org/wiki/Coma_%28optics%29"&gt;coma&lt;/a&gt; were the culprits.&lt;/p&gt;
 &lt;p&gt;So why exactly is coma bad for 3D localization microscopy? Unfortunately, we did not have time to go into the subtleties question in the publication due deadlines on the revisions. Luckily, the internet is a wonderful tool for explaining some of these ideas outside of the formal structure of an academic paper, which is what I will do here.&lt;/p&gt;
 &lt;p&gt;To answer the question, we first require a bit of knowledge about Fourier optics. The purpose of this post is to describe what a pupil function is and how it can be easily simulated on a computer with Python. We'll then see how we can use it to model a simple aberration: defocus. A future post will explain why coma is bad for 3D localization microscopy using the foundations built upon here.&lt;/p&gt;
 
@@ -1715,20 +1654,16 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h3 id="Pupil-Function-Basics"&gt;Pupil Function Basics&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-microscope-pupil-functions.html#Pupil-Function-Basics"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The pupil function of a microscope (and really, of any optical system) is an important tool for analyzing the aberrations present in the system. The pupil function is defined as the two dimensional Fourier transform of the image of an isotropic point source. &lt;a href="http://mathworld.wolfram.com/FourierTransform.html"&gt;The two dimensional Fourier transform&lt;/a&gt; of a function of two variables x and y is expressed as&lt;/p&gt;
-&lt;p&gt;$$F \left( k_x, k_y \right) = \iint f \left( x, y \right) \exp \left[ -j \left( k_{x}x + k_{y}y \right) \right] dx dy$$&lt;/p&gt;
-&lt;p&gt;(I was originally trained as an engineer, so I tend to use 'j' for the imaginary number more than 'i'.) The inverse Fourier transform converts $F \left( k_x, k_y \right)$ back into $f \left( x, y \right)$ and is given by&lt;/p&gt;
-&lt;p&gt;$$f \left( x, y \right) = \iint F \left( k_x, k_y \right) \exp \left[ j \left( k_{x}x + k_{y}y \right) \right] dk_x dk_y$$&lt;/p&gt;
-&lt;p&gt;In this case, $x$ and $y$ are variables representing 2D coordinates in the image plane and $k_x$ and $k_y$ are the spatial frequencies. $f \left( x, y \right)$ and $F \left( k_x, k_y \right)$ are known as Fourier transform pairs.&lt;/p&gt;
+&lt;h3 id="Pupil-Function-Basics"&gt;Pupil Function Basics&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-microscope-pupil-functions/#Pupil-Function-Basics"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The pupil function of a microscope (and really, of any optical system) is an important tool for analyzing the aberrations present in the system. The pupil function is defined as the two dimensional Fourier transform of the image of an isotropic point source. &lt;a href="http://mathworld.wolfram.com/FourierTransform.html"&gt;The two dimensional Fourier transform&lt;/a&gt; of a function of two variables x and y is expressed as&lt;/p&gt;
+$$F \left( k_x, k_y \right) = \iint f \left( x, y \right) \exp \left[ -j \left( k_{x}x + k_{y}y \right) \right] dx dy$$&lt;p&gt;(I was originally trained as an engineer, so I tend to use 'j' for the imaginary number more than 'i'.) The inverse Fourier transform converts $F \left( k_x, k_y \right)$ back into $f \left( x, y \right)$ and is given by&lt;/p&gt;
+$$f \left( x, y \right) = \iint F \left( k_x, k_y \right) \exp \left[ j \left( k_{x}x + k_{y}y \right) \right] dk_x dk_y$$&lt;p&gt;In this case, $x$ and $y$ are variables representing 2D coordinates in the image plane and $k_x$ and $k_y$ are the spatial frequencies. $f \left( x, y \right)$ and $F \left( k_x, k_y \right)$ are known as Fourier transform pairs.&lt;/p&gt;
 &lt;p&gt;An isotropic point source is an idealized source of electromagnetic radiation that emits an equal intensity in all directions. Strictly speaking, real sources such as atoms and molecules are dipoles and not isotropic emitters. This assumption is however a good model for collections of many fluorescent molecules possessing dipole moments that are all pointing in different directions and that are smaller than the wavelength of light because the molecules' individual emission patterns average out. It is also a good approximation for a dipole whose moment is randomly reorienting in many directions during an image acquisition due to thermally-induced rotational diffusion.&lt;/p&gt;
 &lt;p&gt;The image of a point source is known as the &lt;a href="https://en.wikipedia.org/wiki/Point_spread_function"&gt;point spread function (PSF)&lt;/a&gt; of the microscope. In signal processing, it's known as a two dimensional impulse response.&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://www.msg.ucsf.edu/agard/Publications/148-Agard-JMicrosc-2004.pdf"&gt;The equation&lt;/a&gt; that relates the image of the isotropic point source to the pupil function $P \left( k_x, k_y \right)$ is&lt;/p&gt;
-&lt;p&gt;$$\text{PSF}_{\text{A}} \left( x, y \right) = \iint P \left( k_x, k_y \right) \exp \left[ -j \left( k_{x}x + k_{y}y \right) \right] dx dy$$&lt;/p&gt;
-&lt;p&gt;The subscript &lt;code&gt;A&lt;/code&gt; on the PSF stands for &lt;em&gt;amplitude&lt;/em&gt; and means that we are working with the electric field, not the &lt;a href="https://en.wikipedia.org/wiki/Irradiance"&gt;irradiance&lt;/a&gt;. The irradiance, which is what a camera or your eye measures, is proportional to the absolute square of $\text{PSF}_{\text{A}}$. In words, the above equation restates the definition above: the pupil function and the amplitude PSF are Fourier transform pairs.&lt;/p&gt;
-&lt;h3 id="Simulating-Diffraction-Limited-Pupil-Functions-and-PSF's"&gt;Simulating Diffraction Limited Pupil Functions and PSF's&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-microscope-pupil-functions.html#Simulating-Diffraction-Limited-Pupil-Functions-and-PSF's"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;We can simulate how an aberration affects the image of a point source by simulating an aberrated pupil function and computing the Fourier transform above to get the amplitude PSF. The easiest model to simulate is based on scalar diffraction theory, which means that we ignore the fact that the electromagnetic radiation is polarized (i.e. a vector) and treat it as a scalar quantity instead. Even though this is an approximation, it still can give us a good idea about the fundamental physics involved.&lt;/p&gt;
+$$\text{PSF}_{\text{A}} \left( x, y \right) = \iint P \left( k_x, k_y \right) \exp \left[ -j \left( k_{x}x + k_{y}y \right) \right] dx dy$$&lt;p&gt;The subscript &lt;code&gt;A&lt;/code&gt; on the PSF stands for &lt;em&gt;amplitude&lt;/em&gt; and means that we are working with the electric field, not the &lt;a href="https://en.wikipedia.org/wiki/Irradiance"&gt;irradiance&lt;/a&gt;. The irradiance, which is what a camera or your eye measures, is proportional to the absolute square of $\text{PSF}_{\text{A}}$. In words, the above equation restates the definition above: the pupil function and the amplitude PSF are Fourier transform pairs.&lt;/p&gt;
+&lt;h3 id="Simulating-Diffraction-Limited-Pupil-Functions-and-PSF's"&gt;Simulating Diffraction Limited Pupil Functions and PSF's&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-microscope-pupil-functions/#Simulating-Diffraction-Limited-Pupil-Functions-and-PSF's"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;We can simulate how an aberration affects the image of a point source by simulating an aberrated pupil function and computing the Fourier transform above to get the amplitude PSF. The easiest model to simulate is based on scalar diffraction theory, which means that we ignore the fact that the electromagnetic radiation is polarized (i.e. a vector) and treat it as a scalar quantity instead. Even though this is an approximation, it still can give us a good idea about the fundamental physics involved.&lt;/p&gt;
 &lt;p&gt;To perform the simulation, we must first discretize the continuous quantities in the Fourier transform. We'll model $\text{PSF}_{\text{A}}$ and $P \left( k_x, k_y \right)$ as discrete scalar quantities on 2D grids and perform a &lt;a href="https://en.wikipedia.org/wiki/Fast_Fourier_transform"&gt;fast Fourier transform&lt;/a&gt; to turn the pupil function into the PSF.&lt;/p&gt;
 
 &lt;/div&gt;
@@ -1746,7 +1681,7 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;scipy.fftpack&lt;/span&gt; &lt;span class="k"&gt;import&lt;/span&gt; &lt;span class="n"&gt;fftshift&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ifftshift&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1756,7 +1691,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stdout output_text"&gt;
@@ -1779,14 +1714,13 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;rcParams&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'image.cmap'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'plasma'&lt;/span&gt; 
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Let's start by setting up the image plane and spatial frequency grids. If we work with square images, then the primary quantity we have to set a value for is the number of pixels. The number of pixels that we choose to simulate is a bit arbitrary, though as we'll see later, it determines the spacing of the discretized pupil function coordinates.&lt;/p&gt;
 
@@ -1801,14 +1735,13 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;imgSize&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;513&lt;/span&gt; &lt;span class="c1"&gt;# Choose an odd number to ensure rotational symmetry about the center&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;The rest of the important parameters for setting up the grids are determined by your microscope.&lt;/p&gt;
 
@@ -1826,14 +1759,13 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="n"&gt;pixelSize&lt;/span&gt;  &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;0.1&lt;/span&gt;  &lt;span class="c1"&gt;# microns, typical for microscopes with 60X--100X magnifications&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Now we have enough information to define the grid on which the pupil function lies.&lt;/p&gt;
 
@@ -1850,14 +1782,13 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="n"&gt;dk&lt;/span&gt;   &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;pi&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;imgSize&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;pixelSize&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;When working with discrete Fourier transforms, a common question that arises is "What are the units of the Fourier transform variable?" We can answer this question by these rules:&lt;/p&gt;
 &lt;blockquote&gt;&lt;p&gt;$k_{Max} \propto \frac{1}{dx}$&lt;/p&gt;
@@ -1882,7 +1813,7 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Size of kx : &lt;/span&gt;&lt;span class="si"&gt;{0}&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;kx&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1892,7 +1823,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stdout output_text"&gt;
@@ -1908,8 +1839,7 @@ Size of kx : 513
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Now that the coordinate system for the pupil function is setup, we can go ahead and define the pupil function for an &lt;em&gt;aberration free&lt;/em&gt; microscope. First, we need to create a mask whose value is one inside a circle whose extent is set by the microscope's NA and zero outside it. This mask is used to create a circular pupil.&lt;/p&gt;
 
@@ -1933,7 +1863,7 @@ Size of kx : 513
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1943,7 +1873,7 @@ Size of kx : 513
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -1959,8 +1889,7 @@ Size of kx : 513
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;The pupil function is a complex quantity, which means it has both real and imaginary components. The unaberrated pupil function for an on-axis point source simply has a uniform phase and amplitude equal to one inside the mask.&lt;/p&gt;
 
@@ -1977,7 +1906,7 @@ Size of kx : 513
 &lt;span class="n"&gt;pupil&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;amp&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exp&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;phase&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1999,7 +1928,7 @@ Size of kx : 513
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -2009,7 +1938,7 @@ Size of kx : 513
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -2025,8 +1954,7 @@ Size of kx : 513
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;The amplitude PSF for the isotropic point source is simply the Fourier transform of this pupil function. The camera, which measures irradiance and not electric field, sees the absolute square of the amplitude PSF.&lt;/p&gt;
 
@@ -2053,7 +1981,7 @@ Size of kx : 513
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -2063,7 +1991,7 @@ Size of kx : 513
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -2079,8 +2007,7 @@ Size of kx : 513
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;This is a simulated image of an on-axis, in-focus, isotropic point source from an unaberrated pupil with an object-space pixel size of 100 nm.&lt;/p&gt;
 &lt;p&gt;The image is also a decent approximation of what a real single molecule image looks like in localization microscopies. I say &lt;em&gt;decent&lt;/em&gt; because a single molecule will have a dipolar emission profile, not isotropic. Additionally, the scalar-diffraction model used here ignores polarization effects. Finally, a real image will have noise, which would be reflected as a random variation in the signal of each pixel.&lt;/p&gt;
@@ -2089,12 +2016,10 @@ Size of kx : 513
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Let's see how a line profile through the center of the image looks relative to the profile of the &lt;a href="https://en.wikipedia.org/wiki/Airy_disk"&gt;Airy disk&lt;/a&gt;, which is the mathematical solution to the diffraction pattern from a circular aperture in scalar diffraction theory. The Airy disk is given by&lt;/p&gt;
-&lt;p&gt;$$I \left( X \right) = I_{0} \left[ \frac{2J_{1} \left( X \right)}{X} \right]^2$$&lt;/p&gt;
-&lt;p&gt;where $J_{1} \left( X \right) $ is the Bessel function of the first kind and order 1 and $ X = \frac{2 \pi r  (\text{NA})}{\lambda} $. Here, $r$ is the distance from the center of the image plane, so we can easily convert it to pixels.&lt;/p&gt;
+$$I \left( X \right) = I_{0} \left[ \frac{2J_{1} \left( X \right)}{X} \right]^2$$&lt;p&gt;where $J_{1} \left( X \right) $ is the Bessel function of the first kind and order 1 and $ X = \frac{2 \pi r  (\text{NA})}{\lambda} $. Here, $r$ is the distance from the center of the image plane, so we can easily convert it to pixels.&lt;/p&gt;
 &lt;p&gt;Because the pupil of the microscope is circular and unaberrated, it is also the solution for PSF of the microscope.&lt;/p&gt;
 
 &lt;/div&gt;
@@ -2124,7 +2049,7 @@ Size of kx : 513
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -2134,7 +2059,7 @@ Size of kx : 513
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stderr output_text"&gt;
@@ -2145,7 +2070,7 @@ Size of kx : 513
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -2161,8 +2086,7 @@ Size of kx : 513
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;The simulated PSF agrees well with the scalar diffraction theory, demonstrating that we have correctly simulated the microscope's PSF from an unaberrated pupil function.&lt;/p&gt;
 
@@ -2170,14 +2094,12 @@ Size of kx : 513
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h3 id="Defocus"&gt;Defocus&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-microscope-pupil-functions.html#Defocus"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Now that we can simulate the diffraction-limited image of an &lt;em&gt;in-focus&lt;/em&gt; isotropic point source, let's add some defocus to demonstrate what the PSF would look like as the camera or sample is scanned along the axial direction.&lt;/p&gt;
+&lt;h3 id="Defocus"&gt;Defocus&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-microscope-pupil-functions/#Defocus"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Now that we can simulate the diffraction-limited image of an &lt;em&gt;in-focus&lt;/em&gt; isotropic point source, let's add some defocus to demonstrate what the PSF would look like as the camera or sample is scanned along the axial direction.&lt;/p&gt;
 &lt;p&gt;Defocus can be added in numerous ways. One is to multiply our pupil function by the phase aberration for defocus, which is usually modeled as a parabolic phase aberration in the pupil coordinates. However, &lt;a href="http://kmdouglass.github.io/posts/beware-the-paraxial-approximation-in-microscopy.html"&gt;as I explained in a previous post&lt;/a&gt;, this is an approximate model for defocus and fails for large numerical apertures.&lt;/p&gt;
 &lt;p&gt;Another simple way is to propagate the plane wave angular spectrum in the image plane to nearby planes. This relatively easy method is used in a well-known microscopy paper (&lt;a href="http://onlinelibrary.wiley.com/doi/10.1111/j.0022-2720.2004.01393.x/abstract"&gt;Hanser, 2004&lt;/a&gt;) and involves multiplying the pupil function by a defocus kernel before performing the Fourier transform.&lt;/p&gt;
-&lt;p&gt;$$\text{PSF}_{\text{A}} \left( x, y, z \right) = \iint P \left( k_x, k_y \right) \exp \left( j k_{z} z \right) \exp \left[ -j \left( k_{x}x + k_{y}y \right) \right] dx dy$$&lt;/p&gt;
-&lt;p&gt;Here, $k_z = \sqrt{\left( 2 \pi n / \lambda \right)^2 - k_x^2 - k_y^2}$. The defocus kernel essentially shifts the phase of each plane wave with pupil coordinates $\left( k_x, k_y \right)$ by an amount that depends on its coordinates and the distance from the image plane $z$.&lt;/p&gt;
+$$\text{PSF}_{\text{A}} \left( x, y, z \right) = \iint P \left( k_x, k_y \right) \exp \left( j k_{z} z \right) \exp \left[ -j \left( k_{x}x + k_{y}y \right) \right] dx dy$$&lt;p&gt;Here, $k_z = \sqrt{\left( 2 \pi n / \lambda \right)^2 - k_x^2 - k_y^2}$. The defocus kernel essentially shifts the phase of each plane wave with pupil coordinates $\left( k_x, k_y \right)$ by an amount that depends on its coordinates and the distance from the image plane $z$.&lt;/p&gt;
 &lt;p&gt;The above equation means that we can model the PSF behavior as we scan through the focal plane by computing the defocus kernel for different distances from focus. Then, we multiply our perfect pupil by this defocus kernel and compute its Fourier transform to get the amplitude and irradiance PSF's.&lt;/p&gt;
 
 &lt;/div&gt;
@@ -2201,14 +2123,13 @@ Size of kx : 513
     &lt;span class="n"&gt;defocusPSF&lt;/span&gt;&lt;span class="p"&gt;[:,:,&lt;/span&gt;&lt;span class="n"&gt;ctr&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;real&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;defocusPSFA&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conj&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;defocusPSFA&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;And that's it. All we needed to do was multiply pupil by the defocus kernel and compute the FFT like before. Now let's look at a couple of defocused PSF's at different distances from the focal plane.&lt;/p&gt;
 
@@ -2245,7 +2166,7 @@ Size of kx : 513
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -2255,7 +2176,7 @@ Size of kx : 513
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -2271,348 +2192,191 @@ Size of kx : 513
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;As more and more defocus is added to the pupil, the PSF gets dimmer because the same number of photons are spread out across a larger area of the detector.&lt;/p&gt;
 &lt;p&gt;In a future post I'll discuss how we can model arbitrary aberrations within this framework. The idea is similar to how defocus is implemented here: you find the phase profile for the aberration, multiply it by the unaberrated pupil, and finally compute the 2D Fourier transform.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-</description><category>microscopy</category><category>optics</category><category>python</category><guid>http://kmdouglass.github.io/posts/simulating-microscope-pupil-functions.html</guid><pubDate>Sun, 24 Jan 2016 14:13:40 GMT</pubDate></item><item><title>Beware the paraxial approximation in microscopy</title><link>http://kmdouglass.github.io/posts/beware-the-paraxial-approximation-in-microscopy.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;p&gt;
-I have had a difficult time resolving what originally seemed to be an
-inconsistency between a 2004 research article about estimating
-microscope pupil functions and the body of knowledge concerning the
-theory of aberrations in optical systems.
-&lt;/p&gt;
-
-&lt;p&gt;
-In the article by Hanser, et al.&lt;sup&gt;&lt;a id="fnr.1" name="fnr.1" class="footref" href="http://kmdouglass.github.io/posts/beware-the-paraxial-approximation-in-microscopy.html#fn.1"&gt;1&lt;/a&gt;&lt;/sup&gt;, the authors utilize an imaging model
-for calculating the amplitude point-spread function of an optical
-system that incorporates defocus as an exponential term inside the
-Fourier transform integral:
-&lt;/p&gt;
-
+&lt;/div&gt;&lt;/div&gt;</description><category>microscopy</category><category>optics</category><category>python</category><guid>http://kmdouglass.github.io/posts/simulating-microscope-pupil-functions/</guid><pubDate>Sun, 24 Jan 2016 14:13:40 GMT</pubDate></item><item><title>Beware the paraxial approximation in microscopy</title><link>http://kmdouglass.github.io/posts/beware-the-paraxial-approximation-in-microscopy/</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;I have had a difficult time resolving what originally seemed to be an inconsistency between a 2004
+research article about estimating microscope pupil functions and the body of knowledge concerning
+the theory of aberrations in optical systems.&lt;/p&gt;
+&lt;p&gt;In the article by Hanser, et al.[1], the authors utilize an imaging model for calculating the
+amplitude point-spread function of an optical system that incorporates defocus as an exponential
+term inside the Fourier transform integral:&lt;/p&gt;
+&lt;div class="math"&gt;
 \begin{equation*}
 \text{PSF}_{\text{A}} \left( x, y, z \right) = \iint_{pupil} P \left( k_x, k_y \right) e^{i k_z z} e^{i \left( k_{x}x + k_{y}y \right)} dk_x dk_y
 \end{equation*}
-
-&lt;p&gt;
-where \(k_z = \sqrt{\left( 2 \pi n / \lambda \right)^2 - \left( k_x^2 +
-k_y^2 \right)}\). (I changed the notation of some variables used in the
-text because the authors confusingly use \(k\) to represent spatial
-frequency in units of &lt;i&gt;cycles per distance&lt;/i&gt; instead of the much more
-common &lt;i&gt;radians per distance&lt;/i&gt;.) In the image plane at \(z = 0\), there
-is no defocus and we get the amplitude point spread function (PSF) as
-the Fourier transform of the pupil function \(P \left( k_x, k_y
-\right)\) just like we would expect (see Goodman&lt;sup&gt;&lt;a id="fnr.2" name="fnr.2" class="footref" href="http://kmdouglass.github.io/posts/beware-the-paraxial-approximation-in-microscopy.html#fn.2"&gt;2&lt;/a&gt;&lt;/sup&gt;, Chapter 6,
-pp. 129-131).
-&lt;/p&gt;
-
-&lt;p&gt;
-The problem arises when I try to verify this model when \(z\) is not
-equal to zero by computing the defocused PSF using the wavefront error
-for defocus. From the scalar diffraction theory of aberrations, the
-defocused PSF is the Fourier transform of the pupil function
-multiplied by a phase factor whose phase angle is proportional to the
-wavefront error \(W \left( k_x, k_y \right)\)
-&lt;/p&gt;
-
+&lt;/div&gt;
+&lt;p&gt;where &lt;span class="math"&gt;\(k_z = \sqrt{\left( 2 \pi n / \lambda \right)^2 - \left( k_x^2 + k_y^2 \right)}\)&lt;/span&gt;. (I
+changed the notation of some variables used in the text because the authors confusingly use
+&lt;span class="math"&gt;\(k\)&lt;/span&gt; to represent spatial frequency in units of /cycles per distance/ instead of the much more
+common &lt;em&gt;radians per distance&lt;/em&gt;.) In the image plane at &lt;span class="math"&gt;\(z = 0\)&lt;/span&gt;, there is no defocus and we get
+the amplitude point spread function (PSF) as the Fourier transform of the pupil function &lt;span class="math"&gt;\(P
+\left( k_x, k_y \right)\)&lt;/span&gt; just like we would expect (see Goodman[2], Chapter 6, pp. 129-131).&lt;/p&gt;
+&lt;p&gt;The problem arises when I try to verify this model when &lt;span class="math"&gt;\(z\)&lt;/span&gt; is not equal to zero by computing
+the defocused PSF using the wavefront error for defocus. From the scalar diffraction theory of
+aberrations, the defocused PSF is the Fourier transform of the pupil function multiplied by a phase
+factor whose phase angle is proportional to the wavefront error &lt;span class="math"&gt;\(W \left( k_x, k_y \right)\)&lt;/span&gt;&lt;/p&gt;
+&lt;div class="math"&gt;
 \begin{equation*}
 \text{PSF}_{\text{A}} \left( x, y, z \right) = \iint_{pupil} P \left( k_x, k_y \right) e^{i k W \left( k_x, k_y \right)} e^{i \left( k_{x}x + k_{y}y \right)} dk_x dk_y
 \end{equation*}
-
-&lt;p&gt;
-Any textbook discussing Seidel aberrations will tell you that the
-defocused wavefront error \(W\) is quadratic in the pupil plane
-coordinates, i.e. \(W \sim k_x^2 + k_y^2\). Goodman even states this
-with little justification later in Chapter 6 on p. 149 when discussing
-defocus &lt;sup&gt;&lt;a id="fnr.2.100" name="fnr.2.100" class="footref" href="http://kmdouglass.github.io/posts/beware-the-paraxial-approximation-in-microscopy.html#fn.2"&gt;2&lt;/a&gt;&lt;/sup&gt;. So how can I reconcile the first equation in which the
-defocus goes as the square root of a constant minus the squared pupil
-coordinates with the second equation that is quadratic in pupil
-coordinates?
-&lt;/p&gt;
-
-&lt;p&gt;
-The answer, as you might have guessed from the title of this post, is
-that &lt;i&gt;the Seidel polynomial term for defocus is a result of applying
-the paraxial approximation when computing the wavefront error&lt;/i&gt;. You
-can see this by calculating the phase of a spherical wave in the pupil
-plane that is centered on the axis in the image plane; Goodman states
-it is quadratic without justification, but this is only true near the
-axis. Mahajan offers a geometrical interpretation of \(W\) on p. 148,
-where he notes that the path length difference for defocus "is
-approximately equal to the difference of &lt;a href="http://liutaiomottola.com/formulae/sag.htm"&gt;sags&lt;/a&gt; of the reference sphere
-and the wavefront.&lt;sup&gt;&lt;a id="fnr.3" name="fnr.3" class="footref" href="http://kmdouglass.github.io/posts/beware-the-paraxial-approximation-in-microscopy.html#fn.3"&gt;3&lt;/a&gt;&lt;/sup&gt;" He then goes on to derive the same expression
-for \(W\) that Goodman gets; he states the approximation that he uses,
-whereas Goodman implicitly assumes a quadratic phase front in the
-pupil. Hanser et al., on the other hand, are essentially propagating
-the plane wave angular spectrum from the image plane to nearby planes
-to model defocus. I think that this should be rigorously correct since
-no approximation is applied. For me, it is unfortunate that this was
-not made clear in their paper because I spent quite a bit of time
-trying to reconcile the two results.
-&lt;/p&gt;
-
-&lt;p&gt;
-The lesson of this story is to be sure you know about the
-approximations that go into a "standard" result found in textbooks. I
-falsely assumed that the Seidel aberrations were exact and that
-Hanser, et al. were suspect when in fact it was the other way
-around. Because the paraxial approximation is so widespread in optics
-theory, it can often lie hidden behind an equation and its effects can
-easily be taken for granted. This is a problem for the large NA
-systems used in microscopy where the results of the paraxial
-approximation are not often valid.
-&lt;/p&gt;
-&lt;div id="footnotes"&gt;
-&lt;h2 class="footnotes"&gt;Footnotes: &lt;/h2&gt;
-&lt;div id="text-footnotes"&gt;
-
-&lt;div class="footdef"&gt;&lt;sup&gt;&lt;a id="fn.1" name="fn.1" class="footnum" href="http://kmdouglass.github.io/posts/beware-the-paraxial-approximation-in-microscopy.html#fnr.1"&gt;1&lt;/a&gt;&lt;/sup&gt; &lt;p class="footpara"&gt;
-&lt;a href="http://onlinelibrary.wiley.com/doi/10.1111/j.0022-2720.2004.01393.x/abstract;jsessionid=946CF30FA7FA65F1DB4C638D0C4DF00F.f02t04"&gt;http://onlinelibrary.wiley.com/doi/10.1111/j.0022-2720.2004.01393.x/abstract;jsessionid=946CF30FA7FA65F1DB4C638D0C4DF00F.f02t04&lt;/a&gt;
-&lt;/p&gt;&lt;/div&gt;
-
-&lt;div class="footdef"&gt;&lt;sup&gt;&lt;a id="fn.2" name="fn.2" class="footnum" href="http://kmdouglass.github.io/posts/beware-the-paraxial-approximation-in-microscopy.html#fnr.2"&gt;2&lt;/a&gt;&lt;/sup&gt; &lt;p class="footpara"&gt;
-&lt;a href="https://books.google.ch/books/about/Introduction_to_Fourier_optics.html?id=ow5xs_Rtt9AC&amp;amp;redir_esc=y"&gt;https://books.google.ch/books/about/Introduction_to_Fourier_optics.html?id=ow5xs_Rtt9AC&amp;amp;redir_esc=y&lt;/a&gt;
-&lt;/p&gt;&lt;/div&gt;
-
-&lt;div class="footdef"&gt;&lt;sup&gt;&lt;a id="fn.3" name="fn.3" class="footnum" href="http://kmdouglass.github.io/posts/beware-the-paraxial-approximation-in-microscopy.html#fnr.3"&gt;3&lt;/a&gt;&lt;/sup&gt; &lt;p class="footpara"&gt;
-&lt;a href="https://books.google.ch/books/about/Optical_Imaging_and_Aberrations_Ray_geom.html?id=I_1AAQAAIAAJ&amp;amp;redir_esc=y"&gt;https://books.google.ch/books/about/Optical_Imaging_and_Aberrations_Ray_geom.html?id=I_1AAQAAIAAJ&amp;amp;redir_esc=y&lt;/a&gt;
-&lt;/p&gt;&lt;/div&gt;
-
-
 &lt;/div&gt;
-&lt;/div&gt;</description><category>microscopy</category><category>optics</category><guid>http://kmdouglass.github.io/posts/beware-the-paraxial-approximation-in-microscopy.html</guid><pubDate>Wed, 09 Sep 2015 17:40:00 GMT</pubDate></item><item><title>Can my laser beam be collimated?</title><link>http://kmdouglass.github.io/posts/can-my-beam-be-collimated.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;p&gt;
-The fluorescence microscopy setup in my lab requires quite a bit of
-power. The minimum irradiance requirement is greater than 1 kW per
-square centimeter, and this must cover an area spanning a few tens of
-microns across after focusing through the objective. When I was
-designing the setup, the highest priority was placed on finding a
-cheap laser with as much power as possible at a wavelength of 647 nm;
-I considered all other qualities of the laser of secondary importance.
-&lt;/p&gt;
-
-&lt;p&gt;
-Just like everything else in science, I have learned a very good
-lesson from this experience. The laser I decided to purchase is a &lt;a href="http://www.omicron-laser.de/english/lasers/diode-lasers/brixx-lasers/brixx-diode-lasers.html"&gt;800
-mW BrixX laser from Omicron&lt;/a&gt;. The cost is under $10,000, which I
-consider to be a pretty good deal for the amount of power it puts
-out. There is no fiber-coupled version, but all of our lasers are free
-space anyway so I did not consider this to be a big problem. The beam
-is astigmatic, which is to be expected from a high power laser diode.
-&lt;/p&gt;
-
-&lt;p&gt;
-The astigmatism is not necessarily a big problem for me, though. What
-is surprising to me is how difficult it is to keep the beam &lt;a href="http://en.wikipedia.org/wiki/Collimated_light"&gt;collimated&lt;/a&gt;
-over large distances, that is, to keep it roughly the same size as it
-propagates. My application requires a fairly small beam size since the
-exit pupil of the objective is only 6 millimeters in diameter. With
-&lt;a href="http://en.wikipedia.org/wiki/M_squared"&gt;M-squared&lt;/a&gt; values direct from the laser of 12 and 25, it is quite
-difficult to keep the beam collimated for a long enough distance to
-steer the beam through all the optics and to keep it small enough to
-prevent overfilling the objective's exit pupil and losing power.
-&lt;/p&gt;
-
-&lt;p&gt;
-What I have learned from this is that free-space diode lasers, and
-more generally multimode laser beams, require extra consideration to
-ensure that they will stay collimated in long setups.
-&lt;/p&gt;
-
-&lt;p&gt;
-So, how can I predict the distance over which my beam can stay
-collimated to better judge how well it will work for my setup? The
-first thing to realize is that no beam can stay collimated
-forever. Real laser beams experience diffraction, which causes them to
-spread as they propagate. This means that the first thing I should do
-is to consider the distances spanned by the beam paths. In a
-microscopy setup, this path will probably not be longer than a couple
-meters. In mine, it's roughly two meters since I am combining a number
-of laser beams together and need the extra space.
-&lt;/p&gt;
-
-&lt;p&gt;
-Once I identify the length scale over which the beam should stay
-collimated, I need to examine the beam parameter that is best
-associated with collimation. For a pure Gaussian beam, this parameter
-is the &lt;a href="http://en.wikipedia.org/wiki/Rayleigh_length"&gt;Rayleigh range&lt;/a&gt;. The Rayleigh range is the distance between the
-beam waist and the point where the cross-sectional area of the beam
-has doubled, or, equivalently, to the point where the radius of the
-beam has increased over the waist radius by a factor of the
-\(\sqrt{2}\). For a pure Gaussian beam with a waist radius of \(w_0\) and
-a wavelength of \(\lambda\), the Rayleigh range is given by the equation
-&lt;/p&gt;
-
-
+&lt;p&gt;Any textbook discussing Seidel aberrations will tell you that the defocused wavefront error
+&lt;span class="math"&gt;\(W\)&lt;/span&gt; is quadratic in the pupil plane coordinates, i.e. &lt;span class="math"&gt;\(W \sim k_x^2 + k_y^2\)&lt;/span&gt;. Goodman
+even states this with little justification later in Chapter 6 on p. 149 when discussing defocus
+[2]. So how can I reconcile the first equation in which the defocus goes as the square root of a
+constant minus the squared pupil coordinates with the second equation that is quadratic in pupil
+coordinates?&lt;/p&gt;
+&lt;p&gt;The answer, as you might have guessed from the title of this post, is that /the Seidel polynomial
+term for defocus is a result of applying the paraxial approximation when computing the wavefront
+error/. You can see this by calculating the phase of a spherical wave in the pupil plane that is
+centered on the axis in the image plane; Goodman states it is quadratic without justification, but
+this is only true near the axis. Mahajan offers a geometrical interpretation of &lt;span class="math"&gt;\(W\)&lt;/span&gt;
+on p. 148, where he notes that the path length difference for defocus "is approximately equal to
+the difference of &lt;a class="reference external" href="http://liutaiomottola.com/formulae/sag.htm"&gt;sags&lt;/a&gt; of the reference sphere and
+the wavefront.[3]" He then goes on to derive the same expression for &lt;span class="math"&gt;\(W\)&lt;/span&gt; that Goodman gets;
+he states the approximation that he uses, whereas Goodman implicitly assumes a quadratic phase
+front in the pupil. Hanser et al., on the other hand, are essentially propagating the plane wave
+angular spectrum from the image plane to nearby planes to model defocus. I think that this should
+be rigorously correct since no approximation is applied. For me, it is unfortunate that this was
+not made clear in their paper because I spent quite a bit of time trying to reconcile the two
+results.&lt;/p&gt;
+&lt;p&gt;The lesson of this story is to be sure you know about the approximations that go into a "standard"
+result found in textbooks. I falsely assumed that the Seidel aberrations were exact and that
+Hanser, et al. were suspect when in fact it was the other way around. Because the paraxial
+approximation is so widespread in optics theory, it can often lie hidden behind an equation and its
+effects can easily be taken for granted. This is a problem for the large NA systems used in
+microscopy where the results of the paraxial approximation are not often valid.&lt;/p&gt;
+&lt;div class="section" id="footnotes"&gt;
+&lt;h2&gt;Footnotes&lt;/h2&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://onlinelibrary.wiley.com/doi/10.1111/j.0022-2720.2004.01393.x/abstract;jsessionid=946CF30FA7FA65F1DB4C638D0C4DF00F.f02t04"&gt;http://onlinelibrary.wiley.com/doi/10.1111/j.0022-2720.2004.01393.x/abstract;jsessionid=946CF30FA7FA65F1DB4C638D0C4DF00F.f02t04&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://books.google.ch/books/about/Introduction_to_Fourier_optics.html?id=ow5xs_Rtt9AC&amp;amp;redir_esc=y"&gt;https://books.google.ch/books/about/Introduction_to_Fourier_optics.html?id=ow5xs_Rtt9AC&amp;amp;redir_esc=y&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://books.google.ch/books/about/Optical_Imaging_and_Aberrations_Ray_geom.html?id=I_1AAQAAIAAJ&amp;amp;redir_esc=y"&gt;https://books.google.ch/books/about/Optical_Imaging_and_Aberrations_Ray_geom.html?id=I_1AAQAAIAAJ&amp;amp;redir_esc=y&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;&lt;/div&gt;</description><category>microscopy</category><category>optics</category><guid>http://kmdouglass.github.io/posts/beware-the-paraxial-approximation-in-microscopy/</guid><pubDate>Wed, 09 Sep 2015 17:40:00 GMT</pubDate></item><item><title>Can my laser beam be collimated?</title><link>http://kmdouglass.github.io/posts/can-my-beam-be-collimated/</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;The fluorescence microscopy setup in my lab requires quite a bit of power. The minimum irradiance
+requirement is greater than 1 kW per square centimeter, and this must cover an area spanning a few
+tens of microns across after focusing through the objective. When I was designing the setup, the
+highest priority was placed on finding a cheap laser with as much power as possible at a wavelength
+of 647 nm; I considered all other qualities of the laser of secondary importance.&lt;/p&gt;
+&lt;p&gt;Just like everything else in science, I have learned a very good lesson from this experience. The
+laser I decided to purchase is a &lt;a class="reference external" href="http://www.omicron-laser.de/english/lasers/diode-lasers/brixx-lasers/brixx-diode-lasers.html"&gt;800 mW BrixX laser from Omicron&lt;/a&gt;. The
+cost is under $10,000, which I consider to be a pretty good deal for the amount of power it puts
+out. There is no fiber-coupled version, but all of our lasers are free space anyway so I did not
+consider this to be a big problem. The beam is astigmatic, which is to be expected from a high
+power laser diode.&lt;/p&gt;
+&lt;p&gt;The astigmatism is not necessarily a big problem for me, though. What is surprising to me is how
+difficult it is to keep the beam &lt;a class="reference external" href="http://en.wikipedia.org/wiki/Collimated_light"&gt;collimated&lt;/a&gt; over
+large distances, that is, to keep it roughly the same size as it propagates. My application
+requires a fairly small beam size since the exit pupil of the objective is only 6 millimeters in
+diameter. With &lt;a class="reference external" href="http://en.wikipedia.org/wiki/M_squared"&gt;M-squared&lt;/a&gt; values direct from the laser
+of 12 and 25, it is quite difficult to keep the beam collimated for a long enough distance to steer
+the beam through all the optics and to keep it small enough to prevent overfilling the objective's
+exit pupil and losing power.&lt;/p&gt;
+&lt;p&gt;What I have learned from this is that free-space diode lasers, and more generally multimode laser
+beams, require extra consideration to ensure that they will stay collimated in long setups.&lt;/p&gt;
+&lt;p&gt;So, how can I predict the distance over which my beam can stay collimated to better judge how well
+it will work for my setup? The first thing to realize is that no beam can stay collimated
+forever. Real laser beams experience diffraction, which causes them to spread as they
+propagate. This means that the first thing I should do is to consider the distances spanned by the
+beam paths. In a microscopy setup, this path will probably not be longer than a couple meters. In
+mine, it's roughly two meters since I am combining a number of laser beams together and need the
+extra space.&lt;/p&gt;
+&lt;p&gt;Once I identify the length scale over which the beam should stay collimated, I need to examine the
+beam parameter that is best associated with collimation. For a pure Gaussian beam, this parameter
+is the &lt;a class="reference external" href="http://en.wikipedia.org/wiki/Rayleigh_length"&gt;Rayleigh range&lt;/a&gt;. The Rayleigh range is the
+distance between the beam waist and the point where the cross-sectional area of the beam has
+doubled, or, equivalently, to the point where the radius of the beam has increased over the waist
+radius by a factor of the &lt;span class="math"&gt;\(\sqrt{2}\)&lt;/span&gt;. For a pure Gaussian beam with a waist radius of
+&lt;span class="math"&gt;\(w_0\)&lt;/span&gt; and a wavelength of &lt;span class="math"&gt;\(\lambda\)&lt;/span&gt;, the Rayleigh range is given by the equation&lt;/p&gt;
+&lt;div class="math"&gt;
 \begin{equation*}
 z_R = \frac{\pi w_0^2}{\lambda}
 \end{equation*}
-
-&lt;p&gt;
-It is represented by the symbol &lt;i&gt;z&lt;sub&gt;R&lt;/sub&gt;&lt;/i&gt; in the figure below from
-Wikipedia. The total distance over which the beam will stay collimated
-is represented by &lt;i&gt;b&lt;/i&gt; and is just twice the Rayleigh range.
-&lt;/p&gt;
-
-&lt;div align="center"&gt;
-
-
-&lt;div class="figure"&gt;
-&lt;p&gt;&lt;img src="http://kmdouglass.github.io/GaussianBeamWaist.png" alt="GaussianBeamWaist.png"&gt;
-&lt;/p&gt;
 &lt;/div&gt;
-
-&lt;/div&gt;
-
-&lt;p&gt;
-The Rayleigh range of a Gaussian laser beam should therefore be larger
-than the characteristic distance of my setup that I identified in the
-previous step. But what about multimode beams like the one from my
-laser diode? This is where the concept of an "embedded Gaussian" comes
-into play. (For more information about this idea, see &lt;a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.177.3400&amp;amp;rep=rep1&amp;amp;type=pdf"&gt;this tutorial by
-Tony Siegman&lt;/a&gt;.) I can predict the collimated distance by computing the
-Rayleigh range of an ideal Gaussian beam, and then divide it by the
-M&lt;sup&gt;2&lt;/sup&gt; parameter for the beam.
-&lt;/p&gt;
-
-&lt;p&gt;
-Let's take an example using numbers from my own laser. I will first
-pretend there are no collimating optics in the laser, which is not
-true but will serve as a good example as to why diode lasers without
-collimating optics are not good for free space setups. From the
-laser's spec sheet, I know that the M&lt;sup&gt;2&lt;/sup&gt; value in the ``bad'' direction
-is 25 and that its waist size, which is probably half the size of the
-diode in one principle direction, is 107 microns. Using the above
-equation, I get a value of 56 centimeters, which means that an ideal
-Gaussian beam with these specs will stay collimated over about half a
-meter.
-&lt;/p&gt;
-
-&lt;p&gt;
-However, my real multimode beam will have a Rayleigh range that is
-smaller than this value by a factor of 25, which is only about 2
-centimeters. For this reason, diode laser beams almost always have
-collimating optics; the beam from the diode itself is highly
-divergent.
-&lt;/p&gt;
-
-&lt;p&gt;
-Returning to my own setup, if I resize the beam using a telescope to
-have a waist radius of 2 millimeters so it almost entirely fits inside
-the objective's exit pupil, the Rayleigh range of the embedded
-Gaussian beam will be almost &lt;i&gt;20 meters&lt;/i&gt;, which is pretty long. The
-real beam, however, will have a Rayleigh range of about 780
-millimeters meters due to the high M&lt;sup&gt;2&lt;/sup&gt; value. &lt;b&gt;Practically, this means
-I have about one meter of collimated laser beam&lt;/b&gt; with which to work
-since I have double the Rayleigh range of collimated distance, but
-really I want the beam to travel less distance than this.
-&lt;/p&gt;
-
-&lt;p&gt;
-Fortunately I can shrink the beam path enough that this should not be
-a problem, but it does serve as a very good lesson when looking for
-lasers for a microscopy application.
-&lt;/p&gt;</description><category>microscopy</category><category>optics</category><guid>http://kmdouglass.github.io/posts/can-my-beam-be-collimated.html</guid><pubDate>Mon, 04 May 2015 07:44:42 GMT</pubDate></item><item><title>Parallelized confocal microscopy with multiply scattered light</title><link>http://kmdouglass.github.io/posts/confocal-by-scattering.html</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;p&gt;
-My PhD work dealt with the topic of sensing and imaging using light
+&lt;p&gt;It is represented by the symbol &lt;span class="math"&gt;\(z_R\)&lt;/span&gt; in the figure below from Wikipedia. The total distance
+over which the beam will stay collimated is represented by &lt;span class="math"&gt;\(b\)&lt;/span&gt; and is just twice the Rayleigh
+range.&lt;/p&gt;
+&lt;img alt="Gaussian beam waist" class="align-center" src="http://kmdouglass.github.io/images/GaussianBeamWaist.png"&gt;
+&lt;p&gt;The Rayleigh range of a Gaussian laser beam should therefore be larger than the characteristic
+distance of my setup that I identified in the previous step. But what about multimode beams like
+the one from my laser diode? This is where the concept of an "embedded Gaussian" comes into
+play. (For more information about this idea, see &lt;a class="reference external" href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.177.3400&amp;amp;rep=rep1&amp;amp;type=pdf"&gt;this tutorial by Tony Siegman&lt;/a&gt;.) I can
+predict the collimated distance by computing the Rayleigh range of an ideal Gaussian beam, and then
+divide it by the &lt;span class="math"&gt;\(M^2\)&lt;/span&gt; parameter for the beam.&lt;/p&gt;
+&lt;p&gt;Let's take an example using numbers from my own laser. I will first pretend there are no
+collimating optics in the laser, which is not true but will serve as a good example as to why diode
+lasers without collimating optics are not good for free space setups. From the laser's spec sheet,
+I know that the &lt;span class="math"&gt;\(M^2\)&lt;/span&gt; value in the bad direction is 25 and that its waist size, which is
+probably half the size of the diode in one principle direction, is 107 microns. Using the above
+equation, I get a value of 56 centimeters, which means that an ideal Gaussian beam with these specs
+will stay collimated over about half a meter.&lt;/p&gt;
+&lt;p&gt;However, my real multimode beam will have a Rayleigh range that is smaller than this value by a
+factor of 25, which is only about 2 centimeters. For this reason, diode laser beams almost always
+have collimating optics; the beam from the diode itself is highly divergent.&lt;/p&gt;
+&lt;p&gt;Returning to my own setup, if I resize the beam using a telescope to have a waist radius of 2
+millimeters so it almost entirely fits inside the objective's exit pupil, the Rayleigh range of the
+embedded Gaussian beam will be almost &lt;em&gt;20 meters&lt;/em&gt;, which is pretty long. The real beam, however,
+will have a Rayleigh range of about 780 millimeters meters due to the high &lt;span class="math"&gt;\(M^2\)&lt;/span&gt;
+value. &lt;em&gt;Practically, this means I have about one meter of collimated laser beam&lt;/em&gt; with which to work
+since I have double the Rayleigh range of collimated distance, but really I want the beam to travel
+less distance than this.&lt;/p&gt;
+&lt;p&gt;Fortunately I can shrink the beam path enough that this should not be a problem, but it does serve
+as a very good lesson when looking for lasers for a microscopy application.&lt;/p&gt;&lt;/div&gt;</description><category>microscopy</category><category>optics</category><guid>http://kmdouglass.github.io/posts/can-my-beam-be-collimated/</guid><pubDate>Mon, 04 May 2015 07:44:42 GMT</pubDate></item><item><title>Parallelized confocal microscopy with multiply scattered light</title><link>http://kmdouglass.github.io/posts/confocal-by-scattering/</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;My PhD work dealt with the topic of sensing and imaging using light
 that had been transmitted through a random medium. This topic is
 often applied to practical problems such as imaging through a
 turbulent atmosphere or detecting objects, like a tumor, buried
 beneath an opaque substance, like skin and muscle tissue. Though I
 don't necessarily work in this field anymore, I still follow its
-developments occasionally.
-&lt;/p&gt;
-
-&lt;p&gt;
-A few articles appeared within the last week in journals like &lt;a href="http://www.nature.com/nphoton/journal/v8/n10/full/nphoton.2014.189.html"&gt;Nature&lt;/a&gt;
-Photonics]] about the problem of imaging through walls. This problem
-has been studied since the late 1980's in a number of papers,
-including the notable &lt;a href="http://journals.aps.org/prl/abstract/10.1103/PhysRevLett.61.834"&gt;Feng, Kane, Lee, and Stone&lt;/a&gt; paper and &lt;a href="http://www.sciencedirect.com/science/article/pii/037596019090615U#"&gt;Freund's
-discussion&lt;/a&gt; of using cross-correlating two speckle patterns, one of
-which is a reference wave, to do a sort of holographic imaging. The
-recent work continues from these original ideas and applies them to
-microscopy.
-&lt;/p&gt;
-
-&lt;p&gt;
-One article appeared on the arXiv and is from the &lt;a href="http://arxiv.org/abs/1410.2079"&gt;Mosk and Lagendijk&lt;/a&gt;
-camp. In this article, they exploit the optical memory effect,
-whereby a speckle pattern generated by the multiple scattering of a
-plane wave by a random slab is simply translated as the angle of
-incidence of the plane wave is varied. If a thin fluorescent target
-is placed directly on the opposite face of the scattering slab, it
-will be excited by the speckle pattern and emit a fluorescence
-signal that can be captured by an objective. Changing the angle of
-incidence of the plane wave then allows for multiple points to scan
-the sample in parallel. Ultimately, a number of images are taken
-with the sample illuminated by several transversally shifted speckle
-patterns and the resulting 4D data cube (corresponding to the
-sample's x-y dimensions and the two tilt angles of the incident
-plane wave) is used to render an image with improved resolution.
-&lt;/p&gt;
-
-&lt;p&gt;
-As stated in the article's title, the resolution improvement is
-relative to that of a widefield microscope. They obtain an effective
-point spread function of about 140 nm and a field of view of 10
-microns by 10 microns.
-&lt;/p&gt;
-
-&lt;p&gt;
-So how does the technique work? My first thought was that the memory
-effect is simply another way of saying that the speckle pattern acts
-as a number of confocal-like point sources, which essentially means
-this is something of a parallelized confocal microscope. However,
-I'm not sure this is correct for two reasons: 1) there is no
-detection pin hole, and 2) the angle of incidence of the plane wave
-is scanned over a small angular range so that the speckle pattern is
-simply translated. If the angle of incidence is so great that the
-linear change in phase of the plane wave is greater than roughly the
-size of the scattering slab, the speckle pattern is no longer simply
-translated but changes completely.
-&lt;/p&gt;
-
-&lt;p&gt;
-In reality, the ultimate resolution of this technique is the average
-speckle grain size, which can't be less than about half the
-wavelength. This suggests that the angular spectrum of the speckle
-pattern is what determines the resolution improvement.
-&lt;/p&gt;
-
-&lt;p&gt;
-The speckle pattern in a region bounded by the maximum extent of the
-memory effect has a fixed angular spectrum and translating the
-speckle pattern only changes the phase of the spectrum. So, scanning
-a target with a speckle pattern produces beat patterns containing
-high spatial frequency information that can propgate on the low
-spatial frequency waves that reach the objective. Translating the
-speckle pattern then performs a sort of phase-shifting
-interferometry that allows for both intensity and phase retrieval of
-the object.
-&lt;/p&gt;
-
-&lt;p&gt;
-Importantly, if the speckle pattern is scanned outside the range of
-the memory effect, the speckle's angular spectrum within the region
-changes completely so that the original reference wave is lost. The
-fact that the object is fluorescent and not simply scattering the
-light shouldn't matter if the fluorescence intensity is linear with
-the excitation light intensity. However, if the fluorescence has
-saturated at the average intensity of the speckle pattern, then I'm
-not exactly sure that this technique will work (though maybe some
-sort of nonlinear structured illumination microscopy could be
-achieved).
-&lt;/p&gt;
-
-&lt;p&gt;
-Overall it's a neat demonstration and worth the exercise to
-understand it, though I'm doubtful that at this point it would be
-useful for applications in the life sciences. This is because the
-resolution isn't that much better than a spinning disk confocal
-microscope, which has a larger field of view and would arguably be
-easier to use by biologists.
-&lt;/p&gt;</description><category>microscopy</category><category>optics</category><guid>http://kmdouglass.github.io/posts/confocal-by-scattering.html</guid><pubDate>Wed, 08 Oct 2014 22:00:00 GMT</pubDate></item></channel></rss>
+developments occasionally.&lt;/p&gt;
+&lt;p&gt;A few articles appeared within the last week in journals like &lt;a class="reference external" href="http://www.nature.com/nphoton/journal/v8/n10/full/nphoton.2014.189.html"&gt;Nature Photonics&lt;/a&gt; about the problem
+of imaging through walls. This problem has been studied since the late 1980's in a number of
+papers, including the notable paper by &lt;a class="reference external" href="http://journals.aps.org/prl/abstract/10.1103/PhysRevLett.61.834"&gt;Feng, Kane, Lee, and Stone&lt;/a&gt; and &lt;a class="reference external" href="http://www.sciencedirect.com/science/article/pii/037596019090615U#"&gt;Freund's discussion&lt;/a&gt; of
+using cross-correlating two speckle patterns, one of which is a reference wave, to do a sort of
+holographic imaging. The recent work continues from these original ideas and applies them to
+microscopy.&lt;/p&gt;
+&lt;p&gt;One article appeared on the arXiv and is from the &lt;a class="reference external" href="http://arxiv.org/abs/1410.2079"&gt;Mosk and Lagendijk&lt;/a&gt; camp. In this article, they
+exploit the optical memory effect, whereby a speckle pattern generated by the multiple scattering
+of a plane wave by a random slab is simply translated as the angle of incidence of the plane wave
+is varied. If a thin fluorescent target is placed directly on the opposite face of the scattering
+slab, it will be excited by the speckle pattern and emit a fluorescence signal that can be captured
+by an objective. Changing the angle of incidence of the plane wave then allows for multiple points
+to scan the sample in parallel. Ultimately, a number of images are taken with the sample
+illuminated by several transversally shifted speckle patterns and the resulting 4D data cube
+(corresponding to the sample's x-y dimensions and the two tilt angles of the incident plane wave)
+is used to render an image with improved resolution.&lt;/p&gt;
+&lt;p&gt;As stated in the article's title, the resolution improvement is relative to that of a widefield
+microscope. They obtain an effective point spread function of about 140 nm and a field of view of
+10 microns by 10 microns.&lt;/p&gt;
+&lt;p&gt;So how does the technique work? My first thought was that the memory effect is simply another way
+of saying that the speckle pattern acts as a number of confocal-like point sources, which
+essentially means this is something of a parallelized confocal microscope. However, I'm not sure
+this is correct for two reasons: 1) there is no detection pin hole, and 2) the angle of incidence
+of the plane wave is scanned over a small angular range so that the speckle pattern is simply
+translated. If the angle of incidence is so great that the linear change in phase of the plane wave
+is greater than roughly the size of the scattering slab, the speckle pattern is no longer simply
+translated but changes completely.&lt;/p&gt;
+&lt;p&gt;In reality, the ultimate resolution of this technique is the average speckle grain size, which
+can't be less than about half the wavelength. This suggests that the angular spectrum of the
+speckle pattern is what determines the resolution improvement.&lt;/p&gt;
+&lt;p&gt;The speckle pattern in a region bounded by the maximum extent of the memory effect has a fixed
+angular spectrum and translating the speckle pattern only changes the phase of the spectrum. So,
+scanning a target with a speckle pattern produces beat patterns containing high spatial frequency
+information that can propgate on the low spatial frequency waves that reach the
+objective. Translating the speckle pattern then performs a sort of phase-shifting interferometry
+that allows for both intensity and phase retrieval of the object.&lt;/p&gt;
+&lt;p&gt;Importantly, if the speckle pattern is scanned outside the range of the memory effect, the
+speckle's angular spectrum within the region changes completely so that the original reference wave
+is lost. The fact that the object is fluorescent and not simply scattering the light shouldn't
+matter if the fluorescence intensity is linear with the excitation light intensity. However, if the
+fluorescence has saturated at the average intensity of the speckle pattern, then I'm not exactly
+sure that this technique will work (though maybe some sort of nonlinear structured illumination
+microscopy could be achieved).&lt;/p&gt;
+&lt;p&gt;Overall it's a neat demonstration and worth the exercise to understand it, though I'm doubtful that
+at this point it would be useful for applications in the life sciences. This is because the
+resolution isn't that much better than a spinning disk confocal microscope, which has a larger
+field of view and would arguably be easier to use by biologists.&lt;/p&gt;&lt;/div&gt;</description><category>microscopy</category><category>optics</category><guid>http://kmdouglass.github.io/posts/confocal-by-scattering/</guid><pubDate>Wed, 08 Oct 2014 22:00:00 GMT</pubDate></item></channel></rss>
