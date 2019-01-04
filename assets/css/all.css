@@ -972,3 +972,9 @@ body {
   }
 }
 
+/* Fix the video width on mobile devices */
+video {
+  width:  100% !important;
+  height: auto !important;
+}
+
