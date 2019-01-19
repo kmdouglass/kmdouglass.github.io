@@ -15,6 +15,7 @@
 <link rel="canonical" href="http://kmdouglass.github.io/posts/create-a-custom-raspbian-image-with-pi-gen-part-2/">
 <!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><meta name="author" content="Kyle M. Douglass">
 <link rel="prev" href="../create-a-custom-raspbian-image-with-pi-gen-part-1/" title="Create a custom Raspbian image with pi-gen: part 1" type="text/html">
+<link rel="next" href="../linking-shared-libraries-in-micro-manager-for-linux/" title="Linking shared libraries in Micro-Manager for Linux" type="text/html">
 <meta property="og:site_name" content="Kyle M. Douglass">
 <meta property="og:title" content="Create a custom Raspbian image with pi-gen: part 2">
 <meta property="og:url" content="http://kmdouglass.github.io/posts/create-a-custom-raspbian-image-with-pi-gen-part-2/">
@@ -124,7 +125,7 @@ network, which includes its name and the password. For security
 reasons that I hope are obvious, we should not store the password in
 this file. Instead, we create a hash of the password and put that
 inside the file. The command to create the password hash is</p>
-<pre class="code shell"><a name="rest_code_ae6bae2fc9fd41d598cd17a6c4999550-1"></a>wpa_passphrase ESSID PASSWORD &gt; psk
+<pre class="code shell"><a name="rest_code_45ff5013fbaf4b308ecf40f1deb3f79b-1"></a>wpa_passphrase ESSID PASSWORD &gt; psk
 </pre>
 <p>where ESSID is our wireless network's name. Note that I also used a
 space before the <code class="shell">wpa_passphrase</code> command to prevent the
@@ -270,6 +271,9 @@ configure its most basic functionality. Happy Pi'ing!</p>
 <ul class="pager hidden-print">
 <li class="previous">
                 <a href="../create-a-custom-raspbian-image-with-pi-gen-part-1/" rel="prev" title="Create a custom Raspbian image with pi-gen: part 1">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../linking-shared-libraries-in-micro-manager-for-linux/" rel="next" title="Linking shared libraries in Micro-Manager for Linux">Next post</a>
             </li>
         </ul></nav></aside><section class="comments hidden-print"><h2>Comments</h2>
         

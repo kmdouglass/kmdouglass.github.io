@@ -121,7 +121,7 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">'dark_background'</span><span class="p">)</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -131,7 +131,7 @@
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -172,7 +172,7 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -182,7 +182,7 @@
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
@@ -219,7 +219,7 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -229,7 +229,7 @@
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
@@ -313,7 +313,7 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -323,7 +323,7 @@
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
@@ -364,7 +364,7 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -374,7 +374,7 @@
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
@@ -425,7 +425,7 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -435,7 +435,7 @@
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
@@ -476,7 +476,7 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -486,7 +486,7 @@
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
@@ -542,7 +542,8 @@
 <p>Can you guess how the amplitude of the spectrum of 1/f noise varies?</p>
 <p>Surprise! It actually varies as $ \frac{1}{f^{1/2}} $. This is because the <strong>power</strong> spectrum of pink noise varies as 1/f; the <strong>amplitude</strong> of the spectral components is the square root of the average power delivered by each component. The <a href="https://en.wikipedia.org/wiki/Spectral_density#Energy_spectral_density">proper Wikipedia sections on energy and power spectral densities</a> explain this. The difficulty in actually implementing this filter, though, is what happens as we approach the DC value $ f = 0 $ in frequency space. At this value the filter becomes infinite.</p>
 <p>Instead, we can easily approximate a realization of pink noise with a filter that is one near the origin and quickly rolls off into a $ f^{-1/2} $ behavior. A function that does this is</p>
-$$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$<p>The value $ a $ determines how quickly the function moves from a weak dependence on frequency to a $ f^{-1/2} $ dependence. For us, we should set it to a value that is relatively large compared to the frequency spacing in Fourier space. This type of filter is just a special case of the <a href="https://en.wikipedia.org/wiki/Chebyshev_filter">Chebyshev filter</a> that is well-known in signal processing circles.</p>
+<p>$$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$</p>
+<p>The value $ a $ determines how quickly the function moves from a weak dependence on frequency to a $ f^{-1/2} $ dependence. For us, we should set it to a value that is relatively large compared to the frequency spacing in Fourier space. This type of filter is just a special case of the <a href="https://en.wikipedia.org/wiki/Chebyshev_filter">Chebyshev filter</a> that is well-known in signal processing circles.</p>
 
 </div>
 </div>
@@ -560,7 +561,7 @@ $$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$<p>The value $ a $ determines ho
 <span class="n">pinkNoiseFilter</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="n">pinkNoiseFilter</span><span class="p">)</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -584,7 +585,7 @@ $$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$<p>The value $ a $ determines ho
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -594,7 +595,7 @@ $$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$<p>The value $ a $ determines ho
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
@@ -634,7 +635,7 @@ $$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$<p>The value $ a $ determines ho
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -644,7 +645,7 @@ $$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$<p>The value $ a $ determines ho
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="Here I describe how to link shared libraries in Micro-Manager device adapters.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Linking shared libraries in Micro-Manager for Linux | Kyle M. Douglass</title>
+<link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/ipython.min.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/nikola_ipython.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/custom_notebook.css" rel="stylesheet" type="text/css">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
+<link rel="alternate" type="application/rss+xml" title="RSS" hreflang="en" href="../../rss.xml">
+<link rel="canonical" href="http://kmdouglass.github.io/posts/linking-shared-libraries-in-micro-manager-for-linux/">
+<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><meta name="author" content="Kyle M. Douglass">
+<link rel="prev" href="../create-a-custom-raspbian-image-with-pi-gen-part-2/" title="Create a custom Raspbian image with pi-gen: part 2" type="text/html">
+<meta property="og:site_name" content="Kyle M. Douglass">
+<meta property="og:title" content="Linking shared libraries in Micro-Manager for Linux">
+<meta property="og:url" content="http://kmdouglass.github.io/posts/linking-shared-libraries-in-micro-manager-for-linux/">
+<meta property="og:description" content="Here I describe how to link shared libraries in Micro-Manager device adapters.">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2019-01-19T12:00:37+01:00">
+<meta property="article:tag" content="micro-manager">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Menubar -->
+
+<nav class="navbar navbar-default navbar-static-top"><div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://kmdouglass.github.io/">
+
+                <span id="blog-title">Kyle M. Douglass</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
+            <ul class="nav navbar-nav">
+<li>
+<a href="../../categories/index.html">Tags</a>
+                </li>
+<li>
+<a href="../../archive.html">Archive</a>
+                </li>
+<li>
+<a href="../../stories/contact/index.html">Contact</a>
+
+                
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+    <a href="index.rst" id="sourcelink">Source</a>
+    </li>
+
+                
+            </ul>
+</div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Linking shared libraries in Micro-Manager for Linux</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                    Kyle M. Douglass
+            </span></p>
+            <p class="dateline">
+            <a href="." rel="bookmark">
+            <time class="published dt-published" datetime="2019-01-19T12:00:37+01:00" itemprop="datePublished" title="2019-01-19 12:00">2019-01-19 12:00</time></a>
+            </p>
+                <p class="commentline">
+        
+    <a href="#disqus_thread" data-disqus-identifier="cache/posts/linking-shared-libraries-in-micro-manager-for-linux.html">Comments</a>
+
+
+            
+        </p>
+<p class="sourceline"><a href="index.rst" class="sourcelink">Source</a></p>
+
+        </div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<p>Lately I have been working on a new <a class="reference external" href="https://github.com/kmdouglass/RPi-DeviceAdapters">Video4Linux2 device adapter</a> for <a class="reference external" href="https://micro-manager.org/">Micro-Manager</a>. I
+encountered the following error after adding some functionality that introduced two <a class="reference external" href="https://www.boost.org/">Boost
+libraries</a> as new dependencies in my project.</p>
+<pre class="code shell"><a name="rest_code_c872cf2c5ee54edc8a77b218ec2f703c-1"></a>Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
+<a name="rest_code_c872cf2c5ee54edc8a77b218ec2f703c-2"></a>  File <span class="s2">"RPiV4L2.py"</span>, line <span class="m">17</span>, in &lt;module&gt;
+<a name="rest_code_c872cf2c5ee54edc8a77b218ec2f703c-3"></a>    mmc.loadDevice<span class="o">(</span><span class="s2">"camera"</span>, <span class="s2">"RPiV4L2"</span>, <span class="s2">"RPiV4L2"</span><span class="o">)</span>
+<a name="rest_code_c872cf2c5ee54edc8a77b218ec2f703c-4"></a>  File <span class="s2">"/home/micro-manager/app/lib/micro-manager/MMCorePy.py"</span>, line <span class="m">3515</span>, in loadDevice
+<a name="rest_code_c872cf2c5ee54edc8a77b218ec2f703c-5"></a>    <span class="k">return</span> _MMCorePy.CMMCore_loadDevice<span class="o">(</span>self, label, moduleName, deviceName<span class="o">)</span>
+<a name="rest_code_c872cf2c5ee54edc8a77b218ec2f703c-6"></a>MMCorePy.CMMError: Failed to load device <span class="s2">"RPiV4L2"</span> from adapter module <span class="s2">"RPiV4L2"</span> <span class="o">[</span> Failed to load device adapter <span class="s2">"RPiV4L2"</span> <span class="o">[</span> Failed to load module <span class="s2">"/home/micro-manager/app/lib/micro-manager/libmmgr_dal_RPiV4L2.so.0"</span> <span class="o">[</span> /home/micro-manager/app/lib/micro-manager/libmmgr_dal_RPiV4L2.so.0: undefined symbol: _ZN5boost10filesystem6detail13dir_itr_closeERPvS3_ <span class="o">]</span> <span class="o">]</span> <span class="o">]</span>
+</pre>
+<p>I received this error when I tried to load the device in a Python script. At first I was puzzled
+because the code compiled without problems, but I soon found that the solution was simple.</p>
+<p>The key part of the message is <tt class="docutils literal">undefined symbol:
+_ZN5boost10filesystem6detail13dir_itr_closeERPvS3_</tt>. To troubleshoot this, I first demangled the
+symbol name by entering it at <a class="reference external" href="https://demangler.com/">https://demangler.com/</a>. I discovered that the symbol was referring to
+the function <tt class="docutils literal"><span class="pre">boost::filesystem::detail::dir_itr_close(void*&amp;,</span> <span class="pre">void*&amp;)</span></tt>. I had added both the
+Boost filesystem and Boost regex libraries to this device adapter as dependencies, so it was not
+surprising that either of their names appeared in the error message.</p>
+<p>Next, I used the <a class="reference external" href="http://man7.org/linux/man-pages/man1/ldd.1.html">ldd</a> program to check which libraries my device adapter were linked
+against. (libmmgr_dal_RPiV4l2.so.0 is the name of the device adapter library file).</p>
+<pre class="code shell"><a name="rest_code_dca860c142884c7ea9eaa4033f5a79bb-1"></a>$ ldd libmmgr_dal_RPiV4L2.so.0
+<a name="rest_code_dca860c142884c7ea9eaa4033f5a79bb-2"></a>     linux-vdso.so.1 <span class="o">(</span>0x7ec21000<span class="o">)</span>
+<a name="rest_code_dca860c142884c7ea9eaa4033f5a79bb-3"></a>     libdl.so.2 <span class="o">=</span>&gt; /lib/arm-linux-gnueabihf/libdl.so.2 <span class="o">(</span>0x76e9c000<span class="o">)</span>
+<a name="rest_code_dca860c142884c7ea9eaa4033f5a79bb-4"></a>     libstdc++.so.6 <span class="o">=</span>&gt; /usr/lib/arm-linux-gnueabihf/libstdc++.so.6 <span class="o">(</span>0x76d54000<span class="o">)</span>
+<a name="rest_code_dca860c142884c7ea9eaa4033f5a79bb-5"></a>     libm.so.6 <span class="o">=</span>&gt; /lib/arm-linux-gnueabihf/libm.so.6 <span class="o">(</span>0x76cdc000<span class="o">)</span>
+<a name="rest_code_dca860c142884c7ea9eaa4033f5a79bb-6"></a>     libc.so.6 <span class="o">=</span>&gt; /lib/arm-linux-gnueabihf/libc.so.6 <span class="o">(</span>0x76bee000<span class="o">)</span>
+<a name="rest_code_dca860c142884c7ea9eaa4033f5a79bb-7"></a>     libgcc_s.so.1 <span class="o">=</span>&gt; /lib/arm-linux-gnueabihf/libgcc_s.so.1 <span class="o">(</span>0x76bc1000<span class="o">)</span>
+<a name="rest_code_dca860c142884c7ea9eaa4033f5a79bb-8"></a>     libicudata.so.57 <span class="o">=</span>&gt; /usr/lib/arm-linux-gnueabihf/libicudata.so.57 <span class="o">(</span>0x75334000<span class="o">)</span>
+<a name="rest_code_dca860c142884c7ea9eaa4033f5a79bb-9"></a>     libicui18n.so.57 <span class="o">=</span>&gt; /usr/lib/arm-linux-gnueabihf/libicui18n.so.57 <span class="o">(</span>0x75187000<span class="o">)</span>
+<a name="rest_code_dca860c142884c7ea9eaa4033f5a79bb-10"></a>     libicuuc.so.57 <span class="o">=</span>&gt; /usr/lib/arm-linux-gnueabihf/libicuuc.so.57 <span class="o">(</span>0x7505e000<span class="o">)</span>
+<a name="rest_code_dca860c142884c7ea9eaa4033f5a79bb-11"></a>     librt.so.1 <span class="o">=</span>&gt; /lib/arm-linux-gnueabihf/librt.so.1 <span class="o">(</span>0x75048000<span class="o">)</span>
+<a name="rest_code_dca860c142884c7ea9eaa4033f5a79bb-12"></a>     libpthread.so.0 <span class="o">=</span>&gt; /lib/arm-linux-gnueabihf/libpthread.so.0 <span class="o">(</span>0x75024000<span class="o">)</span>
+<a name="rest_code_dca860c142884c7ea9eaa4033f5a79bb-13"></a>     /lib/ld-linux-armhf.so.3 <span class="o">(</span>0x76fb4000<span class="o">)</span>
+</pre>
+<p>Neither libboost_filesystem nor libboost_regex are listed, so I knew that they were not linked with
+the device adapter.</p>
+<p>There is a Makefile.am included in the directory of every device adapter in the Micro-Manager
+project. This file is used by Autotools define how the device adapter should be compiled and
+linked. Here is what my Makefile.am looked like:</p>
+<table class="codetable"><tr>
+<td class="linenos"><div class="linenodiv"><pre><a href="#rest_code_6c99ed2d758f4a3ab7ddb4626e786760-1">1</a>
+<a href="#rest_code_6c99ed2d758f4a3ab7ddb4626e786760-2">2</a>
+<a href="#rest_code_6c99ed2d758f4a3ab7ddb4626e786760-3">3</a>
+<a href="#rest_code_6c99ed2d758f4a3ab7ddb4626e786760-4">4</a>
+<a href="#rest_code_6c99ed2d758f4a3ab7ddb4626e786760-5">5</a></pre></div></td>
+<td class="code"><pre class="code Makefile"><a name="rest_code_6c99ed2d758f4a3ab7ddb4626e786760-1"></a><span class="nv">AM_CXXFLAGS</span> <span class="o">=</span> <span class="k">$(</span>MMDEVAPI_CXXFLAGS<span class="k">)</span>
+<a name="rest_code_6c99ed2d758f4a3ab7ddb4626e786760-2"></a><span class="nv">deviceadapter_LTLIBRARIES</span> <span class="o">=</span> libmmgr_dal_RPiV4L2.la
+<a name="rest_code_6c99ed2d758f4a3ab7ddb4626e786760-3"></a><span class="nv">libmmgr_dal_RPiV4L2_la_SOURCES</span> <span class="o">=</span> RPiV4L2.cpp RPiV4L2.h refactor.h ../../MMDevice/MMDevice.h ../../MMDevice/DeviceBase.h
+<a name="rest_code_6c99ed2d758f4a3ab7ddb4626e786760-4"></a><span class="nv">libmmgr_dal_RPiV4L2_la_LIBADD</span> <span class="o">=</span> <span class="k">$(</span>MMDEVAPI_LIBADD<span class="k">)</span>
+<a name="rest_code_6c99ed2d758f4a3ab7ddb4626e786760-5"></a><span class="nv">libmmgr_dal_RPiV4L2_la_LDFLAGS</span> <span class="o">=</span> <span class="k">$(</span>MMDEVAPI_LDFLAGS<span class="k">)</span>
+</pre></td>
+</tr></table>
+<p>After experimenting a bit, I discovered that I could instruct the linker to link against shared
+libraries by adding them to the <tt class="docutils literal">libmmgr_dal_RPiV4L2_la_LDFLAGS</tt> variable with the <tt class="docutils literal"><span class="pre">-l</span></tt>
+flag. The resulting line now looks like:</p>
+<pre class="code Makefile"><a name="rest_code_f025b340842d437f9d907f7331879a61-1"></a><span class="nv">libmmgr_dal_RPiV4L2_la_LDFLAGS</span> <span class="o">=</span> <span class="k">$(</span>MMDEVAPI_LDFLAGS<span class="k">)</span> -lboost_regex -lboost_filesystem
+</pre>
+<p>Finally, running <tt class="docutils literal">ldd</tt> on the rebuilt device adapter now shows these two libraries:</p>
+<pre class="code shell"><a name="rest_code_1275e7b15878490dbb45b05e9973ea74-1"></a>$ ldd libmmgr_dal_RPiV4L2.so.0
+<a name="rest_code_1275e7b15878490dbb45b05e9973ea74-2"></a>     linux-vdso.so.1 <span class="o">(</span>0x7ed74000<span class="o">)</span>
+<a name="rest_code_1275e7b15878490dbb45b05e9973ea74-3"></a>     libboost_regex.so.1.62.0 <span class="o">=</span>&gt; /usr/lib/arm-linux-gnueabihf/libboost_regex.so.1.62.0 <span class="o">(</span>0x76e3c000<span class="o">)</span>
+<a name="rest_code_1275e7b15878490dbb45b05e9973ea74-4"></a>     libboost_filesystem.so.1.62.0 <span class="o">=</span>&gt; /usr/lib/arm-linux-gnueabihf/libboost_filesystem.so.1.62.0 <span class="o">(</span>0x76e1b000<span class="o">)</span>
+<a name="rest_code_1275e7b15878490dbb45b05e9973ea74-5"></a>     ...
+</pre>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../categories/micro-manager/" rel="tag">micro-manager</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../create-a-custom-raspbian-image-with-pi-gen-part-2/" rel="prev" title="Create a custom Raspbian image with pi-gen: part 2">Previous post</a>
+            </li>
+        </ul></nav></aside><section class="comments hidden-print"><h2>Comments</h2>
+        
+        
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="kmdouglass",
+            disqus_url="http://kmdouglass.github.io/posts/linking-shared-libraries-in-micro-manager-for-linux/",
+        disqus_title="Linking shared libraries in Micro-Manager for Linux",
+        disqus_identifier="cache/posts/linking-shared-libraries-in-micro-manager-for-linux.html",
+        disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+        </section></article><script>var disqus_shortname="kmdouglass";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+</div>
+        <!--End of body content-->
+
+        <footer id="footer">
+            Contents © 2019         <a href="mailto:kyle.m.douglass@gmail.com">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
+            
+        </footer>
+</div>
+</div>
+
+
+            <script src="../../assets/js/all-nocdn.js"></script><!-- fancy dates --><script>
+    moment.locale("en");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates --><script>
+    baguetteBox.run('div#content', {
+        ignoreClass: 'islink',
+        captions: function(element) {
+            return element.getElementsByTagName('img')[0].alt;
+    }});
+    </script>
+</body>
+</html>

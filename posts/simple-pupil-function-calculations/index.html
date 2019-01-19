@@ -123,19 +123,22 @@
 <h2 id="Theoretical-background">Theoretical background<a class="anchor-link" href="#Theoretical-background">¶</a>
 </h2>
 <p>In scalar diffraction theory, light is represented as a three-dimensional function known as the scalar field. At every point in space $ \mathbf{r} $, the scalar field $ u \left( \mathbf{r} \right) $ is a single, complex value that represents the electric field at that point. The physical laws of diffraction require that the scalar field be described by two numbers, an <strong>amplitude</strong> and a <strong>phase</strong>, that are derived from the field's real and the imaginary parts, $ \text{Re} \left[ u \left( \mathbf{r} \right) \right] $ and $ \text{Im} \left[ u \left( \mathbf{r} \right) \right] $:</p>
-\begin{align*}
+<p>\begin{align*}
 A &amp;= \sqrt{\text{Re} \left[ u \left( \mathbf{r} \right) \right]^2 + \text{Im} \left[ u \left( \mathbf{r} \right) \right]^2 } \\
 \phi &amp;= \arctan \left( \frac{\text{Im} \left[ u \left( \mathbf{r} \right) \right]}{\text{Re} \left[ u \left( \mathbf{r} \right) \right]} \right)
-\end{align*}<p>If we know the amplitude and phase at a given point, then we know the scalar field at that point. Despite the fact that scalar diffraction theory ignores the polarization of light, it does wonderfully well at describing a large range of optical phenomena.</p>
+\end{align*}</p>
+<p>If we know the amplitude and phase at a given point, then we know the scalar field at that point. Despite the fact that scalar diffraction theory ignores the polarization of light, it does wonderfully well at describing a large range of optical phenomena.</p>
 <p>For most problems in imaging, we don't really need to know the three-dimensional distribution of the field in all of space. Instead, we simplify the problem by asking how an optical system transforms the field in some two-dimensional <em>object plane</em> into a new field distribution in the <em>image plane</em> (see the figure below). Any changes in scale between these two planes are caused by the system's magnification; any blurring or distortion is caused by diffraction and possibly aberrations.</p>
 <p><img src="../../images/optical_system_with_pupils.png" alt="Optical system with pupils"></p>
 <p>The <strong>pupil function</strong> is the two-dimensional Fourier transform of the scalar field in the image plane when the object is a point source emitting light equally in all directions, i.e. an <em>isotropic</em> point source. Mathematically, the pupil function is written as</p>
-\begin{equation*}
+<p>\begin{equation*}
 P \left(f_x, f_y \right) = \frac{1}{A}\iint_{-\infty}^{\infty} \text{PSF}_A \left( x, y \right) \exp \left[ -j 2 \pi \left( f_x x + f_y y\right) \right] \, dx \, dy
-\end{equation*}<p>where $ A $ is a normalizing constant, $ f_x $ and $ f_y $ represent spatial frequencies in the x- and y-directions, and $ j $ is the imaginary number. $ \text{PSF}_A \left( x, y \right) $ is known as the <strong>amplitude point spread function</strong>. Despite the intimidating name, $ \text{PSF}_A \left( x, y \right) $ is just the scalar field from the isotropic point source in the image plane. The pupil function and the amplitude point spread function form a Fourier transform pair, so we can also write</p>
-\begin{equation*}
+\end{equation*}</p>
+<p>where $ A $ is a normalizing constant, $ f_x $ and $ f_y $ represent spatial frequencies in the x- and y-directions, and $ j $ is the imaginary number. $ \text{PSF}_A \left( x, y \right) $ is known as the <strong>amplitude point spread function</strong>. Despite the intimidating name, $ \text{PSF}_A \left( x, y \right) $ is just the scalar field from the isotropic point source in the image plane. The pupil function and the amplitude point spread function form a Fourier transform pair, so we can also write</p>
+<p>\begin{equation*}
 \text{PSF}_A \left(x, y \right) = A \iint_{-\infty}^{\infty} P \left( f_x, f_y \right) \exp \left[ j 2 \pi \left( f_x x + f_y y\right) \right] \, df_x \, df_y
-\end{equation*}<p>What all of this means is that we can compute the image of an on-axis, isotropic point source if we know the pupil function that describes the system: compute the two-dimensional Fourier transform of the pupil function and voilà, you have the image (or at least the field that will form the image).</p>
+\end{equation*}</p>
+<p>What all of this means is that we can compute the image of an on-axis, isotropic point source if we know the pupil function that describes the system: compute the two-dimensional Fourier transform of the pupil function and voilà, you have the image (or at least the field that will form the image).</p>
 <h3 id="The-pupil-punction-is-dimensionless;-$-\text{PSF}_A-$-is-a-field">The pupil punction is dimensionless; $ \text{PSF}_A $ is a field<a class="anchor-link" href="#The-pupil-punction-is-dimensionless;-%24-%5Ctext%7BPSF%7D_A-%24-is-a-field">¶</a>
 </h3>
 <p>By convention the pupil function is a dimensionless complex number and has a magnitude between 0 and 1. The amplitude PSF, however, has units of electric field, or Volts per distance, $ V / m $.</p>
@@ -192,7 +195,7 @@ P \left(f_x, f_y \right) = \frac{1}{A}\iint_{-\infty}^{\infty} \text{PSF}_A \lef
 <span class="nb">print</span><span class="p">(</span><span class="s1">'Seaborn version:</span><span class="se">\t</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sns</span><span class="o">.</span><span class="n">__version__</span><span class="p">))</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -202,7 +205,7 @@ P \left(f_x, f_y \right) = \frac{1}{A}\iint_{-\infty}^{\infty} \text{PSF}_A \lef
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -246,9 +249,10 @@ Seaborn version:	0.7.1
 <p>Note that pixel size is defined as the size of a pixel in the <em>object space</em>. Defining it like this is often more intuitive than defining the pixel size in the image space. For example, when you see a scale bar on a microscopy image, the distances correspond to object space distances, not the actual distance that the image spans on the piece of paper or computer screen. Furthermore, there is no problem with working with an object space pixel size in the image plane since the coordinate systems in the object and image planes of our perfect optical system can be easily mapped onto one another by a linear scaling by the system's magnification.</p>
 <p>We don't neccessarily need to use a camera as the detector. Since we are limited to working with discrete arrays in the computer, though, it's convenient to say that we have a camera as a detector since each pixel is a discrete sample of the field.</p>
 <p>In addition to the above parameters, we'll assume that the object, the imaging system, and the image plane are all in air. We'll define a constant $ Z_0 = 376.73 \, \Omega $ which is known as the <a href="https://en.wikipedia.org/wiki/Wave_impedance">impedance of free space</a> or the vacuum impedance. This is the constant of proportionality between the power carried by the scalar field and the integral of its absolute square in the image plane:</p>
-\begin{equation*}
+<p>\begin{equation*}
 P_0 = \frac{1}{Z_0} \iint_{-\infty}^{\infty} \left| \text{PSF}_A \left( x, y \right) \right|^2 \, dx \, dy
-\end{equation*}<p>Of course, air does not really have the same impedance as vacuum, but the two values are close enough. I have also used $ P_0 $ to denote the power because I already used $ P \left( f_x, f_y \right) $ to denote the pupil function.</p>
+\end{equation*}</p>
+<p>Of course, air does not really have the same impedance as vacuum, but the two values are close enough. I have also used $ P_0 $ to denote the power because I already used $ P \left( f_x, f_y \right) $ to denote the pupil function.</p>
 
 </div>
 </div>
@@ -267,7 +271,7 @@ P_0 = \frac{1}{Z_0} \iint_{-\infty}^{\infty} \left| \text{PSF}_A \left( x, y \ri
 <span class="n">Z0</span>         <span class="o">=</span> <span class="mf">376.73</span> <span class="c1"># Ohms; impedance of free space</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -294,7 +298,7 @@ P_0 = \frac{1}{Z_0} \iint_{-\infty}^{\infty} \left| \text{PSF}_A \left( x, y \ri
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">pixelSize</span> <span class="o">*</span> <span class="n">numPixels</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">pixelSize</span> <span class="o">*</span> <span class="n">numPixels</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">num</span> <span class="o">=</span> <span class="n">numPixels</span><span class="p">,</span> <span class="n">endpoint</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -327,7 +331,7 @@ P_0 = \frac{1}{Z_0} \iint_{-\infty}^{\infty} \left| \text{PSF}_A \left( x, y \ri
 <span class="n">fx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">fS</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">fS</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="n">df</span><span class="p">)</span> <span class="c1"># Spatial frequency, inverse microns</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -358,7 +362,7 @@ P_0 = \frac{1}{Z_0} \iint_{-\infty}^{\infty} \left| \text{PSF}_A \left( x, y \ri
 <span class="n">pupilMask</span>       <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">W</span> <span class="o">-</span> <span class="n">pupilCenter</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">H</span> <span class="o">-</span> <span class="n">pupilCenter</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">pupilRadius</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -372,9 +376,10 @@ P_0 = \frac{1}{Z_0} \iint_{-\infty}^{\infty} \left| \text{PSF}_A \left( x, y \ri
 </h3>
 <p>I mentioned in the theoretical background above that the total optical power carried by the field is the two dimensional integral of the absolute square of the field divided by the impedance. If we want to set the power as an input of the simulation, we need to first normalize our pupil values by this integral.</p>
 <p><a href="https://en.wikipedia.org/wiki/Parseval's_theorem">Parseval's theorem</a> tells us that we can integrate over $ \text{PSF}_A \left( x, y \right) $ and $ A \times P \left( f_x, f_y \right) $, i.e. the image plane field or the normalized pupil, respectively, and get the same number:</p>
-\begin{equation*}
+<p>\begin{equation*}
 \iint_{-\infty}^{\infty} \left| \text{PSF}_A \left( x, y \right) \right|^2 \, dx \, dy = A^2 \iint_{-\infty}^{\infty} \left| P \left( f_x, f_y \right) \right|^2 \, df_x \, df_y
-\end{equation*}<p>Now that we have the pupil, we can perform a numerical integration over it using Simpson's rule to find the normalizing constant. We then multiply the pupil by the square root of this constant times our desired value for the power to set the total power carried by the field.</p>
+\end{equation*}</p>
+<p>Now that we have the pupil, we can perform a numerical integration over it using Simpson's rule to find the normalizing constant. We then multiply the pupil by the square root of this constant times our desired value for the power to set the total power carried by the field.</p>
 
 </div>
 </div>
@@ -397,7 +402,7 @@ P_0 = \frac{1}{Z_0} \iint_{-\infty}^{\infty} \left| \text{PSF}_A \left( x, y \ri
 <span class="nb">print</span><span class="p">(</span><span class="s1">'Power now carried by field:</span><span class="se">\t</span><span class="si">{:.4f}</span><span class="s1"> W'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">new_power</span><span class="p">))</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -407,7 +412,7 @@ P_0 = \frac{1}{Z_0} \iint_{-\infty}^{\infty} \left| \text{PSF}_A \left( x, y \ri
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -441,7 +446,7 @@ Power now carried by field:	0.1000 W
 <span class="nb">print</span><span class="p">(</span><span class="s1">'Power in pupil plane: </span><span class="si">{:.4f}</span><span class="s1"> W'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">power_pupil</span><span class="p">))</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -451,7 +456,7 @@ Power now carried by field:	0.1000 W
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
@@ -464,7 +469,7 @@ Power now carried by field:	0.1000 W
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -518,7 +523,7 @@ Power now carried by field:	0.1000 W
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -528,7 +533,7 @@ Power now carried by field:	0.1000 W
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
@@ -575,7 +580,7 @@ Power now carried by field:	0.1000 W
 <span class="nb">print</span><span class="p">(</span><span class="s1">'Power in object plane: </span><span class="si">{:.4f}</span><span class="s1"> W'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">power_image</span><span class="p">))</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -585,7 +590,7 @@ Power now carried by field:	0.1000 W
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -605,9 +610,10 @@ Power in object plane: 0.1000 W
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>So far so good. The next thing that we can do to verify these results is to calculate the sampled values of the analytical solution to this problem. Scalar diffraction theory predicts that the solution for the irradiance of the field diffracted by a circular aperture is an <a href="https://en.wikipedia.org/wiki/Airy_disk">Airy disk</a>:</p>
-\begin{equation*}
+<p>\begin{equation*}
 I \left( r \right) = I_0 \left[ \frac{2 J_1 \left( X \right)}{X} \right]^2
-\end{equation*}<p>where $X = \frac{2 \pi r \, \text{NA}}{\lambda} $, $ r = \sqrt{x^2 + y^2} $ is the radial coordinate, and $ J_1 \left( r \right) $ is called the first-order Bessel function of the first kind (<a href="https://en.wikipedia.org/wiki/Irradiance">Weisstein, Mathworld, accessed on 2016-11-16</a>). This function does not exist inside Python's scientific libraries, so we will need to create it.</p>
+\end{equation*}</p>
+<p>where $X = \frac{2 \pi r \, \text{NA}}{\lambda} $, $ r = \sqrt{x^2 + y^2} $ is the radial coordinate, and $ J_1 \left( r \right) $ is called the first-order Bessel function of the first kind (<a href="https://en.wikipedia.org/wiki/Irradiance">Weisstein, Mathworld, accessed on 2016-11-16</a>). This function does not exist inside Python's scientific libraries, so we will need to create it.</p>
 
 </div>
 </div>
@@ -650,7 +656,7 @@ I \left( r \right) = I_0 \left[ \frac{2 J_1 \left( X \right)}{X} \right]^2
     <span class="k">return</span> <span class="n">result</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -673,7 +679,7 @@ I \left( r \right) = I_0 \left[ \frac{2 J_1 \left( X \right)}{X} \right]^2
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">mpl_toolkits.axes_grid1</span> <span class="k">import</span> <span class="n">make_axes_locatable</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -723,7 +729,7 @@ I \left( r \right) = I_0 \left[ \frac{2 J_1 \left( X \right)}{X} \right]^2
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -733,7 +739,7 @@ I \left( r \right) = I_0 \left[ \frac{2 J_1 \left( X \right)}{X} \right]^2
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stderr output_text">
@@ -744,7 +750,7 @@ I \left( r \right) = I_0 \left[ \frac{2 J_1 \left( X \right)}{X} \right]^2
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
@@ -780,7 +786,7 @@ I \left( r \right) = I_0 \left[ \frac{2 J_1 \left( X \right)}{X} \right]^2
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -790,7 +796,7 @@ I \left( r \right) = I_0 \left[ \frac{2 J_1 \left( X \right)}{X} \right]^2
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stderr output_text">
@@ -801,7 +807,7 @@ I \left( r \right) = I_0 \left[ \frac{2 J_1 \left( X \right)}{X} \right]^2
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 

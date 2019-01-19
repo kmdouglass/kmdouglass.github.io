@@ -131,7 +131,7 @@
 <span class="kn">from</span> <span class="nn">scipy.fftpack</span> <span class="k">import</span> <span class="n">fftshift</span><span class="p">,</span> <span class="n">ifftshift</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -141,7 +141,7 @@
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -164,11 +164,16 @@ Populating the interactive namespace from numpy and matplotlib
 </h2>
 <p><a href="https://books.google.ch/books/about/Introduction_to_Fourier_Optics.html?id=ow5xs_Rtt9AC&amp;redir_esc=y">Goodman</a> and <a href="https://en.wikipedia.org/wiki/Fraunhofer_diffraction_%28mathematics%29#Examples_of_Fraunhofer_diffraction_with_a_normally_incident_monochromatic_plane_wave">many others</a> have shown that the far-field (also known as Fraunhofer) solution to the diffracted electric field from a rectangular aperture is proportional to the Fourier transform of the field distribution in the aperture. This fact follows directly from applying the Fraunhofer approximation to the diffraction integral developed by Huygens and Fresnel (<a href="https://books.google.ch/books/about/Introduction_to_Fourier_Optics.html?id=ow5xs_Rtt9AC&amp;redir_esc=y">Goodman</a>).</p>
 <p>For both convenience and numerical efficiency, I will focus on the one-dimensional analog to this problem: diffraction from an infinitely-long slit with width $ a $. If there is an incident monochromatic plane wave with amplitude $E_0$ traveling in the z-direction perpendicular to a slit in the $z=0$ plane, then the Fraunhofer diffraction pattern for the field is expressed by the equation</p>
-$$U \left(x', z \right) = \frac{e^{jkz} e^{ jk\frac{x'^2}{2z} }}{\sqrt{j \lambda z}} \int_{-\infty}^{\infty} u \left( x, z = 0 \right) \exp \left( -j \frac{2 \pi}{\lambda z} xx'\right) dx $$<p>with $u \left( x, z = 0 \right) = E_0 $ denoting the incident field, $ k = \frac{2 \pi}{\lambda} $ representing the freespace wavenumber, $ x = 0 $ and $ x' = 0 $ the center planes of the slit and diffraction patterns, respectively, and $ j $ the imaginary number. The factor $ \sqrt{j \lambda z} $ comes from <a href="https://www.kth.se/polopoly_fs/1.569752!/Gaussian%20beams.pdf">separating the solution to the 2D Huygens-Fresnel integral into two, 1D solutions</a>. The irradiance in the z-planes after the slit is <a href="https://en.wikipedia.org/wiki/Poynting_vector">proportional to the absolute square of the field</a>,</p>
-$$I \left( x', z \right) \propto \left| U \left( x', z \right) \right|^2$$<p>Taking the absolute square eliminates the complex exponentials preceding the integral so that the irradiance profile becomes</p>
-$$I \left( x', z \right) \propto \frac{1}{\lambda z} \left| \int_{-\infty}^{\infty} u \left( x \right) \exp \left( -j \frac{2 \pi}{\lambda z} xx'\right) dx \right|^2 = \frac{1}{\lambda z} \left| \mathcal{F} \left[ u \left( x, z \right) \right] \left( \frac{x'}{\lambda z}\right) \right|^2 $$<p>This expression means that the irradiance describing the Fraunhofer diffraction pattern from slit is proportional to the absolute square of the Fourier transform of the field at the aperture evaluted at spatial frequencies $ f_{x} = x' / \lambda z$. To arrive at the analytical solution, we perform the integration over a region where the slit is not opaque, $ \left[ -a/2, a/2 \right] $. Inside this region, the field is simply $ u \left( x \right) = E_0 $ because we have a monochromatic plane wave with this amplitude.</p>
-$$ \mathcal{F}\left[ u \left( x, z \right) \right] = \int_{-a/2}^{a/2} E_0 \exp \left( -j \frac{2 \pi}{\lambda z} xx'\right) dx $$<p>The analytical solution to this integral is</p>
-$$ \mathcal{F}\left[ u \left( x, z \right) \right] = a E_0 \text{sinc} \left( \frac{ax'}{\lambda z} \right) $$<p>where $ \text{sinc} \left( x \right) = \frac{\sin{\pi x}}{\pi x}$. The far-field irradiance is therefore the absolute square of this quantity divided by the product of the wavelength and the propagation distance.</p>
+<p>$$U \left(x', z \right) = \frac{e^{jkz} e^{ jk\frac{x'^2}{2z} }}{\sqrt{j \lambda z}} \int_{-\infty}^{\infty} u \left( x, z = 0 \right) \exp \left( -j \frac{2 \pi}{\lambda z} xx'\right) dx $$</p>
+<p>with $u \left( x, z = 0 \right) = E_0 $ denoting the incident field, $ k = \frac{2 \pi}{\lambda} $ representing the freespace wavenumber, $ x = 0 $ and $ x' = 0 $ the center planes of the slit and diffraction patterns, respectively, and $ j $ the imaginary number. The factor $ \sqrt{j \lambda z} $ comes from <a href="https://www.kth.se/polopoly_fs/1.569752!/Gaussian%20beams.pdf">separating the solution to the 2D Huygens-Fresnel integral into two, 1D solutions</a>. The irradiance in the z-planes after the slit is <a href="https://en.wikipedia.org/wiki/Poynting_vector">proportional to the absolute square of the field</a>,</p>
+<p>$$I \left( x', z \right) \propto \left| U \left( x', z \right) \right|^2$$</p>
+<p>Taking the absolute square eliminates the complex exponentials preceding the integral so that the irradiance profile becomes</p>
+<p>$$I \left( x', z \right) \propto \frac{1}{\lambda z} \left| \int_{-\infty}^{\infty} u \left( x \right) \exp \left( -j \frac{2 \pi}{\lambda z} xx'\right) dx \right|^2 = \frac{1}{\lambda z} \left| \mathcal{F} \left[ u \left( x, z \right) \right] \left( \frac{x'}{\lambda z}\right) \right|^2 $$</p>
+<p>This expression means that the irradiance describing the Fraunhofer diffraction pattern from slit is proportional to the absolute square of the Fourier transform of the field at the aperture evaluted at spatial frequencies $ f_{x} = x' / \lambda z$. To arrive at the analytical solution, we perform the integration over a region where the slit is not opaque, $ \left[ -a/2, a/2 \right] $. Inside this region, the field is simply $ u \left( x \right) = E_0 $ because we have a monochromatic plane wave with this amplitude.</p>
+<p>$$ \mathcal{F}\left[ u \left( x, z \right) \right] = \int_{-a/2}^{a/2} E_0 \exp \left( -j \frac{2 \pi}{\lambda z} xx'\right) dx $$</p>
+<p>The analytical solution to this integral is</p>
+<p>$$ \mathcal{F}\left[ u \left( x, z \right) \right] = a E_0 \text{sinc} \left( \frac{ax'}{\lambda z} \right) $$</p>
+<p>where $ \text{sinc} \left( x \right) = \frac{\sin{\pi x}}{\pi x}$. The far-field irradiance is therefore the absolute square of this quantity divided by the product of the wavelength and the propagation distance.</p>
 <p>Let's plot the analytically-determined irradiance profile of the diffraction pattern:</p>
 
 </div>
@@ -205,7 +210,7 @@ $$ \mathcal{F}\left[ u \left( x, z \right) \right] = a E_0 \text{sinc} \left( \f
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -215,7 +220,7 @@ $$ \mathcal{F}\left[ u \left( x, z \right) \right] = a E_0 \text{sinc} \left( \f
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
@@ -236,11 +241,15 @@ $$ \mathcal{F}\left[ u \left( x, z \right) \right] = a E_0 \text{sinc} \left( \f
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We can also verify a few key properties of the Fourier transform and ensure that our units are correct. The most important property is the conservation of energy, which in signal processing is often known as <a href="https://en.wikipedia.org/wiki/Parseval%27s_theorem">Parseval's theorem</a>. In our case, conservation of energy means that the integral of the field over the slit must equal the integral of the field in any arbitrary z-plane.</p>
-$$\int_{-\infty}^{\infty} \left| u \left( x, z = 0 \right) \right|^2 dx = \int_{-\infty}^{\infty} \left| U \left( x', z \right) \right|^2 dx'$$<p>where the spatial frequency is $ f_{x} = \frac{x'}{\lambda z} $. Because the incident field is a plane wave, the integral over the slit is just the square of the plane wave amplitude multiplied by the slit width:</p>
-$$\int_{-a/2}^{a/2} E_0^2 dx = aE_0^2$$<p>We need the square integral to be proportional to units of power, which will be true if the field has units of $ \frac{\text{Volts}}{\sqrt{\mu m}} $ and not the more familiar $ \frac{\text{Volts}}{\mu m} $. This peculiarity stems from the fact that we're looking at a somewhat synthetic 1D case. With this in mind, the square integral has units of $ \text{Volts}^2 $ and is proportional to the power delivered by the plane wave.</p>
+<p>$$\int_{-\infty}^{\infty} \left| u \left( x, z = 0 \right) \right|^2 dx = \int_{-\infty}^{\infty} \left| U \left( x', z \right) \right|^2 dx'$$</p>
+<p>where the spatial frequency is $ f_{x} = \frac{x'}{\lambda z} $. Because the incident field is a plane wave, the integral over the slit is just the square of the plane wave amplitude multiplied by the slit width:</p>
+<p>$$\int_{-a/2}^{a/2} E_0^2 dx = aE_0^2$$</p>
+<p>We need the square integral to be proportional to units of power, which will be true if the field has units of $ \frac{\text{Volts}}{\sqrt{\mu m}} $ and not the more familiar $ \frac{\text{Volts}}{\mu m} $. This peculiarity stems from the fact that we're looking at a somewhat synthetic 1D case. With this in mind, the square integral has units of $ \text{Volts}^2 $ and is proportional to the power delivered by the plane wave.</p>
 <p>The absolute square of the diffracted field is</p>
-$$ \left| U \left( x', z \right) \right|^2 = \frac{a^2 E_0^2}{\lambda z} \text{sinc}^2 \left( \frac{a x'}{\lambda z} \right)$$<p>The integral of $ \text{sinc}^2 \left( x \right) $ with my definition of $ \text{sinc} \left( x \right) $ <a href="http://math.stackexchange.com/questions/903117/integral-of-sinc-function-squared-over-the-real-line">over the real number line</a> is just 1, so</p>
-$$ \int_{-\infty}^{\infty} \left| U \left( x', z \right) \right|^2 dx' = \frac{a^2 E_0^2}{\lambda z} \times \frac{\lambda z}{a} = aE_0^2$$<p>All of this is essentially a verification that our units and prefactors have most likely been handled correctly. Most Fourier optics texts drop a lot of prefactors in their derivations, so it's always good to check that they've done everything correctly :)</p>
+<p>$$ \left| U \left( x', z \right) \right|^2 = \frac{a^2 E_0^2}{\lambda z} \text{sinc}^2 \left( \frac{a x'}{\lambda z} \right)$$</p>
+<p>The integral of $ \text{sinc}^2 \left( x \right) $ with my definition of $ \text{sinc} \left( x \right) $ <a href="http://math.stackexchange.com/questions/903117/integral-of-sinc-function-squared-over-the-real-line">over the real number line</a> is just 1, so</p>
+<p>$$ \int_{-\infty}^{\infty} \left| U \left( x', z \right) \right|^2 dx' = \frac{a^2 E_0^2}{\lambda z} \times \frac{\lambda z}{a} = aE_0^2$$</p>
+<p>All of this is essentially a verification that our units and prefactors have most likely been handled correctly. Most Fourier optics texts drop a lot of prefactors in their derivations, so it's always good to check that they've done everything correctly :)</p>
 
 </div>
 </div>
@@ -262,7 +271,7 @@ $$ \int_{-\infty}^{\infty} \left| U \left( x', z \right) \right|^2 dx' = \frac{a
 <span class="nb">print</span><span class="p">(</span><span class="s1">'The input power is </span><span class="si">{0:.4f}</span><span class="s1"> square Volts. The output power is </span><span class="si">{1:.4f}</span><span class="s1"> square Volts'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">powerIn</span><span class="p">,</span> <span class="n">powerOut</span><span class="p">))</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -272,7 +281,7 @@ $$ \int_{-\infty}^{\infty} \left| U \left( x', z \right) \right|^2 dx' = \frac{a
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -316,7 +325,7 @@ $$ \int_{-\infty}^{\infty} \left| U \left( x', z \right) \right|^2 dx' = \frac{a
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -326,7 +335,7 @@ $$ \int_{-\infty}^{\infty} \left| U \left( x', z \right) \right|^2 dx' = \frac{a
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
@@ -365,7 +374,7 @@ $$ \int_{-\infty}^{\infty} \left| U \left( x', z \right) \right|^2 dx' = \frac{a
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -375,7 +384,7 @@ $$ \int_{-\infty}^{\infty} \left| U \left( x', z \right) \right|^2 dx' = \frac{a
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
@@ -396,7 +405,8 @@ $$ \int_{-\infty}^{\infty} \left| U \left( x', z \right) \right|^2 dx' = \frac{a
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Let's go ahead now and compute the FFT of this sequence of field samples. We first need to figure out what the units of the FFT are going to be. The sampling frequency $f_S$ for this field is simply 1 divided by the distance between each sample. The FFT outputs an array of numbers from spatial frequency 0 up to $ \left( \frac{N-1}{N} \right) f_S $. By default, the length of the output array $ N $ is the same as the length of the input. In Python, array indexes start from 0, so the relationship between index $ i $ and spatial frequency is</p>
-$$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/viewcontent.cgi?article=1006&amp;context=engineering_fac">In MATLAB</a>, array indexes start at 1 so $i$ above should be replaced by $i - 1$ .)</p>
+<p>$$ f_{x} = \frac{f_S}{N} i $$</p>
+<p>(<a href="http://scholarsarchive.jwu.edu/cgi/viewcontent.cgi?article=1006&amp;context=engineering_fac">In MATLAB</a>, array indexes start at 1 so $i$ above should be replaced by $i - 1$ .)</p>
 <p>We also need to do two other things when computing the numerical Fourier transform. First, we need to shift the input field using the <code>fftshift</code> command for arrays with an even number of elements and <code>ifftshift</code> for arrays with an odd number of elements. This will shift the elements of the array so that the point corresponding to x = 0 lies in the first element of the array (index 0).</p>
 <p>The second thing we must do is multiply the fft results by the grid spacing <code>dx</code> to ensure that the scaling on the y-axis is correct.</p>
 
@@ -423,7 +433,7 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -433,7 +443,7 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
@@ -479,7 +489,7 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -489,7 +499,7 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stderr output_text">
@@ -501,7 +511,7 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
@@ -553,7 +563,7 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -563,7 +573,7 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
@@ -616,7 +626,7 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -626,7 +636,7 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
@@ -682,7 +692,7 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -692,7 +702,7 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
@@ -733,7 +743,7 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -743,7 +753,7 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stderr output_text">
@@ -754,7 +764,7 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
@@ -796,7 +806,7 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -806,7 +816,7 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
@@ -845,9 +855,11 @@ $$ f_{x} = \frac{f_S}{N} i $$<p>(<a href="http://scholarsarchive.jwu.edu/cgi/vie
 </ol>
 <p>Since the analytical solution and the FFT solution come from two related but different mathematical operations, should we have expected to get the right answer in the first place? <a href="http://ch.mathworks.com/matlabcentral/newsreader/view_thread/294772">As others have pointed out</a>, the discrete time Fourier transform (DTFT) of a square function is a ratio of two sines, not a sinc. Furthermore, the DFT (and equivalently the FFT result) is simply a sampled version of the DTFT. Therefore, we might expect that sampling the DTFT solution for a square wave will produce the same results as the FFT solution. Let's go ahead and try it.</p>
 <p><a href="https://en.wikipedia.org/wiki/Discrete-time_Fourier_transform#Table_of_discrete-time_Fourier_transforms">According to Wikipedia</a>, and changing variables to agree with my notation above, the DTFT solution of the square wave is</p>
-$$F \left( f_{x} \right) = \frac{\sin \left[ \pi f_{x} \left( M + 1 \right) \right] }{\sin \left( \pi f_{x} \right) } e^{ -j \pi f_{x} M }, \, M \in \mathbb{Z} $$<p>where $ M $ is an integer and $ f\_{x} $ is the spatial frequency. An important property of the DTFT  is that it is periodic between 0 and 1. If I had used the angular spatial frequency $ k\_{x} = 2 \pi f\_{x} $ the periodicity would be between 0 and $ 2 \pi $. With this information, we can map our spatial frequency vector onto the appropriate range for the DTFT.</p>
+<p>$$F \left( f_{x} \right) = \frac{\sin \left[ \pi f_{x} \left( M + 1 \right) \right] }{\sin \left( \pi f_{x} \right) } e^{ -j \pi f_{x} M }, \, M \in \mathbb{Z} $$</p>
+<p>where $ M $ is an integer and $ f\_{x} $ is the spatial frequency. An important property of the DTFT  is that it is periodic between 0 and 1. If I had used the angular spatial frequency $ k\_{x} = 2 \pi f\_{x} $ the periodicity would be between 0 and $ 2 \pi $. With this information, we can map our spatial frequency vector onto the appropriate range for the DTFT.</p>
 <p>The square function corresponding to this DTFT solution is defined with the left edge of the square starting at the origin:</p>
-$$ f \left( x \right) = \text{rect} \left( \frac{n - M/2}{M} \right) , \, M \in \mathbb{Z}, \, n = 0, 1, \ldots, N - 1$$<p>$ n $ is the index of the samples taken from the square and $ M $ denotes the center of the square. So, to use this expression for the DTFT of the square, we will first need to shift our original input so that the left edge of the square is at the origin.</p>
+<p>$$ f \left( x \right) = \text{rect} \left( \frac{n - M/2}{M} \right) , \, M \in \mathbb{Z}, \, n = 0, 1, \ldots, N - 1$$</p>
+<p>$ n $ is the index of the samples taken from the square and $ M $ denotes the center of the square. So, to use this expression for the DTFT of the square, we will first need to shift our original input so that the left edge of the square is at the origin.</p>
 
 </div>
 </div>
@@ -874,7 +886,7 @@ $$ f \left( x \right) = \text{rect} \left( \frac{n - M/2}{M} \right) , \, M \in 
 <span class="nb">print</span><span class="p">(</span><span class="s1">'M is </span><span class="si">{0:.0f}</span><span class="s1">.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">M</span><span class="p">))</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -884,7 +896,7 @@ $$ f \left( x \right) = \text{rect} \left( \frac{n - M/2}{M} \right) , \, M \in 
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
@@ -897,7 +909,7 @@ $$ f \left( x \right) = \text{rect} \left( \frac{n - M/2}{M} \right) , \, M \in 
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -947,7 +959,7 @@ $$ f \left( x \right) = \text{rect} \left( \frac{n - M/2}{M} \right) , \, M \in 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -957,7 +969,7 @@ $$ f \left( x \right) = \text{rect} \left( \frac{n - M/2}{M} \right) , \, M \in 
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
@@ -1002,7 +1014,7 @@ $$ f \left( x \right) = \text{rect} \left( \frac{n - M/2}{M} \right) , \, M \in 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -1012,7 +1024,7 @@ $$ f \left( x \right) = \text{rect} \left( \frac{n - M/2}{M} \right) , \, M \in 
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
@@ -1052,7 +1064,7 @@ $$ f \left( x \right) = \text{rect} \left( \frac{n - M/2}{M} \right) , \, M \in 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -1062,7 +1074,7 @@ $$ f \left( x \right) = \text{rect} \left( \frac{n - M/2}{M} \right) , \, M \in 
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stderr output_text">
@@ -1074,7 +1086,7 @@ $$ f \left( x \right) = \text{rect} \left( \frac{n - M/2}{M} \right) , \, M \in 
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 

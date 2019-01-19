@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kyle M. Douglass (Posts about python)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link href="http://kmdouglass.github.io/categories/python.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Fri, 04 Jan 2019 14:44:32 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Perlin Noise</title><link>http://kmdouglass.github.io/posts/perlin-noise/</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Kyle M. Douglass (Posts about python)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link rel="self" href="http://kmdouglass.github.io/categories/python.xml" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Sat, 19 Jan 2019 10:59:16 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Perlin Noise</title><link>http://kmdouglass.github.io/posts/perlin-noise/</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Since my last post, I have been experimenting with the &lt;a href="https://github.com/caseman/noise"&gt;noise package&lt;/a&gt; from Casey Duncan. This package is the easy solution for generating Perlin noise that I had hoped for. It seems simple and fast, though one downside at least to me is that it doesn't play so nicely with numpy arrays. This is not a big deal, though. It was probably not developed for scientists but rather for game design and/or computer graphics.&lt;/p&gt;
 &lt;p&gt;So, let's use this library to continue exploring the question of why correlated noise often makes for a better model of the real world.&lt;/p&gt;
@@ -22,7 +23,7 @@
 &lt;span class="n"&gt;sns&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_color_codes&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-    &lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -32,7 +33,7 @@
 
 &lt;div class="output_area"&gt;
 
-    &lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stdout output_text"&gt;
@@ -46,7 +47,8 @@
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;h2 id="Generating-Perlin-noise-with-the-noise-library"&gt;Generating Perlin noise with the &lt;code&gt;noise&lt;/code&gt; library&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/perlin-noise/#Generating-Perlin-noise-with-the-noise-library"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The basic function &lt;code&gt;pnoise1()&lt;/code&gt; takes a single float argument x. It won't work with numpy arrays. For this reason, I'm generating the noise signal in a &lt;code&gt;for&lt;/code&gt; loop.&lt;/p&gt;
 
@@ -72,7 +74,7 @@
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-    &lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -82,7 +84,7 @@
 
 &lt;div class="output_area"&gt;
 
-    &lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -98,7 +100,8 @@
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;The &lt;code&gt;octaves&lt;/code&gt; and &lt;code&gt;persistence&lt;/code&gt; parameters determine how much energy is contained at frequencies in each successive octave of the noise's &lt;a href="https://en.wikipedia.org/wiki/Spectral_density#Power_spectral_density"&gt;power spectrum&lt;/a&gt;. These parameters determine the presence and strength, respectively, of the finer details in the noise signal. Before going into them with more detail, we can vary them and observe the outcome.&lt;/p&gt;
 &lt;p&gt;Here's the result of varying the number of octaves.&lt;/p&gt;
@@ -126,7 +129,7 @@
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-    &lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -136,7 +139,7 @@
 
 &lt;div class="output_area"&gt;
 
-    &lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -152,7 +155,8 @@
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;In the above plot, and besides constant offsets to aid in visualization, I added one and three additional octaves to the noise, keeping the persistence fixed. Increasing the octaves makes the curve appear more 'jagged' and noisy on the smaller scales, much like extending the frequency range of the filter applied to the random signal from &lt;a href="http://kmdouglass.github.io/posts/correlated-noise-and-the-fft.html"&gt;my last post&lt;/a&gt;. Over longer time scales, the curve more or less follows the original one.&lt;/p&gt;
 &lt;p&gt;Below you can see what happens when we use four octaves but increase the persistence gradually. The amplitude of the spikes at small time scales increases with increasing persistence.&lt;/p&gt;
@@ -178,7 +182,7 @@
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-    &lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -188,7 +192,7 @@
 
 &lt;div class="output_area"&gt;
 
-    &lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -204,7 +208,8 @@
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;We're now in a good position to summarize a few of the main characteristics about Perlin noise. I'll use the term 'feature' as a loose definition for the hills and valleys seen in the curves.&lt;/p&gt;
 &lt;ol&gt;
@@ -219,7 +224,8 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;h2 id="Random-waveforms-in-time"&gt;Random waveforms in time&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/perlin-noise/#Random-waveforms-in-time"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Because Perlin noise is continuous, we can easily generate a nice-looking, traveling Perlin noise waveform and animate it. To do this, I use &lt;code&gt;FuncAnimation&lt;/code&gt; from &lt;a href="http://matplotlib.org/api/animation_api.html"&gt;matplotlib's animation API&lt;/a&gt;. Every time &lt;code&gt;FuncAnimation&lt;/code&gt; is called, I add a constant to the time array, which shifts the curve to the left. I'm also plotting a small particle undergoing a 1D walk and whose position is equivalent to the waveform value at the left-most side of the axis.&lt;/p&gt;
 
@@ -283,20 +289,22 @@
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;close&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-    &lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;video controls src="http://kmdouglass.github.io/traveling_Perlin_wave.mp4" type="video/mp4"&gt;&lt;/video&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Although random, we can see that the particle moves smoothly and continiously. If I were add more octaves or increase the persistence of the walk, the particle would move more erraticly because I would have introduced more high frequency noise like the pink noise example in &lt;a href="http://kmdouglass.github.io/posts/correlated-noise-and-the-fft.html"&gt;my previous post&lt;/a&gt;.&lt;/p&gt;
 
@@ -304,7 +312,8 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;h2 id="Random-Perlin-and-Brownian-Walks"&gt;Random Perlin and Brownian Walks&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/perlin-noise/#Random-Perlin-and-Brownian-Walks"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Finally, let's compare a random walk created using Perlin noise to one created with &lt;a href="https://en.wikipedia.org/wiki/White_noise"&gt;white noise&lt;/a&gt;, which is completely uncorrelated. A walk generated with white noise is the same as good ol' Brownian motion. By comparing the two, you should be able to see why Perlin noise often better approximates natural phenomena: things just don't look quite natural when modeled with white noise.&lt;/p&gt;
 
@@ -373,20 +382,22 @@
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;close&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-    &lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;video controls src="http://kmdouglass.github.io/walkers.mp4" type="video/mp4"&gt;&lt;/video&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;The Perlin walker is just a calm, casual guy out for a walk, whereas the Brownian walker is your officemate after five cups of coffee.&lt;/p&gt;
 &lt;p&gt;So there you have it! Perlin noise is an interesting tool for generating correlated noise forms on a computer. It's used in a number of applications in computer graphics, animation, and games to produce realistic-looking patterns.&lt;/p&gt;
@@ -395,7 +406,8 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;/div&gt;</description><category>python</category><category>signal processing</category><guid>http://kmdouglass.github.io/posts/perlin-noise/</guid><pubDate>Sun, 20 Mar 2016 16:45:00 GMT</pubDate></item><item><title>Correlated noise and the FFT</title><link>http://kmdouglass.github.io/posts/correlated-noise-and-the-fft/</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;I've been perusing the online coding book &lt;a href="http://natureofcode.com/"&gt;The Nature of Code&lt;/a&gt; recently. So far I really like it, especially its approach to demonstrating how one may use mathematics and code to model natural phenomena in a fun a way. I thought I would take a brief break from optics-based posts to blog about some thoughts I've had recently about one of the concepts in the book.&lt;/p&gt;
 &lt;p&gt;In the introduction I came across the concept of &lt;a href="http://freespace.virgin.net/hugo.elias/models/m_perlin.htm"&gt;Perlin noise&lt;/a&gt;, a concept which is named after its inventor Ken Perlin who, at the time of its creation, was working on computer-generated graphics for the movie Tron. Perlin developed his namesake algorithm for generating artificial yet natural-looking textures, something that previously was difficult to do with purely deterministic mathematical tools. He later won an Academy Award for this work because it greatly enabled computer artists to model realistic textures and motion.&lt;/p&gt;
@@ -413,7 +425,7 @@
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;style&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;use&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'dark_background'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-    &lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -423,7 +435,7 @@
 
 &lt;div class="output_area"&gt;
 
-    &lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stdout output_text"&gt;
@@ -437,7 +449,8 @@
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;h2 id="Uncorrelated-noise"&gt;Uncorrelated noise&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/correlated-noise-and-the-fft/#Uncorrelated-noise"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;One reason that Perlin noise models many natural phenomena so well is that its randomness is correlated. To see what I mean by this, I'll first plot a single realization of a purely random signal composed of random integers between 0 and 1. The samples from this signal are &lt;strong&gt;not&lt;/strong&gt; correlated.&lt;/p&gt;
 
@@ -460,7 +473,7 @@
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-    &lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -470,7 +483,7 @@
 
 &lt;div class="output_area"&gt;
 
-    &lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -486,7 +499,8 @@
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;In the plot above, you can see that the value of each sample from our random signal is uncorrelated with all the other samples. This situation is similar to flipping a coin; the result of a coin flip (heads or tails) doesn't depend on the previous or next flip of the coin.&lt;/p&gt;
 &lt;p&gt;If we want to use this random signal to model something natural, such as a landscape, we would be disappointed:&lt;/p&gt;
@@ -505,7 +519,7 @@
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-    &lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -515,7 +529,7 @@
 
 &lt;div class="output_area"&gt;
 
-    &lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -531,7 +545,8 @@
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Our purely random landscape is much too jagged to even come close to approximating a real-looking landscape.&lt;/p&gt;
 
@@ -539,7 +554,8 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;h2 id="Correlated-noise"&gt;Correlated noise&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/correlated-noise-and-the-fft/#Correlated-noise"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Perlin noise is a way of generating a random signal whose samples are correlated over short distances but uncorrelated over longer distances. I haven't yet found any quick and easy implementations for generating Perlin noise in Python, but you can find many examples of on the web, such as &lt;a href="https://www.google.ch/search?q=perlin+noise&amp;amp;tbm=isch&amp;amp;tbo=u&amp;amp;source=univ&amp;amp;sa=X&amp;amp;ved=0ahUKEwi1ytjsx5jLAhXE_3IKHWrfAGkQsAQIPg&amp;amp;biw=1366&amp;amp;bih=644#tbm=isch&amp;amp;q=perlin+noise+1d"&gt;1D Perlin noise images from Google Image search&lt;/a&gt;. (By "quick and easy", I mean something I can install from Anaconda and use with only a couple minutes of reading the docs.)&lt;/p&gt;
 &lt;p&gt;A long time ago I wrote a computer simulation that modeled the motion of a small dipole in a three-dimensional, random electromagnetic field. This involved moving the dipole in a ballistic manner over short times, where the particle's &lt;a href="https://en.wikipedia.org/wiki/Mean_squared_displacement"&gt;mean-squared-displacement (MSD)&lt;/a&gt; evolved quadratically with time, and smoothly rounding off to a random, diffusive motion characterized by a linear time dependence of the MSD at long times. I have also done some partial coherence modeling of illumination systems, which also involves generating correlated noise.&lt;/p&gt;
@@ -549,7 +565,8 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;h3 id="Generating-correlated-noise-using-FFT's"&gt;Generating correlated noise using FFT's&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/correlated-noise-and-the-fft/#Generating-correlated-noise-using-FFT's"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Below is a relatively simple code snippet that generates a correlated noise signal. It was inspired by &lt;a href="https://www.osapublishing.org/oe/abstract.cfm?uri=oe-14-16-6986"&gt;work publised by Xiao and Voelz&lt;/a&gt; in 2006 for modeling partially coherent laser beam propagation through turbulence.&lt;/p&gt;
 
@@ -589,7 +606,7 @@
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-    &lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -599,7 +616,7 @@
 
 &lt;div class="output_area"&gt;
 
-    &lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -615,7 +632,8 @@
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;This algorithm actually produces two independent and random signals that are correlated over distances comparable to &lt;code&gt;sigma_f&lt;/code&gt;; one signal comes from the real part and the other from the imaginary part. I only plotted the real part because we only need one. At distances larger than &lt;code&gt;sigma_f&lt;/code&gt; the signal is uncorrelated. The strength of the fluctuations is determined by &lt;code&gt;sigma_r&lt;/code&gt;, which is the square root of the variance of the underlying, uncorrelated random signal.&lt;/p&gt;
 &lt;p&gt;To better understand how this algorithm it works, I think it's illustrative to plot the product of &lt;code&gt;F&lt;/code&gt; and &lt;code&gt;R&lt;/code&gt; from the code above before they are inverse Fourier transformed.&lt;/p&gt;
@@ -638,7 +656,7 @@
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-    &lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -648,7 +666,7 @@
 
 &lt;div class="output_area"&gt;
 
-    &lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -664,7 +682,8 @@
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;As you can see, the frequency space multiplication is essentially modulating a zero-mean, Gaussian random signal with a Gaussian envelope centered at the origin. We then compute the inverse Fourier transform of this product, scale it by a few factors to ensure that energy is conserved, and take the real or imaginary parts to get two different, random, yet smooth signals. If you're familiar with Fourier transforms, you will probably recognize that the frequency space multiplication of F and R is equivalent to the real space convolution of their individual Fourier transform pairs. Thus, we've essentially smoothed a random signal with a Gaussian blurring kernel.&lt;/p&gt;
 &lt;p&gt;Though we could easily have done this with a convolution and avoided the need to think in frequency space, the visualization above is illustrative for this reason: &lt;strong&gt;we have essentially modified the amplitudes of the various spectral components of the uncorrelated random signal, producing correlated noise in the process&lt;/strong&gt;.&lt;/p&gt;
@@ -697,7 +716,7 @@
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-    &lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -707,7 +726,7 @@
 
 &lt;div class="output_area"&gt;
 
-    &lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -723,7 +742,8 @@
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;We still have smooth, large-scale fluctuations that are about the same size as the inverse width of the top hat, but now there are additional high-frequency fluctuations which lead to a more "jagged" appearance in the blue, top hat curve above.&lt;/p&gt;
 &lt;p&gt;For completeness, here's how the real part of the spectrum is reshaped by multiplying by a top hat.&lt;/p&gt;
@@ -746,7 +766,7 @@
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-    &lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -756,7 +776,7 @@
 
 &lt;div class="output_area"&gt;
 
-    &lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -772,7 +792,8 @@
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;h3 id="Reasoning-about-the-differences"&gt;Reasoning about the differences&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/correlated-noise-and-the-fft/#Reasoning-about-the-differences"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;So far we've learned that we could create correlated noise by filtering a zero-mean, Gaussian random signal in frequency space. We also learned that the nature of the resulting signals changes when the shape of the frequency space filter is modified. In the case of the top hat filter, the resulting random signal became a bit more jagged. This makes sense because the amplitudes of the mid-range spectral components were larger for the top hat filtered signal; there was no smooth Gaussian rolloff but instead a hard cutoff at +/- &lt;code&gt;0.5 / sigma_f&lt;/code&gt;. Even though the Gaussian-filtered signal had a larger bandwidth, the high frequency amplitudes were diminished exponentially, so they essentially didn't matter.&lt;/p&gt;
 
@@ -780,7 +801,8 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;h2 id="The-connection-with-Perlin-noise"&gt;The connection with Perlin noise&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/correlated-noise-and-the-fft/#The-connection-with-Perlin-noise"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Conceptually, Perlin noise is generated by adding together curves with different amplitudes and frequencies &lt;a href="http://freespace.virgin.net/hugo.elias/models/m_perlin.htm"&gt;as explained here&lt;/a&gt;. This is similar to what we did in the examples above: we took sine waves with random phases and different frequencies, modulated their amplitudes, and then added them together to get a realization of a smooth random signal.&lt;/p&gt;
 &lt;p&gt;So what are the differences between the two approaches then? Here's what I can think of for now.&lt;/p&gt;
@@ -794,13 +816,15 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;h2 id="One-last-example:-1/f-noise"&gt;One last example: 1/f noise&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/correlated-noise-and-the-fft/#One-last-example:-1/f-noise"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I realized the day after writing the draft of this post that the above discussion is useful for illustrating some of the "colored" noises. In this case, we use the ideas presented above to generate a realization of &lt;a href="https://en.wikipedia.org/wiki/Pink_noise"&gt;1/f noise&lt;/a&gt;, also known as &lt;em&gt;pink noise&lt;/em&gt; or &lt;em&gt;fractal noise&lt;/em&gt;.&lt;/p&gt;
 &lt;p&gt;Can you guess how the amplitude of the spectrum of 1/f noise varies?&lt;/p&gt;
 &lt;p&gt;Surprise! It actually varies as $ \frac{1}{f^{1/2}} $. This is because the &lt;strong&gt;power&lt;/strong&gt; spectrum of pink noise varies as 1/f; the &lt;strong&gt;amplitude&lt;/strong&gt; of the spectral components is the square root of the average power delivered by each component. The &lt;a href="https://en.wikipedia.org/wiki/Spectral_density#Energy_spectral_density"&gt;proper Wikipedia sections on energy and power spectral densities&lt;/a&gt; explain this. The difficulty in actually implementing this filter, though, is what happens as we approach the DC value $ f = 0 $ in frequency space. At this value the filter becomes infinite.&lt;/p&gt;
 &lt;p&gt;Instead, we can easily approximate a realization of pink noise with a filter that is one near the origin and quickly rolls off into a $ f^{-1/2} $ behavior. A function that does this is&lt;/p&gt;
-$$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$&lt;p&gt;The value $ a $ determines how quickly the function moves from a weak dependence on frequency to a $ f^{-1/2} $ dependence. For us, we should set it to a value that is relatively large compared to the frequency spacing in Fourier space. This type of filter is just a special case of the &lt;a href="https://en.wikipedia.org/wiki/Chebyshev_filter"&gt;Chebyshev filter&lt;/a&gt; that is well-known in signal processing circles.&lt;/p&gt;
+&lt;p&gt;$$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$&lt;/p&gt;
+&lt;p&gt;The value $ a $ determines how quickly the function moves from a weak dependence on frequency to a $ f^{-1/2} $ dependence. For us, we should set it to a value that is relatively large compared to the frequency spacing in Fourier space. This type of filter is just a special case of the &lt;a href="https://en.wikipedia.org/wiki/Chebyshev_filter"&gt;Chebyshev filter&lt;/a&gt; that is well-known in signal processing circles.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -818,7 +842,7 @@ $$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$&lt;p&gt;The value $ a $ determi
 &lt;span class="n"&gt;pinkNoiseFilter&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vectorize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pinkNoiseFilter&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-    &lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -842,7 +866,7 @@ $$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$&lt;p&gt;The value $ a $ determi
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-    &lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -852,7 +876,7 @@ $$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$&lt;p&gt;The value $ a $ determi
 
 &lt;div class="output_area"&gt;
 
-    &lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -868,7 +892,8 @@ $$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$&lt;p&gt;The value $ a $ determi
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Now we have the same general trends in the 1/f noise signal as in the realization of the Gaussian signal, but with a lot of high frequency noise added.&lt;/p&gt;
 &lt;p&gt;We can see that the high frequency noise is coming from poor suppression of high frequencies in the filtered spectrum. Remember that this is the spectrum of just one realization of the noise, this time without the real part of the random signal for clarity.&lt;/p&gt;
@@ -890,7 +915,7 @@ $$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$&lt;p&gt;The value $ a $ determi
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-    &lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -900,7 +925,7 @@ $$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$&lt;p&gt;The value $ a $ determi
 
 &lt;div class="output_area"&gt;
 
-    &lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -916,7 +941,8 @@ $$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$&lt;p&gt;The value $ a $ determi
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Pretty cool! Though I still haven't made a good connection with Perlin noise, I now have a better understanding of how to generate many different kinds of realizations of noise signals on a computer. The general recipe is to&lt;/p&gt;
 &lt;ol&gt;
@@ -928,7 +954,8 @@ $$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$&lt;p&gt;The value $ a $ determi
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;/div&gt;</description><category>python</category><category>signal processing</category><guid>http://kmdouglass.github.io/posts/correlated-noise-and-the-fft/</guid><pubDate>Sun, 28 Feb 2016 08:15:37 GMT</pubDate></item><item><title>Simulating microscope pupil functions</title><link>http://kmdouglass.github.io/posts/simulating-microscope-pupil-functions/</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;*Note: I remade this post to address minor inconsistencies and what I perceived to be a lack of attention to units of some of the physical quantities. The updated post may be found &lt;a href="http://kmdouglass.github.io/posts/simulating-microscope-pupil-functions/simple-pupil-function-calculations.html"&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;h2 id="Simple-simulations-of-microscope-pupil-functions"&gt;Simple simulations of microscope pupil functions&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-microscope-pupil-functions/#Simple-simulations-of-microscope-pupil-functions"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0142949"&gt;In one of my recent publications&lt;/a&gt;, my co-authors and I investigated an aberration that is especially pernicious for 3D localization microscopies such as &lt;a href="https://en.wikipedia.org/wiki/Super-resolution_microscopy#STORM.2C_PALM_and_FPALM"&gt;STORM and PALM&lt;/a&gt;. This aberration results in a dependence of the perceived position of a single, fluorescent molecule on its axial position within the focal plane of a microscope. To identify a possible source for this aberration, I employed a phase retrieval algorithm to obtain the pupil function of the microscope. I then decomposed the pupil function into a number of orthogonal polynomial terms and identified the specific terms that led to the aberration that we observed. In this case, terms associated with &lt;a href="https://en.wikipedia.org/wiki/Coma_%28optics%29"&gt;coma&lt;/a&gt; were the culprits.&lt;/p&gt;
@@ -939,15 +966,19 @@ $$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$&lt;p&gt;The value $ a $ determi
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;h3 id="Pupil-Function-Basics"&gt;Pupil Function Basics&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-microscope-pupil-functions/#Pupil-Function-Basics"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The pupil function of a microscope (and really, of any optical system) is an important tool for analyzing the aberrations present in the system. The pupil function is defined as the two dimensional Fourier transform of the image of an isotropic point source. &lt;a href="http://mathworld.wolfram.com/FourierTransform.html"&gt;The two dimensional Fourier transform&lt;/a&gt; of a function of two variables x and y is expressed as&lt;/p&gt;
-$$F \left( k_x, k_y \right) = \iint f \left( x, y \right) \exp \left[ -j \left( k_{x}x + k_{y}y \right) \right] dx dy$$&lt;p&gt;(I was originally trained as an engineer, so I tend to use 'j' for the imaginary number more than 'i'.) The inverse Fourier transform converts $F \left( k_x, k_y \right)$ back into $f \left( x, y \right)$ and is given by&lt;/p&gt;
-$$f \left( x, y \right) = \iint F \left( k_x, k_y \right) \exp \left[ j \left( k_{x}x + k_{y}y \right) \right] dk_x dk_y$$&lt;p&gt;In this case, $x$ and $y$ are variables representing 2D coordinates in the image plane and $k_x$ and $k_y$ are the spatial frequencies. $f \left( x, y \right)$ and $F \left( k_x, k_y \right)$ are known as Fourier transform pairs.&lt;/p&gt;
+&lt;p&gt;$$F \left( k_x, k_y \right) = \iint f \left( x, y \right) \exp \left[ -j \left( k_{x}x + k_{y}y \right) \right] dx dy$$&lt;/p&gt;
+&lt;p&gt;(I was originally trained as an engineer, so I tend to use 'j' for the imaginary number more than 'i'.) The inverse Fourier transform converts $F \left( k_x, k_y \right)$ back into $f \left( x, y \right)$ and is given by&lt;/p&gt;
+&lt;p&gt;$$f \left( x, y \right) = \iint F \left( k_x, k_y \right) \exp \left[ j \left( k_{x}x + k_{y}y \right) \right] dk_x dk_y$$&lt;/p&gt;
+&lt;p&gt;In this case, $x$ and $y$ are variables representing 2D coordinates in the image plane and $k_x$ and $k_y$ are the spatial frequencies. $f \left( x, y \right)$ and $F \left( k_x, k_y \right)$ are known as Fourier transform pairs.&lt;/p&gt;
 &lt;p&gt;An isotropic point source is an idealized source of electromagnetic radiation that emits an equal intensity in all directions. Strictly speaking, real sources such as atoms and molecules are dipoles and not isotropic emitters. This assumption is however a good model for collections of many fluorescent molecules possessing dipole moments that are all pointing in different directions and that are smaller than the wavelength of light because the molecules' individual emission patterns average out. It is also a good approximation for a dipole whose moment is randomly reorienting in many directions during an image acquisition due to thermally-induced rotational diffusion.&lt;/p&gt;
 &lt;p&gt;The image of a point source is known as the &lt;a href="https://en.wikipedia.org/wiki/Point_spread_function"&gt;point spread function (PSF)&lt;/a&gt; of the microscope. In signal processing, it's known as a two dimensional impulse response.&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://www.msg.ucsf.edu/agard/Publications/148-Agard-JMicrosc-2004.pdf"&gt;The equation&lt;/a&gt; that relates the image of the isotropic point source to the pupil function $P \left( k_x, k_y \right)$ is&lt;/p&gt;
-$$\text{PSF}_{\text{A}} \left( x, y \right) = \iint P \left( k_x, k_y \right) \exp \left[ -j \left( k_{x}x + k_{y}y \right) \right] dx dy$$&lt;p&gt;The subscript &lt;code&gt;A&lt;/code&gt; on the PSF stands for &lt;em&gt;amplitude&lt;/em&gt; and means that we are working with the electric field, not the &lt;a href="https://en.wikipedia.org/wiki/Irradiance"&gt;irradiance&lt;/a&gt;. The irradiance, which is what a camera or your eye measures, is proportional to the absolute square of $\text{PSF}_{\text{A}}$. In words, the above equation restates the definition above: the pupil function and the amplitude PSF are Fourier transform pairs.&lt;/p&gt;
+&lt;p&gt;$$\text{PSF}_{\text{A}} \left( x, y \right) = \iint P \left( k_x, k_y \right) \exp \left[ -j \left( k_{x}x + k_{y}y \right) \right] dx dy$$&lt;/p&gt;
+&lt;p&gt;The subscript &lt;code&gt;A&lt;/code&gt; on the PSF stands for &lt;em&gt;amplitude&lt;/em&gt; and means that we are working with the electric field, not the &lt;a href="https://en.wikipedia.org/wiki/Irradiance"&gt;irradiance&lt;/a&gt;. The irradiance, which is what a camera or your eye measures, is proportional to the absolute square of $\text{PSF}_{\text{A}}$. In words, the above equation restates the definition above: the pupil function and the amplitude PSF are Fourier transform pairs.&lt;/p&gt;
 &lt;h3 id="Simulating-Diffraction-Limited-Pupil-Functions-and-PSF's"&gt;Simulating Diffraction Limited Pupil Functions and PSF's&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-microscope-pupil-functions/#Simulating-Diffraction-Limited-Pupil-Functions-and-PSF's"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;We can simulate how an aberration affects the image of a point source by simulating an aberrated pupil function and computing the Fourier transform above to get the amplitude PSF. The easiest model to simulate is based on scalar diffraction theory, which means that we ignore the fact that the electromagnetic radiation is polarized (i.e. a vector) and treat it as a scalar quantity instead. Even though this is an approximation, it still can give us a good idea about the fundamental physics involved.&lt;/p&gt;
 &lt;p&gt;To perform the simulation, we must first discretize the continuous quantities in the Fourier transform. We'll model $\text{PSF}_{\text{A}}$ and $P \left( k_x, k_y \right)$ as discrete scalar quantities on 2D grids and perform a &lt;a href="https://en.wikipedia.org/wiki/Fast_Fourier_transform"&gt;fast Fourier transform&lt;/a&gt; to turn the pupil function into the PSF.&lt;/p&gt;
 
@@ -966,7 +997,7 @@ $$\text{PSF}_{\text{A}} \left( x, y \right) = \iint P \left( k_x, k_y \right) \e
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;scipy.fftpack&lt;/span&gt; &lt;span class="k"&gt;import&lt;/span&gt; &lt;span class="n"&gt;fftshift&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ifftshift&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-    &lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -976,7 +1007,7 @@ $$\text{PSF}_{\text{A}} \left( x, y \right) = \iint P \left( k_x, k_y \right) \e
 
 &lt;div class="output_area"&gt;
 
-    &lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stdout output_text"&gt;
@@ -999,13 +1030,14 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;rcParams&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'image.cmap'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'plasma'&lt;/span&gt; 
 &lt;/pre&gt;&lt;/div&gt;
 
-    &lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Let's start by setting up the image plane and spatial frequency grids. If we work with square images, then the primary quantity we have to set a value for is the number of pixels. The number of pixels that we choose to simulate is a bit arbitrary, though as we'll see later, it determines the spacing of the discretized pupil function coordinates.&lt;/p&gt;
 
@@ -1020,13 +1052,14 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;imgSize&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;513&lt;/span&gt; &lt;span class="c1"&gt;# Choose an odd number to ensure rotational symmetry about the center&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-    &lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;The rest of the important parameters for setting up the grids are determined by your microscope.&lt;/p&gt;
 
@@ -1044,13 +1077,14 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="n"&gt;pixelSize&lt;/span&gt;  &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;0.1&lt;/span&gt;  &lt;span class="c1"&gt;# microns, typical for microscopes with 60X--100X magnifications&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-    &lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Now we have enough information to define the grid on which the pupil function lies.&lt;/p&gt;
 
@@ -1067,13 +1101,14 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="n"&gt;dk&lt;/span&gt;   &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;pi&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;imgSize&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;pixelSize&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-    &lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;When working with discrete Fourier transforms, a common question that arises is "What are the units of the Fourier transform variable?" We can answer this question by these rules:&lt;/p&gt;
 &lt;blockquote&gt;&lt;p&gt;$k_{Max} \propto \frac{1}{dx}$&lt;/p&gt;
@@ -1098,7 +1133,7 @@ Populating the interactive namespace from numpy and matplotlib
 &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Size of kx : &lt;/span&gt;&lt;span class="si"&gt;{0}&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;kx&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-    &lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1108,7 +1143,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 &lt;div class="output_area"&gt;
 
-    &lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stdout output_text"&gt;
@@ -1124,7 +1159,8 @@ Size of kx : 513
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Now that the coordinate system for the pupil function is setup, we can go ahead and define the pupil function for an &lt;em&gt;aberration free&lt;/em&gt; microscope. First, we need to create a mask whose value is one inside a circle whose extent is set by the microscope's NA and zero outside it. This mask is used to create a circular pupil.&lt;/p&gt;
 
@@ -1148,7 +1184,7 @@ Size of kx : 513
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-    &lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1158,7 +1194,7 @@ Size of kx : 513
 
 &lt;div class="output_area"&gt;
 
-    &lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -1174,7 +1210,8 @@ Size of kx : 513
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;The pupil function is a complex quantity, which means it has both real and imaginary components. The unaberrated pupil function for an on-axis point source simply has a uniform phase and amplitude equal to one inside the mask.&lt;/p&gt;
 
@@ -1191,7 +1228,7 @@ Size of kx : 513
 &lt;span class="n"&gt;pupil&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;amp&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exp&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;phase&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-    &lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1213,7 +1250,7 @@ Size of kx : 513
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-    &lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1223,7 +1260,7 @@ Size of kx : 513
 
 &lt;div class="output_area"&gt;
 
-    &lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -1239,7 +1276,8 @@ Size of kx : 513
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;The amplitude PSF for the isotropic point source is simply the Fourier transform of this pupil function. The camera, which measures irradiance and not electric field, sees the absolute square of the amplitude PSF.&lt;/p&gt;
 
@@ -1266,7 +1304,7 @@ Size of kx : 513
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-    &lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1276,7 +1314,7 @@ Size of kx : 513
 
 &lt;div class="output_area"&gt;
 
-    &lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -1292,7 +1330,8 @@ Size of kx : 513
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;This is a simulated image of an on-axis, in-focus, isotropic point source from an unaberrated pupil with an object-space pixel size of 100 nm.&lt;/p&gt;
 &lt;p&gt;The image is also a decent approximation of what a real single molecule image looks like in localization microscopies. I say &lt;em&gt;decent&lt;/em&gt; because a single molecule will have a dipolar emission profile, not isotropic. Additionally, the scalar-diffraction model used here ignores polarization effects. Finally, a real image will have noise, which would be reflected as a random variation in the signal of each pixel.&lt;/p&gt;
@@ -1301,10 +1340,12 @@ Size of kx : 513
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Let's see how a line profile through the center of the image looks relative to the profile of the &lt;a href="https://en.wikipedia.org/wiki/Airy_disk"&gt;Airy disk&lt;/a&gt;, which is the mathematical solution to the diffraction pattern from a circular aperture in scalar diffraction theory. The Airy disk is given by&lt;/p&gt;
-$$I \left( X \right) = I_{0} \left[ \frac{2J_{1} \left( X \right)}{X} \right]^2$$&lt;p&gt;where $J_{1} \left( X \right) $ is the Bessel function of the first kind and order 1 and $ X = \frac{2 \pi r  (\text{NA})}{\lambda} $. Here, $r$ is the distance from the center of the image plane, so we can easily convert it to pixels.&lt;/p&gt;
+&lt;p&gt;$$I \left( X \right) = I_{0} \left[ \frac{2J_{1} \left( X \right)}{X} \right]^2$$&lt;/p&gt;
+&lt;p&gt;where $J_{1} \left( X \right) $ is the Bessel function of the first kind and order 1 and $ X = \frac{2 \pi r  (\text{NA})}{\lambda} $. Here, $r$ is the distance from the center of the image plane, so we can easily convert it to pixels.&lt;/p&gt;
 &lt;p&gt;Because the pupil of the microscope is circular and unaberrated, it is also the solution for PSF of the microscope.&lt;/p&gt;
 
 &lt;/div&gt;
@@ -1334,7 +1375,7 @@ $$I \left( X \right) = I_{0} \left[ \frac{2J_{1} \left( X \right)}{X} \right]^2$
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-    &lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1344,7 +1385,7 @@ $$I \left( X \right) = I_{0} \left[ \frac{2J_{1} \left( X \right)}{X} \right]^2$
 
 &lt;div class="output_area"&gt;
 
-    &lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stderr output_text"&gt;
@@ -1355,7 +1396,7 @@ $$I \left( X \right) = I_{0} \left[ \frac{2J_{1} \left( X \right)}{X} \right]^2$
 
 &lt;div class="output_area"&gt;
 
-    &lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -1371,7 +1412,8 @@ $$I \left( X \right) = I_{0} \left[ \frac{2J_{1} \left( X \right)}{X} \right]^2$
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;The simulated PSF agrees well with the scalar diffraction theory, demonstrating that we have correctly simulated the microscope's PSF from an unaberrated pupil function.&lt;/p&gt;
 
@@ -1379,12 +1421,14 @@ $$I \left( X \right) = I_{0} \left[ \frac{2J_{1} \left( X \right)}{X} \right]^2$
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;h3 id="Defocus"&gt;Defocus&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/simulating-microscope-pupil-functions/#Defocus"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Now that we can simulate the diffraction-limited image of an &lt;em&gt;in-focus&lt;/em&gt; isotropic point source, let's add some defocus to demonstrate what the PSF would look like as the camera or sample is scanned along the axial direction.&lt;/p&gt;
 &lt;p&gt;Defocus can be added in numerous ways. One is to multiply our pupil function by the phase aberration for defocus, which is usually modeled as a parabolic phase aberration in the pupil coordinates. However, &lt;a href="http://kmdouglass.github.io/posts/beware-the-paraxial-approximation-in-microscopy.html"&gt;as I explained in a previous post&lt;/a&gt;, this is an approximate model for defocus and fails for large numerical apertures.&lt;/p&gt;
 &lt;p&gt;Another simple way is to propagate the plane wave angular spectrum in the image plane to nearby planes. This relatively easy method is used in a well-known microscopy paper (&lt;a href="http://onlinelibrary.wiley.com/doi/10.1111/j.0022-2720.2004.01393.x/abstract"&gt;Hanser, 2004&lt;/a&gt;) and involves multiplying the pupil function by a defocus kernel before performing the Fourier transform.&lt;/p&gt;
-$$\text{PSF}_{\text{A}} \left( x, y, z \right) = \iint P \left( k_x, k_y \right) \exp \left( j k_{z} z \right) \exp \left[ -j \left( k_{x}x + k_{y}y \right) \right] dx dy$$&lt;p&gt;Here, $k_z = \sqrt{\left( 2 \pi n / \lambda \right)^2 - k_x^2 - k_y^2}$. The defocus kernel essentially shifts the phase of each plane wave with pupil coordinates $\left( k_x, k_y \right)$ by an amount that depends on its coordinates and the distance from the image plane $z$.&lt;/p&gt;
+&lt;p&gt;$$\text{PSF}_{\text{A}} \left( x, y, z \right) = \iint P \left( k_x, k_y \right) \exp \left( j k_{z} z \right) \exp \left[ -j \left( k_{x}x + k_{y}y \right) \right] dx dy$$&lt;/p&gt;
+&lt;p&gt;Here, $k_z = \sqrt{\left( 2 \pi n / \lambda \right)^2 - k_x^2 - k_y^2}$. The defocus kernel essentially shifts the phase of each plane wave with pupil coordinates $\left( k_x, k_y \right)$ by an amount that depends on its coordinates and the distance from the image plane $z$.&lt;/p&gt;
 &lt;p&gt;The above equation means that we can model the PSF behavior as we scan through the focal plane by computing the defocus kernel for different distances from focus. Then, we multiply our perfect pupil by this defocus kernel and compute its Fourier transform to get the amplitude and irradiance PSF's.&lt;/p&gt;
 
 &lt;/div&gt;
@@ -1408,13 +1452,14 @@ $$\text{PSF}_{\text{A}} \left( x, y, z \right) = \iint P \left( k_x, k_y \right)
     &lt;span class="n"&gt;defocusPSF&lt;/span&gt;&lt;span class="p"&gt;[:,:,&lt;/span&gt;&lt;span class="n"&gt;ctr&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;real&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;defocusPSFA&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conj&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;defocusPSFA&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-    &lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;And that's it. All we needed to do was multiply pupil by the defocus kernel and compute the FFT like before. Now let's look at a couple of defocused PSF's at different distances from the focal plane.&lt;/p&gt;
 
@@ -1451,7 +1496,7 @@ $$\text{PSF}_{\text{A}} \left( x, y, z \right) = \iint P \left( k_x, k_y \right)
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-    &lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1461,7 +1506,7 @@ $$\text{PSF}_{\text{A}} \left( x, y, z \right) = \iint P \left( k_x, k_y \right)
 
 &lt;div class="output_area"&gt;
 
-    &lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -1477,7 +1522,8 @@ $$\text{PSF}_{\text{A}} \left( x, y, z \right) = \iint P \left( k_x, k_y \right)
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;As more and more defocus is added to the pupil, the PSF gets dimmer because the same number of photons are spread out across a larger area of the detector.&lt;/p&gt;
 &lt;p&gt;In a future post I'll discuss how we can model arbitrary aberrations within this framework. The idea is similar to how defocus is implemented here: you find the phase profile for the aberration, multiply it by the unaberrated pupil, and finally compute the 2D Fourier transform.&lt;/p&gt;
@@ -1503,26 +1549,26 @@ comprehension over lineFilters could have been placed inline with the primary li
 lines in the file. I do think it is more readable the way it is presented below, however.&lt;/p&gt;
 &lt;p&gt;I welcome any comments or suggestions, especially on the &lt;a class="reference external" href="https://gist.github.com/kmdouglass/507717d339bc82f850ce"&gt;Gist website&lt;/a&gt; where others may be more likely to find
 it.&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_24d56600bd694bbfa55cba81a4acf165-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;filename&lt;/span&gt;    &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'myFile.txt'&lt;/span&gt;
-&lt;a name="rest_code_24d56600bd694bbfa55cba81a4acf165-2"&gt;&lt;/a&gt;&lt;span class="n"&gt;outputLines&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
-&lt;a name="rest_code_24d56600bd694bbfa55cba81a4acf165-3"&gt;&lt;/a&gt;
-&lt;a name="rest_code_24d56600bd694bbfa55cba81a4acf165-4"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Keep all lines containing ANY of the following list of strings.&lt;/span&gt;
-&lt;a name="rest_code_24d56600bd694bbfa55cba81a4acf165-5"&gt;&lt;/a&gt;&lt;span class="n"&gt;lineFilters&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'line 1'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-&lt;a name="rest_code_24d56600bd694bbfa55cba81a4acf165-6"&gt;&lt;/a&gt;               &lt;span class="s1"&gt;'line 2'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-&lt;a name="rest_code_24d56600bd694bbfa55cba81a4acf165-7"&gt;&lt;/a&gt;               &lt;span class="s1"&gt;'line 3'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;a name="rest_code_24d56600bd694bbfa55cba81a4acf165-8"&gt;&lt;/a&gt;&lt;span class="n"&gt;stringIsIn&lt;/span&gt;  &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;filter&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="nb"&gt;filter&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;lineFilters&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;a name="rest_code_24d56600bd694bbfa55cba81a4acf165-9"&gt;&lt;/a&gt;
-&lt;a name="rest_code_24d56600bd694bbfa55cba81a4acf165-10"&gt;&lt;/a&gt;
-&lt;a name="rest_code_24d56600bd694bbfa55cba81a4acf165-11"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Read only lines containing one of the strings into memory.&lt;/span&gt;
-&lt;a name="rest_code_24d56600bd694bbfa55cba81a4acf165-12"&gt;&lt;/a&gt;&lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'r'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nb"&gt;file&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-&lt;a name="rest_code_24d56600bd694bbfa55cba81a4acf165-13"&gt;&lt;/a&gt;    &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;outputLines&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;file&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;any&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stringIsIn&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="p"&gt;))]&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_cfd6b47b9d704aa2b1f2d393e535d76e-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;filename&lt;/span&gt;    &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'myFile.txt'&lt;/span&gt;
+&lt;a name="rest_code_cfd6b47b9d704aa2b1f2d393e535d76e-2"&gt;&lt;/a&gt;&lt;span class="n"&gt;outputLines&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+&lt;a name="rest_code_cfd6b47b9d704aa2b1f2d393e535d76e-3"&gt;&lt;/a&gt;
+&lt;a name="rest_code_cfd6b47b9d704aa2b1f2d393e535d76e-4"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Keep all lines containing ANY of the following list of strings.&lt;/span&gt;
+&lt;a name="rest_code_cfd6b47b9d704aa2b1f2d393e535d76e-5"&gt;&lt;/a&gt;&lt;span class="n"&gt;lineFilters&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'line 1'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;a name="rest_code_cfd6b47b9d704aa2b1f2d393e535d76e-6"&gt;&lt;/a&gt;               &lt;span class="s1"&gt;'line 2'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;a name="rest_code_cfd6b47b9d704aa2b1f2d393e535d76e-7"&gt;&lt;/a&gt;               &lt;span class="s1"&gt;'line 3'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_cfd6b47b9d704aa2b1f2d393e535d76e-8"&gt;&lt;/a&gt;&lt;span class="n"&gt;stringIsIn&lt;/span&gt;  &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;filter&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="nb"&gt;filter&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;lineFilters&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_cfd6b47b9d704aa2b1f2d393e535d76e-9"&gt;&lt;/a&gt;
+&lt;a name="rest_code_cfd6b47b9d704aa2b1f2d393e535d76e-10"&gt;&lt;/a&gt;
+&lt;a name="rest_code_cfd6b47b9d704aa2b1f2d393e535d76e-11"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Read only lines containing one of the strings into memory.&lt;/span&gt;
+&lt;a name="rest_code_cfd6b47b9d704aa2b1f2d393e535d76e-12"&gt;&lt;/a&gt;&lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'r'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nb"&gt;file&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;a name="rest_code_cfd6b47b9d704aa2b1f2d393e535d76e-13"&gt;&lt;/a&gt;    &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;outputLines&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;file&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;any&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stringIsIn&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="p"&gt;))]&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;</description><category>micro-manager</category><category>python</category><guid>http://kmdouglass.github.io/posts/reading-select-lines-from-a-text-file/</guid><pubDate>Wed, 18 Mar 2015 07:27:50 GMT</pubDate></item><item><title>The basics of virtualenv</title><link>http://kmdouglass.github.io/posts/the-basics-of-virtualenv/</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;I use Python 3.4 in most of my data analyses and in some simulations. I like a lot of its features,
 like its implementation of generators, maps, and filters. However, much of the software on my
 Debian Wheezy system depends on Python 2.7 to run, such as &lt;a class="reference external" href="http://www.mendeley.com/"&gt;Mendeley&lt;/a&gt;. (It used to run just fine with Python 3.4, until I ran an automatic
 update and that was the end of that.)&lt;/p&gt;
 &lt;p&gt;To run some Python 2.7 programs, I used to do the following:&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_571f3c6e86ce46c286c5eb91aa28fc21-1"&gt;&lt;/a&gt;sudo rm /usr/bin/python
-&lt;a name="rest_code_571f3c6e86ce46c286c5eb91aa28fc21-2"&gt;&lt;/a&gt;sudo ln -s /usr/bin/python2.7 /usr/bin/python
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_5a965b27f5924ab9ad162d760e72dd34-1"&gt;&lt;/a&gt;sudo rm /usr/bin/python
+&lt;a name="rest_code_5a965b27f5924ab9ad162d760e72dd34-2"&gt;&lt;/a&gt;sudo ln -s /usr/bin/python2.7 /usr/bin/python
 &lt;/pre&gt;&lt;p&gt;I know. Ouch. Every single time I needed to run a program that depended on python2.7, I would
 delete the symlink in /usr/bin, make a new link to python2.7, and then run my program. When I
 needed to give various programs convenient access to python3.4, I would delete the symlink and
@@ -1539,29 +1585,29 @@ said&lt;/a&gt; into my own words.&lt;/p&gt;
 them installed at the system level, but I already have done this so I will start from there. I
 first installed pip for Python 2.7 since I only had pip3 on my system to start. I did this because
 I want to keep Python 2.7 as my system's default Python environment.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_550b2707f31d47ee8be7bd95d7e87c40-1"&gt;&lt;/a&gt;sudo apt-get update
-&lt;a name="rest_code_550b2707f31d47ee8be7bd95d7e87c40-2"&gt;&lt;/a&gt;sudo apt-get install python-pip
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_84f7c9f9afa64df0868ddf39808fe6c8-1"&gt;&lt;/a&gt;sudo apt-get update
+&lt;a name="rest_code_84f7c9f9afa64df0868ddf39808fe6c8-2"&gt;&lt;/a&gt;sudo apt-get install python-pip
 &lt;/pre&gt;&lt;p&gt;Once installed, I used it to install virtualenv and &lt;a class="reference external" href="https://virtualenvwrapper.readthedocs.org/en/latest"&gt;virtualenvwrapper&lt;/a&gt;. The latter provides some nice features for
 working with virtualenv.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_bfaa5a6d55a04e8bb0fa9132f2d3dcd1-1"&gt;&lt;/a&gt;sudo pip install virtualenv
-&lt;a name="rest_code_bfaa5a6d55a04e8bb0fa9132f2d3dcd1-2"&gt;&lt;/a&gt;sudo pip install virtualenvwrapper
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_6ee0166501d64c3e8569d7a0c0f5eeec-1"&gt;&lt;/a&gt;sudo pip install virtualenv
+&lt;a name="rest_code_6ee0166501d64c3e8569d7a0c0f5eeec-2"&gt;&lt;/a&gt;sudo pip install virtualenvwrapper
 &lt;/pre&gt;&lt;p&gt;Now, virtualenvwrapper requires an environment variable to tell it where to store the folders for
 each virtual environment. This environment variable is called WORKON_HOME. First, I created the
 folder it will point to:&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_faa7bd3d5b054959ba482e4e15cacfda-1"&gt;&lt;/a&gt;mkdir ~/Envs
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_2621bb3d6cc14851a0c79eb2cc545e81-1"&gt;&lt;/a&gt;mkdir ~/Envs
 &lt;/pre&gt;&lt;p&gt;Next, I edited my ~/.bashrc and added the following line:&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_5a624248ed8e43678e6ca6aff62765ca-1"&gt;&lt;/a&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;WORKON_HOME&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;~/Envs
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_30d0490928aa4ab59edd326e141a7d2b-1"&gt;&lt;/a&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;WORKON_HOME&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;~/Envs
 &lt;/pre&gt;&lt;p&gt;All of my virtual environment files (except for the Python intepreters) will be stored in this
 folder. Finally, I restarted my terminal window so that the environment variable was assigned. You
 can check this by typing =echo $WORKON_HOME= in your new terminal window. If it returns the path to
 your new environments folder, then you should be fine.&lt;/p&gt;
 &lt;p&gt;Next, I ran the virtualwrapper setup script. Note that I did not need sudo (in fact, sudo could not
 find a command called &lt;cite&gt;source&lt;/cite&gt;) and that no output is returned when the script is run.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_34a8f66a3fc74aea9292bb994272ad14-1"&gt;&lt;/a&gt;&lt;span class="nb"&gt;source&lt;/span&gt; /usr/local/bin/virtualenvwrapper.sh
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_260daf058c9740b6a4d91858a3cf0f07-1"&gt;&lt;/a&gt;&lt;span class="nb"&gt;source&lt;/span&gt; /usr/local/bin/virtualenvwrapper.sh
 &lt;/pre&gt;&lt;p&gt;Now virtualenvwrapper should be installed, so let's make a virtual environment. We can do this
 using the &lt;cite&gt;mkvirtualenv&lt;/cite&gt; command, followed by a name for the environment. I will use the name venv
 in this example, like Kenneth Reitz did in his guide that I linked above.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_9c746677de2449e489b256d7d1d5e0f2-1"&gt;&lt;/a&gt;mkvirtualenv venv
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_d40148cbf6414e1d8eb1a2417bd67731-1"&gt;&lt;/a&gt;mkvirtualenv venv
 &lt;/pre&gt;&lt;p&gt;To start the new virtual environment, type &lt;cite&gt;workon venv&lt;/cite&gt; and note that change in the prompt,
 indicating which environment you are in. You now have a fresh Python environment to which you can
 add any library you wish. To leave the environment, type &lt;cite&gt;deactivate&lt;/cite&gt; into your terminal.&lt;/p&gt;
@@ -1569,7 +1615,7 @@ add any library you wish. To leave the environment, type &lt;cite&gt;deactivate&
 the Python interpreter from inside your environment and try importing a module that you know is in
 your system-wide site packages but not in your virtual environment. For example, inside venv I type
 =python= at the terminal prompt and tried importing numpy, which I had not yet installed in venv:&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_ec646c15a455476a993d2e1d04483092-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;numpy&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_de43690c6e5b4587b7863a3d096db0ce-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;numpy&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;This returned an &lt;cite&gt;ImportError: No module named numpy&lt;/cite&gt;. Since I do have numpy installed on my system
 but not in this environment, it tells me that the environment is likely clean.&lt;/p&gt;
 &lt;p&gt;To install new libraries, simply use pip or install them to the folder that was created for this
@@ -1577,7 +1623,7 @@ environment in ~/Env. To delete a virtual environment entirely, use &lt;cite&gt;
 &lt;p&gt;Now, how can I specify that I want the virtual environment to use the python3.4 interpreter in a
 virtual environment named python3-general? Doing so would solve my original problem. Simply
 make a new virtual environment like so:&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_9d404579c1b249ed94a60888ab2e8e3b-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;mkvirtualenv&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nb"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;python3&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt; &lt;span class="n"&gt;python3&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;general&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_e92eda8ae7394ec68e6ac5708ae3f079-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;mkvirtualenv&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nb"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;python3&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt; &lt;span class="n"&gt;python3&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;general&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;Voilà. C'est tout. I hope this helps you get up and running with this great tool!&lt;/p&gt;&lt;/div&gt;</description><category>python</category><guid>http://kmdouglass.github.io/posts/the-basics-of-virtualenv/</guid><pubDate>Tue, 10 Feb 2015 06:47:50 GMT</pubDate></item><item><title>Sending arguments to Python decorators</title><link>http://kmdouglass.github.io/posts/sending-arguments-to-python-decorators/</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;&lt;a class="reference external" href="http://simeonfranklin.com/blog/2012/jul/1/python-decorators-in-12-steps/"&gt;Python's decorators&lt;/a&gt;
 are tools for changing the behavior of a function without completely recoding it. When we apply a
 decorator to a function, we say that the function has been decorated. Strictly speaking, when we
@@ -1585,31 +1631,31 @@ decorate a function, we send it to a wrapper that returns another function. It's
 &lt;p&gt;I was having trouble understanding exactly to which function, the original or the decorated one,
 the arguments are sent in a Python decorated function call. I wrote the following script to better
 understand this process (I use Python 3.4):&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_feef6382548c4f36b35de9d92b49477d-1"&gt;&lt;/a&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;wrapper&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;inFunction&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-&lt;a name="rest_code_feef6382548c4f36b35de9d92b49477d-2"&gt;&lt;/a&gt;    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;outFunction&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-&lt;a name="rest_code_feef6382548c4f36b35de9d92b49477d-3"&gt;&lt;/a&gt;        &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'The input arguments were:'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_feef6382548c4f36b35de9d92b49477d-4"&gt;&lt;/a&gt;        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;items&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
-&lt;a name="rest_code_feef6382548c4f36b35de9d92b49477d-5"&gt;&lt;/a&gt;            &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt;&lt;span class="si"&gt;%r&lt;/span&gt;&lt;span class="s1"&gt; : &lt;/span&gt;&lt;span class="si"&gt;%r&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-&lt;a name="rest_code_feef6382548c4f36b35de9d92b49477d-6"&gt;&lt;/a&gt;
-&lt;a name="rest_code_feef6382548c4f36b35de9d92b49477d-7"&gt;&lt;/a&gt;        &lt;span class="c1"&gt;# Return the original function&lt;/span&gt;
-&lt;a name="rest_code_feef6382548c4f36b35de9d92b49477d-8"&gt;&lt;/a&gt;        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;inFunction&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_feef6382548c4f36b35de9d92b49477d-9"&gt;&lt;/a&gt;
-&lt;a name="rest_code_feef6382548c4f36b35de9d92b49477d-10"&gt;&lt;/a&gt;    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;outFunction&lt;/span&gt;
-&lt;a name="rest_code_feef6382548c4f36b35de9d92b49477d-11"&gt;&lt;/a&gt;
-&lt;a name="rest_code_feef6382548c4f36b35de9d92b49477d-12"&gt;&lt;/a&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-&lt;a name="rest_code_feef6382548c4f36b35de9d92b49477d-13"&gt;&lt;/a&gt;    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_a4a9f6993ad345a2bafdeadda328e966-1"&gt;&lt;/a&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;wrapper&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;inFunction&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_a4a9f6993ad345a2bafdeadda328e966-2"&gt;&lt;/a&gt;    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;outFunction&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_a4a9f6993ad345a2bafdeadda328e966-3"&gt;&lt;/a&gt;        &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'The input arguments were:'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_a4a9f6993ad345a2bafdeadda328e966-4"&gt;&lt;/a&gt;        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;items&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+&lt;a name="rest_code_a4a9f6993ad345a2bafdeadda328e966-5"&gt;&lt;/a&gt;            &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt;&lt;span class="si"&gt;%r&lt;/span&gt;&lt;span class="s1"&gt; : &lt;/span&gt;&lt;span class="si"&gt;%r&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;a name="rest_code_a4a9f6993ad345a2bafdeadda328e966-6"&gt;&lt;/a&gt;
+&lt;a name="rest_code_a4a9f6993ad345a2bafdeadda328e966-7"&gt;&lt;/a&gt;        &lt;span class="c1"&gt;# Return the original function&lt;/span&gt;
+&lt;a name="rest_code_a4a9f6993ad345a2bafdeadda328e966-8"&gt;&lt;/a&gt;        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;inFunction&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_a4a9f6993ad345a2bafdeadda328e966-9"&gt;&lt;/a&gt;
+&lt;a name="rest_code_a4a9f6993ad345a2bafdeadda328e966-10"&gt;&lt;/a&gt;    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;outFunction&lt;/span&gt;
+&lt;a name="rest_code_a4a9f6993ad345a2bafdeadda328e966-11"&gt;&lt;/a&gt;
+&lt;a name="rest_code_a4a9f6993ad345a2bafdeadda328e966-12"&gt;&lt;/a&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_a4a9f6993ad345a2bafdeadda328e966-13"&gt;&lt;/a&gt;    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;&lt;cite&gt;wrapper(inFunction)&lt;/cite&gt; is a function that accepts another function as an argument. It returns a
 function that simply prints the keyword arguments of &lt;cite&gt;inFunction()&lt;/cite&gt;, and calls &lt;cite&gt;inFunction()&lt;/cite&gt; like
 normal.&lt;/p&gt;
 &lt;p&gt;To decorate the function &lt;cite&gt;add(x = 1, y = 2)&lt;/cite&gt; so that its arguments are printed without recoding it,
 we normally would place &lt;cite&gt;@wrapper&lt;/cite&gt; before its definition. However, let's make the decorator in a
 way that's closer to how &lt;cite&gt;@&lt;/cite&gt; works under the hood:&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_b39a212a7c0d4158b19cd1474dc6b1bd-1"&gt;&lt;/a&gt;In &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;22&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;: &lt;span class="nv"&gt;decoratedAdd&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; wrapper&lt;span class="o"&gt;(&lt;/span&gt;add&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_b39a212a7c0d4158b19cd1474dc6b1bd-2"&gt;&lt;/a&gt;In &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;23&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;: decoratedAdd&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;, &lt;span class="nv"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;24&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_b39a212a7c0d4158b19cd1474dc6b1bd-3"&gt;&lt;/a&gt;The input arguments were:
-&lt;a name="rest_code_b39a212a7c0d4158b19cd1474dc6b1bd-4"&gt;&lt;/a&gt;&lt;span class="s1"&gt;'y'&lt;/span&gt; : &lt;span class="m"&gt;24&lt;/span&gt;
-&lt;a name="rest_code_b39a212a7c0d4158b19cd1474dc6b1bd-5"&gt;&lt;/a&gt;&lt;span class="s1"&gt;'x'&lt;/span&gt; : &lt;span class="m"&gt;1&lt;/span&gt;
-&lt;a name="rest_code_b39a212a7c0d4158b19cd1474dc6b1bd-6"&gt;&lt;/a&gt;Out&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;23&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;: &lt;span class="m"&gt;25&lt;/span&gt;
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_c67970373fca49508cb8e921d2acf198-1"&gt;&lt;/a&gt;In &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;22&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;: &lt;span class="nv"&gt;decoratedAdd&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; wrapper&lt;span class="o"&gt;(&lt;/span&gt;add&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_c67970373fca49508cb8e921d2acf198-2"&gt;&lt;/a&gt;In &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;23&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;: decoratedAdd&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;, &lt;span class="nv"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;24&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_c67970373fca49508cb8e921d2acf198-3"&gt;&lt;/a&gt;The input arguments were:
+&lt;a name="rest_code_c67970373fca49508cb8e921d2acf198-4"&gt;&lt;/a&gt;&lt;span class="s1"&gt;'y'&lt;/span&gt; : &lt;span class="m"&gt;24&lt;/span&gt;
+&lt;a name="rest_code_c67970373fca49508cb8e921d2acf198-5"&gt;&lt;/a&gt;&lt;span class="s1"&gt;'x'&lt;/span&gt; : &lt;span class="m"&gt;1&lt;/span&gt;
+&lt;a name="rest_code_c67970373fca49508cb8e921d2acf198-6"&gt;&lt;/a&gt;Out&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;23&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;: &lt;span class="m"&gt;25&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;When we call &lt;cite&gt;decoratedAdd(x = 1, y = 24)&lt;/cite&gt;, the arguments are printed to the screen and we still
 get the same functionality of &lt;cite&gt;add()&lt;/cite&gt;. What I wanted to know was this: are the keyword arguments x
 = 1, y = 24 bound in the namespace of &lt;cite&gt;wrapper()&lt;/cite&gt; or in the namespace of &lt;cite&gt;outFunction()&lt;/cite&gt;? &lt;em&gt;In
@@ -1619,11 +1665,11 @@ function?&lt;/em&gt;&lt;/p&gt;
 returns the decorated function, and then the arguments are passed into the decorated function. If
 this order of operations were flipped, &lt;cite&gt;wrapper()&lt;/cite&gt; should know that I set x to 1 and y to 24, but
 really it doesn't know these details at all.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_8b7e24df9eff49b58cfc003b35651f16-1"&gt;&lt;/a&gt;In &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;24&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;: wrapper&lt;span class="o"&gt;(&lt;/span&gt;add&lt;span class="o"&gt;)(&lt;/span&gt;&lt;span class="nv"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;, &lt;span class="nv"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;24&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_8b7e24df9eff49b58cfc003b35651f16-2"&gt;&lt;/a&gt;The input arguments were:
-&lt;a name="rest_code_8b7e24df9eff49b58cfc003b35651f16-3"&gt;&lt;/a&gt;&lt;span class="s1"&gt;'y'&lt;/span&gt; : &lt;span class="m"&gt;24&lt;/span&gt;
-&lt;a name="rest_code_8b7e24df9eff49b58cfc003b35651f16-4"&gt;&lt;/a&gt;&lt;span class="s1"&gt;'x'&lt;/span&gt; : &lt;span class="m"&gt;1&lt;/span&gt;
-&lt;a name="rest_code_8b7e24df9eff49b58cfc003b35651f16-5"&gt;&lt;/a&gt;Out&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;24&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;: &lt;span class="m"&gt;25&lt;/span&gt;
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_aacfe8dc3e1247ce85756cf417383f41-1"&gt;&lt;/a&gt;In &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;24&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;: wrapper&lt;span class="o"&gt;(&lt;/span&gt;add&lt;span class="o"&gt;)(&lt;/span&gt;&lt;span class="nv"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;, &lt;span class="nv"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;24&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_aacfe8dc3e1247ce85756cf417383f41-2"&gt;&lt;/a&gt;The input arguments were:
+&lt;a name="rest_code_aacfe8dc3e1247ce85756cf417383f41-3"&gt;&lt;/a&gt;&lt;span class="s1"&gt;'y'&lt;/span&gt; : &lt;span class="m"&gt;24&lt;/span&gt;
+&lt;a name="rest_code_aacfe8dc3e1247ce85756cf417383f41-4"&gt;&lt;/a&gt;&lt;span class="s1"&gt;'x'&lt;/span&gt; : &lt;span class="m"&gt;1&lt;/span&gt;
+&lt;a name="rest_code_aacfe8dc3e1247ce85756cf417383f41-5"&gt;&lt;/a&gt;Out&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;24&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;: &lt;span class="m"&gt;25&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;So, when I call &lt;cite&gt;wrapper(add)(x = 1, y = 24)&lt;/cite&gt;, first &lt;cite&gt;wrapper(add)&lt;/cite&gt; is called, which returns
 &lt;cite&gt;outFunction()&lt;/cite&gt;, and then these arguments are passed to &lt;cite&gt;outFunction()&lt;/cite&gt;.&lt;/p&gt;
 &lt;p&gt;Now what happens when I call &lt;cite&gt;wrapper(add(x = 1, y = 24))&lt;/cite&gt;? When I try this, the arguments are
@@ -1661,28 +1707,28 @@ main aspects of the multiprocessing module. They state that the simplest way to 
 different cores of a machine is to create new &lt;cite&gt;Process&lt;/cite&gt; objects with target functions. Each object
 is then set to execute by calling its &lt;cite&gt;start()&lt;/cite&gt; method.&lt;/p&gt;
 &lt;p&gt;The basic example from their site looks like this:&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;multiprocessing&lt;/span&gt;
-&lt;a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-2"&gt;&lt;/a&gt;
-&lt;a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-3"&gt;&lt;/a&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;worker&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
-&lt;a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-4"&gt;&lt;/a&gt;    &lt;span class="sd"&gt;"""worker function"""&lt;/span&gt;
-&lt;a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-5"&gt;&lt;/a&gt;    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s1"&gt;'Worker'&lt;/span&gt;
-&lt;a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-6"&gt;&lt;/a&gt;    &lt;span class="k"&gt;return&lt;/span&gt;
-&lt;a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-7"&gt;&lt;/a&gt;
-&lt;a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-8"&gt;&lt;/a&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;'__main__'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-&lt;a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-9"&gt;&lt;/a&gt;    &lt;span class="n"&gt;jobs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
-&lt;a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-10"&gt;&lt;/a&gt;    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-&lt;a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-11"&gt;&lt;/a&gt;        &lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;multiprocessing&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Process&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;target&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;worker&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-12"&gt;&lt;/a&gt;        &lt;span class="n"&gt;jobs&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_785777f6259d4f51a1e5c5ca8834790b-13"&gt;&lt;/a&gt;        &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;start&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_5c3c33cda8f6408f8b18375bcf9f18f5-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;multiprocessing&lt;/span&gt;
+&lt;a name="rest_code_5c3c33cda8f6408f8b18375bcf9f18f5-2"&gt;&lt;/a&gt;
+&lt;a name="rest_code_5c3c33cda8f6408f8b18375bcf9f18f5-3"&gt;&lt;/a&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;worker&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+&lt;a name="rest_code_5c3c33cda8f6408f8b18375bcf9f18f5-4"&gt;&lt;/a&gt;    &lt;span class="sd"&gt;"""worker function"""&lt;/span&gt;
+&lt;a name="rest_code_5c3c33cda8f6408f8b18375bcf9f18f5-5"&gt;&lt;/a&gt;    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s1"&gt;'Worker'&lt;/span&gt;
+&lt;a name="rest_code_5c3c33cda8f6408f8b18375bcf9f18f5-6"&gt;&lt;/a&gt;    &lt;span class="k"&gt;return&lt;/span&gt;
+&lt;a name="rest_code_5c3c33cda8f6408f8b18375bcf9f18f5-7"&gt;&lt;/a&gt;
+&lt;a name="rest_code_5c3c33cda8f6408f8b18375bcf9f18f5-8"&gt;&lt;/a&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;'__main__'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;a name="rest_code_5c3c33cda8f6408f8b18375bcf9f18f5-9"&gt;&lt;/a&gt;    &lt;span class="n"&gt;jobs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+&lt;a name="rest_code_5c3c33cda8f6408f8b18375bcf9f18f5-10"&gt;&lt;/a&gt;    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_5c3c33cda8f6408f8b18375bcf9f18f5-11"&gt;&lt;/a&gt;        &lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;multiprocessing&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Process&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;target&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;worker&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_5c3c33cda8f6408f8b18375bcf9f18f5-12"&gt;&lt;/a&gt;        &lt;span class="n"&gt;jobs&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_5c3c33cda8f6408f8b18375bcf9f18f5-13"&gt;&lt;/a&gt;        &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;start&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;In this example, it's important to create the Process instances inside the&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_de225704763a438e9afd670052d58ffc-1"&gt;&lt;/a&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;'__main__'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_941c8f9e25c64005b2a107233bae3b6d-1"&gt;&lt;/a&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;'__main__'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;section of the script because child processes import the script where the target function is
 contained. Placing the object instantiation in this section prevents an infinite, recursive string
 of such instantiations. A workaround to this is to define the function in a different script and
 import it into the namespace.&lt;/p&gt;
 &lt;p&gt;To send arguments to the function (&lt;cite&gt;worker()&lt;/cite&gt; in the example above), we can use the &lt;cite&gt;args&lt;/cite&gt; keyword
 in the Process object instantiation like&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_da3be8ef22d146c097c2da03d71cd10a-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;multiprocessing&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Process&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;target&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;worker&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;,))&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_39bcda47bd3f44acba78ceb9965333aa-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;multiprocessing&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Process&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;target&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;worker&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;,))&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;A very important thing to note is that the arguments must be objects that can be pickled using
 Python's pickle module. If an argument is a class instance, this means that every attritube of that
 class must be pickleable.&lt;/p&gt;
@@ -1694,15 +1740,15 @@ essentially applies a function to each element in an iterable and returns the re
 if I wanted to square each number in a list of integers between 0 and 9 and perform the square
 operation on multiple processors, I would write a function for squaring an argument, and supply
 this function and the list of integers to &lt;cite&gt;Pool.map()&lt;/cite&gt;. The code looks like this:&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_80aa35699e8b42569c0122356f4aa6dd-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;multiprocessing&lt;/span&gt;
-&lt;a name="rest_code_80aa35699e8b42569c0122356f4aa6dd-2"&gt;&lt;/a&gt;
-&lt;a name="rest_code_80aa35699e8b42569c0122356f4aa6dd-3"&gt;&lt;/a&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;funSquare&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-&lt;a name="rest_code_80aa35699e8b42569c0122356f4aa6dd-4"&gt;&lt;/a&gt;    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;num&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
-&lt;a name="rest_code_80aa35699e8b42569c0122356f4aa6dd-5"&gt;&lt;/a&gt;
-&lt;a name="rest_code_80aa35699e8b42569c0122356f4aa6dd-6"&gt;&lt;/a&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;'__main__'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-&lt;a name="rest_code_80aa35699e8b42569c0122356f4aa6dd-7"&gt;&lt;/a&gt;    &lt;span class="n"&gt;pool&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;multiprocessing&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Pool&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;a name="rest_code_80aa35699e8b42569c0122356f4aa6dd-8"&gt;&lt;/a&gt;    &lt;span class="n"&gt;results&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pool&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;map&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;funSquare&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-&lt;a name="rest_code_80aa35699e8b42569c0122356f4aa6dd-9"&gt;&lt;/a&gt;    &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;results&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_a536d566938d4f9ca46aa7e710b23e49-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;multiprocessing&lt;/span&gt;
+&lt;a name="rest_code_a536d566938d4f9ca46aa7e710b23e49-2"&gt;&lt;/a&gt;
+&lt;a name="rest_code_a536d566938d4f9ca46aa7e710b23e49-3"&gt;&lt;/a&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;funSquare&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_a536d566938d4f9ca46aa7e710b23e49-4"&gt;&lt;/a&gt;    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;num&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;a name="rest_code_a536d566938d4f9ca46aa7e710b23e49-5"&gt;&lt;/a&gt;
+&lt;a name="rest_code_a536d566938d4f9ca46aa7e710b23e49-6"&gt;&lt;/a&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;'__main__'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;a name="rest_code_a536d566938d4f9ca46aa7e710b23e49-7"&gt;&lt;/a&gt;    &lt;span class="n"&gt;pool&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;multiprocessing&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Pool&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;a name="rest_code_a536d566938d4f9ca46aa7e710b23e49-8"&gt;&lt;/a&gt;    &lt;span class="n"&gt;results&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pool&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;map&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;funSquare&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;a name="rest_code_a536d566938d4f9ca46aa7e710b23e49-9"&gt;&lt;/a&gt;    &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;results&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;div class="section" id="design-the-solution-to-the-problem"&gt;
 &lt;h2&gt;Design the solution to the problem&lt;/h2&gt;
@@ -1727,31 +1773,31 @@ a disk. This may change depending on your specific problem.&lt;/p&gt;
 &lt;p&gt;I'll now give a simplified example of how this solution to the parameter sweep can be implemented
 using Python's multiprocessing module. I won't use objects like in my real code, but will first
 demonstrate an example where &lt;cite&gt;Pool.map()&lt;/cite&gt; is applied to a list of numbers.&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;multiprocessing&lt;/span&gt;
-&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-2"&gt;&lt;/a&gt;
-&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-3"&gt;&lt;/a&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;runSimulation&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-4"&gt;&lt;/a&gt;    &lt;span class="sd"&gt;"""This is the main processing function. It will contain whatever&lt;/span&gt;
-&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-5"&gt;&lt;/a&gt;&lt;span class="sd"&gt;    code should be run on multiple processors.&lt;/span&gt;
-&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-6"&gt;&lt;/a&gt;
-&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-7"&gt;&lt;/a&gt;&lt;span class="sd"&gt;    """&lt;/span&gt;
-&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-8"&gt;&lt;/a&gt;    &lt;span class="n"&gt;param1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;param2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;params&lt;/span&gt;
-&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-9"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;# Example computation&lt;/span&gt;
-&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-10"&gt;&lt;/a&gt;    &lt;span class="n"&gt;processedData&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
-&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-11"&gt;&lt;/a&gt;    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;ctr&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1000000&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-12"&gt;&lt;/a&gt;        &lt;span class="n"&gt;processedData&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;param1&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;ctr&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;param2&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-13"&gt;&lt;/a&gt;
-&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-14"&gt;&lt;/a&gt;    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;processedData&lt;/span&gt;
-&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-15"&gt;&lt;/a&gt;
-&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-16"&gt;&lt;/a&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;'__main__'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-17"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;# Define the parameters to test&lt;/span&gt;
-&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-18"&gt;&lt;/a&gt;    &lt;span class="n"&gt;param1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-19"&gt;&lt;/a&gt;    &lt;span class="n"&gt;param2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;202&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-20"&gt;&lt;/a&gt;
-&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-21"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;# Zip the parameters because pool.map() takes only one iterable&lt;/span&gt;
-&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-22"&gt;&lt;/a&gt;    &lt;span class="n"&gt;params&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;zip&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;param1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;param2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-23"&gt;&lt;/a&gt;
-&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-24"&gt;&lt;/a&gt;    &lt;span class="n"&gt;pool&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;multiprocessing&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Pool&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;a name="rest_code_2985231f1c784cab9f50ab707280e43f-25"&gt;&lt;/a&gt;    &lt;span class="n"&gt;results&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pool&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;map&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;runSimulation&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_72a1648ce281428a81ea751a07ed827b-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;multiprocessing&lt;/span&gt;
+&lt;a name="rest_code_72a1648ce281428a81ea751a07ed827b-2"&gt;&lt;/a&gt;
+&lt;a name="rest_code_72a1648ce281428a81ea751a07ed827b-3"&gt;&lt;/a&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;runSimulation&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_72a1648ce281428a81ea751a07ed827b-4"&gt;&lt;/a&gt;    &lt;span class="sd"&gt;"""This is the main processing function. It will contain whatever&lt;/span&gt;
+&lt;a name="rest_code_72a1648ce281428a81ea751a07ed827b-5"&gt;&lt;/a&gt;&lt;span class="sd"&gt;    code should be run on multiple processors.&lt;/span&gt;
+&lt;a name="rest_code_72a1648ce281428a81ea751a07ed827b-6"&gt;&lt;/a&gt;
+&lt;a name="rest_code_72a1648ce281428a81ea751a07ed827b-7"&gt;&lt;/a&gt;&lt;span class="sd"&gt;    """&lt;/span&gt;
+&lt;a name="rest_code_72a1648ce281428a81ea751a07ed827b-8"&gt;&lt;/a&gt;    &lt;span class="n"&gt;param1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;param2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;params&lt;/span&gt;
+&lt;a name="rest_code_72a1648ce281428a81ea751a07ed827b-9"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;# Example computation&lt;/span&gt;
+&lt;a name="rest_code_72a1648ce281428a81ea751a07ed827b-10"&gt;&lt;/a&gt;    &lt;span class="n"&gt;processedData&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+&lt;a name="rest_code_72a1648ce281428a81ea751a07ed827b-11"&gt;&lt;/a&gt;    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;ctr&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1000000&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_72a1648ce281428a81ea751a07ed827b-12"&gt;&lt;/a&gt;        &lt;span class="n"&gt;processedData&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;param1&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;ctr&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;param2&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_72a1648ce281428a81ea751a07ed827b-13"&gt;&lt;/a&gt;
+&lt;a name="rest_code_72a1648ce281428a81ea751a07ed827b-14"&gt;&lt;/a&gt;    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;processedData&lt;/span&gt;
+&lt;a name="rest_code_72a1648ce281428a81ea751a07ed827b-15"&gt;&lt;/a&gt;
+&lt;a name="rest_code_72a1648ce281428a81ea751a07ed827b-16"&gt;&lt;/a&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;'__main__'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;a name="rest_code_72a1648ce281428a81ea751a07ed827b-17"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;# Define the parameters to test&lt;/span&gt;
+&lt;a name="rest_code_72a1648ce281428a81ea751a07ed827b-18"&gt;&lt;/a&gt;    &lt;span class="n"&gt;param1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_72a1648ce281428a81ea751a07ed827b-19"&gt;&lt;/a&gt;    &lt;span class="n"&gt;param2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;202&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_72a1648ce281428a81ea751a07ed827b-20"&gt;&lt;/a&gt;
+&lt;a name="rest_code_72a1648ce281428a81ea751a07ed827b-21"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;# Zip the parameters because pool.map() takes only one iterable&lt;/span&gt;
+&lt;a name="rest_code_72a1648ce281428a81ea751a07ed827b-22"&gt;&lt;/a&gt;    &lt;span class="n"&gt;params&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;zip&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;param1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;param2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_72a1648ce281428a81ea751a07ed827b-23"&gt;&lt;/a&gt;
+&lt;a name="rest_code_72a1648ce281428a81ea751a07ed827b-24"&gt;&lt;/a&gt;    &lt;span class="n"&gt;pool&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;multiprocessing&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Pool&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;a name="rest_code_72a1648ce281428a81ea751a07ed827b-25"&gt;&lt;/a&gt;    &lt;span class="n"&gt;results&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pool&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;map&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;runSimulation&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;This is a rather silly example of a simulation, but I think it illustrates the point nicely. In the
 &lt;cite&gt;__main__&lt;/cite&gt; portion of the code, I first define two lists for each parameter value that I want to
 'simulate.' These parameters are zipped together in this example because &lt;cite&gt;Pool.map()&lt;/cite&gt; takes only
@@ -1772,37 +1818,37 @@ example.&lt;/p&gt;
 &lt;p&gt;In my real simulation code, I use a class to encapsulate a number of structural parameters and
 methods for simulating a polymer model. So long as instances of this class can be &lt;a class="reference external" href="https://docs.python.org/3/library/pickle.html"&gt;pickled&lt;/a&gt;, I can use them as the iterable in &lt;cite&gt;Pool.map()&lt;/cite&gt;,
 not just lists of floating point numbers.&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;multiprocessing&lt;/span&gt;
-&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-2"&gt;&lt;/a&gt;
-&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-3"&gt;&lt;/a&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;simObject&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
-&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-4"&gt;&lt;/a&gt;    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-5"&gt;&lt;/a&gt;        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;param1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;param2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;params&lt;/span&gt;
-&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-6"&gt;&lt;/a&gt;
-&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-7"&gt;&lt;/a&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;runSimulation&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;objInstance&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-8"&gt;&lt;/a&gt;    &lt;span class="sd"&gt;"""This is the main processing function. It will contain whatever&lt;/span&gt;
-&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-9"&gt;&lt;/a&gt;&lt;span class="sd"&gt;    code should be run on multiple processors.&lt;/span&gt;
-&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-10"&gt;&lt;/a&gt;
-&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-11"&gt;&lt;/a&gt;&lt;span class="sd"&gt;    """&lt;/span&gt;
-&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-12"&gt;&lt;/a&gt;    &lt;span class="n"&gt;param1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;param2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;objInstance&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;param1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;objInstance&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;param2&lt;/span&gt;
-&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-13"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;# Example computation&lt;/span&gt;
-&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-14"&gt;&lt;/a&gt;    &lt;span class="n"&gt;processedData&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
-&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-15"&gt;&lt;/a&gt;    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;ctr&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1000000&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-16"&gt;&lt;/a&gt;        &lt;span class="n"&gt;processedData&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;param1&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;ctr&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;param2&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-17"&gt;&lt;/a&gt;
-&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-18"&gt;&lt;/a&gt;    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;processedData&lt;/span&gt;
-&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-19"&gt;&lt;/a&gt;
-&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-20"&gt;&lt;/a&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;'__main__'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-21"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;# Define the parameters to test&lt;/span&gt;
-&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-22"&gt;&lt;/a&gt;    &lt;span class="n"&gt;param1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-23"&gt;&lt;/a&gt;    &lt;span class="n"&gt;param2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;202&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-24"&gt;&lt;/a&gt;
-&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-25"&gt;&lt;/a&gt;    &lt;span class="n"&gt;objList&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
-&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-26"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;# Create a list of objects to feed into pool.map()&lt;/span&gt;
-&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-27"&gt;&lt;/a&gt;    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;p1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;p2&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;zip&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;param1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;param2&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-28"&gt;&lt;/a&gt;        &lt;span class="n"&gt;objList&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;simObject&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;p1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;p2&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
-&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-29"&gt;&lt;/a&gt;
-&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-30"&gt;&lt;/a&gt;    &lt;span class="n"&gt;pool&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;multiprocessing&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Pool&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;a name="rest_code_e7c5ee588e854a03ae514248194fa6f1-31"&gt;&lt;/a&gt;    &lt;span class="n"&gt;results&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pool&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;map&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;runSimulation&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;objList&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_b21c9e051c534da79f9dd10b315daa0a-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;multiprocessing&lt;/span&gt;
+&lt;a name="rest_code_b21c9e051c534da79f9dd10b315daa0a-2"&gt;&lt;/a&gt;
+&lt;a name="rest_code_b21c9e051c534da79f9dd10b315daa0a-3"&gt;&lt;/a&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;simObject&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+&lt;a name="rest_code_b21c9e051c534da79f9dd10b315daa0a-4"&gt;&lt;/a&gt;    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_b21c9e051c534da79f9dd10b315daa0a-5"&gt;&lt;/a&gt;        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;param1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;param2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;params&lt;/span&gt;
+&lt;a name="rest_code_b21c9e051c534da79f9dd10b315daa0a-6"&gt;&lt;/a&gt;
+&lt;a name="rest_code_b21c9e051c534da79f9dd10b315daa0a-7"&gt;&lt;/a&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;runSimulation&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;objInstance&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_b21c9e051c534da79f9dd10b315daa0a-8"&gt;&lt;/a&gt;    &lt;span class="sd"&gt;"""This is the main processing function. It will contain whatever&lt;/span&gt;
+&lt;a name="rest_code_b21c9e051c534da79f9dd10b315daa0a-9"&gt;&lt;/a&gt;&lt;span class="sd"&gt;    code should be run on multiple processors.&lt;/span&gt;
+&lt;a name="rest_code_b21c9e051c534da79f9dd10b315daa0a-10"&gt;&lt;/a&gt;
+&lt;a name="rest_code_b21c9e051c534da79f9dd10b315daa0a-11"&gt;&lt;/a&gt;&lt;span class="sd"&gt;    """&lt;/span&gt;
+&lt;a name="rest_code_b21c9e051c534da79f9dd10b315daa0a-12"&gt;&lt;/a&gt;    &lt;span class="n"&gt;param1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;param2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;objInstance&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;param1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;objInstance&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;param2&lt;/span&gt;
+&lt;a name="rest_code_b21c9e051c534da79f9dd10b315daa0a-13"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;# Example computation&lt;/span&gt;
+&lt;a name="rest_code_b21c9e051c534da79f9dd10b315daa0a-14"&gt;&lt;/a&gt;    &lt;span class="n"&gt;processedData&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+&lt;a name="rest_code_b21c9e051c534da79f9dd10b315daa0a-15"&gt;&lt;/a&gt;    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;ctr&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1000000&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_b21c9e051c534da79f9dd10b315daa0a-16"&gt;&lt;/a&gt;        &lt;span class="n"&gt;processedData&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;param1&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;ctr&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;param2&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_b21c9e051c534da79f9dd10b315daa0a-17"&gt;&lt;/a&gt;
+&lt;a name="rest_code_b21c9e051c534da79f9dd10b315daa0a-18"&gt;&lt;/a&gt;    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;processedData&lt;/span&gt;
+&lt;a name="rest_code_b21c9e051c534da79f9dd10b315daa0a-19"&gt;&lt;/a&gt;
+&lt;a name="rest_code_b21c9e051c534da79f9dd10b315daa0a-20"&gt;&lt;/a&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;'__main__'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;a name="rest_code_b21c9e051c534da79f9dd10b315daa0a-21"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;# Define the parameters to test&lt;/span&gt;
+&lt;a name="rest_code_b21c9e051c534da79f9dd10b315daa0a-22"&gt;&lt;/a&gt;    &lt;span class="n"&gt;param1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_b21c9e051c534da79f9dd10b315daa0a-23"&gt;&lt;/a&gt;    &lt;span class="n"&gt;param2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;202&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_b21c9e051c534da79f9dd10b315daa0a-24"&gt;&lt;/a&gt;
+&lt;a name="rest_code_b21c9e051c534da79f9dd10b315daa0a-25"&gt;&lt;/a&gt;    &lt;span class="n"&gt;objList&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+&lt;a name="rest_code_b21c9e051c534da79f9dd10b315daa0a-26"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;# Create a list of objects to feed into pool.map()&lt;/span&gt;
+&lt;a name="rest_code_b21c9e051c534da79f9dd10b315daa0a-27"&gt;&lt;/a&gt;    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;p1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;p2&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;zip&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;param1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;param2&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_b21c9e051c534da79f9dd10b315daa0a-28"&gt;&lt;/a&gt;        &lt;span class="n"&gt;objList&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;simObject&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;p1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;p2&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+&lt;a name="rest_code_b21c9e051c534da79f9dd10b315daa0a-29"&gt;&lt;/a&gt;
+&lt;a name="rest_code_b21c9e051c534da79f9dd10b315daa0a-30"&gt;&lt;/a&gt;    &lt;span class="n"&gt;pool&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;multiprocessing&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Pool&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;a name="rest_code_b21c9e051c534da79f9dd10b315daa0a-31"&gt;&lt;/a&gt;    &lt;span class="n"&gt;results&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pool&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;map&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;runSimulation&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;objList&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;Again, this is a silly example, but it demonstrates that lists of objects can be used in the
 parameter sweep, allowing for easy parallelization of object-oriented code.&lt;/p&gt;
 &lt;p&gt;Instead of &lt;cite&gt;runSimulation()&lt;/cite&gt;, you may want to apply an instance method to a list in &lt;cite&gt;pool.map()&lt;/cite&gt;. A
@@ -1814,43 +1860,43 @@ method and pass the object instance into the pool. More details can be found &lt
 &lt;h2&gt;Comparing computation times&lt;/h2&gt;
 &lt;p&gt;The following code makes a rough comparison between computation time for the parallel and serial
 versions of &lt;cite&gt;map()&lt;/cite&gt;:&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;multiprocessing&lt;/span&gt;
-&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-2"&gt;&lt;/a&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;time&lt;/span&gt;
-&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-3"&gt;&lt;/a&gt;
-&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-4"&gt;&lt;/a&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;runSimulation&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-5"&gt;&lt;/a&gt;    &lt;span class="sd"&gt;"""This is the main processing function. It will contain whatever&lt;/span&gt;
-&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-6"&gt;&lt;/a&gt;&lt;span class="sd"&gt;    code should be run on multiple processors.&lt;/span&gt;
-&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-7"&gt;&lt;/a&gt;
-&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-8"&gt;&lt;/a&gt;&lt;span class="sd"&gt;    """&lt;/span&gt;
-&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-9"&gt;&lt;/a&gt;    &lt;span class="n"&gt;param1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;param2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;params&lt;/span&gt;
-&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-10"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;# Example computation&lt;/span&gt;
-&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-11"&gt;&lt;/a&gt;    &lt;span class="n"&gt;processedData&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
-&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-12"&gt;&lt;/a&gt;    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;ctr&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1000000&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-13"&gt;&lt;/a&gt;        &lt;span class="n"&gt;processedData&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;param1&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;ctr&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;param2&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-14"&gt;&lt;/a&gt;
-&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-15"&gt;&lt;/a&gt;    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;processedData&lt;/span&gt;
-&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-16"&gt;&lt;/a&gt;
-&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-17"&gt;&lt;/a&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;'__main__'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-18"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;# Define the parameters to test&lt;/span&gt;
-&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-19"&gt;&lt;/a&gt;    &lt;span class="n"&gt;param1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-20"&gt;&lt;/a&gt;    &lt;span class="n"&gt;param2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;202&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-21"&gt;&lt;/a&gt;
-&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-22"&gt;&lt;/a&gt;    &lt;span class="n"&gt;params&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;zip&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;param1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;param2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-23"&gt;&lt;/a&gt;
-&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-24"&gt;&lt;/a&gt;    &lt;span class="n"&gt;pool&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;multiprocessing&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Pool&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-25"&gt;&lt;/a&gt;
-&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-26"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;# Parallel map&lt;/span&gt;
-&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-27"&gt;&lt;/a&gt;    &lt;span class="n"&gt;tic&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-28"&gt;&lt;/a&gt;    &lt;span class="n"&gt;results&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pool&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;map&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;runSimulation&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-29"&gt;&lt;/a&gt;    &lt;span class="n"&gt;toc&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-30"&gt;&lt;/a&gt;
-&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-31"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;# Serial map&lt;/span&gt;
-&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-32"&gt;&lt;/a&gt;    &lt;span class="n"&gt;tic2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-33"&gt;&lt;/a&gt;    &lt;span class="n"&gt;results&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;map&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;runSimulation&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-34"&gt;&lt;/a&gt;    &lt;span class="n"&gt;toc2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-35"&gt;&lt;/a&gt;
-&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-36"&gt;&lt;/a&gt;    &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Parallel processing time: &lt;/span&gt;&lt;span class="si"&gt;%r&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s1"&gt;Serial processing time: &lt;/span&gt;&lt;span class="si"&gt;%r&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt;
-&lt;a name="rest_code_10c94886ac5e44b78a6b5e29ade9e015-37"&gt;&lt;/a&gt;          &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;toc&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;tic&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;toc2&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;tic2&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_abff85415f36416aafa632c21025a647-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;multiprocessing&lt;/span&gt;
+&lt;a name="rest_code_abff85415f36416aafa632c21025a647-2"&gt;&lt;/a&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;time&lt;/span&gt;
+&lt;a name="rest_code_abff85415f36416aafa632c21025a647-3"&gt;&lt;/a&gt;
+&lt;a name="rest_code_abff85415f36416aafa632c21025a647-4"&gt;&lt;/a&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;runSimulation&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_abff85415f36416aafa632c21025a647-5"&gt;&lt;/a&gt;    &lt;span class="sd"&gt;"""This is the main processing function. It will contain whatever&lt;/span&gt;
+&lt;a name="rest_code_abff85415f36416aafa632c21025a647-6"&gt;&lt;/a&gt;&lt;span class="sd"&gt;    code should be run on multiple processors.&lt;/span&gt;
+&lt;a name="rest_code_abff85415f36416aafa632c21025a647-7"&gt;&lt;/a&gt;
+&lt;a name="rest_code_abff85415f36416aafa632c21025a647-8"&gt;&lt;/a&gt;&lt;span class="sd"&gt;    """&lt;/span&gt;
+&lt;a name="rest_code_abff85415f36416aafa632c21025a647-9"&gt;&lt;/a&gt;    &lt;span class="n"&gt;param1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;param2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;params&lt;/span&gt;
+&lt;a name="rest_code_abff85415f36416aafa632c21025a647-10"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;# Example computation&lt;/span&gt;
+&lt;a name="rest_code_abff85415f36416aafa632c21025a647-11"&gt;&lt;/a&gt;    &lt;span class="n"&gt;processedData&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+&lt;a name="rest_code_abff85415f36416aafa632c21025a647-12"&gt;&lt;/a&gt;    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;ctr&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1000000&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_abff85415f36416aafa632c21025a647-13"&gt;&lt;/a&gt;        &lt;span class="n"&gt;processedData&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;param1&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;ctr&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;param2&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_abff85415f36416aafa632c21025a647-14"&gt;&lt;/a&gt;
+&lt;a name="rest_code_abff85415f36416aafa632c21025a647-15"&gt;&lt;/a&gt;    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;processedData&lt;/span&gt;
+&lt;a name="rest_code_abff85415f36416aafa632c21025a647-16"&gt;&lt;/a&gt;
+&lt;a name="rest_code_abff85415f36416aafa632c21025a647-17"&gt;&lt;/a&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;'__main__'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;a name="rest_code_abff85415f36416aafa632c21025a647-18"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;# Define the parameters to test&lt;/span&gt;
+&lt;a name="rest_code_abff85415f36416aafa632c21025a647-19"&gt;&lt;/a&gt;    &lt;span class="n"&gt;param1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_abff85415f36416aafa632c21025a647-20"&gt;&lt;/a&gt;    &lt;span class="n"&gt;param2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;202&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_abff85415f36416aafa632c21025a647-21"&gt;&lt;/a&gt;
+&lt;a name="rest_code_abff85415f36416aafa632c21025a647-22"&gt;&lt;/a&gt;    &lt;span class="n"&gt;params&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;zip&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;param1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;param2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_abff85415f36416aafa632c21025a647-23"&gt;&lt;/a&gt;
+&lt;a name="rest_code_abff85415f36416aafa632c21025a647-24"&gt;&lt;/a&gt;    &lt;span class="n"&gt;pool&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;multiprocessing&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Pool&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;a name="rest_code_abff85415f36416aafa632c21025a647-25"&gt;&lt;/a&gt;
+&lt;a name="rest_code_abff85415f36416aafa632c21025a647-26"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;# Parallel map&lt;/span&gt;
+&lt;a name="rest_code_abff85415f36416aafa632c21025a647-27"&gt;&lt;/a&gt;    &lt;span class="n"&gt;tic&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;a name="rest_code_abff85415f36416aafa632c21025a647-28"&gt;&lt;/a&gt;    &lt;span class="n"&gt;results&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pool&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;map&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;runSimulation&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_abff85415f36416aafa632c21025a647-29"&gt;&lt;/a&gt;    &lt;span class="n"&gt;toc&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;a name="rest_code_abff85415f36416aafa632c21025a647-30"&gt;&lt;/a&gt;
+&lt;a name="rest_code_abff85415f36416aafa632c21025a647-31"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;# Serial map&lt;/span&gt;
+&lt;a name="rest_code_abff85415f36416aafa632c21025a647-32"&gt;&lt;/a&gt;    &lt;span class="n"&gt;tic2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;a name="rest_code_abff85415f36416aafa632c21025a647-33"&gt;&lt;/a&gt;    &lt;span class="n"&gt;results&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;map&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;runSimulation&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_abff85415f36416aafa632c21025a647-34"&gt;&lt;/a&gt;    &lt;span class="n"&gt;toc2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;a name="rest_code_abff85415f36416aafa632c21025a647-35"&gt;&lt;/a&gt;
+&lt;a name="rest_code_abff85415f36416aafa632c21025a647-36"&gt;&lt;/a&gt;    &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Parallel processing time: &lt;/span&gt;&lt;span class="si"&gt;%r&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s1"&gt;Serial processing time: &lt;/span&gt;&lt;span class="si"&gt;%r&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt;
+&lt;a name="rest_code_abff85415f36416aafa632c21025a647-37"&gt;&lt;/a&gt;          &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;toc&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;tic&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;toc2&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;tic2&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;On my machine, &lt;cite&gt;pool.map()&lt;/cite&gt; ran in 9.6 seconds, but the serial version took 163.3 seconds. My
 laptop has 8 cores, so I would have expected the speedup to be a factor of 8, not a factor
 of 16. I'm not sure why it's 16, but I suspect part of the reason is that measuring system time
@@ -1863,7 +1909,7 @@ the &lt;a class="reference external" href="http://hisham.hm/htop/"&gt;htop&lt;/a
 scipy, etc. may limit processes in Python to running on only one core on Linux machines, which
 defeats the purpose of writing concurrent code in this case. (See for example &lt;a class="reference external" href="http://stackoverflow.com/questions/15639779/what-determines-whether-different-python-processes-are-assigned-to-the-same-or-d/15641148#15641148"&gt;this discussion&lt;/a&gt;.)
 To fix this, we can import Python's &lt;em&gt;os&lt;/em&gt; module to reset the task affinity in our code:&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_3d082ad6666c43b5a89a61046f1bd410-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;system&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"taskset -p 0xff &lt;/span&gt;&lt;span class="si"&gt;%d&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getpid&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_6f439e910d0f46ec8b0df82a14ca6e36-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;system&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"taskset -p 0xff &lt;/span&gt;&lt;span class="si"&gt;%d&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getpid&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;div class="section" id="conclusions"&gt;
 &lt;h2&gt;Conclusions&lt;/h2&gt;

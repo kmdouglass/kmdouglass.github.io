@@ -995,3 +995,16 @@ video {
   height: auto !important;
 }
 
+/* Change color of line numbers in code blocks */
+pre a {
+  color: #19177c;
+}
+
+pre a:hover {
+  color: #191
+}
+
+.codetable {
+    background-color: #272b30;
+}
+
