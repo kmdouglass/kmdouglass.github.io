@@ -136,7 +136,7 @@
 <span class="nb">print</span><span class="p">(</span><span class="s1">'SciPy</span><span class="se">\t\t</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">scipy</span><span class="o">.</span><span class="n">__version__</span><span class="p">))</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -146,7 +146,7 @@
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -216,7 +216,7 @@ SciPy		0.19.1
 <span class="n">scaling_factor</span> <span class="o">=</span> <span class="n">NA</span> <span class="o">*</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_basis</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">min_wavelength</span> <span class="o">/</span> <span class="n">wavelength</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -255,7 +255,7 @@ SciPy		0.19.1
 <span class="n">z</span> <span class="o">=</span> <span class="n">res_axial</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">size_z</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">size_z</span> <span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">res_axial</span> <span class="o">/</span> <span class="mi">2</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -269,10 +269,9 @@ SciPy		0.19.1
 </h2>
 <p><code>z.reshape(-1,1)</code> flips <code>z</code> from a row array to a column array so that it may be broadcast across <code>rho</code>.</p>
 <p>The coefficients <code>C</code> are found by a least-squares solution to the equation</p>
-<p>\begin{equation*}
+\begin{equation*}
 \mathbf{\phi} \left( \rho , z \right)= \mathbf{J} \left( \rho \right) \mathbf{c} \left( z \right)
-\end{equation*}</p>
-<p>$ \mathbf{c} $ has dimensions <code>num_basis</code> $ \times $ <code>len(z)</code>. The <code>J</code> array has dimensions <code>num_basis</code> $ \times $ <code>len(rho)</code> and the <code>phase</code> array has dimensions <code>len(z)</code> $ \times $ <code>len(rho)</code>. The <code>J</code> and <code>phase</code> arrays are therefore transposed to get the dimensions right in the call to <code>np.linalg.lstsq</code>.</p>
+\end{equation*}<p>$ \mathbf{c} $ has dimensions <code>num_basis</code> $ \times $ <code>len(z)</code>. The <code>J</code> array has dimensions <code>num_basis</code> $ \times $ <code>len(rho)</code> and the <code>phase</code> array has dimensions <code>len(z)</code> $ \times $ <code>len(rho)</code>. The <code>J</code> and <code>phase</code> arrays are therefore transposed to get the dimensions right in the call to <code>np.linalg.lstsq</code>.</p>
 
 </div>
 </div>
@@ -303,7 +302,7 @@ SciPy		0.19.1
 <span class="n">C</span><span class="p">,</span> <span class="n">residuals</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">lstsq</span><span class="p">(</span><span class="n">J</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">phase</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -345,7 +344,7 @@ SciPy		0.19.1
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -355,7 +354,7 @@ SciPy		0.19.1
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -378,10 +377,9 @@ SciPy		0.19.1
 <h2 id="Step-2:-Compute-the-PSF">Step 2: Compute the PSF<a class="anchor-link" href="#Step-2:-Compute-the-PSF">¶</a>
 </h2>
 <p>Here, we use the Fourier-Bessel series expansion of the phase function and a Bessel integral identity to compute the approximate PSF. Each coefficient $ c_{m} \left( z \right) $ needs to be multiplied by</p>
-<p>\begin{equation*}
+\begin{equation*}
 R \left(r; \mathbf{p} \right) = \frac{\sigma_m J_1 \left( \sigma_m a \right) J_0 \left( \beta a \right)a - \beta J_0 \left( \sigma_m a \right) J_1 \left( \beta a \right)a }{\sigma_m^2 - \beta^2}
-\end{equation*}</p>
-<p>and the resulting products summed over the number of basis functions. $ \mathbf{p} $ is the parameter vector for the Gibson-Lanni model, $ \sigma_m $ is the scaling factor for the argument to the $ m'th $ Bessel basis function, and $ \beta = kr\text{NA} $.</p>
+\end{equation*}<p>and the resulting products summed over the number of basis functions. $ \mathbf{p} $ is the parameter vector for the Gibson-Lanni model, $ \sigma_m $ is the scaling factor for the argument to the $ m'th $ Bessel basis function, and $ \beta = kr\text{NA} $.</p>
 <p><code>b</code> is defined such that <code>R</code> has dimensions of <code>len(r)</code> $ \times $ <code>len(rho)</code>.</p>
 
 </div>
@@ -404,7 +402,7 @@ R \left(r; \mathbf{p} \right) = \frac{\sigma_m J_1 \left( \sigma_m a \right) J_0
 <span class="n">R</span> <span class="o">/=</span> <span class="n">denom</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -415,10 +413,9 @@ R \left(r; \mathbf{p} \right) = \frac{\sigma_m J_1 \left( \sigma_m a \right) J_0
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Now compute the point-spread function via</p>
-<p>\begin{equation*}
+\begin{equation*}
 PSF \left( r, z; z_p, \mathbf{p} \right) = \left| \mathbf{R} \left( r; \mathbf{p} \right) \mathbf{c} \left( z \right) \right|^2
-\end{equation*}</p>
-
+\end{equation*}
 </div>
 </div>
 </div>
@@ -435,7 +432,7 @@ PSF \left( r, z; z_p, \mathbf{p} \right) = \left| \mathbf{R} \left( r; \mathbf{p
 <span class="n">PSF_rz</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">PSF_rz</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -466,7 +463,7 @@ PSF \left( r, z; z_p, \mathbf{p} \right) = \left| \mathbf{R} \left( r; \mathbf{p
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -476,7 +473,7 @@ PSF \left( r, z; z_p, \mathbf{p} \right) = \left| \mathbf{R} \left( r; \mathbf{p
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -523,7 +520,7 @@ PSF \left( r, z; z_p, \mathbf{p} \right) = \left| \mathbf{R} \left( r; \mathbf{p
     <span class="n">PSF</span><span class="p">[:,:,</span> <span class="n">z_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">PSF_interp</span><span class="p">(</span><span class="n">r_pixel</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">size_y</span><span class="p">,</span> <span class="n">size_x</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -587,7 +584,7 @@ PSF \left( r, z; z_p, \mathbf{p} \right) = \left| \mathbf{R} \left( r; \mathbf{p
 <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 

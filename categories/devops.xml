@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Kyle M. Douglass (Posts about devops)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link rel="self" href="http://kmdouglass.github.io/categories/devops.xml" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Sat, 19 Jan 2019 10:59:17 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Create a custom Raspbian image with pi-gen: part 2</title><link>http://kmdouglass.github.io/posts/create-a-custom-raspbian-image-with-pi-gen-part-2/</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;In my &lt;a class="reference external" href="http://kmdouglass.github.io/posts/create-a-custom-raspbian-image-with-pi-gen-part-1/"&gt;previous post&lt;/a&gt;, I discussed how to setup user accounts and
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kyle M. Douglass (Posts about devops)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link href="http://kmdouglass.github.io/categories/devops.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Sun, 10 Feb 2019 11:47:48 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Create a custom Raspbian image with pi-gen: part 2</title><link>http://kmdouglass.github.io/posts/create-a-custom-raspbian-image-with-pi-gen-part-2/</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;In my &lt;a class="reference external" href="http://kmdouglass.github.io/posts/create-a-custom-raspbian-image-with-pi-gen-part-1/"&gt;previous post&lt;/a&gt;, I discussed how to setup user accounts and
 locales in a custom Raspbian image using pi-gen. In this follow-up
 post, I will discuss the main problems that I want to solve:
 automatically configuring the wireless network and ssh on a new
@@ -23,7 +23,7 @@ network, which includes its name and the password. For security
 reasons that I hope are obvious, we should not store the password in
 this file. Instead, we create a hash of the password and put that
 inside the file. The command to create the password hash is&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_45ff5013fbaf4b308ecf40f1deb3f79b-1"&gt;&lt;/a&gt;wpa_passphrase ESSID PASSWORD &amp;gt; psk
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_1f92ddbec0384391be7bf21a6925b013-1"&gt;&lt;/a&gt;wpa_passphrase ESSID PASSWORD &amp;gt; psk
 &lt;/pre&gt;&lt;p&gt;where ESSID is our wireless network's name. Note that I also used a
 space before the &lt;code class="shell"&gt;wpa_passphrase&lt;/code&gt; command to prevent the
 password being written to my .bash_history file. Now, we copy and
@@ -177,7 +177,7 @@ sure to check them out for another take on modifying Raspbian images.&lt;/em&gt;
 &lt;div class="section" id="clone-the-pi-gen-repository"&gt;
 &lt;h2&gt;Clone the pi-gen repository&lt;/h2&gt;
 &lt;p&gt;This is as easy as cloning the git repository.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_37b8ff9b83cc41bc8c0b59238cc36721-1"&gt;&lt;/a&gt;git clone git@github.com:RPi-Distro/pi-gen.git
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_f19bfcba99684c19a9d2fa047fad2f0c-1"&gt;&lt;/a&gt;git clone git@github.com:RPi-Distro/pi-gen.git
 &lt;/pre&gt;&lt;p&gt;Alternatively, you can use the https address instead of ssh, which is
 &lt;a class="reference external" href="https://github.com/RPi-Distro/pi-gen.git"&gt;https://github.com/RPi-Distro/pi-gen.git&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;From now on, all directories in this post will be relative to the root
@@ -203,12 +203,12 @@ edition.&lt;/p&gt;
 build. To do this, we assign a name to a variable called &lt;strong&gt;IMG_NAME&lt;/strong&gt;
 inside a file called &lt;strong&gt;config&lt;/strong&gt; that is located inside the root pi-gen
 folder.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_2c0cb1bfd9dc43ccb8641efdb8dfd2e6-1"&gt;&lt;/a&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;"IMG_NAME=my_name"&lt;/span&gt; &amp;gt; config
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_e232415732ea43fe95e51e74b11e2b99-1"&gt;&lt;/a&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;"IMG_NAME=my_name"&lt;/span&gt; &amp;gt; config
 &lt;/pre&gt;&lt;/div&gt;
 &lt;div class="section" id="build-the-default-image"&gt;
 &lt;h3&gt;Build the default image&lt;/h3&gt;
 &lt;p&gt;Once we've named our image, we can go ahead and run the build script.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_01666ed219f84ec08c0c1f72753bb788-1"&gt;&lt;/a&gt;./build-docker.sh
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_385cf74d053741a8a789d2cea844990e-1"&gt;&lt;/a&gt;./build-docker.sh
 &lt;/pre&gt;&lt;p&gt;Be prepared to wait a while when running this script; the full build
 took well over half an hour on my laptop and with the Docker volume
 located on a SSD. It also consumed several GB of space on the SSD.&lt;/p&gt;
@@ -221,7 +221,7 @@ installing a Debian package.&lt;/p&gt;
 &lt;p&gt;We can resume a failed build from the point of failure by assigning
 the value 1 to the CONTINUE variable when calling build-docker.sh
 again.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_688eaceebde440cc96ea380af6c64f1a-1"&gt;&lt;/a&gt;&lt;span class="nv"&gt;CONTINUE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; ./build-docker.sh
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_154758032301453282820d763470ca5b-1"&gt;&lt;/a&gt;&lt;span class="nv"&gt;CONTINUE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; ./build-docker.sh
 &lt;/pre&gt;&lt;p&gt;If we don't want to run previously built stages, we can simply place a
 file inside the corresponding folder named SKIP. For example, if our
 build fails at stage2, we can place SKIP files inside the stage0 and
@@ -238,7 +238,7 @@ the &lt;strong&gt;deploy&lt;/strong&gt; folder of the pi-gen directory. These ma
 written onto a SD card and used as a standard Raspbian image.&lt;/p&gt;
 &lt;p&gt;We can ensure that the build container is preserved even after successful
 builds using&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_f636f444162a4f54a74a1ee3d94586dc-1"&gt;&lt;/a&gt;&lt;span class="nv"&gt;PRESERVE_CONTAINER&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; ./build-docker.sh
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_c7f95acfa32c4244927b2e58aad0a055-1"&gt;&lt;/a&gt;&lt;span class="nv"&gt;PRESERVE_CONTAINER&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; ./build-docker.sh
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -278,8 +278,8 @@ stages. We also disable the explicit creation of images by adding an
 empty file called &lt;strong&gt;SKIP_IMAGES&lt;/strong&gt; to stages 4 and 5. (We don't need to
 add a SKIP_IMAGES file to the stage3 folder because no image is
 produced at this stage.)&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_e970b8bae76b4fd6b3c8a1766a8847c6-1"&gt;&lt;/a&gt;touch ./stage3/SKIP ./stage4/SKIP ./stage5/SKIP
-&lt;a name="rest_code_e970b8bae76b4fd6b3c8a1766a8847c6-2"&gt;&lt;/a&gt;touch ./stage4/SKIP_IMAGES ./stage5/SKIP_IMAGES
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_014d2d664645418b86d30b7f8cc750f8-1"&gt;&lt;/a&gt;touch ./stage3/SKIP ./stage4/SKIP ./stage5/SKIP
+&lt;a name="rest_code_014d2d664645418b86d30b7f8cc750f8-2"&gt;&lt;/a&gt;touch ./stage4/SKIP_IMAGES ./stage5/SKIP_IMAGES
 &lt;/pre&gt;&lt;p&gt;Now, when we run build-docker.sh, pi-gen will only build and produce
 one image for Raspbian Lite in the deploy directory.&lt;/p&gt;
 &lt;/div&gt;
@@ -291,13 +291,13 @@ account is not very secure because it and its password, &lt;em&gt;raspberry&lt;/
 are the well-known defaults in Raspbian. Let's go ahead and change
 them.&lt;/p&gt;
 &lt;p&gt;The relevant lines in the script look like this:&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_8d46ad7a9b4c482da679dfbc4604ffbb-1"&gt;&lt;/a&gt;on_chroot &lt;span class="s"&gt;&amp;lt;&amp;lt; EOF&lt;/span&gt;
-&lt;a name="rest_code_8d46ad7a9b4c482da679dfbc4604ffbb-2"&gt;&lt;/a&gt;&lt;span class="s"&gt;if ! id -u pi &amp;gt;/dev/null 2&amp;gt;&amp;amp;1; then&lt;/span&gt;
-&lt;a name="rest_code_8d46ad7a9b4c482da679dfbc4604ffbb-3"&gt;&lt;/a&gt;&lt;span class="s"&gt;     adduser --disabled-password --gecos "" pi&lt;/span&gt;
-&lt;a name="rest_code_8d46ad7a9b4c482da679dfbc4604ffbb-4"&gt;&lt;/a&gt;&lt;span class="s"&gt;fi&lt;/span&gt;
-&lt;a name="rest_code_8d46ad7a9b4c482da679dfbc4604ffbb-5"&gt;&lt;/a&gt;&lt;span class="s"&gt;echo "pi:raspberry" | chpasswd&lt;/span&gt;
-&lt;a name="rest_code_8d46ad7a9b4c482da679dfbc4604ffbb-6"&gt;&lt;/a&gt;&lt;span class="s"&gt;echo "root:root" | chpasswd&lt;/span&gt;
-&lt;a name="rest_code_8d46ad7a9b4c482da679dfbc4604ffbb-7"&gt;&lt;/a&gt;&lt;span class="s"&gt;EOF&lt;/span&gt;
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_a81e47aeb8124d26b08b1d66339d811a-1"&gt;&lt;/a&gt;on_chroot &lt;span class="s"&gt;&amp;lt;&amp;lt; EOF&lt;/span&gt;
+&lt;a name="rest_code_a81e47aeb8124d26b08b1d66339d811a-2"&gt;&lt;/a&gt;&lt;span class="s"&gt;if ! id -u pi &amp;gt;/dev/null 2&amp;gt;&amp;amp;1; then&lt;/span&gt;
+&lt;a name="rest_code_a81e47aeb8124d26b08b1d66339d811a-3"&gt;&lt;/a&gt;&lt;span class="s"&gt;     adduser --disabled-password --gecos "" pi&lt;/span&gt;
+&lt;a name="rest_code_a81e47aeb8124d26b08b1d66339d811a-4"&gt;&lt;/a&gt;&lt;span class="s"&gt;fi&lt;/span&gt;
+&lt;a name="rest_code_a81e47aeb8124d26b08b1d66339d811a-5"&gt;&lt;/a&gt;&lt;span class="s"&gt;echo "pi:raspberry" | chpasswd&lt;/span&gt;
+&lt;a name="rest_code_a81e47aeb8124d26b08b1d66339d811a-6"&gt;&lt;/a&gt;&lt;span class="s"&gt;echo "root:root" | chpasswd&lt;/span&gt;
+&lt;a name="rest_code_a81e47aeb8124d26b08b1d66339d811a-7"&gt;&lt;/a&gt;&lt;span class="s"&gt;EOF&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;The user pi is created with the line
 &lt;code class="shell"&gt;adduser --disabled-password --gecos &lt;span class="s2"&gt;""&lt;/span&gt; pi&lt;/code&gt; if it doesn't
 already exist. According to the &lt;a class="reference external" href="http://manpages.ubuntu.com/manpages/trusty/man8/adduser.8.html"&gt;adduser man pages&lt;/a&gt;
@@ -314,27 +314,27 @@ let's change its name to alphapi. For the password, we will generate a
 &lt;strong&gt;temporary, random&lt;/strong&gt; password and write it to a file in the deploy
 directory. We'll do the same for root. The modifications look like the
 following:&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_141a4533d84f4b4587541b958ac2980e-1"&gt;&lt;/a&gt;&lt;span class="nv"&gt;user_passwd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&amp;lt; /dev/urandom tr -dc _A-Z-a-z-0-9 &lt;span class="p"&gt;|&lt;/span&gt; head -c&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;1&lt;/span&gt;&lt;span class="k"&gt;:-&lt;/span&gt;&lt;span class="nv"&gt;8&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_141a4533d84f4b4587541b958ac2980e-2"&gt;&lt;/a&gt;&lt;span class="nv"&gt;root_passwd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&amp;lt; /dev/urandom tr -dc _A-Z-a-z-0-9 &lt;span class="p"&gt;|&lt;/span&gt; head -c&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;1&lt;/span&gt;&lt;span class="k"&gt;:-&lt;/span&gt;&lt;span class="nv"&gt;8&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_141a4533d84f4b4587541b958ac2980e-3"&gt;&lt;/a&gt;
-&lt;a name="rest_code_141a4533d84f4b4587541b958ac2980e-4"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Write passwords to a file.&lt;/span&gt;
-&lt;a name="rest_code_141a4533d84f4b4587541b958ac2980e-5"&gt;&lt;/a&gt;cat &lt;span class="s"&gt;&amp;lt;&amp;lt;EOF &amp;gt; /pi-gen/deploy/users&lt;/span&gt;
-&lt;a name="rest_code_141a4533d84f4b4587541b958ac2980e-6"&gt;&lt;/a&gt;&lt;span class="s"&gt;${user_passwd}&lt;/span&gt;
-&lt;a name="rest_code_141a4533d84f4b4587541b958ac2980e-7"&gt;&lt;/a&gt;&lt;span class="s"&gt;${root_passwd}&lt;/span&gt;
-&lt;a name="rest_code_141a4533d84f4b4587541b958ac2980e-8"&gt;&lt;/a&gt;&lt;span class="s"&gt;EOF&lt;/span&gt;
-&lt;a name="rest_code_141a4533d84f4b4587541b958ac2980e-9"&gt;&lt;/a&gt;
-&lt;a name="rest_code_141a4533d84f4b4587541b958ac2980e-10"&gt;&lt;/a&gt;on_chroot &lt;span class="s"&gt;&amp;lt;&amp;lt; EOF&lt;/span&gt;
-&lt;a name="rest_code_141a4533d84f4b4587541b958ac2980e-11"&gt;&lt;/a&gt;&lt;span class="s"&gt;if ! id -u alphapi &amp;gt;/dev/null 2&amp;gt;&amp;amp;1; then&lt;/span&gt;
-&lt;a name="rest_code_141a4533d84f4b4587541b958ac2980e-12"&gt;&lt;/a&gt;&lt;span class="s"&gt;     adduser --disabled-password --gecos "" alphapi&lt;/span&gt;
-&lt;a name="rest_code_141a4533d84f4b4587541b958ac2980e-13"&gt;&lt;/a&gt;&lt;span class="s"&gt;fi&lt;/span&gt;
-&lt;a name="rest_code_141a4533d84f4b4587541b958ac2980e-14"&gt;&lt;/a&gt;&lt;span class="s"&gt;echo "alphapi:${user_passwd}" | chpasswd&lt;/span&gt;
-&lt;a name="rest_code_141a4533d84f4b4587541b958ac2980e-15"&gt;&lt;/a&gt;&lt;span class="s"&gt;echo "root:${root_passwd}" | chpasswd&lt;/span&gt;
-&lt;a name="rest_code_141a4533d84f4b4587541b958ac2980e-16"&gt;&lt;/a&gt;&lt;span class="s"&gt;EOF&lt;/span&gt;
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_0c2102f654fe4314a80c4da7c7cca66c-1"&gt;&lt;/a&gt;&lt;span class="nv"&gt;user_passwd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&amp;lt; /dev/urandom tr -dc _A-Z-a-z-0-9 &lt;span class="p"&gt;|&lt;/span&gt; head -c&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;1&lt;/span&gt;&lt;span class="k"&gt;:-&lt;/span&gt;&lt;span class="nv"&gt;8&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_0c2102f654fe4314a80c4da7c7cca66c-2"&gt;&lt;/a&gt;&lt;span class="nv"&gt;root_passwd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&amp;lt; /dev/urandom tr -dc _A-Z-a-z-0-9 &lt;span class="p"&gt;|&lt;/span&gt; head -c&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;1&lt;/span&gt;&lt;span class="k"&gt;:-&lt;/span&gt;&lt;span class="nv"&gt;8&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_0c2102f654fe4314a80c4da7c7cca66c-3"&gt;&lt;/a&gt;
+&lt;a name="rest_code_0c2102f654fe4314a80c4da7c7cca66c-4"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Write passwords to a file.&lt;/span&gt;
+&lt;a name="rest_code_0c2102f654fe4314a80c4da7c7cca66c-5"&gt;&lt;/a&gt;cat &lt;span class="s"&gt;&amp;lt;&amp;lt;EOF &amp;gt; /pi-gen/deploy/users&lt;/span&gt;
+&lt;a name="rest_code_0c2102f654fe4314a80c4da7c7cca66c-6"&gt;&lt;/a&gt;&lt;span class="s"&gt;${user_passwd}&lt;/span&gt;
+&lt;a name="rest_code_0c2102f654fe4314a80c4da7c7cca66c-7"&gt;&lt;/a&gt;&lt;span class="s"&gt;${root_passwd}&lt;/span&gt;
+&lt;a name="rest_code_0c2102f654fe4314a80c4da7c7cca66c-8"&gt;&lt;/a&gt;&lt;span class="s"&gt;EOF&lt;/span&gt;
+&lt;a name="rest_code_0c2102f654fe4314a80c4da7c7cca66c-9"&gt;&lt;/a&gt;
+&lt;a name="rest_code_0c2102f654fe4314a80c4da7c7cca66c-10"&gt;&lt;/a&gt;on_chroot &lt;span class="s"&gt;&amp;lt;&amp;lt; EOF&lt;/span&gt;
+&lt;a name="rest_code_0c2102f654fe4314a80c4da7c7cca66c-11"&gt;&lt;/a&gt;&lt;span class="s"&gt;if ! id -u alphapi &amp;gt;/dev/null 2&amp;gt;&amp;amp;1; then&lt;/span&gt;
+&lt;a name="rest_code_0c2102f654fe4314a80c4da7c7cca66c-12"&gt;&lt;/a&gt;&lt;span class="s"&gt;     adduser --disabled-password --gecos "" alphapi&lt;/span&gt;
+&lt;a name="rest_code_0c2102f654fe4314a80c4da7c7cca66c-13"&gt;&lt;/a&gt;&lt;span class="s"&gt;fi&lt;/span&gt;
+&lt;a name="rest_code_0c2102f654fe4314a80c4da7c7cca66c-14"&gt;&lt;/a&gt;&lt;span class="s"&gt;echo "alphapi:${user_passwd}" | chpasswd&lt;/span&gt;
+&lt;a name="rest_code_0c2102f654fe4314a80c4da7c7cca66c-15"&gt;&lt;/a&gt;&lt;span class="s"&gt;echo "root:${root_passwd}" | chpasswd&lt;/span&gt;
+&lt;a name="rest_code_0c2102f654fe4314a80c4da7c7cca66c-16"&gt;&lt;/a&gt;&lt;span class="s"&gt;EOF&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;The first two lines create random alphanumeric passwords for the users
 alphapi and root. They should be changed immediately when the image is
 first run.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_57b28ce663e1440b98bc7db88af58a3a-1"&gt;&lt;/a&gt;&lt;span class="nv"&gt;user_passwd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&amp;lt; /dev/urandom tr -dc _A-Z-a-z-0-9 &lt;span class="p"&gt;|&lt;/span&gt; head -c&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;1&lt;/span&gt;&lt;span class="k"&gt;:-&lt;/span&gt;&lt;span class="nv"&gt;8&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_57b28ce663e1440b98bc7db88af58a3a-2"&gt;&lt;/a&gt;&lt;span class="nv"&gt;root_passwd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&amp;lt; /dev/urandom tr -dc _A-Z-a-z-0-9 &lt;span class="p"&gt;|&lt;/span&gt; head -c&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;1&lt;/span&gt;&lt;span class="k"&gt;:-&lt;/span&gt;&lt;span class="nv"&gt;8&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_b0cadf8453d94743b1fba9832c139a99-1"&gt;&lt;/a&gt;&lt;span class="nv"&gt;user_passwd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&amp;lt; /dev/urandom tr -dc _A-Z-a-z-0-9 &lt;span class="p"&gt;|&lt;/span&gt; head -c&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;1&lt;/span&gt;&lt;span class="k"&gt;:-&lt;/span&gt;&lt;span class="nv"&gt;8&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_b0cadf8453d94743b1fba9832c139a99-2"&gt;&lt;/a&gt;&lt;span class="nv"&gt;root_passwd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&amp;lt; /dev/urandom tr -dc _A-Z-a-z-0-9 &lt;span class="p"&gt;|&lt;/span&gt; head -c&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;1&lt;/span&gt;&lt;span class="k"&gt;:-&lt;/span&gt;&lt;span class="nv"&gt;8&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;This way of password generation works by reading random bytes from
 /dev/urandom and redirecting them to the standard input of the tr
 command, which filters the input so only alphanumeric characters
@@ -342,11 +342,11 @@ remain. Next, the output is piped to the head command, which outputs
 only the first eight alphanumeric characters produced in this fashion.&lt;/p&gt;
 &lt;p&gt;The passwords are then written to a file named &lt;strong&gt;users&lt;/strong&gt; inside the
 deploy directory where the outputs will eventually be placed.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_7a080d6e32304fe48ee78df1a7c755a6-1"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Write passwords to a file.&lt;/span&gt;
-&lt;a name="rest_code_7a080d6e32304fe48ee78df1a7c755a6-2"&gt;&lt;/a&gt;cat &lt;span class="s"&gt;&amp;lt;&amp;lt;EOF &amp;gt; /pi-gen/deploy/users&lt;/span&gt;
-&lt;a name="rest_code_7a080d6e32304fe48ee78df1a7c755a6-3"&gt;&lt;/a&gt;&lt;span class="s"&gt;${user_passwd}&lt;/span&gt;
-&lt;a name="rest_code_7a080d6e32304fe48ee78df1a7c755a6-4"&gt;&lt;/a&gt;&lt;span class="s"&gt;${root_passwd}&lt;/span&gt;
-&lt;a name="rest_code_7a080d6e32304fe48ee78df1a7c755a6-5"&gt;&lt;/a&gt;&lt;span class="s"&gt;EOF&lt;/span&gt;
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_0641a3a2ff25402e996739b87839c5ed-1"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Write passwords to a file.&lt;/span&gt;
+&lt;a name="rest_code_0641a3a2ff25402e996739b87839c5ed-2"&gt;&lt;/a&gt;cat &lt;span class="s"&gt;&amp;lt;&amp;lt;EOF &amp;gt; /pi-gen/deploy/users&lt;/span&gt;
+&lt;a name="rest_code_0641a3a2ff25402e996739b87839c5ed-3"&gt;&lt;/a&gt;&lt;span class="s"&gt;${user_passwd}&lt;/span&gt;
+&lt;a name="rest_code_0641a3a2ff25402e996739b87839c5ed-4"&gt;&lt;/a&gt;&lt;span class="s"&gt;${root_passwd}&lt;/span&gt;
+&lt;a name="rest_code_0641a3a2ff25402e996739b87839c5ed-5"&gt;&lt;/a&gt;&lt;span class="s"&gt;EOF&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;The remaining parts of the script are more-or-less the same as before,
 except I changed pi to alphapi and used variable substitution for the
 passwords.&lt;/p&gt;
@@ -355,9 +355,9 @@ because it's at this stage where the user pi is added to the various
 groups on the system. We therefore need to open
 &lt;strong&gt;stage2/01-sys-tweaks/01-run.sh&lt;/strong&gt; and modify the following lines,
 replacing pi with alphapi.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_d90a76e7a43541a985fa081bd475717a-1"&gt;&lt;/a&gt;&lt;span class="k"&gt;for&lt;/span&gt; GRP in adm dialout cdrom audio users sudo video games plugdev input gpio spi i2c netdev&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
-&lt;a name="rest_code_d90a76e7a43541a985fa081bd475717a-2"&gt;&lt;/a&gt;    adduser alphapi &lt;span class="nv"&gt;$GRP&lt;/span&gt;
-&lt;a name="rest_code_d90a76e7a43541a985fa081bd475717a-3"&gt;&lt;/a&gt;&lt;span class="k"&gt;done&lt;/span&gt;
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_972cb481279f4663b95768106e1a5715-1"&gt;&lt;/a&gt;&lt;span class="k"&gt;for&lt;/span&gt; GRP in adm dialout cdrom audio users sudo video games plugdev input gpio spi i2c netdev&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+&lt;a name="rest_code_972cb481279f4663b95768106e1a5715-2"&gt;&lt;/a&gt;    adduser alphapi &lt;span class="nv"&gt;$GRP&lt;/span&gt;
+&lt;a name="rest_code_972cb481279f4663b95768106e1a5715-3"&gt;&lt;/a&gt;&lt;span class="k"&gt;done&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;div class="section" id="set-the-locale-information"&gt;
 &lt;h3&gt;Set the locale information&lt;/h3&gt;
@@ -365,12 +365,12 @@ replacing pi with alphapi.&lt;/p&gt;
 as follows. Open &lt;strong&gt;stage0/01-locale/00-debconf&lt;/strong&gt;. I personally changed
 every occurence of en_GB.UTF-8 to en_US.UTF-8, but you can set your
 locale accordingly.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_d6aa24c68f0d4872b0d51d570873f979-1"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Locales to be generated:&lt;/span&gt;
-&lt;a name="rest_code_d6aa24c68f0d4872b0d51d570873f979-2"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Choices: All locales, aa_DJ ISO-8859-1, aa_DJ.UTF-8 UTF-8, ...&lt;/span&gt;
-&lt;a name="rest_code_d6aa24c68f0d4872b0d51d570873f979-3"&gt;&lt;/a&gt;locales locales/locales_to_be_generated multiselect en_US.UTF-8 UTF-8
-&lt;a name="rest_code_d6aa24c68f0d4872b0d51d570873f979-4"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Default locale for the system environment:&lt;/span&gt;
-&lt;a name="rest_code_d6aa24c68f0d4872b0d51d570873f979-5"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Choices: None, C.UTF-8, en_US.UTF-8&lt;/span&gt;
-&lt;a name="rest_code_d6aa24c68f0d4872b0d51d570873f979-6"&gt;&lt;/a&gt;locales locales/default_environment_locale   &lt;span class="k"&gt;select&lt;/span&gt;  en_US.UTF-8
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_80f2f1970d3543acb2dc9d2887d73163-1"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Locales to be generated:&lt;/span&gt;
+&lt;a name="rest_code_80f2f1970d3543acb2dc9d2887d73163-2"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Choices: All locales, aa_DJ ISO-8859-1, aa_DJ.UTF-8 UTF-8, ...&lt;/span&gt;
+&lt;a name="rest_code_80f2f1970d3543acb2dc9d2887d73163-3"&gt;&lt;/a&gt;locales locales/locales_to_be_generated multiselect en_US.UTF-8 UTF-8
+&lt;a name="rest_code_80f2f1970d3543acb2dc9d2887d73163-4"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Default locale for the system environment:&lt;/span&gt;
+&lt;a name="rest_code_80f2f1970d3543acb2dc9d2887d73163-5"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Choices: None, C.UTF-8, en_US.UTF-8&lt;/span&gt;
+&lt;a name="rest_code_80f2f1970d3543acb2dc9d2887d73163-6"&gt;&lt;/a&gt;locales locales/default_environment_locale   &lt;span class="k"&gt;select&lt;/span&gt;  en_US.UTF-8
 &lt;/pre&gt;&lt;p&gt;Next, we open &lt;strong&gt;stage2/01-sys-tweaks/00-debconf&lt;/strong&gt;. I currently live in
 Europe, so I made the following changes:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
@@ -378,8 +378,8 @@ tzdata        tzdata/Areas    select  Europe
 &lt;/pre&gt;
 &lt;p&gt;I also made the following changes to switch from the default British
 English to American English:&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_9b145cd0419f40bbae5cdcf18286d6c6-1"&gt;&lt;/a&gt;keyboard-configuration keyboard-configuration/xkb-keymap &lt;span class="k"&gt;select&lt;/span&gt; us
-&lt;a name="rest_code_9b145cd0419f40bbae5cdcf18286d6c6-2"&gt;&lt;/a&gt;keyboard-configuration keyboard-configuration/fvariant  &lt;span class="k"&gt;select&lt;/span&gt;  English &lt;span class="o"&gt;(&lt;/span&gt;US&lt;span class="o"&gt;)&lt;/span&gt; - English &lt;span class="o"&gt;(&lt;/span&gt;US&lt;span class="se"&gt;\,&lt;/span&gt; international with dead keys&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_d45e83ad2e024f4397a26ce490e94618-1"&gt;&lt;/a&gt;keyboard-configuration keyboard-configuration/xkb-keymap &lt;span class="k"&gt;select&lt;/span&gt; us
+&lt;a name="rest_code_d45e83ad2e024f4397a26ce490e94618-2"&gt;&lt;/a&gt;keyboard-configuration keyboard-configuration/fvariant  &lt;span class="k"&gt;select&lt;/span&gt;  English &lt;span class="o"&gt;(&lt;/span&gt;US&lt;span class="o"&gt;)&lt;/span&gt; - English &lt;span class="o"&gt;(&lt;/span&gt;US&lt;span class="se"&gt;\,&lt;/span&gt; international with dead keys&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;Note that the comment in 00-debconf above the
 keyboard-configuration/xkb-keymap line erroneously states that
 American English is an option, but it's not. You need to change it
@@ -401,7 +401,7 @@ laptop). Once I get its device name, I use the Linux &lt;code class="shell"&gt;d
 command to copy the contents of the image onto the card. (Be sure to
 change /dev/mccblk0 to match the name that your system gives to your
 SD card device.)&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_1533d72d1e59437caf0bfd1fe1883e29-1"&gt;&lt;/a&gt;sudo dd &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;2018&lt;/span&gt;-07-21-my_name-lite.img &lt;span class="nv"&gt;of&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/dev/mmcblk0 &lt;span class="nv"&gt;bs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;4096&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; sync
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_a2d2d70fff3c4fefbeffad38a3cd0256-1"&gt;&lt;/a&gt;sudo dd &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;2018&lt;/span&gt;-07-21-my_name-lite.img &lt;span class="nv"&gt;of&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/dev/mmcblk0 &lt;span class="nv"&gt;bs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;4096&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; sync
 &lt;/pre&gt;&lt;p&gt;&lt;strong&gt;Please be EXTREMELY careful that you get the device name right.&lt;/strong&gt;
 It's not very difficult to write the contents of the image file over
 your root partition or other important data.&lt;/p&gt;

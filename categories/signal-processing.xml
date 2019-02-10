@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Kyle M. Douglass (Posts about signal processing)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link rel="self" href="http://kmdouglass.github.io/categories/signal-processing.xml" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Sat, 19 Jan 2019 10:59:16 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Perlin Noise</title><link>http://kmdouglass.github.io/posts/perlin-noise/</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kyle M. Douglass (Posts about signal processing)</title><link>http://kmdouglass.github.io/</link><description></description><atom:link href="http://kmdouglass.github.io/categories/signal-processing.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Sun, 10 Feb 2019 11:47:49 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Perlin Noise</title><link>http://kmdouglass.github.io/posts/perlin-noise/</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Since my last post, I have been experimenting with the &lt;a href="https://github.com/caseman/noise"&gt;noise package&lt;/a&gt; from Casey Duncan. This package is the easy solution for generating Perlin noise that I had hoped for. It seems simple and fast, though one downside at least to me is that it doesn't play so nicely with numpy arrays. This is not a big deal, though. It was probably not developed for scientists but rather for game design and/or computer graphics.&lt;/p&gt;
 &lt;p&gt;So, let's use this library to continue exploring the question of why correlated noise often makes for a better model of the real world.&lt;/p&gt;
@@ -23,7 +22,7 @@
 &lt;span class="n"&gt;sns&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_color_codes&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -33,7 +32,7 @@
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stdout output_text"&gt;
@@ -47,8 +46,7 @@
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;h2 id="Generating-Perlin-noise-with-the-noise-library"&gt;Generating Perlin noise with the &lt;code&gt;noise&lt;/code&gt; library&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/perlin-noise/#Generating-Perlin-noise-with-the-noise-library"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The basic function &lt;code&gt;pnoise1()&lt;/code&gt; takes a single float argument x. It won't work with numpy arrays. For this reason, I'm generating the noise signal in a &lt;code&gt;for&lt;/code&gt; loop.&lt;/p&gt;
 
@@ -74,7 +72,7 @@
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -84,7 +82,7 @@
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -100,8 +98,7 @@
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;The &lt;code&gt;octaves&lt;/code&gt; and &lt;code&gt;persistence&lt;/code&gt; parameters determine how much energy is contained at frequencies in each successive octave of the noise's &lt;a href="https://en.wikipedia.org/wiki/Spectral_density#Power_spectral_density"&gt;power spectrum&lt;/a&gt;. These parameters determine the presence and strength, respectively, of the finer details in the noise signal. Before going into them with more detail, we can vary them and observe the outcome.&lt;/p&gt;
 &lt;p&gt;Here's the result of varying the number of octaves.&lt;/p&gt;
@@ -129,7 +126,7 @@
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -139,7 +136,7 @@
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -155,8 +152,7 @@
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;In the above plot, and besides constant offsets to aid in visualization, I added one and three additional octaves to the noise, keeping the persistence fixed. Increasing the octaves makes the curve appear more 'jagged' and noisy on the smaller scales, much like extending the frequency range of the filter applied to the random signal from &lt;a href="http://kmdouglass.github.io/posts/correlated-noise-and-the-fft.html"&gt;my last post&lt;/a&gt;. Over longer time scales, the curve more or less follows the original one.&lt;/p&gt;
 &lt;p&gt;Below you can see what happens when we use four octaves but increase the persistence gradually. The amplitude of the spikes at small time scales increases with increasing persistence.&lt;/p&gt;
@@ -182,7 +178,7 @@
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -192,7 +188,7 @@
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -208,8 +204,7 @@
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;We're now in a good position to summarize a few of the main characteristics about Perlin noise. I'll use the term 'feature' as a loose definition for the hills and valleys seen in the curves.&lt;/p&gt;
 &lt;ol&gt;
@@ -224,8 +219,7 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;h2 id="Random-waveforms-in-time"&gt;Random waveforms in time&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/perlin-noise/#Random-waveforms-in-time"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Because Perlin noise is continuous, we can easily generate a nice-looking, traveling Perlin noise waveform and animate it. To do this, I use &lt;code&gt;FuncAnimation&lt;/code&gt; from &lt;a href="http://matplotlib.org/api/animation_api.html"&gt;matplotlib's animation API&lt;/a&gt;. Every time &lt;code&gt;FuncAnimation&lt;/code&gt; is called, I add a constant to the time array, which shifts the curve to the left. I'm also plotting a small particle undergoing a 1D walk and whose position is equivalent to the waveform value at the left-most side of the axis.&lt;/p&gt;
 
@@ -289,22 +283,20 @@
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;close&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;video controls src="http://kmdouglass.github.io/traveling_Perlin_wave.mp4" type="video/mp4"&gt;&lt;/video&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Although random, we can see that the particle moves smoothly and continiously. If I were add more octaves or increase the persistence of the walk, the particle would move more erraticly because I would have introduced more high frequency noise like the pink noise example in &lt;a href="http://kmdouglass.github.io/posts/correlated-noise-and-the-fft.html"&gt;my previous post&lt;/a&gt;.&lt;/p&gt;
 
@@ -312,8 +304,7 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;h2 id="Random-Perlin-and-Brownian-Walks"&gt;Random Perlin and Brownian Walks&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/perlin-noise/#Random-Perlin-and-Brownian-Walks"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Finally, let's compare a random walk created using Perlin noise to one created with &lt;a href="https://en.wikipedia.org/wiki/White_noise"&gt;white noise&lt;/a&gt;, which is completely uncorrelated. A walk generated with white noise is the same as good ol' Brownian motion. By comparing the two, you should be able to see why Perlin noise often better approximates natural phenomena: things just don't look quite natural when modeled with white noise.&lt;/p&gt;
 
@@ -382,22 +373,20 @@
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;close&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;video controls src="http://kmdouglass.github.io/walkers.mp4" type="video/mp4"&gt;&lt;/video&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;The Perlin walker is just a calm, casual guy out for a walk, whereas the Brownian walker is your officemate after five cups of coffee.&lt;/p&gt;
 &lt;p&gt;So there you have it! Perlin noise is an interesting tool for generating correlated noise forms on a computer. It's used in a number of applications in computer graphics, animation, and games to produce realistic-looking patterns.&lt;/p&gt;
@@ -406,8 +395,7 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;/div&gt;</description><category>python</category><category>signal processing</category><guid>http://kmdouglass.github.io/posts/perlin-noise/</guid><pubDate>Sun, 20 Mar 2016 16:45:00 GMT</pubDate></item><item><title>Correlated noise and the FFT</title><link>http://kmdouglass.github.io/posts/correlated-noise-and-the-fft/</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;I've been perusing the online coding book &lt;a href="http://natureofcode.com/"&gt;The Nature of Code&lt;/a&gt; recently. So far I really like it, especially its approach to demonstrating how one may use mathematics and code to model natural phenomena in a fun a way. I thought I would take a brief break from optics-based posts to blog about some thoughts I've had recently about one of the concepts in the book.&lt;/p&gt;
 &lt;p&gt;In the introduction I came across the concept of &lt;a href="http://freespace.virgin.net/hugo.elias/models/m_perlin.htm"&gt;Perlin noise&lt;/a&gt;, a concept which is named after its inventor Ken Perlin who, at the time of its creation, was working on computer-generated graphics for the movie Tron. Perlin developed his namesake algorithm for generating artificial yet natural-looking textures, something that previously was difficult to do with purely deterministic mathematical tools. He later won an Academy Award for this work because it greatly enabled computer artists to model realistic textures and motion.&lt;/p&gt;
@@ -425,7 +413,7 @@
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;style&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;use&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'dark_background'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -435,7 +423,7 @@
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 &lt;div class="output_subarea output_stream output_stdout output_text"&gt;
@@ -449,8 +437,7 @@
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;h2 id="Uncorrelated-noise"&gt;Uncorrelated noise&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/correlated-noise-and-the-fft/#Uncorrelated-noise"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;One reason that Perlin noise models many natural phenomena so well is that its randomness is correlated. To see what I mean by this, I'll first plot a single realization of a purely random signal composed of random integers between 0 and 1. The samples from this signal are &lt;strong&gt;not&lt;/strong&gt; correlated.&lt;/p&gt;
 
@@ -473,7 +460,7 @@
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -483,7 +470,7 @@
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -499,8 +486,7 @@
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;In the plot above, you can see that the value of each sample from our random signal is uncorrelated with all the other samples. This situation is similar to flipping a coin; the result of a coin flip (heads or tails) doesn't depend on the previous or next flip of the coin.&lt;/p&gt;
 &lt;p&gt;If we want to use this random signal to model something natural, such as a landscape, we would be disappointed:&lt;/p&gt;
@@ -519,7 +505,7 @@
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -529,7 +515,7 @@
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -545,8 +531,7 @@
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Our purely random landscape is much too jagged to even come close to approximating a real-looking landscape.&lt;/p&gt;
 
@@ -554,8 +539,7 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;h2 id="Correlated-noise"&gt;Correlated noise&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/correlated-noise-and-the-fft/#Correlated-noise"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Perlin noise is a way of generating a random signal whose samples are correlated over short distances but uncorrelated over longer distances. I haven't yet found any quick and easy implementations for generating Perlin noise in Python, but you can find many examples of on the web, such as &lt;a href="https://www.google.ch/search?q=perlin+noise&amp;amp;tbm=isch&amp;amp;tbo=u&amp;amp;source=univ&amp;amp;sa=X&amp;amp;ved=0ahUKEwi1ytjsx5jLAhXE_3IKHWrfAGkQsAQIPg&amp;amp;biw=1366&amp;amp;bih=644#tbm=isch&amp;amp;q=perlin+noise+1d"&gt;1D Perlin noise images from Google Image search&lt;/a&gt;. (By "quick and easy", I mean something I can install from Anaconda and use with only a couple minutes of reading the docs.)&lt;/p&gt;
 &lt;p&gt;A long time ago I wrote a computer simulation that modeled the motion of a small dipole in a three-dimensional, random electromagnetic field. This involved moving the dipole in a ballistic manner over short times, where the particle's &lt;a href="https://en.wikipedia.org/wiki/Mean_squared_displacement"&gt;mean-squared-displacement (MSD)&lt;/a&gt; evolved quadratically with time, and smoothly rounding off to a random, diffusive motion characterized by a linear time dependence of the MSD at long times. I have also done some partial coherence modeling of illumination systems, which also involves generating correlated noise.&lt;/p&gt;
@@ -565,8 +549,7 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;h3 id="Generating-correlated-noise-using-FFT's"&gt;Generating correlated noise using FFT's&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/correlated-noise-and-the-fft/#Generating-correlated-noise-using-FFT's"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Below is a relatively simple code snippet that generates a correlated noise signal. It was inspired by &lt;a href="https://www.osapublishing.org/oe/abstract.cfm?uri=oe-14-16-6986"&gt;work publised by Xiao and Voelz&lt;/a&gt; in 2006 for modeling partially coherent laser beam propagation through turbulence.&lt;/p&gt;
 
@@ -606,7 +589,7 @@
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -616,7 +599,7 @@
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -632,8 +615,7 @@
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;This algorithm actually produces two independent and random signals that are correlated over distances comparable to &lt;code&gt;sigma_f&lt;/code&gt;; one signal comes from the real part and the other from the imaginary part. I only plotted the real part because we only need one. At distances larger than &lt;code&gt;sigma_f&lt;/code&gt; the signal is uncorrelated. The strength of the fluctuations is determined by &lt;code&gt;sigma_r&lt;/code&gt;, which is the square root of the variance of the underlying, uncorrelated random signal.&lt;/p&gt;
 &lt;p&gt;To better understand how this algorithm it works, I think it's illustrative to plot the product of &lt;code&gt;F&lt;/code&gt; and &lt;code&gt;R&lt;/code&gt; from the code above before they are inverse Fourier transformed.&lt;/p&gt;
@@ -656,7 +638,7 @@
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -666,7 +648,7 @@
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -682,8 +664,7 @@
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;As you can see, the frequency space multiplication is essentially modulating a zero-mean, Gaussian random signal with a Gaussian envelope centered at the origin. We then compute the inverse Fourier transform of this product, scale it by a few factors to ensure that energy is conserved, and take the real or imaginary parts to get two different, random, yet smooth signals. If you're familiar with Fourier transforms, you will probably recognize that the frequency space multiplication of F and R is equivalent to the real space convolution of their individual Fourier transform pairs. Thus, we've essentially smoothed a random signal with a Gaussian blurring kernel.&lt;/p&gt;
 &lt;p&gt;Though we could easily have done this with a convolution and avoided the need to think in frequency space, the visualization above is illustrative for this reason: &lt;strong&gt;we have essentially modified the amplitudes of the various spectral components of the uncorrelated random signal, producing correlated noise in the process&lt;/strong&gt;.&lt;/p&gt;
@@ -716,7 +697,7 @@
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -726,7 +707,7 @@
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -742,8 +723,7 @@
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;We still have smooth, large-scale fluctuations that are about the same size as the inverse width of the top hat, but now there are additional high-frequency fluctuations which lead to a more "jagged" appearance in the blue, top hat curve above.&lt;/p&gt;
 &lt;p&gt;For completeness, here's how the real part of the spectrum is reshaped by multiplying by a top hat.&lt;/p&gt;
@@ -766,7 +746,7 @@
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -776,7 +756,7 @@
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -792,8 +772,7 @@
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;h3 id="Reasoning-about-the-differences"&gt;Reasoning about the differences&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/correlated-noise-and-the-fft/#Reasoning-about-the-differences"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;So far we've learned that we could create correlated noise by filtering a zero-mean, Gaussian random signal in frequency space. We also learned that the nature of the resulting signals changes when the shape of the frequency space filter is modified. In the case of the top hat filter, the resulting random signal became a bit more jagged. This makes sense because the amplitudes of the mid-range spectral components were larger for the top hat filtered signal; there was no smooth Gaussian rolloff but instead a hard cutoff at +/- &lt;code&gt;0.5 / sigma_f&lt;/code&gt;. Even though the Gaussian-filtered signal had a larger bandwidth, the high frequency amplitudes were diminished exponentially, so they essentially didn't matter.&lt;/p&gt;
 
@@ -801,8 +780,7 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;h2 id="The-connection-with-Perlin-noise"&gt;The connection with Perlin noise&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/correlated-noise-and-the-fft/#The-connection-with-Perlin-noise"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Conceptually, Perlin noise is generated by adding together curves with different amplitudes and frequencies &lt;a href="http://freespace.virgin.net/hugo.elias/models/m_perlin.htm"&gt;as explained here&lt;/a&gt;. This is similar to what we did in the examples above: we took sine waves with random phases and different frequencies, modulated their amplitudes, and then added them together to get a realization of a smooth random signal.&lt;/p&gt;
 &lt;p&gt;So what are the differences between the two approaches then? Here's what I can think of for now.&lt;/p&gt;
@@ -816,15 +794,13 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;h2 id="One-last-example:-1/f-noise"&gt;One last example: 1/f noise&lt;a class="anchor-link" href="http://kmdouglass.github.io/posts/correlated-noise-and-the-fft/#One-last-example:-1/f-noise"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I realized the day after writing the draft of this post that the above discussion is useful for illustrating some of the "colored" noises. In this case, we use the ideas presented above to generate a realization of &lt;a href="https://en.wikipedia.org/wiki/Pink_noise"&gt;1/f noise&lt;/a&gt;, also known as &lt;em&gt;pink noise&lt;/em&gt; or &lt;em&gt;fractal noise&lt;/em&gt;.&lt;/p&gt;
 &lt;p&gt;Can you guess how the amplitude of the spectrum of 1/f noise varies?&lt;/p&gt;
 &lt;p&gt;Surprise! It actually varies as $ \frac{1}{f^{1/2}} $. This is because the &lt;strong&gt;power&lt;/strong&gt; spectrum of pink noise varies as 1/f; the &lt;strong&gt;amplitude&lt;/strong&gt; of the spectral components is the square root of the average power delivered by each component. The &lt;a href="https://en.wikipedia.org/wiki/Spectral_density#Energy_spectral_density"&gt;proper Wikipedia sections on energy and power spectral densities&lt;/a&gt; explain this. The difficulty in actually implementing this filter, though, is what happens as we approach the DC value $ f = 0 $ in frequency space. At this value the filter becomes infinite.&lt;/p&gt;
 &lt;p&gt;Instead, we can easily approximate a realization of pink noise with a filter that is one near the origin and quickly rolls off into a $ f^{-1/2} $ behavior. A function that does this is&lt;/p&gt;
-&lt;p&gt;$$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$&lt;/p&gt;
-&lt;p&gt;The value $ a $ determines how quickly the function moves from a weak dependence on frequency to a $ f^{-1/2} $ dependence. For us, we should set it to a value that is relatively large compared to the frequency spacing in Fourier space. This type of filter is just a special case of the &lt;a href="https://en.wikipedia.org/wiki/Chebyshev_filter"&gt;Chebyshev filter&lt;/a&gt; that is well-known in signal processing circles.&lt;/p&gt;
+$$H \left( f \right) = \frac{1}{\sqrt{1 + af}}$$&lt;p&gt;The value $ a $ determines how quickly the function moves from a weak dependence on frequency to a $ f^{-1/2} $ dependence. For us, we should set it to a value that is relatively large compared to the frequency spacing in Fourier space. This type of filter is just a special case of the &lt;a href="https://en.wikipedia.org/wiki/Chebyshev_filter"&gt;Chebyshev filter&lt;/a&gt; that is well-known in signal processing circles.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -842,7 +818,7 @@
 &lt;span class="n"&gt;pinkNoiseFilter&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vectorize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pinkNoiseFilter&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -866,7 +842,7 @@
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -876,7 +852,7 @@
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -892,8 +868,7 @@
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Now we have the same general trends in the 1/f noise signal as in the realization of the Gaussian signal, but with a lot of high frequency noise added.&lt;/p&gt;
 &lt;p&gt;We can see that the high frequency noise is coming from poor suppression of high frequencies in the filtered spectrum. Remember that this is the spectrum of just one realization of the noise, this time without the real part of the random signal for clarity.&lt;/p&gt;
@@ -915,7 +890,7 @@
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -925,7 +900,7 @@
 
 &lt;div class="output_area"&gt;
 
-&lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt"&gt;&lt;/div&gt;
 
 
 
@@ -941,8 +916,7 @@
 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Pretty cool! Though I still haven't made a good connection with Perlin noise, I now have a better understanding of how to generate many different kinds of realizations of noise signals on a computer. The general recipe is to&lt;/p&gt;
 &lt;ol&gt;
