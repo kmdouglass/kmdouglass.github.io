@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="How to read from a UNIX socket in Rust">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A simple UNIX socket listener in Rust | Kyle M. Douglass</title>
+<link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/ipython.min.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/nikola_ipython.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/custom_notebook.css" rel="stylesheet" type="text/css">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
+<link rel="alternate" type="application/rss+xml" title="RSS" hreflang="en" href="../../rss.xml">
+<link rel="canonical" href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/">
+<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><meta name="author" content="Kyle M. Douglass">
+<link rel="prev" href="../linking-shared-libraries-in-micro-manager-for-linux/" title="Linking shared libraries in Micro-Manager for Linux" type="text/html">
+<meta property="og:site_name" content="Kyle M. Douglass">
+<meta property="og:title" content="A simple UNIX socket listener in Rust">
+<meta property="og:url" content="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/">
+<meta property="og:description" content="How to read from a UNIX socket in Rust">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2019-02-24T16:25:58+01:00">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="rust">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Menubar -->
+
+<nav class="navbar navbar-default navbar-static-top"><div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://kmdouglass.github.io/">
+
+                <span id="blog-title">Kyle M. Douglass</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
+            <ul class="nav navbar-nav">
+<li>
+<a href="../../categories/index.html">Tags</a>
+                </li>
+<li>
+<a href="../../archive.html">Archive</a>
+                </li>
+<li>
+<a href="../../stories/contact/index.html">Contact</a>
+
+                
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+    <a href="index.rst" id="sourcelink">Source</a>
+    </li>
+
+                
+            </ul>
+</div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">A simple UNIX socket listener in Rust</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                    Kyle M. Douglass
+            </span></p>
+            <p class="dateline">
+            <a href="." rel="bookmark">
+            <time class="published dt-published" datetime="2019-02-24T16:25:58+01:00" itemprop="datePublished" title="2019-02-24 16:25">2019-02-24 16:25</time></a>
+            </p>
+                <p class="commentline">
+        
+    <a href="#disqus_thread" data-disqus-identifier="cache/posts/a-simple-unix-socket-listener-in-rust.html">Comments</a>
+
+
+            
+        </p>
+<p class="sourceline"><a href="index.rst" class="sourcelink">Source</a></p>
+
+        </div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<p>I decided that I wanted to learn a new programming language in 2019. After a bit of research, I
+settled upon <a class="reference external" href="https://www.rust-lang.org/">Rust</a> due to its speed, novel ideas about memory safety, and <a class="reference external" href="https://blog.rust-lang.org/2018/03/12/roadmap.html#four-target-domains">focus on two areas
+that I am interested in</a>: embedded systems and WebAssembly. While I think that <a class="reference external" href="https://doc.rust-lang.org/book/">The Book</a> is the
+best place to get started learning the language, nothing is a really a substitute for writing
+code.</p>
+<p>With that in mind, I developed an idea for a starting project: a background daemon for Linux
+systems like the Raspberry Pi that controls and reads data from the system's peripherals. The
+design of this project is inspired by Docker: a daemon process does most of the heavy work while a
+command line tool communicates with the Daemon over a Unix socket (typically a file located at
+<tt class="docutils literal">/var/run/docker.sock</tt>). The purpose of this post is to demonstrate the most basic realization of
+this: reading text from a UNIX socket in Rust.</p>
+<p>To begin, I created a new Rust project with <tt class="docutils literal">cargo</tt>.</p>
+<pre class="code shell"><a name="rest_code_967f153616db408793a4970266cac833-1"></a>$ cargo new rust-uds
+<a name="rest_code_967f153616db408793a4970266cac833-2"></a>$ <span class="nb">cd</span> rust-uds
+</pre>
+<p>Next, I opened the file that cargo automatically generated in <tt class="docutils literal">src/main.rs</tt>, removed the
+auto-generated content, and added the following code, which is largely taken from the <a class="reference external" href="https://doc.rust-lang.org/std/os/unix/net/struct.UnixListener.html#examples">example</a>
+provided in the Rust documentation:</p>
+<table class="codetable"><tr>
+<td class="linenos"><div class="linenodiv"><pre><a href="#rest_code_819ca8e783174bd38b9c00c8c69b2689-1"> 1</a>
+<a href="#rest_code_819ca8e783174bd38b9c00c8c69b2689-2"> 2</a>
+<a href="#rest_code_819ca8e783174bd38b9c00c8c69b2689-3"> 3</a>
+<a href="#rest_code_819ca8e783174bd38b9c00c8c69b2689-4"> 4</a>
+<a href="#rest_code_819ca8e783174bd38b9c00c8c69b2689-5"> 5</a>
+<a href="#rest_code_819ca8e783174bd38b9c00c8c69b2689-6"> 6</a>
+<a href="#rest_code_819ca8e783174bd38b9c00c8c69b2689-7"> 7</a>
+<a href="#rest_code_819ca8e783174bd38b9c00c8c69b2689-8"> 8</a>
+<a href="#rest_code_819ca8e783174bd38b9c00c8c69b2689-9"> 9</a>
+<a href="#rest_code_819ca8e783174bd38b9c00c8c69b2689-10">10</a>
+<a href="#rest_code_819ca8e783174bd38b9c00c8c69b2689-11">11</a>
+<a href="#rest_code_819ca8e783174bd38b9c00c8c69b2689-12">12</a>
+<a href="#rest_code_819ca8e783174bd38b9c00c8c69b2689-13">13</a>
+<a href="#rest_code_819ca8e783174bd38b9c00c8c69b2689-14">14</a>
+<a href="#rest_code_819ca8e783174bd38b9c00c8c69b2689-15">15</a>
+<a href="#rest_code_819ca8e783174bd38b9c00c8c69b2689-16">16</a>
+<a href="#rest_code_819ca8e783174bd38b9c00c8c69b2689-17">17</a>
+<a href="#rest_code_819ca8e783174bd38b9c00c8c69b2689-18">18</a>
+<a href="#rest_code_819ca8e783174bd38b9c00c8c69b2689-19">19</a>
+<a href="#rest_code_819ca8e783174bd38b9c00c8c69b2689-20">20</a>
+<a href="#rest_code_819ca8e783174bd38b9c00c8c69b2689-21">21</a>
+<a href="#rest_code_819ca8e783174bd38b9c00c8c69b2689-22">22</a>
+<a href="#rest_code_819ca8e783174bd38b9c00c8c69b2689-23">23</a>
+<a href="#rest_code_819ca8e783174bd38b9c00c8c69b2689-24">24</a>
+<a href="#rest_code_819ca8e783174bd38b9c00c8c69b2689-25">25</a>
+<a href="#rest_code_819ca8e783174bd38b9c00c8c69b2689-26">26</a></pre></div></td>
+<td class="code"><pre class="code rust"><a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-1"></a><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">io</span>::<span class="n">Read</span><span class="p">;</span><span class="w"></span>
+<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-2"></a><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">os</span>::<span class="n">unix</span>::<span class="n">net</span>::<span class="p">{</span><span class="n">UnixStream</span><span class="p">,</span><span class="n">UnixListener</span><span class="p">};</span><span class="w"></span>
+<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-3"></a><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">thread</span><span class="p">;</span><span class="w"></span>
+<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-4"></a>
+<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-5"></a><span class="k">fn</span> <span class="nf">handle_client</span><span class="p">(</span><span class="k">mut</span><span class="w"> </span><span class="n">stream</span>: <span class="nc">UnixStream</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-6"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span>::<span class="n">new</span><span class="p">();</span><span class="w"></span>
+<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-7"></a>
+<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-8"></a><span class="w">    </span><span class="n">stream</span><span class="p">.</span><span class="n">read_to_string</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">response</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
+<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-9"></a><span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span><span class="w"> </span><span class="n">response</span><span class="p">);</span><span class="w"></span>
+<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-10"></a><span class="p">}</span><span class="w"></span>
+<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-11"></a>
+<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-12"></a><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-13"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">listener</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UnixListener</span>::<span class="n">bind</span><span class="p">(</span><span class="s">"/tmp/rust-uds.sock"</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
+<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-14"></a>
+<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-15"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">stream</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">listener</span><span class="p">.</span><span class="n">incoming</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-16"></a><span class="w">       </span><span class="k">match</span><span class="w"> </span><span class="n">stream</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-17"></a><span class="w">            </span><span class="nb">Ok</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-18"></a><span class="w">                </span><span class="n">thread</span>::<span class="n">spawn</span><span class="p">(</span><span class="k">move</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">handle_client</span><span class="p">(</span><span class="n">stream</span><span class="p">));</span><span class="w"></span>
+<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-19"></a><span class="w">            </span><span class="p">}</span><span class="w"></span>
+<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-20"></a><span class="w">            </span><span class="nb">Err</span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-21"></a><span class="w">                </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">"Error: {}"</span><span class="p">,</span><span class="w"> </span><span class="n">err</span><span class="p">);</span><span class="w"></span>
+<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-22"></a><span class="w">                </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-23"></a><span class="w">            </span><span class="p">}</span><span class="w"></span>
+<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-24"></a><span class="w">        </span><span class="p">}</span><span class="w"></span>
+<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-25"></a><span class="w">    </span><span class="p">}</span><span class="w"></span>
+<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-26"></a><span class="p">}</span><span class="w"></span>
+</pre></td>
+</tr></table>
+<div class="section" id="explanation">
+<h2>Explanation</h2>
+<p>The first three lines import the necessary modules for this code example.</p>
+<pre class="code rust"><a name="rest_code_a86edaa15d044d909202b11d358b01e6-1"></a><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">io</span>::<span class="n">Read</span><span class="p">;</span><span class="w"></span>
+<a name="rest_code_a86edaa15d044d909202b11d358b01e6-2"></a><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">os</span>::<span class="n">unix</span>::<span class="n">net</span>::<span class="p">{</span><span class="n">UnixStream</span><span class="p">,</span><span class="n">UnixListener</span><span class="p">};</span><span class="w"></span>
+<a name="rest_code_a86edaa15d044d909202b11d358b01e6-3"></a><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">thread</span><span class="p">;</span><span class="w"></span>
+</pre>
+<p><tt class="docutils literal">Read</tt> is a trait that must be imported into the current scope to use the <cite>read_to_string()</cite>
+method. <tt class="docutils literal">UnixStream</tt> and <tt class="docutils literal">UnixListener</tt> are structs that provide the functionality for handling
+the UNIX socket, and the <tt class="docutils literal"><span class="pre">std::thread</span></tt> module is used to spawn threads.</p>
+<p>The next set of lines defines a function named <tt class="docutils literal">handle_client()</tt> that is called whenever new data
+arrives in the stream. The explanation for this is best left until after the <tt class="docutils literal">main()</tt> function.</p>
+<p>The first line in the <tt class="docutils literal">main()</tt> function creates the UnixListener struct and binds it to the
+<tt class="docutils literal">listener</tt> variable.</p>
+<pre class="code rust"><a name="rest_code_03772faa925d480ca21401b3c0302685-1"></a><span class="kd">let</span><span class="w"> </span><span class="n">listener</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UnixListener</span>::<span class="n">bind</span><span class="p">(</span><span class="s">"/tmp/rust-uds.sock"</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
+</pre>
+<p>The <tt class="docutils literal">bind()</tt> function takes a string argument that is a path to the socket file and <tt class="docutils literal">unwrap()</tt>
+moves the value out of the Option that is returned by <tt class="docutils literal">bind()</tt>. (This is a pattern that is
+<a class="reference external" href="https://doc.rust-lang.org/std/option/enum.Option.html#method.unwrap">discouraged</a> in Rust but is OK for quick prototypes because it simplifies the error handling.)</p>
+<p>After creating the listener, <tt class="docutils literal">listener.incoming()</tt> returns an iterator over the incoming
+connections to the socket. The connections are looped over in an infinite for loop; I believe that
+this is more-or-less the same as a generator in Python which never raises a <tt class="docutils literal">StopIteration</tt>
+exception.</p>
+<p>Next, the <tt class="docutils literal">Result</tt> of the incoming streams is matched; if there is an error, it is printed and
+the loop it exited:</p>
+<pre class="code rust"><a name="rest_code_594d1ee5ee624166938771045c5c3783-1"></a><span class="nb">Err</span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_594d1ee5ee624166938771045c5c3783-2"></a><span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">"Error: {}"</span><span class="p">,</span><span class="w"> </span><span class="n">err</span><span class="p">);</span><span class="w"></span>
+<a name="rest_code_594d1ee5ee624166938771045c5c3783-3"></a><span class="w">    </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<a name="rest_code_594d1ee5ee624166938771045c5c3783-4"></a><span class="p">}</span><span class="w"></span>
+</pre>
+<p>However, if the <tt class="docutils literal">Result</tt> of the connection is <tt class="docutils literal">Ok</tt>, then a new thread is spawned to handle the
+new stream:</p>
+<pre class="code rust"><a name="rest_code_3c5d994a0b604c3494e9e1222d3edcb1-1"></a><span class="nb">Ok</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_3c5d994a0b604c3494e9e1222d3edcb1-2"></a><span class="w">    </span><span class="n">thread</span>::<span class="n">spawn</span><span class="p">(</span><span class="k">move</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">handle_client</span><span class="p">(</span><span class="n">stream</span><span class="p">));</span><span class="w"></span>
+<a name="rest_code_3c5d994a0b604c3494e9e1222d3edcb1-3"></a><span class="p">}</span><span class="w"></span>
+</pre>
+<p>I had to add the <tt class="docutils literal">move</tt> keyword to the argument of <tt class="docutils literal">thread.spawn()</tt> to make the compiler
+happy. The reason is that the argument to the client handler is mutable, which I think means that
+it needs to take ownership of the stream. (See the documentation <a class="reference external" href="https://doc.rust-lang.org/book/ch16-01-threads.html#using-move-closures-with-threads">here</a>.)</p>
+<p>Finally, the client handler is called for each connection.</p>
+<pre class="code rust"><a name="rest_code_c19dccf207d44ba1bb8eeff2ea101fe9-1"></a><span class="k">fn</span> <span class="nf">handle_client</span><span class="p">(</span><span class="k">mut</span><span class="w"> </span><span class="n">stream</span>: <span class="nc">UnixStream</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_c19dccf207d44ba1bb8eeff2ea101fe9-2"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span>::<span class="n">new</span><span class="p">();</span><span class="w"></span>
+<a name="rest_code_c19dccf207d44ba1bb8eeff2ea101fe9-3"></a>
+<a name="rest_code_c19dccf207d44ba1bb8eeff2ea101fe9-4"></a><span class="w">    </span><span class="n">stream</span><span class="p">.</span><span class="n">read_to_string</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">response</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
+<a name="rest_code_c19dccf207d44ba1bb8eeff2ea101fe9-5"></a><span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span><span class="w"> </span><span class="n">response</span><span class="p">);</span><span class="w"></span>
+<a name="rest_code_c19dccf207d44ba1bb8eeff2ea101fe9-6"></a><span class="p">}</span><span class="w"></span>
+</pre>
+<p>The handler in this case is fairly straight-forward. The response is stored in a mutable string
+which we extract from the stream and printed to terminal.</p>
+</div>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../categories/linux/" rel="tag">linux</a></li>
+            <li><a class="tag p-category" href="../../categories/rust/" rel="tag">rust</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../linking-shared-libraries-in-micro-manager-for-linux/" rel="prev" title="Linking shared libraries in Micro-Manager for Linux">Previous post</a>
+            </li>
+        </ul></nav></aside><section class="comments hidden-print"><h2>Comments</h2>
+        
+        
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="kmdouglass",
+            disqus_url="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/",
+        disqus_title="A simple UNIX socket listener in Rust",
+        disqus_identifier="cache/posts/a-simple-unix-socket-listener-in-rust.html",
+        disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+        </section></article><script>var disqus_shortname="kmdouglass";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+</div>
+        <!--End of body content-->
+
+        <footer id="footer">
+            Contents © 2019         <a href="mailto:kyle.m.douglass@gmail.com">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
+            
+        </footer>
+</div>
+</div>
+
+
+            <script src="../../assets/js/all-nocdn.js"></script><!-- fancy dates --><script>
+    moment.locale("en");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates --><script>
+    baguetteBox.run('div#content', {
+        ignoreClass: 'islink',
+        captions: function(element) {
+            return element.getElementsByTagName('img')[0].alt;
+    }});
+    </script>
+</body>
+</html>
