@@ -991,3 +991,13 @@ pre a:hover {
     background-color: #272b30;
 }
 
+/* Change the width of the separator in the line numbers */
+td.linenos {
+    width: 3em;
+}
+
+pre.code {
+    margin-left: 5px;
+    margin-right: 0px;
+}
+
