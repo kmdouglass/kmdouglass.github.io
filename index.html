@@ -95,87 +95,92 @@ systems like the Raspberry Pi that controls and reads data from the system's per
 design of this project is inspired by Docker: a daemon process does most of the heavy work while a
 command line tool communicates with the Daemon over a Unix socket (typically a file located at
 <tt class="docutils literal">/var/run/docker.sock</tt>). The purpose of this post is to demonstrate the most basic realization of
-this: reading text from a UNIX socket in Rust.</p>
+this: reading text from a UNIX socket in Rust. And to emphasize that the UNIX socket is used for
+communication between two separate processes, we will send messages from Bash to Rust.</p>
+<p>Keep in mind that this is my first-ever Rust program, so it may not be completely idiomatic
+Rust. The follow was compiled with rustc 1.32.0 (9fda7c223 2019-01-16).</p>
 <p>To begin, I created a new Rust project with <tt class="docutils literal">cargo</tt>.</p>
-<pre class="code shell"><a name="rest_code_967f153616db408793a4970266cac833-1"></a>$ cargo new rust-uds
-<a name="rest_code_967f153616db408793a4970266cac833-2"></a>$ <span class="nb">cd</span> rust-uds
+<pre class="code shell"><a name="rest_code_cf489af8c90143cfa29db798c98cc3f8-1"></a>$ cargo new rust-uds
+<a name="rest_code_cf489af8c90143cfa29db798c98cc3f8-2"></a>$ <span class="nb">cd</span> rust-uds
 </pre>
 <p>Next, I opened the file that cargo automatically generated in <tt class="docutils literal">src/main.rs</tt>, removed the
-auto-generated content, and added the following code, which is largely taken from the <a class="reference external" href="https://doc.rust-lang.org/std/os/unix/net/struct.UnixListener.html#examples">example</a>
-provided in the Rust documentation:</p>
+auto-generated content, and added the following code, which is largely based on the <a class="reference external" href="https://doc.rust-lang.org/std/os/unix/net/struct.UnixListener.html#examples">example</a>
+provided in the Rust documentation but with a few key differences:</p>
 <table class="codetable"><tr>
-<td class="linenos"><div class="linenodiv"><pre><a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_819ca8e783174bd38b9c00c8c69b2689-1"> 1</a>
-<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_819ca8e783174bd38b9c00c8c69b2689-2"> 2</a>
-<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_819ca8e783174bd38b9c00c8c69b2689-3"> 3</a>
-<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_819ca8e783174bd38b9c00c8c69b2689-4"> 4</a>
-<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_819ca8e783174bd38b9c00c8c69b2689-5"> 5</a>
-<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_819ca8e783174bd38b9c00c8c69b2689-6"> 6</a>
-<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_819ca8e783174bd38b9c00c8c69b2689-7"> 7</a>
-<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_819ca8e783174bd38b9c00c8c69b2689-8"> 8</a>
-<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_819ca8e783174bd38b9c00c8c69b2689-9"> 9</a>
-<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_819ca8e783174bd38b9c00c8c69b2689-10">10</a>
-<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_819ca8e783174bd38b9c00c8c69b2689-11">11</a>
-<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_819ca8e783174bd38b9c00c8c69b2689-12">12</a>
-<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_819ca8e783174bd38b9c00c8c69b2689-13">13</a>
-<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_819ca8e783174bd38b9c00c8c69b2689-14">14</a>
-<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_819ca8e783174bd38b9c00c8c69b2689-15">15</a>
-<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_819ca8e783174bd38b9c00c8c69b2689-16">16</a>
-<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_819ca8e783174bd38b9c00c8c69b2689-17">17</a>
-<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_819ca8e783174bd38b9c00c8c69b2689-18">18</a>
-<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_819ca8e783174bd38b9c00c8c69b2689-19">19</a>
-<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_819ca8e783174bd38b9c00c8c69b2689-20">20</a>
-<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_819ca8e783174bd38b9c00c8c69b2689-21">21</a>
-<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_819ca8e783174bd38b9c00c8c69b2689-22">22</a>
-<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_819ca8e783174bd38b9c00c8c69b2689-23">23</a>
-<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_819ca8e783174bd38b9c00c8c69b2689-24">24</a>
-<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_819ca8e783174bd38b9c00c8c69b2689-25">25</a>
-<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_819ca8e783174bd38b9c00c8c69b2689-26">26</a></pre></div></td>
-<td class="code"><pre class="code rust"><a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-1"></a><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">io</span>::<span class="n">Read</span><span class="p">;</span><span class="w"></span>
-<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-2"></a><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">os</span>::<span class="n">unix</span>::<span class="n">net</span>::<span class="p">{</span><span class="n">UnixStream</span><span class="p">,</span><span class="n">UnixListener</span><span class="p">};</span><span class="w"></span>
-<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-3"></a><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">thread</span><span class="p">;</span><span class="w"></span>
-<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-4"></a>
-<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-5"></a><span class="k">fn</span> <span class="nf">handle_client</span><span class="p">(</span><span class="k">mut</span><span class="w"> </span><span class="n">stream</span>: <span class="nc">UnixStream</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-6"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span>::<span class="n">new</span><span class="p">();</span><span class="w"></span>
-<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-7"></a>
-<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-8"></a><span class="w">    </span><span class="n">stream</span><span class="p">.</span><span class="n">read_to_string</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">response</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
-<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-9"></a><span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span><span class="w"> </span><span class="n">response</span><span class="p">);</span><span class="w"></span>
-<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-10"></a><span class="p">}</span><span class="w"></span>
-<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-11"></a>
-<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-12"></a><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-13"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">listener</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UnixListener</span>::<span class="n">bind</span><span class="p">(</span><span class="s">"/tmp/rust-uds.sock"</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
-<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-14"></a>
-<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-15"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">stream</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">listener</span><span class="p">.</span><span class="n">incoming</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-16"></a><span class="w">       </span><span class="k">match</span><span class="w"> </span><span class="n">stream</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-17"></a><span class="w">            </span><span class="nb">Ok</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-18"></a><span class="w">                </span><span class="n">thread</span>::<span class="n">spawn</span><span class="p">(</span><span class="k">move</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">handle_client</span><span class="p">(</span><span class="n">stream</span><span class="p">));</span><span class="w"></span>
-<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-19"></a><span class="w">            </span><span class="p">}</span><span class="w"></span>
-<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-20"></a><span class="w">            </span><span class="nb">Err</span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-21"></a><span class="w">                </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">"Error: {}"</span><span class="p">,</span><span class="w"> </span><span class="n">err</span><span class="p">);</span><span class="w"></span>
-<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-22"></a><span class="w">                </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-23"></a><span class="w">            </span><span class="p">}</span><span class="w"></span>
-<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-24"></a><span class="w">        </span><span class="p">}</span><span class="w"></span>
-<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-25"></a><span class="w">    </span><span class="p">}</span><span class="w"></span>
-<a name="rest_code_819ca8e783174bd38b9c00c8c69b2689-26"></a><span class="p">}</span><span class="w"></span>
+<td class="linenos"><div class="linenodiv"><pre><a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-1"> 1</a>
+<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-2"> 2</a>
+<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-3"> 3</a>
+<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-4"> 4</a>
+<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-5"> 5</a>
+<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-6"> 6</a>
+<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-7"> 7</a>
+<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-8"> 8</a>
+<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-9"> 9</a>
+<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-10">10</a>
+<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-11">11</a>
+<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-12">12</a>
+<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-13">13</a>
+<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-14">14</a>
+<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-15">15</a>
+<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-16">16</a>
+<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-17">17</a>
+<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-18">18</a>
+<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-19">19</a>
+<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-20">20</a>
+<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-21">21</a>
+<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-22">22</a>
+<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-23">23</a>
+<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-24">24</a>
+<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-25">25</a>
+<a href="posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-26">26</a></pre></div></td>
+<td class="code"><pre class="code rust"><a name="rest_code_57f78f465e87409d9622b3743cad53de-1"></a><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">io</span>::<span class="p">{</span><span class="n">BufRead</span><span class="p">,</span><span class="w"> </span><span class="n">BufReader</span><span class="p">};</span><span class="w"></span>
+<a name="rest_code_57f78f465e87409d9622b3743cad53de-2"></a><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">os</span>::<span class="n">unix</span>::<span class="n">net</span>::<span class="p">{</span><span class="n">UnixStream</span><span class="p">,</span><span class="n">UnixListener</span><span class="p">};</span><span class="w"></span>
+<a name="rest_code_57f78f465e87409d9622b3743cad53de-3"></a><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">thread</span><span class="p">;</span><span class="w"></span>
+<a name="rest_code_57f78f465e87409d9622b3743cad53de-4"></a>
+<a name="rest_code_57f78f465e87409d9622b3743cad53de-5"></a><span class="k">fn</span> <span class="nf">handle_client</span><span class="p">(</span><span class="n">stream</span>: <span class="nc">UnixStream</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_57f78f465e87409d9622b3743cad53de-6"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">stream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BufReader</span>::<span class="n">new</span><span class="p">(</span><span class="n">stream</span><span class="p">);</span><span class="w"></span>
+<a name="rest_code_57f78f465e87409d9622b3743cad53de-7"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">line</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">stream</span><span class="p">.</span><span class="n">lines</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_57f78f465e87409d9622b3743cad53de-8"></a><span class="w">        </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span><span class="w"> </span><span class="n">line</span><span class="p">.</span><span class="n">unwrap</span><span class="p">());</span><span class="w"></span>
+<a name="rest_code_57f78f465e87409d9622b3743cad53de-9"></a><span class="w">    </span><span class="p">}</span><span class="w"></span>
+<a name="rest_code_57f78f465e87409d9622b3743cad53de-10"></a><span class="p">}</span><span class="w"></span>
+<a name="rest_code_57f78f465e87409d9622b3743cad53de-11"></a>
+<a name="rest_code_57f78f465e87409d9622b3743cad53de-12"></a><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_57f78f465e87409d9622b3743cad53de-13"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">listener</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UnixListener</span>::<span class="n">bind</span><span class="p">(</span><span class="s">"/tmp/rust-uds.sock"</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
+<a name="rest_code_57f78f465e87409d9622b3743cad53de-14"></a>
+<a name="rest_code_57f78f465e87409d9622b3743cad53de-15"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">stream</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">listener</span><span class="p">.</span><span class="n">incoming</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_57f78f465e87409d9622b3743cad53de-16"></a><span class="w">        </span><span class="k">match</span><span class="w"> </span><span class="n">stream</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_57f78f465e87409d9622b3743cad53de-17"></a><span class="w">            </span><span class="nb">Ok</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_57f78f465e87409d9622b3743cad53de-18"></a><span class="w">                </span><span class="n">thread</span>::<span class="n">spawn</span><span class="p">(</span><span class="o">||</span><span class="w"> </span><span class="n">handle_client</span><span class="p">(</span><span class="n">stream</span><span class="p">));</span><span class="w"></span>
+<a name="rest_code_57f78f465e87409d9622b3743cad53de-19"></a><span class="w">            </span><span class="p">}</span><span class="w"></span>
+<a name="rest_code_57f78f465e87409d9622b3743cad53de-20"></a><span class="w">            </span><span class="nb">Err</span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_57f78f465e87409d9622b3743cad53de-21"></a><span class="w">                </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">"Error: {}"</span><span class="p">,</span><span class="w"> </span><span class="n">err</span><span class="p">);</span><span class="w"></span>
+<a name="rest_code_57f78f465e87409d9622b3743cad53de-22"></a><span class="w">                </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<a name="rest_code_57f78f465e87409d9622b3743cad53de-23"></a><span class="w">            </span><span class="p">}</span><span class="w"></span>
+<a name="rest_code_57f78f465e87409d9622b3743cad53de-24"></a><span class="w">        </span><span class="p">}</span><span class="w"></span>
+<a name="rest_code_57f78f465e87409d9622b3743cad53de-25"></a><span class="w">    </span><span class="p">}</span><span class="w"></span>
+<a name="rest_code_57f78f465e87409d9622b3743cad53de-26"></a><span class="p">}</span><span class="w"></span>
 </pre></td>
 </tr></table>
 <div class="section" id="explanation">
 <h2>Explanation</h2>
 <p>The first three lines import the necessary modules for this code example.</p>
-<pre class="code rust"><a name="rest_code_a86edaa15d044d909202b11d358b01e6-1"></a><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">io</span>::<span class="n">Read</span><span class="p">;</span><span class="w"></span>
-<a name="rest_code_a86edaa15d044d909202b11d358b01e6-2"></a><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">os</span>::<span class="n">unix</span>::<span class="n">net</span>::<span class="p">{</span><span class="n">UnixStream</span><span class="p">,</span><span class="n">UnixListener</span><span class="p">};</span><span class="w"></span>
-<a name="rest_code_a86edaa15d044d909202b11d358b01e6-3"></a><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">thread</span><span class="p">;</span><span class="w"></span>
+<pre class="code rust"><a name="rest_code_b6a0acba0e394b1ab2f35106acf540fe-1"></a><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">io</span>::<span class="p">{</span><span class="n">BufRead</span><span class="p">,</span><span class="w"> </span><span class="n">BufReader</span><span class="p">};</span><span class="w"></span>
+<a name="rest_code_b6a0acba0e394b1ab2f35106acf540fe-2"></a><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">os</span>::<span class="n">unix</span>::<span class="n">net</span>::<span class="p">{</span><span class="n">UnixStream</span><span class="p">,</span><span class="n">UnixListener</span><span class="p">};</span><span class="w"></span>
+<a name="rest_code_b6a0acba0e394b1ab2f35106acf540fe-3"></a><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">thread</span><span class="p">;</span><span class="w"></span>
 </pre>
-<p><tt class="docutils literal">Read</tt> is a trait that must be imported into the current scope to use the <cite>read_to_string()</cite>
-method. <tt class="docutils literal">UnixStream</tt> and <tt class="docutils literal">UnixListener</tt> are structs that provide the functionality for handling
-the UNIX socket, and the <tt class="docutils literal"><span class="pre">std::thread</span></tt> module is used to spawn threads.</p>
+<p><tt class="docutils literal">BufRead</tt> is a trait that enables extra ways of reading data sources; in this case, it has an
+internal buffer for reading the socket line-by-line. <tt class="docutils literal">BufReader</tt> is a struct that actually
+implements the functionality in <tt class="docutils literal">BufRead</tt>. <tt class="docutils literal">UnixStream</tt> and <tt class="docutils literal">UnixListener</tt> are structs that
+provide the functionality for handling the UNIX socket, and the <tt class="docutils literal"><span class="pre">std::thread</span></tt> module is used to
+spawn threads.</p>
 <p>The next set of lines defines a function named <tt class="docutils literal">handle_client()</tt> that is called whenever new data
 arrives in the stream. The explanation for this is best left until after the <tt class="docutils literal">main()</tt> function.</p>
 <p>The first line in the <tt class="docutils literal">main()</tt> function creates the UnixListener struct and binds it to the
 <tt class="docutils literal">listener</tt> variable.</p>
-<pre class="code rust"><a name="rest_code_03772faa925d480ca21401b3c0302685-1"></a><span class="kd">let</span><span class="w"> </span><span class="n">listener</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UnixListener</span>::<span class="n">bind</span><span class="p">(</span><span class="s">"/tmp/rust-uds.sock"</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
+<pre class="code rust"><a name="rest_code_7d8f3d39e1da4338b07cbb8b8937cee6-1"></a><span class="kd">let</span><span class="w"> </span><span class="n">listener</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UnixListener</span>::<span class="n">bind</span><span class="p">(</span><span class="s">"/tmp/rust-uds.sock"</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
 </pre>
 <p>The <tt class="docutils literal">bind()</tt> function takes a string argument that is a path to the socket file and <tt class="docutils literal">unwrap()</tt>
-moves the value out of the Option that is returned by <tt class="docutils literal">bind()</tt>. (This is a pattern that is
+moves the value out of the Result that is returned by <tt class="docutils literal">bind()</tt>. (This is a pattern that is
 <a class="reference external" href="https://doc.rust-lang.org/std/option/enum.Option.html#method.unwrap">discouraged</a> in Rust but is OK for quick prototypes because it simplifies the error handling.)</p>
 <p>After creating the listener, <tt class="docutils literal">listener.incoming()</tt> returns an iterator over the incoming
 connections to the socket. The connections are looped over in an infinite for loop; I believe that
@@ -183,30 +188,63 @@ this is more-or-less the same as a generator in Python which never raises a <tt 
 exception.</p>
 <p>Next, the <tt class="docutils literal">Result</tt> of the incoming streams is matched; if there is an error, it is printed and
 the loop it exited:</p>
-<pre class="code rust"><a name="rest_code_594d1ee5ee624166938771045c5c3783-1"></a><span class="nb">Err</span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a name="rest_code_594d1ee5ee624166938771045c5c3783-2"></a><span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">"Error: {}"</span><span class="p">,</span><span class="w"> </span><span class="n">err</span><span class="p">);</span><span class="w"></span>
-<a name="rest_code_594d1ee5ee624166938771045c5c3783-3"></a><span class="w">    </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<a name="rest_code_594d1ee5ee624166938771045c5c3783-4"></a><span class="p">}</span><span class="w"></span>
+<pre class="code rust"><a name="rest_code_9007ff3cc2f94d84910c0a1aa35f346f-1"></a><span class="nb">Err</span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_9007ff3cc2f94d84910c0a1aa35f346f-2"></a><span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">"Error: {}"</span><span class="p">,</span><span class="w"> </span><span class="n">err</span><span class="p">);</span><span class="w"></span>
+<a name="rest_code_9007ff3cc2f94d84910c0a1aa35f346f-3"></a><span class="w">    </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<a name="rest_code_9007ff3cc2f94d84910c0a1aa35f346f-4"></a><span class="p">}</span><span class="w"></span>
 </pre>
 <p>However, if the <tt class="docutils literal">Result</tt> of the connection is <tt class="docutils literal">Ok</tt>, then a new thread is spawned to handle the
 new stream:</p>
-<pre class="code rust"><a name="rest_code_3c5d994a0b604c3494e9e1222d3edcb1-1"></a><span class="nb">Ok</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a name="rest_code_3c5d994a0b604c3494e9e1222d3edcb1-2"></a><span class="w">    </span><span class="n">thread</span>::<span class="n">spawn</span><span class="p">(</span><span class="k">move</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">handle_client</span><span class="p">(</span><span class="n">stream</span><span class="p">));</span><span class="w"></span>
-<a name="rest_code_3c5d994a0b604c3494e9e1222d3edcb1-3"></a><span class="p">}</span><span class="w"></span>
+<pre class="code rust"><a name="rest_code_9364da6430984347967a7efe86f42dad-1"></a><span class="nb">Ok</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_9364da6430984347967a7efe86f42dad-2"></a><span class="w">    </span><span class="n">thread</span>::<span class="n">spawn</span><span class="p">(</span><span class="o">||</span><span class="w"> </span><span class="n">handle_client</span><span class="p">(</span><span class="n">stream</span><span class="p">));</span><span class="w"></span>
+<a name="rest_code_9364da6430984347967a7efe86f42dad-3"></a><span class="p">}</span><span class="w"></span>
 </pre>
-<p>I had to add the <tt class="docutils literal">move</tt> keyword to the argument of <tt class="docutils literal">thread.spawn()</tt> to make the compiler
-happy. The reason is that the argument to the client handler is mutable, which I think means that
-it needs to take ownership of the stream. (See the documentation <a class="reference external" href="https://doc.rust-lang.org/book/ch16-01-threads.html#using-move-closures-with-threads">here</a>.)</p>
 <p>Finally, the client handler is called for each connection.</p>
-<pre class="code rust"><a name="rest_code_c19dccf207d44ba1bb8eeff2ea101fe9-1"></a><span class="k">fn</span> <span class="nf">handle_client</span><span class="p">(</span><span class="k">mut</span><span class="w"> </span><span class="n">stream</span>: <span class="nc">UnixStream</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a name="rest_code_c19dccf207d44ba1bb8eeff2ea101fe9-2"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span>::<span class="n">new</span><span class="p">();</span><span class="w"></span>
-<a name="rest_code_c19dccf207d44ba1bb8eeff2ea101fe9-3"></a>
-<a name="rest_code_c19dccf207d44ba1bb8eeff2ea101fe9-4"></a><span class="w">    </span><span class="n">stream</span><span class="p">.</span><span class="n">read_to_string</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">response</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
-<a name="rest_code_c19dccf207d44ba1bb8eeff2ea101fe9-5"></a><span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span><span class="w"> </span><span class="n">response</span><span class="p">);</span><span class="w"></span>
-<a name="rest_code_c19dccf207d44ba1bb8eeff2ea101fe9-6"></a><span class="p">}</span><span class="w"></span>
+<pre class="code rust"><a name="rest_code_445a6bbae86d44b8908c06528d359809-1"></a><span class="k">fn</span> <span class="nf">handle_client</span><span class="p">(</span><span class="k">mut</span><span class="w"> </span><span class="n">stream</span>: <span class="nc">UnixStream</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_445a6bbae86d44b8908c06528d359809-2"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">stream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BufReader</span>::<span class="n">new</span><span class="p">(</span><span class="n">stream</span><span class="p">);</span><span class="w"></span>
+<a name="rest_code_445a6bbae86d44b8908c06528d359809-3"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">line</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">stream</span><span class="p">.</span><span class="n">lines</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_445a6bbae86d44b8908c06528d359809-4"></a><span class="w">        </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span><span class="w"> </span><span class="n">line</span><span class="p">.</span><span class="n">unwrap</span><span class="p">());</span><span class="w"></span>
+<a name="rest_code_445a6bbae86d44b8908c06528d359809-5"></a><span class="w">    </span><span class="p">}</span><span class="w"></span>
+<a name="rest_code_445a6bbae86d44b8908c06528d359809-6"></a><span class="p">}</span><span class="w"></span>
 </pre>
-<p>The handler in this case is fairly straight-forward. The response is stored in a mutable string
-which we extract from the stream and printed to terminal.</p>
+<p>The handler in this case is fairly straight-forward. It shadows the original <tt class="docutils literal">stream</tt> variable by
+binding it to a version of itself that has been converted to a <tt class="docutils literal">BufReader</tt>. Finally, it loops
+over the <tt class="docutils literal">lines()</tt> iterator, which blocks until a new line appears in the stream.</p>
+</div>
+<div class="section" id="sending-messages">
+<h2>Sending messages</h2>
+<p>As an example, let's send messages to the Rust program via Bash using <a class="reference external" href="http://man.openbsd.org/nc">the OpenBSD version of
+netcat</a>. (The OpenBSD version seems to be the default on Ubuntu-based systems.) This should
+underscore the fact that the UNIX socket is really being used to communicate between two different
+processes.</p>
+<p>First, compile and run the Rust program to start the socket listener:</p>
+<pre class="code text"><a name="rest_code_783e25274cee4b90bf839bafb17db3b7-1"></a>$ cargo run --release
+<a name="rest_code_783e25274cee4b90bf839bafb17db3b7-2"></a>   Compiling rust-uds v0.1.0 (/home/kmd/src/rust-uds)
+<a name="rest_code_783e25274cee4b90bf839bafb17db3b7-3"></a>    Finished release [optimized] target(s) in 1.59s
+<a name="rest_code_783e25274cee4b90bf839bafb17db3b7-4"></a>     Running `target/release/rust-uds`
+</pre>
+<p>Open up a new terminal. You should see the socket file /tmp/rust-uds.sock:</p>
+<pre class="code text"><a name="rest_code_4cc0fbc5fddd47e7a44fdee2c6914b27-1"></a>$ ls /tmp | grep rust
+<a name="rest_code_4cc0fbc5fddd47e7a44fdee2c6914b27-2"></a>rust-uds.sock
+</pre>
+<p>Now let's send messages to the rust program. Use the following netcat command to open a connection
+to the socket.</p>
+<pre class="code text"><a name="rest_code_bf8168653546403caefb21172f43b73f-1"></a>$ nc -U /tmp/rust-uds.sock
+</pre>
+<p>The <tt class="docutils literal"><span class="pre">-U</span></tt> is necessary to indicate to netcat that this is a UNIX stream socket. Now, start typing
+text into the same window. Every time you press ENTER, you should see the same text appear in the
+terminal window in which the Rust program is running. Press CTRL-C to exit the Rust socket
+listener. If you re-run the program, delete the old socket first: <tt class="docutils literal">rm <span class="pre">/tmp/rust-uds.sock</span></tt></p>
+</div>
+<div class="section" id="summary">
+<h2>Summary</h2>
+<ul class="simple">
+<li>Use a <tt class="docutils literal">UnixListener</tt> struct to create a UNIX socket and listen to it for connections.</li>
+<li>For each new connection, spawn a new thread and read the stream with a <tt class="docutils literal">BufReader</tt>.</li>
+<li>Print each new line in the stream by iterating over the <tt class="docutils literal">lines()</tt> iterator of the
+<tt class="docutils literal">BufReader</tt>.</li>
+<li>Send commands to your Rust program from bash with <tt class="docutils literal">nc <span class="pre">-U</span> "$PATH_TO_SOCKET"</tt>.</li>
+</ul>
 </div>
 </div>
     </div>
