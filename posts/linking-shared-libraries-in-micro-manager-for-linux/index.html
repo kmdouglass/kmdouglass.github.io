@@ -102,12 +102,12 @@
 <p>Lately I have been working on a new <a class="reference external" href="https://github.com/kmdouglass/RPi-DeviceAdapters">Video4Linux2 device adapter</a> for <a class="reference external" href="https://micro-manager.org/">Micro-Manager</a>. I
 encountered the following error after adding some functionality that introduced two <a class="reference external" href="https://www.boost.org/">Boost
 libraries</a> as new dependencies in my project.</p>
-<pre class="code shell"><a name="rest_code_e614e0b50300401a8dfa1b79b332c46b-1"></a>Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
-<a name="rest_code_e614e0b50300401a8dfa1b79b332c46b-2"></a>  File <span class="s2">"RPiV4L2.py"</span>, line <span class="m">17</span>, in &lt;module&gt;
-<a name="rest_code_e614e0b50300401a8dfa1b79b332c46b-3"></a>    mmc.loadDevice<span class="o">(</span><span class="s2">"camera"</span>, <span class="s2">"RPiV4L2"</span>, <span class="s2">"RPiV4L2"</span><span class="o">)</span>
-<a name="rest_code_e614e0b50300401a8dfa1b79b332c46b-4"></a>  File <span class="s2">"/home/micro-manager/app/lib/micro-manager/MMCorePy.py"</span>, line <span class="m">3515</span>, in loadDevice
-<a name="rest_code_e614e0b50300401a8dfa1b79b332c46b-5"></a>    <span class="k">return</span> _MMCorePy.CMMCore_loadDevice<span class="o">(</span>self, label, moduleName, deviceName<span class="o">)</span>
-<a name="rest_code_e614e0b50300401a8dfa1b79b332c46b-6"></a>MMCorePy.CMMError: Failed to load device <span class="s2">"RPiV4L2"</span> from adapter module <span class="s2">"RPiV4L2"</span> <span class="o">[</span> Failed to load device adapter <span class="s2">"RPiV4L2"</span> <span class="o">[</span> Failed to load module <span class="s2">"/home/micro-manager/app/lib/micro-manager/libmmgr_dal_RPiV4L2.so.0"</span> <span class="o">[</span> /home/micro-manager/app/lib/micro-manager/libmmgr_dal_RPiV4L2.so.0: undefined symbol: _ZN5boost10filesystem6detail13dir_itr_closeERPvS3_ <span class="o">]</span> <span class="o">]</span> <span class="o">]</span>
+<pre class="code shell"><a name="rest_code_9d9256b5693d4c539ad4f5b0b958a73a-1"></a>Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
+<a name="rest_code_9d9256b5693d4c539ad4f5b0b958a73a-2"></a>  File <span class="s2">"RPiV4L2.py"</span>, line <span class="m">17</span>, in &lt;module&gt;
+<a name="rest_code_9d9256b5693d4c539ad4f5b0b958a73a-3"></a>    mmc.loadDevice<span class="o">(</span><span class="s2">"camera"</span>, <span class="s2">"RPiV4L2"</span>, <span class="s2">"RPiV4L2"</span><span class="o">)</span>
+<a name="rest_code_9d9256b5693d4c539ad4f5b0b958a73a-4"></a>  File <span class="s2">"/home/micro-manager/app/lib/micro-manager/MMCorePy.py"</span>, line <span class="m">3515</span>, in loadDevice
+<a name="rest_code_9d9256b5693d4c539ad4f5b0b958a73a-5"></a>    <span class="k">return</span> _MMCorePy.CMMCore_loadDevice<span class="o">(</span>self, label, moduleName, deviceName<span class="o">)</span>
+<a name="rest_code_9d9256b5693d4c539ad4f5b0b958a73a-6"></a>MMCorePy.CMMError: Failed to load device <span class="s2">"RPiV4L2"</span> from adapter module <span class="s2">"RPiV4L2"</span> <span class="o">[</span> Failed to load device adapter <span class="s2">"RPiV4L2"</span> <span class="o">[</span> Failed to load module <span class="s2">"/home/micro-manager/app/lib/micro-manager/libmmgr_dal_RPiV4L2.so.0"</span> <span class="o">[</span> /home/micro-manager/app/lib/micro-manager/libmmgr_dal_RPiV4L2.so.0: undefined symbol: _ZN5boost10filesystem6detail13dir_itr_closeERPvS3_ <span class="o">]</span> <span class="o">]</span> <span class="o">]</span>
 </pre>
 <p>I received this error when I tried to load the device in a Python script. At first I was puzzled
 because the code compiled without problems, but I soon found that the solution was simple.</p>
@@ -119,19 +119,19 @@ Boost filesystem and Boost regex libraries to this device adapter as dependencie
 surprising that either of their names appeared in the error message.</p>
 <p>Next, I used the <a class="reference external" href="http://man7.org/linux/man-pages/man1/ldd.1.html">ldd</a> program to check which libraries my device adapter were linked
 against. (libmmgr_dal_RPiV4l2.so.0 is the name of the device adapter library file).</p>
-<pre class="code shell"><a name="rest_code_5c9ca3504b1c4438a55e12534d692f98-1"></a>$ ldd libmmgr_dal_RPiV4L2.so.0
-<a name="rest_code_5c9ca3504b1c4438a55e12534d692f98-2"></a>     linux-vdso.so.1 <span class="o">(</span>0x7ec21000<span class="o">)</span>
-<a name="rest_code_5c9ca3504b1c4438a55e12534d692f98-3"></a>     libdl.so.2 <span class="o">=</span>&gt; /lib/arm-linux-gnueabihf/libdl.so.2 <span class="o">(</span>0x76e9c000<span class="o">)</span>
-<a name="rest_code_5c9ca3504b1c4438a55e12534d692f98-4"></a>     libstdc++.so.6 <span class="o">=</span>&gt; /usr/lib/arm-linux-gnueabihf/libstdc++.so.6 <span class="o">(</span>0x76d54000<span class="o">)</span>
-<a name="rest_code_5c9ca3504b1c4438a55e12534d692f98-5"></a>     libm.so.6 <span class="o">=</span>&gt; /lib/arm-linux-gnueabihf/libm.so.6 <span class="o">(</span>0x76cdc000<span class="o">)</span>
-<a name="rest_code_5c9ca3504b1c4438a55e12534d692f98-6"></a>     libc.so.6 <span class="o">=</span>&gt; /lib/arm-linux-gnueabihf/libc.so.6 <span class="o">(</span>0x76bee000<span class="o">)</span>
-<a name="rest_code_5c9ca3504b1c4438a55e12534d692f98-7"></a>     libgcc_s.so.1 <span class="o">=</span>&gt; /lib/arm-linux-gnueabihf/libgcc_s.so.1 <span class="o">(</span>0x76bc1000<span class="o">)</span>
-<a name="rest_code_5c9ca3504b1c4438a55e12534d692f98-8"></a>     libicudata.so.57 <span class="o">=</span>&gt; /usr/lib/arm-linux-gnueabihf/libicudata.so.57 <span class="o">(</span>0x75334000<span class="o">)</span>
-<a name="rest_code_5c9ca3504b1c4438a55e12534d692f98-9"></a>     libicui18n.so.57 <span class="o">=</span>&gt; /usr/lib/arm-linux-gnueabihf/libicui18n.so.57 <span class="o">(</span>0x75187000<span class="o">)</span>
-<a name="rest_code_5c9ca3504b1c4438a55e12534d692f98-10"></a>     libicuuc.so.57 <span class="o">=</span>&gt; /usr/lib/arm-linux-gnueabihf/libicuuc.so.57 <span class="o">(</span>0x7505e000<span class="o">)</span>
-<a name="rest_code_5c9ca3504b1c4438a55e12534d692f98-11"></a>     librt.so.1 <span class="o">=</span>&gt; /lib/arm-linux-gnueabihf/librt.so.1 <span class="o">(</span>0x75048000<span class="o">)</span>
-<a name="rest_code_5c9ca3504b1c4438a55e12534d692f98-12"></a>     libpthread.so.0 <span class="o">=</span>&gt; /lib/arm-linux-gnueabihf/libpthread.so.0 <span class="o">(</span>0x75024000<span class="o">)</span>
-<a name="rest_code_5c9ca3504b1c4438a55e12534d692f98-13"></a>     /lib/ld-linux-armhf.so.3 <span class="o">(</span>0x76fb4000<span class="o">)</span>
+<pre class="code shell"><a name="rest_code_32d1031f26de464a9d15132195760eb8-1"></a>$ ldd libmmgr_dal_RPiV4L2.so.0
+<a name="rest_code_32d1031f26de464a9d15132195760eb8-2"></a>     linux-vdso.so.1 <span class="o">(</span>0x7ec21000<span class="o">)</span>
+<a name="rest_code_32d1031f26de464a9d15132195760eb8-3"></a>     libdl.so.2 <span class="o">=</span>&gt; /lib/arm-linux-gnueabihf/libdl.so.2 <span class="o">(</span>0x76e9c000<span class="o">)</span>
+<a name="rest_code_32d1031f26de464a9d15132195760eb8-4"></a>     libstdc++.so.6 <span class="o">=</span>&gt; /usr/lib/arm-linux-gnueabihf/libstdc++.so.6 <span class="o">(</span>0x76d54000<span class="o">)</span>
+<a name="rest_code_32d1031f26de464a9d15132195760eb8-5"></a>     libm.so.6 <span class="o">=</span>&gt; /lib/arm-linux-gnueabihf/libm.so.6 <span class="o">(</span>0x76cdc000<span class="o">)</span>
+<a name="rest_code_32d1031f26de464a9d15132195760eb8-6"></a>     libc.so.6 <span class="o">=</span>&gt; /lib/arm-linux-gnueabihf/libc.so.6 <span class="o">(</span>0x76bee000<span class="o">)</span>
+<a name="rest_code_32d1031f26de464a9d15132195760eb8-7"></a>     libgcc_s.so.1 <span class="o">=</span>&gt; /lib/arm-linux-gnueabihf/libgcc_s.so.1 <span class="o">(</span>0x76bc1000<span class="o">)</span>
+<a name="rest_code_32d1031f26de464a9d15132195760eb8-8"></a>     libicudata.so.57 <span class="o">=</span>&gt; /usr/lib/arm-linux-gnueabihf/libicudata.so.57 <span class="o">(</span>0x75334000<span class="o">)</span>
+<a name="rest_code_32d1031f26de464a9d15132195760eb8-9"></a>     libicui18n.so.57 <span class="o">=</span>&gt; /usr/lib/arm-linux-gnueabihf/libicui18n.so.57 <span class="o">(</span>0x75187000<span class="o">)</span>
+<a name="rest_code_32d1031f26de464a9d15132195760eb8-10"></a>     libicuuc.so.57 <span class="o">=</span>&gt; /usr/lib/arm-linux-gnueabihf/libicuuc.so.57 <span class="o">(</span>0x7505e000<span class="o">)</span>
+<a name="rest_code_32d1031f26de464a9d15132195760eb8-11"></a>     librt.so.1 <span class="o">=</span>&gt; /lib/arm-linux-gnueabihf/librt.so.1 <span class="o">(</span>0x75048000<span class="o">)</span>
+<a name="rest_code_32d1031f26de464a9d15132195760eb8-12"></a>     libpthread.so.0 <span class="o">=</span>&gt; /lib/arm-linux-gnueabihf/libpthread.so.0 <span class="o">(</span>0x75024000<span class="o">)</span>
+<a name="rest_code_32d1031f26de464a9d15132195760eb8-13"></a>     /lib/ld-linux-armhf.so.3 <span class="o">(</span>0x76fb4000<span class="o">)</span>
 </pre>
 <p>Neither libboost_filesystem nor libboost_regex are listed, so I knew that they were not linked with
 the device adapter.</p>
@@ -139,29 +139,29 @@ the device adapter.</p>
 project. This file is used by Autotools define how the device adapter should be compiled and
 linked. Here is what my Makefile.am looked like:</p>
 <table class="codetable"><tr>
-<td class="linenos"><div class="linenodiv"><pre><a href="#rest_code_927d6a01e8a5412da730588caea6ae98-1">1</a>
-<a href="#rest_code_927d6a01e8a5412da730588caea6ae98-2">2</a>
-<a href="#rest_code_927d6a01e8a5412da730588caea6ae98-3">3</a>
-<a href="#rest_code_927d6a01e8a5412da730588caea6ae98-4">4</a>
-<a href="#rest_code_927d6a01e8a5412da730588caea6ae98-5">5</a></pre></div></td>
-<td class="code"><pre class="code Makefile"><a name="rest_code_927d6a01e8a5412da730588caea6ae98-1"></a><span class="nv">AM_CXXFLAGS</span> <span class="o">=</span> <span class="k">$(</span>MMDEVAPI_CXXFLAGS<span class="k">)</span>
-<a name="rest_code_927d6a01e8a5412da730588caea6ae98-2"></a><span class="nv">deviceadapter_LTLIBRARIES</span> <span class="o">=</span> libmmgr_dal_RPiV4L2.la
-<a name="rest_code_927d6a01e8a5412da730588caea6ae98-3"></a><span class="nv">libmmgr_dal_RPiV4L2_la_SOURCES</span> <span class="o">=</span> RPiV4L2.cpp RPiV4L2.h refactor.h ../../MMDevice/MMDevice.h ../../MMDevice/DeviceBase.h
-<a name="rest_code_927d6a01e8a5412da730588caea6ae98-4"></a><span class="nv">libmmgr_dal_RPiV4L2_la_LIBADD</span> <span class="o">=</span> <span class="k">$(</span>MMDEVAPI_LIBADD<span class="k">)</span>
-<a name="rest_code_927d6a01e8a5412da730588caea6ae98-5"></a><span class="nv">libmmgr_dal_RPiV4L2_la_LDFLAGS</span> <span class="o">=</span> <span class="k">$(</span>MMDEVAPI_LDFLAGS<span class="k">)</span>
+<td class="linenos"><div class="linenodiv"><pre><a href="#rest_code_b57a9522e2f94164915e7af7388ed42a-1">1</a>
+<a href="#rest_code_b57a9522e2f94164915e7af7388ed42a-2">2</a>
+<a href="#rest_code_b57a9522e2f94164915e7af7388ed42a-3">3</a>
+<a href="#rest_code_b57a9522e2f94164915e7af7388ed42a-4">4</a>
+<a href="#rest_code_b57a9522e2f94164915e7af7388ed42a-5">5</a></pre></div></td>
+<td class="code"><pre class="code Makefile"><a name="rest_code_b57a9522e2f94164915e7af7388ed42a-1"></a><span class="nv">AM_CXXFLAGS</span> <span class="o">=</span> <span class="k">$(</span>MMDEVAPI_CXXFLAGS<span class="k">)</span>
+<a name="rest_code_b57a9522e2f94164915e7af7388ed42a-2"></a><span class="nv">deviceadapter_LTLIBRARIES</span> <span class="o">=</span> libmmgr_dal_RPiV4L2.la
+<a name="rest_code_b57a9522e2f94164915e7af7388ed42a-3"></a><span class="nv">libmmgr_dal_RPiV4L2_la_SOURCES</span> <span class="o">=</span> RPiV4L2.cpp RPiV4L2.h refactor.h ../../MMDevice/MMDevice.h ../../MMDevice/DeviceBase.h
+<a name="rest_code_b57a9522e2f94164915e7af7388ed42a-4"></a><span class="nv">libmmgr_dal_RPiV4L2_la_LIBADD</span> <span class="o">=</span> <span class="k">$(</span>MMDEVAPI_LIBADD<span class="k">)</span>
+<a name="rest_code_b57a9522e2f94164915e7af7388ed42a-5"></a><span class="nv">libmmgr_dal_RPiV4L2_la_LDFLAGS</span> <span class="o">=</span> <span class="k">$(</span>MMDEVAPI_LDFLAGS<span class="k">)</span>
 </pre></td>
 </tr></table>
 <p>After experimenting a bit, I discovered that I could instruct the linker to link against shared
 libraries by adding them to the <tt class="docutils literal">libmmgr_dal_RPiV4L2_la_LDFLAGS</tt> variable with the <tt class="docutils literal"><span class="pre">-l</span></tt>
 flag. The resulting line now looks like:</p>
-<pre class="code Makefile"><a name="rest_code_d54f2105cea14f11838c566f86fb8c07-1"></a><span class="nv">libmmgr_dal_RPiV4L2_la_LDFLAGS</span> <span class="o">=</span> <span class="k">$(</span>MMDEVAPI_LDFLAGS<span class="k">)</span> -lboost_regex -lboost_filesystem
+<pre class="code Makefile"><a name="rest_code_4bdefe39a778487ab2fe440151177548-1"></a><span class="nv">libmmgr_dal_RPiV4L2_la_LDFLAGS</span> <span class="o">=</span> <span class="k">$(</span>MMDEVAPI_LDFLAGS<span class="k">)</span> -lboost_regex -lboost_filesystem
 </pre>
 <p>Finally, running <tt class="docutils literal">ldd</tt> on the rebuilt device adapter now shows these two libraries:</p>
-<pre class="code shell"><a name="rest_code_2bd209b893944ac88109c79594243bfe-1"></a>$ ldd libmmgr_dal_RPiV4L2.so.0
-<a name="rest_code_2bd209b893944ac88109c79594243bfe-2"></a>     linux-vdso.so.1 <span class="o">(</span>0x7ed74000<span class="o">)</span>
-<a name="rest_code_2bd209b893944ac88109c79594243bfe-3"></a>     libboost_regex.so.1.62.0 <span class="o">=</span>&gt; /usr/lib/arm-linux-gnueabihf/libboost_regex.so.1.62.0 <span class="o">(</span>0x76e3c000<span class="o">)</span>
-<a name="rest_code_2bd209b893944ac88109c79594243bfe-4"></a>     libboost_filesystem.so.1.62.0 <span class="o">=</span>&gt; /usr/lib/arm-linux-gnueabihf/libboost_filesystem.so.1.62.0 <span class="o">(</span>0x76e1b000<span class="o">)</span>
-<a name="rest_code_2bd209b893944ac88109c79594243bfe-5"></a>     ...
+<pre class="code shell"><a name="rest_code_b39bf6ffa8b24613bc01c83491e844f2-1"></a>$ ldd libmmgr_dal_RPiV4L2.so.0
+<a name="rest_code_b39bf6ffa8b24613bc01c83491e844f2-2"></a>     linux-vdso.so.1 <span class="o">(</span>0x7ed74000<span class="o">)</span>
+<a name="rest_code_b39bf6ffa8b24613bc01c83491e844f2-3"></a>     libboost_regex.so.1.62.0 <span class="o">=</span>&gt; /usr/lib/arm-linux-gnueabihf/libboost_regex.so.1.62.0 <span class="o">(</span>0x76e3c000<span class="o">)</span>
+<a name="rest_code_b39bf6ffa8b24613bc01c83491e844f2-4"></a>     libboost_filesystem.so.1.62.0 <span class="o">=</span>&gt; /usr/lib/arm-linux-gnueabihf/libboost_filesystem.so.1.62.0 <span class="o">(</span>0x76e1b000<span class="o">)</span>
+<a name="rest_code_b39bf6ffa8b24613bc01c83491e844f2-5"></a>     ...
 </pre>
 </div>
     </div>

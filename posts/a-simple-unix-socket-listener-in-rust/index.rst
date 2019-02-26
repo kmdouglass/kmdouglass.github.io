@@ -22,7 +22,7 @@ this: reading text from a UNIX socket in Rust. And to emphasize that the UNIX so
 communication between two separate processes, we will send messages from Bash to Rust.
 
 Keep in mind that this is my first-ever Rust program, so it may not be completely idiomatic
-Rust. The follow was compiled with rustc 1.32.0 (9fda7c223 2019-01-16).
+Rust. The following was compiled with rustc 1.32.0 (9fda7c223 2019-01-16).
 
 To begin, I created a new Rust project with ``cargo``.
 

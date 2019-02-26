@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kyle M. Douglass</title><link>http://kmdouglass.github.io/</link><description>Optics, programming, and computer vision.</description><atom:link href="http://kmdouglass.github.io/rss.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Tue, 26 Feb 2019 06:27:49 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>A simple UNIX socket listener in Rust</title><link>http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;I decided that I wanted to learn a new programming language in 2019. After a bit of research, I
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kyle M. Douglass</title><link>http://kmdouglass.github.io/</link><description>Optics, programming, and computer vision.</description><atom:link href="http://kmdouglass.github.io/rss.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Tue, 26 Feb 2019 18:34:47 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>A simple UNIX socket listener in Rust</title><link>http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;I decided that I wanted to learn a new programming language in 2019. After a bit of research, I
 settled upon &lt;a class="reference external" href="https://www.rust-lang.org/"&gt;Rust&lt;/a&gt; due to its speed, novel ideas about memory safety, and &lt;a class="reference external" href="https://blog.rust-lang.org/2018/03/12/roadmap.html#four-target-domains"&gt;focus on two areas
 that I am interested in&lt;/a&gt;: embedded systems and WebAssembly. While I think that &lt;a class="reference external" href="https://doc.rust-lang.org/book/"&gt;The Book&lt;/a&gt; is the
 best place to get started learning the language, nothing is a really a substitute for writing
@@ -12,70 +12,70 @@ command line tool communicates with the Daemon over a Unix socket (typically a f
 this: reading text from a UNIX socket in Rust. And to emphasize that the UNIX socket is used for
 communication between two separate processes, we will send messages from Bash to Rust.&lt;/p&gt;
 &lt;p&gt;Keep in mind that this is my first-ever Rust program, so it may not be completely idiomatic
-Rust. The follow was compiled with rustc 1.32.0 (9fda7c223 2019-01-16).&lt;/p&gt;
+Rust. The following was compiled with rustc 1.32.0 (9fda7c223 2019-01-16).&lt;/p&gt;
 &lt;p&gt;To begin, I created a new Rust project with &lt;tt class="docutils literal"&gt;cargo&lt;/tt&gt;.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_cf489af8c90143cfa29db798c98cc3f8-1"&gt;&lt;/a&gt;$ cargo new rust-uds
-&lt;a name="rest_code_cf489af8c90143cfa29db798c98cc3f8-2"&gt;&lt;/a&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; rust-uds
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_fdfc39b8b2ec45d0be43d9d75dd8a438-1"&gt;&lt;/a&gt;$ cargo new rust-uds
+&lt;a name="rest_code_fdfc39b8b2ec45d0be43d9d75dd8a438-2"&gt;&lt;/a&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; rust-uds
 &lt;/pre&gt;&lt;p&gt;Next, I opened the file that cargo automatically generated in &lt;tt class="docutils literal"&gt;src/main.rs&lt;/tt&gt;, removed the
 auto-generated content, and added the following code, which is largely based on the &lt;a class="reference external" href="https://doc.rust-lang.org/std/os/unix/net/struct.UnixListener.html#examples"&gt;example&lt;/a&gt;
 provided in the Rust documentation but with a few key differences:&lt;/p&gt;
-&lt;table class="codetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-1"&gt; 1&lt;/a&gt;
-&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-2"&gt; 2&lt;/a&gt;
-&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-3"&gt; 3&lt;/a&gt;
-&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-4"&gt; 4&lt;/a&gt;
-&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-5"&gt; 5&lt;/a&gt;
-&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-6"&gt; 6&lt;/a&gt;
-&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-7"&gt; 7&lt;/a&gt;
-&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-8"&gt; 8&lt;/a&gt;
-&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-9"&gt; 9&lt;/a&gt;
-&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-10"&gt;10&lt;/a&gt;
-&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-11"&gt;11&lt;/a&gt;
-&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-12"&gt;12&lt;/a&gt;
-&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-13"&gt;13&lt;/a&gt;
-&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-14"&gt;14&lt;/a&gt;
-&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-15"&gt;15&lt;/a&gt;
-&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-16"&gt;16&lt;/a&gt;
-&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-17"&gt;17&lt;/a&gt;
-&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-18"&gt;18&lt;/a&gt;
-&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-19"&gt;19&lt;/a&gt;
-&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-20"&gt;20&lt;/a&gt;
-&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-21"&gt;21&lt;/a&gt;
-&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-22"&gt;22&lt;/a&gt;
-&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-23"&gt;23&lt;/a&gt;
-&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-24"&gt;24&lt;/a&gt;
-&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-25"&gt;25&lt;/a&gt;
-&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_57f78f465e87409d9622b3743cad53de-26"&gt;26&lt;/a&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;pre class="code rust"&gt;&lt;a name="rest_code_57f78f465e87409d9622b3743cad53de-1"&gt;&lt;/a&gt;&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;::&lt;span class="n"&gt;io&lt;/span&gt;::&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;BufRead&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;BufReader&lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;a name="rest_code_57f78f465e87409d9622b3743cad53de-2"&gt;&lt;/a&gt;&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;::&lt;span class="n"&gt;os&lt;/span&gt;::&lt;span class="n"&gt;unix&lt;/span&gt;::&lt;span class="n"&gt;net&lt;/span&gt;::&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;UnixStream&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;UnixListener&lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;a name="rest_code_57f78f465e87409d9622b3743cad53de-3"&gt;&lt;/a&gt;&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;::&lt;span class="n"&gt;thread&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;a name="rest_code_57f78f465e87409d9622b3743cad53de-4"&gt;&lt;/a&gt;
-&lt;a name="rest_code_57f78f465e87409d9622b3743cad53de-5"&gt;&lt;/a&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;handle_client&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stream&lt;/span&gt;: &lt;span class="nc"&gt;UnixStream&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;a name="rest_code_57f78f465e87409d9622b3743cad53de-6"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;stream&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;BufReader&lt;/span&gt;::&lt;span class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stream&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;a name="rest_code_57f78f465e87409d9622b3743cad53de-7"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;stream&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;lines&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;a name="rest_code_57f78f465e87409d9622b3743cad53de-8"&gt;&lt;/a&gt;&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"{}"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;a name="rest_code_57f78f465e87409d9622b3743cad53de-9"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;a name="rest_code_57f78f465e87409d9622b3743cad53de-10"&gt;&lt;/a&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;a name="rest_code_57f78f465e87409d9622b3743cad53de-11"&gt;&lt;/a&gt;
-&lt;a name="rest_code_57f78f465e87409d9622b3743cad53de-12"&gt;&lt;/a&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;a name="rest_code_57f78f465e87409d9622b3743cad53de-13"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;listener&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;UnixListener&lt;/span&gt;::&lt;span class="n"&gt;bind&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"/tmp/rust-uds.sock"&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;a name="rest_code_57f78f465e87409d9622b3743cad53de-14"&gt;&lt;/a&gt;
-&lt;a name="rest_code_57f78f465e87409d9622b3743cad53de-15"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;stream&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;listener&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;incoming&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;a name="rest_code_57f78f465e87409d9622b3743cad53de-16"&gt;&lt;/a&gt;&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;match&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;stream&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;a name="rest_code_57f78f465e87409d9622b3743cad53de-17"&gt;&lt;/a&gt;&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="nb"&gt;Ok&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stream&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;a name="rest_code_57f78f465e87409d9622b3743cad53de-18"&gt;&lt;/a&gt;&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="n"&gt;thread&lt;/span&gt;::&lt;span class="n"&gt;spawn&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;||&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;handle_client&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stream&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;a name="rest_code_57f78f465e87409d9622b3743cad53de-19"&gt;&lt;/a&gt;&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;a name="rest_code_57f78f465e87409d9622b3743cad53de-20"&gt;&lt;/a&gt;&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="nb"&gt;Err&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;err&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;a name="rest_code_57f78f465e87409d9622b3743cad53de-21"&gt;&lt;/a&gt;&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"Error: {}"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;err&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;a name="rest_code_57f78f465e87409d9622b3743cad53de-22"&gt;&lt;/a&gt;&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;a name="rest_code_57f78f465e87409d9622b3743cad53de-23"&gt;&lt;/a&gt;&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;a name="rest_code_57f78f465e87409d9622b3743cad53de-24"&gt;&lt;/a&gt;&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;a name="rest_code_57f78f465e87409d9622b3743cad53de-25"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;a name="rest_code_57f78f465e87409d9622b3743cad53de-26"&gt;&lt;/a&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;table class="codetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_4c11b8c78c5f4e9ebf425ad95fece225-1"&gt; 1&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_4c11b8c78c5f4e9ebf425ad95fece225-2"&gt; 2&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_4c11b8c78c5f4e9ebf425ad95fece225-3"&gt; 3&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_4c11b8c78c5f4e9ebf425ad95fece225-4"&gt; 4&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_4c11b8c78c5f4e9ebf425ad95fece225-5"&gt; 5&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_4c11b8c78c5f4e9ebf425ad95fece225-6"&gt; 6&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_4c11b8c78c5f4e9ebf425ad95fece225-7"&gt; 7&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_4c11b8c78c5f4e9ebf425ad95fece225-8"&gt; 8&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_4c11b8c78c5f4e9ebf425ad95fece225-9"&gt; 9&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_4c11b8c78c5f4e9ebf425ad95fece225-10"&gt;10&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_4c11b8c78c5f4e9ebf425ad95fece225-11"&gt;11&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_4c11b8c78c5f4e9ebf425ad95fece225-12"&gt;12&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_4c11b8c78c5f4e9ebf425ad95fece225-13"&gt;13&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_4c11b8c78c5f4e9ebf425ad95fece225-14"&gt;14&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_4c11b8c78c5f4e9ebf425ad95fece225-15"&gt;15&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_4c11b8c78c5f4e9ebf425ad95fece225-16"&gt;16&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_4c11b8c78c5f4e9ebf425ad95fece225-17"&gt;17&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_4c11b8c78c5f4e9ebf425ad95fece225-18"&gt;18&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_4c11b8c78c5f4e9ebf425ad95fece225-19"&gt;19&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_4c11b8c78c5f4e9ebf425ad95fece225-20"&gt;20&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_4c11b8c78c5f4e9ebf425ad95fece225-21"&gt;21&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_4c11b8c78c5f4e9ebf425ad95fece225-22"&gt;22&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_4c11b8c78c5f4e9ebf425ad95fece225-23"&gt;23&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_4c11b8c78c5f4e9ebf425ad95fece225-24"&gt;24&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_4c11b8c78c5f4e9ebf425ad95fece225-25"&gt;25&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/#rest_code_4c11b8c78c5f4e9ebf425ad95fece225-26"&gt;26&lt;/a&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;pre class="code rust"&gt;&lt;a name="rest_code_4c11b8c78c5f4e9ebf425ad95fece225-1"&gt;&lt;/a&gt;&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;::&lt;span class="n"&gt;io&lt;/span&gt;::&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;BufRead&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;BufReader&lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_4c11b8c78c5f4e9ebf425ad95fece225-2"&gt;&lt;/a&gt;&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;::&lt;span class="n"&gt;os&lt;/span&gt;::&lt;span class="n"&gt;unix&lt;/span&gt;::&lt;span class="n"&gt;net&lt;/span&gt;::&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;UnixStream&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;UnixListener&lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_4c11b8c78c5f4e9ebf425ad95fece225-3"&gt;&lt;/a&gt;&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;::&lt;span class="n"&gt;thread&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_4c11b8c78c5f4e9ebf425ad95fece225-4"&gt;&lt;/a&gt;
+&lt;a name="rest_code_4c11b8c78c5f4e9ebf425ad95fece225-5"&gt;&lt;/a&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;handle_client&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stream&lt;/span&gt;: &lt;span class="nc"&gt;UnixStream&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_4c11b8c78c5f4e9ebf425ad95fece225-6"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;stream&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;BufReader&lt;/span&gt;::&lt;span class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stream&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_4c11b8c78c5f4e9ebf425ad95fece225-7"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;stream&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;lines&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_4c11b8c78c5f4e9ebf425ad95fece225-8"&gt;&lt;/a&gt;&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"{}"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_4c11b8c78c5f4e9ebf425ad95fece225-9"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_4c11b8c78c5f4e9ebf425ad95fece225-10"&gt;&lt;/a&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_4c11b8c78c5f4e9ebf425ad95fece225-11"&gt;&lt;/a&gt;
+&lt;a name="rest_code_4c11b8c78c5f4e9ebf425ad95fece225-12"&gt;&lt;/a&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_4c11b8c78c5f4e9ebf425ad95fece225-13"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;listener&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;UnixListener&lt;/span&gt;::&lt;span class="n"&gt;bind&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"/tmp/rust-uds.sock"&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_4c11b8c78c5f4e9ebf425ad95fece225-14"&gt;&lt;/a&gt;
+&lt;a name="rest_code_4c11b8c78c5f4e9ebf425ad95fece225-15"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;stream&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;listener&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;incoming&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_4c11b8c78c5f4e9ebf425ad95fece225-16"&gt;&lt;/a&gt;&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;match&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;stream&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_4c11b8c78c5f4e9ebf425ad95fece225-17"&gt;&lt;/a&gt;&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="nb"&gt;Ok&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stream&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_4c11b8c78c5f4e9ebf425ad95fece225-18"&gt;&lt;/a&gt;&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="n"&gt;thread&lt;/span&gt;::&lt;span class="n"&gt;spawn&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;||&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;handle_client&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stream&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_4c11b8c78c5f4e9ebf425ad95fece225-19"&gt;&lt;/a&gt;&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_4c11b8c78c5f4e9ebf425ad95fece225-20"&gt;&lt;/a&gt;&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="nb"&gt;Err&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;err&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_4c11b8c78c5f4e9ebf425ad95fece225-21"&gt;&lt;/a&gt;&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"Error: {}"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;err&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_4c11b8c78c5f4e9ebf425ad95fece225-22"&gt;&lt;/a&gt;&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_4c11b8c78c5f4e9ebf425ad95fece225-23"&gt;&lt;/a&gt;&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_4c11b8c78c5f4e9ebf425ad95fece225-24"&gt;&lt;/a&gt;&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_4c11b8c78c5f4e9ebf425ad95fece225-25"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_4c11b8c78c5f4e9ebf425ad95fece225-26"&gt;&lt;/a&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;div class="section" id="explanation"&gt;
 &lt;h2&gt;Explanation&lt;/h2&gt;
 &lt;p&gt;The first three lines import the necessary modules for this code example.&lt;/p&gt;
-&lt;pre class="code rust"&gt;&lt;a name="rest_code_b6a0acba0e394b1ab2f35106acf540fe-1"&gt;&lt;/a&gt;&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;::&lt;span class="n"&gt;io&lt;/span&gt;::&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;BufRead&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;BufReader&lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;a name="rest_code_b6a0acba0e394b1ab2f35106acf540fe-2"&gt;&lt;/a&gt;&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;::&lt;span class="n"&gt;os&lt;/span&gt;::&lt;span class="n"&gt;unix&lt;/span&gt;::&lt;span class="n"&gt;net&lt;/span&gt;::&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;UnixStream&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;UnixListener&lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;a name="rest_code_b6a0acba0e394b1ab2f35106acf540fe-3"&gt;&lt;/a&gt;&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;::&lt;span class="n"&gt;thread&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;pre class="code rust"&gt;&lt;a name="rest_code_28c734edfd9f4eb3b8d13472db04a609-1"&gt;&lt;/a&gt;&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;::&lt;span class="n"&gt;io&lt;/span&gt;::&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;BufRead&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;BufReader&lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_28c734edfd9f4eb3b8d13472db04a609-2"&gt;&lt;/a&gt;&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;::&lt;span class="n"&gt;os&lt;/span&gt;::&lt;span class="n"&gt;unix&lt;/span&gt;::&lt;span class="n"&gt;net&lt;/span&gt;::&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;UnixStream&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;UnixListener&lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_28c734edfd9f4eb3b8d13472db04a609-3"&gt;&lt;/a&gt;&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;::&lt;span class="n"&gt;thread&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;&lt;tt class="docutils literal"&gt;BufRead&lt;/tt&gt; is a trait that enables extra ways of reading data sources; in this case, it has an
 internal buffer for reading the socket line-by-line. &lt;tt class="docutils literal"&gt;BufReader&lt;/tt&gt; is a struct that actually
 implements the functionality in &lt;tt class="docutils literal"&gt;BufRead&lt;/tt&gt;. &lt;tt class="docutils literal"&gt;UnixStream&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;UnixListener&lt;/tt&gt; are structs that
@@ -85,7 +85,7 @@ spawn threads.&lt;/p&gt;
 arrives in the stream. The explanation for this is best left until after the &lt;tt class="docutils literal"&gt;main()&lt;/tt&gt; function.&lt;/p&gt;
 &lt;p&gt;The first line in the &lt;tt class="docutils literal"&gt;main()&lt;/tt&gt; function creates the UnixListener struct and binds it to the
 &lt;tt class="docutils literal"&gt;listener&lt;/tt&gt; variable.&lt;/p&gt;
-&lt;pre class="code rust"&gt;&lt;a name="rest_code_7d8f3d39e1da4338b07cbb8b8937cee6-1"&gt;&lt;/a&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;listener&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;UnixListener&lt;/span&gt;::&lt;span class="n"&gt;bind&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"/tmp/rust-uds.sock"&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;pre class="code rust"&gt;&lt;a name="rest_code_95c55c4496d94d7bbcde824919b048f6-1"&gt;&lt;/a&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;listener&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;UnixListener&lt;/span&gt;::&lt;span class="n"&gt;bind&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"/tmp/rust-uds.sock"&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;The &lt;tt class="docutils literal"&gt;bind()&lt;/tt&gt; function takes a string argument that is a path to the socket file and &lt;tt class="docutils literal"&gt;unwrap()&lt;/tt&gt;
 moves the value out of the Result that is returned by &lt;tt class="docutils literal"&gt;bind()&lt;/tt&gt;. (This is a pattern that is
 &lt;a class="reference external" href="https://doc.rust-lang.org/std/option/enum.Option.html#method.unwrap"&gt;discouraged&lt;/a&gt; in Rust but is OK for quick prototypes because it simplifies the error handling.)&lt;/p&gt;
@@ -95,22 +95,22 @@ this is more-or-less the same as a generator in Python which never raises a &lt;
 exception.&lt;/p&gt;
 &lt;p&gt;Next, the &lt;tt class="docutils literal"&gt;Result&lt;/tt&gt; of the incoming streams is matched; if there is an error, it is printed and
 the loop it exited:&lt;/p&gt;
-&lt;pre class="code rust"&gt;&lt;a name="rest_code_9007ff3cc2f94d84910c0a1aa35f346f-1"&gt;&lt;/a&gt;&lt;span class="nb"&gt;Err&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;err&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;a name="rest_code_9007ff3cc2f94d84910c0a1aa35f346f-2"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"Error: {}"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;err&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;a name="rest_code_9007ff3cc2f94d84910c0a1aa35f346f-3"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;a name="rest_code_9007ff3cc2f94d84910c0a1aa35f346f-4"&gt;&lt;/a&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;pre class="code rust"&gt;&lt;a name="rest_code_1da1ba5f221c4159bc42f36a76f0ce2b-1"&gt;&lt;/a&gt;&lt;span class="nb"&gt;Err&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;err&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_1da1ba5f221c4159bc42f36a76f0ce2b-2"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"Error: {}"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;err&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_1da1ba5f221c4159bc42f36a76f0ce2b-3"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_1da1ba5f221c4159bc42f36a76f0ce2b-4"&gt;&lt;/a&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;However, if the &lt;tt class="docutils literal"&gt;Result&lt;/tt&gt; of the connection is &lt;tt class="docutils literal"&gt;Ok&lt;/tt&gt;, then a new thread is spawned to handle the
 new stream:&lt;/p&gt;
-&lt;pre class="code rust"&gt;&lt;a name="rest_code_9364da6430984347967a7efe86f42dad-1"&gt;&lt;/a&gt;&lt;span class="nb"&gt;Ok&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stream&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;a name="rest_code_9364da6430984347967a7efe86f42dad-2"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;thread&lt;/span&gt;::&lt;span class="n"&gt;spawn&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;||&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;handle_client&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stream&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;a name="rest_code_9364da6430984347967a7efe86f42dad-3"&gt;&lt;/a&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;pre class="code rust"&gt;&lt;a name="rest_code_65ed67bd835b439fb097d574655ca37d-1"&gt;&lt;/a&gt;&lt;span class="nb"&gt;Ok&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stream&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_65ed67bd835b439fb097d574655ca37d-2"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;thread&lt;/span&gt;::&lt;span class="n"&gt;spawn&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;||&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;handle_client&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stream&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_65ed67bd835b439fb097d574655ca37d-3"&gt;&lt;/a&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;Finally, the client handler is called for each connection.&lt;/p&gt;
-&lt;pre class="code rust"&gt;&lt;a name="rest_code_445a6bbae86d44b8908c06528d359809-1"&gt;&lt;/a&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;handle_client&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;stream&lt;/span&gt;: &lt;span class="nc"&gt;UnixStream&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;a name="rest_code_445a6bbae86d44b8908c06528d359809-2"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;stream&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;BufReader&lt;/span&gt;::&lt;span class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stream&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;a name="rest_code_445a6bbae86d44b8908c06528d359809-3"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;stream&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;lines&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;a name="rest_code_445a6bbae86d44b8908c06528d359809-4"&gt;&lt;/a&gt;&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"{}"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;a name="rest_code_445a6bbae86d44b8908c06528d359809-5"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;a name="rest_code_445a6bbae86d44b8908c06528d359809-6"&gt;&lt;/a&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;pre class="code rust"&gt;&lt;a name="rest_code_3dd2c0b9e1584280b25559f4f4931d7d-1"&gt;&lt;/a&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;handle_client&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;stream&lt;/span&gt;: &lt;span class="nc"&gt;UnixStream&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_3dd2c0b9e1584280b25559f4f4931d7d-2"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;stream&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;BufReader&lt;/span&gt;::&lt;span class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stream&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_3dd2c0b9e1584280b25559f4f4931d7d-3"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;stream&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;lines&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_3dd2c0b9e1584280b25559f4f4931d7d-4"&gt;&lt;/a&gt;&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"{}"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_3dd2c0b9e1584280b25559f4f4931d7d-5"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_3dd2c0b9e1584280b25559f4f4931d7d-6"&gt;&lt;/a&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;The handler in this case is fairly straight-forward. It shadows the original &lt;tt class="docutils literal"&gt;stream&lt;/tt&gt; variable by
 binding it to a version of itself that has been converted to a &lt;tt class="docutils literal"&gt;BufReader&lt;/tt&gt;. Finally, it loops
 over the &lt;tt class="docutils literal"&gt;lines()&lt;/tt&gt; iterator, which blocks until a new line appears in the stream.&lt;/p&gt;
@@ -122,16 +122,16 @@ netcat&lt;/a&gt;. (The OpenBSD version seems to be the default on Ubuntu-based s
 underscore the fact that the UNIX socket is really being used to communicate between two different
 processes.&lt;/p&gt;
 &lt;p&gt;First, compile and run the Rust program to start the socket listener:&lt;/p&gt;
-&lt;pre class="code text"&gt;&lt;a name="rest_code_783e25274cee4b90bf839bafb17db3b7-1"&gt;&lt;/a&gt;$ cargo run --release
-&lt;a name="rest_code_783e25274cee4b90bf839bafb17db3b7-2"&gt;&lt;/a&gt;   Compiling rust-uds v0.1.0 (/home/kmd/src/rust-uds)
-&lt;a name="rest_code_783e25274cee4b90bf839bafb17db3b7-3"&gt;&lt;/a&gt;    Finished release [optimized] target(s) in 1.59s
-&lt;a name="rest_code_783e25274cee4b90bf839bafb17db3b7-4"&gt;&lt;/a&gt;     Running `target/release/rust-uds`
+&lt;pre class="code text"&gt;&lt;a name="rest_code_764823c4e09248dfa918e6f704325997-1"&gt;&lt;/a&gt;$ cargo run --release
+&lt;a name="rest_code_764823c4e09248dfa918e6f704325997-2"&gt;&lt;/a&gt;   Compiling rust-uds v0.1.0 (/home/kmd/src/rust-uds)
+&lt;a name="rest_code_764823c4e09248dfa918e6f704325997-3"&gt;&lt;/a&gt;    Finished release [optimized] target(s) in 1.59s
+&lt;a name="rest_code_764823c4e09248dfa918e6f704325997-4"&gt;&lt;/a&gt;     Running `target/release/rust-uds`
 &lt;/pre&gt;&lt;p&gt;Open up a new terminal. You should see the socket file /tmp/rust-uds.sock:&lt;/p&gt;
-&lt;pre class="code text"&gt;&lt;a name="rest_code_4cc0fbc5fddd47e7a44fdee2c6914b27-1"&gt;&lt;/a&gt;$ ls /tmp | grep rust
-&lt;a name="rest_code_4cc0fbc5fddd47e7a44fdee2c6914b27-2"&gt;&lt;/a&gt;rust-uds.sock
+&lt;pre class="code text"&gt;&lt;a name="rest_code_df8f989109c74c8e95ed22e17d0b0095-1"&gt;&lt;/a&gt;$ ls /tmp | grep rust
+&lt;a name="rest_code_df8f989109c74c8e95ed22e17d0b0095-2"&gt;&lt;/a&gt;rust-uds.sock
 &lt;/pre&gt;&lt;p&gt;Now let's send messages to the rust program. Use the following netcat command to open a connection
 to the socket.&lt;/p&gt;
-&lt;pre class="code text"&gt;&lt;a name="rest_code_bf8168653546403caefb21172f43b73f-1"&gt;&lt;/a&gt;$ nc -U /tmp/rust-uds.sock
+&lt;pre class="code text"&gt;&lt;a name="rest_code_02aab62732624e62a2054cf0a5433f74-1"&gt;&lt;/a&gt;$ nc -U /tmp/rust-uds.sock
 &lt;/pre&gt;&lt;p&gt;The &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-U&lt;/span&gt;&lt;/tt&gt; is necessary to indicate to netcat that this is a UNIX stream socket. Now, start typing
 text into the same window. Every time you press ENTER, you should see the same text appear in the
 terminal window in which the Rust program is running. Press CTRL-C to exit the Rust socket
@@ -149,12 +149,12 @@ listener. If you re-run the program, delete the old socket first: &lt;tt class="
 &lt;/div&gt;&lt;/div&gt;</description><category>linux</category><category>rust</category><guid>http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/</guid><pubDate>Sun, 24 Feb 2019 15:25:58 GMT</pubDate></item><item><title>Linking shared libraries in Micro-Manager for Linux</title><link>http://kmdouglass.github.io/posts/linking-shared-libraries-in-micro-manager-for-linux/</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;Lately I have been working on a new &lt;a class="reference external" href="https://github.com/kmdouglass/RPi-DeviceAdapters"&gt;Video4Linux2 device adapter&lt;/a&gt; for &lt;a class="reference external" href="https://micro-manager.org/"&gt;Micro-Manager&lt;/a&gt;. I
 encountered the following error after adding some functionality that introduced two &lt;a class="reference external" href="https://www.boost.org/"&gt;Boost
 libraries&lt;/a&gt; as new dependencies in my project.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_e614e0b50300401a8dfa1b79b332c46b-1"&gt;&lt;/a&gt;Traceback &lt;span class="o"&gt;(&lt;/span&gt;most recent call last&lt;span class="o"&gt;)&lt;/span&gt;:
-&lt;a name="rest_code_e614e0b50300401a8dfa1b79b332c46b-2"&gt;&lt;/a&gt;  File &lt;span class="s2"&gt;"RPiV4L2.py"&lt;/span&gt;, line &lt;span class="m"&gt;17&lt;/span&gt;, in &amp;lt;module&amp;gt;
-&lt;a name="rest_code_e614e0b50300401a8dfa1b79b332c46b-3"&gt;&lt;/a&gt;    mmc.loadDevice&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"camera"&lt;/span&gt;, &lt;span class="s2"&gt;"RPiV4L2"&lt;/span&gt;, &lt;span class="s2"&gt;"RPiV4L2"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_e614e0b50300401a8dfa1b79b332c46b-4"&gt;&lt;/a&gt;  File &lt;span class="s2"&gt;"/home/micro-manager/app/lib/micro-manager/MMCorePy.py"&lt;/span&gt;, line &lt;span class="m"&gt;3515&lt;/span&gt;, in loadDevice
-&lt;a name="rest_code_e614e0b50300401a8dfa1b79b332c46b-5"&gt;&lt;/a&gt;    &lt;span class="k"&gt;return&lt;/span&gt; _MMCorePy.CMMCore_loadDevice&lt;span class="o"&gt;(&lt;/span&gt;self, label, moduleName, deviceName&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_e614e0b50300401a8dfa1b79b332c46b-6"&gt;&lt;/a&gt;MMCorePy.CMMError: Failed to load device &lt;span class="s2"&gt;"RPiV4L2"&lt;/span&gt; from adapter module &lt;span class="s2"&gt;"RPiV4L2"&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; Failed to load device adapter &lt;span class="s2"&gt;"RPiV4L2"&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; Failed to load module &lt;span class="s2"&gt;"/home/micro-manager/app/lib/micro-manager/libmmgr_dal_RPiV4L2.so.0"&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; /home/micro-manager/app/lib/micro-manager/libmmgr_dal_RPiV4L2.so.0: undefined symbol: _ZN5boost10filesystem6detail13dir_itr_closeERPvS3_ &lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_9d9256b5693d4c539ad4f5b0b958a73a-1"&gt;&lt;/a&gt;Traceback &lt;span class="o"&gt;(&lt;/span&gt;most recent call last&lt;span class="o"&gt;)&lt;/span&gt;:
+&lt;a name="rest_code_9d9256b5693d4c539ad4f5b0b958a73a-2"&gt;&lt;/a&gt;  File &lt;span class="s2"&gt;"RPiV4L2.py"&lt;/span&gt;, line &lt;span class="m"&gt;17&lt;/span&gt;, in &amp;lt;module&amp;gt;
+&lt;a name="rest_code_9d9256b5693d4c539ad4f5b0b958a73a-3"&gt;&lt;/a&gt;    mmc.loadDevice&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"camera"&lt;/span&gt;, &lt;span class="s2"&gt;"RPiV4L2"&lt;/span&gt;, &lt;span class="s2"&gt;"RPiV4L2"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_9d9256b5693d4c539ad4f5b0b958a73a-4"&gt;&lt;/a&gt;  File &lt;span class="s2"&gt;"/home/micro-manager/app/lib/micro-manager/MMCorePy.py"&lt;/span&gt;, line &lt;span class="m"&gt;3515&lt;/span&gt;, in loadDevice
+&lt;a name="rest_code_9d9256b5693d4c539ad4f5b0b958a73a-5"&gt;&lt;/a&gt;    &lt;span class="k"&gt;return&lt;/span&gt; _MMCorePy.CMMCore_loadDevice&lt;span class="o"&gt;(&lt;/span&gt;self, label, moduleName, deviceName&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_9d9256b5693d4c539ad4f5b0b958a73a-6"&gt;&lt;/a&gt;MMCorePy.CMMError: Failed to load device &lt;span class="s2"&gt;"RPiV4L2"&lt;/span&gt; from adapter module &lt;span class="s2"&gt;"RPiV4L2"&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; Failed to load device adapter &lt;span class="s2"&gt;"RPiV4L2"&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; Failed to load module &lt;span class="s2"&gt;"/home/micro-manager/app/lib/micro-manager/libmmgr_dal_RPiV4L2.so.0"&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; /home/micro-manager/app/lib/micro-manager/libmmgr_dal_RPiV4L2.so.0: undefined symbol: _ZN5boost10filesystem6detail13dir_itr_closeERPvS3_ &lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;I received this error when I tried to load the device in a Python script. At first I was puzzled
 because the code compiled without problems, but I soon found that the solution was simple.&lt;/p&gt;
 &lt;p&gt;The key part of the message is &lt;tt class="docutils literal"&gt;undefined symbol:
@@ -165,43 +165,43 @@ Boost filesystem and Boost regex libraries to this device adapter as dependencie
 surprising that either of their names appeared in the error message.&lt;/p&gt;
 &lt;p&gt;Next, I used the &lt;a class="reference external" href="http://man7.org/linux/man-pages/man1/ldd.1.html"&gt;ldd&lt;/a&gt; program to check which libraries my device adapter were linked
 against. (libmmgr_dal_RPiV4l2.so.0 is the name of the device adapter library file).&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_5c9ca3504b1c4438a55e12534d692f98-1"&gt;&lt;/a&gt;$ ldd libmmgr_dal_RPiV4L2.so.0
-&lt;a name="rest_code_5c9ca3504b1c4438a55e12534d692f98-2"&gt;&lt;/a&gt;     linux-vdso.so.1 &lt;span class="o"&gt;(&lt;/span&gt;0x7ec21000&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_5c9ca3504b1c4438a55e12534d692f98-3"&gt;&lt;/a&gt;     libdl.so.2 &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; /lib/arm-linux-gnueabihf/libdl.so.2 &lt;span class="o"&gt;(&lt;/span&gt;0x76e9c000&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_5c9ca3504b1c4438a55e12534d692f98-4"&gt;&lt;/a&gt;     libstdc++.so.6 &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; /usr/lib/arm-linux-gnueabihf/libstdc++.so.6 &lt;span class="o"&gt;(&lt;/span&gt;0x76d54000&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_5c9ca3504b1c4438a55e12534d692f98-5"&gt;&lt;/a&gt;     libm.so.6 &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; /lib/arm-linux-gnueabihf/libm.so.6 &lt;span class="o"&gt;(&lt;/span&gt;0x76cdc000&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_5c9ca3504b1c4438a55e12534d692f98-6"&gt;&lt;/a&gt;     libc.so.6 &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; /lib/arm-linux-gnueabihf/libc.so.6 &lt;span class="o"&gt;(&lt;/span&gt;0x76bee000&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_5c9ca3504b1c4438a55e12534d692f98-7"&gt;&lt;/a&gt;     libgcc_s.so.1 &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; /lib/arm-linux-gnueabihf/libgcc_s.so.1 &lt;span class="o"&gt;(&lt;/span&gt;0x76bc1000&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_5c9ca3504b1c4438a55e12534d692f98-8"&gt;&lt;/a&gt;     libicudata.so.57 &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; /usr/lib/arm-linux-gnueabihf/libicudata.so.57 &lt;span class="o"&gt;(&lt;/span&gt;0x75334000&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_5c9ca3504b1c4438a55e12534d692f98-9"&gt;&lt;/a&gt;     libicui18n.so.57 &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; /usr/lib/arm-linux-gnueabihf/libicui18n.so.57 &lt;span class="o"&gt;(&lt;/span&gt;0x75187000&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_5c9ca3504b1c4438a55e12534d692f98-10"&gt;&lt;/a&gt;     libicuuc.so.57 &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; /usr/lib/arm-linux-gnueabihf/libicuuc.so.57 &lt;span class="o"&gt;(&lt;/span&gt;0x7505e000&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_5c9ca3504b1c4438a55e12534d692f98-11"&gt;&lt;/a&gt;     librt.so.1 &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; /lib/arm-linux-gnueabihf/librt.so.1 &lt;span class="o"&gt;(&lt;/span&gt;0x75048000&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_5c9ca3504b1c4438a55e12534d692f98-12"&gt;&lt;/a&gt;     libpthread.so.0 &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; /lib/arm-linux-gnueabihf/libpthread.so.0 &lt;span class="o"&gt;(&lt;/span&gt;0x75024000&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_5c9ca3504b1c4438a55e12534d692f98-13"&gt;&lt;/a&gt;     /lib/ld-linux-armhf.so.3 &lt;span class="o"&gt;(&lt;/span&gt;0x76fb4000&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_32d1031f26de464a9d15132195760eb8-1"&gt;&lt;/a&gt;$ ldd libmmgr_dal_RPiV4L2.so.0
+&lt;a name="rest_code_32d1031f26de464a9d15132195760eb8-2"&gt;&lt;/a&gt;     linux-vdso.so.1 &lt;span class="o"&gt;(&lt;/span&gt;0x7ec21000&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_32d1031f26de464a9d15132195760eb8-3"&gt;&lt;/a&gt;     libdl.so.2 &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; /lib/arm-linux-gnueabihf/libdl.so.2 &lt;span class="o"&gt;(&lt;/span&gt;0x76e9c000&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_32d1031f26de464a9d15132195760eb8-4"&gt;&lt;/a&gt;     libstdc++.so.6 &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; /usr/lib/arm-linux-gnueabihf/libstdc++.so.6 &lt;span class="o"&gt;(&lt;/span&gt;0x76d54000&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_32d1031f26de464a9d15132195760eb8-5"&gt;&lt;/a&gt;     libm.so.6 &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; /lib/arm-linux-gnueabihf/libm.so.6 &lt;span class="o"&gt;(&lt;/span&gt;0x76cdc000&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_32d1031f26de464a9d15132195760eb8-6"&gt;&lt;/a&gt;     libc.so.6 &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; /lib/arm-linux-gnueabihf/libc.so.6 &lt;span class="o"&gt;(&lt;/span&gt;0x76bee000&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_32d1031f26de464a9d15132195760eb8-7"&gt;&lt;/a&gt;     libgcc_s.so.1 &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; /lib/arm-linux-gnueabihf/libgcc_s.so.1 &lt;span class="o"&gt;(&lt;/span&gt;0x76bc1000&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_32d1031f26de464a9d15132195760eb8-8"&gt;&lt;/a&gt;     libicudata.so.57 &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; /usr/lib/arm-linux-gnueabihf/libicudata.so.57 &lt;span class="o"&gt;(&lt;/span&gt;0x75334000&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_32d1031f26de464a9d15132195760eb8-9"&gt;&lt;/a&gt;     libicui18n.so.57 &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; /usr/lib/arm-linux-gnueabihf/libicui18n.so.57 &lt;span class="o"&gt;(&lt;/span&gt;0x75187000&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_32d1031f26de464a9d15132195760eb8-10"&gt;&lt;/a&gt;     libicuuc.so.57 &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; /usr/lib/arm-linux-gnueabihf/libicuuc.so.57 &lt;span class="o"&gt;(&lt;/span&gt;0x7505e000&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_32d1031f26de464a9d15132195760eb8-11"&gt;&lt;/a&gt;     librt.so.1 &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; /lib/arm-linux-gnueabihf/librt.so.1 &lt;span class="o"&gt;(&lt;/span&gt;0x75048000&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_32d1031f26de464a9d15132195760eb8-12"&gt;&lt;/a&gt;     libpthread.so.0 &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; /lib/arm-linux-gnueabihf/libpthread.so.0 &lt;span class="o"&gt;(&lt;/span&gt;0x75024000&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_32d1031f26de464a9d15132195760eb8-13"&gt;&lt;/a&gt;     /lib/ld-linux-armhf.so.3 &lt;span class="o"&gt;(&lt;/span&gt;0x76fb4000&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;Neither libboost_filesystem nor libboost_regex are listed, so I knew that they were not linked with
 the device adapter.&lt;/p&gt;
 &lt;p&gt;There is a Makefile.am included in the directory of every device adapter in the Micro-Manager
 project. This file is used by Autotools define how the device adapter should be compiled and
 linked. Here is what my Makefile.am looked like:&lt;/p&gt;
-&lt;table class="codetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;&lt;a href="http://kmdouglass.github.io/posts/linking-shared-libraries-in-micro-manager-for-linux/#rest_code_927d6a01e8a5412da730588caea6ae98-1"&gt;1&lt;/a&gt;
-&lt;a href="http://kmdouglass.github.io/posts/linking-shared-libraries-in-micro-manager-for-linux/#rest_code_927d6a01e8a5412da730588caea6ae98-2"&gt;2&lt;/a&gt;
-&lt;a href="http://kmdouglass.github.io/posts/linking-shared-libraries-in-micro-manager-for-linux/#rest_code_927d6a01e8a5412da730588caea6ae98-3"&gt;3&lt;/a&gt;
-&lt;a href="http://kmdouglass.github.io/posts/linking-shared-libraries-in-micro-manager-for-linux/#rest_code_927d6a01e8a5412da730588caea6ae98-4"&gt;4&lt;/a&gt;
-&lt;a href="http://kmdouglass.github.io/posts/linking-shared-libraries-in-micro-manager-for-linux/#rest_code_927d6a01e8a5412da730588caea6ae98-5"&gt;5&lt;/a&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;pre class="code Makefile"&gt;&lt;a name="rest_code_927d6a01e8a5412da730588caea6ae98-1"&gt;&lt;/a&gt;&lt;span class="nv"&gt;AM_CXXFLAGS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;$(&lt;/span&gt;MMDEVAPI_CXXFLAGS&lt;span class="k"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_927d6a01e8a5412da730588caea6ae98-2"&gt;&lt;/a&gt;&lt;span class="nv"&gt;deviceadapter_LTLIBRARIES&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; libmmgr_dal_RPiV4L2.la
-&lt;a name="rest_code_927d6a01e8a5412da730588caea6ae98-3"&gt;&lt;/a&gt;&lt;span class="nv"&gt;libmmgr_dal_RPiV4L2_la_SOURCES&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; RPiV4L2.cpp RPiV4L2.h refactor.h ../../MMDevice/MMDevice.h ../../MMDevice/DeviceBase.h
-&lt;a name="rest_code_927d6a01e8a5412da730588caea6ae98-4"&gt;&lt;/a&gt;&lt;span class="nv"&gt;libmmgr_dal_RPiV4L2_la_LIBADD&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;$(&lt;/span&gt;MMDEVAPI_LIBADD&lt;span class="k"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_927d6a01e8a5412da730588caea6ae98-5"&gt;&lt;/a&gt;&lt;span class="nv"&gt;libmmgr_dal_RPiV4L2_la_LDFLAGS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;$(&lt;/span&gt;MMDEVAPI_LDFLAGS&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;table class="codetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;&lt;a href="http://kmdouglass.github.io/posts/linking-shared-libraries-in-micro-manager-for-linux/#rest_code_b57a9522e2f94164915e7af7388ed42a-1"&gt;1&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/linking-shared-libraries-in-micro-manager-for-linux/#rest_code_b57a9522e2f94164915e7af7388ed42a-2"&gt;2&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/linking-shared-libraries-in-micro-manager-for-linux/#rest_code_b57a9522e2f94164915e7af7388ed42a-3"&gt;3&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/linking-shared-libraries-in-micro-manager-for-linux/#rest_code_b57a9522e2f94164915e7af7388ed42a-4"&gt;4&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/linking-shared-libraries-in-micro-manager-for-linux/#rest_code_b57a9522e2f94164915e7af7388ed42a-5"&gt;5&lt;/a&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;pre class="code Makefile"&gt;&lt;a name="rest_code_b57a9522e2f94164915e7af7388ed42a-1"&gt;&lt;/a&gt;&lt;span class="nv"&gt;AM_CXXFLAGS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;$(&lt;/span&gt;MMDEVAPI_CXXFLAGS&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_b57a9522e2f94164915e7af7388ed42a-2"&gt;&lt;/a&gt;&lt;span class="nv"&gt;deviceadapter_LTLIBRARIES&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; libmmgr_dal_RPiV4L2.la
+&lt;a name="rest_code_b57a9522e2f94164915e7af7388ed42a-3"&gt;&lt;/a&gt;&lt;span class="nv"&gt;libmmgr_dal_RPiV4L2_la_SOURCES&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; RPiV4L2.cpp RPiV4L2.h refactor.h ../../MMDevice/MMDevice.h ../../MMDevice/DeviceBase.h
+&lt;a name="rest_code_b57a9522e2f94164915e7af7388ed42a-4"&gt;&lt;/a&gt;&lt;span class="nv"&gt;libmmgr_dal_RPiV4L2_la_LIBADD&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;$(&lt;/span&gt;MMDEVAPI_LIBADD&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_b57a9522e2f94164915e7af7388ed42a-5"&gt;&lt;/a&gt;&lt;span class="nv"&gt;libmmgr_dal_RPiV4L2_la_LDFLAGS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;$(&lt;/span&gt;MMDEVAPI_LDFLAGS&lt;span class="k"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;After experimenting a bit, I discovered that I could instruct the linker to link against shared
 libraries by adding them to the &lt;tt class="docutils literal"&gt;libmmgr_dal_RPiV4L2_la_LDFLAGS&lt;/tt&gt; variable with the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-l&lt;/span&gt;&lt;/tt&gt;
 flag. The resulting line now looks like:&lt;/p&gt;
-&lt;pre class="code Makefile"&gt;&lt;a name="rest_code_d54f2105cea14f11838c566f86fb8c07-1"&gt;&lt;/a&gt;&lt;span class="nv"&gt;libmmgr_dal_RPiV4L2_la_LDFLAGS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;$(&lt;/span&gt;MMDEVAPI_LDFLAGS&lt;span class="k"&gt;)&lt;/span&gt; -lboost_regex -lboost_filesystem
+&lt;pre class="code Makefile"&gt;&lt;a name="rest_code_4bdefe39a778487ab2fe440151177548-1"&gt;&lt;/a&gt;&lt;span class="nv"&gt;libmmgr_dal_RPiV4L2_la_LDFLAGS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;$(&lt;/span&gt;MMDEVAPI_LDFLAGS&lt;span class="k"&gt;)&lt;/span&gt; -lboost_regex -lboost_filesystem
 &lt;/pre&gt;&lt;p&gt;Finally, running &lt;tt class="docutils literal"&gt;ldd&lt;/tt&gt; on the rebuilt device adapter now shows these two libraries:&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_2bd209b893944ac88109c79594243bfe-1"&gt;&lt;/a&gt;$ ldd libmmgr_dal_RPiV4L2.so.0
-&lt;a name="rest_code_2bd209b893944ac88109c79594243bfe-2"&gt;&lt;/a&gt;     linux-vdso.so.1 &lt;span class="o"&gt;(&lt;/span&gt;0x7ed74000&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_2bd209b893944ac88109c79594243bfe-3"&gt;&lt;/a&gt;     libboost_regex.so.1.62.0 &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; /usr/lib/arm-linux-gnueabihf/libboost_regex.so.1.62.0 &lt;span class="o"&gt;(&lt;/span&gt;0x76e3c000&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_2bd209b893944ac88109c79594243bfe-4"&gt;&lt;/a&gt;     libboost_filesystem.so.1.62.0 &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; /usr/lib/arm-linux-gnueabihf/libboost_filesystem.so.1.62.0 &lt;span class="o"&gt;(&lt;/span&gt;0x76e1b000&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_2bd209b893944ac88109c79594243bfe-5"&gt;&lt;/a&gt;     ...
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_b39bf6ffa8b24613bc01c83491e844f2-1"&gt;&lt;/a&gt;$ ldd libmmgr_dal_RPiV4L2.so.0
+&lt;a name="rest_code_b39bf6ffa8b24613bc01c83491e844f2-2"&gt;&lt;/a&gt;     linux-vdso.so.1 &lt;span class="o"&gt;(&lt;/span&gt;0x7ed74000&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_b39bf6ffa8b24613bc01c83491e844f2-3"&gt;&lt;/a&gt;     libboost_regex.so.1.62.0 &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; /usr/lib/arm-linux-gnueabihf/libboost_regex.so.1.62.0 &lt;span class="o"&gt;(&lt;/span&gt;0x76e3c000&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_b39bf6ffa8b24613bc01c83491e844f2-4"&gt;&lt;/a&gt;     libboost_filesystem.so.1.62.0 &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; /usr/lib/arm-linux-gnueabihf/libboost_filesystem.so.1.62.0 &lt;span class="o"&gt;(&lt;/span&gt;0x76e1b000&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_b39bf6ffa8b24613bc01c83491e844f2-5"&gt;&lt;/a&gt;     ...
 &lt;/pre&gt;&lt;/div&gt;</description><category>micro-manager</category><guid>http://kmdouglass.github.io/posts/linking-shared-libraries-in-micro-manager-for-linux/</guid><pubDate>Sat, 19 Jan 2019 11:00:37 GMT</pubDate></item><item><title>Create a custom Raspbian image with pi-gen: part 2</title><link>http://kmdouglass.github.io/posts/create-a-custom-raspbian-image-with-pi-gen-part-2/</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;In my &lt;a class="reference external" href="http://kmdouglass.github.io/posts/create-a-custom-raspbian-image-with-pi-gen-part-1/"&gt;previous post&lt;/a&gt;, I discussed how to setup user accounts and
 locales in a custom Raspbian image using pi-gen. In this follow-up
 post, I will discuss the main problems that I want to solve:
@@ -226,7 +226,7 @@ network, which includes its name and the password. For security
 reasons that I hope are obvious, we should not store the password in
 this file. Instead, we create a hash of the password and put that
 inside the file. The command to create the password hash is&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_c27f64fba4694375849fbb6aaa45bb14-1"&gt;&lt;/a&gt;wpa_passphrase ESSID PASSWORD &amp;gt; psk
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_1f92ddbec0384391be7bf21a6925b013-1"&gt;&lt;/a&gt;wpa_passphrase ESSID PASSWORD &amp;gt; psk
 &lt;/pre&gt;&lt;p&gt;where ESSID is our wireless network's name. Note that I also used a
 space before the &lt;code class="shell"&gt;wpa_passphrase&lt;/code&gt; command to prevent the
 password being written to my .bash_history file. Now, we copy and
@@ -380,7 +380,7 @@ sure to check them out for another take on modifying Raspbian images.&lt;/em&gt;
 &lt;div class="section" id="clone-the-pi-gen-repository"&gt;
 &lt;h2&gt;Clone the pi-gen repository&lt;/h2&gt;
 &lt;p&gt;This is as easy as cloning the git repository.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_f60c98ac9ed740229a8d1cd88fc56b44-1"&gt;&lt;/a&gt;git clone git@github.com:RPi-Distro/pi-gen.git
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_f19bfcba99684c19a9d2fa047fad2f0c-1"&gt;&lt;/a&gt;git clone git@github.com:RPi-Distro/pi-gen.git
 &lt;/pre&gt;&lt;p&gt;Alternatively, you can use the https address instead of ssh, which is
 &lt;a class="reference external" href="https://github.com/RPi-Distro/pi-gen.git"&gt;https://github.com/RPi-Distro/pi-gen.git&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;From now on, all directories in this post will be relative to the root
@@ -406,12 +406,12 @@ edition.&lt;/p&gt;
 build. To do this, we assign a name to a variable called &lt;strong&gt;IMG_NAME&lt;/strong&gt;
 inside a file called &lt;strong&gt;config&lt;/strong&gt; that is located inside the root pi-gen
 folder.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_45a053e14a07456bbabaf0969a9753ab-1"&gt;&lt;/a&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;"IMG_NAME=my_name"&lt;/span&gt; &amp;gt; config
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_e232415732ea43fe95e51e74b11e2b99-1"&gt;&lt;/a&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;"IMG_NAME=my_name"&lt;/span&gt; &amp;gt; config
 &lt;/pre&gt;&lt;/div&gt;
 &lt;div class="section" id="build-the-default-image"&gt;
 &lt;h3&gt;Build the default image&lt;/h3&gt;
 &lt;p&gt;Once we've named our image, we can go ahead and run the build script.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_cf0c2072324e4b81b8942e516fda60e2-1"&gt;&lt;/a&gt;./build-docker.sh
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_385cf74d053741a8a789d2cea844990e-1"&gt;&lt;/a&gt;./build-docker.sh
 &lt;/pre&gt;&lt;p&gt;Be prepared to wait a while when running this script; the full build
 took well over half an hour on my laptop and with the Docker volume
 located on a SSD. It also consumed several GB of space on the SSD.&lt;/p&gt;
@@ -424,7 +424,7 @@ installing a Debian package.&lt;/p&gt;
 &lt;p&gt;We can resume a failed build from the point of failure by assigning
 the value 1 to the CONTINUE variable when calling build-docker.sh
 again.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_26c9a5f6c2f246a6abf52cdd223358e4-1"&gt;&lt;/a&gt;&lt;span class="nv"&gt;CONTINUE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; ./build-docker.sh
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_154758032301453282820d763470ca5b-1"&gt;&lt;/a&gt;&lt;span class="nv"&gt;CONTINUE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; ./build-docker.sh
 &lt;/pre&gt;&lt;p&gt;If we don't want to run previously built stages, we can simply place a
 file inside the corresponding folder named SKIP. For example, if our
 build fails at stage2, we can place SKIP files inside the stage0 and
@@ -441,7 +441,7 @@ the &lt;strong&gt;deploy&lt;/strong&gt; folder of the pi-gen directory. These ma
 written onto a SD card and used as a standard Raspbian image.&lt;/p&gt;
 &lt;p&gt;We can ensure that the build container is preserved even after successful
 builds using&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_de2f9edaba4a4bcaaf8a746fcb7ff95d-1"&gt;&lt;/a&gt;&lt;span class="nv"&gt;PRESERVE_CONTAINER&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; ./build-docker.sh
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_c7f95acfa32c4244927b2e58aad0a055-1"&gt;&lt;/a&gt;&lt;span class="nv"&gt;PRESERVE_CONTAINER&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; ./build-docker.sh
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -481,8 +481,8 @@ stages. We also disable the explicit creation of images by adding an
 empty file called &lt;strong&gt;SKIP_IMAGES&lt;/strong&gt; to stages 4 and 5. (We don't need to
 add a SKIP_IMAGES file to the stage3 folder because no image is
 produced at this stage.)&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_871c874d3f754e0085b9ffbe9cee9284-1"&gt;&lt;/a&gt;touch ./stage3/SKIP ./stage4/SKIP ./stage5/SKIP
-&lt;a name="rest_code_871c874d3f754e0085b9ffbe9cee9284-2"&gt;&lt;/a&gt;touch ./stage4/SKIP_IMAGES ./stage5/SKIP_IMAGES
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_014d2d664645418b86d30b7f8cc750f8-1"&gt;&lt;/a&gt;touch ./stage3/SKIP ./stage4/SKIP ./stage5/SKIP
+&lt;a name="rest_code_014d2d664645418b86d30b7f8cc750f8-2"&gt;&lt;/a&gt;touch ./stage4/SKIP_IMAGES ./stage5/SKIP_IMAGES
 &lt;/pre&gt;&lt;p&gt;Now, when we run build-docker.sh, pi-gen will only build and produce
 one image for Raspbian Lite in the deploy directory.&lt;/p&gt;
 &lt;/div&gt;
@@ -494,13 +494,13 @@ account is not very secure because it and its password, &lt;em&gt;raspberry&lt;/
 are the well-known defaults in Raspbian. Let's go ahead and change
 them.&lt;/p&gt;
 &lt;p&gt;The relevant lines in the script look like this:&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_cd582d3a7569473994dbeeacebcbea94-1"&gt;&lt;/a&gt;on_chroot &lt;span class="s"&gt;&amp;lt;&amp;lt; EOF&lt;/span&gt;
-&lt;a name="rest_code_cd582d3a7569473994dbeeacebcbea94-2"&gt;&lt;/a&gt;&lt;span class="s"&gt;if ! id -u pi &amp;gt;/dev/null 2&amp;gt;&amp;amp;1; then&lt;/span&gt;
-&lt;a name="rest_code_cd582d3a7569473994dbeeacebcbea94-3"&gt;&lt;/a&gt;&lt;span class="s"&gt;     adduser --disabled-password --gecos "" pi&lt;/span&gt;
-&lt;a name="rest_code_cd582d3a7569473994dbeeacebcbea94-4"&gt;&lt;/a&gt;&lt;span class="s"&gt;fi&lt;/span&gt;
-&lt;a name="rest_code_cd582d3a7569473994dbeeacebcbea94-5"&gt;&lt;/a&gt;&lt;span class="s"&gt;echo "pi:raspberry" | chpasswd&lt;/span&gt;
-&lt;a name="rest_code_cd582d3a7569473994dbeeacebcbea94-6"&gt;&lt;/a&gt;&lt;span class="s"&gt;echo "root:root" | chpasswd&lt;/span&gt;
-&lt;a name="rest_code_cd582d3a7569473994dbeeacebcbea94-7"&gt;&lt;/a&gt;&lt;span class="s"&gt;EOF&lt;/span&gt;
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_a81e47aeb8124d26b08b1d66339d811a-1"&gt;&lt;/a&gt;on_chroot &lt;span class="s"&gt;&amp;lt;&amp;lt; EOF&lt;/span&gt;
+&lt;a name="rest_code_a81e47aeb8124d26b08b1d66339d811a-2"&gt;&lt;/a&gt;&lt;span class="s"&gt;if ! id -u pi &amp;gt;/dev/null 2&amp;gt;&amp;amp;1; then&lt;/span&gt;
+&lt;a name="rest_code_a81e47aeb8124d26b08b1d66339d811a-3"&gt;&lt;/a&gt;&lt;span class="s"&gt;     adduser --disabled-password --gecos "" pi&lt;/span&gt;
+&lt;a name="rest_code_a81e47aeb8124d26b08b1d66339d811a-4"&gt;&lt;/a&gt;&lt;span class="s"&gt;fi&lt;/span&gt;
+&lt;a name="rest_code_a81e47aeb8124d26b08b1d66339d811a-5"&gt;&lt;/a&gt;&lt;span class="s"&gt;echo "pi:raspberry" | chpasswd&lt;/span&gt;
+&lt;a name="rest_code_a81e47aeb8124d26b08b1d66339d811a-6"&gt;&lt;/a&gt;&lt;span class="s"&gt;echo "root:root" | chpasswd&lt;/span&gt;
+&lt;a name="rest_code_a81e47aeb8124d26b08b1d66339d811a-7"&gt;&lt;/a&gt;&lt;span class="s"&gt;EOF&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;The user pi is created with the line
 &lt;code class="shell"&gt;adduser --disabled-password --gecos &lt;span class="s2"&gt;""&lt;/span&gt; pi&lt;/code&gt; if it doesn't
 already exist. According to the &lt;a class="reference external" href="http://manpages.ubuntu.com/manpages/trusty/man8/adduser.8.html"&gt;adduser man pages&lt;/a&gt;
@@ -517,27 +517,27 @@ let's change its name to alphapi. For the password, we will generate a
 &lt;strong&gt;temporary, random&lt;/strong&gt; password and write it to a file in the deploy
 directory. We'll do the same for root. The modifications look like the
 following:&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_5cd7b9791db443d7bec97144b91014aa-1"&gt;&lt;/a&gt;&lt;span class="nv"&gt;user_passwd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&amp;lt; /dev/urandom tr -dc _A-Z-a-z-0-9 &lt;span class="p"&gt;|&lt;/span&gt; head -c&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;1&lt;/span&gt;&lt;span class="k"&gt;:-&lt;/span&gt;&lt;span class="nv"&gt;8&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_5cd7b9791db443d7bec97144b91014aa-2"&gt;&lt;/a&gt;&lt;span class="nv"&gt;root_passwd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&amp;lt; /dev/urandom tr -dc _A-Z-a-z-0-9 &lt;span class="p"&gt;|&lt;/span&gt; head -c&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;1&lt;/span&gt;&lt;span class="k"&gt;:-&lt;/span&gt;&lt;span class="nv"&gt;8&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_5cd7b9791db443d7bec97144b91014aa-3"&gt;&lt;/a&gt;
-&lt;a name="rest_code_5cd7b9791db443d7bec97144b91014aa-4"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Write passwords to a file.&lt;/span&gt;
-&lt;a name="rest_code_5cd7b9791db443d7bec97144b91014aa-5"&gt;&lt;/a&gt;cat &lt;span class="s"&gt;&amp;lt;&amp;lt;EOF &amp;gt; /pi-gen/deploy/users&lt;/span&gt;
-&lt;a name="rest_code_5cd7b9791db443d7bec97144b91014aa-6"&gt;&lt;/a&gt;&lt;span class="s"&gt;${user_passwd}&lt;/span&gt;
-&lt;a name="rest_code_5cd7b9791db443d7bec97144b91014aa-7"&gt;&lt;/a&gt;&lt;span class="s"&gt;${root_passwd}&lt;/span&gt;
-&lt;a name="rest_code_5cd7b9791db443d7bec97144b91014aa-8"&gt;&lt;/a&gt;&lt;span class="s"&gt;EOF&lt;/span&gt;
-&lt;a name="rest_code_5cd7b9791db443d7bec97144b91014aa-9"&gt;&lt;/a&gt;
-&lt;a name="rest_code_5cd7b9791db443d7bec97144b91014aa-10"&gt;&lt;/a&gt;on_chroot &lt;span class="s"&gt;&amp;lt;&amp;lt; EOF&lt;/span&gt;
-&lt;a name="rest_code_5cd7b9791db443d7bec97144b91014aa-11"&gt;&lt;/a&gt;&lt;span class="s"&gt;if ! id -u alphapi &amp;gt;/dev/null 2&amp;gt;&amp;amp;1; then&lt;/span&gt;
-&lt;a name="rest_code_5cd7b9791db443d7bec97144b91014aa-12"&gt;&lt;/a&gt;&lt;span class="s"&gt;     adduser --disabled-password --gecos "" alphapi&lt;/span&gt;
-&lt;a name="rest_code_5cd7b9791db443d7bec97144b91014aa-13"&gt;&lt;/a&gt;&lt;span class="s"&gt;fi&lt;/span&gt;
-&lt;a name="rest_code_5cd7b9791db443d7bec97144b91014aa-14"&gt;&lt;/a&gt;&lt;span class="s"&gt;echo "alphapi:${user_passwd}" | chpasswd&lt;/span&gt;
-&lt;a name="rest_code_5cd7b9791db443d7bec97144b91014aa-15"&gt;&lt;/a&gt;&lt;span class="s"&gt;echo "root:${root_passwd}" | chpasswd&lt;/span&gt;
-&lt;a name="rest_code_5cd7b9791db443d7bec97144b91014aa-16"&gt;&lt;/a&gt;&lt;span class="s"&gt;EOF&lt;/span&gt;
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_0c2102f654fe4314a80c4da7c7cca66c-1"&gt;&lt;/a&gt;&lt;span class="nv"&gt;user_passwd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&amp;lt; /dev/urandom tr -dc _A-Z-a-z-0-9 &lt;span class="p"&gt;|&lt;/span&gt; head -c&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;1&lt;/span&gt;&lt;span class="k"&gt;:-&lt;/span&gt;&lt;span class="nv"&gt;8&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_0c2102f654fe4314a80c4da7c7cca66c-2"&gt;&lt;/a&gt;&lt;span class="nv"&gt;root_passwd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&amp;lt; /dev/urandom tr -dc _A-Z-a-z-0-9 &lt;span class="p"&gt;|&lt;/span&gt; head -c&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;1&lt;/span&gt;&lt;span class="k"&gt;:-&lt;/span&gt;&lt;span class="nv"&gt;8&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_0c2102f654fe4314a80c4da7c7cca66c-3"&gt;&lt;/a&gt;
+&lt;a name="rest_code_0c2102f654fe4314a80c4da7c7cca66c-4"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Write passwords to a file.&lt;/span&gt;
+&lt;a name="rest_code_0c2102f654fe4314a80c4da7c7cca66c-5"&gt;&lt;/a&gt;cat &lt;span class="s"&gt;&amp;lt;&amp;lt;EOF &amp;gt; /pi-gen/deploy/users&lt;/span&gt;
+&lt;a name="rest_code_0c2102f654fe4314a80c4da7c7cca66c-6"&gt;&lt;/a&gt;&lt;span class="s"&gt;${user_passwd}&lt;/span&gt;
+&lt;a name="rest_code_0c2102f654fe4314a80c4da7c7cca66c-7"&gt;&lt;/a&gt;&lt;span class="s"&gt;${root_passwd}&lt;/span&gt;
+&lt;a name="rest_code_0c2102f654fe4314a80c4da7c7cca66c-8"&gt;&lt;/a&gt;&lt;span class="s"&gt;EOF&lt;/span&gt;
+&lt;a name="rest_code_0c2102f654fe4314a80c4da7c7cca66c-9"&gt;&lt;/a&gt;
+&lt;a name="rest_code_0c2102f654fe4314a80c4da7c7cca66c-10"&gt;&lt;/a&gt;on_chroot &lt;span class="s"&gt;&amp;lt;&amp;lt; EOF&lt;/span&gt;
+&lt;a name="rest_code_0c2102f654fe4314a80c4da7c7cca66c-11"&gt;&lt;/a&gt;&lt;span class="s"&gt;if ! id -u alphapi &amp;gt;/dev/null 2&amp;gt;&amp;amp;1; then&lt;/span&gt;
+&lt;a name="rest_code_0c2102f654fe4314a80c4da7c7cca66c-12"&gt;&lt;/a&gt;&lt;span class="s"&gt;     adduser --disabled-password --gecos "" alphapi&lt;/span&gt;
+&lt;a name="rest_code_0c2102f654fe4314a80c4da7c7cca66c-13"&gt;&lt;/a&gt;&lt;span class="s"&gt;fi&lt;/span&gt;
+&lt;a name="rest_code_0c2102f654fe4314a80c4da7c7cca66c-14"&gt;&lt;/a&gt;&lt;span class="s"&gt;echo "alphapi:${user_passwd}" | chpasswd&lt;/span&gt;
+&lt;a name="rest_code_0c2102f654fe4314a80c4da7c7cca66c-15"&gt;&lt;/a&gt;&lt;span class="s"&gt;echo "root:${root_passwd}" | chpasswd&lt;/span&gt;
+&lt;a name="rest_code_0c2102f654fe4314a80c4da7c7cca66c-16"&gt;&lt;/a&gt;&lt;span class="s"&gt;EOF&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;The first two lines create random alphanumeric passwords for the users
 alphapi and root. They should be changed immediately when the image is
 first run.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_860ca64fd41c48279dd0670a488e98f4-1"&gt;&lt;/a&gt;&lt;span class="nv"&gt;user_passwd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&amp;lt; /dev/urandom tr -dc _A-Z-a-z-0-9 &lt;span class="p"&gt;|&lt;/span&gt; head -c&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;1&lt;/span&gt;&lt;span class="k"&gt;:-&lt;/span&gt;&lt;span class="nv"&gt;8&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_860ca64fd41c48279dd0670a488e98f4-2"&gt;&lt;/a&gt;&lt;span class="nv"&gt;root_passwd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&amp;lt; /dev/urandom tr -dc _A-Z-a-z-0-9 &lt;span class="p"&gt;|&lt;/span&gt; head -c&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;1&lt;/span&gt;&lt;span class="k"&gt;:-&lt;/span&gt;&lt;span class="nv"&gt;8&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_b0cadf8453d94743b1fba9832c139a99-1"&gt;&lt;/a&gt;&lt;span class="nv"&gt;user_passwd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&amp;lt; /dev/urandom tr -dc _A-Z-a-z-0-9 &lt;span class="p"&gt;|&lt;/span&gt; head -c&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;1&lt;/span&gt;&lt;span class="k"&gt;:-&lt;/span&gt;&lt;span class="nv"&gt;8&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_b0cadf8453d94743b1fba9832c139a99-2"&gt;&lt;/a&gt;&lt;span class="nv"&gt;root_passwd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&amp;lt; /dev/urandom tr -dc _A-Z-a-z-0-9 &lt;span class="p"&gt;|&lt;/span&gt; head -c&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;1&lt;/span&gt;&lt;span class="k"&gt;:-&lt;/span&gt;&lt;span class="nv"&gt;8&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;This way of password generation works by reading random bytes from
 /dev/urandom and redirecting them to the standard input of the tr
 command, which filters the input so only alphanumeric characters
@@ -545,11 +545,11 @@ remain. Next, the output is piped to the head command, which outputs
 only the first eight alphanumeric characters produced in this fashion.&lt;/p&gt;
 &lt;p&gt;The passwords are then written to a file named &lt;strong&gt;users&lt;/strong&gt; inside the
 deploy directory where the outputs will eventually be placed.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_31f3864808ed4da2a89d0f76ebd492ff-1"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Write passwords to a file.&lt;/span&gt;
-&lt;a name="rest_code_31f3864808ed4da2a89d0f76ebd492ff-2"&gt;&lt;/a&gt;cat &lt;span class="s"&gt;&amp;lt;&amp;lt;EOF &amp;gt; /pi-gen/deploy/users&lt;/span&gt;
-&lt;a name="rest_code_31f3864808ed4da2a89d0f76ebd492ff-3"&gt;&lt;/a&gt;&lt;span class="s"&gt;${user_passwd}&lt;/span&gt;
-&lt;a name="rest_code_31f3864808ed4da2a89d0f76ebd492ff-4"&gt;&lt;/a&gt;&lt;span class="s"&gt;${root_passwd}&lt;/span&gt;
-&lt;a name="rest_code_31f3864808ed4da2a89d0f76ebd492ff-5"&gt;&lt;/a&gt;&lt;span class="s"&gt;EOF&lt;/span&gt;
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_0641a3a2ff25402e996739b87839c5ed-1"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Write passwords to a file.&lt;/span&gt;
+&lt;a name="rest_code_0641a3a2ff25402e996739b87839c5ed-2"&gt;&lt;/a&gt;cat &lt;span class="s"&gt;&amp;lt;&amp;lt;EOF &amp;gt; /pi-gen/deploy/users&lt;/span&gt;
+&lt;a name="rest_code_0641a3a2ff25402e996739b87839c5ed-3"&gt;&lt;/a&gt;&lt;span class="s"&gt;${user_passwd}&lt;/span&gt;
+&lt;a name="rest_code_0641a3a2ff25402e996739b87839c5ed-4"&gt;&lt;/a&gt;&lt;span class="s"&gt;${root_passwd}&lt;/span&gt;
+&lt;a name="rest_code_0641a3a2ff25402e996739b87839c5ed-5"&gt;&lt;/a&gt;&lt;span class="s"&gt;EOF&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;The remaining parts of the script are more-or-less the same as before,
 except I changed pi to alphapi and used variable substitution for the
 passwords.&lt;/p&gt;
@@ -558,9 +558,9 @@ because it's at this stage where the user pi is added to the various
 groups on the system. We therefore need to open
 &lt;strong&gt;stage2/01-sys-tweaks/01-run.sh&lt;/strong&gt; and modify the following lines,
 replacing pi with alphapi.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_aab65eb2dfdb4682bcc8b2c194f70c65-1"&gt;&lt;/a&gt;&lt;span class="k"&gt;for&lt;/span&gt; GRP in adm dialout cdrom audio users sudo video games plugdev input gpio spi i2c netdev&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
-&lt;a name="rest_code_aab65eb2dfdb4682bcc8b2c194f70c65-2"&gt;&lt;/a&gt;    adduser alphapi &lt;span class="nv"&gt;$GRP&lt;/span&gt;
-&lt;a name="rest_code_aab65eb2dfdb4682bcc8b2c194f70c65-3"&gt;&lt;/a&gt;&lt;span class="k"&gt;done&lt;/span&gt;
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_972cb481279f4663b95768106e1a5715-1"&gt;&lt;/a&gt;&lt;span class="k"&gt;for&lt;/span&gt; GRP in adm dialout cdrom audio users sudo video games plugdev input gpio spi i2c netdev&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+&lt;a name="rest_code_972cb481279f4663b95768106e1a5715-2"&gt;&lt;/a&gt;    adduser alphapi &lt;span class="nv"&gt;$GRP&lt;/span&gt;
+&lt;a name="rest_code_972cb481279f4663b95768106e1a5715-3"&gt;&lt;/a&gt;&lt;span class="k"&gt;done&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;div class="section" id="set-the-locale-information"&gt;
 &lt;h3&gt;Set the locale information&lt;/h3&gt;
@@ -568,12 +568,12 @@ replacing pi with alphapi.&lt;/p&gt;
 as follows. Open &lt;strong&gt;stage0/01-locale/00-debconf&lt;/strong&gt;. I personally changed
 every occurence of en_GB.UTF-8 to en_US.UTF-8, but you can set your
 locale accordingly.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_84cf504b872149b386a697ea53332dce-1"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Locales to be generated:&lt;/span&gt;
-&lt;a name="rest_code_84cf504b872149b386a697ea53332dce-2"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Choices: All locales, aa_DJ ISO-8859-1, aa_DJ.UTF-8 UTF-8, ...&lt;/span&gt;
-&lt;a name="rest_code_84cf504b872149b386a697ea53332dce-3"&gt;&lt;/a&gt;locales locales/locales_to_be_generated multiselect en_US.UTF-8 UTF-8
-&lt;a name="rest_code_84cf504b872149b386a697ea53332dce-4"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Default locale for the system environment:&lt;/span&gt;
-&lt;a name="rest_code_84cf504b872149b386a697ea53332dce-5"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Choices: None, C.UTF-8, en_US.UTF-8&lt;/span&gt;
-&lt;a name="rest_code_84cf504b872149b386a697ea53332dce-6"&gt;&lt;/a&gt;locales locales/default_environment_locale   &lt;span class="k"&gt;select&lt;/span&gt;  en_US.UTF-8
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_80f2f1970d3543acb2dc9d2887d73163-1"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Locales to be generated:&lt;/span&gt;
+&lt;a name="rest_code_80f2f1970d3543acb2dc9d2887d73163-2"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Choices: All locales, aa_DJ ISO-8859-1, aa_DJ.UTF-8 UTF-8, ...&lt;/span&gt;
+&lt;a name="rest_code_80f2f1970d3543acb2dc9d2887d73163-3"&gt;&lt;/a&gt;locales locales/locales_to_be_generated multiselect en_US.UTF-8 UTF-8
+&lt;a name="rest_code_80f2f1970d3543acb2dc9d2887d73163-4"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Default locale for the system environment:&lt;/span&gt;
+&lt;a name="rest_code_80f2f1970d3543acb2dc9d2887d73163-5"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Choices: None, C.UTF-8, en_US.UTF-8&lt;/span&gt;
+&lt;a name="rest_code_80f2f1970d3543acb2dc9d2887d73163-6"&gt;&lt;/a&gt;locales locales/default_environment_locale   &lt;span class="k"&gt;select&lt;/span&gt;  en_US.UTF-8
 &lt;/pre&gt;&lt;p&gt;Next, we open &lt;strong&gt;stage2/01-sys-tweaks/00-debconf&lt;/strong&gt;. I currently live in
 Europe, so I made the following changes:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
@@ -581,8 +581,8 @@ tzdata        tzdata/Areas    select  Europe
 &lt;/pre&gt;
 &lt;p&gt;I also made the following changes to switch from the default British
 English to American English:&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_75299cf5cb064bad80bc9e35a0f143ae-1"&gt;&lt;/a&gt;keyboard-configuration keyboard-configuration/xkb-keymap &lt;span class="k"&gt;select&lt;/span&gt; us
-&lt;a name="rest_code_75299cf5cb064bad80bc9e35a0f143ae-2"&gt;&lt;/a&gt;keyboard-configuration keyboard-configuration/fvariant  &lt;span class="k"&gt;select&lt;/span&gt;  English &lt;span class="o"&gt;(&lt;/span&gt;US&lt;span class="o"&gt;)&lt;/span&gt; - English &lt;span class="o"&gt;(&lt;/span&gt;US&lt;span class="se"&gt;\,&lt;/span&gt; international with dead keys&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_d45e83ad2e024f4397a26ce490e94618-1"&gt;&lt;/a&gt;keyboard-configuration keyboard-configuration/xkb-keymap &lt;span class="k"&gt;select&lt;/span&gt; us
+&lt;a name="rest_code_d45e83ad2e024f4397a26ce490e94618-2"&gt;&lt;/a&gt;keyboard-configuration keyboard-configuration/fvariant  &lt;span class="k"&gt;select&lt;/span&gt;  English &lt;span class="o"&gt;(&lt;/span&gt;US&lt;span class="o"&gt;)&lt;/span&gt; - English &lt;span class="o"&gt;(&lt;/span&gt;US&lt;span class="se"&gt;\,&lt;/span&gt; international with dead keys&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;Note that the comment in 00-debconf above the
 keyboard-configuration/xkb-keymap line erroneously states that
 American English is an option, but it's not. You need to change it
@@ -604,7 +604,7 @@ laptop). Once I get its device name, I use the Linux &lt;code class="shell"&gt;d
 command to copy the contents of the image onto the card. (Be sure to
 change /dev/mccblk0 to match the name that your system gives to your
 SD card device.)&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_2118ddc82cbf42cf9b0d6ae1f931e4fa-1"&gt;&lt;/a&gt;sudo dd &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;2018&lt;/span&gt;-07-21-my_name-lite.img &lt;span class="nv"&gt;of&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/dev/mmcblk0 &lt;span class="nv"&gt;bs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;4096&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; sync
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_a2d2d70fff3c4fefbeffad38a3cd0256-1"&gt;&lt;/a&gt;sudo dd &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;2018&lt;/span&gt;-07-21-my_name-lite.img &lt;span class="nv"&gt;of&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/dev/mmcblk0 &lt;span class="nv"&gt;bs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;4096&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; sync
 &lt;/pre&gt;&lt;p&gt;&lt;strong&gt;Please be EXTREMELY careful that you get the device name right.&lt;/strong&gt;
 It's not very difficult to write the contents of the image file over
 your root partition or other important data.&lt;/p&gt;
@@ -820,65 +820,65 @@ workflow.&lt;/p&gt;
 &lt;p&gt;The final prerequisite is to register QEMU with the Docker build
 agent. First, install a few packages for QEMU. On Ubuntu, this looks
 like&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_f4df6f5a58624db7bd618e7c93225e89-1"&gt;&lt;/a&gt;$ sudo apt update
-&lt;a name="rest_code_f4df6f5a58624db7bd618e7c93225e89-2"&gt;&lt;/a&gt;$ sudo install qemu qemu-user-static qemu-user binfmt-support
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_b87c48e2f26940b6811eaf9edb7ff982-1"&gt;&lt;/a&gt;$ sudo apt update
+&lt;a name="rest_code_b87c48e2f26940b6811eaf9edb7ff982-2"&gt;&lt;/a&gt;$ sudo install qemu qemu-user-static qemu-user binfmt-support
 &lt;/pre&gt;&lt;p&gt;Finally, register the build agent with the command:&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_c7b127b355764bdb84de753bd0d0536a-1"&gt;&lt;/a&gt;$ docker run --rm --privileged multiarch/qemu-user-static:register --reset
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_e869da2c6d5c443c8aa1ec189e29ad40-1"&gt;&lt;/a&gt;$ docker run --rm --privileged multiarch/qemu-user-static:register --reset
 &lt;/pre&gt;&lt;/div&gt;
 &lt;div class="section" id="step-1-create-the-build-image"&gt;
 &lt;h3&gt;Step 1: Create the build image&lt;/h3&gt;
 &lt;p&gt;Inside the build folder, I have a file called Dockerfile. Here are its
 contents.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-1"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Copyright (C) 2018 Kyle M. Douglass&lt;/span&gt;
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-2"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-3"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Defines a build environment for Micro-Manager on the Raspberry Pi.&lt;/span&gt;
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-4"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-5"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Usage: docker build \&lt;/span&gt;
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-6"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#          -t NAME:TAG \&lt;/span&gt;
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-7"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#         .&lt;/span&gt;
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-8"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-9"&gt;&lt;/a&gt;
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-10"&gt;&lt;/a&gt;FROM resin/raspberrypi3-debian:stretch
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-11"&gt;&lt;/a&gt;MAINTAINER Kyle M. Douglass &amp;lt;kyle.m.douglass@gmail.com&amp;gt;
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-12"&gt;&lt;/a&gt;
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-13"&gt;&lt;/a&gt;RUN &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;"cross-build-start"&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-14"&gt;&lt;/a&gt;
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-15"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Get the build dependencies.&lt;/span&gt;
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-16"&gt;&lt;/a&gt;RUN apt-get update &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt-get -y install --no-install-recommends &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-17"&gt;&lt;/a&gt;autoconf &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-18"&gt;&lt;/a&gt;automake &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-19"&gt;&lt;/a&gt;build-essential &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-20"&gt;&lt;/a&gt;git &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-21"&gt;&lt;/a&gt;libatlas-base-dev &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-22"&gt;&lt;/a&gt;libboost-dev &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-23"&gt;&lt;/a&gt;libboost-all-dev &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-24"&gt;&lt;/a&gt;libtool &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-25"&gt;&lt;/a&gt;patch &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-26"&gt;&lt;/a&gt;pkg-config &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-27"&gt;&lt;/a&gt;python3-dev &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-28"&gt;&lt;/a&gt;python3-pip &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-29"&gt;&lt;/a&gt;python3-setuptools &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-30"&gt;&lt;/a&gt;python3-wheel &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-31"&gt;&lt;/a&gt;swig &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-32"&gt;&lt;/a&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt-get clean &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; rm -rf /var/lib/apt/lists/* &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-33"&gt;&lt;/a&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; pip3 install numpy
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-34"&gt;&lt;/a&gt;
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-35"&gt;&lt;/a&gt;RUN &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;"cross-build-end"&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-36"&gt;&lt;/a&gt;
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-37"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Set up the mount point for the source files and setup script.&lt;/span&gt;
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-38"&gt;&lt;/a&gt;ADD setup /micro-manager/
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-39"&gt;&lt;/a&gt;VOLUME /micro-manager/src
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-40"&gt;&lt;/a&gt;
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-41"&gt;&lt;/a&gt;WORKDIR /micro-manager/src
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-42"&gt;&lt;/a&gt;ENTRYPOINT &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;"/sbin/tini"&lt;/span&gt;, &lt;span class="s2"&gt;"-s"&lt;/span&gt;, &lt;span class="s2"&gt;"--"&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;
-&lt;a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-43"&gt;&lt;/a&gt;CMD &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;"/micro-manager/setup"&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-1"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Copyright (C) 2018 Kyle M. Douglass&lt;/span&gt;
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-2"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-3"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Defines a build environment for Micro-Manager on the Raspberry Pi.&lt;/span&gt;
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-4"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-5"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Usage: docker build \&lt;/span&gt;
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-6"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#          -t NAME:TAG \&lt;/span&gt;
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-7"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#         .&lt;/span&gt;
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-8"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-9"&gt;&lt;/a&gt;
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-10"&gt;&lt;/a&gt;FROM resin/raspberrypi3-debian:stretch
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-11"&gt;&lt;/a&gt;MAINTAINER Kyle M. Douglass &amp;lt;kyle.m.douglass@gmail.com&amp;gt;
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-12"&gt;&lt;/a&gt;
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-13"&gt;&lt;/a&gt;RUN &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;"cross-build-start"&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-14"&gt;&lt;/a&gt;
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-15"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Get the build dependencies.&lt;/span&gt;
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-16"&gt;&lt;/a&gt;RUN apt-get update &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt-get -y install --no-install-recommends &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-17"&gt;&lt;/a&gt;autoconf &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-18"&gt;&lt;/a&gt;automake &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-19"&gt;&lt;/a&gt;build-essential &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-20"&gt;&lt;/a&gt;git &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-21"&gt;&lt;/a&gt;libatlas-base-dev &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-22"&gt;&lt;/a&gt;libboost-dev &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-23"&gt;&lt;/a&gt;libboost-all-dev &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-24"&gt;&lt;/a&gt;libtool &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-25"&gt;&lt;/a&gt;patch &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-26"&gt;&lt;/a&gt;pkg-config &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-27"&gt;&lt;/a&gt;python3-dev &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-28"&gt;&lt;/a&gt;python3-pip &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-29"&gt;&lt;/a&gt;python3-setuptools &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-30"&gt;&lt;/a&gt;python3-wheel &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-31"&gt;&lt;/a&gt;swig &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-32"&gt;&lt;/a&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt-get clean &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; rm -rf /var/lib/apt/lists/* &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-33"&gt;&lt;/a&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; pip3 install numpy
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-34"&gt;&lt;/a&gt;
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-35"&gt;&lt;/a&gt;RUN &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;"cross-build-end"&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-36"&gt;&lt;/a&gt;
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-37"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Set up the mount point for the source files and setup script.&lt;/span&gt;
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-38"&gt;&lt;/a&gt;ADD setup /micro-manager/
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-39"&gt;&lt;/a&gt;VOLUME /micro-manager/src
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-40"&gt;&lt;/a&gt;
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-41"&gt;&lt;/a&gt;WORKDIR /micro-manager/src
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-42"&gt;&lt;/a&gt;ENTRYPOINT &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;"/sbin/tini"&lt;/span&gt;, &lt;span class="s2"&gt;"-s"&lt;/span&gt;, &lt;span class="s2"&gt;"--"&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_4fb25d93f1cc40bab53355d24dc5e8e8-43"&gt;&lt;/a&gt;CMD &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;"/micro-manager/setup"&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;A Dockerfile defines the steps in building an image -- in this case,
 the build image. Let's break this file down into pieces. In the first
 two lines that follow the comments, I specify that my image is based
 on the resin/raspberrypi3-debian:stretch image and that I am the
 maintainer.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_5910ede5f135467cb5f1f036a00d6691-1"&gt;&lt;/a&gt;FROM resin/raspberrypi3-debian:stretch
-&lt;a name="rest_code_5910ede5f135467cb5f1f036a00d6691-2"&gt;&lt;/a&gt;MAINTAINER Kyle M. Douglass &amp;lt;kyle.m.douglass@gmail.com&amp;gt;
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_7fd23be1d27c4f6586e3ae1a3e48b705-1"&gt;&lt;/a&gt;FROM resin/raspberrypi3-debian:stretch
+&lt;a name="rest_code_7fd23be1d27c4f6586e3ae1a3e48b705-2"&gt;&lt;/a&gt;MAINTAINER Kyle M. Douglass &amp;lt;kyle.m.douglass@gmail.com&amp;gt;
 &lt;/pre&gt;&lt;p&gt;Images from &lt;a class="reference external" href="https://hub.docker.com/u/resin/"&gt;Resin&lt;/a&gt; are freely
 available and already have the QEMU emulator installed. Next, I
 specify what commands should be run for the ARM architecture. Any
@@ -899,9 +899,9 @@ This command is just telling the image to expect a folder to be
 mounted at this location when the container is run.&lt;/p&gt;
 &lt;p&gt;The last three lines set the working directory, the entrypoint and the
 default container command, respectively.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_92c7502ee22944f987eec8edaaa0a343-1"&gt;&lt;/a&gt;WORKDIR /micro-manager/src
-&lt;a name="rest_code_92c7502ee22944f987eec8edaaa0a343-2"&gt;&lt;/a&gt;ENTRYPOINT &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;"/sbin/tini"&lt;/span&gt;, &lt;span class="s2"&gt;"-s"&lt;/span&gt;, &lt;span class="s2"&gt;"--"&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;
-&lt;a name="rest_code_92c7502ee22944f987eec8edaaa0a343-3"&gt;&lt;/a&gt;CMD &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;"/micro-manager/setup"&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_2c0f8f3af37f45a1b390e8387afda629-1"&gt;&lt;/a&gt;WORKDIR /micro-manager/src
+&lt;a name="rest_code_2c0f8f3af37f45a1b390e8387afda629-2"&gt;&lt;/a&gt;ENTRYPOINT &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;"/sbin/tini"&lt;/span&gt;, &lt;span class="s2"&gt;"-s"&lt;/span&gt;, &lt;span class="s2"&gt;"--"&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_2c0f8f3af37f45a1b390e8387afda629-3"&gt;&lt;/a&gt;CMD &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;"/micro-manager/setup"&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;This specific entrypoint tells Docker that any containers built from
 this image should first run Tini, which is a lightweight init system
 for Docker containers. If you do not specify Tini as the entry point,
@@ -918,15 +918,15 @@ you can choose not to run the setup script but instead to enter the
 container through a Bash shell, for example.&lt;/p&gt;
 &lt;p&gt;To build the image, I use the following build script located in the
 same directory as the Dockerfile for convenience.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_c62e1bf9d8754811a58ee084b140144c-1"&gt;&lt;/a&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
-&lt;a name="rest_code_c62e1bf9d8754811a58ee084b140144c-2"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Copyright (C) 2018 Kyle M. Douglass&lt;/span&gt;
-&lt;a name="rest_code_c62e1bf9d8754811a58ee084b140144c-3"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
-&lt;a name="rest_code_c62e1bf9d8754811a58ee084b140144c-4"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Usage: ./build&lt;/span&gt;
-&lt;a name="rest_code_c62e1bf9d8754811a58ee084b140144c-5"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
-&lt;a name="rest_code_c62e1bf9d8754811a58ee084b140144c-6"&gt;&lt;/a&gt;
-&lt;a name="rest_code_c62e1bf9d8754811a58ee084b140144c-7"&gt;&lt;/a&gt;docker build &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_c62e1bf9d8754811a58ee084b140144c-8"&gt;&lt;/a&gt;       -t localhost:5000/rpi-micromanager:build &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_c62e1bf9d8754811a58ee084b140144c-9"&gt;&lt;/a&gt;       .
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_4887bb47befa4c5685ca7e5253d11163-1"&gt;&lt;/a&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+&lt;a name="rest_code_4887bb47befa4c5685ca7e5253d11163-2"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Copyright (C) 2018 Kyle M. Douglass&lt;/span&gt;
+&lt;a name="rest_code_4887bb47befa4c5685ca7e5253d11163-3"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;a name="rest_code_4887bb47befa4c5685ca7e5253d11163-4"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Usage: ./build&lt;/span&gt;
+&lt;a name="rest_code_4887bb47befa4c5685ca7e5253d11163-5"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;a name="rest_code_4887bb47befa4c5685ca7e5253d11163-6"&gt;&lt;/a&gt;
+&lt;a name="rest_code_4887bb47befa4c5685ca7e5253d11163-7"&gt;&lt;/a&gt;docker build &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_4887bb47befa4c5685ca7e5253d11163-8"&gt;&lt;/a&gt;       -t localhost:5000/rpi-micromanager:build &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_4887bb47befa4c5685ca7e5253d11163-9"&gt;&lt;/a&gt;       .
 &lt;/pre&gt;&lt;p&gt;By using &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-t&lt;/span&gt; &lt;span class="pre"&gt;localhost:5000/rpi-micromanager:build&lt;/span&gt;&lt;/tt&gt; argument I am
 giving the image a name of &lt;em&gt;rpi-micromanager&lt;/em&gt;, a tag of &lt;em&gt;build&lt;/em&gt;, and
 specifying that I will eventually host this image on my local registry
@@ -938,36 +938,36 @@ don't worry. I'll explain it in the next section.&lt;/p&gt;
 &lt;h3&gt;Step 2: Compile Micro-Manager&lt;/h3&gt;
 &lt;p&gt;After the image is built, I create a container and use it to compile
 Micro-Manager. For this, I use the run script in the build directory.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-1"&gt;&lt;/a&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
-&lt;a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-2"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Copyright (C) 2018 Kyle M. Douglass&lt;/span&gt;
-&lt;a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-3"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
-&lt;a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-4"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Usage: ./run DIR CONFIGURE&lt;/span&gt;
-&lt;a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-5"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
-&lt;a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-6"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# DIR is the parent folder containing the micro-manager Git&lt;/span&gt;
-&lt;a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-7"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# repository, the 3rdpartypublic Subversion repository, and any&lt;/span&gt;
-&lt;a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-8"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# additional build resources.&lt;/span&gt;
-&lt;a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-9"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
-&lt;a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-10"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# If CONFIGURE=true, the build system is remade and the configure&lt;/span&gt;
-&lt;a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-11"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# script is rerun before running 'make' and 'make install'. If&lt;/span&gt;
-&lt;a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-12"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# CONFIGURE=false, only 'make' and 'make install' are run.&lt;/span&gt;
-&lt;a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-13"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
-&lt;a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-14"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# The compiled program files are stored in a bind mount volume so that&lt;/span&gt;
-&lt;a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-15"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# they may be copied into the deployment container.&lt;/span&gt;
-&lt;a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-16"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
-&lt;a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-17"&gt;&lt;/a&gt;
-&lt;a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-18"&gt;&lt;/a&gt;&lt;span class="nv"&gt;src_dir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;
-&lt;a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-19"&gt;&lt;/a&gt;&lt;span class="nv"&gt;cmd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"/micro-manager/setup &lt;/span&gt;&lt;span class="nv"&gt;$2&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt;
-&lt;a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-20"&gt;&lt;/a&gt;
-&lt;a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-21"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Remove the build artifacts from previous builds.&lt;/span&gt;
-&lt;a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-22"&gt;&lt;/a&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;"&lt;/span&gt;&lt;span class="nv"&gt;$2&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;"&lt;/span&gt;&lt;span class="nv"&gt;$2&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="nb"&gt;false&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
-&lt;a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-23"&gt;&lt;/a&gt;    rm -rf &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;src_dir&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;/build &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt;
-&lt;a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-24"&gt;&lt;/a&gt;&lt;span class="k"&gt;fi&lt;/span&gt;
-&lt;a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-25"&gt;&lt;/a&gt;
-&lt;a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-26"&gt;&lt;/a&gt;docker run --rm &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-27"&gt;&lt;/a&gt;       -v &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;src_dir&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;:/micro-manager/src &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-28"&gt;&lt;/a&gt;       --name mm-build &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-29"&gt;&lt;/a&gt;       localhost:5000/rpi-micromanager:build &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-30"&gt;&lt;/a&gt;       &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;cmd&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_be03b1f8838b4003ab1299a1803b54fd-1"&gt;&lt;/a&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+&lt;a name="rest_code_be03b1f8838b4003ab1299a1803b54fd-2"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Copyright (C) 2018 Kyle M. Douglass&lt;/span&gt;
+&lt;a name="rest_code_be03b1f8838b4003ab1299a1803b54fd-3"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;a name="rest_code_be03b1f8838b4003ab1299a1803b54fd-4"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Usage: ./run DIR CONFIGURE&lt;/span&gt;
+&lt;a name="rest_code_be03b1f8838b4003ab1299a1803b54fd-5"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;a name="rest_code_be03b1f8838b4003ab1299a1803b54fd-6"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# DIR is the parent folder containing the micro-manager Git&lt;/span&gt;
+&lt;a name="rest_code_be03b1f8838b4003ab1299a1803b54fd-7"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# repository, the 3rdpartypublic Subversion repository, and any&lt;/span&gt;
+&lt;a name="rest_code_be03b1f8838b4003ab1299a1803b54fd-8"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# additional build resources.&lt;/span&gt;
+&lt;a name="rest_code_be03b1f8838b4003ab1299a1803b54fd-9"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;a name="rest_code_be03b1f8838b4003ab1299a1803b54fd-10"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# If CONFIGURE=true, the build system is remade and the configure&lt;/span&gt;
+&lt;a name="rest_code_be03b1f8838b4003ab1299a1803b54fd-11"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# script is rerun before running 'make' and 'make install'. If&lt;/span&gt;
+&lt;a name="rest_code_be03b1f8838b4003ab1299a1803b54fd-12"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# CONFIGURE=false, only 'make' and 'make install' are run.&lt;/span&gt;
+&lt;a name="rest_code_be03b1f8838b4003ab1299a1803b54fd-13"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;a name="rest_code_be03b1f8838b4003ab1299a1803b54fd-14"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# The compiled program files are stored in a bind mount volume so that&lt;/span&gt;
+&lt;a name="rest_code_be03b1f8838b4003ab1299a1803b54fd-15"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# they may be copied into the deployment container.&lt;/span&gt;
+&lt;a name="rest_code_be03b1f8838b4003ab1299a1803b54fd-16"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;a name="rest_code_be03b1f8838b4003ab1299a1803b54fd-17"&gt;&lt;/a&gt;
+&lt;a name="rest_code_be03b1f8838b4003ab1299a1803b54fd-18"&gt;&lt;/a&gt;&lt;span class="nv"&gt;src_dir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;
+&lt;a name="rest_code_be03b1f8838b4003ab1299a1803b54fd-19"&gt;&lt;/a&gt;&lt;span class="nv"&gt;cmd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"/micro-manager/setup &lt;/span&gt;&lt;span class="nv"&gt;$2&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt;
+&lt;a name="rest_code_be03b1f8838b4003ab1299a1803b54fd-20"&gt;&lt;/a&gt;
+&lt;a name="rest_code_be03b1f8838b4003ab1299a1803b54fd-21"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Remove the build artifacts from previous builds.&lt;/span&gt;
+&lt;a name="rest_code_be03b1f8838b4003ab1299a1803b54fd-22"&gt;&lt;/a&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;"&lt;/span&gt;&lt;span class="nv"&gt;$2&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;"&lt;/span&gt;&lt;span class="nv"&gt;$2&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="nb"&gt;false&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+&lt;a name="rest_code_be03b1f8838b4003ab1299a1803b54fd-23"&gt;&lt;/a&gt;    rm -rf &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;src_dir&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;/build &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt;
+&lt;a name="rest_code_be03b1f8838b4003ab1299a1803b54fd-24"&gt;&lt;/a&gt;&lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;a name="rest_code_be03b1f8838b4003ab1299a1803b54fd-25"&gt;&lt;/a&gt;
+&lt;a name="rest_code_be03b1f8838b4003ab1299a1803b54fd-26"&gt;&lt;/a&gt;docker run --rm &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_be03b1f8838b4003ab1299a1803b54fd-27"&gt;&lt;/a&gt;       -v &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;src_dir&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;:/micro-manager/src &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_be03b1f8838b4003ab1299a1803b54fd-28"&gt;&lt;/a&gt;       --name mm-build &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_be03b1f8838b4003ab1299a1803b54fd-29"&gt;&lt;/a&gt;       localhost:5000/rpi-micromanager:build &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_be03b1f8838b4003ab1299a1803b54fd-30"&gt;&lt;/a&gt;       &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;cmd&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;The script takes two arguments. The first is the path to the folder
 containing all the source code (see below for details). The second
 argument is either &lt;strong&gt;true&lt;/strong&gt; or &lt;strong&gt;false&lt;/strong&gt;. (It can actually be
@@ -996,57 +996,57 @@ I checkout the mm2 branch because I am interested in developing my
 application for Micro-Manager 2.0.&lt;/p&gt;
 &lt;p&gt;The setup script that is run inside the container and mentioned in the
 previous section looks like this.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-1"&gt;&lt;/a&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-2"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-3"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# # Copyright (C) 2018 Kyle M. Douglass&lt;/span&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-4"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-5"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Builds Micro-Manager.&lt;/span&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-6"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-7"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Usage: ./setup CONFIGURE&lt;/span&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-8"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-9"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# If CONFIGURE=true, the build system is remade and the configure&lt;/span&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-10"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# script is rerun before running 'make' and 'make install'. If&lt;/span&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-11"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# CONFIGURE=false, only 'make' and 'make install' or run.&lt;/span&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-12"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-13"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Kyle M. Douglass, 2018&lt;/span&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-14"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-15"&gt;&lt;/a&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-16"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Move into the source directory.&lt;/span&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-17"&gt;&lt;/a&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; micro-manager
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-18"&gt;&lt;/a&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-19"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Undo any previous patches.&lt;/span&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-20"&gt;&lt;/a&gt;git checkout -- DeviceAdapters/WieneckeSinske/CAN29.cpp
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-21"&gt;&lt;/a&gt;git checkout -- DeviceAdapters/WieneckeSinske/WieneckeSinske.cpp
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-22"&gt;&lt;/a&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-23"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Patch the broken WieneckeSinske device adapter.&lt;/span&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-24"&gt;&lt;/a&gt;patch DeviceAdapters/WieneckeSinske/CAN29.cpp &amp;lt; ../patches/CAN29.cpp.diff &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-25"&gt;&lt;/a&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; patch DeviceAdapters/WieneckeSinske/WieneckeSinske.cpp &amp;lt; ../patches/WieneckeSinske.cpp.diff
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-26"&gt;&lt;/a&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-27"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Compile MM2.&lt;/span&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-28"&gt;&lt;/a&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;"&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-29"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;# Remake the entire build system, then compile from scratch.&lt;/span&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-30"&gt;&lt;/a&gt;    ./autogen.sh
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-31"&gt;&lt;/a&gt;    &lt;span class="nv"&gt;PYTHON&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"/usr/bin/python3"&lt;/span&gt; ./configure &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-32"&gt;&lt;/a&gt;        --prefix&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"/micro-manager/src/build"&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-33"&gt;&lt;/a&gt;        --with-python&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"/usr/include/python3.5"&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-34"&gt;&lt;/a&gt;        --with-boost-libdir&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"/usr/lib/arm-linux-gnueabihf"&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-35"&gt;&lt;/a&gt;        --with-boost&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"/usr/include/boost"&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-36"&gt;&lt;/a&gt;        --disable-java-app &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-37"&gt;&lt;/a&gt;        --disable-install-dependency-jars &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-38"&gt;&lt;/a&gt;        --with-java&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"no"&lt;/span&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-39"&gt;&lt;/a&gt;    make
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-40"&gt;&lt;/a&gt;    make install
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-41"&gt;&lt;/a&gt;    chmod -R a+w /micro-manager/src/build
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-42"&gt;&lt;/a&gt;&lt;span class="k"&gt;elif&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;"&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;false&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-43"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;# Only recompile changed source files.&lt;/span&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-44"&gt;&lt;/a&gt;    make
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-45"&gt;&lt;/a&gt;    make install
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-46"&gt;&lt;/a&gt;    chmod -R a+w /micro-manager/src/build
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-47"&gt;&lt;/a&gt;&lt;span class="k"&gt;else&lt;/span&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-48"&gt;&lt;/a&gt;    &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;"&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="s2"&gt; : Unrecognized argument."&lt;/span&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-49"&gt;&lt;/a&gt;    &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;"Pass \"true\" to run the full build process."&lt;/span&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-50"&gt;&lt;/a&gt;    &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;"Pass \"false\" to run only \"make\" and \"make install\"."&lt;/span&gt;
-&lt;a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-51"&gt;&lt;/a&gt;&lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-1"&gt;&lt;/a&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-2"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-3"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# # Copyright (C) 2018 Kyle M. Douglass&lt;/span&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-4"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-5"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Builds Micro-Manager.&lt;/span&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-6"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-7"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Usage: ./setup CONFIGURE&lt;/span&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-8"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-9"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# If CONFIGURE=true, the build system is remade and the configure&lt;/span&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-10"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# script is rerun before running 'make' and 'make install'. If&lt;/span&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-11"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# CONFIGURE=false, only 'make' and 'make install' or run.&lt;/span&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-12"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-13"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Kyle M. Douglass, 2018&lt;/span&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-14"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-15"&gt;&lt;/a&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-16"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Move into the source directory.&lt;/span&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-17"&gt;&lt;/a&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; micro-manager
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-18"&gt;&lt;/a&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-19"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Undo any previous patches.&lt;/span&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-20"&gt;&lt;/a&gt;git checkout -- DeviceAdapters/WieneckeSinske/CAN29.cpp
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-21"&gt;&lt;/a&gt;git checkout -- DeviceAdapters/WieneckeSinske/WieneckeSinske.cpp
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-22"&gt;&lt;/a&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-23"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Patch the broken WieneckeSinske device adapter.&lt;/span&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-24"&gt;&lt;/a&gt;patch DeviceAdapters/WieneckeSinske/CAN29.cpp &amp;lt; ../patches/CAN29.cpp.diff &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-25"&gt;&lt;/a&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; patch DeviceAdapters/WieneckeSinske/WieneckeSinske.cpp &amp;lt; ../patches/WieneckeSinske.cpp.diff
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-26"&gt;&lt;/a&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-27"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Compile MM2.&lt;/span&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-28"&gt;&lt;/a&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;"&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-29"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;# Remake the entire build system, then compile from scratch.&lt;/span&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-30"&gt;&lt;/a&gt;    ./autogen.sh
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-31"&gt;&lt;/a&gt;    &lt;span class="nv"&gt;PYTHON&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"/usr/bin/python3"&lt;/span&gt; ./configure &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-32"&gt;&lt;/a&gt;        --prefix&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"/micro-manager/src/build"&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-33"&gt;&lt;/a&gt;        --with-python&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"/usr/include/python3.5"&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-34"&gt;&lt;/a&gt;        --with-boost-libdir&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"/usr/lib/arm-linux-gnueabihf"&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-35"&gt;&lt;/a&gt;        --with-boost&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"/usr/include/boost"&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-36"&gt;&lt;/a&gt;        --disable-java-app &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-37"&gt;&lt;/a&gt;        --disable-install-dependency-jars &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-38"&gt;&lt;/a&gt;        --with-java&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"no"&lt;/span&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-39"&gt;&lt;/a&gt;    make
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-40"&gt;&lt;/a&gt;    make install
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-41"&gt;&lt;/a&gt;    chmod -R a+w /micro-manager/src/build
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-42"&gt;&lt;/a&gt;&lt;span class="k"&gt;elif&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;"&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;false&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-43"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;# Only recompile changed source files.&lt;/span&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-44"&gt;&lt;/a&gt;    make
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-45"&gt;&lt;/a&gt;    make install
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-46"&gt;&lt;/a&gt;    chmod -R a+w /micro-manager/src/build
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-47"&gt;&lt;/a&gt;&lt;span class="k"&gt;else&lt;/span&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-48"&gt;&lt;/a&gt;    &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;"&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="s2"&gt; : Unrecognized argument."&lt;/span&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-49"&gt;&lt;/a&gt;    &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;"Pass \"true\" to run the full build process."&lt;/span&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-50"&gt;&lt;/a&gt;    &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;"Pass \"false\" to run only \"make\" and \"make install\"."&lt;/span&gt;
+&lt;a name="rest_code_a4e69083ffd3466c81d9eca3012eefd9-51"&gt;&lt;/a&gt;&lt;span class="k"&gt;fi&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;Most important in this script is the call to &lt;tt class="docutils literal"&gt;configure&lt;/tt&gt;. You can
 see that the compiled libraries and Python wrapper will be written to
 the build folder inside the mounted directory. This gives the host
@@ -1059,53 +1059,53 @@ stopped.&lt;/p&gt;
 image that contains only the essentials for running Micro-Manager.&lt;/p&gt;
 &lt;p&gt;For this, I use a separate Dockerfile inside the 2.0-python
 directory.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_46b4c349fe104918b102ca6087ee7b15-1"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Copyright (C) 2018 Kyle M. Douglass&lt;/span&gt;
-&lt;a name="rest_code_46b4c349fe104918b102ca6087ee7b15-2"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
-&lt;a name="rest_code_46b4c349fe104918b102ca6087ee7b15-3"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Builds the Micro-Manager 2.0 Python wrapper for the Raspberry Pi.&lt;/span&gt;
-&lt;a name="rest_code_46b4c349fe104918b102ca6087ee7b15-4"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
-&lt;a name="rest_code_46b4c349fe104918b102ca6087ee7b15-5"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Usage: docker build \&lt;/span&gt;
-&lt;a name="rest_code_46b4c349fe104918b102ca6087ee7b15-6"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#          -t NAME:TAG \&lt;/span&gt;
-&lt;a name="rest_code_46b4c349fe104918b102ca6087ee7b15-7"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#          .&lt;/span&gt;
-&lt;a name="rest_code_46b4c349fe104918b102ca6087ee7b15-8"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
-&lt;a name="rest_code_46b4c349fe104918b102ca6087ee7b15-9"&gt;&lt;/a&gt;
-&lt;a name="rest_code_46b4c349fe104918b102ca6087ee7b15-10"&gt;&lt;/a&gt;FROM resin/raspberrypi3-debian:stretch
-&lt;a name="rest_code_46b4c349fe104918b102ca6087ee7b15-11"&gt;&lt;/a&gt;MAINTAINER Kyle M. Douglass &amp;lt;kyle.m.douglass@gmail.com&amp;gt;
-&lt;a name="rest_code_46b4c349fe104918b102ca6087ee7b15-12"&gt;&lt;/a&gt;
-&lt;a name="rest_code_46b4c349fe104918b102ca6087ee7b15-13"&gt;&lt;/a&gt;RUN &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;"cross-build-start"&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;
-&lt;a name="rest_code_46b4c349fe104918b102ca6087ee7b15-14"&gt;&lt;/a&gt;
-&lt;a name="rest_code_46b4c349fe104918b102ca6087ee7b15-15"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Install the run-time dependencies.&lt;/span&gt;
-&lt;a name="rest_code_46b4c349fe104918b102ca6087ee7b15-16"&gt;&lt;/a&gt;RUN apt-get update &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt-get -y install --no-install-recommends &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_46b4c349fe104918b102ca6087ee7b15-17"&gt;&lt;/a&gt;    libatlas-base-dev &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_46b4c349fe104918b102ca6087ee7b15-18"&gt;&lt;/a&gt;    libboost-all-dev &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_46b4c349fe104918b102ca6087ee7b15-19"&gt;&lt;/a&gt;    python3-pip &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_46b4c349fe104918b102ca6087ee7b15-20"&gt;&lt;/a&gt;    python3-setuptools &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_46b4c349fe104918b102ca6087ee7b15-21"&gt;&lt;/a&gt;    python3-wheel &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_46b4c349fe104918b102ca6087ee7b15-22"&gt;&lt;/a&gt;    &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; pip3 install numpy &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_46b4c349fe104918b102ca6087ee7b15-23"&gt;&lt;/a&gt;    &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt-get clean &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; rm -rf /var/lib/apt/lists/*
-&lt;a name="rest_code_46b4c349fe104918b102ca6087ee7b15-24"&gt;&lt;/a&gt;
-&lt;a name="rest_code_46b4c349fe104918b102ca6087ee7b15-25"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Copy in the Micro-Manager source files.&lt;/span&gt;
-&lt;a name="rest_code_46b4c349fe104918b102ca6087ee7b15-26"&gt;&lt;/a&gt;RUN useradd -ms /bin/bash micro-manager
-&lt;a name="rest_code_46b4c349fe104918b102ca6087ee7b15-27"&gt;&lt;/a&gt;WORKDIR /home/micro-manager/app
-&lt;a name="rest_code_46b4c349fe104918b102ca6087ee7b15-28"&gt;&lt;/a&gt;COPY --chown&lt;span class="o"&gt;=&lt;/span&gt;micro-manager:micro-manager . .
-&lt;a name="rest_code_46b4c349fe104918b102ca6087ee7b15-29"&gt;&lt;/a&gt;
-&lt;a name="rest_code_46b4c349fe104918b102ca6087ee7b15-30"&gt;&lt;/a&gt;RUN &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;"cross-build-end"&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;
-&lt;a name="rest_code_46b4c349fe104918b102ca6087ee7b15-31"&gt;&lt;/a&gt;
-&lt;a name="rest_code_46b4c349fe104918b102ca6087ee7b15-32"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Final environment configuration.&lt;/span&gt;
-&lt;a name="rest_code_46b4c349fe104918b102ca6087ee7b15-33"&gt;&lt;/a&gt;USER micro-manager:micro-manager
-&lt;a name="rest_code_46b4c349fe104918b102ca6087ee7b15-34"&gt;&lt;/a&gt;ENV PYTHONPATH /home/micro-manager/app/lib/micro-manager
-&lt;a name="rest_code_46b4c349fe104918b102ca6087ee7b15-35"&gt;&lt;/a&gt;ENTRYPOINT &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"/sbin/tini"&lt;/span&gt;, &lt;span class="s2"&gt;"-s"&lt;/span&gt;, &lt;span class="s2"&gt;"--"&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
-&lt;a name="rest_code_46b4c349fe104918b102ca6087ee7b15-36"&gt;&lt;/a&gt;CMD &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"/usr/bin/python3"&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_9e5be4f5111d4c4fb09dfed00c22d5fa-1"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Copyright (C) 2018 Kyle M. Douglass&lt;/span&gt;
+&lt;a name="rest_code_9e5be4f5111d4c4fb09dfed00c22d5fa-2"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;a name="rest_code_9e5be4f5111d4c4fb09dfed00c22d5fa-3"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Builds the Micro-Manager 2.0 Python wrapper for the Raspberry Pi.&lt;/span&gt;
+&lt;a name="rest_code_9e5be4f5111d4c4fb09dfed00c22d5fa-4"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;a name="rest_code_9e5be4f5111d4c4fb09dfed00c22d5fa-5"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Usage: docker build \&lt;/span&gt;
+&lt;a name="rest_code_9e5be4f5111d4c4fb09dfed00c22d5fa-6"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#          -t NAME:TAG \&lt;/span&gt;
+&lt;a name="rest_code_9e5be4f5111d4c4fb09dfed00c22d5fa-7"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#          .&lt;/span&gt;
+&lt;a name="rest_code_9e5be4f5111d4c4fb09dfed00c22d5fa-8"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;a name="rest_code_9e5be4f5111d4c4fb09dfed00c22d5fa-9"&gt;&lt;/a&gt;
+&lt;a name="rest_code_9e5be4f5111d4c4fb09dfed00c22d5fa-10"&gt;&lt;/a&gt;FROM resin/raspberrypi3-debian:stretch
+&lt;a name="rest_code_9e5be4f5111d4c4fb09dfed00c22d5fa-11"&gt;&lt;/a&gt;MAINTAINER Kyle M. Douglass &amp;lt;kyle.m.douglass@gmail.com&amp;gt;
+&lt;a name="rest_code_9e5be4f5111d4c4fb09dfed00c22d5fa-12"&gt;&lt;/a&gt;
+&lt;a name="rest_code_9e5be4f5111d4c4fb09dfed00c22d5fa-13"&gt;&lt;/a&gt;RUN &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;"cross-build-start"&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_9e5be4f5111d4c4fb09dfed00c22d5fa-14"&gt;&lt;/a&gt;
+&lt;a name="rest_code_9e5be4f5111d4c4fb09dfed00c22d5fa-15"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Install the run-time dependencies.&lt;/span&gt;
+&lt;a name="rest_code_9e5be4f5111d4c4fb09dfed00c22d5fa-16"&gt;&lt;/a&gt;RUN apt-get update &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt-get -y install --no-install-recommends &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_9e5be4f5111d4c4fb09dfed00c22d5fa-17"&gt;&lt;/a&gt;    libatlas-base-dev &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_9e5be4f5111d4c4fb09dfed00c22d5fa-18"&gt;&lt;/a&gt;    libboost-all-dev &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_9e5be4f5111d4c4fb09dfed00c22d5fa-19"&gt;&lt;/a&gt;    python3-pip &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_9e5be4f5111d4c4fb09dfed00c22d5fa-20"&gt;&lt;/a&gt;    python3-setuptools &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_9e5be4f5111d4c4fb09dfed00c22d5fa-21"&gt;&lt;/a&gt;    python3-wheel &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_9e5be4f5111d4c4fb09dfed00c22d5fa-22"&gt;&lt;/a&gt;    &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; pip3 install numpy &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_9e5be4f5111d4c4fb09dfed00c22d5fa-23"&gt;&lt;/a&gt;    &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt-get clean &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; rm -rf /var/lib/apt/lists/*
+&lt;a name="rest_code_9e5be4f5111d4c4fb09dfed00c22d5fa-24"&gt;&lt;/a&gt;
+&lt;a name="rest_code_9e5be4f5111d4c4fb09dfed00c22d5fa-25"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Copy in the Micro-Manager source files.&lt;/span&gt;
+&lt;a name="rest_code_9e5be4f5111d4c4fb09dfed00c22d5fa-26"&gt;&lt;/a&gt;RUN useradd -ms /bin/bash micro-manager
+&lt;a name="rest_code_9e5be4f5111d4c4fb09dfed00c22d5fa-27"&gt;&lt;/a&gt;WORKDIR /home/micro-manager/app
+&lt;a name="rest_code_9e5be4f5111d4c4fb09dfed00c22d5fa-28"&gt;&lt;/a&gt;COPY --chown&lt;span class="o"&gt;=&lt;/span&gt;micro-manager:micro-manager . .
+&lt;a name="rest_code_9e5be4f5111d4c4fb09dfed00c22d5fa-29"&gt;&lt;/a&gt;
+&lt;a name="rest_code_9e5be4f5111d4c4fb09dfed00c22d5fa-30"&gt;&lt;/a&gt;RUN &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;"cross-build-end"&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_9e5be4f5111d4c4fb09dfed00c22d5fa-31"&gt;&lt;/a&gt;
+&lt;a name="rest_code_9e5be4f5111d4c4fb09dfed00c22d5fa-32"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Final environment configuration.&lt;/span&gt;
+&lt;a name="rest_code_9e5be4f5111d4c4fb09dfed00c22d5fa-33"&gt;&lt;/a&gt;USER micro-manager:micro-manager
+&lt;a name="rest_code_9e5be4f5111d4c4fb09dfed00c22d5fa-34"&gt;&lt;/a&gt;ENV PYTHONPATH /home/micro-manager/app/lib/micro-manager
+&lt;a name="rest_code_9e5be4f5111d4c4fb09dfed00c22d5fa-35"&gt;&lt;/a&gt;ENTRYPOINT &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"/sbin/tini"&lt;/span&gt;, &lt;span class="s2"&gt;"-s"&lt;/span&gt;, &lt;span class="s2"&gt;"--"&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_9e5be4f5111d4c4fb09dfed00c22d5fa-36"&gt;&lt;/a&gt;CMD &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"/usr/bin/python3"&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;As before, I use a clean resin base image. However, this time I only
 install the essential software to run Micro-Manager.&lt;/p&gt;
 &lt;p&gt;After apt-getting and pip-installing everything, I create a new user
 called &lt;strong&gt;micro-manager&lt;/strong&gt; and a new folder called &lt;strong&gt;app&lt;/strong&gt; inside this
 user's home directory.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_c9363b3dfe7c48a3afa05fa732537cd8-1"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Copy in the Micro-Manager source files.&lt;/span&gt;
-&lt;a name="rest_code_c9363b3dfe7c48a3afa05fa732537cd8-2"&gt;&lt;/a&gt;RUN useradd -ms /bin/bash micro-manager
-&lt;a name="rest_code_c9363b3dfe7c48a3afa05fa732537cd8-3"&gt;&lt;/a&gt;WORKDIR /home/micro-manager/app
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_7e192a1d53cd4ba7a4c002d5a4fcd861-1"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Copy in the Micro-Manager source files.&lt;/span&gt;
+&lt;a name="rest_code_7e192a1d53cd4ba7a4c002d5a4fcd861-2"&gt;&lt;/a&gt;RUN useradd -ms /bin/bash micro-manager
+&lt;a name="rest_code_7e192a1d53cd4ba7a4c002d5a4fcd861-3"&gt;&lt;/a&gt;WORKDIR /home/micro-manager/app
 &lt;/pre&gt;&lt;p&gt;Next, I directly copy the compiled libraries into the image with the
 COPY command.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_f199dbee693647feb0ce94d6a1dcb64a-1"&gt;&lt;/a&gt;COPY --chown&lt;span class="o"&gt;=&lt;/span&gt;micro-manager:micro-manager . .
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_b080fe7867e4493caed39f2076409ef0-1"&gt;&lt;/a&gt;COPY --chown&lt;span class="o"&gt;=&lt;/span&gt;micro-manager:micro-manager . .
 &lt;/pre&gt;&lt;p&gt;The two periods (.) mean that I copy the current host directory's
 contents into the container's current working directory
 (/home/micro-manager/app). What is the current host directory? Well,
@@ -1116,23 +1116,23 @@ Dockerfile by saying that I switch the USER so that I do not run the
 container as root, add the library to the PYTHONPATH environment
 variable, and setup the default command as the python3 interpreter.&lt;/p&gt;
 &lt;p&gt;To build this image, I use the following build script.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_c54f777de08141208482d2bd59e0c1ae-1"&gt;&lt;/a&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
-&lt;a name="rest_code_c54f777de08141208482d2bd59e0c1ae-2"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Copyright (C) 2018 Kyle M. Douglass&lt;/span&gt;
-&lt;a name="rest_code_c54f777de08141208482d2bd59e0c1ae-3"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
-&lt;a name="rest_code_c54f777de08141208482d2bd59e0c1ae-4"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Usage: ./build DIR&lt;/span&gt;
-&lt;a name="rest_code_c54f777de08141208482d2bd59e0c1ae-5"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
-&lt;a name="rest_code_c54f777de08141208482d2bd59e0c1ae-6"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# DIR is the root directory containing the Micro-Manager build&lt;/span&gt;
-&lt;a name="rest_code_c54f777de08141208482d2bd59e0c1ae-7"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# artifacts. These artifacts will be added to the Docker image.&lt;/span&gt;
-&lt;a name="rest_code_c54f777de08141208482d2bd59e0c1ae-8"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
-&lt;a name="rest_code_c54f777de08141208482d2bd59e0c1ae-9"&gt;&lt;/a&gt;
-&lt;a name="rest_code_c54f777de08141208482d2bd59e0c1ae-10"&gt;&lt;/a&gt;&lt;span class="nv"&gt;src_dir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;
-&lt;a name="rest_code_c54f777de08141208482d2bd59e0c1ae-11"&gt;&lt;/a&gt;
-&lt;a name="rest_code_c54f777de08141208482d2bd59e0c1ae-12"&gt;&lt;/a&gt;cp Dockerfile &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;src_dir&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;
-&lt;a name="rest_code_c54f777de08141208482d2bd59e0c1ae-13"&gt;&lt;/a&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;src_dir&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;
-&lt;a name="rest_code_c54f777de08141208482d2bd59e0c1ae-14"&gt;&lt;/a&gt;
-&lt;a name="rest_code_c54f777de08141208482d2bd59e0c1ae-15"&gt;&lt;/a&gt;docker build &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_c54f777de08141208482d2bd59e0c1ae-16"&gt;&lt;/a&gt;       -t localhost:5000/rpi-micromanager:2.0-python &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_c54f777de08141208482d2bd59e0c1ae-17"&gt;&lt;/a&gt;       .
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_a991d981c3174b2b83649ef2fd80f2f8-1"&gt;&lt;/a&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+&lt;a name="rest_code_a991d981c3174b2b83649ef2fd80f2f8-2"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Copyright (C) 2018 Kyle M. Douglass&lt;/span&gt;
+&lt;a name="rest_code_a991d981c3174b2b83649ef2fd80f2f8-3"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;a name="rest_code_a991d981c3174b2b83649ef2fd80f2f8-4"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Usage: ./build DIR&lt;/span&gt;
+&lt;a name="rest_code_a991d981c3174b2b83649ef2fd80f2f8-5"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;a name="rest_code_a991d981c3174b2b83649ef2fd80f2f8-6"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# DIR is the root directory containing the Micro-Manager build&lt;/span&gt;
+&lt;a name="rest_code_a991d981c3174b2b83649ef2fd80f2f8-7"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# artifacts. These artifacts will be added to the Docker image.&lt;/span&gt;
+&lt;a name="rest_code_a991d981c3174b2b83649ef2fd80f2f8-8"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;a name="rest_code_a991d981c3174b2b83649ef2fd80f2f8-9"&gt;&lt;/a&gt;
+&lt;a name="rest_code_a991d981c3174b2b83649ef2fd80f2f8-10"&gt;&lt;/a&gt;&lt;span class="nv"&gt;src_dir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;
+&lt;a name="rest_code_a991d981c3174b2b83649ef2fd80f2f8-11"&gt;&lt;/a&gt;
+&lt;a name="rest_code_a991d981c3174b2b83649ef2fd80f2f8-12"&gt;&lt;/a&gt;cp Dockerfile &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;src_dir&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;
+&lt;a name="rest_code_a991d981c3174b2b83649ef2fd80f2f8-13"&gt;&lt;/a&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;src_dir&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;
+&lt;a name="rest_code_a991d981c3174b2b83649ef2fd80f2f8-14"&gt;&lt;/a&gt;
+&lt;a name="rest_code_a991d981c3174b2b83649ef2fd80f2f8-15"&gt;&lt;/a&gt;docker build &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_a991d981c3174b2b83649ef2fd80f2f8-16"&gt;&lt;/a&gt;       -t localhost:5000/rpi-micromanager:2.0-python &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_a991d981c3174b2b83649ef2fd80f2f8-17"&gt;&lt;/a&gt;       .
 &lt;/pre&gt;&lt;p&gt;This script takes one argument, which is the &lt;strong&gt;build&lt;/strong&gt; directory
 containing the compiled source code. The script first copies the
 Dockerfile into this directory and then changes into it with the cd
@@ -1175,10 +1175,10 @@ called certs inside my workstation home directory and then use openssl
 to make the cerficate. During the prompts, I press ENTER at every step
 except the FQDN (fully qualified domain name). For the FQDN, I enter
 the same IP address as above.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_f09e02f3f4da44c59e52cff527fbd035-1"&gt;&lt;/a&gt;mkdir certs
-&lt;a name="rest_code_f09e02f3f4da44c59e52cff527fbd035-2"&gt;&lt;/a&gt;openssl req -newkey rsa:4096 -nodes -sha256 &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_f09e02f3f4da44c59e52cff527fbd035-3"&gt;&lt;/a&gt;-keyout certs/domain.key -x509 -days &lt;span class="m"&gt;365&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_f09e02f3f4da44c59e52cff527fbd035-4"&gt;&lt;/a&gt;-config /etc/ssl/openssl.cnf -out certs/domain.crt
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_c3098da4713740b88d1c13152825826b-1"&gt;&lt;/a&gt;mkdir certs
+&lt;a name="rest_code_c3098da4713740b88d1c13152825826b-2"&gt;&lt;/a&gt;openssl req -newkey rsa:4096 -nodes -sha256 &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_c3098da4713740b88d1c13152825826b-3"&gt;&lt;/a&gt;-keyout certs/domain.key -x509 -days &lt;span class="m"&gt;365&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_c3098da4713740b88d1c13152825826b-4"&gt;&lt;/a&gt;-config /etc/ssl/openssl.cnf -out certs/domain.crt
 &lt;/pre&gt;&lt;p&gt;&lt;strong&gt;I had to add the ``-config /etc/ssl/openssl.cnf`` argument for the
 subject alternative name to be added to the certificate.&lt;/strong&gt; This part
 was tricky, because if this argument is not included, then the key
@@ -1191,13 +1191,13 @@ cannot validate certificate for 192.168.XXX.XXX because it doesn't contain any I
 &lt;p&gt;After the domain.key and domain.crt files have been created, I run the
 official registry server container. (See how handy Docker containers
 are? There's no messy installation beyond grabbing the container.)&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_3c7d4492bdd544a0ab29f19053fed1b5-1"&gt;&lt;/a&gt;docker run -d -p &lt;span class="m"&gt;5000&lt;/span&gt;:5000 &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_3c7d4492bdd544a0ab29f19053fed1b5-2"&gt;&lt;/a&gt;  --restart&lt;span class="o"&gt;=&lt;/span&gt;always &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_3c7d4492bdd544a0ab29f19053fed1b5-3"&gt;&lt;/a&gt;  --name registry &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_3c7d4492bdd544a0ab29f19053fed1b5-4"&gt;&lt;/a&gt;  -v &lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;pwd&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;/certs:/certs &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_3c7d4492bdd544a0ab29f19053fed1b5-5"&gt;&lt;/a&gt;  -e &lt;span class="nv"&gt;REGISTRY_HTTP_TLS_CERTIFICATE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/certs/domain.crt &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_3c7d4492bdd544a0ab29f19053fed1b5-6"&gt;&lt;/a&gt;  -e &lt;span class="nv"&gt;REGISTRY_HTTP_TLS_KEY&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/certs/domain.key &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_3c7d4492bdd544a0ab29f19053fed1b5-7"&gt;&lt;/a&gt;  registry:2
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_3b4bd5a809ab4d3583b7c56d6005b4a6-1"&gt;&lt;/a&gt;docker run -d -p &lt;span class="m"&gt;5000&lt;/span&gt;:5000 &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_3b4bd5a809ab4d3583b7c56d6005b4a6-2"&gt;&lt;/a&gt;  --restart&lt;span class="o"&gt;=&lt;/span&gt;always &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_3b4bd5a809ab4d3583b7c56d6005b4a6-3"&gt;&lt;/a&gt;  --name registry &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_3b4bd5a809ab4d3583b7c56d6005b4a6-4"&gt;&lt;/a&gt;  -v &lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;pwd&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;/certs:/certs &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_3b4bd5a809ab4d3583b7c56d6005b4a6-5"&gt;&lt;/a&gt;  -e &lt;span class="nv"&gt;REGISTRY_HTTP_TLS_CERTIFICATE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/certs/domain.crt &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_3b4bd5a809ab4d3583b7c56d6005b4a6-6"&gt;&lt;/a&gt;  -e &lt;span class="nv"&gt;REGISTRY_HTTP_TLS_KEY&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/certs/domain.key &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_3b4bd5a809ab4d3583b7c56d6005b4a6-7"&gt;&lt;/a&gt;  registry:2
 &lt;/pre&gt;&lt;p&gt;If the registry:2 image is not already downloaded, then it will be
 downloaded for automatically when running the container. Note that
 the -p 5000:5000 argument indicates that the server is using port 5000
@@ -1207,7 +1207,7 @@ certs directory is relative to the current directory because I use the
 your setup.&lt;/p&gt;
 &lt;p&gt;Let's go ahead and push the application image to the server now that
 it's running.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_8a7ac257787c4eba9122b1a51394579d-1"&gt;&lt;/a&gt;docker push localhost:5000/rpi-micromanager:2.0-python
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_ab809ffbc5d74295b10a5f042066b5c6-1"&gt;&lt;/a&gt;docker push localhost:5000/rpi-micromanager:2.0-python
 &lt;/pre&gt;&lt;/div&gt;
 &lt;div class="section" id="setup-the-pi"&gt;
 &lt;h4&gt;Setup the Pi&lt;/h4&gt;
@@ -1216,18 +1216,18 @@ Docker&lt;/a&gt; on
 it and know how to communicate with it via ssh and copy files to it
 using scp.&lt;/p&gt;
 &lt;p&gt;I copy the certificate from the host with scp.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_f81dcc28dbf34e3ea1bf9e19a860b92b-1"&gt;&lt;/a&gt;sudo mkdir -p /etc/docker/certs.d/192.168.XXX.XXX:5000/
-&lt;a name="rest_code_f81dcc28dbf34e3ea1bf9e19a860b92b-2"&gt;&lt;/a&gt;sudo scp kmdouglass@192.168.XXX.XXX:/home/kmdouglass/certs/domain.crt /etc/docker/certs.d/192.168.XXX.XXX:5000/ca.crt
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_ed9212e1144a4ae5bde0029d26900afc-1"&gt;&lt;/a&gt;sudo mkdir -p /etc/docker/certs.d/192.168.XXX.XXX:5000/
+&lt;a name="rest_code_ed9212e1144a4ae5bde0029d26900afc-2"&gt;&lt;/a&gt;sudo scp kmdouglass@192.168.XXX.XXX:/home/kmdouglass/certs/domain.crt /etc/docker/certs.d/192.168.XXX.XXX:5000/ca.crt
 &lt;/pre&gt;&lt;p&gt;The IP address that I am using is the one to the machine where the
 registry server is running. After this step, I make the operating
 system trust the certificate.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_1603979d854c4fc09abeab85dfb17b86-1"&gt;&lt;/a&gt;sudo scp kmdouglass@192.168.XXX.XXX:/home/kmdouglass/certs/domain.crt /usr/local/share/ca-certificates/192.168.XXX.XXX.crt
-&lt;a name="rest_code_1603979d854c4fc09abeab85dfb17b86-2"&gt;&lt;/a&gt;sudo update-ca-certifications
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_5cff8950f19e4ea19783c82fe8dc9e08-1"&gt;&lt;/a&gt;sudo scp kmdouglass@192.168.XXX.XXX:/home/kmdouglass/certs/domain.crt /usr/local/share/ca-certificates/192.168.XXX.XXX.crt
+&lt;a name="rest_code_5cff8950f19e4ea19783c82fe8dc9e08-2"&gt;&lt;/a&gt;sudo update-ca-certifications
 &lt;/pre&gt;&lt;p&gt;Finally, I restart the Docker daemon.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_a30030b90b9e48cbbc663ed71086bb1f-1"&gt;&lt;/a&gt;sudo service docker restart
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_9f7a3e1a0f31401883f7f8b9e65e86cf-1"&gt;&lt;/a&gt;sudo service docker restart
 &lt;/pre&gt;&lt;p&gt;If everything is working, then I should be able to pull the image from
 your network's registry server.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_07188abc472a47509f522f8550ed5a8b-1"&gt;&lt;/a&gt;docker pull &lt;span class="m"&gt;192&lt;/span&gt;.168.XXX.XXX:5000/rpi-micromanager:python2.0
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_70c31f2d5fd34bbc8a0559a9a78f5460-1"&gt;&lt;/a&gt;docker pull &lt;span class="m"&gt;192&lt;/span&gt;.168.XXX.XXX:5000/rpi-micromanager:python2.0
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="section" id="step-5-run-micro-manager"&gt;
@@ -1235,14 +1235,14 @@ your network's registry server.&lt;/p&gt;
 &lt;p&gt;And now the moment of truth: running the application container. Since
 it's setup to run Python automatically, I use a pretty simple &lt;tt class="docutils literal"&gt;docker
 run&lt;/tt&gt; command.&lt;/p&gt;
-&lt;pre class="code shell"&gt;&lt;a name="rest_code_bd02e1afc3c4450f9b9eb38f759b2c16-1"&gt;&lt;/a&gt;docker run -it --rm &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_bd02e1afc3c4450f9b9eb38f759b2c16-2"&gt;&lt;/a&gt;     --name micro-manager &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;a name="rest_code_bd02e1afc3c4450f9b9eb38f759b2c16-3"&gt;&lt;/a&gt;     &lt;span class="m"&gt;192&lt;/span&gt;.168.XXX.XXX:5000/rpi-micromanager:2.0-python
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_f62d12eb5e084f3cb0e0a2eb864cdc5a-1"&gt;&lt;/a&gt;docker run -it --rm &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_f62d12eb5e084f3cb0e0a2eb864cdc5a-2"&gt;&lt;/a&gt;     --name micro-manager &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_f62d12eb5e084f3cb0e0a2eb864cdc5a-3"&gt;&lt;/a&gt;     &lt;span class="m"&gt;192&lt;/span&gt;.168.XXX.XXX:5000/rpi-micromanager:2.0-python
 &lt;/pre&gt;&lt;p&gt;I verify that the Micro-Manager Python wrapper is working by trying to
 import it and run &lt;a class="reference external" href="https://micro-manager.org/wiki/Using_the_Micro-Manager_python_library"&gt;a few basic commands&lt;/a&gt;.&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_3f3a9c36707841cd9a854d6c7ffed10f-1"&gt;&lt;/a&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;MMCorePy&lt;/span&gt;
-&lt;a name="rest_code_3f3a9c36707841cd9a854d6c7ffed10f-2"&gt;&lt;/a&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;mmc&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;MMCorePy&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;CMMCore&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;a name="rest_code_3f3a9c36707841cd9a854d6c7ffed10f-3"&gt;&lt;/a&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;mmc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getVersionInfo&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_3c1ae89b0b6048f7ac17985273e70300-1"&gt;&lt;/a&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;MMCorePy&lt;/span&gt;
+&lt;a name="rest_code_3c1ae89b0b6048f7ac17985273e70300-2"&gt;&lt;/a&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;mmc&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;MMCorePy&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;CMMCore&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;a name="rest_code_3c1ae89b0b6048f7ac17985273e70300-3"&gt;&lt;/a&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;mmc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getVersionInfo&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;If these work without error, then congratulations! You're now ready to
 start building your embedded microscopy system ;)&lt;/p&gt;
 &lt;/div&gt;
@@ -3721,10 +3721,10 @@ Integral, hologram plane: 2621.0387
 
 
 
-&lt;div id="99582581-af94-4951-a93e-9226092e03af"&gt;&lt;/div&gt;
+&lt;div id="59339c02-104f-4fb8-8fc6-af48f5cfdb3c"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#99582581-af94-4951-a93e-9226092e03af');
+var element = $('#59339c02-104f-4fb8-8fc6-af48f5cfdb3c');
 /* Put everything inside the global mpl namespace */
 window.mpl = {};
 
