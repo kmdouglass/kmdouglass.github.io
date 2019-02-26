@@ -163,6 +163,7 @@ Now let's send messages to the rust program. Use the following netcat command to
 to the socket.
 
 .. code-block::
+
    $ nc -U /tmp/rust-uds.sock
 
 The ``-U`` is necessary to indicate to netcat that this is a UNIX stream socket. Now, start typing
