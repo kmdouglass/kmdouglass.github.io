@@ -18,6 +18,10 @@
   <lastmod>2019-02-10T11:47:00Z</lastmod>
  </sitemap>
  <sitemap>
+  <loc>http://kmdouglass.github.io/categories/c.xml</loc>
+  <lastmod>2019-04-04T17:53:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>http://kmdouglass.github.io/categories/cat_computational-optics.xml</loc>
   <lastmod>2019-02-10T11:59:00Z</lastmod>
  </sitemap>
@@ -95,7 +99,7 @@
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/rust.xml</loc>
-  <lastmod>2019-02-26T18:34:00Z</lastmod>
+  <lastmod>2019-04-04T17:53:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/categories/sensing.xml</loc>
@@ -123,10 +127,10 @@
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/rss.xml</loc>
-  <lastmod>2019-02-26T18:34:00Z</lastmod>
+  <lastmod>2019-04-04T17:53:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://kmdouglass.github.io/sitemap.xml</loc>
-  <lastmod>2019-02-26T18:34:00Z</lastmod>
+  <lastmod>2019-04-04T17:53:00Z</lastmod>
  </sitemap>
 </sitemapindex>

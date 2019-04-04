@@ -39,11 +39,11 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/archive.html</loc>
-  <lastmod>2019-02-26T18:34:00Z</lastmod>
+  <lastmod>2019-04-04T17:53:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/</loc>
-  <lastmod>2019-02-26T18:34:00Z</lastmod>
+  <lastmod>2019-04-01T04:39:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/biology/</loc>
@@ -56,6 +56,10 @@
  <url>
   <loc>http://kmdouglass.github.io/categories/blog/</loc>
   <lastmod>2019-01-19T10:59:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://kmdouglass.github.io/categories/c/</loc>
+  <lastmod>2019-04-01T04:39:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/cat_computational-optics/</loc>
@@ -171,7 +175,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/index-3.html</loc>
-  <lastmod>2019-02-26T18:34:00Z</lastmod>
+  <lastmod>2019-04-04T17:53:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/notes/fiji/</loc>
@@ -200,6 +204,10 @@
  <url>
   <loc>http://kmdouglass.github.io/posts/can-my-beam-be-collimated/</loc>
   <lastmod>2019-01-19T10:59:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/</loc>
+  <lastmod>2019-04-01T04:39:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/confocal-by-scattering/</loc>

@@ -1,5 +1,521 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kyle M. Douglass</title><link>http://kmdouglass.github.io/</link><description>Optics, programming, and computer vision.</description><atom:link href="http://kmdouglass.github.io/rss.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Tue, 26 Feb 2019 18:34:47 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>A simple UNIX socket listener in Rust</title><link>http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;I decided that I wanted to learn a new programming language in 2019. After a bit of research, I
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kyle M. Douglass</title><link>http://kmdouglass.github.io/</link><description>Optics, programming, and computer vision.</description><atom:link href="http://kmdouglass.github.io/rss.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Thu, 04 Apr 2019 17:53:36 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Complex data types and the Rust FFI</title><link>http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;The &lt;a class="reference external" href="https://doc.rust-lang.org/nomicon/ffi.html"&gt;Rust Foreign Function Interface&lt;/a&gt; (FFI, for short) is a feature of Rust that enables the
+sharing of data and functions between parts of code that have been written in different
+languages. I am interested in the FFI because many libraries used in embedded systems are written
+in C, and I would like to leverage them for my embedded work with Rust.&lt;/p&gt;
+&lt;p&gt;I quickly learned from my initial experiments with the Rust FFI that one of its challenges is
+casting data types into a form that may be consumed by other languages. This challenge is not
+unique to the Rust FFI, and there are numerous reasons for it. For one, different languages use
+different mechanisms to layout data in the computer's memory. What's more, names for functions and
+data types are often mangled, which means that the symbol in a library that maps to a function may
+be different than the name that you give to the function in your code. As far as I know, C
+compilers do not mangle symbol names, and partly for this reason the C language is often used as an
+intermediary language in FFIs. Converting Rust to C is therefore an important skill when using Rust
+for multi-language work.&lt;/p&gt;
+&lt;p&gt;There are a few good resources on the internet about using the Rust FFI to expose functions written
+in Rust to other languages. However, I found little information about passing data types between
+languages. To help remedy this situation, I describe in this post a simple Rust library that I
+wrote to explore how to pass complex data types from Rust to C.&lt;/p&gt;
+&lt;div class="section" id="an-example-ffi-project"&gt;
+&lt;h2&gt;An example FFI project&lt;/h2&gt;
+&lt;p&gt;I created the Rust library in the typical way by first starting a new project with Cargo:&lt;/p&gt;
+&lt;pre class="code shell"&gt;&lt;a name="rest_code_94deb026c9a34351b130546753fc9202-1"&gt;&lt;/a&gt;$ cargo new --lib rstruct
+&lt;a name="rest_code_94deb026c9a34351b130546753fc9202-2"&gt;&lt;/a&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; rstruct
+&lt;/pre&gt;&lt;p&gt;Inside, I modified the contents of &lt;tt class="docutils literal"&gt;Cargo.toml&lt;/tt&gt; to the following:&lt;/p&gt;
+&lt;pre class="code text"&gt;&lt;a name="rest_code_1a2585912a19453c98a51a50912849bd-1"&gt;&lt;/a&gt;[package]
+&lt;a name="rest_code_1a2585912a19453c98a51a50912849bd-2"&gt;&lt;/a&gt;name = "rstruct"
+&lt;a name="rest_code_1a2585912a19453c98a51a50912849bd-3"&gt;&lt;/a&gt;version = "0.1.0"
+&lt;a name="rest_code_1a2585912a19453c98a51a50912849bd-4"&gt;&lt;/a&gt;authors = ["Kyle M. Douglass"]
+&lt;a name="rest_code_1a2585912a19453c98a51a50912849bd-5"&gt;&lt;/a&gt;edition = "2018"
+&lt;a name="rest_code_1a2585912a19453c98a51a50912849bd-6"&gt;&lt;/a&gt;
+&lt;a name="rest_code_1a2585912a19453c98a51a50912849bd-7"&gt;&lt;/a&gt;[lib]
+&lt;a name="rest_code_1a2585912a19453c98a51a50912849bd-8"&gt;&lt;/a&gt;crate-type = ["cdylib"]
+&lt;a name="rest_code_1a2585912a19453c98a51a50912849bd-9"&gt;&lt;/a&gt;
+&lt;a name="rest_code_1a2585912a19453c98a51a50912849bd-10"&gt;&lt;/a&gt;[dependencies]
+&lt;/pre&gt;&lt;p&gt;The only lines that I added were &lt;tt class="docutils literal"&gt;[lib]&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;crate-type&lt;/span&gt; = ["cdylib"]&lt;/tt&gt;. As described in the
+&lt;a class="reference external" href="https://doc.rust-lang.org/edition-guide/rust-2018/platform-and-target-support/cdylib-crates-for-c-interoperability.html"&gt;2018 edition guide&lt;/a&gt;, this type of crate produces a binary that has no Rust-specific information
+in it and is intended for use through a C FFI.&lt;/p&gt;
+&lt;p&gt;Next, I opened the &lt;tt class="docutils literal"&gt;src/lib.rs&lt;/tt&gt; source file, removed the auto-generated content, and added the
+following source.&lt;/p&gt;
+&lt;table class="codetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-1"&gt; 1&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-2"&gt; 2&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-3"&gt; 3&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-4"&gt; 4&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-5"&gt; 5&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-6"&gt; 6&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-7"&gt; 7&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-8"&gt; 8&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-9"&gt; 9&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-10"&gt;10&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-11"&gt;11&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-12"&gt;12&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-13"&gt;13&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-14"&gt;14&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-15"&gt;15&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-16"&gt;16&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-17"&gt;17&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-18"&gt;18&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-19"&gt;19&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-20"&gt;20&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-21"&gt;21&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-22"&gt;22&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-23"&gt;23&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-24"&gt;24&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-25"&gt;25&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-26"&gt;26&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-27"&gt;27&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-28"&gt;28&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-29"&gt;29&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-30"&gt;30&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-31"&gt;31&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-32"&gt;32&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-33"&gt;33&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-34"&gt;34&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-35"&gt;35&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-36"&gt;36&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-37"&gt;37&lt;/a&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;pre class="code rust"&gt;&lt;a name="rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-1"&gt;&lt;/a&gt;&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;::&lt;span class="n"&gt;boxed&lt;/span&gt;::&lt;span class="nb"&gt;Box&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-2"&gt;&lt;/a&gt;&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;::&lt;span class="n"&gt;ffi&lt;/span&gt;::&lt;span class="n"&gt;CString&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-3"&gt;&lt;/a&gt;&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;::&lt;span class="n"&gt;os&lt;/span&gt;::&lt;span class="n"&gt;raw&lt;/span&gt;::&lt;span class="n"&gt;c_char&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-4"&gt;&lt;/a&gt;
+&lt;a name="rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-5"&gt;&lt;/a&gt;&lt;span class="cp"&gt;#[repr(C)]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-6"&gt;&lt;/a&gt;&lt;span class="k"&gt;pub&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;struct&lt;/span&gt; &lt;span class="nc"&gt;RStruct&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-7"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;: &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="k"&gt;const&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;c_char&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-8"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt;: &lt;span class="nc"&gt;Value&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-9"&gt;&lt;/a&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-10"&gt;&lt;/a&gt;
+&lt;a name="rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-11"&gt;&lt;/a&gt;&lt;span class="cp"&gt;#[repr(C)]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-12"&gt;&lt;/a&gt;&lt;span class="k"&gt;pub&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;enum&lt;/span&gt; &lt;span class="nc"&gt;Value&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-13"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;_Int&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;i32&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-14"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;_Float&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;f64&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-15"&gt;&lt;/a&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-16"&gt;&lt;/a&gt;
+&lt;a name="rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-17"&gt;&lt;/a&gt;&lt;span class="cp"&gt;#[no_mangle]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-18"&gt;&lt;/a&gt;&lt;span class="k"&gt;pub&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;extern&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;"C"&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;data_new&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-&amp;gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;RStruct&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-19"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"{}"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;"Inside data_new()."&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to_string&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-20"&gt;&lt;/a&gt;
+&lt;a name="rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-21"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nb"&gt;Box&lt;/span&gt;::&lt;span class="n"&gt;into_raw&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;Box&lt;/span&gt;::&lt;span class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;RStruct&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-22"&gt;&lt;/a&gt;&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;: &lt;span class="nc"&gt;CString&lt;/span&gt;::&lt;span class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"my_rstruct"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-23"&gt;&lt;/a&gt;&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;expect&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"Error: CString::new()"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-24"&gt;&lt;/a&gt;&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;into_raw&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-25"&gt;&lt;/a&gt;&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt;: &lt;span class="nc"&gt;Value&lt;/span&gt;::&lt;span class="n"&gt;_Int&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;42&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-26"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;}))&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-27"&gt;&lt;/a&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-28"&gt;&lt;/a&gt;
+&lt;a name="rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-29"&gt;&lt;/a&gt;&lt;span class="cp"&gt;#[no_mangle]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-30"&gt;&lt;/a&gt;&lt;span class="k"&gt;pub&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;extern&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;"C"&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;data_free&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ptr&lt;/span&gt;: &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;RStruct&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-31"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;ptr&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;is_null&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-32"&gt;&lt;/a&gt;&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-33"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-34"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;unsafe&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-35"&gt;&lt;/a&gt;&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nb"&gt;Box&lt;/span&gt;::&lt;span class="n"&gt;from_raw&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ptr&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-36"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_b1c0e749a8b847fb8890248ba5fa9d0f-37"&gt;&lt;/a&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;Roughly speaking, this simple library does two things. First, it defines two data types, a struct
+called &lt;tt class="docutils literal"&gt;RStruct&lt;/tt&gt; and a Rust enum (not to be confused with a C enum!) called &lt;tt class="docutils literal"&gt;Value&lt;/tt&gt;. Second, it
+exposes two functions that may be used to access instances of these data types from C:
+&lt;tt class="docutils literal"&gt;data_new()&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;data_free()&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;Let's take closer look now at what the code is doing.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="defining-structs-and-enums-for-use-in-c"&gt;
+&lt;h2&gt;Defining structs and enums for use in C&lt;/h2&gt;
+&lt;p&gt;I want to expose instances of the RStruct type to C code. The definition of &lt;tt class="docutils literal"&gt;RStruct&lt;/tt&gt; is&lt;/p&gt;
+&lt;pre class="code rust"&gt;&lt;a name="rest_code_96544b233f224d659280bfeff1acbfee-1"&gt;&lt;/a&gt;&lt;span class="cp"&gt;#[repr(C)]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_96544b233f224d659280bfeff1acbfee-2"&gt;&lt;/a&gt;&lt;span class="k"&gt;pub&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;struct&lt;/span&gt; &lt;span class="nc"&gt;RStruct&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_96544b233f224d659280bfeff1acbfee-3"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;: &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="k"&gt;const&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;c_char&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_96544b233f224d659280bfeff1acbfee-4"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt;: &lt;span class="nc"&gt;Value&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_96544b233f224d659280bfeff1acbfee-5"&gt;&lt;/a&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;The first line here is &lt;tt class="docutils literal"&gt;[repr(C)]&lt;/tt&gt;. This is an attribute that modifies the layout of the struct
+in memory to "do what C does." As described in the &lt;a class="reference external" href="https://doc.rust-lang.org/nomicon/other-reprs.html"&gt;Rustonomicon&lt;/a&gt;,&lt;/p&gt;
+&lt;blockquote&gt;
+The order, size, and alignment of fields is exactly what you would expect from C or C++. Any
+type you expect to pass through an FFI boundary should have repr(C), as C is the lingua-franca
+of the programming world.&lt;/blockquote&gt;
+&lt;p&gt;Next, we define a public struct just as we would if we were writing typical Rust code. In this
+example, the struct has two fields. The first is a field called &lt;tt class="docutils literal"&gt;name&lt;/tt&gt;, which has a type &lt;tt class="docutils literal"&gt;*const
+c_char&lt;/tt&gt;. The Rust data types &lt;tt class="docutils literal"&gt;String&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;&amp;amp;str&lt;/tt&gt; cannot be interpreted in C, so instead we
+define the data type as a &lt;a class="reference external" href="https://doc.rust-lang.org/std/primitive.pointer.html"&gt;raw pointer&lt;/a&gt; to a &lt;tt class="docutils literal"&gt;c_char&lt;/tt&gt;. (In this case, &lt;tt class="docutils literal"&gt;*&lt;/tt&gt; is not dereferencing
+the pointer but is &lt;a class="reference external" href="https://doc.rust-lang.org/beta/book/ch19-01-unsafe-rust.html#dereferencing-a-raw-pointer"&gt;part of the type name&lt;/a&gt; &lt;tt class="docutils literal"&gt;*const T&lt;/tt&gt;.)&lt;/p&gt;
+&lt;p&gt;The second field is an enum whose definition follows:&lt;/p&gt;
+&lt;pre class="code rust"&gt;&lt;a name="rest_code_1e0b89fb843e4d9c970faefa294f7b60-1"&gt;&lt;/a&gt;&lt;span class="cp"&gt;#[repr(C)]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_1e0b89fb843e4d9c970faefa294f7b60-2"&gt;&lt;/a&gt;&lt;span class="k"&gt;pub&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;enum&lt;/span&gt; &lt;span class="nc"&gt;Value&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_1e0b89fb843e4d9c970faefa294f7b60-3"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;_Int&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;i32&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_1e0b89fb843e4d9c970faefa294f7b60-4"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;_Float&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;f64&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_1e0b89fb843e4d9c970faefa294f7b60-5"&gt;&lt;/a&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;Again we use &lt;tt class="docutils literal"&gt;#[repr(C)]&lt;/tt&gt; to indicate that we want the enum to be laid out in memory in the same
+manner as in C. The enum &lt;tt class="docutils literal"&gt;Value&lt;/tt&gt; has two variants, &lt;tt class="docutils literal"&gt;_Int&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;_Float&lt;/tt&gt;, that each contain a
+value of &lt;tt class="docutils literal"&gt;i32&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;f64&lt;/tt&gt;, respectively. If you're familiar with C, then you may have already
+noticed that C enums are differnt from Rust enums in that they do not hold any data themselves. How
+this minor annoyance is solved will be seen later when we generate the C header for this library.&lt;/p&gt;
+&lt;p&gt;The data types i32 and f64 are easily translated into C's equivalent numeric data types, so there
+is no need to do anything special with them.&lt;/p&gt;
+&lt;div class="section" id="instantiating-and-freeing-memory"&gt;
+&lt;h3&gt;Instantiating and freeing Memory&lt;/h3&gt;
+&lt;p&gt;Following the data type definitions, there are two functions that are exposed through the FFI
+boundary, one for instantiating an &lt;tt class="docutils literal"&gt;RStruct&lt;/tt&gt; and one for freeing the memory associated with an
+&lt;tt class="docutils literal"&gt;RStruct&lt;/tt&gt;. The method for instantiation is first:&lt;/p&gt;
+&lt;pre class="code rust"&gt;&lt;a name="rest_code_504314c6a3b64e2a9bcc18ebc0ae56a6-1"&gt;&lt;/a&gt;&lt;span class="cp"&gt;#[no_mangle]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_504314c6a3b64e2a9bcc18ebc0ae56a6-2"&gt;&lt;/a&gt;&lt;span class="k"&gt;pub&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;extern&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;"C"&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;data_new&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-&amp;gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;RStruct&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_504314c6a3b64e2a9bcc18ebc0ae56a6-3"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"{}"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;"Inside data_new()."&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to_string&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_504314c6a3b64e2a9bcc18ebc0ae56a6-4"&gt;&lt;/a&gt;
+&lt;a name="rest_code_504314c6a3b64e2a9bcc18ebc0ae56a6-5"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nb"&gt;Box&lt;/span&gt;::&lt;span class="n"&gt;into_raw&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;Box&lt;/span&gt;::&lt;span class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;RStruct&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_504314c6a3b64e2a9bcc18ebc0ae56a6-6"&gt;&lt;/a&gt;&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;: &lt;span class="nc"&gt;CString&lt;/span&gt;::&lt;span class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"my_rstruct"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_504314c6a3b64e2a9bcc18ebc0ae56a6-7"&gt;&lt;/a&gt;&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;expect&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"Error: CString::new()"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_504314c6a3b64e2a9bcc18ebc0ae56a6-8"&gt;&lt;/a&gt;&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;into_raw&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_504314c6a3b64e2a9bcc18ebc0ae56a6-9"&gt;&lt;/a&gt;&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt;: &lt;span class="nc"&gt;Value&lt;/span&gt;::&lt;span class="n"&gt;_Int&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;42&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_504314c6a3b64e2a9bcc18ebc0ae56a6-10"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;}))&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_504314c6a3b64e2a9bcc18ebc0ae56a6-11"&gt;&lt;/a&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;The first line contains an attribute called &lt;tt class="docutils literal"&gt;#[no_mangle]&lt;/tt&gt;. As defined in &lt;a class="reference external" href="https://doc.rust-lang.org/book/ch19-01-unsafe-rust.html#calling-rust-functions-from-other-languages"&gt;the Book&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+Mangling is when a compiler changes the name we’ve given a function to a different name that
+contains more information for other parts of the compilation process to consume but is less
+human readable.&lt;/blockquote&gt;
+&lt;p&gt;Placing the &lt;tt class="docutils literal"&gt;#[no_mangle]&lt;/tt&gt; attribute before the function definition ensures that the function
+name matches that of the corresponding symbol in the library.&lt;/p&gt;
+&lt;p&gt;Next is the function definition &lt;tt class="docutils literal"&gt;pub extern "C" fn data_new() &lt;span class="pre"&gt;-&amp;gt;&lt;/span&gt; *mut RStruct&lt;/tt&gt;. Let's break this
+down into parts to understand it better:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;pub&lt;/tt&gt; : The function will be callable from outside the library&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;extern "C"&lt;/tt&gt; : This line serves two different purposes in Rust, both related to FFI. In my
+case, I use it specify that the function should be exposed with the &lt;a class="reference external" href="https://doc.rust-lang.org/book/ch19-01-unsafe-rust.html#using-extern-functions-to-call-external-code"&gt;application binary interface
+from C&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;fn data_new()&lt;/tt&gt; : This is just the usual &lt;tt class="docutils literal"&gt;fn&lt;/tt&gt; keyword and the name of the function&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-&amp;gt;&lt;/span&gt; *mut RStruct&lt;/tt&gt; : Here I specify that the function will return a mutable, raw pointer to an
+&lt;tt class="docutils literal"&gt;RStruct instance&lt;/tt&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The purpose of this function is to create a &lt;tt class="docutils literal"&gt;RStruct&lt;/tt&gt; instance and return a pointer to it. The
+&lt;tt class="docutils literal"&gt;RStruct&lt;/tt&gt; is created just as we would any other struct in Rust, with the exception of the
+&lt;tt class="docutils literal"&gt;name&lt;/tt&gt; field:&lt;/p&gt;
+&lt;pre class="code rust"&gt;&lt;a name="rest_code_9efd22b1445c4041a9363975a061033c-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;RStruct&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_9efd22b1445c4041a9363975a061033c-2"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;: &lt;span class="nc"&gt;CString&lt;/span&gt;::&lt;span class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"my_rstruct"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_9efd22b1445c4041a9363975a061033c-3"&gt;&lt;/a&gt;&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;expect&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"Error: CString::new()"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_9efd22b1445c4041a9363975a061033c-4"&gt;&lt;/a&gt;&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;into_raw&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_9efd22b1445c4041a9363975a061033c-5"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt;: &lt;span class="nc"&gt;Value&lt;/span&gt;::&lt;span class="n"&gt;_Int&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;42&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_9efd22b1445c4041a9363975a061033c-6"&gt;&lt;/a&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;The &lt;tt class="docutils literal"&gt;CString&lt;/tt&gt; is first created with the &lt;tt class="docutils literal"&gt;new()&lt;/tt&gt; constructor and contains the value
+&lt;tt class="docutils literal"&gt;"my_rstruct"&lt;/tt&gt;. After unpacking the result with &lt;tt class="docutils literal"&gt;expect()&lt;/tt&gt;, I call the &lt;tt class="docutils literal"&gt;into_raw()&lt;/tt&gt; method to
+create a raw pointer to the C string whose &lt;a class="reference external" href="https://doc.rust-lang.org/std/ffi/struct.CString.html#method.into_raw"&gt;ownership will be passed off to the calling C
+code&lt;/a&gt;. (If I had used &lt;tt class="docutils literal"&gt;as_ptr()&lt;/tt&gt; instead, the pointer would have been dropped immediately after
+the function call because the &lt;tt class="docutils literal"&gt;CString&lt;/tt&gt; &lt;a class="reference external" href="https://doc.rust-lang.org/std/ffi/struct.CString.html#method.as_ptr"&gt;would have been deallocated&lt;/a&gt;.) The &lt;tt class="docutils literal"&gt;value&lt;/tt&gt; field is
+instantiated as it would be in normal Rust.&lt;/p&gt;
+&lt;p&gt;What is perhaps new in this method is the &lt;tt class="docutils literal"&gt;Box&lt;/tt&gt; type that wraps the &lt;tt class="docutils literal"&gt;RStruct&lt;/tt&gt; instance.&lt;/p&gt;
+&lt;pre class="code rust"&gt;&lt;a name="rest_code_7dd20d8145ff4bbab7445f399aa76498-1"&gt;&lt;/a&gt;&lt;span class="nb"&gt;Box&lt;/span&gt;::&lt;span class="n"&gt;into_raw&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;Box&lt;/span&gt;::&lt;span class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;...&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;A &lt;tt class="docutils literal"&gt;Box&lt;/tt&gt; is one of Rust's smart pointers that is used to &lt;a class="reference external" href="https://doc.rust-lang.org/book/ch15-01-box.html"&gt;allocate memory for a data type on the
+heap&lt;/a&gt;. When &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;Box::new()&lt;/span&gt;&lt;/tt&gt; is called it creates a pointer to the newly created &lt;tt class="docutils literal"&gt;RStruct&lt;/tt&gt;
+instance. Normally, this pointer would be dropped and the memory automatically deallocated when the
+&lt;tt class="docutils literal"&gt;data_new()&lt;/tt&gt; function returns. However, the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;Box::into_raw()&lt;/span&gt;&lt;/tt&gt; function serves the same purpose
+here as the corresponding function for &lt;tt class="docutils literal"&gt;CString&lt;/tt&gt;: it hands off ownership of the pointer to the
+calling code so that the memory is not deallocated.&lt;/p&gt;
+&lt;p&gt;There is a rule-of-thumb that memory allocated by Rust should be freed by Rust. For this reason, we
+provide the &lt;tt class="docutils literal"&gt;data_free()&lt;/tt&gt; method that C code may use to deallocate the memory that is allocated
+by &lt;tt class="docutils literal"&gt;data_new()&lt;/tt&gt;.&lt;/p&gt;
+&lt;pre class="code rust"&gt;&lt;a name="rest_code_0df1422974fc4f6db3a179466087073d-1"&gt;&lt;/a&gt;&lt;span class="cp"&gt;#[no_mangle]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_0df1422974fc4f6db3a179466087073d-2"&gt;&lt;/a&gt;&lt;span class="k"&gt;pub&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;extern&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;"C"&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;data_free&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ptr&lt;/span&gt;: &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;RStruct&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_0df1422974fc4f6db3a179466087073d-3"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;ptr&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;is_null&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_0df1422974fc4f6db3a179466087073d-4"&gt;&lt;/a&gt;&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_0df1422974fc4f6db3a179466087073d-5"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_0df1422974fc4f6db3a179466087073d-6"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;unsafe&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_0df1422974fc4f6db3a179466087073d-7"&gt;&lt;/a&gt;&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nb"&gt;Box&lt;/span&gt;::&lt;span class="n"&gt;from_raw&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ptr&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_0df1422974fc4f6db3a179466087073d-8"&gt;&lt;/a&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;a name="rest_code_0df1422974fc4f6db3a179466087073d-9"&gt;&lt;/a&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;This function accepts a mutable pointer to an RStruct. First, it checks whether the pointer is null
+and if it is, the function returns without doing anything. Assuming that the pointer is not null,
+the &lt;tt class="docutils literal"&gt;Box&lt;/tt&gt; is reconstructed from it inside an &lt;tt class="docutils literal"&gt;unsafe&lt;/tt&gt; block because &lt;tt class="docutils literal"&gt;from_raw()&lt;/tt&gt; &lt;a class="reference external" href="https://doc.rust-lang.org/std/boxed/struct.Box.html#method.from_raw"&gt;is
+unsafe&lt;/a&gt;. Importantly, this new Box pointer will go out of scope at the end of the function so that
+it will automatically be dropped when the function returns.&lt;/p&gt;
+&lt;p&gt;Building the library is simple. I run &lt;tt class="docutils literal"&gt;cargo build &lt;span class="pre"&gt;--release&lt;/span&gt;&lt;/tt&gt; to build a release version. The
+library itself will be found at &lt;tt class="docutils literal"&gt;target/release/librstruct.so&lt;/tt&gt;. On Linux, one can verify that it
+contains the &lt;tt class="docutils literal"&gt;data_new()&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;data_free()&lt;/tt&gt; methods by displaying its symbols with the &lt;tt class="docutils literal"&gt;nm
+&lt;span class="pre"&gt;-g&lt;/span&gt;&lt;/tt&gt; command:&lt;/p&gt;
+&lt;pre class="code console"&gt;&lt;a name="rest_code_8f5d646cb85949059629f4247118b9c0-1"&gt;&lt;/a&gt;&lt;span class="gp"&gt;$&lt;/span&gt; nm -g target/release/librstruct.so
+&lt;a name="rest_code_8f5d646cb85949059629f4247118b9c0-2"&gt;&lt;/a&gt;&lt;span class="gp"&gt;#&lt;/span&gt; snip
+&lt;a name="rest_code_8f5d646cb85949059629f4247118b9c0-3"&gt;&lt;/a&gt;&lt;span class="go"&gt;00000000000046c0 T data_free&lt;/span&gt;
+&lt;a name="rest_code_8f5d646cb85949059629f4247118b9c0-4"&gt;&lt;/a&gt;&lt;span class="go"&gt;00000000000044e0 T data_new&lt;/span&gt;
+&lt;a name="rest_code_8f5d646cb85949059629f4247118b9c0-5"&gt;&lt;/a&gt;&lt;span class="gp"&gt;#&lt;/span&gt; snip
+&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="section" id="generating-the-header-for-the-library"&gt;
+&lt;h3&gt;Generating the header for the library&lt;/h3&gt;
+&lt;p&gt;Now that I have a shared library, I want to access the functions that it exposes from C. To do
+this, I first need a header file that I can use to import the library's declarations into the C
+code. Moreover, generating the header can help in understanding how Rust translates its data types
+to C.&lt;/p&gt;
+&lt;p&gt;I will use &lt;a class="reference external" href="https://github.com/eqrion/cbindgen"&gt;cbindgen&lt;/a&gt; to automatically generate the header. &lt;tt class="docutils literal"&gt;cbindgen&lt;/tt&gt; is installed with the
+command&lt;/p&gt;
+&lt;pre class="code console"&gt;&lt;a name="rest_code_2a31026df4a74574b683dc3035d790d5-1"&gt;&lt;/a&gt;&lt;span class="gp"&gt;$&lt;/span&gt; cargo install cbindgen
+&lt;/pre&gt;&lt;p&gt;&lt;tt class="docutils literal"&gt;cbindgen&lt;/tt&gt; is highly configurable, but for the project described here I only need its most basic
+functionality. Assuming that I am in the root directory of my Rust project, I generate the header
+&lt;tt class="docutils literal"&gt;rstruct.h&lt;/tt&gt; with the following&lt;/p&gt;
+&lt;pre class="code console"&gt;&lt;a name="rest_code_dfb9c49b99d94143b0b1a6765d1d6926-1"&gt;&lt;/a&gt;&lt;span class="gp"&gt;$&lt;/span&gt; cbindgen --lang C -o rstruct.h .
+&lt;/pre&gt;&lt;p&gt;After running &lt;tt class="docutils literal"&gt;cbindgen&lt;/tt&gt; there is a new file called &lt;tt class="docutils literal"&gt;rstruct.h&lt;/tt&gt; in the project folder. Here are
+its contents:&lt;/p&gt;
+&lt;table class="codetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_5b8729dd5bf644d69e65141a63661dfc-1"&gt; 1&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_5b8729dd5bf644d69e65141a63661dfc-2"&gt; 2&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_5b8729dd5bf644d69e65141a63661dfc-3"&gt; 3&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_5b8729dd5bf644d69e65141a63661dfc-4"&gt; 4&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_5b8729dd5bf644d69e65141a63661dfc-5"&gt; 5&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_5b8729dd5bf644d69e65141a63661dfc-6"&gt; 6&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_5b8729dd5bf644d69e65141a63661dfc-7"&gt; 7&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_5b8729dd5bf644d69e65141a63661dfc-8"&gt; 8&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_5b8729dd5bf644d69e65141a63661dfc-9"&gt; 9&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_5b8729dd5bf644d69e65141a63661dfc-10"&gt;10&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_5b8729dd5bf644d69e65141a63661dfc-11"&gt;11&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_5b8729dd5bf644d69e65141a63661dfc-12"&gt;12&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_5b8729dd5bf644d69e65141a63661dfc-13"&gt;13&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_5b8729dd5bf644d69e65141a63661dfc-14"&gt;14&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_5b8729dd5bf644d69e65141a63661dfc-15"&gt;15&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_5b8729dd5bf644d69e65141a63661dfc-16"&gt;16&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_5b8729dd5bf644d69e65141a63661dfc-17"&gt;17&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_5b8729dd5bf644d69e65141a63661dfc-18"&gt;18&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_5b8729dd5bf644d69e65141a63661dfc-19"&gt;19&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_5b8729dd5bf644d69e65141a63661dfc-20"&gt;20&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_5b8729dd5bf644d69e65141a63661dfc-21"&gt;21&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_5b8729dd5bf644d69e65141a63661dfc-22"&gt;22&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_5b8729dd5bf644d69e65141a63661dfc-23"&gt;23&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_5b8729dd5bf644d69e65141a63661dfc-24"&gt;24&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_5b8729dd5bf644d69e65141a63661dfc-25"&gt;25&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_5b8729dd5bf644d69e65141a63661dfc-26"&gt;26&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_5b8729dd5bf644d69e65141a63661dfc-27"&gt;27&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_5b8729dd5bf644d69e65141a63661dfc-28"&gt;28&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_5b8729dd5bf644d69e65141a63661dfc-29"&gt;29&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_5b8729dd5bf644d69e65141a63661dfc-30"&gt;30&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_5b8729dd5bf644d69e65141a63661dfc-31"&gt;31&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_5b8729dd5bf644d69e65141a63661dfc-32"&gt;32&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_5b8729dd5bf644d69e65141a63661dfc-33"&gt;33&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_5b8729dd5bf644d69e65141a63661dfc-34"&gt;34&lt;/a&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;pre class="code c"&gt;&lt;a name="rest_code_5b8729dd5bf644d69e65141a63661dfc-1"&gt;&lt;/a&gt;&lt;span class="cp"&gt;#include&lt;/span&gt; &lt;span class="cpf"&gt;&amp;lt;stdarg.h&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;&lt;/span&gt;
+&lt;a name="rest_code_5b8729dd5bf644d69e65141a63661dfc-2"&gt;&lt;/a&gt;&lt;span class="cp"&gt;#include&lt;/span&gt; &lt;span class="cpf"&gt;&amp;lt;stdbool.h&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;&lt;/span&gt;
+&lt;a name="rest_code_5b8729dd5bf644d69e65141a63661dfc-3"&gt;&lt;/a&gt;&lt;span class="cp"&gt;#include&lt;/span&gt; &lt;span class="cpf"&gt;&amp;lt;stdint.h&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;&lt;/span&gt;
+&lt;a name="rest_code_5b8729dd5bf644d69e65141a63661dfc-4"&gt;&lt;/a&gt;&lt;span class="cp"&gt;#include&lt;/span&gt; &lt;span class="cpf"&gt;&amp;lt;stdlib.h&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;&lt;/span&gt;
+&lt;a name="rest_code_5b8729dd5bf644d69e65141a63661dfc-5"&gt;&lt;/a&gt;
+&lt;a name="rest_code_5b8729dd5bf644d69e65141a63661dfc-6"&gt;&lt;/a&gt;&lt;span class="k"&gt;typedef&lt;/span&gt; &lt;span class="k"&gt;enum&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;a name="rest_code_5b8729dd5bf644d69e65141a63661dfc-7"&gt;&lt;/a&gt;  &lt;span class="n"&gt;_Int&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;a name="rest_code_5b8729dd5bf644d69e65141a63661dfc-8"&gt;&lt;/a&gt;  &lt;span class="n"&gt;_Float&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;a name="rest_code_5b8729dd5bf644d69e65141a63661dfc-9"&gt;&lt;/a&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="n"&gt;Value_Tag&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;a name="rest_code_5b8729dd5bf644d69e65141a63661dfc-10"&gt;&lt;/a&gt;
+&lt;a name="rest_code_5b8729dd5bf644d69e65141a63661dfc-11"&gt;&lt;/a&gt;&lt;span class="k"&gt;typedef&lt;/span&gt; &lt;span class="k"&gt;struct&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;a name="rest_code_5b8729dd5bf644d69e65141a63661dfc-12"&gt;&lt;/a&gt;  &lt;span class="kt"&gt;int32_t&lt;/span&gt; &lt;span class="n"&gt;_0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;a name="rest_code_5b8729dd5bf644d69e65141a63661dfc-13"&gt;&lt;/a&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="n"&gt;_Int_Body&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;a name="rest_code_5b8729dd5bf644d69e65141a63661dfc-14"&gt;&lt;/a&gt;
+&lt;a name="rest_code_5b8729dd5bf644d69e65141a63661dfc-15"&gt;&lt;/a&gt;&lt;span class="k"&gt;typedef&lt;/span&gt; &lt;span class="k"&gt;struct&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;a name="rest_code_5b8729dd5bf644d69e65141a63661dfc-16"&gt;&lt;/a&gt;  &lt;span class="kt"&gt;double&lt;/span&gt; &lt;span class="n"&gt;_0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;a name="rest_code_5b8729dd5bf644d69e65141a63661dfc-17"&gt;&lt;/a&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="n"&gt;_Float_Body&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;a name="rest_code_5b8729dd5bf644d69e65141a63661dfc-18"&gt;&lt;/a&gt;
+&lt;a name="rest_code_5b8729dd5bf644d69e65141a63661dfc-19"&gt;&lt;/a&gt;&lt;span class="k"&gt;typedef&lt;/span&gt; &lt;span class="k"&gt;struct&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;a name="rest_code_5b8729dd5bf644d69e65141a63661dfc-20"&gt;&lt;/a&gt;  &lt;span class="n"&gt;Value_Tag&lt;/span&gt; &lt;span class="n"&gt;tag&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;a name="rest_code_5b8729dd5bf644d69e65141a63661dfc-21"&gt;&lt;/a&gt;  &lt;span class="k"&gt;union&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;a name="rest_code_5b8729dd5bf644d69e65141a63661dfc-22"&gt;&lt;/a&gt;    &lt;span class="n"&gt;_Int_Body&lt;/span&gt; &lt;span class="n"&gt;_int&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;a name="rest_code_5b8729dd5bf644d69e65141a63661dfc-23"&gt;&lt;/a&gt;    &lt;span class="n"&gt;_Float_Body&lt;/span&gt; &lt;span class="n"&gt;_float&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;a name="rest_code_5b8729dd5bf644d69e65141a63661dfc-24"&gt;&lt;/a&gt;  &lt;span class="p"&gt;};&lt;/span&gt;
+&lt;a name="rest_code_5b8729dd5bf644d69e65141a63661dfc-25"&gt;&lt;/a&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="n"&gt;Value&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;a name="rest_code_5b8729dd5bf644d69e65141a63661dfc-26"&gt;&lt;/a&gt;
+&lt;a name="rest_code_5b8729dd5bf644d69e65141a63661dfc-27"&gt;&lt;/a&gt;&lt;span class="k"&gt;typedef&lt;/span&gt; &lt;span class="k"&gt;struct&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;a name="rest_code_5b8729dd5bf644d69e65141a63661dfc-28"&gt;&lt;/a&gt;  &lt;span class="k"&gt;const&lt;/span&gt; &lt;span class="kt"&gt;char&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;a name="rest_code_5b8729dd5bf644d69e65141a63661dfc-29"&gt;&lt;/a&gt;  &lt;span class="n"&gt;Value&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;a name="rest_code_5b8729dd5bf644d69e65141a63661dfc-30"&gt;&lt;/a&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="n"&gt;RStruct&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;a name="rest_code_5b8729dd5bf644d69e65141a63661dfc-31"&gt;&lt;/a&gt;
+&lt;a name="rest_code_5b8729dd5bf644d69e65141a63661dfc-32"&gt;&lt;/a&gt;&lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;data_free&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;RStruct&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;ptr&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;a name="rest_code_5b8729dd5bf644d69e65141a63661dfc-33"&gt;&lt;/a&gt;
+&lt;a name="rest_code_5b8729dd5bf644d69e65141a63661dfc-34"&gt;&lt;/a&gt;&lt;span class="n"&gt;RStruct&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="nf"&gt;data_new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;First, you can see the &lt;tt class="docutils literal"&gt;enum&lt;/tt&gt; that contains the variations of the &lt;tt class="docutils literal"&gt;Value&lt;/tt&gt; data type that is
+stored in the &lt;tt class="docutils literal"&gt;RStruct&lt;/tt&gt; and that was defined in Rust. The name of this new type is &lt;tt class="docutils literal"&gt;Value_Tag&lt;/tt&gt;,
+and it is used to define the current type of a value.&lt;/p&gt;
+&lt;pre class="code c"&gt;&lt;a name="rest_code_6063e114f51f4b7aaf30fc368527f67b-1"&gt;&lt;/a&gt;&lt;span class="k"&gt;typedef&lt;/span&gt; &lt;span class="k"&gt;struct&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;a name="rest_code_6063e114f51f4b7aaf30fc368527f67b-2"&gt;&lt;/a&gt;  &lt;span class="n"&gt;Value_Tag&lt;/span&gt; &lt;span class="n"&gt;tag&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;a name="rest_code_6063e114f51f4b7aaf30fc368527f67b-3"&gt;&lt;/a&gt;  &lt;span class="k"&gt;union&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;a name="rest_code_6063e114f51f4b7aaf30fc368527f67b-4"&gt;&lt;/a&gt;    &lt;span class="n"&gt;_Int_Body&lt;/span&gt; &lt;span class="n"&gt;_int&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;a name="rest_code_6063e114f51f4b7aaf30fc368527f67b-5"&gt;&lt;/a&gt;    &lt;span class="n"&gt;_Float_Body&lt;/span&gt; &lt;span class="n"&gt;_float&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;a name="rest_code_6063e114f51f4b7aaf30fc368527f67b-6"&gt;&lt;/a&gt;  &lt;span class="p"&gt;};&lt;/span&gt;
+&lt;a name="rest_code_6063e114f51f4b7aaf30fc368527f67b-7"&gt;&lt;/a&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="n"&gt;Value&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;A &lt;tt class="docutils literal"&gt;Value&lt;/tt&gt; is just another struct that contains a &lt;tt class="docutils literal"&gt;Value_Tag&lt;/tt&gt; field to identify which variant of
+the &lt;tt class="docutils literal"&gt;enum&lt;/tt&gt; it is holding and a &lt;tt class="docutils literal"&gt;union&lt;/tt&gt; field that holds the actual value.&lt;/p&gt;
+&lt;p&gt;The important thing to understand here is that &lt;tt class="docutils literal"&gt;cbindgen&lt;/tt&gt; effectively uses nested C data types to
+represent complex Rust data structures. In particular, Rust &lt;tt class="docutils literal"&gt;enums&lt;/tt&gt; are a combination of C
+&lt;tt class="docutils literal"&gt;structs&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;enums&lt;/tt&gt;, and &lt;tt class="docutils literal"&gt;unions&lt;/tt&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="calling-the-library-from-c"&gt;
+&lt;h2&gt;Calling the library from C&lt;/h2&gt;
+&lt;p&gt;With everything in place, it's now time to write the C program. My example C program looks like the
+following:&lt;/p&gt;
+&lt;table class="codetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-1"&gt; 1&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-2"&gt; 2&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-3"&gt; 3&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-4"&gt; 4&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-5"&gt; 5&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-6"&gt; 6&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-7"&gt; 7&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-8"&gt; 8&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-9"&gt; 9&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-10"&gt;10&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-11"&gt;11&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-12"&gt;12&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-13"&gt;13&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-14"&gt;14&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-15"&gt;15&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-16"&gt;16&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-17"&gt;17&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-18"&gt;18&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-19"&gt;19&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-20"&gt;20&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-21"&gt;21&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-22"&gt;22&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-23"&gt;23&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-24"&gt;24&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-25"&gt;25&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-26"&gt;26&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-27"&gt;27&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-28"&gt;28&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-29"&gt;29&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-30"&gt;30&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-31"&gt;31&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-32"&gt;32&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-33"&gt;33&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-34"&gt;34&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-35"&gt;35&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-36"&gt;36&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-37"&gt;37&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-38"&gt;38&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-39"&gt;39&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-40"&gt;40&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-41"&gt;41&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-42"&gt;42&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-43"&gt;43&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-44"&gt;44&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-45"&gt;45&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-46"&gt;46&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-47"&gt;47&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-48"&gt;48&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-49"&gt;49&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-50"&gt;50&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-51"&gt;51&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-52"&gt;52&lt;/a&gt;
+&lt;a href="http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/#rest_code_29e61e95cc7446a997dbed5cbc3cc20a-53"&gt;53&lt;/a&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;pre class="code c"&gt;&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-1"&gt;&lt;/a&gt;&lt;span class="cp"&gt;#include&lt;/span&gt; &lt;span class="cpf"&gt;&amp;lt;dlfcn.h&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-2"&gt;&lt;/a&gt;&lt;span class="cp"&gt;#include&lt;/span&gt; &lt;span class="cpf"&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-3"&gt;&lt;/a&gt;&lt;span class="cp"&gt;#include&lt;/span&gt; &lt;span class="cpf"&gt;&amp;lt;stdlib.h&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-4"&gt;&lt;/a&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-5"&gt;&lt;/a&gt;&lt;span class="cp"&gt;#include&lt;/span&gt; &lt;span class="cpf"&gt;"rstruct.h"&lt;/span&gt;&lt;span class="cp"&gt;&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-6"&gt;&lt;/a&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-7"&gt;&lt;/a&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-8"&gt;&lt;/a&gt;  &lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;handle&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-9"&gt;&lt;/a&gt;  &lt;span class="n"&gt;RStruct&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;data_new&lt;/span&gt;&lt;span class="p"&gt;)(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-10"&gt;&lt;/a&gt;  &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;data_free&lt;/span&gt;&lt;span class="p"&gt;)(&lt;/span&gt;&lt;span class="n"&gt;RStruct&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-11"&gt;&lt;/a&gt;  &lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;error&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-12"&gt;&lt;/a&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-13"&gt;&lt;/a&gt;  &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"Loading librstruct.so...&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-14"&gt;&lt;/a&gt;  &lt;span class="n"&gt;handle&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;dlopen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-15"&gt;&lt;/a&gt;    &lt;span class="s"&gt;"librstruct.so"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-16"&gt;&lt;/a&gt;    &lt;span class="n"&gt;RTLD_LAZY&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-17"&gt;&lt;/a&gt;  &lt;span class="p"&gt;);&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-18"&gt;&lt;/a&gt;  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="n"&gt;handle&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-19"&gt;&lt;/a&gt;    &lt;span class="n"&gt;fprintf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stderr&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;"%s&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dlerror&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-20"&gt;&lt;/a&gt;    &lt;span class="n"&gt;exit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;EXIT_FAILURE&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-21"&gt;&lt;/a&gt;  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-22"&gt;&lt;/a&gt;  &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"Done.&lt;/span&gt;&lt;span class="se"&gt;\n\n&lt;/span&gt;&lt;span class="s"&gt;"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-23"&gt;&lt;/a&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-24"&gt;&lt;/a&gt;  &lt;span class="n"&gt;dlerror&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-25"&gt;&lt;/a&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-26"&gt;&lt;/a&gt;  &lt;span class="n"&gt;data_new&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;RStruct&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="n"&gt;dlsym&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;handle&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;"data_new"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-27"&gt;&lt;/a&gt;  &lt;span class="n"&gt;error&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;dlerror&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-28"&gt;&lt;/a&gt;  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;error&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="nb"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-29"&gt;&lt;/a&gt;    &lt;span class="n"&gt;fprintf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stderr&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;"%s&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;error&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-30"&gt;&lt;/a&gt;    &lt;span class="n"&gt;exit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;EXIT_FAILURE&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-31"&gt;&lt;/a&gt;  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-32"&gt;&lt;/a&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-33"&gt;&lt;/a&gt;  &lt;span class="n"&gt;dlerror&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-34"&gt;&lt;/a&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-35"&gt;&lt;/a&gt;  &lt;span class="n"&gt;data_free&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)(&lt;/span&gt;&lt;span class="n"&gt;RStruct&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="n"&gt;dlsym&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;handle&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;"data_free"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-36"&gt;&lt;/a&gt;  &lt;span class="n"&gt;error&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;dlerror&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-37"&gt;&lt;/a&gt;  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;error&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="nb"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-38"&gt;&lt;/a&gt;    &lt;span class="n"&gt;fprintf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stderr&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;"%s&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;error&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-39"&gt;&lt;/a&gt;    &lt;span class="n"&gt;exit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;EXIT_FAILURE&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-40"&gt;&lt;/a&gt;  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-41"&gt;&lt;/a&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-42"&gt;&lt;/a&gt;  &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"Calling data_new() from main.c...&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-43"&gt;&lt;/a&gt;  &lt;span class="n"&gt;RStruct&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;data_new&lt;/span&gt;&lt;span class="p"&gt;)();&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-44"&gt;&lt;/a&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-45"&gt;&lt;/a&gt;  &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;Back inside main.c. Printing results...&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-46"&gt;&lt;/a&gt;  &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"Name: %s&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;Value: %d&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_int&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_0&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-47"&gt;&lt;/a&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-48"&gt;&lt;/a&gt;  &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;Freeing the RStruct data...&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-49"&gt;&lt;/a&gt;  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;data_free&lt;/span&gt;&lt;span class="p"&gt;)(&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-50"&gt;&lt;/a&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-51"&gt;&lt;/a&gt;  &lt;span class="n"&gt;dlclose&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;handle&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-52"&gt;&lt;/a&gt;  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;EXIT_SUCCESS&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;a name="rest_code_29e61e95cc7446a997dbed5cbc3cc20a-53"&gt;&lt;/a&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;This code is based on the example in the &lt;tt class="docutils literal"&gt;dlopen()&lt;/tt&gt; &lt;a class="reference external" href="https://linux.die.net/man/3/dlopen"&gt;man pages&lt;/a&gt;. In particular, the library file
+is opened and a handle attached to it here:&lt;/p&gt;
+&lt;pre class="code c"&gt;&lt;a name="rest_code_52c924412c174329a23288f5548da1c1-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;handle&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;dlopen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;a name="rest_code_52c924412c174329a23288f5548da1c1-2"&gt;&lt;/a&gt;  &lt;span class="s"&gt;"librstruct.so"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;a name="rest_code_52c924412c174329a23288f5548da1c1-3"&gt;&lt;/a&gt;  &lt;span class="n"&gt;RTLD_LAZY&lt;/span&gt;
+&lt;a name="rest_code_52c924412c174329a23288f5548da1c1-4"&gt;&lt;/a&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;A function pointer to &lt;tt class="docutils literal"&gt;data_new()&lt;/tt&gt; is created with &lt;tt class="docutils literal"&gt;dlsym()&lt;/tt&gt;, and we use the function to create
+the new &lt;tt class="docutils literal"&gt;RStruct&lt;/tt&gt; instance with the lines&lt;/p&gt;
+&lt;pre class="code c"&gt;&lt;a name="rest_code_654447446b0f4f9ba342be02ee389330-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;data_new&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;RStruct&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="n"&gt;dlsym&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;handle&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;"data_new"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;a name="rest_code_654447446b0f4f9ba342be02ee389330-2"&gt;&lt;/a&gt;&lt;span class="c1"&gt;// snip&lt;/span&gt;
+&lt;a name="rest_code_654447446b0f4f9ba342be02ee389330-3"&gt;&lt;/a&gt;&lt;span class="n"&gt;RStruct&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;data_new&lt;/span&gt;&lt;span class="p"&gt;)();&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;Finally, the data is freed by creating another function pointer to &lt;tt class="docutils literal"&gt;data_free()&lt;/tt&gt; and calling it.&lt;/p&gt;
+&lt;pre class="code c"&gt;&lt;a name="rest_code_805b609da2124e9fbac5ec44da894bf2-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;data_free&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)(&lt;/span&gt;&lt;span class="n"&gt;RStruct&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="n"&gt;dlsym&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;handle&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;"data_free"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;a name="rest_code_805b609da2124e9fbac5ec44da894bf2-2"&gt;&lt;/a&gt;&lt;span class="c1"&gt;// snip&lt;/span&gt;
+&lt;a name="rest_code_805b609da2124e9fbac5ec44da894bf2-3"&gt;&lt;/a&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;data_free&lt;/span&gt;&lt;span class="p"&gt;)(&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;div class="section" id="running-the-program"&gt;
+&lt;h3&gt;Running the program&lt;/h3&gt;
+&lt;p&gt;I wrote a small Makefile to handle compilation of the C and Rust programs while I wrote this
+post. I won't include it here because it distracts from the main message about the Rust
+FFI. Instead, I will describe how to compile the program from the command line.&lt;/p&gt;
+&lt;p&gt;I first placed the &lt;tt class="docutils literal"&gt;librstruct.so&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;rstruct.h&lt;/tt&gt;, and &lt;tt class="docutils literal"&gt;main.c&lt;/tt&gt; programs into the following
+directory structure:&lt;/p&gt;
+&lt;pre class="code console"&gt;&lt;a name="rest_code_fdb98c2a9ca74b15bfe97eca94afed59-1"&gt;&lt;/a&gt;&lt;span class="gp"&gt;$&lt;/span&gt; tree
+&lt;a name="rest_code_fdb98c2a9ca74b15bfe97eca94afed59-2"&gt;&lt;/a&gt;&lt;span class="go"&gt;.&lt;/span&gt;
+&lt;a name="rest_code_fdb98c2a9ca74b15bfe97eca94afed59-3"&gt;&lt;/a&gt;&lt;span class="go"&gt;├── include&lt;/span&gt;
+&lt;a name="rest_code_fdb98c2a9ca74b15bfe97eca94afed59-4"&gt;&lt;/a&gt;&lt;span class="go"&gt;│   └── rstruct.h&lt;/span&gt;
+&lt;a name="rest_code_fdb98c2a9ca74b15bfe97eca94afed59-5"&gt;&lt;/a&gt;&lt;span class="go"&gt;├── lib&lt;/span&gt;
+&lt;a name="rest_code_fdb98c2a9ca74b15bfe97eca94afed59-6"&gt;&lt;/a&gt;&lt;span class="go"&gt;│   └── librstruct.so&lt;/span&gt;
+&lt;a name="rest_code_fdb98c2a9ca74b15bfe97eca94afed59-7"&gt;&lt;/a&gt;&lt;span class="go"&gt;└── src&lt;/span&gt;
+&lt;a name="rest_code_fdb98c2a9ca74b15bfe97eca94afed59-8"&gt;&lt;/a&gt;&lt;span class="go"&gt;    └── main.c&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;Next, I compiled the &lt;tt class="docutils literal"&gt;main&lt;/tt&gt; binary with gcc.&lt;/p&gt;
+&lt;pre class="code console"&gt;&lt;a name="rest_code_390b82ca627d4958a606683bf3f4916d-1"&gt;&lt;/a&gt;&lt;span class="gp"&gt;$&lt;/span&gt; gcc -Wall -g -Iinclude -c -o main.o main.c
+&lt;a name="rest_code_390b82ca627d4958a606683bf3f4916d-2"&gt;&lt;/a&gt;&lt;span class="gp"&gt;$&lt;/span&gt; gcc -Wall -g -o main main.o -ldl
+&lt;/pre&gt;&lt;p&gt;(&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-ldl&lt;/span&gt;&lt;/tt&gt; is used to link against libdl for dynamically loading the library from C.) After
+compilation I run the &lt;tt class="docutils literal"&gt;main&lt;/tt&gt; binary. To make it work, I set the &lt;tt class="docutils literal"&gt;LD_LIBRARY_PATH&lt;/tt&gt; environment
+variable so that the program knows to look inside the &lt;tt class="docutils literal"&gt;lib&lt;/tt&gt; directory for the &lt;tt class="docutils literal"&gt;librstruct.so&lt;/tt&gt;
+library.&lt;/p&gt;
+&lt;pre class="code console"&gt;&lt;a name="rest_code_d3020715974b4ff382ee693c31b4db30-1"&gt;&lt;/a&gt;&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="nv"&gt;LD_LIBRARY_PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;lib ./main
+&lt;a name="rest_code_d3020715974b4ff382ee693c31b4db30-2"&gt;&lt;/a&gt;&lt;span class="go"&gt;Loading librstruct.so...&lt;/span&gt;
+&lt;a name="rest_code_d3020715974b4ff382ee693c31b4db30-3"&gt;&lt;/a&gt;&lt;span class="go"&gt;Done.&lt;/span&gt;
+&lt;a name="rest_code_d3020715974b4ff382ee693c31b4db30-4"&gt;&lt;/a&gt;
+&lt;a name="rest_code_d3020715974b4ff382ee693c31b4db30-5"&gt;&lt;/a&gt;&lt;span class="go"&gt;Calling data_new() from main.c...&lt;/span&gt;
+&lt;a name="rest_code_d3020715974b4ff382ee693c31b4db30-6"&gt;&lt;/a&gt;&lt;span class="go"&gt;Inside data_new().&lt;/span&gt;
+&lt;a name="rest_code_d3020715974b4ff382ee693c31b4db30-7"&gt;&lt;/a&gt;
+&lt;a name="rest_code_d3020715974b4ff382ee693c31b4db30-8"&gt;&lt;/a&gt;&lt;span class="go"&gt;Back inside main.c. Printing results...&lt;/span&gt;
+&lt;a name="rest_code_d3020715974b4ff382ee693c31b4db30-9"&gt;&lt;/a&gt;&lt;span class="go"&gt;Name: my_rstruct&lt;/span&gt;
+&lt;a name="rest_code_d3020715974b4ff382ee693c31b4db30-10"&gt;&lt;/a&gt;&lt;span class="go"&gt;Value: 42&lt;/span&gt;
+&lt;a name="rest_code_d3020715974b4ff382ee693c31b4db30-11"&gt;&lt;/a&gt;
+&lt;a name="rest_code_d3020715974b4ff382ee693c31b4db30-12"&gt;&lt;/a&gt;&lt;span class="go"&gt;Freeing the RStruct data...&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;Nice! From the output you can see the print statements that I placed inside both the Rust and C
+code to indicate where the program was as it was running. In summary, the program performs the
+following sequence of events:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;The main binary is run&lt;/li&gt;
+&lt;li&gt;The &lt;tt class="docutils literal"&gt;librstruct.so&lt;/tt&gt; library is opened and pointers to the &lt;tt class="docutils literal"&gt;data_new()&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;data_free()&lt;/tt&gt;
+functions are created&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;data_new()&lt;/tt&gt; is called, creating our Rust datatype on the heap and returning a pointer to it in
+the C code&lt;/li&gt;
+&lt;li&gt;Information about the data type is printed from C&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;data_free()&lt;/tt&gt; is called, freeing the memory from back inside Rust&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="summary"&gt;
+&lt;h2&gt;Summary&lt;/h2&gt;
+&lt;p&gt;And that's it! I hope you enjoyed this post. It took me several days of reading and trial-and-error
+to learn about this feature of Rust. The topics covered here were&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;the Rust FFI and its purpose&lt;/li&gt;
+&lt;li&gt;creating a complex data type (a Rust enum nested inside a Rust struct) and exporting it through
+the FFI&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;Box&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;CString&lt;/tt&gt; Rust data types&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;cbindgen&lt;/tt&gt; for automatically creating header files from Rust code&lt;/li&gt;
+&lt;li&gt;using the Rust library from inside C&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;&lt;/div&gt;</description><category>c</category><category>rust</category><guid>http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/</guid><pubDate>Thu, 04 Apr 2019 17:51:55 GMT</pubDate></item><item><title>A simple UNIX socket listener in Rust</title><link>http://kmdouglass.github.io/posts/a-simple-unix-socket-listener-in-rust/</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;I decided that I wanted to learn a new programming language in 2019. After a bit of research, I
 settled upon &lt;a class="reference external" href="https://www.rust-lang.org/"&gt;Rust&lt;/a&gt; due to its speed, novel ideas about memory safety, and &lt;a class="reference external" href="https://blog.rust-lang.org/2018/03/12/roadmap.html#four-target-domains"&gt;focus on two areas
 that I am interested in&lt;/a&gt;: embedded systems and WebAssembly. While I think that &lt;a class="reference external" href="https://doc.rust-lang.org/book/"&gt;The Book&lt;/a&gt; is the
 best place to get started learning the language, nothing is a really a substitute for writing
@@ -4554,200 +5070,4 @@ if (IPython.notebook.kernel != null) {
 
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;/div&gt;</description><category>Fourier optics</category><category>holography</category><guid>http://kmdouglass.github.io/posts/simulating-inline-holograms/</guid><pubDate>Sat, 29 Apr 2017 09:25:01 GMT</pubDate></item><item><title>Micro-Manager on the Raspberry Pi</title><link>http://kmdouglass.github.io/posts/micro-manager-on-the-raspberry-pi/</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;&lt;a class="reference external" href="https://micro-manager.org/"&gt;Micro-Manager&lt;/a&gt; is an open source platform for controlling microscope
-hardware, automating image acquisition, and tracking metadata about
-how images are acquired. In biomedical imaging research, it serves as
-an incredibly important tool because it is free and open source, which
-means that scientists can benefit from the contributions of others to
-the software without paying costly licensing fees.&lt;/p&gt;
-&lt;p&gt;I recently managed to compile Micro-Manager version 2.0 on the
-Raspberry Pi. I did this for a small hobby project I am working on to
-build a cheap yet effective tool for &lt;a class="reference external" href="https://hackaday.io/project/19677-basic-lensless-imaging-for-low-cost-microscopy"&gt;at-home microscope projects and
-hacking&lt;/a&gt;. Though I am not yet convinced that Micro-Manager will be
-the best tool for this particular job given it's relatively heavy
-footprint on the Pi's slower hardware, I thought that I would post my
-notes so that others could benefit from my experience.&lt;/p&gt;
-&lt;div class="section" id="software-versions"&gt;
-&lt;h2&gt;Software versions&lt;/h2&gt;
-&lt;p&gt;I am working with a Raspberry Pi 3 Model B:&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-pi@raspberrypi:~ $ uname -a &amp;amp; gcc -dumpversion &amp;amp; make -v &amp;amp; ldd --version
-Linux raspberrypi 4.4.38-v7+ #938 SMP Thu Dec 15 15:22:21 GMT 2016 armv7l GNU/Linux
-
-pi@raspberrypi:~ $ gcc -dumpversion
-4.9.2
-
-pi@raspberrypi:~ $ make -v
-GNU Make 4.0
-
-pi@raspberrypi:~ $ ldd --version
-ldd (Debian GLIBC 2.19-18+deb8u7) 2.19
-&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div class="section" id="setup-a-network-share-for-3rd-party-libraries"&gt;
-&lt;h2&gt;Setup a network share for 3rd party libraries&lt;/h2&gt;
-&lt;p&gt;We need to compile Micro-Manager because binares for the Pi's ARM
-processor are not distributed by the Micro-Manager team (probably
-because too few people have ever wanted them). To compile
-Micro-Manager, we need to checkout a rather large set of 3rd party
-libraries. When I last checked, these libraries occupied 6.7 GB of
-space on my laptop, a size which can be prohibitive when using the
-Micro-SD cards that provide storage for the Pi.&lt;/p&gt;
-&lt;p&gt;To circumvent this problem, I checked out the &lt;strong&gt;3rdpartypublic&lt;/strong&gt; SVN
-repository onto my laptop and created a network share from this
-directory. Then, I mounted the share on my Pi in the directory just
-above that containing the Micro-Manager source code.&lt;/p&gt;
-&lt;p&gt;To get started, first have a look at my post on connecting a Pi to a
-Linux home network for ideas if you haven't already connected the Pi
-to your other machines at home:
-&lt;a class="reference external" href="http://kmdouglass.github.io/posts/connecting-a-raspberry-pi-to-a-home-linux-network.html"&gt;http://kmdouglass.github.io/posts/connecting-a-raspberry-pi-to-a-home-linux-network.html&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Once the Pi and the laptop are on the same network, checkout the SVN
-3rdpartypublic repository onto your laptop or home server. You may
-need to do this a few times until completion because the downloads can
-timeout after a few minutes:&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-svn checkout https://valelab4.ucsf.edu/svn/3rdpartypublic/
-&lt;/pre&gt;
-&lt;p&gt;Next, we need to setup the network share. If your laptop or server is
-running Windows, then you will probably need to setup &lt;a class="reference external" href="https://www.samba.org/samba/what_is_samba.html"&gt;Samba&lt;/a&gt; on the
-Pi to share files between them. I however am running a Linux home
-network, so I decided to use &lt;a class="reference external" href="https://en.wikipedia.org/wiki/Network_File_System"&gt;NFS&lt;/a&gt; (Network File Sharing) to share
-the directory between my laptop--which runs Debian Linux--and the
-Pi. I installed NFS on my laptop with:&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-sudo apt-get install nfs-kernel-server nfs-common
-&lt;/pre&gt;
-&lt;p&gt;Once installed, I added the following line to the newly created
-/etc/exports file:&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-/home/kmdouglass/src/micro-manager/3rdpartypublic 192.168.0.2/24(ro)
-&lt;/pre&gt;
-&lt;p&gt;The first part is the directory to share, i.e. where the
-3rdpartypublic directory is stored on my laptop. The second part
-contains the static IP address of the Pi on my home network. The /24
-was REQUIRED for my client (the Pi) to mount the share. /24 simply
-denotes a network mask of 255.255.255.0; if you have a different mask
-on your network, then you can find a good discussion on this topic
-here: &lt;a class="reference external" href="https://arstechnica.com/civis/viewtopic.php?t=751834"&gt;https://arstechnica.com/civis/viewtopic.php?t=751834&lt;/a&gt; Finally,
-(...)  specifies shared options and &lt;strong&gt;ro&lt;/strong&gt; means read only.&lt;/p&gt;
-&lt;p&gt;After editing the file, export the folder and restart the NFS server:&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-sudo exportfs -arv
-sudo /etc/init.d/nfs-kernel-server restart
-&lt;/pre&gt;
-&lt;p&gt;On the client (the Pi), the NFS client software was already
-installed. However, I had to restart the rpcbind service before I
-could mount the share:&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-sudo /etc/init.d/rpcbind restart
-&lt;/pre&gt;
-&lt;p&gt;Finally, I added a line to the &lt;strong&gt;/etc/fstab&lt;/strong&gt; file on the Pi to make
-mounting the 3rdpartypublic share easier:&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-192.168.0.102:/home/kmdouglass/src/micro-manager/3rdpartypublic /home/pi/src/micro-manager/3rdpartypublic nfs user,noauto 0 0
-&lt;/pre&gt;
-&lt;p&gt;The first part indicates the IP of the laptop and the share to
-mount. The second part, &lt;strong&gt;/home/pi/src/micro-manager/3rdpartypublic&lt;/strong&gt;
-is the directory on the Pi where the share will be mounted. I placed
-this one directory above where the MM source code is,
-(&lt;strong&gt;/home/pi/src/micro-manager/micro-manager&lt;/strong&gt; on my machine). &lt;strong&gt;nfs&lt;/strong&gt;
-indicates the type of share to mount, and &lt;strong&gt;user,noauto&lt;/strong&gt; permits any
-user to mount the share (not just root), though this share will not be
-automatically mounted when the Pi starts. The final two zeros are
-explained in the fstab comments but aren't really important for us. To
-mount the share, type the following on the Pi:&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-sudo mount /home/pi/src/micro-manager/3rdpartypublic
-&lt;/pre&gt;
-&lt;p&gt;In case you're interested in learning more about the intricacies of
-Linux home networking, I found the following sources of information to
-be incredibly helpful.&lt;/p&gt;
-&lt;ol class="arabic simple"&gt;
-&lt;li&gt;&lt;a class="reference external" href="https://www.howtoforge.com/install_nfs_server_and_client_on_debian_wheezy"&gt;https://www.howtoforge.com/install_nfs_server_and_client_on_debian_wheezy&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference external" href="https://www.youtube.com/watch?v=luqq8DUqqCw"&gt;https://www.youtube.com/watch?v=luqq8DUqqCw&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference external" href="http://nfs.sourceforge.net/nfs-howto/ar01s03.html#config_server_setup"&gt;http://nfs.sourceforge.net/nfs-howto/ar01s03.html#config_server_setup&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference external" href="http://www.tecmint.com/how-to-setup-nfs-server-in-linux/"&gt;http://www.tecmint.com/how-to-setup-nfs-server-in-linux/&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/div&gt;
-&lt;div class="section" id="building-mm"&gt;
-&lt;h2&gt;Building MM&lt;/h2&gt;
-&lt;p&gt;Once I was able to mount the share containing 3rd party libraries, I
-installed the following packages on the Pi and checked out the
-Micro-Manager source code:&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-sudo apt-get install autoconf automake libtool pkg-config swig ant libboost-dev libboost-all-dev
-cd ~/src/micro-manager
-git clone https://github.com/micro-manager/micro-manager.git
-cd micro-manager
-git checkout mm2
-&lt;/pre&gt;
-&lt;p&gt;The last command switches to the mm2 branch where the Micro-Manager
-2.0 source code is found. Note that it may not be necessary to install
-all of the boost libraries with &lt;code&gt;sudo apt-get install
-libboost-all-dev&lt;/code&gt;, but I did this anyway because I encountered
-multiple errors due to missing boost library files the first few times
-I tried compiling.&lt;/p&gt;
-&lt;p&gt;The next step follows the normal Micro-Manager build routine using
-make, with the exception of the configuration step. From inside the
-Micro-Manager source code directory on the Pi, run the following
-commands one at a time:&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-./autogen.sh
-PYTHON=/usr/bin/python3 ./configure --prefix=/opt/micro-manager --with-ij-jar=/usr/share/java/ij.jar --with-python=/usr/include/python3.4 --with-boost-libdir=/usr/lib/arm-linux-gnueabihf --with-boost=/usr/include/boost
-make fetchdeps
-make
-sudo make install
-&lt;/pre&gt;
-&lt;p&gt;In the configuration step, I set the Python interpreter to Python 3
-because I greatly prefer it over Python 2. This is done by setting the
-&lt;strong&gt;PYTHON&lt;/strong&gt; environment variable before running
-configure. &lt;strong&gt;--prefix=/opt/micro-manager/&lt;/strong&gt; indicates the preferred
-installation directory of
-Micro-Manager. &lt;strong&gt;--with-ij-jar=/usr/share/java/ij.jar&lt;/strong&gt; is the path to
-the ImageJ Java library, though I am uncertain whether this was
-necessary. (I installed ImageJ with a &lt;code&gt;sudo apt-get install
-imagej&lt;/code&gt; a while ago.) &lt;strong&gt;--with-python=/usr/include/python3.4&lt;/strong&gt; should
-point to the directory containing the &lt;strong&gt;Python.h&lt;/strong&gt; header file for the
-version of Python you are compiling against. &lt;strong&gt;with-boost-libdir&lt;/strong&gt;
-should point to the directory containing the boost libraries (.so
-files). This was critical for getting MM2 to build. If you are unsure
-where they are located, you can search for them with &lt;code&gt;sudo find
-/ -name "libboost*"&lt;/code&gt;. Finally, the last option, &lt;strong&gt;with-boost&lt;/strong&gt;, may or
-may not be necessary. I set it to the directory containing the boost
-headers but never checked to see whether MM compiles without it.&lt;/p&gt;
-&lt;p&gt;If all goes well, Micro-Manager will compile and install without
-problems. Compilation time on my Pi took around one hour.&lt;/p&gt;
-&lt;div class="section" id="set-the-maximum-amount-of-direct-memory"&gt;
-&lt;h3&gt;Set the maximum amount of direct memory&lt;/h3&gt;
-&lt;p&gt;In the next step, we need to make a minor edit to the Micro-Manager
-Linux start script. Edit the script
-(/opt/micro-manager/bin/micromanager) to reduce the maximum direct
-memory to something reasonable:&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-/usr/lib/jvm/jdk-8-oracle-arm32-vfp-hflt/bin/java -Xmx1024M \
-  -XX:MaxDirectMemorySize=1000G \
-   -classpath "$CLASSPATH" \
-   -Dmmcorej.library.loading.stderr.log=yes \
-   -Dmmcorej.library.path="/opt/micro-manager/lib/micro-manager" \
-   -Dorg.micromanager.plugin.path="/opt/micro-manager/share/micro-manager/mmplugins" \
-&lt;/pre&gt;
-&lt;p&gt;Change 1000G to 512M or 256M; otherwise the Pi will complain that the
-MaxDirectMemorySize of 1000G is too large. You can start Micro-Manager
-by running this modified script.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="section" id="what-s-next"&gt;
-&lt;h2&gt;What's next?&lt;/h2&gt;
-&lt;p&gt;Though Micro-Manager compiles and runs on the Pi, I have not yet
-tested it thoroughly acquisitions. I am currently waiting on a camera
-board to arrive in the mail, and when it does, I will attempt to
-interface with it through Micro-Manager. Though I could write my own
-Python library, Micro-Manager is appealing because it can save a lot
-of time by providing a ready-made means to annotate, process, and
-store imaging data.&lt;/p&gt;
-&lt;p&gt;Running Micro-Manager on the Pi also raises the possibility of a fully
-open, embedded biomedical imaging platform, though I am uncertain at
-the moment whether the hardware on the Pi is up to the task. If you
-manage to do anything cool with Micro-Manager and the Raspberry Pi,
-please let me know in the comments!&lt;/p&gt;
-&lt;/div&gt;&lt;/div&gt;</description><category>micro-manager</category><category>microscopy</category><category>open source</category><category>raspberry pi</category><guid>http://kmdouglass.github.io/posts/micro-manager-on-the-raspberry-pi/</guid><pubDate>Fri, 10 Feb 2017 18:31:57 GMT</pubDate></item></channel></rss>
+&lt;/div&gt;&lt;/div&gt;</description><category>Fourier optics</category><category>holography</category><guid>http://kmdouglass.github.io/posts/simulating-inline-holograms/</guid><pubDate>Sat, 29 Apr 2017 09:25:01 GMT</pubDate></item></channel></rss>
