@@ -1,6 +1,6 @@
 .. title: Complex data types and the Rust FFI
 .. slug: complex-data-types-and-the-rust-ffi
-.. date: 2019-03-30 14:39:55 UTC+01:00
+.. date: 2019-04-04 19:51:55 UTC+02:00
 .. tags: rust, c
 .. category: 
 .. link: 
@@ -19,8 +19,8 @@ different mechanisms to layout data in the computer's memory. What's more, names
 data types are often mangled, which means that the symbol in a library that maps to a function may
 be different than the name that you give to the function in your code. As far as I know, C
 compilers do not mangle symbol names, and partly for this reason the C language is often used as an
-intermediary language in FFIs. Converting Rust to C is therefore an important skill when using the
-Rust for multi-language work.
+intermediary language in FFIs. Converting Rust to C is therefore an important skill when using Rust
+for multi-language work.
 
 There are a few good resources on the internet about using the Rust FFI to expose functions written
 in Rust to other languages. However, I found little information about passing data types between
@@ -39,12 +39,12 @@ I created the Rust library in the typical way by first starting a new project wi
 
 Inside, I modified the contents of ``Cargo.toml`` to the following:
 
-.. code-block
+.. code-block::
 
    [package]
    name = "rstruct"
    version = "0.1.0"
-   authors = ["Kyle M. Douglass <kyle.m.douglass@gmail.com>"]
+   authors = ["Kyle M. Douglass"]
    edition = "2018"
 
    [lib]
@@ -102,7 +102,7 @@ following source.
 
 Roughly speaking, this simple library does two things. First, it defines two data types, a struct
 called ``RStruct`` and a Rust enum (not to be confused with a C enum!) called ``Value``. Second, it
-exposes two functions that may be used to access instances of these datatypes from C:
+exposes two functions that may be used to access instances of these data types from C:
 ``data_new()`` and ``data_free()``.
 
 Let's take closer look now at what the code is doing.
@@ -120,8 +120,8 @@ I want to expose instances of the RStruct type to C code. The definition of ``RS
        value: Value,
    }
 
-The first line that we encounter is ``[repr(C)]``. This is an attribute that modifies the layout
-of the struct in memory to "do what C does." As described in the `Rustonomicon`_,
+The first line here is ``[repr(C)]``. This is an attribute that modifies the layout of the struct
+in memory to "do what C does." As described in the `Rustonomicon`_,
 
    The order, size, and alignment of fields is exactly what you would expect from C or C++. Any
    type you expect to pass through an FFI boundary should have repr(C), as C is the lingua-franca
@@ -152,7 +152,7 @@ this minor annoyance is solved will be seen later when we generate the C header 
 The data types i32 and f64 are easily translated into C's equivalent numeric data types, so there
 is no need to do anything special with them.
 
-Instantiating and Freeing Memory
+Instantiating and freeing Memory
 --------------------------------
 
 Following the data type definitions, there are two functions that are exposed through the FFI
@@ -173,11 +173,15 @@ boundary, one for instantiating an ``RStruct`` and one for freeing the memory as
        }))
    }
 
-The first line contains an attribute called ``#[no_mangle]``. As defined in ``the Book``_,
-"Mangling is when a compiler changes the name we’ve given a function to a different name that
-contains more information for other parts of the compilation process to consume but is less human
-readable." Placing the ``#[no_mangle]`` attribute before the function definition ensures that the
-function name matches that of the corresponding symbol in the library.
+The first line contains an attribute called ``#[no_mangle]``. As defined in `the Book`_:
+
+   Mangling is when a compiler changes the name we’ve given a function to a different name that
+   contains more information for other parts of the compilation process to consume but is less
+   human readable.
+
+
+Placing the ``#[no_mangle]`` attribute before the function definition ensures that the function
+name matches that of the corresponding symbol in the library.
 
 Next is the function definition ``pub extern "C" fn data_new() -> *mut RStruct``. Let's break this
 down into parts to understand it better:
@@ -241,12 +245,12 @@ by ``data_new()``.
 
 This function accepts a mutable pointer to an RStruct. First, it checks whether the pointer is null
 and if it is, the function returns without doing anything. Assuming that the pointer is not null,
-the ``Box`` is reconstruted from it inside an ``unsafe`` block because ``from_raw()`` `is
-unsafe`_. Importantly, this new pointer will go out of scope at the end of the function so that it
-will automatically be dropped when the function returns.
+the ``Box`` is reconstructed from it inside an ``unsafe`` block because ``from_raw()`` `is
+unsafe`_. Importantly, this new Box pointer will go out of scope at the end of the function so that
+it will automatically be dropped when the function returns.
 
-Building the library is simple. Just run ``cargo build --release`` to build a release version. The
-library itself will be found at ``target/release/librstruct.so``. On Linux, we can verify that it
+Building the library is simple. I run ``cargo build --release`` to build a release version. The
+library itself will be found at ``target/release/librstruct.so``. On Linux, one can verify that it
 contains the ``data_new()`` and ``data_free()`` methods by displaying its symbols with the ``nm
 -g`` command:
 
@@ -264,8 +268,8 @@ Generating the header for the library
 
 Now that I have a shared library, I want to access the functions that it exposes from C. To do
 this, I first need a header file that I can use to import the library's declarations into the C
-code. Beyond this, generating the header can help in understanding how Rust translates its data
-types to C.
+code. Moreover, generating the header can help in understanding how Rust translates its data types
+to C.
 
 I will use `cbindgen`_ to automatically generate the header. ``cbindgen`` is installed with the
 command
@@ -324,8 +328,8 @@ its contents:
    RStruct *data_new(void);
 
 First, you can see the ``enum`` that contains the variations of the ``Value`` data type that is
-stored in the ``RStruct`` and that were defined in Rust. The name of this new type is
-``Value_Tag``, and it is used to define the current type of a value.
+stored in the ``RStruct`` and that was defined in Rust. The name of this new type is ``Value_Tag``,
+and it is used to define the current type of a value.
 
 .. code-block:: c
 
@@ -385,12 +389,6 @@ following:
        exit(EXIT_FAILURE);
      }
 
-     printf("Calling data_new() from main.c...\n");
-     RStruct* data = (*data_new)();
-
-     printf("\nBack inside main.c. Printing results...\n");
-     printf("Name: %s\nValue: %d\n", data->name, data->value._int._0);
-
      dlerror();
      
      data_free = (void (*)(RStruct*)) dlsym(handle, "data_free");
@@ -400,8 +398,14 @@ following:
        exit(EXIT_FAILURE);
      }
 
+     printf("Calling data_new() from main.c...\n");
+     RStruct* data = (*data_new)();
+
+     printf("\nBack inside main.c. Printing results...\n");
+     printf("Name: %s\nValue: %d\n", data->name, data->value._int._0);
+
      printf("\nFreeing the RStruct data...\n");
-     data_free(data);
+     (*data_free)(data);
 
      dlclose(handle);
      return EXIT_SUCCESS;
@@ -417,8 +421,8 @@ is opened and a handle attached to it here:
        RTLD_LAZY
      );
 
-A function pointer to ``data_new()`` is created with ``dlsym()``, and we use function to create the
-new ``RStruct`` instance with the lines
+A function pointer to ``data_new()`` is created with ``dlsym()``, and we use the function to create
+the new ``RStruct`` instance with the lines
 
 .. code-block:: c
 
@@ -432,7 +436,80 @@ Finally, the data is freed by creating another function pointer to ``data_free()
 
    data_free = (void (*)(RStruct*)) dlsym(handle, "data_free");
    // snip
-   data_free(data);
+   (*data_free)(data);
+
+Running the program
+-------------------
+
+I wrote a small Makefile to handle compilation of the C and Rust programs while I wrote this
+post. I won't include it here because it distracts from the main message about the Rust
+FFI. Instead, I will describe how to compile the program from the command line.
+
+I first placed the ``librstruct.so``, ``rstruct.h``, and ``main.c`` programs into the following
+directory structure:
+
+.. code-block:: console
+
+   $ tree
+   .
+   ├── include
+   │   └── rstruct.h
+   ├── lib
+   │   └── librstruct.so
+   └── src
+       └── main.c
+
+Next, I compiled the ``main`` binary with gcc.
+
+.. code-block:: console
+
+   $ gcc -Wall -g -Iinclude -c -o main.o main.c
+   $ gcc -Wall -g -o main main.o -ldl
+
+(``-ldl`` is used to link against libdl for dynamically loading the library from C.) After
+compilation I run the ``main`` binary. To make it work, I set the ``LD_LIBRARY_PATH`` environment
+variable so that the program knows to look inside the ``lib`` directory for the ``librstruct.so``
+library.
+
+.. code-block:: console
+
+   $ LD_LIBRARY_PATH=lib ./main
+   Loading librstruct.so...
+   Done.
+
+   Calling data_new() from main.c...
+   Inside data_new().
+
+   Back inside main.c. Printing results...
+   Name: my_rstruct
+   Value: 42
+
+   Freeing the RStruct data...
+
+Nice! From the output you can see the print statements that I placed inside both the Rust and C
+code to indicate where the program was as it was running. In summary, the program performs the
+following sequence of events:
+
+- The main binary is run
+- The ``librstruct.so`` library is opened and pointers to the ``data_new()`` and ``data_free()``
+  functions are created
+- ``data_new()`` is called, creating our Rust datatype on the heap and returning a pointer to it in
+  the C code
+- Information about the data type is printed from C
+- ``data_free()`` is called, freeing the memory from back inside Rust
+
+Summary
+=======
+
+And that's it! I hope you enjoyed this post. It took me several days of reading and trial-and-error
+to learn about this feature of Rust. The topics covered here were
+
+- the Rust FFI and its purpose
+- creating a complex data type (a Rust enum nested inside a Rust struct) and exporting it through
+  the FFI
+- ``Box`` and ``CString`` Rust data types
+- ``cbindgen`` for automatically creating header files from Rust code
+- using the Rust library from inside C
 
 .. _`Rust Foreign Function Interface`: https://doc.rust-lang.org/nomicon/ffi.html
 .. _`2018 edition guide`: https://doc.rust-lang.org/edition-guide/rust-2018/platform-and-target-support/cdylib-crates-for-c-interoperability.html
