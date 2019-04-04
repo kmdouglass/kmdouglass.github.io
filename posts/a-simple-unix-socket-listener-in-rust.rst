@@ -10,8 +10,7 @@
 I decided that I wanted to learn a new programming language in 2019. After a bit of research, I
 settled upon `Rust`_ due to its speed, novel ideas about memory safety, and `focus on two areas
 that I am interested in`_: embedded systems and WebAssembly. While I think that `The Book`_ is the
-best place to get started learning the language, nothing is a really a substitute for writing
-code.
+best place to get started learning the language, nothing is really a substitute for writing code.
 
 With that in mind, I developed an idea for a starting project: a background daemon for Linux
 systems like the Raspberry Pi that controls and reads data from the system's peripherals. The
