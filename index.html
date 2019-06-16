@@ -98,7 +98,8 @@ which means my monitoring system needs to interface with C libraries such as thi
 with a Rust application. I have omitted all application-specific logic from the example and will
 instead focus on the design of the plugin interface itself.</p>
 <p>You may find <a class="reference external" href="https://github.com/kmdouglass/rust-libloading-example">the source code for this post here</a>. I was heavily inspired by both the <a class="reference external" href="http://jakegoulding.com/rust-ffi-omnibus/">Rust FFI
-Omnibus</a> and <a class="reference external" href="https://michael-f-bryan.github.io/rust-ffi-guide/">The (unofficial) Rust FFI Guide</a>.</p>
+Omnibus</a> and <a class="reference external" href="https://michael-f-bryan.github.io/rust-ffi-guide/">The (unofficial) Rust FFI Guide</a>. This post was written using version 1.35.0 of the
+Rust compiler.</p>
 <div class="section" id="the-c-plugin">
 <h2>The C plugin</h2>
 <p>I wrote a very simple of C library that is located in the <a class="reference external" href="https://github.com/kmdouglass/rust-libloading-example/tree/master/ffi-test">ffi-test</a> folder of the example
@@ -106,36 +107,36 @@ repository and that will serve the purpose of this demonstration. It consists of
 (<tt class="docutils literal"><span class="pre">ffi-test.c</span></tt> and <tt class="docutils literal"><span class="pre">ffi-test.h</span></tt>) and a <tt class="docutils literal">Makefile</tt>. The plugin's interface is defined as usual
 in the header file:</p>
 <table class="codetable"><tr>
-<td class="linenos"><div class="linenodiv"><pre><a href="posts/a-simple-plugin-interface-for-the-rust-ffi/#rest_code_eae1deb543ff47ec9088fb29b6a155c7-1"> 1</a>
-<a href="posts/a-simple-plugin-interface-for-the-rust-ffi/#rest_code_eae1deb543ff47ec9088fb29b6a155c7-2"> 2</a>
-<a href="posts/a-simple-plugin-interface-for-the-rust-ffi/#rest_code_eae1deb543ff47ec9088fb29b6a155c7-3"> 3</a>
-<a href="posts/a-simple-plugin-interface-for-the-rust-ffi/#rest_code_eae1deb543ff47ec9088fb29b6a155c7-4"> 4</a>
-<a href="posts/a-simple-plugin-interface-for-the-rust-ffi/#rest_code_eae1deb543ff47ec9088fb29b6a155c7-5"> 5</a>
-<a href="posts/a-simple-plugin-interface-for-the-rust-ffi/#rest_code_eae1deb543ff47ec9088fb29b6a155c7-6"> 6</a>
-<a href="posts/a-simple-plugin-interface-for-the-rust-ffi/#rest_code_eae1deb543ff47ec9088fb29b6a155c7-7"> 7</a>
-<a href="posts/a-simple-plugin-interface-for-the-rust-ffi/#rest_code_eae1deb543ff47ec9088fb29b6a155c7-8"> 8</a>
-<a href="posts/a-simple-plugin-interface-for-the-rust-ffi/#rest_code_eae1deb543ff47ec9088fb29b6a155c7-9"> 9</a>
-<a href="posts/a-simple-plugin-interface-for-the-rust-ffi/#rest_code_eae1deb543ff47ec9088fb29b6a155c7-10">10</a>
-<a href="posts/a-simple-plugin-interface-for-the-rust-ffi/#rest_code_eae1deb543ff47ec9088fb29b6a155c7-11">11</a>
-<a href="posts/a-simple-plugin-interface-for-the-rust-ffi/#rest_code_eae1deb543ff47ec9088fb29b6a155c7-12">12</a>
-<a href="posts/a-simple-plugin-interface-for-the-rust-ffi/#rest_code_eae1deb543ff47ec9088fb29b6a155c7-13">13</a>
-<a href="posts/a-simple-plugin-interface-for-the-rust-ffi/#rest_code_eae1deb543ff47ec9088fb29b6a155c7-14">14</a>
-<a href="posts/a-simple-plugin-interface-for-the-rust-ffi/#rest_code_eae1deb543ff47ec9088fb29b6a155c7-15">15</a></pre></div></td>
-<td class="code"><pre class="code c"><a name="rest_code_eae1deb543ff47ec9088fb29b6a155c7-1"></a><span class="cp">#ifndef FFI_TEST_H</span>
-<a name="rest_code_eae1deb543ff47ec9088fb29b6a155c7-2"></a><span class="cp">#define FFI_TEST_H</span>
-<a name="rest_code_eae1deb543ff47ec9088fb29b6a155c7-3"></a>
-<a name="rest_code_eae1deb543ff47ec9088fb29b6a155c7-4"></a><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp"></span>
-<a name="rest_code_eae1deb543ff47ec9088fb29b6a155c7-5"></a>
-<a name="rest_code_eae1deb543ff47ec9088fb29b6a155c7-6"></a><span class="k">struct</span> <span class="n">object</span><span class="p">;</span>
-<a name="rest_code_eae1deb543ff47ec9088fb29b6a155c7-7"></a>
-<a name="rest_code_eae1deb543ff47ec9088fb29b6a155c7-8"></a><span class="k">struct</span> <span class="n">object</span><span class="o">*</span> <span class="nf">init</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
-<a name="rest_code_eae1deb543ff47ec9088fb29b6a155c7-9"></a><span class="kt">void</span> <span class="nf">free_object</span><span class="p">(</span><span class="k">struct</span> <span class="n">object</span><span class="o">*</span><span class="p">);</span>
-<a name="rest_code_eae1deb543ff47ec9088fb29b6a155c7-10"></a><span class="kt">int</span> <span class="nf">get_api_version</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
-<a name="rest_code_eae1deb543ff47ec9088fb29b6a155c7-11"></a><span class="kt">int</span> <span class="nf">get_info</span><span class="p">(</span><span class="k">const</span> <span class="k">struct</span> <span class="n">object</span><span class="o">*</span><span class="p">);</span>
-<a name="rest_code_eae1deb543ff47ec9088fb29b6a155c7-12"></a><span class="kt">void</span> <span class="nf">set_info</span><span class="p">(</span><span class="k">struct</span> <span class="n">object</span><span class="o">*</span><span class="p">,</span> <span class="kt">int</span><span class="p">);</span>
-<a name="rest_code_eae1deb543ff47ec9088fb29b6a155c7-13"></a><span class="kt">size_t</span> <span class="nf">sizeof_obj</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
-<a name="rest_code_eae1deb543ff47ec9088fb29b6a155c7-14"></a>
-<a name="rest_code_eae1deb543ff47ec9088fb29b6a155c7-15"></a><span class="cp">#endif </span><span class="cm">/* FFI_TEST_H */</span><span class="cp"></span>
+<td class="linenos"><div class="linenodiv"><pre><a href="posts/a-simple-plugin-interface-for-the-rust-ffi/#rest_code_e01c92327d554f7c81b24936c594d3a6-1"> 1</a>
+<a href="posts/a-simple-plugin-interface-for-the-rust-ffi/#rest_code_e01c92327d554f7c81b24936c594d3a6-2"> 2</a>
+<a href="posts/a-simple-plugin-interface-for-the-rust-ffi/#rest_code_e01c92327d554f7c81b24936c594d3a6-3"> 3</a>
+<a href="posts/a-simple-plugin-interface-for-the-rust-ffi/#rest_code_e01c92327d554f7c81b24936c594d3a6-4"> 4</a>
+<a href="posts/a-simple-plugin-interface-for-the-rust-ffi/#rest_code_e01c92327d554f7c81b24936c594d3a6-5"> 5</a>
+<a href="posts/a-simple-plugin-interface-for-the-rust-ffi/#rest_code_e01c92327d554f7c81b24936c594d3a6-6"> 6</a>
+<a href="posts/a-simple-plugin-interface-for-the-rust-ffi/#rest_code_e01c92327d554f7c81b24936c594d3a6-7"> 7</a>
+<a href="posts/a-simple-plugin-interface-for-the-rust-ffi/#rest_code_e01c92327d554f7c81b24936c594d3a6-8"> 8</a>
+<a href="posts/a-simple-plugin-interface-for-the-rust-ffi/#rest_code_e01c92327d554f7c81b24936c594d3a6-9"> 9</a>
+<a href="posts/a-simple-plugin-interface-for-the-rust-ffi/#rest_code_e01c92327d554f7c81b24936c594d3a6-10">10</a>
+<a href="posts/a-simple-plugin-interface-for-the-rust-ffi/#rest_code_e01c92327d554f7c81b24936c594d3a6-11">11</a>
+<a href="posts/a-simple-plugin-interface-for-the-rust-ffi/#rest_code_e01c92327d554f7c81b24936c594d3a6-12">12</a>
+<a href="posts/a-simple-plugin-interface-for-the-rust-ffi/#rest_code_e01c92327d554f7c81b24936c594d3a6-13">13</a>
+<a href="posts/a-simple-plugin-interface-for-the-rust-ffi/#rest_code_e01c92327d554f7c81b24936c594d3a6-14">14</a>
+<a href="posts/a-simple-plugin-interface-for-the-rust-ffi/#rest_code_e01c92327d554f7c81b24936c594d3a6-15">15</a></pre></div></td>
+<td class="code"><pre class="code c"><a name="rest_code_e01c92327d554f7c81b24936c594d3a6-1"></a><span class="cp">#ifndef FFI_TEST_H</span>
+<a name="rest_code_e01c92327d554f7c81b24936c594d3a6-2"></a><span class="cp">#define FFI_TEST_H</span>
+<a name="rest_code_e01c92327d554f7c81b24936c594d3a6-3"></a>
+<a name="rest_code_e01c92327d554f7c81b24936c594d3a6-4"></a><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp"></span>
+<a name="rest_code_e01c92327d554f7c81b24936c594d3a6-5"></a>
+<a name="rest_code_e01c92327d554f7c81b24936c594d3a6-6"></a><span class="k">struct</span> <span class="n">object</span><span class="p">;</span>
+<a name="rest_code_e01c92327d554f7c81b24936c594d3a6-7"></a>
+<a name="rest_code_e01c92327d554f7c81b24936c594d3a6-8"></a><span class="k">struct</span> <span class="n">object</span><span class="o">*</span> <span class="nf">init</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<a name="rest_code_e01c92327d554f7c81b24936c594d3a6-9"></a><span class="kt">void</span> <span class="nf">free_object</span><span class="p">(</span><span class="k">struct</span> <span class="n">object</span><span class="o">*</span><span class="p">);</span>
+<a name="rest_code_e01c92327d554f7c81b24936c594d3a6-10"></a><span class="kt">int</span> <span class="nf">get_api_version</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<a name="rest_code_e01c92327d554f7c81b24936c594d3a6-11"></a><span class="kt">int</span> <span class="nf">get_info</span><span class="p">(</span><span class="k">const</span> <span class="k">struct</span> <span class="n">object</span><span class="o">*</span><span class="p">);</span>
+<a name="rest_code_e01c92327d554f7c81b24936c594d3a6-12"></a><span class="kt">void</span> <span class="nf">set_info</span><span class="p">(</span><span class="k">struct</span> <span class="n">object</span><span class="o">*</span><span class="p">,</span> <span class="kt">int</span><span class="p">);</span>
+<a name="rest_code_e01c92327d554f7c81b24936c594d3a6-13"></a><span class="kt">size_t</span> <span class="nf">sizeof_obj</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<a name="rest_code_e01c92327d554f7c81b24936c594d3a6-14"></a>
+<a name="rest_code_e01c92327d554f7c81b24936c594d3a6-15"></a><span class="cp">#endif </span><span class="cm">/* FFI_TEST_H */</span><span class="cp"></span>
 </pre></td>
 </tr></table>
 <p>In particular, there is an opaque struct that is declared by the line <code>struct object;</code>. (An
@@ -145,9 +146,9 @@ it is opaque, we will only be able to interact with it through functions such as
 <tt class="docutils literal">free_object</tt>, etc. that are provided by the API.</p>
 <p>To build the C library on UNIX-like systems, simply execute the <tt class="docutils literal">make</tt> command from within the
 <tt class="docutils literal"><span class="pre">ffi-test</span></tt> library.</p>
-<pre class="code console"><a name="rest_code_3ea8a3bd9f6f402ea90392173a2be0fe-1"></a><span class="gp">$</span> make
-<a name="rest_code_3ea8a3bd9f6f402ea90392173a2be0fe-2"></a><span class="go">gcc -c -o libffi-test.o -fpic ffi-test.c -Wall -Werror</span>
-<a name="rest_code_3ea8a3bd9f6f402ea90392173a2be0fe-3"></a><span class="go">gcc -shared -o libffi-test.so libffi-test.o</span>
+<pre class="code console"><a name="rest_code_4a6c677f5eba476999420b96766ac2c5-1"></a><span class="gp">$</span> make
+<a name="rest_code_4a6c677f5eba476999420b96766ac2c5-2"></a><span class="go">gcc -c -o libffi-test.o -fpic ffi-test.c -Wall -Werror</span>
+<a name="rest_code_4a6c677f5eba476999420b96766ac2c5-3"></a><span class="go">gcc -shared -o libffi-test.so libffi-test.o</span>
 </pre>
 </div>
 <div class="section" id="the-rust-c-plugin-interface">
@@ -164,23 +165,23 @@ object provided by the C library</li>
 <div class="section" id="external-function-types">
 <h3>External function types</h3>
 <p>The external function types are defined as follows:</p>
-<pre class="code rust"><a name="rest_code_a0dd37eb96a94195aedb1a00ea7cbfd0-1"></a><span class="cp">#[repr(C)]</span><span class="w"></span>
-<a name="rest_code_a0dd37eb96a94195aedb1a00ea7cbfd0-2"></a><span class="k">struct</span> <span class="nc">Object</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a name="rest_code_a0dd37eb96a94195aedb1a00ea7cbfd0-3"></a><span class="w">    </span><span class="n">_private</span>: <span class="p">[</span><span class="kt">u8</span><span class="p">;</span><span class="w"> </span><span class="mi">0</span><span class="p">],</span><span class="w"></span>
-<a name="rest_code_a0dd37eb96a94195aedb1a00ea7cbfd0-4"></a><span class="p">}</span><span class="w"></span>
-<a name="rest_code_a0dd37eb96a94195aedb1a00ea7cbfd0-5"></a><span class="k">type</span> <span class="nc">FreeObject</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">extern</span><span class="w"> </span><span class="s">"C"</span><span class="w"> </span><span class="k">fn</span><span class="p">(</span><span class="o">*</span><span class="k">mut</span><span class="w"> </span><span class="n">Object</span><span class="p">);</span><span class="w"></span>
-<a name="rest_code_a0dd37eb96a94195aedb1a00ea7cbfd0-6"></a><span class="k">type</span> <span class="nc">Init</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">extern</span><span class="w"> </span><span class="s">"C"</span><span class="w"> </span><span class="k">fn</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="o">*</span><span class="k">mut</span><span class="w"> </span><span class="n">Object</span><span class="p">;</span><span class="w"></span>
-<a name="rest_code_a0dd37eb96a94195aedb1a00ea7cbfd0-7"></a><span class="k">type</span> <span class="nc">GetApiVersion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">extern</span><span class="w"> </span><span class="s">"C"</span><span class="w"> </span><span class="k">fn</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="nc">c_int</span><span class="p">;</span><span class="w"></span>
-<a name="rest_code_a0dd37eb96a94195aedb1a00ea7cbfd0-8"></a><span class="k">type</span> <span class="nc">GetInfo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">extern</span><span class="w"> </span><span class="s">"C"</span><span class="w"> </span><span class="k">fn</span><span class="p">(</span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">Object</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">c_int</span><span class="p">;</span><span class="w"></span>
-<a name="rest_code_a0dd37eb96a94195aedb1a00ea7cbfd0-9"></a><span class="k">type</span> <span class="nc">SetInfo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">extern</span><span class="w"> </span><span class="s">"C"</span><span class="w"> </span><span class="k">fn</span><span class="p">(</span><span class="o">*</span><span class="k">mut</span><span class="w"> </span><span class="n">Object</span><span class="p">,</span><span class="w"> </span><span class="n">c_int</span><span class="p">);</span><span class="w"></span>
+<pre class="code rust"><a name="rest_code_dee977936591438b98705d26e078ca6a-1"></a><span class="cp">#[repr(C)]</span><span class="w"></span>
+<a name="rest_code_dee977936591438b98705d26e078ca6a-2"></a><span class="k">struct</span> <span class="nc">Object</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_dee977936591438b98705d26e078ca6a-3"></a><span class="w">    </span><span class="n">_private</span>: <span class="p">[</span><span class="kt">u8</span><span class="p">;</span><span class="w"> </span><span class="mi">0</span><span class="p">],</span><span class="w"></span>
+<a name="rest_code_dee977936591438b98705d26e078ca6a-4"></a><span class="p">}</span><span class="w"></span>
+<a name="rest_code_dee977936591438b98705d26e078ca6a-5"></a><span class="k">type</span> <span class="nc">FreeObject</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">extern</span><span class="w"> </span><span class="s">"C"</span><span class="w"> </span><span class="k">fn</span><span class="p">(</span><span class="o">*</span><span class="k">mut</span><span class="w"> </span><span class="n">Object</span><span class="p">);</span><span class="w"></span>
+<a name="rest_code_dee977936591438b98705d26e078ca6a-6"></a><span class="k">type</span> <span class="nc">Init</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">extern</span><span class="w"> </span><span class="s">"C"</span><span class="w"> </span><span class="k">fn</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="o">*</span><span class="k">mut</span><span class="w"> </span><span class="n">Object</span><span class="p">;</span><span class="w"></span>
+<a name="rest_code_dee977936591438b98705d26e078ca6a-7"></a><span class="k">type</span> <span class="nc">GetApiVersion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">extern</span><span class="w"> </span><span class="s">"C"</span><span class="w"> </span><span class="k">fn</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="nc">c_int</span><span class="p">;</span><span class="w"></span>
+<a name="rest_code_dee977936591438b98705d26e078ca6a-8"></a><span class="k">type</span> <span class="nc">GetInfo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">extern</span><span class="w"> </span><span class="s">"C"</span><span class="w"> </span><span class="k">fn</span><span class="p">(</span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">Object</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">c_int</span><span class="p">;</span><span class="w"></span>
+<a name="rest_code_dee977936591438b98705d26e078ca6a-9"></a><span class="k">type</span> <span class="nc">SetInfo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">extern</span><span class="w"> </span><span class="s">"C"</span><span class="w"> </span><span class="k">fn</span><span class="p">(</span><span class="o">*</span><span class="k">mut</span><span class="w"> </span><span class="n">Object</span><span class="p">,</span><span class="w"> </span><span class="n">c_int</span><span class="p">);</span><span class="w"></span>
 </pre>
 <p>The opaque struct from the C library is represented as rust <tt class="docutils literal">struct</tt> with a single, private field
 containing an empty array. <a class="reference external" href="https://doc.rust-lang.org/nomicon/ffi.html#representing-opaque-structs">This is currently the recommended way</a> to represent opaque structs in
 the Rust FFI. Following the <tt class="docutils literal">struct</tt> definition are the type definitions for the foreign
 functions.</p>
-<pre class="code rust"><a name="rest_code_17c3f27069c648d78f337f94e0101ef4-1"></a><span class="k">type</span> <span class="nc">FreeObject</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">extern</span><span class="w"> </span><span class="s">"C"</span><span class="w"> </span><span class="k">fn</span><span class="p">(</span><span class="o">*</span><span class="k">mut</span><span class="w"> </span><span class="n">Object</span><span class="p">);</span><span class="w"></span>
-<a name="rest_code_17c3f27069c648d78f337f94e0101ef4-2"></a><span class="k">type</span> <span class="nc">Init</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">extern</span><span class="w"> </span><span class="s">"C"</span><span class="w"> </span><span class="k">fn</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="o">*</span><span class="k">mut</span><span class="w"> </span><span class="n">Object</span><span class="p">;</span><span class="w"></span>
-<a name="rest_code_17c3f27069c648d78f337f94e0101ef4-3"></a><span class="c1">// ...</span>
+<pre class="code rust"><a name="rest_code_af8313bbad0649ed977070a1f74fe18c-1"></a><span class="k">type</span> <span class="nc">FreeObject</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">extern</span><span class="w"> </span><span class="s">"C"</span><span class="w"> </span><span class="k">fn</span><span class="p">(</span><span class="o">*</span><span class="k">mut</span><span class="w"> </span><span class="n">Object</span><span class="p">);</span><span class="w"></span>
+<a name="rest_code_af8313bbad0649ed977070a1f74fe18c-2"></a><span class="k">type</span> <span class="nc">Init</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">extern</span><span class="w"> </span><span class="s">"C"</span><span class="w"> </span><span class="k">fn</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="o">*</span><span class="k">mut</span><span class="w"> </span><span class="n">Object</span><span class="p">;</span><span class="w"></span>
+<a name="rest_code_af8313bbad0649ed977070a1f74fe18c-3"></a><span class="c1">// ...</span>
 </pre>
 <p>For example, the <tt class="docutils literal">Init</tt> type represents a foreign C function that takes no arguments and returns
 a mutable raw pointer to an <tt class="docutils literal">Object</tt> instance. This function type therefore represents the
@@ -192,11 +193,11 @@ a mutable raw pointer to an <tt class="docutils literal">Object</tt> instance. T
 one place. Furthermore, I added a version number to make it <tt class="docutils literal">VTableV0</tt>. The purpose in doing this
 is to easily maintain backwards compatability with and follow changes to the C API.</p>
 <p>By looking at its definition, you can see that it contains a few <tt class="docutils literal">RawSymbol</tt> instances:</p>
-<pre class="code rust"><a name="rest_code_d9d3c1b172f44f7f916384ec2f1b0a09-1"></a><span class="k">struct</span> <span class="nc">VTableV0</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a name="rest_code_d9d3c1b172f44f7f916384ec2f1b0a09-2"></a><span class="w">    </span><span class="n">free_object</span>: <span class="nc">RawSymbol</span><span class="o">&lt;</span><span class="n">FreeObject</span><span class="o">&gt;</span><span class="p">,</span><span class="w"></span>
-<a name="rest_code_d9d3c1b172f44f7f916384ec2f1b0a09-3"></a><span class="w">    </span><span class="n">get_info</span>: <span class="nc">RawSymbol</span><span class="o">&lt;</span><span class="n">GetInfo</span><span class="o">&gt;</span><span class="p">,</span><span class="w"></span>
-<a name="rest_code_d9d3c1b172f44f7f916384ec2f1b0a09-4"></a><span class="w">    </span><span class="n">set_info</span>: <span class="nc">RawSymbol</span><span class="o">&lt;</span><span class="n">SetInfo</span><span class="o">&gt;</span><span class="p">,</span><span class="w"></span>
-<a name="rest_code_d9d3c1b172f44f7f916384ec2f1b0a09-5"></a><span class="p">}</span><span class="w"></span>
+<pre class="code rust"><a name="rest_code_2a8e26df8c514068bdd0815625a10613-1"></a><span class="k">struct</span> <span class="nc">VTableV0</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_2a8e26df8c514068bdd0815625a10613-2"></a><span class="w">    </span><span class="n">free_object</span>: <span class="nc">RawSymbol</span><span class="o">&lt;</span><span class="n">FreeObject</span><span class="o">&gt;</span><span class="p">,</span><span class="w"></span>
+<a name="rest_code_2a8e26df8c514068bdd0815625a10613-3"></a><span class="w">    </span><span class="n">get_info</span>: <span class="nc">RawSymbol</span><span class="o">&lt;</span><span class="n">GetInfo</span><span class="o">&gt;</span><span class="p">,</span><span class="w"></span>
+<a name="rest_code_2a8e26df8c514068bdd0815625a10613-4"></a><span class="w">    </span><span class="n">set_info</span>: <span class="nc">RawSymbol</span><span class="o">&lt;</span><span class="n">SetInfo</span><span class="o">&gt;</span><span class="p">,</span><span class="w"></span>
+<a name="rest_code_2a8e26df8c514068bdd0815625a10613-5"></a><span class="p">}</span><span class="w"></span>
 </pre>
 <p>A <tt class="docutils literal">RawSymbol</tt> is a name that I gave to Unix-specific symbols from the <tt class="docutils literal">libloading</tt> Rust
 library. (See the <tt class="docutils literal">use</tt> statements at the top of the source code file.) I am not storing plain
@@ -208,11 +209,11 @@ tried to own plain <tt class="docutils literal">Symbols</tt>; none of these atte
 library each time that I wanted to call them.</p>
 <p>The way to obtain <tt class="docutils literal">RawSymbols</tt> is to use the <tt class="docutils literal">into_raw</tt> method of a plain <tt class="docutils literal">Symbol</tt>. You can
 find an example of this inside the <tt class="docutils literal">VTable</tt>'s constructor:</p>
-<pre class="code rust"><a name="rest_code_1fc6f2eb52ed4de2845fb6615a005317-1"></a><span class="k">unsafe</span><span class="w"> </span><span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">library</span>: <span class="kp">&amp;</span><span class="nc">Library</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">VTableV0</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a name="rest_code_1fc6f2eb52ed4de2845fb6615a005317-2"></a><span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">"Loading API version 0..."</span><span class="p">);</span><span class="w"></span>
-<a name="rest_code_1fc6f2eb52ed4de2845fb6615a005317-3"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">free_object</span>: <span class="nc">Symbol</span><span class="o">&lt;</span><span class="n">FreeObject</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">library</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">b"free_object</span><span class="se">\0</span><span class="s">"</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
-<a name="rest_code_1fc6f2eb52ed4de2845fb6615a005317-4"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">free_object</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">free_object</span><span class="p">.</span><span class="n">into_raw</span><span class="p">();</span><span class="w"></span>
-<a name="rest_code_1fc6f2eb52ed4de2845fb6615a005317-5"></a><span class="w">    </span><span class="c1">// ...</span>
+<pre class="code rust"><a name="rest_code_24689496daa145458f94573be8ec8abf-1"></a><span class="k">unsafe</span><span class="w"> </span><span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">library</span>: <span class="kp">&amp;</span><span class="nc">Library</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">VTableV0</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_24689496daa145458f94573be8ec8abf-2"></a><span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">"Loading API version 0..."</span><span class="p">);</span><span class="w"></span>
+<a name="rest_code_24689496daa145458f94573be8ec8abf-3"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">free_object</span>: <span class="nc">Symbol</span><span class="o">&lt;</span><span class="n">FreeObject</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">library</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">b"free_object</span><span class="se">\0</span><span class="s">"</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
+<a name="rest_code_24689496daa145458f94573be8ec8abf-4"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">free_object</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">free_object</span><span class="p">.</span><span class="n">into_raw</span><span class="p">();</span><span class="w"></span>
+<a name="rest_code_24689496daa145458f94573be8ec8abf-5"></a><span class="w">    </span><span class="c1">// ...</span>
 </pre>
 <p>First, the <tt class="docutils literal">free_object</tt> <tt class="docutils literal">Symbol</tt> is imported from the library using the <tt class="docutils literal">get()</tt> method from
 the library, then it is converted to a <tt class="docutils literal">RawSymbol</tt> in the following line so that it can be stored
@@ -223,71 +224,71 @@ inside the <tt class="docutils literal">VTableV0</tt> struct that is returned by
 <h3>The Plugin</h3>
 <p>Finally we reach the top of the hierarchy of the components that comprise this design, the
 <tt class="docutils literal">Plugin</tt> struct. Its implementation follows:</p>
-<pre class="code rust"><a name="rest_code_b477bc2feb694474bad974d0ab83a432-1"></a><span class="k">struct</span> <span class="nc">Plugin</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a name="rest_code_b477bc2feb694474bad974d0ab83a432-2"></a><span class="w">    </span><span class="cp">#[allow(dead_code)]</span><span class="w"></span>
-<a name="rest_code_b477bc2feb694474bad974d0ab83a432-3"></a><span class="w">    </span><span class="n">library</span>: <span class="nc">Library</span><span class="p">,</span><span class="w"></span>
-<a name="rest_code_b477bc2feb694474bad974d0ab83a432-4"></a><span class="w">    </span><span class="n">object</span>: <span class="o">*</span><span class="k">mut</span><span class="w"> </span><span class="n">Object</span><span class="p">,</span><span class="w"></span>
-<a name="rest_code_b477bc2feb694474bad974d0ab83a432-5"></a><span class="w">    </span><span class="n">vtable</span>: <span class="nc">VTableV0</span><span class="p">,</span><span class="w"></span>
-<a name="rest_code_b477bc2feb694474bad974d0ab83a432-6"></a><span class="p">}</span><span class="w"></span>
-<a name="rest_code_b477bc2feb694474bad974d0ab83a432-7"></a>
-<a name="rest_code_b477bc2feb694474bad974d0ab83a432-8"></a><span class="k">impl</span><span class="w"> </span><span class="n">Plugin</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a name="rest_code_b477bc2feb694474bad974d0ab83a432-9"></a><span class="w">    </span><span class="k">unsafe</span><span class="w"> </span><span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">library_name</span>: <span class="kp">&amp;</span><span class="nc">OsStr</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Plugin</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a name="rest_code_b477bc2feb694474bad974d0ab83a432-10"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">library</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Library</span>::<span class="n">new</span><span class="p">(</span><span class="n">library_name</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
-<a name="rest_code_b477bc2feb694474bad974d0ab83a432-11"></a><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">get_api_version</span>: <span class="nc">Symbol</span><span class="o">&lt;</span><span class="n">GetApiVersion</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">library</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">b"get_api_version</span><span class="se">\0</span><span class="s">"</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
-<a name="rest_code_b477bc2feb694474bad974d0ab83a432-12"></a><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">vtable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="n">get_api_version</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a name="rest_code_b477bc2feb694474bad974d0ab83a432-13"></a><span class="w">            </span><span class="mi">0</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">VTableV0</span>::<span class="n">new</span><span class="p">(</span><span class="o">&amp;</span><span class="n">library</span><span class="p">),</span><span class="w"></span>
-<a name="rest_code_b477bc2feb694474bad974d0ab83a432-14"></a><span class="w">            </span><span class="n">_</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">panic</span><span class="o">!</span><span class="p">(</span><span class="s">"Unrecognized C API version number."</span><span class="p">),</span><span class="w"></span>
-<a name="rest_code_b477bc2feb694474bad974d0ab83a432-15"></a><span class="w">        </span><span class="p">};</span><span class="w"></span>
-<a name="rest_code_b477bc2feb694474bad974d0ab83a432-16"></a>
-<a name="rest_code_b477bc2feb694474bad974d0ab83a432-17"></a><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">init</span>: <span class="nc">Symbol</span><span class="o">&lt;</span><span class="n">Init</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">library</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">b"init</span><span class="se">\0</span><span class="s">"</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
-<a name="rest_code_b477bc2feb694474bad974d0ab83a432-18"></a><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">object</span>: <span class="o">*</span><span class="k">mut</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">init</span><span class="p">();</span><span class="w"></span>
-<a name="rest_code_b477bc2feb694474bad974d0ab83a432-19"></a>
-<a name="rest_code_b477bc2feb694474bad974d0ab83a432-20"></a><span class="w">        </span><span class="n">Plugin</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a name="rest_code_b477bc2feb694474bad974d0ab83a432-21"></a><span class="w">            </span><span class="n">library</span>: <span class="nc">library</span><span class="p">,</span><span class="w"></span>
-<a name="rest_code_b477bc2feb694474bad974d0ab83a432-22"></a><span class="w">            </span><span class="n">object</span>: <span class="nc">object</span><span class="p">,</span><span class="w"></span>
-<a name="rest_code_b477bc2feb694474bad974d0ab83a432-23"></a><span class="w">            </span><span class="n">vtable</span>: <span class="nc">vtable</span><span class="p">,</span><span class="w"></span>
-<a name="rest_code_b477bc2feb694474bad974d0ab83a432-24"></a><span class="w">        </span><span class="p">}</span><span class="w"></span>
-<a name="rest_code_b477bc2feb694474bad974d0ab83a432-25"></a><span class="w">    </span><span class="p">}</span><span class="w"></span>
-<a name="rest_code_b477bc2feb694474bad974d0ab83a432-26"></a><span class="p">}</span><span class="w"></span>
-<a name="rest_code_b477bc2feb694474bad974d0ab83a432-27"></a>
-<a name="rest_code_b477bc2feb694474bad974d0ab83a432-28"></a><span class="k">impl</span><span class="w"> </span><span class="nb">Drop</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Plugin</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a name="rest_code_b477bc2feb694474bad974d0ab83a432-29"></a><span class="w">    </span><span class="k">fn</span> <span class="nf">drop</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a name="rest_code_b477bc2feb694474bad974d0ab83a432-30"></a><span class="w">        </span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">vtable</span><span class="p">.</span><span class="n">free_object</span><span class="p">)(</span><span class="bp">self</span><span class="p">.</span><span class="n">object</span><span class="p">);</span><span class="w"></span>
-<a name="rest_code_b477bc2feb694474bad974d0ab83a432-31"></a><span class="w">    </span><span class="p">}</span><span class="w"></span>
-<a name="rest_code_b477bc2feb694474bad974d0ab83a432-32"></a><span class="p">}</span><span class="w"></span>
+<pre class="code rust"><a name="rest_code_1a91d8a2fdf947088668fac83beca098-1"></a><span class="k">struct</span> <span class="nc">Plugin</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_1a91d8a2fdf947088668fac83beca098-2"></a><span class="w">    </span><span class="cp">#[allow(dead_code)]</span><span class="w"></span>
+<a name="rest_code_1a91d8a2fdf947088668fac83beca098-3"></a><span class="w">    </span><span class="n">library</span>: <span class="nc">Library</span><span class="p">,</span><span class="w"></span>
+<a name="rest_code_1a91d8a2fdf947088668fac83beca098-4"></a><span class="w">    </span><span class="n">object</span>: <span class="o">*</span><span class="k">mut</span><span class="w"> </span><span class="n">Object</span><span class="p">,</span><span class="w"></span>
+<a name="rest_code_1a91d8a2fdf947088668fac83beca098-5"></a><span class="w">    </span><span class="n">vtable</span>: <span class="nc">VTableV0</span><span class="p">,</span><span class="w"></span>
+<a name="rest_code_1a91d8a2fdf947088668fac83beca098-6"></a><span class="p">}</span><span class="w"></span>
+<a name="rest_code_1a91d8a2fdf947088668fac83beca098-7"></a>
+<a name="rest_code_1a91d8a2fdf947088668fac83beca098-8"></a><span class="k">impl</span><span class="w"> </span><span class="n">Plugin</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_1a91d8a2fdf947088668fac83beca098-9"></a><span class="w">    </span><span class="k">unsafe</span><span class="w"> </span><span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">library_name</span>: <span class="kp">&amp;</span><span class="nc">OsStr</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Plugin</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_1a91d8a2fdf947088668fac83beca098-10"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">library</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Library</span>::<span class="n">new</span><span class="p">(</span><span class="n">library_name</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
+<a name="rest_code_1a91d8a2fdf947088668fac83beca098-11"></a><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">get_api_version</span>: <span class="nc">Symbol</span><span class="o">&lt;</span><span class="n">GetApiVersion</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">library</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">b"get_api_version</span><span class="se">\0</span><span class="s">"</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
+<a name="rest_code_1a91d8a2fdf947088668fac83beca098-12"></a><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">vtable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="n">get_api_version</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_1a91d8a2fdf947088668fac83beca098-13"></a><span class="w">            </span><span class="mi">0</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">VTableV0</span>::<span class="n">new</span><span class="p">(</span><span class="o">&amp;</span><span class="n">library</span><span class="p">),</span><span class="w"></span>
+<a name="rest_code_1a91d8a2fdf947088668fac83beca098-14"></a><span class="w">            </span><span class="n">_</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">panic</span><span class="o">!</span><span class="p">(</span><span class="s">"Unrecognized C API version number."</span><span class="p">),</span><span class="w"></span>
+<a name="rest_code_1a91d8a2fdf947088668fac83beca098-15"></a><span class="w">        </span><span class="p">};</span><span class="w"></span>
+<a name="rest_code_1a91d8a2fdf947088668fac83beca098-16"></a>
+<a name="rest_code_1a91d8a2fdf947088668fac83beca098-17"></a><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">init</span>: <span class="nc">Symbol</span><span class="o">&lt;</span><span class="n">Init</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">library</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">b"init</span><span class="se">\0</span><span class="s">"</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
+<a name="rest_code_1a91d8a2fdf947088668fac83beca098-18"></a><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">object</span>: <span class="o">*</span><span class="k">mut</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">init</span><span class="p">();</span><span class="w"></span>
+<a name="rest_code_1a91d8a2fdf947088668fac83beca098-19"></a>
+<a name="rest_code_1a91d8a2fdf947088668fac83beca098-20"></a><span class="w">        </span><span class="n">Plugin</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_1a91d8a2fdf947088668fac83beca098-21"></a><span class="w">            </span><span class="n">library</span>: <span class="nc">library</span><span class="p">,</span><span class="w"></span>
+<a name="rest_code_1a91d8a2fdf947088668fac83beca098-22"></a><span class="w">            </span><span class="n">object</span>: <span class="nc">object</span><span class="p">,</span><span class="w"></span>
+<a name="rest_code_1a91d8a2fdf947088668fac83beca098-23"></a><span class="w">            </span><span class="n">vtable</span>: <span class="nc">vtable</span><span class="p">,</span><span class="w"></span>
+<a name="rest_code_1a91d8a2fdf947088668fac83beca098-24"></a><span class="w">        </span><span class="p">}</span><span class="w"></span>
+<a name="rest_code_1a91d8a2fdf947088668fac83beca098-25"></a><span class="w">    </span><span class="p">}</span><span class="w"></span>
+<a name="rest_code_1a91d8a2fdf947088668fac83beca098-26"></a><span class="p">}</span><span class="w"></span>
+<a name="rest_code_1a91d8a2fdf947088668fac83beca098-27"></a>
+<a name="rest_code_1a91d8a2fdf947088668fac83beca098-28"></a><span class="k">impl</span><span class="w"> </span><span class="nb">Drop</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Plugin</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_1a91d8a2fdf947088668fac83beca098-29"></a><span class="w">    </span><span class="k">fn</span> <span class="nf">drop</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_1a91d8a2fdf947088668fac83beca098-30"></a><span class="w">        </span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">vtable</span><span class="p">.</span><span class="n">free_object</span><span class="p">)(</span><span class="bp">self</span><span class="p">.</span><span class="n">object</span><span class="p">);</span><span class="w"></span>
+<a name="rest_code_1a91d8a2fdf947088668fac83beca098-31"></a><span class="w">    </span><span class="p">}</span><span class="w"></span>
+<a name="rest_code_1a91d8a2fdf947088668fac83beca098-32"></a><span class="p">}</span><span class="w"></span>
 </pre>
 <p>The interesting parts here are the <tt class="docutils literal">Plugin</tt>'s constructor <tt class="docutils literal">new</tt> and the implementation of the
 <tt class="docutils literal">Drop</tt> trait. After loading the library, the constructor calls the C library function that
 returns its API version; if the version matches one for which we have a <tt class="docutils literal">VTable</tt>, then we create
 the new <tt class="docutils literal">VTable</tt>. Next, we instantiate an <tt class="docutils literal">Object</tt> by calling its constructor to obtain a raw
 pointer to it.</p>
-<pre class="code rust"><a name="rest_code_72e73931d2774493bf0f4f2c4694f19d-1"></a><span class="kd">let</span><span class="w"> </span><span class="n">init</span>: <span class="nc">Symbol</span><span class="o">&lt;</span><span class="n">Init</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">library</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">b"init</span><span class="se">\0</span><span class="s">"</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
-<a name="rest_code_72e73931d2774493bf0f4f2c4694f19d-2"></a><span class="kd">let</span><span class="w"> </span><span class="n">object</span>: <span class="o">*</span><span class="k">mut</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">init</span><span class="p">();</span><span class="w"></span>
+<pre class="code rust"><a name="rest_code_0ef66b531298438fbde7434d0cf7e23f-1"></a><span class="kd">let</span><span class="w"> </span><span class="n">init</span>: <span class="nc">Symbol</span><span class="o">&lt;</span><span class="n">Init</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">library</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">b"init</span><span class="se">\0</span><span class="s">"</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
+<a name="rest_code_0ef66b531298438fbde7434d0cf7e23f-2"></a><span class="kd">let</span><span class="w"> </span><span class="n">object</span>: <span class="o">*</span><span class="k">mut</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">init</span><span class="p">();</span><span class="w"></span>
 </pre>
 <p>The constructor packs the library, the <tt class="docutils literal">VTable</tt>, and the object pointer into a new <tt class="docutils literal">Plugin</tt>
 struct and returns it.</p>
 <p>The <tt class="docutils literal">Drop</tt> trait implementation is used to automatically free the memory that has been allocated
 when the pointer held by the <tt class="docutils literal">Plugin</tt> struct goes out-of-scope. It does this by calling the
 <tt class="docutils literal">free_object</tt> method in the VTable.</p>
-<pre class="code rust"><a name="rest_code_81169538e3144e2fa46efed93f0f467d-1"></a><span class="k">impl</span><span class="w"> </span><span class="nb">Drop</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Plugin</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a name="rest_code_81169538e3144e2fa46efed93f0f467d-2"></a><span class="w">    </span><span class="k">fn</span> <span class="nf">drop</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a name="rest_code_81169538e3144e2fa46efed93f0f467d-3"></a><span class="w">        </span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">vtable</span><span class="p">.</span><span class="n">free_object</span><span class="p">)(</span><span class="bp">self</span><span class="p">.</span><span class="n">object</span><span class="p">);</span><span class="w"></span>
-<a name="rest_code_81169538e3144e2fa46efed93f0f467d-4"></a><span class="w">    </span><span class="p">}</span><span class="w"></span>
-<a name="rest_code_81169538e3144e2fa46efed93f0f467d-5"></a><span class="p">}</span><span class="w"></span>
+<pre class="code rust"><a name="rest_code_f834ee57c18045c3871fd83ecf5c11a0-1"></a><span class="k">impl</span><span class="w"> </span><span class="nb">Drop</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Plugin</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_f834ee57c18045c3871fd83ecf5c11a0-2"></a><span class="w">    </span><span class="k">fn</span> <span class="nf">drop</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_f834ee57c18045c3871fd83ecf5c11a0-3"></a><span class="w">        </span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">vtable</span><span class="p">.</span><span class="n">free_object</span><span class="p">)(</span><span class="bp">self</span><span class="p">.</span><span class="n">object</span><span class="p">);</span><span class="w"></span>
+<a name="rest_code_f834ee57c18045c3871fd83ecf5c11a0-4"></a><span class="w">    </span><span class="p">}</span><span class="w"></span>
+<a name="rest_code_f834ee57c18045c3871fd83ecf5c11a0-5"></a><span class="p">}</span><span class="w"></span>
 </pre>
 </div>
 <div class="section" id="running-the-example">
 <h3>Running the example</h3>
 <p>To run the example, run the following commands from the root directory of the example repository.</p>
-<pre class="code console"><a name="rest_code_426d7ecb6f7b41f09b8fdb72afc3a8f3-1"></a><span class="gp">$</span> cargo build
-<a name="rest_code_426d7ecb6f7b41f09b8fdb72afc3a8f3-2"></a><span class="go">Compiling rust-libloading v0.1.0 (/home/kmdouglass/src/rust-libloading-example)</span>
-<a name="rest_code_426d7ecb6f7b41f09b8fdb72afc3a8f3-3"></a><span class="go"> Finished dev [unoptimized + debuginfo] target(s) in 0.27s</span>
-<a name="rest_code_426d7ecb6f7b41f09b8fdb72afc3a8f3-4"></a><span class="gp">$</span> cargo run
-<a name="rest_code_426d7ecb6f7b41f09b8fdb72afc3a8f3-5"></a><span class="go"> Finished dev [unoptimized + debuginfo] target(s) in 0.01s</span>
-<a name="rest_code_426d7ecb6f7b41f09b8fdb72afc3a8f3-6"></a><span class="go">  Running `target/debug/rust-libloading`</span>
-<a name="rest_code_426d7ecb6f7b41f09b8fdb72afc3a8f3-7"></a><span class="go">Loading API version 0...</span>
-<a name="rest_code_426d7ecb6f7b41f09b8fdb72afc3a8f3-8"></a><span class="go">Original value: 0</span>
-<a name="rest_code_426d7ecb6f7b41f09b8fdb72afc3a8f3-9"></a><span class="go">New value: 42</span>
+<pre class="code console"><a name="rest_code_19e67fb939614723b78bf5fd57ae0d9a-1"></a><span class="gp">$</span> cargo build
+<a name="rest_code_19e67fb939614723b78bf5fd57ae0d9a-2"></a><span class="go">Compiling rust-libloading v0.1.0 (/home/kmdouglass/src/rust-libloading-example)</span>
+<a name="rest_code_19e67fb939614723b78bf5fd57ae0d9a-3"></a><span class="go"> Finished dev [unoptimized + debuginfo] target(s) in 0.27s</span>
+<a name="rest_code_19e67fb939614723b78bf5fd57ae0d9a-4"></a><span class="gp">$</span> cargo run
+<a name="rest_code_19e67fb939614723b78bf5fd57ae0d9a-5"></a><span class="go"> Finished dev [unoptimized + debuginfo] target(s) in 0.01s</span>
+<a name="rest_code_19e67fb939614723b78bf5fd57ae0d9a-6"></a><span class="go">  Running `target/debug/rust-libloading`</span>
+<a name="rest_code_19e67fb939614723b78bf5fd57ae0d9a-7"></a><span class="go">Loading API version 0...</span>
+<a name="rest_code_19e67fb939614723b78bf5fd57ae0d9a-8"></a><span class="go">Original value: 0</span>
+<a name="rest_code_19e67fb939614723b78bf5fd57ae0d9a-9"></a><span class="go">New value: 42</span>
 </pre>
 <p>The <tt class="docutils literal">main</tt> method of the Rust code creates the plugin, prints the default value of the data held
 by the object (which is instantiated by the C library), and then mutates the data to the value
@@ -311,6 +312,9 @@ called.</p>
 library. C programmers have a large amount of freedom in designing APIs for their libraries. They
 are not forced to use opaque structs or to version their APIs. As a result, I don't believe that
 the plugin design presented here can be completely generalized to any C library.</p>
+<p>The <tt class="docutils literal">Plugin</tt> struct is almost certainly not thread safe. To make it thread safe, it may be
+necessary to wrap the raw pointer in a <tt class="docutils literal">Mutex</tt>. It may even be simpler to wrap the entire struct
+in a <tt class="docutils literal">Mutex</tt>.</p>
 <p>Finally, owning raw symbols is not platform independent. You can see at the top of the Rust source
 code that I am importing the <tt class="docutils literal">Symbol</tt> object specific to UNIX systems. One would need to change
 this if it was intended to work on Windows.</p>
