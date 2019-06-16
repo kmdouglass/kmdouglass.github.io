@@ -120,19 +120,19 @@ comprehension over lineFilters could have been placed inline with the primary li
 lines in the file. I do think it is more readable the way it is presented below, however.</p>
 <p>I welcome any comments or suggestions, especially on the <a class="reference external" href="https://gist.github.com/kmdouglass/507717d339bc82f850ce">Gist website</a> where others may be more likely to find
 it.</p>
-<pre class="code python"><a name="rest_code_9dd12834c2c44e1b9e833859abf2c73a-1"></a><span class="n">filename</span>    <span class="o">=</span> <span class="s1">'myFile.txt'</span>
-<a name="rest_code_9dd12834c2c44e1b9e833859abf2c73a-2"></a><span class="n">outputLines</span> <span class="o">=</span> <span class="p">[]</span>
-<a name="rest_code_9dd12834c2c44e1b9e833859abf2c73a-3"></a>
-<a name="rest_code_9dd12834c2c44e1b9e833859abf2c73a-4"></a><span class="c1"># Keep all lines containing ANY of the following list of strings.</span>
-<a name="rest_code_9dd12834c2c44e1b9e833859abf2c73a-5"></a><span class="n">lineFilters</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'line 1'</span><span class="p">,</span>
-<a name="rest_code_9dd12834c2c44e1b9e833859abf2c73a-6"></a>               <span class="s1">'line 2'</span><span class="p">,</span>
-<a name="rest_code_9dd12834c2c44e1b9e833859abf2c73a-7"></a>               <span class="s1">'line 3'</span><span class="p">]</span>
-<a name="rest_code_9dd12834c2c44e1b9e833859abf2c73a-8"></a><span class="n">stringIsIn</span>  <span class="o">=</span> <span class="k">lambda</span> <span class="n">line</span><span class="p">:</span> <span class="p">[</span><span class="nb">filter</span> <span class="ow">in</span> <span class="n">line</span> <span class="k">for</span> <span class="nb">filter</span> <span class="ow">in</span> <span class="n">lineFilters</span><span class="p">]</span>
-<a name="rest_code_9dd12834c2c44e1b9e833859abf2c73a-9"></a>
-<a name="rest_code_9dd12834c2c44e1b9e833859abf2c73a-10"></a>
-<a name="rest_code_9dd12834c2c44e1b9e833859abf2c73a-11"></a><span class="c1"># Read only lines containing one of the strings into memory.</span>
-<a name="rest_code_9dd12834c2c44e1b9e833859abf2c73a-12"></a><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">file</span><span class="p">:</span>
-<a name="rest_code_9dd12834c2c44e1b9e833859abf2c73a-13"></a>    <span class="p">[</span><span class="n">outputLines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">file</span> <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">stringIsIn</span><span class="p">(</span><span class="n">line</span><span class="p">))]</span>
+<pre class="code python"><a name="rest_code_893212ffccc44238897c8ac2b9ad1988-1"></a><span class="n">filename</span>    <span class="o">=</span> <span class="s1">'myFile.txt'</span>
+<a name="rest_code_893212ffccc44238897c8ac2b9ad1988-2"></a><span class="n">outputLines</span> <span class="o">=</span> <span class="p">[]</span>
+<a name="rest_code_893212ffccc44238897c8ac2b9ad1988-3"></a>
+<a name="rest_code_893212ffccc44238897c8ac2b9ad1988-4"></a><span class="c1"># Keep all lines containing ANY of the following list of strings.</span>
+<a name="rest_code_893212ffccc44238897c8ac2b9ad1988-5"></a><span class="n">lineFilters</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'line 1'</span><span class="p">,</span>
+<a name="rest_code_893212ffccc44238897c8ac2b9ad1988-6"></a>               <span class="s1">'line 2'</span><span class="p">,</span>
+<a name="rest_code_893212ffccc44238897c8ac2b9ad1988-7"></a>               <span class="s1">'line 3'</span><span class="p">]</span>
+<a name="rest_code_893212ffccc44238897c8ac2b9ad1988-8"></a><span class="n">stringIsIn</span>  <span class="o">=</span> <span class="k">lambda</span> <span class="n">line</span><span class="p">:</span> <span class="p">[</span><span class="nb">filter</span> <span class="ow">in</span> <span class="n">line</span> <span class="k">for</span> <span class="nb">filter</span> <span class="ow">in</span> <span class="n">lineFilters</span><span class="p">]</span>
+<a name="rest_code_893212ffccc44238897c8ac2b9ad1988-9"></a>
+<a name="rest_code_893212ffccc44238897c8ac2b9ad1988-10"></a>
+<a name="rest_code_893212ffccc44238897c8ac2b9ad1988-11"></a><span class="c1"># Read only lines containing one of the strings into memory.</span>
+<a name="rest_code_893212ffccc44238897c8ac2b9ad1988-12"></a><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">file</span><span class="p">:</span>
+<a name="rest_code_893212ffccc44238897c8ac2b9ad1988-13"></a>    <span class="p">[</span><span class="n">outputLines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">file</span> <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">stringIsIn</span><span class="p">(</span><span class="n">line</span><span class="p">))]</span>
 </pre>
 </div>
     </div>

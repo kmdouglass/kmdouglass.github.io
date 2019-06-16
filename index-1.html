@@ -92,19 +92,19 @@ decorate a function, we send it to a wrapper that returns another function. It's
 <p>I was having trouble understanding exactly to which function, the original or the decorated one,
 the arguments are sent in a Python decorated function call. I wrote the following script to better
 understand this process (I use Python 3.4):</p>
-<pre class="code python"><a name="rest_code_dfd08b9ff1df4c13ab13a20c0821c72a-1"></a><span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">inFunction</span><span class="p">):</span>
-<a name="rest_code_dfd08b9ff1df4c13ab13a20c0821c72a-2"></a>    <span class="k">def</span> <span class="nf">outFunction</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<a name="rest_code_dfd08b9ff1df4c13ab13a20c0821c72a-3"></a>        <span class="k">print</span><span class="p">(</span><span class="s1">'The input arguments were:'</span><span class="p">)</span>
-<a name="rest_code_dfd08b9ff1df4c13ab13a20c0821c72a-4"></a>        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-<a name="rest_code_dfd08b9ff1df4c13ab13a20c0821c72a-5"></a>            <span class="k">print</span><span class="p">(</span><span class="s1">'</span><span class="si">%r</span><span class="s1"> : </span><span class="si">%r</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
-<a name="rest_code_dfd08b9ff1df4c13ab13a20c0821c72a-6"></a>
-<a name="rest_code_dfd08b9ff1df4c13ab13a20c0821c72a-7"></a>        <span class="c1"># Return the original function</span>
-<a name="rest_code_dfd08b9ff1df4c13ab13a20c0821c72a-8"></a>        <span class="k">return</span> <span class="n">inFunction</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<a name="rest_code_dfd08b9ff1df4c13ab13a20c0821c72a-9"></a>
-<a name="rest_code_dfd08b9ff1df4c13ab13a20c0821c72a-10"></a>    <span class="k">return</span> <span class="n">outFunction</span>
-<a name="rest_code_dfd08b9ff1df4c13ab13a20c0821c72a-11"></a>
-<a name="rest_code_dfd08b9ff1df4c13ab13a20c0821c72a-12"></a><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
-<a name="rest_code_dfd08b9ff1df4c13ab13a20c0821c72a-13"></a>    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+<pre class="code python"><a name="rest_code_db7e926b3a794d22801632f194920b42-1"></a><span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">inFunction</span><span class="p">):</span>
+<a name="rest_code_db7e926b3a794d22801632f194920b42-2"></a>    <span class="k">def</span> <span class="nf">outFunction</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<a name="rest_code_db7e926b3a794d22801632f194920b42-3"></a>        <span class="k">print</span><span class="p">(</span><span class="s1">'The input arguments were:'</span><span class="p">)</span>
+<a name="rest_code_db7e926b3a794d22801632f194920b42-4"></a>        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<a name="rest_code_db7e926b3a794d22801632f194920b42-5"></a>            <span class="k">print</span><span class="p">(</span><span class="s1">'</span><span class="si">%r</span><span class="s1"> : </span><span class="si">%r</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+<a name="rest_code_db7e926b3a794d22801632f194920b42-6"></a>
+<a name="rest_code_db7e926b3a794d22801632f194920b42-7"></a>        <span class="c1"># Return the original function</span>
+<a name="rest_code_db7e926b3a794d22801632f194920b42-8"></a>        <span class="k">return</span> <span class="n">inFunction</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<a name="rest_code_db7e926b3a794d22801632f194920b42-9"></a>
+<a name="rest_code_db7e926b3a794d22801632f194920b42-10"></a>    <span class="k">return</span> <span class="n">outFunction</span>
+<a name="rest_code_db7e926b3a794d22801632f194920b42-11"></a>
+<a name="rest_code_db7e926b3a794d22801632f194920b42-12"></a><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
+<a name="rest_code_db7e926b3a794d22801632f194920b42-13"></a>    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
 </pre>
 <p><cite>wrapper(inFunction)</cite> is a function that accepts another function as an argument. It returns a
 function that simply prints the keyword arguments of <cite>inFunction()</cite>, and calls <cite>inFunction()</cite> like
@@ -112,12 +112,12 @@ normal.</p>
 <p>To decorate the function <cite>add(x = 1, y = 2)</cite> so that its arguments are printed without recoding it,
 we normally would place <cite>@wrapper</cite> before its definition. However, let's make the decorator in a
 way that's closer to how <cite>@</cite> works under the hood:</p>
-<pre class="code shell"><a name="rest_code_0fe0f5f80c404a2791a9b35ded541da6-1"></a>In <span class="o">[</span><span class="m">22</span><span class="o">]</span>: <span class="nv">decoratedAdd</span> <span class="o">=</span> wrapper<span class="o">(</span>add<span class="o">)</span>
-<a name="rest_code_0fe0f5f80c404a2791a9b35ded541da6-2"></a>In <span class="o">[</span><span class="m">23</span><span class="o">]</span>: decoratedAdd<span class="o">(</span><span class="nv">x</span> <span class="o">=</span> <span class="m">1</span>, <span class="nv">y</span> <span class="o">=</span> <span class="m">24</span><span class="o">)</span>
-<a name="rest_code_0fe0f5f80c404a2791a9b35ded541da6-3"></a>The input arguments were:
-<a name="rest_code_0fe0f5f80c404a2791a9b35ded541da6-4"></a><span class="s1">'y'</span> : <span class="m">24</span>
-<a name="rest_code_0fe0f5f80c404a2791a9b35ded541da6-5"></a><span class="s1">'x'</span> : <span class="m">1</span>
-<a name="rest_code_0fe0f5f80c404a2791a9b35ded541da6-6"></a>Out<span class="o">[</span><span class="m">23</span><span class="o">]</span>: <span class="m">25</span>
+<pre class="code shell"><a name="rest_code_b7bf98935d58463d9240a7357e074015-1"></a>In <span class="o">[</span><span class="m">22</span><span class="o">]</span>: <span class="nv">decoratedAdd</span> <span class="o">=</span> wrapper<span class="o">(</span>add<span class="o">)</span>
+<a name="rest_code_b7bf98935d58463d9240a7357e074015-2"></a>In <span class="o">[</span><span class="m">23</span><span class="o">]</span>: decoratedAdd<span class="o">(</span><span class="nv">x</span> <span class="o">=</span> <span class="m">1</span>, <span class="nv">y</span> <span class="o">=</span> <span class="m">24</span><span class="o">)</span>
+<a name="rest_code_b7bf98935d58463d9240a7357e074015-3"></a>The input arguments were:
+<a name="rest_code_b7bf98935d58463d9240a7357e074015-4"></a><span class="s1">'y'</span> : <span class="m">24</span>
+<a name="rest_code_b7bf98935d58463d9240a7357e074015-5"></a><span class="s1">'x'</span> : <span class="m">1</span>
+<a name="rest_code_b7bf98935d58463d9240a7357e074015-6"></a>Out<span class="o">[</span><span class="m">23</span><span class="o">]</span>: <span class="m">25</span>
 </pre>
 <p>When we call <cite>decoratedAdd(x = 1, y = 24)</cite>, the arguments are printed to the screen and we still
 get the same functionality of <cite>add()</cite>. What I wanted to know was this: are the keyword arguments x
@@ -128,11 +128,11 @@ function?</em></p>
 returns the decorated function, and then the arguments are passed into the decorated function. If
 this order of operations were flipped, <cite>wrapper()</cite> should know that I set x to 1 and y to 24, but
 really it doesn't know these details at all.</p>
-<pre class="code shell"><a name="rest_code_06ea438022684720b308c89f52226597-1"></a>In <span class="o">[</span><span class="m">24</span><span class="o">]</span>: wrapper<span class="o">(</span>add<span class="o">)(</span><span class="nv">x</span> <span class="o">=</span> <span class="m">1</span>, <span class="nv">y</span> <span class="o">=</span> <span class="m">24</span><span class="o">)</span>
-<a name="rest_code_06ea438022684720b308c89f52226597-2"></a>The input arguments were:
-<a name="rest_code_06ea438022684720b308c89f52226597-3"></a><span class="s1">'y'</span> : <span class="m">24</span>
-<a name="rest_code_06ea438022684720b308c89f52226597-4"></a><span class="s1">'x'</span> : <span class="m">1</span>
-<a name="rest_code_06ea438022684720b308c89f52226597-5"></a>Out<span class="o">[</span><span class="m">24</span><span class="o">]</span>: <span class="m">25</span>
+<pre class="code shell"><a name="rest_code_b0f9c0cbc0c94212a947b5d8beca8d8a-1"></a>In <span class="o">[</span><span class="m">24</span><span class="o">]</span>: wrapper<span class="o">(</span>add<span class="o">)(</span><span class="nv">x</span> <span class="o">=</span> <span class="m">1</span>, <span class="nv">y</span> <span class="o">=</span> <span class="m">24</span><span class="o">)</span>
+<a name="rest_code_b0f9c0cbc0c94212a947b5d8beca8d8a-2"></a>The input arguments were:
+<a name="rest_code_b0f9c0cbc0c94212a947b5d8beca8d8a-3"></a><span class="s1">'y'</span> : <span class="m">24</span>
+<a name="rest_code_b0f9c0cbc0c94212a947b5d8beca8d8a-4"></a><span class="s1">'x'</span> : <span class="m">1</span>
+<a name="rest_code_b0f9c0cbc0c94212a947b5d8beca8d8a-5"></a>Out<span class="o">[</span><span class="m">24</span><span class="o">]</span>: <span class="m">25</span>
 </pre>
 <p>So, when I call <cite>wrapper(add)(x = 1, y = 24)</cite>, first <cite>wrapper(add)</cite> is called, which returns
 <cite>outFunction()</cite>, and then these arguments are passed to <cite>outFunction()</cite>.</p>
@@ -209,7 +209,7 @@ all the details across all length scales to reproduce what exactly is going on.<
             </span></p>
             <p class="dateline">
             <a href="posts/learning-pythons-multiprocessing-module/" rel="bookmark">
-            <time class="published dt-published" datetime="2014-12-29T18:42:23+01:00" itemprop="datePublished" title="2014-12-29 18:42">2014-12-29 18:42</time></a>
+            <time class="published dt-published" datetime="2014-12-29T18:42:23+01:00" itemprop="datePublished" title="2015-12-29 18:42">2015-12-29 18:42</time></a>
             </p>
                 <p class="commentline">
         
@@ -252,22 +252,22 @@ main aspects of the multiprocessing module. They state that the simplest way to 
 different cores of a machine is to create new <cite>Process</cite> objects with target functions. Each object
 is then set to execute by calling its <cite>start()</cite> method.</p>
 <p>The basic example from their site looks like this:</p>
-<pre class="code python"><a name="rest_code_3e4e82fb623243b99c24c092a7f7c571-1"></a><span class="kn">import</span> <span class="nn">multiprocessing</span>
-<a name="rest_code_3e4e82fb623243b99c24c092a7f7c571-2"></a>
-<a name="rest_code_3e4e82fb623243b99c24c092a7f7c571-3"></a><span class="k">def</span> <span class="nf">worker</span><span class="p">():</span>
-<a name="rest_code_3e4e82fb623243b99c24c092a7f7c571-4"></a>    <span class="sd">"""worker function"""</span>
-<a name="rest_code_3e4e82fb623243b99c24c092a7f7c571-5"></a>    <span class="k">print</span> <span class="s1">'Worker'</span>
-<a name="rest_code_3e4e82fb623243b99c24c092a7f7c571-6"></a>    <span class="k">return</span>
-<a name="rest_code_3e4e82fb623243b99c24c092a7f7c571-7"></a>
-<a name="rest_code_3e4e82fb623243b99c24c092a7f7c571-8"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
-<a name="rest_code_3e4e82fb623243b99c24c092a7f7c571-9"></a>    <span class="n">jobs</span> <span class="o">=</span> <span class="p">[]</span>
-<a name="rest_code_3e4e82fb623243b99c24c092a7f7c571-10"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
-<a name="rest_code_3e4e82fb623243b99c24c092a7f7c571-11"></a>        <span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">worker</span><span class="p">)</span>
-<a name="rest_code_3e4e82fb623243b99c24c092a7f7c571-12"></a>        <span class="n">jobs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-<a name="rest_code_3e4e82fb623243b99c24c092a7f7c571-13"></a>        <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<pre class="code python"><a name="rest_code_548179ef68394d8ab26ab5c1c8d19da1-1"></a><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<a name="rest_code_548179ef68394d8ab26ab5c1c8d19da1-2"></a>
+<a name="rest_code_548179ef68394d8ab26ab5c1c8d19da1-3"></a><span class="k">def</span> <span class="nf">worker</span><span class="p">():</span>
+<a name="rest_code_548179ef68394d8ab26ab5c1c8d19da1-4"></a>    <span class="sd">"""worker function"""</span>
+<a name="rest_code_548179ef68394d8ab26ab5c1c8d19da1-5"></a>    <span class="k">print</span> <span class="s1">'Worker'</span>
+<a name="rest_code_548179ef68394d8ab26ab5c1c8d19da1-6"></a>    <span class="k">return</span>
+<a name="rest_code_548179ef68394d8ab26ab5c1c8d19da1-7"></a>
+<a name="rest_code_548179ef68394d8ab26ab5c1c8d19da1-8"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
+<a name="rest_code_548179ef68394d8ab26ab5c1c8d19da1-9"></a>    <span class="n">jobs</span> <span class="o">=</span> <span class="p">[]</span>
+<a name="rest_code_548179ef68394d8ab26ab5c1c8d19da1-10"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+<a name="rest_code_548179ef68394d8ab26ab5c1c8d19da1-11"></a>        <span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">worker</span><span class="p">)</span>
+<a name="rest_code_548179ef68394d8ab26ab5c1c8d19da1-12"></a>        <span class="n">jobs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<a name="rest_code_548179ef68394d8ab26ab5c1c8d19da1-13"></a>        <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 </pre>
 <p>In this example, it's important to create the Process instances inside the</p>
-<pre class="code python"><a name="rest_code_3bb4b8ef0aa541658f60465c29abd774-1"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
+<pre class="code python"><a name="rest_code_d46b279749514d93bf85c68fa16bc8ea-1"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
 </pre>
 <p>section of the script because child processes import the script where the target function is
 contained. Placing the object instantiation in this section prevents an infinite, recursive string
@@ -275,7 +275,7 @@ of such instantiations. A workaround to this is to define the function in a diff
 import it into the namespace.</p>
 <p>To send arguments to the function (<cite>worker()</cite> in the example above), we can use the <cite>args</cite> keyword
 in the Process object instantiation like</p>
-<pre class="code python"><a name="rest_code_adf9fac482c949c2b157ae0c9bca6ebe-1"></a><span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">worker</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">i</span><span class="p">,))</span>
+<pre class="code python"><a name="rest_code_a5a2d7a8be5d42219d9e4a6b0c70ca30-1"></a><span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">worker</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">i</span><span class="p">,))</span>
 </pre>
 <p>A very important thing to note is that the arguments must be objects that can be pickled using
 Python's pickle module. If an argument is a class instance, this means that every attritube of that
@@ -288,15 +288,15 @@ essentially applies a function to each element in an iterable and returns the re
 if I wanted to square each number in a list of integers between 0 and 9 and perform the square
 operation on multiple processors, I would write a function for squaring an argument, and supply
 this function and the list of integers to <cite>Pool.map()</cite>. The code looks like this:</p>
-<pre class="code python"><a name="rest_code_8e898229e90e49e79783c32c3a0c99e9-1"></a><span class="kn">import</span> <span class="nn">multiprocessing</span>
-<a name="rest_code_8e898229e90e49e79783c32c3a0c99e9-2"></a>
-<a name="rest_code_8e898229e90e49e79783c32c3a0c99e9-3"></a><span class="k">def</span> <span class="nf">funSquare</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
-<a name="rest_code_8e898229e90e49e79783c32c3a0c99e9-4"></a>    <span class="k">return</span> <span class="n">num</span> <span class="o">**</span> <span class="mi">2</span>
-<a name="rest_code_8e898229e90e49e79783c32c3a0c99e9-5"></a>
-<a name="rest_code_8e898229e90e49e79783c32c3a0c99e9-6"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
-<a name="rest_code_8e898229e90e49e79783c32c3a0c99e9-7"></a>    <span class="n">pool</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Pool</span><span class="p">()</span>
-<a name="rest_code_8e898229e90e49e79783c32c3a0c99e9-8"></a>    <span class="n">results</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">funSquare</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
-<a name="rest_code_8e898229e90e49e79783c32c3a0c99e9-9"></a>    <span class="k">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+<pre class="code python"><a name="rest_code_17246f1db8824fcdb5761ff17e6e78b7-1"></a><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<a name="rest_code_17246f1db8824fcdb5761ff17e6e78b7-2"></a>
+<a name="rest_code_17246f1db8824fcdb5761ff17e6e78b7-3"></a><span class="k">def</span> <span class="nf">funSquare</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+<a name="rest_code_17246f1db8824fcdb5761ff17e6e78b7-4"></a>    <span class="k">return</span> <span class="n">num</span> <span class="o">**</span> <span class="mi">2</span>
+<a name="rest_code_17246f1db8824fcdb5761ff17e6e78b7-5"></a>
+<a name="rest_code_17246f1db8824fcdb5761ff17e6e78b7-6"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
+<a name="rest_code_17246f1db8824fcdb5761ff17e6e78b7-7"></a>    <span class="n">pool</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Pool</span><span class="p">()</span>
+<a name="rest_code_17246f1db8824fcdb5761ff17e6e78b7-8"></a>    <span class="n">results</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">funSquare</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<a name="rest_code_17246f1db8824fcdb5761ff17e6e78b7-9"></a>    <span class="k">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
 </pre>
 </div>
 <div class="section" id="design-the-solution-to-the-problem">
@@ -322,31 +322,31 @@ a disk. This may change depending on your specific problem.</p>
 <p>I'll now give a simplified example of how this solution to the parameter sweep can be implemented
 using Python's multiprocessing module. I won't use objects like in my real code, but will first
 demonstrate an example where <cite>Pool.map()</cite> is applied to a list of numbers.</p>
-<pre class="code python"><a name="rest_code_6a5ed861e03b4b83be551dda0b221f82-1"></a><span class="kn">import</span> <span class="nn">multiprocessing</span>
-<a name="rest_code_6a5ed861e03b4b83be551dda0b221f82-2"></a>
-<a name="rest_code_6a5ed861e03b4b83be551dda0b221f82-3"></a><span class="k">def</span> <span class="nf">runSimulation</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
-<a name="rest_code_6a5ed861e03b4b83be551dda0b221f82-4"></a>    <span class="sd">"""This is the main processing function. It will contain whatever</span>
-<a name="rest_code_6a5ed861e03b4b83be551dda0b221f82-5"></a><span class="sd">    code should be run on multiple processors.</span>
-<a name="rest_code_6a5ed861e03b4b83be551dda0b221f82-6"></a>
-<a name="rest_code_6a5ed861e03b4b83be551dda0b221f82-7"></a><span class="sd">    """</span>
-<a name="rest_code_6a5ed861e03b4b83be551dda0b221f82-8"></a>    <span class="n">param1</span><span class="p">,</span> <span class="n">param2</span> <span class="o">=</span> <span class="n">params</span>
-<a name="rest_code_6a5ed861e03b4b83be551dda0b221f82-9"></a>    <span class="c1"># Example computation</span>
-<a name="rest_code_6a5ed861e03b4b83be551dda0b221f82-10"></a>    <span class="n">processedData</span> <span class="o">=</span> <span class="p">[]</span>
-<a name="rest_code_6a5ed861e03b4b83be551dda0b221f82-11"></a>    <span class="k">for</span> <span class="n">ctr</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000000</span><span class="p">):</span>
-<a name="rest_code_6a5ed861e03b4b83be551dda0b221f82-12"></a>        <span class="n">processedData</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">param1</span> <span class="o">*</span> <span class="n">ctr</span> <span class="o">-</span> <span class="n">param2</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
-<a name="rest_code_6a5ed861e03b4b83be551dda0b221f82-13"></a>
-<a name="rest_code_6a5ed861e03b4b83be551dda0b221f82-14"></a>    <span class="k">return</span> <span class="n">processedData</span>
-<a name="rest_code_6a5ed861e03b4b83be551dda0b221f82-15"></a>
-<a name="rest_code_6a5ed861e03b4b83be551dda0b221f82-16"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
-<a name="rest_code_6a5ed861e03b4b83be551dda0b221f82-17"></a>    <span class="c1"># Define the parameters to test</span>
-<a name="rest_code_6a5ed861e03b4b83be551dda0b221f82-18"></a>    <span class="n">param1</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
-<a name="rest_code_6a5ed861e03b4b83be551dda0b221f82-19"></a>    <span class="n">param2</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">202</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<a name="rest_code_6a5ed861e03b4b83be551dda0b221f82-20"></a>
-<a name="rest_code_6a5ed861e03b4b83be551dda0b221f82-21"></a>    <span class="c1"># Zip the parameters because pool.map() takes only one iterable</span>
-<a name="rest_code_6a5ed861e03b4b83be551dda0b221f82-22"></a>    <span class="n">params</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">param1</span><span class="p">,</span> <span class="n">param2</span><span class="p">)</span>
-<a name="rest_code_6a5ed861e03b4b83be551dda0b221f82-23"></a>
-<a name="rest_code_6a5ed861e03b4b83be551dda0b221f82-24"></a>    <span class="n">pool</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Pool</span><span class="p">()</span>
-<a name="rest_code_6a5ed861e03b4b83be551dda0b221f82-25"></a>    <span class="n">results</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">runSimulation</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+<pre class="code python"><a name="rest_code_2fb6a6bfd8f94f6aa2b5cbb85880ea07-1"></a><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<a name="rest_code_2fb6a6bfd8f94f6aa2b5cbb85880ea07-2"></a>
+<a name="rest_code_2fb6a6bfd8f94f6aa2b5cbb85880ea07-3"></a><span class="k">def</span> <span class="nf">runSimulation</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
+<a name="rest_code_2fb6a6bfd8f94f6aa2b5cbb85880ea07-4"></a>    <span class="sd">"""This is the main processing function. It will contain whatever</span>
+<a name="rest_code_2fb6a6bfd8f94f6aa2b5cbb85880ea07-5"></a><span class="sd">    code should be run on multiple processors.</span>
+<a name="rest_code_2fb6a6bfd8f94f6aa2b5cbb85880ea07-6"></a>
+<a name="rest_code_2fb6a6bfd8f94f6aa2b5cbb85880ea07-7"></a><span class="sd">    """</span>
+<a name="rest_code_2fb6a6bfd8f94f6aa2b5cbb85880ea07-8"></a>    <span class="n">param1</span><span class="p">,</span> <span class="n">param2</span> <span class="o">=</span> <span class="n">params</span>
+<a name="rest_code_2fb6a6bfd8f94f6aa2b5cbb85880ea07-9"></a>    <span class="c1"># Example computation</span>
+<a name="rest_code_2fb6a6bfd8f94f6aa2b5cbb85880ea07-10"></a>    <span class="n">processedData</span> <span class="o">=</span> <span class="p">[]</span>
+<a name="rest_code_2fb6a6bfd8f94f6aa2b5cbb85880ea07-11"></a>    <span class="k">for</span> <span class="n">ctr</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000000</span><span class="p">):</span>
+<a name="rest_code_2fb6a6bfd8f94f6aa2b5cbb85880ea07-12"></a>        <span class="n">processedData</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">param1</span> <span class="o">*</span> <span class="n">ctr</span> <span class="o">-</span> <span class="n">param2</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+<a name="rest_code_2fb6a6bfd8f94f6aa2b5cbb85880ea07-13"></a>
+<a name="rest_code_2fb6a6bfd8f94f6aa2b5cbb85880ea07-14"></a>    <span class="k">return</span> <span class="n">processedData</span>
+<a name="rest_code_2fb6a6bfd8f94f6aa2b5cbb85880ea07-15"></a>
+<a name="rest_code_2fb6a6bfd8f94f6aa2b5cbb85880ea07-16"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
+<a name="rest_code_2fb6a6bfd8f94f6aa2b5cbb85880ea07-17"></a>    <span class="c1"># Define the parameters to test</span>
+<a name="rest_code_2fb6a6bfd8f94f6aa2b5cbb85880ea07-18"></a>    <span class="n">param1</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<a name="rest_code_2fb6a6bfd8f94f6aa2b5cbb85880ea07-19"></a>    <span class="n">param2</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">202</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<a name="rest_code_2fb6a6bfd8f94f6aa2b5cbb85880ea07-20"></a>
+<a name="rest_code_2fb6a6bfd8f94f6aa2b5cbb85880ea07-21"></a>    <span class="c1"># Zip the parameters because pool.map() takes only one iterable</span>
+<a name="rest_code_2fb6a6bfd8f94f6aa2b5cbb85880ea07-22"></a>    <span class="n">params</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">param1</span><span class="p">,</span> <span class="n">param2</span><span class="p">)</span>
+<a name="rest_code_2fb6a6bfd8f94f6aa2b5cbb85880ea07-23"></a>
+<a name="rest_code_2fb6a6bfd8f94f6aa2b5cbb85880ea07-24"></a>    <span class="n">pool</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Pool</span><span class="p">()</span>
+<a name="rest_code_2fb6a6bfd8f94f6aa2b5cbb85880ea07-25"></a>    <span class="n">results</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">runSimulation</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
 </pre>
 <p>This is a rather silly example of a simulation, but I think it illustrates the point nicely. In the
 <cite>__main__</cite> portion of the code, I first define two lists for each parameter value that I want to
@@ -368,37 +368,37 @@ example.</p>
 <p>In my real simulation code, I use a class to encapsulate a number of structural parameters and
 methods for simulating a polymer model. So long as instances of this class can be <a class="reference external" href="https://docs.python.org/3/library/pickle.html">pickled</a>, I can use them as the iterable in <cite>Pool.map()</cite>,
 not just lists of floating point numbers.</p>
-<pre class="code python"><a name="rest_code_6c1756fc61474e7d882dfbca107e6bde-1"></a><span class="kn">import</span> <span class="nn">multiprocessing</span>
-<a name="rest_code_6c1756fc61474e7d882dfbca107e6bde-2"></a>
-<a name="rest_code_6c1756fc61474e7d882dfbca107e6bde-3"></a><span class="k">class</span> <span class="nc">simObject</span><span class="p">():</span>
-<a name="rest_code_6c1756fc61474e7d882dfbca107e6bde-4"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
-<a name="rest_code_6c1756fc61474e7d882dfbca107e6bde-5"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">param1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">param2</span> <span class="o">=</span> <span class="n">params</span>
-<a name="rest_code_6c1756fc61474e7d882dfbca107e6bde-6"></a>
-<a name="rest_code_6c1756fc61474e7d882dfbca107e6bde-7"></a><span class="k">def</span> <span class="nf">runSimulation</span><span class="p">(</span><span class="n">objInstance</span><span class="p">):</span>
-<a name="rest_code_6c1756fc61474e7d882dfbca107e6bde-8"></a>    <span class="sd">"""This is the main processing function. It will contain whatever</span>
-<a name="rest_code_6c1756fc61474e7d882dfbca107e6bde-9"></a><span class="sd">    code should be run on multiple processors.</span>
-<a name="rest_code_6c1756fc61474e7d882dfbca107e6bde-10"></a>
-<a name="rest_code_6c1756fc61474e7d882dfbca107e6bde-11"></a><span class="sd">    """</span>
-<a name="rest_code_6c1756fc61474e7d882dfbca107e6bde-12"></a>    <span class="n">param1</span><span class="p">,</span> <span class="n">param2</span> <span class="o">=</span> <span class="n">objInstance</span><span class="o">.</span><span class="n">param1</span><span class="p">,</span> <span class="n">objInstance</span><span class="o">.</span><span class="n">param2</span>
-<a name="rest_code_6c1756fc61474e7d882dfbca107e6bde-13"></a>    <span class="c1"># Example computation</span>
-<a name="rest_code_6c1756fc61474e7d882dfbca107e6bde-14"></a>    <span class="n">processedData</span> <span class="o">=</span> <span class="p">[]</span>
-<a name="rest_code_6c1756fc61474e7d882dfbca107e6bde-15"></a>    <span class="k">for</span> <span class="n">ctr</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000000</span><span class="p">):</span>
-<a name="rest_code_6c1756fc61474e7d882dfbca107e6bde-16"></a>        <span class="n">processedData</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">param1</span> <span class="o">*</span> <span class="n">ctr</span> <span class="o">-</span> <span class="n">param2</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
-<a name="rest_code_6c1756fc61474e7d882dfbca107e6bde-17"></a>
-<a name="rest_code_6c1756fc61474e7d882dfbca107e6bde-18"></a>    <span class="k">return</span> <span class="n">processedData</span>
-<a name="rest_code_6c1756fc61474e7d882dfbca107e6bde-19"></a>
-<a name="rest_code_6c1756fc61474e7d882dfbca107e6bde-20"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
-<a name="rest_code_6c1756fc61474e7d882dfbca107e6bde-21"></a>    <span class="c1"># Define the parameters to test</span>
-<a name="rest_code_6c1756fc61474e7d882dfbca107e6bde-22"></a>    <span class="n">param1</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
-<a name="rest_code_6c1756fc61474e7d882dfbca107e6bde-23"></a>    <span class="n">param2</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">202</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<a name="rest_code_6c1756fc61474e7d882dfbca107e6bde-24"></a>
-<a name="rest_code_6c1756fc61474e7d882dfbca107e6bde-25"></a>    <span class="n">objList</span> <span class="o">=</span> <span class="p">[]</span>
-<a name="rest_code_6c1756fc61474e7d882dfbca107e6bde-26"></a>    <span class="c1"># Create a list of objects to feed into pool.map()</span>
-<a name="rest_code_6c1756fc61474e7d882dfbca107e6bde-27"></a>    <span class="k">for</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">param1</span><span class="p">,</span> <span class="n">param2</span><span class="p">):</span>
-<a name="rest_code_6c1756fc61474e7d882dfbca107e6bde-28"></a>        <span class="n">objList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">simObject</span><span class="p">((</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">)))</span>
-<a name="rest_code_6c1756fc61474e7d882dfbca107e6bde-29"></a>
-<a name="rest_code_6c1756fc61474e7d882dfbca107e6bde-30"></a>    <span class="n">pool</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Pool</span><span class="p">()</span>
-<a name="rest_code_6c1756fc61474e7d882dfbca107e6bde-31"></a>    <span class="n">results</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">runSimulation</span><span class="p">,</span> <span class="n">objList</span><span class="p">)</span>
+<pre class="code python"><a name="rest_code_903f2e22a53148cf86751b890b6beea0-1"></a><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<a name="rest_code_903f2e22a53148cf86751b890b6beea0-2"></a>
+<a name="rest_code_903f2e22a53148cf86751b890b6beea0-3"></a><span class="k">class</span> <span class="nc">simObject</span><span class="p">():</span>
+<a name="rest_code_903f2e22a53148cf86751b890b6beea0-4"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+<a name="rest_code_903f2e22a53148cf86751b890b6beea0-5"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">param1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">param2</span> <span class="o">=</span> <span class="n">params</span>
+<a name="rest_code_903f2e22a53148cf86751b890b6beea0-6"></a>
+<a name="rest_code_903f2e22a53148cf86751b890b6beea0-7"></a><span class="k">def</span> <span class="nf">runSimulation</span><span class="p">(</span><span class="n">objInstance</span><span class="p">):</span>
+<a name="rest_code_903f2e22a53148cf86751b890b6beea0-8"></a>    <span class="sd">"""This is the main processing function. It will contain whatever</span>
+<a name="rest_code_903f2e22a53148cf86751b890b6beea0-9"></a><span class="sd">    code should be run on multiple processors.</span>
+<a name="rest_code_903f2e22a53148cf86751b890b6beea0-10"></a>
+<a name="rest_code_903f2e22a53148cf86751b890b6beea0-11"></a><span class="sd">    """</span>
+<a name="rest_code_903f2e22a53148cf86751b890b6beea0-12"></a>    <span class="n">param1</span><span class="p">,</span> <span class="n">param2</span> <span class="o">=</span> <span class="n">objInstance</span><span class="o">.</span><span class="n">param1</span><span class="p">,</span> <span class="n">objInstance</span><span class="o">.</span><span class="n">param2</span>
+<a name="rest_code_903f2e22a53148cf86751b890b6beea0-13"></a>    <span class="c1"># Example computation</span>
+<a name="rest_code_903f2e22a53148cf86751b890b6beea0-14"></a>    <span class="n">processedData</span> <span class="o">=</span> <span class="p">[]</span>
+<a name="rest_code_903f2e22a53148cf86751b890b6beea0-15"></a>    <span class="k">for</span> <span class="n">ctr</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000000</span><span class="p">):</span>
+<a name="rest_code_903f2e22a53148cf86751b890b6beea0-16"></a>        <span class="n">processedData</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">param1</span> <span class="o">*</span> <span class="n">ctr</span> <span class="o">-</span> <span class="n">param2</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+<a name="rest_code_903f2e22a53148cf86751b890b6beea0-17"></a>
+<a name="rest_code_903f2e22a53148cf86751b890b6beea0-18"></a>    <span class="k">return</span> <span class="n">processedData</span>
+<a name="rest_code_903f2e22a53148cf86751b890b6beea0-19"></a>
+<a name="rest_code_903f2e22a53148cf86751b890b6beea0-20"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
+<a name="rest_code_903f2e22a53148cf86751b890b6beea0-21"></a>    <span class="c1"># Define the parameters to test</span>
+<a name="rest_code_903f2e22a53148cf86751b890b6beea0-22"></a>    <span class="n">param1</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<a name="rest_code_903f2e22a53148cf86751b890b6beea0-23"></a>    <span class="n">param2</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">202</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<a name="rest_code_903f2e22a53148cf86751b890b6beea0-24"></a>
+<a name="rest_code_903f2e22a53148cf86751b890b6beea0-25"></a>    <span class="n">objList</span> <span class="o">=</span> <span class="p">[]</span>
+<a name="rest_code_903f2e22a53148cf86751b890b6beea0-26"></a>    <span class="c1"># Create a list of objects to feed into pool.map()</span>
+<a name="rest_code_903f2e22a53148cf86751b890b6beea0-27"></a>    <span class="k">for</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">param1</span><span class="p">,</span> <span class="n">param2</span><span class="p">):</span>
+<a name="rest_code_903f2e22a53148cf86751b890b6beea0-28"></a>        <span class="n">objList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">simObject</span><span class="p">((</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">)))</span>
+<a name="rest_code_903f2e22a53148cf86751b890b6beea0-29"></a>
+<a name="rest_code_903f2e22a53148cf86751b890b6beea0-30"></a>    <span class="n">pool</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Pool</span><span class="p">()</span>
+<a name="rest_code_903f2e22a53148cf86751b890b6beea0-31"></a>    <span class="n">results</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">runSimulation</span><span class="p">,</span> <span class="n">objList</span><span class="p">)</span>
 </pre>
 <p>Again, this is a silly example, but it demonstrates that lists of objects can be used in the
 parameter sweep, allowing for easy parallelization of object-oriented code.</p>
@@ -411,43 +411,43 @@ method and pass the object instance into the pool. More details can be found <a 
 <h2>Comparing computation times</h2>
 <p>The following code makes a rough comparison between computation time for the parallel and serial
 versions of <cite>map()</cite>:</p>
-<pre class="code python"><a name="rest_code_814f65081d71423ebe89ef9ac0ec2399-1"></a><span class="kn">import</span> <span class="nn">multiprocessing</span>
-<a name="rest_code_814f65081d71423ebe89ef9ac0ec2399-2"></a><span class="kn">import</span> <span class="nn">time</span>
-<a name="rest_code_814f65081d71423ebe89ef9ac0ec2399-3"></a>
-<a name="rest_code_814f65081d71423ebe89ef9ac0ec2399-4"></a><span class="k">def</span> <span class="nf">runSimulation</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
-<a name="rest_code_814f65081d71423ebe89ef9ac0ec2399-5"></a>    <span class="sd">"""This is the main processing function. It will contain whatever</span>
-<a name="rest_code_814f65081d71423ebe89ef9ac0ec2399-6"></a><span class="sd">    code should be run on multiple processors.</span>
-<a name="rest_code_814f65081d71423ebe89ef9ac0ec2399-7"></a>
-<a name="rest_code_814f65081d71423ebe89ef9ac0ec2399-8"></a><span class="sd">    """</span>
-<a name="rest_code_814f65081d71423ebe89ef9ac0ec2399-9"></a>    <span class="n">param1</span><span class="p">,</span> <span class="n">param2</span> <span class="o">=</span> <span class="n">params</span>
-<a name="rest_code_814f65081d71423ebe89ef9ac0ec2399-10"></a>    <span class="c1"># Example computation</span>
-<a name="rest_code_814f65081d71423ebe89ef9ac0ec2399-11"></a>    <span class="n">processedData</span> <span class="o">=</span> <span class="p">[]</span>
-<a name="rest_code_814f65081d71423ebe89ef9ac0ec2399-12"></a>    <span class="k">for</span> <span class="n">ctr</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000000</span><span class="p">):</span>
-<a name="rest_code_814f65081d71423ebe89ef9ac0ec2399-13"></a>        <span class="n">processedData</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">param1</span> <span class="o">*</span> <span class="n">ctr</span> <span class="o">-</span> <span class="n">param2</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
-<a name="rest_code_814f65081d71423ebe89ef9ac0ec2399-14"></a>
-<a name="rest_code_814f65081d71423ebe89ef9ac0ec2399-15"></a>    <span class="k">return</span> <span class="n">processedData</span>
-<a name="rest_code_814f65081d71423ebe89ef9ac0ec2399-16"></a>
-<a name="rest_code_814f65081d71423ebe89ef9ac0ec2399-17"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
-<a name="rest_code_814f65081d71423ebe89ef9ac0ec2399-18"></a>    <span class="c1"># Define the parameters to test</span>
-<a name="rest_code_814f65081d71423ebe89ef9ac0ec2399-19"></a>    <span class="n">param1</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
-<a name="rest_code_814f65081d71423ebe89ef9ac0ec2399-20"></a>    <span class="n">param2</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">202</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<a name="rest_code_814f65081d71423ebe89ef9ac0ec2399-21"></a>
-<a name="rest_code_814f65081d71423ebe89ef9ac0ec2399-22"></a>    <span class="n">params</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">param1</span><span class="p">,</span> <span class="n">param2</span><span class="p">)</span>
-<a name="rest_code_814f65081d71423ebe89ef9ac0ec2399-23"></a>
-<a name="rest_code_814f65081d71423ebe89ef9ac0ec2399-24"></a>    <span class="n">pool</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Pool</span><span class="p">()</span>
-<a name="rest_code_814f65081d71423ebe89ef9ac0ec2399-25"></a>
-<a name="rest_code_814f65081d71423ebe89ef9ac0ec2399-26"></a>    <span class="c1"># Parallel map</span>
-<a name="rest_code_814f65081d71423ebe89ef9ac0ec2399-27"></a>    <span class="n">tic</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-<a name="rest_code_814f65081d71423ebe89ef9ac0ec2399-28"></a>    <span class="n">results</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">runSimulation</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
-<a name="rest_code_814f65081d71423ebe89ef9ac0ec2399-29"></a>    <span class="n">toc</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-<a name="rest_code_814f65081d71423ebe89ef9ac0ec2399-30"></a>
-<a name="rest_code_814f65081d71423ebe89ef9ac0ec2399-31"></a>    <span class="c1"># Serial map</span>
-<a name="rest_code_814f65081d71423ebe89ef9ac0ec2399-32"></a>    <span class="n">tic2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-<a name="rest_code_814f65081d71423ebe89ef9ac0ec2399-33"></a>    <span class="n">results</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">runSimulation</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
-<a name="rest_code_814f65081d71423ebe89ef9ac0ec2399-34"></a>    <span class="n">toc2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-<a name="rest_code_814f65081d71423ebe89ef9ac0ec2399-35"></a>
-<a name="rest_code_814f65081d71423ebe89ef9ac0ec2399-36"></a>    <span class="k">print</span><span class="p">(</span><span class="s1">'Parallel processing time: </span><span class="si">%r</span><span class="se">\n</span><span class="s1">Serial processing time: </span><span class="si">%r</span><span class="s1">'</span>
-<a name="rest_code_814f65081d71423ebe89ef9ac0ec2399-37"></a>          <span class="o">%</span> <span class="p">(</span><span class="n">toc</span> <span class="o">-</span> <span class="n">tic</span><span class="p">,</span> <span class="n">toc2</span> <span class="o">-</span> <span class="n">tic2</span><span class="p">))</span>
+<pre class="code python"><a name="rest_code_d2c536e4784946ff9b7a549a8b2568f9-1"></a><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<a name="rest_code_d2c536e4784946ff9b7a549a8b2568f9-2"></a><span class="kn">import</span> <span class="nn">time</span>
+<a name="rest_code_d2c536e4784946ff9b7a549a8b2568f9-3"></a>
+<a name="rest_code_d2c536e4784946ff9b7a549a8b2568f9-4"></a><span class="k">def</span> <span class="nf">runSimulation</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
+<a name="rest_code_d2c536e4784946ff9b7a549a8b2568f9-5"></a>    <span class="sd">"""This is the main processing function. It will contain whatever</span>
+<a name="rest_code_d2c536e4784946ff9b7a549a8b2568f9-6"></a><span class="sd">    code should be run on multiple processors.</span>
+<a name="rest_code_d2c536e4784946ff9b7a549a8b2568f9-7"></a>
+<a name="rest_code_d2c536e4784946ff9b7a549a8b2568f9-8"></a><span class="sd">    """</span>
+<a name="rest_code_d2c536e4784946ff9b7a549a8b2568f9-9"></a>    <span class="n">param1</span><span class="p">,</span> <span class="n">param2</span> <span class="o">=</span> <span class="n">params</span>
+<a name="rest_code_d2c536e4784946ff9b7a549a8b2568f9-10"></a>    <span class="c1"># Example computation</span>
+<a name="rest_code_d2c536e4784946ff9b7a549a8b2568f9-11"></a>    <span class="n">processedData</span> <span class="o">=</span> <span class="p">[]</span>
+<a name="rest_code_d2c536e4784946ff9b7a549a8b2568f9-12"></a>    <span class="k">for</span> <span class="n">ctr</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000000</span><span class="p">):</span>
+<a name="rest_code_d2c536e4784946ff9b7a549a8b2568f9-13"></a>        <span class="n">processedData</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">param1</span> <span class="o">*</span> <span class="n">ctr</span> <span class="o">-</span> <span class="n">param2</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+<a name="rest_code_d2c536e4784946ff9b7a549a8b2568f9-14"></a>
+<a name="rest_code_d2c536e4784946ff9b7a549a8b2568f9-15"></a>    <span class="k">return</span> <span class="n">processedData</span>
+<a name="rest_code_d2c536e4784946ff9b7a549a8b2568f9-16"></a>
+<a name="rest_code_d2c536e4784946ff9b7a549a8b2568f9-17"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
+<a name="rest_code_d2c536e4784946ff9b7a549a8b2568f9-18"></a>    <span class="c1"># Define the parameters to test</span>
+<a name="rest_code_d2c536e4784946ff9b7a549a8b2568f9-19"></a>    <span class="n">param1</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<a name="rest_code_d2c536e4784946ff9b7a549a8b2568f9-20"></a>    <span class="n">param2</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">202</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<a name="rest_code_d2c536e4784946ff9b7a549a8b2568f9-21"></a>
+<a name="rest_code_d2c536e4784946ff9b7a549a8b2568f9-22"></a>    <span class="n">params</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">param1</span><span class="p">,</span> <span class="n">param2</span><span class="p">)</span>
+<a name="rest_code_d2c536e4784946ff9b7a549a8b2568f9-23"></a>
+<a name="rest_code_d2c536e4784946ff9b7a549a8b2568f9-24"></a>    <span class="n">pool</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Pool</span><span class="p">()</span>
+<a name="rest_code_d2c536e4784946ff9b7a549a8b2568f9-25"></a>
+<a name="rest_code_d2c536e4784946ff9b7a549a8b2568f9-26"></a>    <span class="c1"># Parallel map</span>
+<a name="rest_code_d2c536e4784946ff9b7a549a8b2568f9-27"></a>    <span class="n">tic</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<a name="rest_code_d2c536e4784946ff9b7a549a8b2568f9-28"></a>    <span class="n">results</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">runSimulation</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+<a name="rest_code_d2c536e4784946ff9b7a549a8b2568f9-29"></a>    <span class="n">toc</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<a name="rest_code_d2c536e4784946ff9b7a549a8b2568f9-30"></a>
+<a name="rest_code_d2c536e4784946ff9b7a549a8b2568f9-31"></a>    <span class="c1"># Serial map</span>
+<a name="rest_code_d2c536e4784946ff9b7a549a8b2568f9-32"></a>    <span class="n">tic2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<a name="rest_code_d2c536e4784946ff9b7a549a8b2568f9-33"></a>    <span class="n">results</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">runSimulation</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+<a name="rest_code_d2c536e4784946ff9b7a549a8b2568f9-34"></a>    <span class="n">toc2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<a name="rest_code_d2c536e4784946ff9b7a549a8b2568f9-35"></a>
+<a name="rest_code_d2c536e4784946ff9b7a549a8b2568f9-36"></a>    <span class="k">print</span><span class="p">(</span><span class="s1">'Parallel processing time: </span><span class="si">%r</span><span class="se">\n</span><span class="s1">Serial processing time: </span><span class="si">%r</span><span class="s1">'</span>
+<a name="rest_code_d2c536e4784946ff9b7a549a8b2568f9-37"></a>          <span class="o">%</span> <span class="p">(</span><span class="n">toc</span> <span class="o">-</span> <span class="n">tic</span><span class="p">,</span> <span class="n">toc2</span> <span class="o">-</span> <span class="n">tic2</span><span class="p">))</span>
 </pre>
 <p>On my machine, <cite>pool.map()</cite> ran in 9.6 seconds, but the serial version took 163.3 seconds. My
 laptop has 8 cores, so I would have expected the speedup to be a factor of 8, not a factor
@@ -461,7 +461,7 @@ the <a class="reference external" href="http://hisham.hm/htop/">htop</a> console
 scipy, etc. may limit processes in Python to running on only one core on Linux machines, which
 defeats the purpose of writing concurrent code in this case. (See for example <a class="reference external" href="http://stackoverflow.com/questions/15639779/what-determines-whether-different-python-processes-are-assigned-to-the-same-or-d/15641148#15641148">this discussion</a>.)
 To fix this, we can import Python's <em>os</em> module to reset the task affinity in our code:</p>
-<pre class="code python"><a name="rest_code_734924f6764947fc9e304ab2bf2786dd-1"></a><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">"taskset -p 0xff </span><span class="si">%d</span><span class="s2">"</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">())</span>
+<pre class="code python"><a name="rest_code_b8e1d021fb0647f1b560e231df1818b7-1"></a><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">"taskset -p 0xff </span><span class="si">%d</span><span class="s2">"</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">())</span>
 </pre>
 </div>
 <div class="section" id="conclusions">
