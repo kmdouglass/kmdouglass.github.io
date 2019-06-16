@@ -283,7 +283,7 @@ Summary
   ``VTable``. This collection is part of a larger collection which owns pointers to the opaque data
   types exposed by the library, as well as the plugin library itself.
 - The trick to owning symbols (instead of looking them up in the library each time you want to use
-  them), is use ``into_raw`` method that is implemented on libloading's ``Symbol``.
+  them), is to use ``into_raw`` method that is implemented on libloading's ``Symbol``.
 - This design cannot be completely generalized to any C library, but should provide a good starting
   point to work with FFI plugins in Rust.
 
