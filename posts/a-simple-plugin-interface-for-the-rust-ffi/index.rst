@@ -22,7 +22,8 @@ In this post I will describe my current understanding for how best to integrate 
 with a Rust application. I have omitted all application-specific logic from the example and will
 instead focus on the design of the plugin interface itself.
 
-You may find `the source code for this post here`_.
+You may find `the source code for this post here`_. I was heavily inspired by both the `Rust FFI
+Omnibus`_ and `The (unofficial) Rust FFI Guide`_.
 
 The C plugin
 ============
@@ -284,6 +285,8 @@ Summary
 .. _`how to pass complex datatypes through the Rust FFI`: http://kmdouglass.github.io/posts/complex-data-types-and-the-rust-ffi/
 .. _`a small web application`: https://github.com/kmdouglass/kpal
 .. _`WiringPi`: http://wiringpi.com
+.. _`Rust FFI Omnibus`: http://jakegoulding.com/rust-ffi-omnibus/
+.. _`The (unofficial) Rust FFI Guide`: https://michael-f-bryan.github.io/rust-ffi-guide/
 .. _`the source code for this post here`: https://github.com/kmdouglass/rust-libloading-example
 .. _`ffi-test`: https://github.com/kmdouglass/rust-libloading-example/tree/master/ffi-test
 .. _`src/main.rs`: https://github.com/kmdouglass/rust-libloading-example/blob/master/src/main.rs
