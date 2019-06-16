@@ -23,7 +23,8 @@ with a Rust application. I have omitted all application-specific logic from the 
 instead focus on the design of the plugin interface itself.
 
 You may find `the source code for this post here`_. I was heavily inspired by both the `Rust FFI
-Omnibus`_ and `The (unofficial) Rust FFI Guide`_.
+Omnibus`_ and `The (unofficial) Rust FFI Guide`_. This post was written using version 1.35.0 of the
+Rust compiler.
 
 The C plugin
 ============
@@ -265,6 +266,10 @@ Another disadvantage of this design is that it relies on the particular C API ex
 library. C programmers have a large amount of freedom in designing APIs for their libraries. They
 are not forced to use opaque structs or to version their APIs. As a result, I don't believe that
 the plugin design presented here can be completely generalized to any C library.
+
+The ``Plugin`` struct is almost certainly not thread safe. To make it thread safe, it may be
+necessary to wrap the raw pointer in a ``Mutex``. It may even be simpler to wrap the entire struct
+in a ``Mutex``.
 
 Finally, owning raw symbols is not platform independent. You can see at the top of the Rust source
 code that I am importing the ``Symbol`` object specific to UNIX systems. One would need to change
