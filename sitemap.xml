@@ -39,7 +39,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/archive.html</loc>
-  <lastmod>2019-06-16T08:09:00Z</lastmod>
+  <lastmod>2019-11-24T10:24:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/categories/</loc>
@@ -175,7 +175,7 @@
  </url>
  <url>
   <loc>http://kmdouglass.github.io/index-3.html</loc>
-  <lastmod>2019-06-16T08:09:00Z</lastmod>
+  <lastmod>2019-11-24T10:24:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/notes/fiji/</loc>
@@ -324,6 +324,10 @@
  <url>
   <loc>http://kmdouglass.github.io/posts/thoughts-from-the-swiss-photonics-machine-learning-workshop/</loc>
   <lastmod>2019-06-16T08:09:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://kmdouglass.github.io/posts/variable-locations-in-rust-during-copy-and-move/</loc>
+  <lastmod>2019-11-24T10:24:00Z</lastmod>
  </url>
  <url>
   <loc>http://kmdouglass.github.io/posts/whats-the-difference-between-a-back-focal-plane-and-pupil-plane/</loc>
