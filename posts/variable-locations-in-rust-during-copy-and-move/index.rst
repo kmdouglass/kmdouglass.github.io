@@ -22,10 +22,10 @@ Compiling this code will produce an error because the ``String`` value that is b
 variable ``s1`` is moved to ``s2``. After a move, you may no longer use the value bound to
 ``s1``. (You may, as we will see, re-use its memory by binding a new value of the same type to it.)
 
-``String`` is a container type, which means that it contains both metadata and a pointer to data on
-the heap. Simple types such as ``i32``, on the other hand, are normally stored on the stack. Types
-such as these implement the `Copy`_ trait. This means that variable reassignment does not produce
-a compile-time error like it does in the example above:
+``String`` is a container type, which means that it contains both metadata on the stack and a
+pointer to data on the heap. Simple types such as ``i32``, on the other hand, are normally stored
+entirely on the stack. Types such as these implement the `Copy`_ trait. This means that variable
+reassignment does not produce a compile-time error like it does in the example above:
 
 .. code-block:: rust
    :linenos:
@@ -67,8 +67,8 @@ In the above code snippet, addresses of variables are printed by using the point
 ``:p``. I create a ``String`` value and bind it to the variable ``x``. Then, the value is moved to
 the variable ``y`` which prevents me from using ``x`` again in the ``println!`` macro.
 
-However, I can assign a new ``String`` value to the memory allocated for ``x``. This does not
-change its location in memory as seen in the output below:
+However, I can assign a new ``String`` value to ``x`` by reusing its memory on the stack. This does
+not change its memory address as seen in the output below:
 
 .. code-block:: console
    :linenos:
@@ -112,9 +112,9 @@ Summary
 =======
 
 Move semantics on container types are one of the reasons for Rust's memory safety. Nothing
-mysterious is happening in memory when a value is moved from one location to another. The allocated
-memory still exists; its use is simply disallowed by the compiler until a new value is assigned to
-it.
+mysterious is happening in memory when a value is moved from one location to another. The original
+stack memory still exists; its use is simply disallowed by the compiler until a new value is
+assigned to it.
 
 The complete program from this post may be found here:
 https://gist.github.com/kmdouglass/e596d0934e15f6b3a96c1eca6f6cd999
