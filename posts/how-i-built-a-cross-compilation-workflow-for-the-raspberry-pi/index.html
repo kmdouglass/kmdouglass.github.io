@@ -303,68 +303,68 @@ workflow.</p>
 <p>The final prerequisite is to register QEMU with the Docker build
 agent. First, install a few packages for QEMU. On Ubuntu, this looks
 like</p>
-<pre class="code shell"><a name="rest_code_deacfa1a9a25439a970acfc38f97963f-1"></a>$ sudo apt update
-<a name="rest_code_deacfa1a9a25439a970acfc38f97963f-2"></a>$ sudo install qemu qemu-user-static qemu-user binfmt-support
+<pre class="code shell"><a name="rest_code_f4df6f5a58624db7bd618e7c93225e89-1"></a>$ sudo apt update
+<a name="rest_code_f4df6f5a58624db7bd618e7c93225e89-2"></a>$ sudo install qemu qemu-user-static qemu-user binfmt-support
 </pre>
 <p>Finally, register the build agent with the command:</p>
-<pre class="code shell"><a name="rest_code_e8b8d4d4c8e540d59c38b8017332baba-1"></a>$ docker run --rm --privileged multiarch/qemu-user-static:register --reset
+<pre class="code shell"><a name="rest_code_c7b127b355764bdb84de753bd0d0536a-1"></a>$ docker run --rm --privileged multiarch/qemu-user-static:register --reset
 </pre>
 </div>
 <div class="section" id="step-1-create-the-build-image">
 <h3>Step 1: Create the build image</h3>
 <p>Inside the build folder, I have a file called Dockerfile. Here are its
 contents.</p>
-<pre class="code shell"><a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-1"></a><span class="c1"># Copyright (C) 2018 Kyle M. Douglass</span>
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-2"></a><span class="c1">#</span>
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-3"></a><span class="c1"># Defines a build environment for Micro-Manager on the Raspberry Pi.</span>
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-4"></a><span class="c1">#</span>
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-5"></a><span class="c1"># Usage: docker build \</span>
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-6"></a><span class="c1">#          -t NAME:TAG \</span>
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-7"></a><span class="c1">#         .</span>
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-8"></a><span class="c1">#</span>
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-9"></a>
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-10"></a>FROM resin/raspberrypi3-debian:stretch
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-11"></a>MAINTAINER Kyle M. Douglass &lt;kyle.m.douglass@gmail.com&gt;
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-12"></a>
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-13"></a>RUN <span class="o">[</span> <span class="s2">"cross-build-start"</span> <span class="o">]</span>
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-14"></a>
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-15"></a><span class="c1"># Get the build dependencies.</span>
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-16"></a>RUN apt-get update <span class="o">&amp;&amp;</span> apt-get -y install --no-install-recommends <span class="se">\</span>
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-17"></a>autoconf <span class="se">\</span>
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-18"></a>automake <span class="se">\</span>
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-19"></a>build-essential <span class="se">\</span>
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-20"></a>git <span class="se">\</span>
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-21"></a>libatlas-base-dev <span class="se">\</span>
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-22"></a>libboost-dev <span class="se">\</span>
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-23"></a>libboost-all-dev <span class="se">\</span>
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-24"></a>libtool <span class="se">\</span>
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-25"></a>patch <span class="se">\</span>
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-26"></a>pkg-config <span class="se">\</span>
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-27"></a>python3-dev <span class="se">\</span>
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-28"></a>python3-pip <span class="se">\</span>
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-29"></a>python3-setuptools <span class="se">\</span>
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-30"></a>python3-wheel <span class="se">\</span>
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-31"></a>swig <span class="se">\</span>
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-32"></a><span class="o">&amp;&amp;</span> apt-get clean <span class="o">&amp;&amp;</span> rm -rf /var/lib/apt/lists/* <span class="se">\</span>
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-33"></a><span class="o">&amp;&amp;</span> pip3 install numpy
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-34"></a>
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-35"></a>RUN <span class="o">[</span> <span class="s2">"cross-build-end"</span> <span class="o">]</span>
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-36"></a>
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-37"></a><span class="c1"># Set up the mount point for the source files and setup script.</span>
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-38"></a>ADD setup /micro-manager/
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-39"></a>VOLUME /micro-manager/src
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-40"></a>
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-41"></a>WORKDIR /micro-manager/src
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-42"></a>ENTRYPOINT <span class="o">[</span> <span class="s2">"/sbin/tini"</span>, <span class="s2">"-s"</span>, <span class="s2">"--"</span> <span class="o">]</span>
-<a name="rest_code_c0a4d4086a554bd99c3d67b732f508f6-43"></a>CMD <span class="o">[</span> <span class="s2">"/micro-manager/setup"</span> <span class="o">]</span>
+<pre class="code shell"><a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-1"></a><span class="c1"># Copyright (C) 2018 Kyle M. Douglass</span>
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-2"></a><span class="c1">#</span>
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-3"></a><span class="c1"># Defines a build environment for Micro-Manager on the Raspberry Pi.</span>
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-4"></a><span class="c1">#</span>
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-5"></a><span class="c1"># Usage: docker build \</span>
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-6"></a><span class="c1">#          -t NAME:TAG \</span>
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-7"></a><span class="c1">#         .</span>
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-8"></a><span class="c1">#</span>
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-9"></a>
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-10"></a>FROM resin/raspberrypi3-debian:stretch
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-11"></a>MAINTAINER Kyle M. Douglass &lt;kyle.m.douglass@gmail.com&gt;
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-12"></a>
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-13"></a>RUN <span class="o">[</span> <span class="s2">"cross-build-start"</span> <span class="o">]</span>
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-14"></a>
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-15"></a><span class="c1"># Get the build dependencies.</span>
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-16"></a>RUN apt-get update <span class="o">&amp;&amp;</span> apt-get -y install --no-install-recommends <span class="se">\</span>
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-17"></a>autoconf <span class="se">\</span>
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-18"></a>automake <span class="se">\</span>
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-19"></a>build-essential <span class="se">\</span>
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-20"></a>git <span class="se">\</span>
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-21"></a>libatlas-base-dev <span class="se">\</span>
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-22"></a>libboost-dev <span class="se">\</span>
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-23"></a>libboost-all-dev <span class="se">\</span>
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-24"></a>libtool <span class="se">\</span>
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-25"></a>patch <span class="se">\</span>
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-26"></a>pkg-config <span class="se">\</span>
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-27"></a>python3-dev <span class="se">\</span>
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-28"></a>python3-pip <span class="se">\</span>
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-29"></a>python3-setuptools <span class="se">\</span>
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-30"></a>python3-wheel <span class="se">\</span>
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-31"></a>swig <span class="se">\</span>
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-32"></a><span class="o">&amp;&amp;</span> apt-get clean <span class="o">&amp;&amp;</span> rm -rf /var/lib/apt/lists/* <span class="se">\</span>
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-33"></a><span class="o">&amp;&amp;</span> pip3 install numpy
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-34"></a>
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-35"></a>RUN <span class="o">[</span> <span class="s2">"cross-build-end"</span> <span class="o">]</span>
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-36"></a>
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-37"></a><span class="c1"># Set up the mount point for the source files and setup script.</span>
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-38"></a>ADD setup /micro-manager/
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-39"></a>VOLUME /micro-manager/src
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-40"></a>
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-41"></a>WORKDIR /micro-manager/src
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-42"></a>ENTRYPOINT <span class="o">[</span> <span class="s2">"/sbin/tini"</span>, <span class="s2">"-s"</span>, <span class="s2">"--"</span> <span class="o">]</span>
+<a name="rest_code_1f7fe8b4f7434cc9a1f1cc100d44dec2-43"></a>CMD <span class="o">[</span> <span class="s2">"/micro-manager/setup"</span> <span class="o">]</span>
 </pre>
 <p>A Dockerfile defines the steps in building an image -- in this case,
 the build image. Let's break this file down into pieces. In the first
 two lines that follow the comments, I specify that my image is based
 on the resin/raspberrypi3-debian:stretch image and that I am the
 maintainer.</p>
-<pre class="code shell"><a name="rest_code_6f6100ac8b7b4501961496830d326e59-1"></a>FROM resin/raspberrypi3-debian:stretch
-<a name="rest_code_6f6100ac8b7b4501961496830d326e59-2"></a>MAINTAINER Kyle M. Douglass &lt;kyle.m.douglass@gmail.com&gt;
+<pre class="code shell"><a name="rest_code_5910ede5f135467cb5f1f036a00d6691-1"></a>FROM resin/raspberrypi3-debian:stretch
+<a name="rest_code_5910ede5f135467cb5f1f036a00d6691-2"></a>MAINTAINER Kyle M. Douglass &lt;kyle.m.douglass@gmail.com&gt;
 </pre>
 <p>Images from <a class="reference external" href="https://hub.docker.com/u/resin/">Resin</a> are freely
 available and already have the QEMU emulator installed. Next, I
@@ -386,9 +386,9 @@ This command is just telling the image to expect a folder to be
 mounted at this location when the container is run.</p>
 <p>The last three lines set the working directory, the entrypoint and the
 default container command, respectively.</p>
-<pre class="code shell"><a name="rest_code_562074e3cfad486b82873bea18b77684-1"></a>WORKDIR /micro-manager/src
-<a name="rest_code_562074e3cfad486b82873bea18b77684-2"></a>ENTRYPOINT <span class="o">[</span> <span class="s2">"/sbin/tini"</span>, <span class="s2">"-s"</span>, <span class="s2">"--"</span> <span class="o">]</span>
-<a name="rest_code_562074e3cfad486b82873bea18b77684-3"></a>CMD <span class="o">[</span> <span class="s2">"/micro-manager/setup"</span> <span class="o">]</span>
+<pre class="code shell"><a name="rest_code_92c7502ee22944f987eec8edaaa0a343-1"></a>WORKDIR /micro-manager/src
+<a name="rest_code_92c7502ee22944f987eec8edaaa0a343-2"></a>ENTRYPOINT <span class="o">[</span> <span class="s2">"/sbin/tini"</span>, <span class="s2">"-s"</span>, <span class="s2">"--"</span> <span class="o">]</span>
+<a name="rest_code_92c7502ee22944f987eec8edaaa0a343-3"></a>CMD <span class="o">[</span> <span class="s2">"/micro-manager/setup"</span> <span class="o">]</span>
 </pre>
 <p>This specific entrypoint tells Docker that any containers built from
 this image should first run Tini, which is a lightweight init system
@@ -406,15 +406,15 @@ you can choose not to run the setup script but instead to enter the
 container through a Bash shell, for example.</p>
 <p>To build the image, I use the following build script located in the
 same directory as the Dockerfile for convenience.</p>
-<pre class="code shell"><a name="rest_code_3ac75315a8d942d49bc70301c60b9981-1"></a><span class="ch">#!/bin/bash</span>
-<a name="rest_code_3ac75315a8d942d49bc70301c60b9981-2"></a><span class="c1"># Copyright (C) 2018 Kyle M. Douglass</span>
-<a name="rest_code_3ac75315a8d942d49bc70301c60b9981-3"></a><span class="c1">#</span>
-<a name="rest_code_3ac75315a8d942d49bc70301c60b9981-4"></a><span class="c1"># Usage: ./build</span>
-<a name="rest_code_3ac75315a8d942d49bc70301c60b9981-5"></a><span class="c1">#</span>
-<a name="rest_code_3ac75315a8d942d49bc70301c60b9981-6"></a>
-<a name="rest_code_3ac75315a8d942d49bc70301c60b9981-7"></a>docker build <span class="se">\</span>
-<a name="rest_code_3ac75315a8d942d49bc70301c60b9981-8"></a>       -t localhost:5000/rpi-micromanager:build <span class="se">\</span>
-<a name="rest_code_3ac75315a8d942d49bc70301c60b9981-9"></a>       .
+<pre class="code shell"><a name="rest_code_c62e1bf9d8754811a58ee084b140144c-1"></a><span class="ch">#!/bin/bash</span>
+<a name="rest_code_c62e1bf9d8754811a58ee084b140144c-2"></a><span class="c1"># Copyright (C) 2018 Kyle M. Douglass</span>
+<a name="rest_code_c62e1bf9d8754811a58ee084b140144c-3"></a><span class="c1">#</span>
+<a name="rest_code_c62e1bf9d8754811a58ee084b140144c-4"></a><span class="c1"># Usage: ./build</span>
+<a name="rest_code_c62e1bf9d8754811a58ee084b140144c-5"></a><span class="c1">#</span>
+<a name="rest_code_c62e1bf9d8754811a58ee084b140144c-6"></a>
+<a name="rest_code_c62e1bf9d8754811a58ee084b140144c-7"></a>docker build <span class="se">\</span>
+<a name="rest_code_c62e1bf9d8754811a58ee084b140144c-8"></a>       -t localhost:5000/rpi-micromanager:build <span class="se">\</span>
+<a name="rest_code_c62e1bf9d8754811a58ee084b140144c-9"></a>       .
 </pre>
 <p>By using <tt class="docutils literal"><span class="pre">-t</span> <span class="pre">localhost:5000/rpi-micromanager:build</span></tt> argument I am
 giving the image a name of <em>rpi-micromanager</em>, a tag of <em>build</em>, and
@@ -427,36 +427,36 @@ don't worry. I'll explain it in the next section.</p>
 <h3>Step 2: Compile Micro-Manager</h3>
 <p>After the image is built, I create a container and use it to compile
 Micro-Manager. For this, I use the run script in the build directory.</p>
-<pre class="code shell"><a name="rest_code_9aac600ac9774ed1b1899fa4c2e3c8fb-1"></a><span class="ch">#!/bin/bash</span>
-<a name="rest_code_9aac600ac9774ed1b1899fa4c2e3c8fb-2"></a><span class="c1"># Copyright (C) 2018 Kyle M. Douglass</span>
-<a name="rest_code_9aac600ac9774ed1b1899fa4c2e3c8fb-3"></a><span class="c1">#</span>
-<a name="rest_code_9aac600ac9774ed1b1899fa4c2e3c8fb-4"></a><span class="c1"># Usage: ./run DIR CONFIGURE</span>
-<a name="rest_code_9aac600ac9774ed1b1899fa4c2e3c8fb-5"></a><span class="c1">#</span>
-<a name="rest_code_9aac600ac9774ed1b1899fa4c2e3c8fb-6"></a><span class="c1"># DIR is the parent folder containing the micro-manager Git</span>
-<a name="rest_code_9aac600ac9774ed1b1899fa4c2e3c8fb-7"></a><span class="c1"># repository, the 3rdpartypublic Subversion repository, and any</span>
-<a name="rest_code_9aac600ac9774ed1b1899fa4c2e3c8fb-8"></a><span class="c1"># additional build resources.</span>
-<a name="rest_code_9aac600ac9774ed1b1899fa4c2e3c8fb-9"></a><span class="c1">#</span>
-<a name="rest_code_9aac600ac9774ed1b1899fa4c2e3c8fb-10"></a><span class="c1"># If CONFIGURE=true, the build system is remade and the configure</span>
-<a name="rest_code_9aac600ac9774ed1b1899fa4c2e3c8fb-11"></a><span class="c1"># script is rerun before running 'make' and 'make install'. If</span>
-<a name="rest_code_9aac600ac9774ed1b1899fa4c2e3c8fb-12"></a><span class="c1"># CONFIGURE=false, only 'make' and 'make install' are run.</span>
-<a name="rest_code_9aac600ac9774ed1b1899fa4c2e3c8fb-13"></a><span class="c1">#</span>
-<a name="rest_code_9aac600ac9774ed1b1899fa4c2e3c8fb-14"></a><span class="c1"># The compiled program files are stored in a bind mount volume so that</span>
-<a name="rest_code_9aac600ac9774ed1b1899fa4c2e3c8fb-15"></a><span class="c1"># they may be copied into the deployment container.</span>
-<a name="rest_code_9aac600ac9774ed1b1899fa4c2e3c8fb-16"></a><span class="c1">#</span>
-<a name="rest_code_9aac600ac9774ed1b1899fa4c2e3c8fb-17"></a>
-<a name="rest_code_9aac600ac9774ed1b1899fa4c2e3c8fb-18"></a><span class="nv">src_dir</span><span class="o">=</span><span class="nv">$1</span>
-<a name="rest_code_9aac600ac9774ed1b1899fa4c2e3c8fb-19"></a><span class="nv">cmd</span><span class="o">=</span><span class="s2">"/micro-manager/setup </span><span class="nv">$2</span><span class="s2">"</span>
-<a name="rest_code_9aac600ac9774ed1b1899fa4c2e3c8fb-20"></a>
-<a name="rest_code_9aac600ac9774ed1b1899fa4c2e3c8fb-21"></a><span class="c1"># Remove the build artifacts from previous builds.</span>
-<a name="rest_code_9aac600ac9774ed1b1899fa4c2e3c8fb-22"></a><span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$2</span><span class="s2">"</span> <span class="o">==</span> <span class="nb">true</span> <span class="o">]</span> <span class="o">||</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$2</span><span class="s2">"</span> <span class="o">==</span> <span class="nb">false</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-<a name="rest_code_9aac600ac9774ed1b1899fa4c2e3c8fb-23"></a>    rm -rf <span class="si">${</span><span class="nv">src_dir</span><span class="si">}</span>/build <span class="o">||</span> <span class="nb">true</span>
-<a name="rest_code_9aac600ac9774ed1b1899fa4c2e3c8fb-24"></a><span class="k">fi</span>
-<a name="rest_code_9aac600ac9774ed1b1899fa4c2e3c8fb-25"></a>
-<a name="rest_code_9aac600ac9774ed1b1899fa4c2e3c8fb-26"></a>docker run --rm <span class="se">\</span>
-<a name="rest_code_9aac600ac9774ed1b1899fa4c2e3c8fb-27"></a>       -v <span class="si">${</span><span class="nv">src_dir</span><span class="si">}</span>:/micro-manager/src <span class="se">\</span>
-<a name="rest_code_9aac600ac9774ed1b1899fa4c2e3c8fb-28"></a>       --name mm-build <span class="se">\</span>
-<a name="rest_code_9aac600ac9774ed1b1899fa4c2e3c8fb-29"></a>       localhost:5000/rpi-micromanager:build <span class="se">\</span>
-<a name="rest_code_9aac600ac9774ed1b1899fa4c2e3c8fb-30"></a>       <span class="si">${</span><span class="nv">cmd</span><span class="si">}</span>
+<pre class="code shell"><a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-1"></a><span class="ch">#!/bin/bash</span>
+<a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-2"></a><span class="c1"># Copyright (C) 2018 Kyle M. Douglass</span>
+<a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-3"></a><span class="c1">#</span>
+<a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-4"></a><span class="c1"># Usage: ./run DIR CONFIGURE</span>
+<a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-5"></a><span class="c1">#</span>
+<a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-6"></a><span class="c1"># DIR is the parent folder containing the micro-manager Git</span>
+<a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-7"></a><span class="c1"># repository, the 3rdpartypublic Subversion repository, and any</span>
+<a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-8"></a><span class="c1"># additional build resources.</span>
+<a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-9"></a><span class="c1">#</span>
+<a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-10"></a><span class="c1"># If CONFIGURE=true, the build system is remade and the configure</span>
+<a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-11"></a><span class="c1"># script is rerun before running 'make' and 'make install'. If</span>
+<a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-12"></a><span class="c1"># CONFIGURE=false, only 'make' and 'make install' are run.</span>
+<a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-13"></a><span class="c1">#</span>
+<a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-14"></a><span class="c1"># The compiled program files are stored in a bind mount volume so that</span>
+<a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-15"></a><span class="c1"># they may be copied into the deployment container.</span>
+<a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-16"></a><span class="c1">#</span>
+<a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-17"></a>
+<a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-18"></a><span class="nv">src_dir</span><span class="o">=</span><span class="nv">$1</span>
+<a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-19"></a><span class="nv">cmd</span><span class="o">=</span><span class="s2">"/micro-manager/setup </span><span class="nv">$2</span><span class="s2">"</span>
+<a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-20"></a>
+<a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-21"></a><span class="c1"># Remove the build artifacts from previous builds.</span>
+<a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-22"></a><span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$2</span><span class="s2">"</span> <span class="o">==</span> <span class="nb">true</span> <span class="o">]</span> <span class="o">||</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$2</span><span class="s2">"</span> <span class="o">==</span> <span class="nb">false</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+<a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-23"></a>    rm -rf <span class="si">${</span><span class="nv">src_dir</span><span class="si">}</span>/build <span class="o">||</span> <span class="nb">true</span>
+<a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-24"></a><span class="k">fi</span>
+<a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-25"></a>
+<a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-26"></a>docker run --rm <span class="se">\</span>
+<a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-27"></a>       -v <span class="si">${</span><span class="nv">src_dir</span><span class="si">}</span>:/micro-manager/src <span class="se">\</span>
+<a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-28"></a>       --name mm-build <span class="se">\</span>
+<a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-29"></a>       localhost:5000/rpi-micromanager:build <span class="se">\</span>
+<a name="rest_code_6f72e78cdbe64102b8bb5cf3cdef80f3-30"></a>       <span class="si">${</span><span class="nv">cmd</span><span class="si">}</span>
 </pre>
 <p>The script takes two arguments. The first is the path to the folder
 containing all the source code (see below for details). The second
@@ -486,57 +486,57 @@ I checkout the mm2 branch because I am interested in developing my
 application for Micro-Manager 2.0.</p>
 <p>The setup script that is run inside the container and mentioned in the
 previous section looks like this.</p>
-<pre class="code shell"><a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-1"></a><span class="ch">#!/bin/bash</span>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-2"></a><span class="c1">#</span>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-3"></a><span class="c1"># # Copyright (C) 2018 Kyle M. Douglass</span>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-4"></a><span class="c1">#</span>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-5"></a><span class="c1"># Builds Micro-Manager.</span>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-6"></a><span class="c1">#</span>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-7"></a><span class="c1"># Usage: ./setup CONFIGURE</span>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-8"></a><span class="c1">#</span>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-9"></a><span class="c1"># If CONFIGURE=true, the build system is remade and the configure</span>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-10"></a><span class="c1"># script is rerun before running 'make' and 'make install'. If</span>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-11"></a><span class="c1"># CONFIGURE=false, only 'make' and 'make install' or run.</span>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-12"></a><span class="c1">#</span>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-13"></a><span class="c1"># Kyle M. Douglass, 2018</span>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-14"></a><span class="c1">#</span>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-15"></a>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-16"></a><span class="c1"># Move into the source directory.</span>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-17"></a><span class="nb">cd</span> micro-manager
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-18"></a>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-19"></a><span class="c1"># Undo any previous patches.</span>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-20"></a>git checkout -- DeviceAdapters/WieneckeSinske/CAN29.cpp
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-21"></a>git checkout -- DeviceAdapters/WieneckeSinske/WieneckeSinske.cpp
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-22"></a>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-23"></a><span class="c1"># Patch the broken WieneckeSinske device adapter.</span>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-24"></a>patch DeviceAdapters/WieneckeSinske/CAN29.cpp &lt; ../patches/CAN29.cpp.diff <span class="se">\</span>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-25"></a><span class="o">&amp;&amp;</span> patch DeviceAdapters/WieneckeSinske/WieneckeSinske.cpp &lt; ../patches/WieneckeSinske.cpp.diff
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-26"></a>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-27"></a><span class="c1"># Compile MM2.</span>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-28"></a><span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> <span class="o">=</span> <span class="nb">true</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-29"></a>    <span class="c1"># Remake the entire build system, then compile from scratch.</span>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-30"></a>    ./autogen.sh
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-31"></a>    <span class="nv">PYTHON</span><span class="o">=</span><span class="s2">"/usr/bin/python3"</span> ./configure <span class="se">\</span>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-32"></a>        --prefix<span class="o">=</span><span class="s2">"/micro-manager/src/build"</span> <span class="se">\</span>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-33"></a>        --with-python<span class="o">=</span><span class="s2">"/usr/include/python3.5"</span> <span class="se">\</span>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-34"></a>        --with-boost-libdir<span class="o">=</span><span class="s2">"/usr/lib/arm-linux-gnueabihf"</span> <span class="se">\</span>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-35"></a>        --with-boost<span class="o">=</span><span class="s2">"/usr/include/boost"</span> <span class="se">\</span>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-36"></a>        --disable-java-app <span class="se">\</span>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-37"></a>        --disable-install-dependency-jars <span class="se">\</span>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-38"></a>        --with-java<span class="o">=</span><span class="s2">"no"</span>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-39"></a>    make
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-40"></a>    make install
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-41"></a>    chmod -R a+w /micro-manager/src/build
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-42"></a><span class="k">elif</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> <span class="o">=</span> <span class="nb">false</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-43"></a>    <span class="c1"># Only recompile changed source files.</span>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-44"></a>    make
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-45"></a>    make install
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-46"></a>    chmod -R a+w /micro-manager/src/build
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-47"></a><span class="k">else</span>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-48"></a>    <span class="nb">echo</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2"> : Unrecognized argument."</span>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-49"></a>    <span class="nb">echo</span> <span class="s2">"Pass \"true\" to run the full build process."</span>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-50"></a>    <span class="nb">echo</span> <span class="s2">"Pass \"false\" to run only \"make\" and \"make install\"."</span>
-<a name="rest_code_c4bdae05ce3949a29a977ba64ad474a1-51"></a><span class="k">fi</span>
+<pre class="code shell"><a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-1"></a><span class="ch">#!/bin/bash</span>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-2"></a><span class="c1">#</span>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-3"></a><span class="c1"># # Copyright (C) 2018 Kyle M. Douglass</span>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-4"></a><span class="c1">#</span>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-5"></a><span class="c1"># Builds Micro-Manager.</span>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-6"></a><span class="c1">#</span>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-7"></a><span class="c1"># Usage: ./setup CONFIGURE</span>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-8"></a><span class="c1">#</span>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-9"></a><span class="c1"># If CONFIGURE=true, the build system is remade and the configure</span>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-10"></a><span class="c1"># script is rerun before running 'make' and 'make install'. If</span>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-11"></a><span class="c1"># CONFIGURE=false, only 'make' and 'make install' or run.</span>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-12"></a><span class="c1">#</span>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-13"></a><span class="c1"># Kyle M. Douglass, 2018</span>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-14"></a><span class="c1">#</span>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-15"></a>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-16"></a><span class="c1"># Move into the source directory.</span>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-17"></a><span class="nb">cd</span> micro-manager
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-18"></a>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-19"></a><span class="c1"># Undo any previous patches.</span>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-20"></a>git checkout -- DeviceAdapters/WieneckeSinske/CAN29.cpp
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-21"></a>git checkout -- DeviceAdapters/WieneckeSinske/WieneckeSinske.cpp
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-22"></a>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-23"></a><span class="c1"># Patch the broken WieneckeSinske device adapter.</span>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-24"></a>patch DeviceAdapters/WieneckeSinske/CAN29.cpp &lt; ../patches/CAN29.cpp.diff <span class="se">\</span>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-25"></a><span class="o">&amp;&amp;</span> patch DeviceAdapters/WieneckeSinske/WieneckeSinske.cpp &lt; ../patches/WieneckeSinske.cpp.diff
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-26"></a>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-27"></a><span class="c1"># Compile MM2.</span>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-28"></a><span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> <span class="o">=</span> <span class="nb">true</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-29"></a>    <span class="c1"># Remake the entire build system, then compile from scratch.</span>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-30"></a>    ./autogen.sh
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-31"></a>    <span class="nv">PYTHON</span><span class="o">=</span><span class="s2">"/usr/bin/python3"</span> ./configure <span class="se">\</span>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-32"></a>        --prefix<span class="o">=</span><span class="s2">"/micro-manager/src/build"</span> <span class="se">\</span>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-33"></a>        --with-python<span class="o">=</span><span class="s2">"/usr/include/python3.5"</span> <span class="se">\</span>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-34"></a>        --with-boost-libdir<span class="o">=</span><span class="s2">"/usr/lib/arm-linux-gnueabihf"</span> <span class="se">\</span>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-35"></a>        --with-boost<span class="o">=</span><span class="s2">"/usr/include/boost"</span> <span class="se">\</span>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-36"></a>        --disable-java-app <span class="se">\</span>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-37"></a>        --disable-install-dependency-jars <span class="se">\</span>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-38"></a>        --with-java<span class="o">=</span><span class="s2">"no"</span>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-39"></a>    make
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-40"></a>    make install
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-41"></a>    chmod -R a+w /micro-manager/src/build
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-42"></a><span class="k">elif</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> <span class="o">=</span> <span class="nb">false</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-43"></a>    <span class="c1"># Only recompile changed source files.</span>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-44"></a>    make
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-45"></a>    make install
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-46"></a>    chmod -R a+w /micro-manager/src/build
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-47"></a><span class="k">else</span>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-48"></a>    <span class="nb">echo</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2"> : Unrecognized argument."</span>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-49"></a>    <span class="nb">echo</span> <span class="s2">"Pass \"true\" to run the full build process."</span>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-50"></a>    <span class="nb">echo</span> <span class="s2">"Pass \"false\" to run only \"make\" and \"make install\"."</span>
+<a name="rest_code_966c46d1e02e4ed9916f4d37b690b07c-51"></a><span class="k">fi</span>
 </pre>
 <p>Most important in this script is the call to <tt class="docutils literal">configure</tt>. You can
 see that the compiled libraries and Python wrapper will be written to
@@ -550,55 +550,55 @@ stopped.</p>
 image that contains only the essentials for running Micro-Manager.</p>
 <p>For this, I use a separate Dockerfile inside the 2.0-python
 directory.</p>
-<pre class="code shell"><a name="rest_code_d2c39a585a2c4f18b05c576e91c7b9e5-1"></a><span class="c1"># Copyright (C) 2018 Kyle M. Douglass</span>
-<a name="rest_code_d2c39a585a2c4f18b05c576e91c7b9e5-2"></a><span class="c1">#</span>
-<a name="rest_code_d2c39a585a2c4f18b05c576e91c7b9e5-3"></a><span class="c1"># Builds the Micro-Manager 2.0 Python wrapper for the Raspberry Pi.</span>
-<a name="rest_code_d2c39a585a2c4f18b05c576e91c7b9e5-4"></a><span class="c1">#</span>
-<a name="rest_code_d2c39a585a2c4f18b05c576e91c7b9e5-5"></a><span class="c1"># Usage: docker build \</span>
-<a name="rest_code_d2c39a585a2c4f18b05c576e91c7b9e5-6"></a><span class="c1">#          -t NAME:TAG \</span>
-<a name="rest_code_d2c39a585a2c4f18b05c576e91c7b9e5-7"></a><span class="c1">#          .</span>
-<a name="rest_code_d2c39a585a2c4f18b05c576e91c7b9e5-8"></a><span class="c1">#</span>
-<a name="rest_code_d2c39a585a2c4f18b05c576e91c7b9e5-9"></a>
-<a name="rest_code_d2c39a585a2c4f18b05c576e91c7b9e5-10"></a>FROM resin/raspberrypi3-debian:stretch
-<a name="rest_code_d2c39a585a2c4f18b05c576e91c7b9e5-11"></a>MAINTAINER Kyle M. Douglass &lt;kyle.m.douglass@gmail.com&gt;
-<a name="rest_code_d2c39a585a2c4f18b05c576e91c7b9e5-12"></a>
-<a name="rest_code_d2c39a585a2c4f18b05c576e91c7b9e5-13"></a>RUN <span class="o">[</span> <span class="s2">"cross-build-start"</span> <span class="o">]</span>
-<a name="rest_code_d2c39a585a2c4f18b05c576e91c7b9e5-14"></a>
-<a name="rest_code_d2c39a585a2c4f18b05c576e91c7b9e5-15"></a><span class="c1"># Install the run-time dependencies.</span>
-<a name="rest_code_d2c39a585a2c4f18b05c576e91c7b9e5-16"></a>RUN apt-get update <span class="o">&amp;&amp;</span> apt-get -y install --no-install-recommends <span class="se">\</span>
-<a name="rest_code_d2c39a585a2c4f18b05c576e91c7b9e5-17"></a>    libatlas-base-dev <span class="se">\</span>
-<a name="rest_code_d2c39a585a2c4f18b05c576e91c7b9e5-18"></a>    libboost-all-dev <span class="se">\</span>
-<a name="rest_code_d2c39a585a2c4f18b05c576e91c7b9e5-19"></a>    python3-pip <span class="se">\</span>
-<a name="rest_code_d2c39a585a2c4f18b05c576e91c7b9e5-20"></a>    python3-setuptools <span class="se">\</span>
-<a name="rest_code_d2c39a585a2c4f18b05c576e91c7b9e5-21"></a>    python3-wheel <span class="se">\</span>
-<a name="rest_code_d2c39a585a2c4f18b05c576e91c7b9e5-22"></a>    <span class="o">&amp;&amp;</span> pip3 install numpy <span class="se">\</span>
-<a name="rest_code_d2c39a585a2c4f18b05c576e91c7b9e5-23"></a>    <span class="o">&amp;&amp;</span> apt-get clean <span class="o">&amp;&amp;</span> rm -rf /var/lib/apt/lists/*
-<a name="rest_code_d2c39a585a2c4f18b05c576e91c7b9e5-24"></a>
-<a name="rest_code_d2c39a585a2c4f18b05c576e91c7b9e5-25"></a><span class="c1"># Copy in the Micro-Manager source files.</span>
-<a name="rest_code_d2c39a585a2c4f18b05c576e91c7b9e5-26"></a>RUN useradd -ms /bin/bash micro-manager
-<a name="rest_code_d2c39a585a2c4f18b05c576e91c7b9e5-27"></a>WORKDIR /home/micro-manager/app
-<a name="rest_code_d2c39a585a2c4f18b05c576e91c7b9e5-28"></a>COPY --chown<span class="o">=</span>micro-manager:micro-manager . .
-<a name="rest_code_d2c39a585a2c4f18b05c576e91c7b9e5-29"></a>
-<a name="rest_code_d2c39a585a2c4f18b05c576e91c7b9e5-30"></a>RUN <span class="o">[</span> <span class="s2">"cross-build-end"</span> <span class="o">]</span>
-<a name="rest_code_d2c39a585a2c4f18b05c576e91c7b9e5-31"></a>
-<a name="rest_code_d2c39a585a2c4f18b05c576e91c7b9e5-32"></a><span class="c1"># Final environment configuration.</span>
-<a name="rest_code_d2c39a585a2c4f18b05c576e91c7b9e5-33"></a>USER micro-manager:micro-manager
-<a name="rest_code_d2c39a585a2c4f18b05c576e91c7b9e5-34"></a>ENV PYTHONPATH /home/micro-manager/app/lib/micro-manager
-<a name="rest_code_d2c39a585a2c4f18b05c576e91c7b9e5-35"></a>ENTRYPOINT <span class="o">[</span><span class="s2">"/sbin/tini"</span>, <span class="s2">"-s"</span>, <span class="s2">"--"</span><span class="o">]</span>
-<a name="rest_code_d2c39a585a2c4f18b05c576e91c7b9e5-36"></a>CMD <span class="o">[</span><span class="s2">"/usr/bin/python3"</span><span class="o">]</span>
+<pre class="code shell"><a name="rest_code_46b4c349fe104918b102ca6087ee7b15-1"></a><span class="c1"># Copyright (C) 2018 Kyle M. Douglass</span>
+<a name="rest_code_46b4c349fe104918b102ca6087ee7b15-2"></a><span class="c1">#</span>
+<a name="rest_code_46b4c349fe104918b102ca6087ee7b15-3"></a><span class="c1"># Builds the Micro-Manager 2.0 Python wrapper for the Raspberry Pi.</span>
+<a name="rest_code_46b4c349fe104918b102ca6087ee7b15-4"></a><span class="c1">#</span>
+<a name="rest_code_46b4c349fe104918b102ca6087ee7b15-5"></a><span class="c1"># Usage: docker build \</span>
+<a name="rest_code_46b4c349fe104918b102ca6087ee7b15-6"></a><span class="c1">#          -t NAME:TAG \</span>
+<a name="rest_code_46b4c349fe104918b102ca6087ee7b15-7"></a><span class="c1">#          .</span>
+<a name="rest_code_46b4c349fe104918b102ca6087ee7b15-8"></a><span class="c1">#</span>
+<a name="rest_code_46b4c349fe104918b102ca6087ee7b15-9"></a>
+<a name="rest_code_46b4c349fe104918b102ca6087ee7b15-10"></a>FROM resin/raspberrypi3-debian:stretch
+<a name="rest_code_46b4c349fe104918b102ca6087ee7b15-11"></a>MAINTAINER Kyle M. Douglass &lt;kyle.m.douglass@gmail.com&gt;
+<a name="rest_code_46b4c349fe104918b102ca6087ee7b15-12"></a>
+<a name="rest_code_46b4c349fe104918b102ca6087ee7b15-13"></a>RUN <span class="o">[</span> <span class="s2">"cross-build-start"</span> <span class="o">]</span>
+<a name="rest_code_46b4c349fe104918b102ca6087ee7b15-14"></a>
+<a name="rest_code_46b4c349fe104918b102ca6087ee7b15-15"></a><span class="c1"># Install the run-time dependencies.</span>
+<a name="rest_code_46b4c349fe104918b102ca6087ee7b15-16"></a>RUN apt-get update <span class="o">&amp;&amp;</span> apt-get -y install --no-install-recommends <span class="se">\</span>
+<a name="rest_code_46b4c349fe104918b102ca6087ee7b15-17"></a>    libatlas-base-dev <span class="se">\</span>
+<a name="rest_code_46b4c349fe104918b102ca6087ee7b15-18"></a>    libboost-all-dev <span class="se">\</span>
+<a name="rest_code_46b4c349fe104918b102ca6087ee7b15-19"></a>    python3-pip <span class="se">\</span>
+<a name="rest_code_46b4c349fe104918b102ca6087ee7b15-20"></a>    python3-setuptools <span class="se">\</span>
+<a name="rest_code_46b4c349fe104918b102ca6087ee7b15-21"></a>    python3-wheel <span class="se">\</span>
+<a name="rest_code_46b4c349fe104918b102ca6087ee7b15-22"></a>    <span class="o">&amp;&amp;</span> pip3 install numpy <span class="se">\</span>
+<a name="rest_code_46b4c349fe104918b102ca6087ee7b15-23"></a>    <span class="o">&amp;&amp;</span> apt-get clean <span class="o">&amp;&amp;</span> rm -rf /var/lib/apt/lists/*
+<a name="rest_code_46b4c349fe104918b102ca6087ee7b15-24"></a>
+<a name="rest_code_46b4c349fe104918b102ca6087ee7b15-25"></a><span class="c1"># Copy in the Micro-Manager source files.</span>
+<a name="rest_code_46b4c349fe104918b102ca6087ee7b15-26"></a>RUN useradd -ms /bin/bash micro-manager
+<a name="rest_code_46b4c349fe104918b102ca6087ee7b15-27"></a>WORKDIR /home/micro-manager/app
+<a name="rest_code_46b4c349fe104918b102ca6087ee7b15-28"></a>COPY --chown<span class="o">=</span>micro-manager:micro-manager . .
+<a name="rest_code_46b4c349fe104918b102ca6087ee7b15-29"></a>
+<a name="rest_code_46b4c349fe104918b102ca6087ee7b15-30"></a>RUN <span class="o">[</span> <span class="s2">"cross-build-end"</span> <span class="o">]</span>
+<a name="rest_code_46b4c349fe104918b102ca6087ee7b15-31"></a>
+<a name="rest_code_46b4c349fe104918b102ca6087ee7b15-32"></a><span class="c1"># Final environment configuration.</span>
+<a name="rest_code_46b4c349fe104918b102ca6087ee7b15-33"></a>USER micro-manager:micro-manager
+<a name="rest_code_46b4c349fe104918b102ca6087ee7b15-34"></a>ENV PYTHONPATH /home/micro-manager/app/lib/micro-manager
+<a name="rest_code_46b4c349fe104918b102ca6087ee7b15-35"></a>ENTRYPOINT <span class="o">[</span><span class="s2">"/sbin/tini"</span>, <span class="s2">"-s"</span>, <span class="s2">"--"</span><span class="o">]</span>
+<a name="rest_code_46b4c349fe104918b102ca6087ee7b15-36"></a>CMD <span class="o">[</span><span class="s2">"/usr/bin/python3"</span><span class="o">]</span>
 </pre>
 <p>As before, I use a clean resin base image. However, this time I only
 install the essential software to run Micro-Manager.</p>
 <p>After apt-getting and pip-installing everything, I create a new user
 called <strong>micro-manager</strong> and a new folder called <strong>app</strong> inside this
 user's home directory.</p>
-<pre class="code shell"><a name="rest_code_429cf0806a154ad1830bf3a72e544697-1"></a><span class="c1"># Copy in the Micro-Manager source files.</span>
-<a name="rest_code_429cf0806a154ad1830bf3a72e544697-2"></a>RUN useradd -ms /bin/bash micro-manager
-<a name="rest_code_429cf0806a154ad1830bf3a72e544697-3"></a>WORKDIR /home/micro-manager/app
+<pre class="code shell"><a name="rest_code_c9363b3dfe7c48a3afa05fa732537cd8-1"></a><span class="c1"># Copy in the Micro-Manager source files.</span>
+<a name="rest_code_c9363b3dfe7c48a3afa05fa732537cd8-2"></a>RUN useradd -ms /bin/bash micro-manager
+<a name="rest_code_c9363b3dfe7c48a3afa05fa732537cd8-3"></a>WORKDIR /home/micro-manager/app
 </pre>
 <p>Next, I directly copy the compiled libraries into the image with the
 COPY command.</p>
-<pre class="code shell"><a name="rest_code_669f943f2dbd45fea1871087ea64446f-1"></a>COPY --chown<span class="o">=</span>micro-manager:micro-manager . .
+<pre class="code shell"><a name="rest_code_f199dbee693647feb0ce94d6a1dcb64a-1"></a>COPY --chown<span class="o">=</span>micro-manager:micro-manager . .
 </pre>
 <p>The two periods (.) mean that I copy the current host directory's
 contents into the container's current working directory
@@ -610,23 +610,23 @@ Dockerfile by saying that I switch the USER so that I do not run the
 container as root, add the library to the PYTHONPATH environment
 variable, and setup the default command as the python3 interpreter.</p>
 <p>To build this image, I use the following build script.</p>
-<pre class="code shell"><a name="rest_code_dc3a0e2e3f174899a0f46febdbac5215-1"></a><span class="ch">#!/bin/bash</span>
-<a name="rest_code_dc3a0e2e3f174899a0f46febdbac5215-2"></a><span class="c1"># Copyright (C) 2018 Kyle M. Douglass</span>
-<a name="rest_code_dc3a0e2e3f174899a0f46febdbac5215-3"></a><span class="c1">#</span>
-<a name="rest_code_dc3a0e2e3f174899a0f46febdbac5215-4"></a><span class="c1"># Usage: ./build DIR</span>
-<a name="rest_code_dc3a0e2e3f174899a0f46febdbac5215-5"></a><span class="c1">#</span>
-<a name="rest_code_dc3a0e2e3f174899a0f46febdbac5215-6"></a><span class="c1"># DIR is the root directory containing the Micro-Manager build</span>
-<a name="rest_code_dc3a0e2e3f174899a0f46febdbac5215-7"></a><span class="c1"># artifacts. These artifacts will be added to the Docker image.</span>
-<a name="rest_code_dc3a0e2e3f174899a0f46febdbac5215-8"></a><span class="c1">#</span>
-<a name="rest_code_dc3a0e2e3f174899a0f46febdbac5215-9"></a>
-<a name="rest_code_dc3a0e2e3f174899a0f46febdbac5215-10"></a><span class="nv">src_dir</span><span class="o">=</span><span class="nv">$1</span>
-<a name="rest_code_dc3a0e2e3f174899a0f46febdbac5215-11"></a>
-<a name="rest_code_dc3a0e2e3f174899a0f46febdbac5215-12"></a>cp Dockerfile <span class="si">${</span><span class="nv">src_dir</span><span class="si">}</span>
-<a name="rest_code_dc3a0e2e3f174899a0f46febdbac5215-13"></a><span class="nb">cd</span> <span class="si">${</span><span class="nv">src_dir</span><span class="si">}</span>
-<a name="rest_code_dc3a0e2e3f174899a0f46febdbac5215-14"></a>
-<a name="rest_code_dc3a0e2e3f174899a0f46febdbac5215-15"></a>docker build <span class="se">\</span>
-<a name="rest_code_dc3a0e2e3f174899a0f46febdbac5215-16"></a>       -t localhost:5000/rpi-micromanager:2.0-python <span class="se">\</span>
-<a name="rest_code_dc3a0e2e3f174899a0f46febdbac5215-17"></a>       .
+<pre class="code shell"><a name="rest_code_c54f777de08141208482d2bd59e0c1ae-1"></a><span class="ch">#!/bin/bash</span>
+<a name="rest_code_c54f777de08141208482d2bd59e0c1ae-2"></a><span class="c1"># Copyright (C) 2018 Kyle M. Douglass</span>
+<a name="rest_code_c54f777de08141208482d2bd59e0c1ae-3"></a><span class="c1">#</span>
+<a name="rest_code_c54f777de08141208482d2bd59e0c1ae-4"></a><span class="c1"># Usage: ./build DIR</span>
+<a name="rest_code_c54f777de08141208482d2bd59e0c1ae-5"></a><span class="c1">#</span>
+<a name="rest_code_c54f777de08141208482d2bd59e0c1ae-6"></a><span class="c1"># DIR is the root directory containing the Micro-Manager build</span>
+<a name="rest_code_c54f777de08141208482d2bd59e0c1ae-7"></a><span class="c1"># artifacts. These artifacts will be added to the Docker image.</span>
+<a name="rest_code_c54f777de08141208482d2bd59e0c1ae-8"></a><span class="c1">#</span>
+<a name="rest_code_c54f777de08141208482d2bd59e0c1ae-9"></a>
+<a name="rest_code_c54f777de08141208482d2bd59e0c1ae-10"></a><span class="nv">src_dir</span><span class="o">=</span><span class="nv">$1</span>
+<a name="rest_code_c54f777de08141208482d2bd59e0c1ae-11"></a>
+<a name="rest_code_c54f777de08141208482d2bd59e0c1ae-12"></a>cp Dockerfile <span class="si">${</span><span class="nv">src_dir</span><span class="si">}</span>
+<a name="rest_code_c54f777de08141208482d2bd59e0c1ae-13"></a><span class="nb">cd</span> <span class="si">${</span><span class="nv">src_dir</span><span class="si">}</span>
+<a name="rest_code_c54f777de08141208482d2bd59e0c1ae-14"></a>
+<a name="rest_code_c54f777de08141208482d2bd59e0c1ae-15"></a>docker build <span class="se">\</span>
+<a name="rest_code_c54f777de08141208482d2bd59e0c1ae-16"></a>       -t localhost:5000/rpi-micromanager:2.0-python <span class="se">\</span>
+<a name="rest_code_c54f777de08141208482d2bd59e0c1ae-17"></a>       .
 </pre>
 <p>This script takes one argument, which is the <strong>build</strong> directory
 containing the compiled source code. The script first copies the
@@ -670,10 +670,10 @@ called certs inside my workstation home directory and then use openssl
 to make the cerficate. During the prompts, I press ENTER at every step
 except the FQDN (fully qualified domain name). For the FQDN, I enter
 the same IP address as above.</p>
-<pre class="code shell"><a name="rest_code_86887feb6b394f85a6cb2b2087c05d36-1"></a>mkdir certs
-<a name="rest_code_86887feb6b394f85a6cb2b2087c05d36-2"></a>openssl req -newkey rsa:4096 -nodes -sha256 <span class="se">\</span>
-<a name="rest_code_86887feb6b394f85a6cb2b2087c05d36-3"></a>-keyout certs/domain.key -x509 -days <span class="m">365</span> <span class="se">\</span>
-<a name="rest_code_86887feb6b394f85a6cb2b2087c05d36-4"></a>-config /etc/ssl/openssl.cnf -out certs/domain.crt
+<pre class="code shell"><a name="rest_code_f09e02f3f4da44c59e52cff527fbd035-1"></a>mkdir certs
+<a name="rest_code_f09e02f3f4da44c59e52cff527fbd035-2"></a>openssl req -newkey rsa:4096 -nodes -sha256 <span class="se">\</span>
+<a name="rest_code_f09e02f3f4da44c59e52cff527fbd035-3"></a>-keyout certs/domain.key -x509 -days <span class="m">365</span> <span class="se">\</span>
+<a name="rest_code_f09e02f3f4da44c59e52cff527fbd035-4"></a>-config /etc/ssl/openssl.cnf -out certs/domain.crt
 </pre>
 <p><strong>I had to add the ``-config /etc/ssl/openssl.cnf`` argument for the
 subject alternative name to be added to the certificate.</strong> This part
@@ -687,13 +687,13 @@ cannot validate certificate for 192.168.XXX.XXX because it doesn't contain any I
 <p>After the domain.key and domain.crt files have been created, I run the
 official registry server container. (See how handy Docker containers
 are? There's no messy installation beyond grabbing the container.)</p>
-<pre class="code shell"><a name="rest_code_0a9896e55c0d4f90aeeca6488c13fa6a-1"></a>docker run -d -p <span class="m">5000</span>:5000 <span class="se">\</span>
-<a name="rest_code_0a9896e55c0d4f90aeeca6488c13fa6a-2"></a>  --restart<span class="o">=</span>always <span class="se">\</span>
-<a name="rest_code_0a9896e55c0d4f90aeeca6488c13fa6a-3"></a>  --name registry <span class="se">\</span>
-<a name="rest_code_0a9896e55c0d4f90aeeca6488c13fa6a-4"></a>  -v <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/certs:/certs <span class="se">\</span>
-<a name="rest_code_0a9896e55c0d4f90aeeca6488c13fa6a-5"></a>  -e <span class="nv">REGISTRY_HTTP_TLS_CERTIFICATE</span><span class="o">=</span>/certs/domain.crt <span class="se">\</span>
-<a name="rest_code_0a9896e55c0d4f90aeeca6488c13fa6a-6"></a>  -e <span class="nv">REGISTRY_HTTP_TLS_KEY</span><span class="o">=</span>/certs/domain.key <span class="se">\</span>
-<a name="rest_code_0a9896e55c0d4f90aeeca6488c13fa6a-7"></a>  registry:2
+<pre class="code shell"><a name="rest_code_3c7d4492bdd544a0ab29f19053fed1b5-1"></a>docker run -d -p <span class="m">5000</span>:5000 <span class="se">\</span>
+<a name="rest_code_3c7d4492bdd544a0ab29f19053fed1b5-2"></a>  --restart<span class="o">=</span>always <span class="se">\</span>
+<a name="rest_code_3c7d4492bdd544a0ab29f19053fed1b5-3"></a>  --name registry <span class="se">\</span>
+<a name="rest_code_3c7d4492bdd544a0ab29f19053fed1b5-4"></a>  -v <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/certs:/certs <span class="se">\</span>
+<a name="rest_code_3c7d4492bdd544a0ab29f19053fed1b5-5"></a>  -e <span class="nv">REGISTRY_HTTP_TLS_CERTIFICATE</span><span class="o">=</span>/certs/domain.crt <span class="se">\</span>
+<a name="rest_code_3c7d4492bdd544a0ab29f19053fed1b5-6"></a>  -e <span class="nv">REGISTRY_HTTP_TLS_KEY</span><span class="o">=</span>/certs/domain.key <span class="se">\</span>
+<a name="rest_code_3c7d4492bdd544a0ab29f19053fed1b5-7"></a>  registry:2
 </pre>
 <p>If the registry:2 image is not already downloaded, then it will be
 downloaded for automatically when running the container. Note that
@@ -704,7 +704,7 @@ certs directory is relative to the current directory because I use the
 your setup.</p>
 <p>Let's go ahead and push the application image to the server now that
 it's running.</p>
-<pre class="code shell"><a name="rest_code_9f2efb97cc1f4405b31df75762cf0ccd-1"></a>docker push localhost:5000/rpi-micromanager:2.0-python
+<pre class="code shell"><a name="rest_code_8a7ac257787c4eba9122b1a51394579d-1"></a>docker push localhost:5000/rpi-micromanager:2.0-python
 </pre>
 </div>
 <div class="section" id="setup-the-pi">
@@ -714,21 +714,21 @@ Docker</a> on
 it and know how to communicate with it via ssh and copy files to it
 using scp.</p>
 <p>I copy the certificate from the host with scp.</p>
-<pre class="code shell"><a name="rest_code_01f2057272c64a55a7dc30a09662f278-1"></a>sudo mkdir -p /etc/docker/certs.d/192.168.XXX.XXX:5000/
-<a name="rest_code_01f2057272c64a55a7dc30a09662f278-2"></a>sudo scp kmdouglass@192.168.XXX.XXX:/home/kmdouglass/certs/domain.crt /etc/docker/certs.d/192.168.XXX.XXX:5000/ca.crt
+<pre class="code shell"><a name="rest_code_f81dcc28dbf34e3ea1bf9e19a860b92b-1"></a>sudo mkdir -p /etc/docker/certs.d/192.168.XXX.XXX:5000/
+<a name="rest_code_f81dcc28dbf34e3ea1bf9e19a860b92b-2"></a>sudo scp kmdouglass@192.168.XXX.XXX:/home/kmdouglass/certs/domain.crt /etc/docker/certs.d/192.168.XXX.XXX:5000/ca.crt
 </pre>
 <p>The IP address that I am using is the one to the machine where the
 registry server is running. After this step, I make the operating
 system trust the certificate.</p>
-<pre class="code shell"><a name="rest_code_b992be5945ec448c99eb26412ad3fcd8-1"></a>sudo scp kmdouglass@192.168.XXX.XXX:/home/kmdouglass/certs/domain.crt /usr/local/share/ca-certificates/192.168.XXX.XXX.crt
-<a name="rest_code_b992be5945ec448c99eb26412ad3fcd8-2"></a>sudo update-ca-certifications
+<pre class="code shell"><a name="rest_code_1603979d854c4fc09abeab85dfb17b86-1"></a>sudo scp kmdouglass@192.168.XXX.XXX:/home/kmdouglass/certs/domain.crt /usr/local/share/ca-certificates/192.168.XXX.XXX.crt
+<a name="rest_code_1603979d854c4fc09abeab85dfb17b86-2"></a>sudo update-ca-certifications
 </pre>
 <p>Finally, I restart the Docker daemon.</p>
-<pre class="code shell"><a name="rest_code_2ad10e9d31d944548082cd85d6f25f6d-1"></a>sudo service docker restart
+<pre class="code shell"><a name="rest_code_a30030b90b9e48cbbc663ed71086bb1f-1"></a>sudo service docker restart
 </pre>
 <p>If everything is working, then I should be able to pull the image from
 your network's registry server.</p>
-<pre class="code shell"><a name="rest_code_f9dbff5d6425426489523f7e12278aab-1"></a>docker pull <span class="m">192</span>.168.XXX.XXX:5000/rpi-micromanager:python2.0
+<pre class="code shell"><a name="rest_code_07188abc472a47509f522f8550ed5a8b-1"></a>docker pull <span class="m">192</span>.168.XXX.XXX:5000/rpi-micromanager:python2.0
 </pre>
 </div>
 </div>
@@ -737,15 +737,15 @@ your network's registry server.</p>
 <p>And now the moment of truth: running the application container. Since
 it's setup to run Python automatically, I use a pretty simple <tt class="docutils literal">docker
 run</tt> command.</p>
-<pre class="code shell"><a name="rest_code_44303c2f70dc4c699fe02dd7140e1c76-1"></a>docker run -it --rm <span class="se">\</span>
-<a name="rest_code_44303c2f70dc4c699fe02dd7140e1c76-2"></a>     --name micro-manager <span class="se">\</span>
-<a name="rest_code_44303c2f70dc4c699fe02dd7140e1c76-3"></a>     <span class="m">192</span>.168.XXX.XXX:5000/rpi-micromanager:2.0-python
+<pre class="code shell"><a name="rest_code_bd02e1afc3c4450f9b9eb38f759b2c16-1"></a>docker run -it --rm <span class="se">\</span>
+<a name="rest_code_bd02e1afc3c4450f9b9eb38f759b2c16-2"></a>     --name micro-manager <span class="se">\</span>
+<a name="rest_code_bd02e1afc3c4450f9b9eb38f759b2c16-3"></a>     <span class="m">192</span>.168.XXX.XXX:5000/rpi-micromanager:2.0-python
 </pre>
 <p>I verify that the Micro-Manager Python wrapper is working by trying to
 import it and run <a class="reference external" href="https://micro-manager.org/wiki/Using_the_Micro-Manager_python_library">a few basic commands</a>.</p>
-<pre class="code python"><a name="rest_code_5bd277414f21415497aef665e01aa4dc-1"></a><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">MMCorePy</span>
-<a name="rest_code_5bd277414f21415497aef665e01aa4dc-2"></a><span class="o">&gt;&gt;&gt;</span> <span class="n">mmc</span> <span class="o">=</span> <span class="n">MMCorePy</span><span class="o">.</span><span class="n">CMMCore</span><span class="p">()</span>
-<a name="rest_code_5bd277414f21415497aef665e01aa4dc-3"></a><span class="o">&gt;&gt;&gt;</span> <span class="n">mmc</span><span class="o">.</span><span class="n">getVersionInfo</span><span class="p">()</span>
+<pre class="code python"><a name="rest_code_3f3a9c36707841cd9a854d6c7ffed10f-1"></a><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">MMCorePy</span>
+<a name="rest_code_3f3a9c36707841cd9a854d6c7ffed10f-2"></a><span class="o">&gt;&gt;&gt;</span> <span class="n">mmc</span> <span class="o">=</span> <span class="n">MMCorePy</span><span class="o">.</span><span class="n">CMMCore</span><span class="p">()</span>
+<a name="rest_code_3f3a9c36707841cd9a854d6c7ffed10f-3"></a><span class="o">&gt;&gt;&gt;</span> <span class="n">mmc</span><span class="o">.</span><span class="n">getVersionInfo</span><span class="p">()</span>
 </pre>
 <p>If these work without error, then congratulations! You're now ready to
 start building your embedded microscopy system ;)</p>
@@ -820,7 +820,7 @@ programming!</p>
         <!--End of body content-->
 
         <footer id="footer">
-            Contents © 2019         <a href="mailto:kyle.m.douglass@gmail.com">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
+            Contents © 2020         <a href="mailto:kyle.m.douglass@gmail.com">Kyle M. Douglass</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
             
         </footer>
 </div>
