@@ -112,8 +112,8 @@ Results
    append (best of five tests):	0.2241 s
 
 In this test the ``append`` method of Python's list does appear to be
-faster by a factor of 6% or 7%. ``append`` took about 0.239
-microseconds per loop, whereas the += operator took 0.224 microseconds.
+faster by a factor of 6% or 7%. ``append`` took about 0.224
+microseconds per loop, whereas the += operator took 0.239 microseconds.
 
 The advantage of the ``append`` method is probably only noticeable if
 you need to append to a list many millions of times per second.

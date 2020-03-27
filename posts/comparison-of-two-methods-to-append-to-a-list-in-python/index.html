@@ -113,21 +113,21 @@ example, the requirements are</p>
 <li><p>The string cannot be longer than 10 characters</p></li>
 <li><p>The string cannot contain a number</p></li>
 </ol>
-<pre class="code python"><a name="rest_code_52efc8ce48b94fd38522e65a73c7d54c-1"></a><span class="kn">import</span> <span class="nn">re</span>
-<a name="rest_code_52efc8ce48b94fd38522e65a73c7d54c-2"></a>
-<a name="rest_code_52efc8ce48b94fd38522e65a73c7d54c-3"></a><span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<a name="rest_code_52efc8ce48b94fd38522e65a73c7d54c-4"></a>    <span class="n">reasons</span> <span class="o">=</span> <span class="p">[]</span>
-<a name="rest_code_52efc8ce48b94fd38522e65a73c7d54c-5"></a>
-<a name="rest_code_52efc8ce48b94fd38522e65a73c7d54c-6"></a>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
-<a name="rest_code_52efc8ce48b94fd38522e65a73c7d54c-7"></a>        <span class="n">reasons</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">"Input is too long"</span><span class="p">]</span>
-<a name="rest_code_52efc8ce48b94fd38522e65a73c7d54c-8"></a>
-<a name="rest_code_52efc8ce48b94fd38522e65a73c7d54c-9"></a>    <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">"\d"</span><span class="p">,</span> <span class="nb">input</span><span class="p">)):</span>
-<a name="rest_code_52efc8ce48b94fd38522e65a73c7d54c-10"></a>        <span class="n">reasons</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">"Input contains a number"</span><span class="p">]</span>
-<a name="rest_code_52efc8ce48b94fd38522e65a73c7d54c-11"></a>
-<a name="rest_code_52efc8ce48b94fd38522e65a73c7d54c-12"></a>    <span class="k">if</span> <span class="n">reasons</span><span class="p">:</span>
-<a name="rest_code_52efc8ce48b94fd38522e65a73c7d54c-13"></a>         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">" | "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">reasons</span><span class="p">))</span>
-<a name="rest_code_52efc8ce48b94fd38522e65a73c7d54c-14"></a>
-<a name="rest_code_52efc8ce48b94fd38522e65a73c7d54c-15"></a>    <span class="k">return</span> <span class="nb">input</span>
+<pre class="code python"><a name="rest_code_1001bcca55fb45a88d7a71b779d09598-1"></a><span class="kn">import</span> <span class="nn">re</span>
+<a name="rest_code_1001bcca55fb45a88d7a71b779d09598-2"></a>
+<a name="rest_code_1001bcca55fb45a88d7a71b779d09598-3"></a><span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<a name="rest_code_1001bcca55fb45a88d7a71b779d09598-4"></a>    <span class="n">reasons</span> <span class="o">=</span> <span class="p">[]</span>
+<a name="rest_code_1001bcca55fb45a88d7a71b779d09598-5"></a>
+<a name="rest_code_1001bcca55fb45a88d7a71b779d09598-6"></a>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
+<a name="rest_code_1001bcca55fb45a88d7a71b779d09598-7"></a>        <span class="n">reasons</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">"Input is too long"</span><span class="p">]</span>
+<a name="rest_code_1001bcca55fb45a88d7a71b779d09598-8"></a>
+<a name="rest_code_1001bcca55fb45a88d7a71b779d09598-9"></a>    <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">"\d"</span><span class="p">,</span> <span class="nb">input</span><span class="p">)):</span>
+<a name="rest_code_1001bcca55fb45a88d7a71b779d09598-10"></a>        <span class="n">reasons</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">"Input contains a number"</span><span class="p">]</span>
+<a name="rest_code_1001bcca55fb45a88d7a71b779d09598-11"></a>
+<a name="rest_code_1001bcca55fb45a88d7a71b779d09598-12"></a>    <span class="k">if</span> <span class="n">reasons</span><span class="p">:</span>
+<a name="rest_code_1001bcca55fb45a88d7a71b779d09598-13"></a>         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">" | "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">reasons</span><span class="p">))</span>
+<a name="rest_code_1001bcca55fb45a88d7a71b779d09598-14"></a>
+<a name="rest_code_1001bcca55fb45a88d7a71b779d09598-15"></a>    <span class="k">return</span> <span class="nb">input</span>
 </pre>
 <p>If either of these conditions are violated, an exception is raised
 containing a message. The message describes which condition(s) is(are)
@@ -144,58 +144,58 @@ the following:</p>
 <li><p>Create an empty list</p></li>
 <li><p>Append error strings to the list one at a time</p></li>
 </ol>
-<pre class="code python"><a name="rest_code_def40df234134ccd9d68f66f42f56e7b-1"></a><span class="kn">import</span> <span class="nn">string</span>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-2"></a><span class="kn">import</span> <span class="nn">timeit</span>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-3"></a>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-4"></a><span class="n">reasons</span> <span class="o">=</span> <span class="p">[</span>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-5"></a>    <span class="s2">"This is an error message"</span><span class="p">,</span>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-6"></a>    <span class="s2">"This is another error message"</span><span class="p">,</span>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-7"></a>    <span class="s2">"Let's add another for good measure"</span><span class="p">,</span>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-8"></a><span class="p">]</span>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-9"></a><span class="k">def</span> <span class="nf">test_plus_equals</span><span class="p">():</span>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-10"></a>    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-11"></a>    <span class="k">for</span> <span class="n">reason</span> <span class="ow">in</span> <span class="n">reasons</span><span class="p">:</span>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-12"></a>        <span class="n">result</span> <span class="o">+=</span> <span class="p">[</span><span class="n">reason</span><span class="p">]</span>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-13"></a>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-14"></a><span class="k">def</span> <span class="nf">test_append</span><span class="p">():</span>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-15"></a>    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-16"></a>    <span class="k">for</span> <span class="n">reason</span> <span class="ow">in</span> <span class="n">reasons</span><span class="p">:</span>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-17"></a>        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reason</span><span class="p">)</span>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-18"></a>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-19"></a><span class="n">number</span> <span class="o">=</span> <span class="mi">1000000</span>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-20"></a><span class="n">repeat</span> <span class="o">=</span> <span class="mi">5</span>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-21"></a><span class="n">results_plus_equals</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-22"></a>    <span class="n">timeit</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-23"></a>        <span class="s2">"test_plus_equals()"</span><span class="p">,</span>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-24"></a>        <span class="n">number</span><span class="o">=</span><span class="n">number</span><span class="p">,</span>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-25"></a>        <span class="n">repeat</span><span class="o">=</span><span class="n">repeat</span><span class="p">,</span>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-26"></a>        <span class="n">setup</span><span class="o">=</span><span class="s2">"from __main__ import test_plus_equals"</span>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-27"></a>    <span class="p">)</span>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-28"></a><span class="p">)</span>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-29"></a>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-30"></a><span class="n">results_append</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-31"></a>    <span class="n">timeit</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-32"></a>        <span class="s2">"test_append()"</span><span class="p">,</span>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-33"></a>        <span class="n">number</span><span class="o">=</span><span class="n">number</span><span class="p">,</span>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-34"></a>        <span class="n">repeat</span><span class="o">=</span><span class="n">repeat</span><span class="p">,</span>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-35"></a>        <span class="n">setup</span><span class="o">=</span><span class="s2">"from __main__ import test_append"</span><span class="p">)</span>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-36"></a><span class="p">)</span>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-37"></a>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-38"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-39"></a>    <span class="k">print</span><span class="p">(</span><span class="s2">"1E+6 loops per test"</span><span class="p">)</span>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-40"></a>    <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">"+= (best of five tests):</span><span class="se">\t</span><span class="s2">{results_plus_equals:0.4f} s"</span><span class="p">)</span>
-<a name="rest_code_def40df234134ccd9d68f66f42f56e7b-41"></a>    <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">"append (best of five tests):</span><span class="se">\t</span><span class="s2">{results_append:0.4f} s"</span><span class="p">)</span>
+<pre class="code python"><a name="rest_code_351fa1974a9648f194cac3ef35ed9263-1"></a><span class="kn">import</span> <span class="nn">string</span>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-2"></a><span class="kn">import</span> <span class="nn">timeit</span>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-3"></a>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-4"></a><span class="n">reasons</span> <span class="o">=</span> <span class="p">[</span>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-5"></a>    <span class="s2">"This is an error message"</span><span class="p">,</span>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-6"></a>    <span class="s2">"This is another error message"</span><span class="p">,</span>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-7"></a>    <span class="s2">"Let's add another for good measure"</span><span class="p">,</span>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-8"></a><span class="p">]</span>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-9"></a><span class="k">def</span> <span class="nf">test_plus_equals</span><span class="p">():</span>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-10"></a>    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-11"></a>    <span class="k">for</span> <span class="n">reason</span> <span class="ow">in</span> <span class="n">reasons</span><span class="p">:</span>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-12"></a>        <span class="n">result</span> <span class="o">+=</span> <span class="p">[</span><span class="n">reason</span><span class="p">]</span>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-13"></a>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-14"></a><span class="k">def</span> <span class="nf">test_append</span><span class="p">():</span>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-15"></a>    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-16"></a>    <span class="k">for</span> <span class="n">reason</span> <span class="ow">in</span> <span class="n">reasons</span><span class="p">:</span>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-17"></a>        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reason</span><span class="p">)</span>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-18"></a>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-19"></a><span class="n">number</span> <span class="o">=</span> <span class="mi">1000000</span>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-20"></a><span class="n">repeat</span> <span class="o">=</span> <span class="mi">5</span>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-21"></a><span class="n">results_plus_equals</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-22"></a>    <span class="n">timeit</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-23"></a>        <span class="s2">"test_plus_equals()"</span><span class="p">,</span>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-24"></a>        <span class="n">number</span><span class="o">=</span><span class="n">number</span><span class="p">,</span>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-25"></a>        <span class="n">repeat</span><span class="o">=</span><span class="n">repeat</span><span class="p">,</span>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-26"></a>        <span class="n">setup</span><span class="o">=</span><span class="s2">"from __main__ import test_plus_equals"</span>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-27"></a>    <span class="p">)</span>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-28"></a><span class="p">)</span>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-29"></a>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-30"></a><span class="n">results_append</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-31"></a>    <span class="n">timeit</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-32"></a>        <span class="s2">"test_append()"</span><span class="p">,</span>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-33"></a>        <span class="n">number</span><span class="o">=</span><span class="n">number</span><span class="p">,</span>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-34"></a>        <span class="n">repeat</span><span class="o">=</span><span class="n">repeat</span><span class="p">,</span>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-35"></a>        <span class="n">setup</span><span class="o">=</span><span class="s2">"from __main__ import test_append"</span><span class="p">)</span>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-36"></a><span class="p">)</span>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-37"></a>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-38"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-39"></a>    <span class="k">print</span><span class="p">(</span><span class="s2">"1E+6 loops per test"</span><span class="p">)</span>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-40"></a>    <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">"+= (best of five tests):</span><span class="se">\t</span><span class="s2">{results_plus_equals:0.4f} s"</span><span class="p">)</span>
+<a name="rest_code_351fa1974a9648f194cac3ef35ed9263-41"></a>    <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">"append (best of five tests):</span><span class="se">\t</span><span class="s2">{results_append:0.4f} s"</span><span class="p">)</span>
 </pre>
 </div>
 <div class="section" id="results">
 <h2>Results</h2>
-<pre class="code text"><a name="rest_code_424252c9a31447b78be116d87d63f868-1"></a>1E+6 loops per test
-<a name="rest_code_424252c9a31447b78be116d87d63f868-2"></a>+= (best of five tests):     0.2392 s
-<a name="rest_code_424252c9a31447b78be116d87d63f868-3"></a>append (best of five tests): 0.2241 s
+<pre class="code text"><a name="rest_code_b7bf81d52bbb401d9b9a9f9de6844e0b-1"></a>1E+6 loops per test
+<a name="rest_code_b7bf81d52bbb401d9b9a9f9de6844e0b-2"></a>+= (best of five tests):     0.2392 s
+<a name="rest_code_b7bf81d52bbb401d9b9a9f9de6844e0b-3"></a>append (best of five tests): 0.2241 s
 </pre>
 <p>In this test the <code class="docutils literal">append</code> method of Python's list does appear to be
-faster by a factor of 6% or 7%. <code class="docutils literal">append</code> took about 0.239
-microseconds per loop, whereas the += operator took 0.224 microseconds.</p>
+faster by a factor of 6% or 7%. <code class="docutils literal">append</code> took about 0.224
+microseconds per loop, whereas the += operator took 0.239 microseconds.</p>
 <p>The advantage of the <code class="docutils literal">append</code> method is probably only noticeable if
 you need to append to a list many millions of times per second.</p>
 </div>

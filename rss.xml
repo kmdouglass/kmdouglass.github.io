@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kyle M. Douglass</title><link>http://kmdouglass.github.io/</link><description>Optics, programming, and computer vision.</description><atom:link href="http://kmdouglass.github.io/rss.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Fri, 27 Mar 2020 17:20:23 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Comparison of two methods to append to a list in Python</title><link>http://kmdouglass.github.io/posts/comparison-of-two-methods-to-append-to-a-list-in-python/</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;div class="abstract docutils container"&gt;
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kyle M. Douglass</title><link>http://kmdouglass.github.io/</link><description>Optics, programming, and computer vision.</description><atom:link href="http://kmdouglass.github.io/rss.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Fri, 27 Mar 2020 17:27:59 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Comparison of two methods to append to a list in Python</title><link>http://kmdouglass.github.io/posts/comparison-of-two-methods-to-append-to-a-list-in-python/</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;div class="abstract docutils container"&gt;
 &lt;p&gt;A colleague recently told me that the &lt;code class="docutils literal"&gt;append&lt;/code&gt; method on a Python
 list is more efficient than using the += operator but provided no
 justification. Curious, I investigated whether this was true.&lt;/p&gt;
@@ -14,21 +14,21 @@ example, the requirements are&lt;/p&gt;
 &lt;li&gt;&lt;p&gt;The string cannot be longer than 10 characters&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;The string cannot contain a number&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_52efc8ce48b94fd38522e65a73c7d54c-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;re&lt;/span&gt;
-&lt;a name="rest_code_52efc8ce48b94fd38522e65a73c7d54c-2"&gt;&lt;/a&gt;
-&lt;a name="rest_code_52efc8ce48b94fd38522e65a73c7d54c-3"&gt;&lt;/a&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;validate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;input&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-&lt;a name="rest_code_52efc8ce48b94fd38522e65a73c7d54c-4"&gt;&lt;/a&gt;    &lt;span class="n"&gt;reasons&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
-&lt;a name="rest_code_52efc8ce48b94fd38522e65a73c7d54c-5"&gt;&lt;/a&gt;
-&lt;a name="rest_code_52efc8ce48b94fd38522e65a73c7d54c-6"&gt;&lt;/a&gt;    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;input&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-&lt;a name="rest_code_52efc8ce48b94fd38522e65a73c7d54c-7"&gt;&lt;/a&gt;        &lt;span class="n"&gt;reasons&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"Input is too long"&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;a name="rest_code_52efc8ce48b94fd38522e65a73c7d54c-8"&gt;&lt;/a&gt;
-&lt;a name="rest_code_52efc8ce48b94fd38522e65a73c7d54c-9"&gt;&lt;/a&gt;    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;bool&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;search&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;r&lt;/span&gt;&lt;span class="s2"&gt;"\d"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;input&lt;/span&gt;&lt;span class="p"&gt;)):&lt;/span&gt;
-&lt;a name="rest_code_52efc8ce48b94fd38522e65a73c7d54c-10"&gt;&lt;/a&gt;        &lt;span class="n"&gt;reasons&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"Input contains a number"&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;a name="rest_code_52efc8ce48b94fd38522e65a73c7d54c-11"&gt;&lt;/a&gt;
-&lt;a name="rest_code_52efc8ce48b94fd38522e65a73c7d54c-12"&gt;&lt;/a&gt;    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;reasons&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-&lt;a name="rest_code_52efc8ce48b94fd38522e65a73c7d54c-13"&gt;&lt;/a&gt;         &lt;span class="k"&gt;raise&lt;/span&gt; &lt;span class="ne"&gt;Exception&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;" | "&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;reasons&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-&lt;a name="rest_code_52efc8ce48b94fd38522e65a73c7d54c-14"&gt;&lt;/a&gt;
-&lt;a name="rest_code_52efc8ce48b94fd38522e65a73c7d54c-15"&gt;&lt;/a&gt;    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;input&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_1001bcca55fb45a88d7a71b779d09598-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;re&lt;/span&gt;
+&lt;a name="rest_code_1001bcca55fb45a88d7a71b779d09598-2"&gt;&lt;/a&gt;
+&lt;a name="rest_code_1001bcca55fb45a88d7a71b779d09598-3"&gt;&lt;/a&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;validate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;input&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;a name="rest_code_1001bcca55fb45a88d7a71b779d09598-4"&gt;&lt;/a&gt;    &lt;span class="n"&gt;reasons&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+&lt;a name="rest_code_1001bcca55fb45a88d7a71b779d09598-5"&gt;&lt;/a&gt;
+&lt;a name="rest_code_1001bcca55fb45a88d7a71b779d09598-6"&gt;&lt;/a&gt;    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;input&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;a name="rest_code_1001bcca55fb45a88d7a71b779d09598-7"&gt;&lt;/a&gt;        &lt;span class="n"&gt;reasons&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"Input is too long"&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_1001bcca55fb45a88d7a71b779d09598-8"&gt;&lt;/a&gt;
+&lt;a name="rest_code_1001bcca55fb45a88d7a71b779d09598-9"&gt;&lt;/a&gt;    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;bool&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;search&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;r&lt;/span&gt;&lt;span class="s2"&gt;"\d"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;input&lt;/span&gt;&lt;span class="p"&gt;)):&lt;/span&gt;
+&lt;a name="rest_code_1001bcca55fb45a88d7a71b779d09598-10"&gt;&lt;/a&gt;        &lt;span class="n"&gt;reasons&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"Input contains a number"&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_1001bcca55fb45a88d7a71b779d09598-11"&gt;&lt;/a&gt;
+&lt;a name="rest_code_1001bcca55fb45a88d7a71b779d09598-12"&gt;&lt;/a&gt;    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;reasons&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;a name="rest_code_1001bcca55fb45a88d7a71b779d09598-13"&gt;&lt;/a&gt;         &lt;span class="k"&gt;raise&lt;/span&gt; &lt;span class="ne"&gt;Exception&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;" | "&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;reasons&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;a name="rest_code_1001bcca55fb45a88d7a71b779d09598-14"&gt;&lt;/a&gt;
+&lt;a name="rest_code_1001bcca55fb45a88d7a71b779d09598-15"&gt;&lt;/a&gt;    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;input&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;If either of these conditions are violated, an exception is raised
 containing a message. The message describes which condition(s) is(are)
 violated. The &lt;code class="docutils literal"&gt;reasons&lt;/code&gt; list contains zero, one, or two elements, and
@@ -44,56 +44,56 @@ the following:&lt;/p&gt;
 &lt;li&gt;&lt;p&gt;Create an empty list&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;Append error strings to the list one at a time&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;string&lt;/span&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-2"&gt;&lt;/a&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;timeit&lt;/span&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-3"&gt;&lt;/a&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-4"&gt;&lt;/a&gt;&lt;span class="n"&gt;reasons&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-5"&gt;&lt;/a&gt;    &lt;span class="s2"&gt;"This is an error message"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-6"&gt;&lt;/a&gt;    &lt;span class="s2"&gt;"This is another error message"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-7"&gt;&lt;/a&gt;    &lt;span class="s2"&gt;"Let's add another for good measure"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-8"&gt;&lt;/a&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-9"&gt;&lt;/a&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test_plus_equals&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-10"&gt;&lt;/a&gt;    &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-11"&gt;&lt;/a&gt;    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;reason&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;reasons&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-12"&gt;&lt;/a&gt;        &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;reason&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-13"&gt;&lt;/a&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-14"&gt;&lt;/a&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test_append&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-15"&gt;&lt;/a&gt;    &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-16"&gt;&lt;/a&gt;    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;reason&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;reasons&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-17"&gt;&lt;/a&gt;        &lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;reason&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-18"&gt;&lt;/a&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-19"&gt;&lt;/a&gt;&lt;span class="n"&gt;number&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1000000&lt;/span&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-20"&gt;&lt;/a&gt;&lt;span class="n"&gt;repeat&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-21"&gt;&lt;/a&gt;&lt;span class="n"&gt;results_plus_equals&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;min&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-22"&gt;&lt;/a&gt;    &lt;span class="n"&gt;timeit&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;repeat&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-23"&gt;&lt;/a&gt;        &lt;span class="s2"&gt;"test_plus_equals()"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-24"&gt;&lt;/a&gt;        &lt;span class="n"&gt;number&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;number&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-25"&gt;&lt;/a&gt;        &lt;span class="n"&gt;repeat&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;repeat&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-26"&gt;&lt;/a&gt;        &lt;span class="n"&gt;setup&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"from __main__ import test_plus_equals"&lt;/span&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-27"&gt;&lt;/a&gt;    &lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-28"&gt;&lt;/a&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-29"&gt;&lt;/a&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-30"&gt;&lt;/a&gt;&lt;span class="n"&gt;results_append&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;min&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-31"&gt;&lt;/a&gt;    &lt;span class="n"&gt;timeit&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;repeat&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-32"&gt;&lt;/a&gt;        &lt;span class="s2"&gt;"test_append()"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-33"&gt;&lt;/a&gt;        &lt;span class="n"&gt;number&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;number&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-34"&gt;&lt;/a&gt;        &lt;span class="n"&gt;repeat&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;repeat&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-35"&gt;&lt;/a&gt;        &lt;span class="n"&gt;setup&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"from __main__ import test_append"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-36"&gt;&lt;/a&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-37"&gt;&lt;/a&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-38"&gt;&lt;/a&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s2"&gt;"__main__"&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-39"&gt;&lt;/a&gt;    &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"1E+6 loops per test"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-40"&gt;&lt;/a&gt;    &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;"+= (best of five tests):&lt;/span&gt;&lt;span class="se"&gt;\t&lt;/span&gt;&lt;span class="s2"&gt;{results_plus_equals:0.4f} s"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_def40df234134ccd9d68f66f42f56e7b-41"&gt;&lt;/a&gt;    &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;"append (best of five tests):&lt;/span&gt;&lt;span class="se"&gt;\t&lt;/span&gt;&lt;span class="s2"&gt;{results_append:0.4f} s"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;string&lt;/span&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-2"&gt;&lt;/a&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;timeit&lt;/span&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-3"&gt;&lt;/a&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-4"&gt;&lt;/a&gt;&lt;span class="n"&gt;reasons&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-5"&gt;&lt;/a&gt;    &lt;span class="s2"&gt;"This is an error message"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-6"&gt;&lt;/a&gt;    &lt;span class="s2"&gt;"This is another error message"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-7"&gt;&lt;/a&gt;    &lt;span class="s2"&gt;"Let's add another for good measure"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-8"&gt;&lt;/a&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-9"&gt;&lt;/a&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test_plus_equals&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-10"&gt;&lt;/a&gt;    &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-11"&gt;&lt;/a&gt;    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;reason&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;reasons&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-12"&gt;&lt;/a&gt;        &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;reason&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-13"&gt;&lt;/a&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-14"&gt;&lt;/a&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test_append&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-15"&gt;&lt;/a&gt;    &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-16"&gt;&lt;/a&gt;    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;reason&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;reasons&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-17"&gt;&lt;/a&gt;        &lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;reason&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-18"&gt;&lt;/a&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-19"&gt;&lt;/a&gt;&lt;span class="n"&gt;number&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1000000&lt;/span&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-20"&gt;&lt;/a&gt;&lt;span class="n"&gt;repeat&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-21"&gt;&lt;/a&gt;&lt;span class="n"&gt;results_plus_equals&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;min&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-22"&gt;&lt;/a&gt;    &lt;span class="n"&gt;timeit&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;repeat&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-23"&gt;&lt;/a&gt;        &lt;span class="s2"&gt;"test_plus_equals()"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-24"&gt;&lt;/a&gt;        &lt;span class="n"&gt;number&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;number&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-25"&gt;&lt;/a&gt;        &lt;span class="n"&gt;repeat&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;repeat&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-26"&gt;&lt;/a&gt;        &lt;span class="n"&gt;setup&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"from __main__ import test_plus_equals"&lt;/span&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-27"&gt;&lt;/a&gt;    &lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-28"&gt;&lt;/a&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-29"&gt;&lt;/a&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-30"&gt;&lt;/a&gt;&lt;span class="n"&gt;results_append&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;min&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-31"&gt;&lt;/a&gt;    &lt;span class="n"&gt;timeit&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;repeat&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-32"&gt;&lt;/a&gt;        &lt;span class="s2"&gt;"test_append()"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-33"&gt;&lt;/a&gt;        &lt;span class="n"&gt;number&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;number&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-34"&gt;&lt;/a&gt;        &lt;span class="n"&gt;repeat&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;repeat&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-35"&gt;&lt;/a&gt;        &lt;span class="n"&gt;setup&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"from __main__ import test_append"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-36"&gt;&lt;/a&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-37"&gt;&lt;/a&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-38"&gt;&lt;/a&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s2"&gt;"__main__"&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-39"&gt;&lt;/a&gt;    &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"1E+6 loops per test"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-40"&gt;&lt;/a&gt;    &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;"+= (best of five tests):&lt;/span&gt;&lt;span class="se"&gt;\t&lt;/span&gt;&lt;span class="s2"&gt;{results_plus_equals:0.4f} s"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_351fa1974a9648f194cac3ef35ed9263-41"&gt;&lt;/a&gt;    &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;"append (best of five tests):&lt;/span&gt;&lt;span class="se"&gt;\t&lt;/span&gt;&lt;span class="s2"&gt;{results_append:0.4f} s"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;div class="section" id="results"&gt;
 &lt;h2&gt;Results&lt;/h2&gt;
-&lt;pre class="code text"&gt;&lt;a name="rest_code_424252c9a31447b78be116d87d63f868-1"&gt;&lt;/a&gt;1E+6 loops per test
-&lt;a name="rest_code_424252c9a31447b78be116d87d63f868-2"&gt;&lt;/a&gt;+= (best of five tests):     0.2392 s
-&lt;a name="rest_code_424252c9a31447b78be116d87d63f868-3"&gt;&lt;/a&gt;append (best of five tests): 0.2241 s
+&lt;pre class="code text"&gt;&lt;a name="rest_code_b7bf81d52bbb401d9b9a9f9de6844e0b-1"&gt;&lt;/a&gt;1E+6 loops per test
+&lt;a name="rest_code_b7bf81d52bbb401d9b9a9f9de6844e0b-2"&gt;&lt;/a&gt;+= (best of five tests):     0.2392 s
+&lt;a name="rest_code_b7bf81d52bbb401d9b9a9f9de6844e0b-3"&gt;&lt;/a&gt;append (best of five tests): 0.2241 s
 &lt;/pre&gt;&lt;p&gt;In this test the &lt;code class="docutils literal"&gt;append&lt;/code&gt; method of Python's list does appear to be
-faster by a factor of 6% or 7%. &lt;code class="docutils literal"&gt;append&lt;/code&gt; took about 0.239
-microseconds per loop, whereas the += operator took 0.224 microseconds.&lt;/p&gt;
+faster by a factor of 6% or 7%. &lt;code class="docutils literal"&gt;append&lt;/code&gt; took about 0.224
+microseconds per loop, whereas the += operator took 0.239 microseconds.&lt;/p&gt;
 &lt;p&gt;The advantage of the &lt;code class="docutils literal"&gt;append&lt;/code&gt; method is probably only noticeable if
 you need to append to a list many millions of times per second.&lt;/p&gt;
 &lt;/div&gt;&lt;/div&gt;</description><category>python</category><guid>http://kmdouglass.github.io/posts/comparison-of-two-methods-to-append-to-a-list-in-python/</guid><pubDate>Fri, 27 Mar 2020 17:09:00 GMT</pubDate></item><item><title>Out of the Tar Pit: a Summary</title><link>http://kmdouglass.github.io/posts/summary-out-of-the-tar-pit/</link><dc:creator>Kyle M. Douglass</dc:creator><description>&lt;div&gt;&lt;p&gt;&lt;a class="reference external" href="http://curtclifton.net/papers/MoseleyMarks06a.pdf"&gt;Out of the Tar Pit&lt;/a&gt; is a 2006 paper by Ben Moseley and Peter Marks about the causes and effects
