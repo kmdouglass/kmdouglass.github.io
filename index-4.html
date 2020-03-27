@@ -2,28 +2,20 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="description" content="A Python implementation of a fast algorithm to compute Gibson-Lanni PSFs used in microscopy">
+<meta name="description" content="Optics, programming, and computer vision.">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Implementing a fast Gibson-Lanni PSF solver in Python | Kyle M. Douglass</title>
-<link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
-<link href="../../assets/css/ipython.min.css" rel="stylesheet" type="text/css">
-<link href="../../assets/css/nikola_ipython.css" rel="stylesheet" type="text/css">
-<link href="../../assets/css/custom_notebook.css" rel="stylesheet" type="text/css">
+<title>Kyle M. Douglass (old posts, page 4) | Kyle M. Douglass</title>
+<link href="assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<link href="assets/css/ipython.min.css" rel="stylesheet" type="text/css">
+<link href="assets/css/nikola_ipython.css" rel="stylesheet" type="text/css">
+<link href="assets/css/custom_notebook.css" rel="stylesheet" type="text/css">
 <meta name="theme-color" content="#5670d4">
 <meta name="generator" content="Nikola (getnikola.com)">
-<link rel="alternate" type="application/rss+xml" title="RSS" hreflang="en" href="../../rss.xml">
-<link rel="canonical" href="http://kmdouglass.github.io/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/">
-<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><meta name="author" content="Kyle M. Douglass">
-<link rel="prev" href="../accessing-the-raspberry-pi-camera-image-sensor/" title="Accessing the Raspberry Pi camera image sensor" type="text/html">
-<link rel="next" href="../how-i-built-a-cross-compilation-workflow-for-the-raspberry-pi/" title="How I built a cross-compilation workflow for the Raspberry Pi" type="text/html">
-<meta property="og:site_name" content="Kyle M. Douglass">
-<meta property="og:title" content="Implementing a fast Gibson-Lanni PSF solver in Python">
-<meta property="og:url" content="http://kmdouglass.github.io/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/">
-<meta property="og:description" content="A Python implementation of a fast algorithm to compute Gibson-Lanni PSFs used in microscopy">
-<meta property="og:type" content="article">
-<meta property="article:published_time" content="2017-10-20T07:25:54+02:00">
-<meta property="article:tag" content="microscopy">
-<meta property="article:tag" content="optics">
+<link rel="alternate" type="application/rss+xml" title="RSS" hreflang="en" href="rss.xml">
+<link rel="canonical" href="http://kmdouglass.github.io/index-4.html">
+<link rel="prev" href="." type="text/html">
+<link rel="next" href="index-3.html" type="text/html">
+<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -48,24 +40,18 @@
         <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
             <ul class="nav navbar-nav">
 <li>
-<a href="../../categories/index.html">Tags</a>
+<a href="categories/index.html">Tags</a>
                 </li>
 <li>
-<a href="../../archive.html">Archive</a>
+<a href="archive.html">Archive</a>
                 </li>
 <li>
-<a href="../../stories/contact/index.html">Contact</a>
+<a href="stories/contact/index.html">Contact</a>
 
                 
             </li>
 </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-    <a href="index.ipynb" id="sourcelink">Source</a>
-    </li>
-
-                
-            </ul>
+<ul class="nav navbar-nav navbar-right"></ul>
 </div>
 <!-- /.navbar-collapse -->
     </div>
@@ -76,29 +62,29 @@
         <div class="row">
             
             
-<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Implementing a fast Gibson-Lanni PSF solver in Python</a></h1>
 
+    
+
+
+    
+<div class="postindex">
+    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/" class="u-url">Implementing a fast Gibson-Lanni PSF solver in Python</a></h1>
         <div class="metadata">
-            <p class="byline author vcard p-author h-card"><span class="byline-name fn p-name" itemprop="author">
-                    Kyle M. Douglass
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                Kyle M. Douglass
             </span></p>
             <p class="dateline">
-            <a href="." rel="bookmark">
+            <a href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/" rel="bookmark">
             <time class="published dt-published" datetime="2017-10-20T07:25:54+02:00" itemprop="datePublished" title="2017-10-20 07:25">2017-10-20 07:25</time></a>
             </p>
                 <p class="commentline">
         
-    <a href="#disqus_thread" data-disqus-identifier="cache/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python.html">Comments</a>
+    <a href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/#disqus_thread" data-disqus-identifier="cache/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python.html">Comments</a>
 
 
-            
         </p>
-<p class="sourceline"><a href="index.ipynb" class="sourcelink">Source</a></p>
-
-        </div>
-        
-
-    </header><div class="e-content entry-content" itemprop="articleBody text">
+</div>
+    </header><div class="p-summary entry-summary">
     <div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -106,7 +92,7 @@
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Many techniques in modern fluorescence microscopy--such as deconvolution and single molecule localization microscopy--rely on the computation of accurate microscope point spread functions (PSFs). Several models exist for these purposes with varying degrees of accuracy and generality. One such model, the so-called Gibson-Lanni model, approximates the PSF of an immersion microscope objective by accounting for the different refractive indexes of the immersion medium, coverslip, and sample, as well as variations in the thicknesses of the different layers. This post describes a Python implementation of a fast computational approach to the G&amp;L PSF that was presented in <strong>Fast and accurate three-dimensional point spread function computation for fluorescence microscopy</strong> by Li, Xue, and Blu. The approach is fast because it avoids the need to perform any explicit integration of the Kirchhoff diffraction integral, such as is done in <a href="http://bigwww.epfl.ch/algorithms/psfgenerator/">PSF Generator</a>. The prototype is based on the manuscript and the associated MATLAB code at <a href="http://www.ee.cuhk.edu.hk/~tblu/monsite/phps/fastPSF.php">http://www.ee.cuhk.edu.hk/~tblu/monsite/phps/fastPSF.php</a></p>
-<h2 id="References">References<a class="anchor-link" href="#References">¶</a>
+<h2 id="References">References<a class="anchor-link" href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/#References">¶</a>
 </h2>
 <ul>
 <li><a href="https://www.osapublishing.org/josaa/abstract.cfm?uri=josaa-9-1-154">Gibson, S. F., &amp; Lanni, F. (1992). Experimental test of an analytical model of aberration in an oil-immersion objective lens used in three-dimensional light microscopy. JOSA A, 9(1), 154-166.</a></li>
@@ -170,9 +156,9 @@ SciPy		0.19.1
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Simulation-setup">Simulation setup<a class="anchor-link" href="#Simulation-setup">¶</a>
+<h2 id="Simulation-setup">Simulation setup<a class="anchor-link" href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/#Simulation-setup">¶</a>
 </h2>
-<h3 id="Define-the-simulation-parameters">Define the simulation parameters<a class="anchor-link" href="#Define-the-simulation-parameters">¶</a>
+<h3 id="Define-the-simulation-parameters">Define the simulation parameters<a class="anchor-link" href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/#Define-the-simulation-parameters">¶</a>
 </h3>
 <p>The Gibson-Lanni PSF model accounts for differences between design parameters and real parameters that describe the fluorescence microscope, such as the refractive indexes and thicknesses of the immersion medium, coverslip, and sample. For more information, please see the above references or, if you do not have access to the publications, the description of the model here: <a href="http://bigwww.epfl.ch/algorithms/psfgenerator/">http://bigwww.epfl.ch/algorithms/psfgenerator/</a></p>
 
@@ -226,7 +212,7 @@ SciPy		0.19.1
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Create-the-coordinate-systems">Create the coordinate systems<a class="anchor-link" href="#Create-the-coordinate-systems">¶</a>
+<h3 id="Create-the-coordinate-systems">Create the coordinate systems<a class="anchor-link" href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/#Create-the-coordinate-systems">¶</a>
 </h3>
 </div>
 </div>
@@ -265,7 +251,7 @@ SciPy		0.19.1
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-1:-Approximate-the-pupil-phase-with-a-Fourier-Bessel-series">Step 1: Approximate the pupil phase with a Fourier-Bessel series<a class="anchor-link" href="#Step-1:-Approximate-the-pupil-phase-with-a-Fourier-Bessel-series">¶</a>
+<h2 id="Step-1:-Approximate-the-pupil-phase-with-a-Fourier-Bessel-series">Step 1: Approximate the pupil phase with a Fourier-Bessel series<a class="anchor-link" href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/#Step-1:-Approximate-the-pupil-phase-with-a-Fourier-Bessel-series">¶</a>
 </h2>
 <p><code>z.reshape(-1,1)</code> flips <code>z</code> from a row array to a column array so that it may be broadcast across <code>rho</code>.</p>
 <p>The coefficients <code>C</code> are found by a least-squares solution to the equation</p>
@@ -312,7 +298,7 @@ SciPy		0.19.1
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Compare-the-function-to-its-Fourier-Bessel-expansion">Compare the function to its Fourier-Bessel expansion<a class="anchor-link" href="#Compare-the-function-to-its-Fourier-Bessel-expansion">¶</a>
+<h3 id="Compare-the-function-to-its-Fourier-Bessel-expansion">Compare the function to its Fourier-Bessel expansion<a class="anchor-link" href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/#Compare-the-function-to-its-Fourier-Bessel-expansion">¶</a>
 </h3>
 </div>
 </div>
@@ -374,7 +360,7 @@ SciPy		0.19.1
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-2:-Compute-the-PSF">Step 2: Compute the PSF<a class="anchor-link" href="#Step-2:-Compute-the-PSF">¶</a>
+<h2 id="Step-2:-Compute-the-PSF">Step 2: Compute the PSF<a class="anchor-link" href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/#Step-2:-Compute-the-PSF">¶</a>
 </h2>
 <p>Here, we use the Fourier-Bessel series expansion of the phase function and a Bessel integral identity to compute the approximate PSF. Each coefficient $ c_{m} \left( z \right) $ needs to be multiplied by</p>
 \begin{equation*}
@@ -442,7 +428,7 @@ PSF \left( r, z; z_p, \mathbf{p} \right) = \left| \mathbf{R} \left( r; \mathbf{p
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Profile-in-r-and-z">Profile in r and z<a class="anchor-link" href="#Profile-in-r-and-z">¶</a>
+<h3 id="Profile-in-r-and-z">Profile in r and z<a class="anchor-link" href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/#Profile-in-r-and-z">¶</a>
 </h3>
 </div>
 </div>
@@ -494,7 +480,7 @@ PSF \left( r, z; z_p, \mathbf{p} \right) = \left| \mathbf{R} \left( r; \mathbf{p
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>z is the stage <em>displacement</em> in an inverted microscope. So, negative z's correspond to moving "up" in the sample.</p>
-<h2 id="Step-3:-Resample-the-PSF-onto-a-rotationally-symmetric-Cartesian-grid">Step 3: Resample the PSF onto a rotationally-symmetric Cartesian grid<a class="anchor-link" href="#Step-3:-Resample-the-PSF-onto-a-rotationally-symmetric-Cartesian-grid">¶</a>
+<h2 id="Step-3:-Resample-the-PSF-onto-a-rotationally-symmetric-Cartesian-grid">Step 3: Resample the PSF onto a rotationally-symmetric Cartesian grid<a class="anchor-link" href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/#Step-3:-Resample-the-PSF-onto-a-rotationally-symmetric-Cartesian-grid">¶</a>
 </h2>
 <p>Here we generate a two dimensional grid where the value at each grid point is the distance of the point from the center of the grid. These values are supplied to an interpolation function computed from <code>PSF_rz</code> to produce a rotationally-symmetric 2D PSF at each z-position.</p>
 
@@ -530,7 +516,7 @@ PSF \left( r, z; z_p, \mathbf{p} \right) = \left| \mathbf{R} \left( r; \mathbf{p
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Save-z-stack-to-a-movie">Save z-stack to a movie<a class="anchor-link" href="#Save-z-stack-to-a-movie">¶</a>
+<h2 id="Save-z-stack-to-a-movie">Save z-stack to a movie<a class="anchor-link" href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/#Save-z-stack-to-a-movie">¶</a>
 </h2>
 </div>
 </div>
@@ -594,7 +580,7 @@ PSF \left( r, z; z_p, \mathbf{p} \right) = \left| \mathbf{R} \left( r; \mathbf{p
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<video controls src="../../gibson-lanni.mp4" type="video/mp4"></video>
+<video controls src="gibson-lanni.mp4" type="video/mp4"></video>
 </div>
 </div>
 </div>
@@ -603,7 +589,7 @@ PSF \left( r, z; z_p, \mathbf{p} \right) = \left| \mathbf{R} \left( r; \mathbf{p
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Summary">Summary<a class="anchor-link" href="#Summary">¶</a>
+<h2 id="Summary">Summary<a class="anchor-link" href="posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/#Summary">¶</a>
 </h2>
 <p>In summary, this method for calculating the Gibson-Lanni PSF is fast because it reduces the problem to a numer of matrix operations, rather than a numerical integration of the Kirchhoff diffraction integral. I especially find the Fourier-Bessel approximation of the phase function very clever, since this enables us to apply the integral identity described above. Moreover, it seems like the approach can extend to computing PSFs from other wavefront aberrations, though at the moment I do not know how it might handle non-rotationally symmetric pupils. (I am referring to the <code>W</code> variable above.)</p>
 <p>I would like to thank the first author of the work, <a href="http://www.ee.cuhk.edu.hk/~jzli/">Jizhou Li</a>, for encouraging me to write this as a blog post and for providing feedback on the implementation presented here.</p>
@@ -613,47 +599,24 @@ PSF \left( r, z; z_p, \mathbf{p} \right) = \left| \mathbf{R} \left( r; \mathbf{p
 </div>
 </div>
     </div>
-    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
-<li><a class="tag p-category" href="../../categories/microscopy/" rel="tag">microscopy</a></li>
-            <li><a class="tag p-category" href="../../categories/optics/" rel="tag">optics</a></li>
-        </ul>
-<ul class="pager hidden-print">
+    </article>
+</div>
+
+        <nav class="postindexpager"><ul class="pager">
 <li class="previous">
-                <a href="../accessing-the-raspberry-pi-camera-image-sensor/" rel="prev" title="Accessing the Raspberry Pi camera image sensor">Previous post</a>
+                <a href="." rel="prev">Newer posts</a>
             </li>
             <li class="next">
-                <a href="../how-i-built-a-cross-compilation-workflow-for-the-raspberry-pi/" rel="next" title="How I built a cross-compilation workflow for the Raspberry Pi">Next post</a>
+                <a href="index-3.html" rel="next">Older posts</a>
             </li>
-        </ul></nav></aside><section class="comments hidden-print"><h2>Comments</h2>
-        
-        
-        <div id="disqus_thread"></div>
-        <script>
-        var disqus_shortname ="kmdouglass",
-            disqus_url="http://kmdouglass.github.io/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python/",
-        disqus_title="Implementing a fast Gibson-Lanni PSF solver in Python",
-        disqus_identifier="cache/posts/implementing-a-fast-gibson-lanni-psf-solver-in-python.html",
-        disqus_config = function () {
-            this.language = "en";
-        };
-        (function() {
-            var dsq = document.createElement('script'); dsq.async = true;
-            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
-    </script><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
-</noscript>
-    <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
-
-
-        </section><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-3lJUsx1TJHt7BA4udB5KPnDrlkO8T6J6v/op7ui0BbCjvZ9WqV4Xm6DTP6kQ/iBH" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
+        </ul></nav><script>var disqus_shortname="kmdouglass";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-3lJUsx1TJHt7BA4udB5KPnDrlkO8T6J6v/op7ui0BbCjvZ9WqV4Xm6DTP6kQ/iBH" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
 MathJax.Hub.Config({
     tex2jax: {
         inlineMath: [ ['$','$'], ["\\(","\\)"] ],
         processEscapes: true
     }
 });
-</script></article><script>var disqus_shortname="kmdouglass";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+</script>
 </div>
         <!--End of body content-->
 
@@ -665,7 +628,7 @@ MathJax.Hub.Config({
 </div>
 
 
-            <script src="../../assets/js/all-nocdn.js"></script><!-- fancy dates --><script>
+            <script src="assets/js/all-nocdn.js"></script><!-- fancy dates --><script>
     moment.locale("en");
     fancydates(0, "YYYY-MM-DD HH:mm");
     </script><!-- end fancy dates --><script>

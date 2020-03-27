@@ -79,7 +79,7 @@
 <article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Complex data types and the Rust FFI</a></h1>
 
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+            <p class="byline author vcard p-author h-card"><span class="byline-name fn p-name" itemprop="author">
                     Kyle M. Douglass
             </span></p>
             <p class="dateline">
@@ -120,20 +120,20 @@ wrote to explore how to pass complex data types from Rust to C.</p>
 <div class="section" id="an-example-ffi-project">
 <h2>An example FFI project</h2>
 <p>I created the Rust library in the typical way by first starting a new project with Cargo:</p>
-<pre class="code shell"><a name="rest_code_a0105e5f3010431fbd558b3556a77a99-1"></a>$ cargo new --lib rstruct
-<a name="rest_code_a0105e5f3010431fbd558b3556a77a99-2"></a>$ <span class="nb">cd</span> rstruct
+<pre class="code shell"><a name="rest_code_372b84d1c7254bbaa80260de2378dbce-1"></a>$ cargo new --lib rstruct
+<a name="rest_code_372b84d1c7254bbaa80260de2378dbce-2"></a>$ <span class="nb">cd</span> rstruct
 </pre>
 <p>Inside, I modified the contents of <tt class="docutils literal">Cargo.toml</tt> to the following:</p>
-<pre class="code text"><a name="rest_code_e85b8ae78481410eb14719beca47a982-1"></a>[package]
-<a name="rest_code_e85b8ae78481410eb14719beca47a982-2"></a>name = "rstruct"
-<a name="rest_code_e85b8ae78481410eb14719beca47a982-3"></a>version = "0.1.0"
-<a name="rest_code_e85b8ae78481410eb14719beca47a982-4"></a>authors = ["Kyle M. Douglass"]
-<a name="rest_code_e85b8ae78481410eb14719beca47a982-5"></a>edition = "2018"
-<a name="rest_code_e85b8ae78481410eb14719beca47a982-6"></a>
-<a name="rest_code_e85b8ae78481410eb14719beca47a982-7"></a>[lib]
-<a name="rest_code_e85b8ae78481410eb14719beca47a982-8"></a>crate-type = ["cdylib"]
-<a name="rest_code_e85b8ae78481410eb14719beca47a982-9"></a>
-<a name="rest_code_e85b8ae78481410eb14719beca47a982-10"></a>[dependencies]
+<pre class="code text"><a name="rest_code_5fbba1c3a9fd47cd91f5cd370105ecf6-1"></a>[package]
+<a name="rest_code_5fbba1c3a9fd47cd91f5cd370105ecf6-2"></a>name = "rstruct"
+<a name="rest_code_5fbba1c3a9fd47cd91f5cd370105ecf6-3"></a>version = "0.1.0"
+<a name="rest_code_5fbba1c3a9fd47cd91f5cd370105ecf6-4"></a>authors = ["Kyle M. Douglass"]
+<a name="rest_code_5fbba1c3a9fd47cd91f5cd370105ecf6-5"></a>edition = "2018"
+<a name="rest_code_5fbba1c3a9fd47cd91f5cd370105ecf6-6"></a>
+<a name="rest_code_5fbba1c3a9fd47cd91f5cd370105ecf6-7"></a>[lib]
+<a name="rest_code_5fbba1c3a9fd47cd91f5cd370105ecf6-8"></a>crate-type = ["cdylib"]
+<a name="rest_code_5fbba1c3a9fd47cd91f5cd370105ecf6-9"></a>
+<a name="rest_code_5fbba1c3a9fd47cd91f5cd370105ecf6-10"></a>[dependencies]
 </pre>
 <p>The only lines that I added were <tt class="docutils literal">[lib]</tt> and <tt class="docutils literal"><span class="pre">crate-type</span> = ["cdylib"]</tt>. As described in the
 <a class="reference external" href="https://doc.rust-lang.org/edition-guide/rust-2018/platform-and-target-support/cdylib-crates-for-c-interoperability.html">2018 edition guide</a>, this type of crate produces a binary that has no Rust-specific information
@@ -141,80 +141,80 @@ in it and is intended for use through a C FFI.</p>
 <p>Next, I opened the <tt class="docutils literal">src/lib.rs</tt> source file, removed the auto-generated content, and added the
 following source.</p>
 <table class="codetable"><tr>
-<td class="linenos"><div class="linenodiv"><pre><a href="#rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-1"> 1</a>
-<a href="#rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-2"> 2</a>
-<a href="#rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-3"> 3</a>
-<a href="#rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-4"> 4</a>
-<a href="#rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-5"> 5</a>
-<a href="#rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-6"> 6</a>
-<a href="#rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-7"> 7</a>
-<a href="#rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-8"> 8</a>
-<a href="#rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-9"> 9</a>
-<a href="#rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-10">10</a>
-<a href="#rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-11">11</a>
-<a href="#rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-12">12</a>
-<a href="#rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-13">13</a>
-<a href="#rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-14">14</a>
-<a href="#rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-15">15</a>
-<a href="#rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-16">16</a>
-<a href="#rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-17">17</a>
-<a href="#rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-18">18</a>
-<a href="#rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-19">19</a>
-<a href="#rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-20">20</a>
-<a href="#rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-21">21</a>
-<a href="#rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-22">22</a>
-<a href="#rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-23">23</a>
-<a href="#rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-24">24</a>
-<a href="#rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-25">25</a>
-<a href="#rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-26">26</a>
-<a href="#rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-27">27</a>
-<a href="#rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-28">28</a>
-<a href="#rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-29">29</a>
-<a href="#rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-30">30</a>
-<a href="#rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-31">31</a>
-<a href="#rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-32">32</a>
-<a href="#rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-33">33</a>
-<a href="#rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-34">34</a>
-<a href="#rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-35">35</a>
-<a href="#rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-36">36</a>
-<a href="#rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-37">37</a></pre></div></td>
-<td class="code"><pre class="code rust"><a name="rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-1"></a><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">boxed</span>::<span class="nb">Box</span><span class="p">;</span><span class="w"></span>
-<a name="rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-2"></a><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">ffi</span>::<span class="n">CString</span><span class="p">;</span><span class="w"></span>
-<a name="rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-3"></a><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">os</span>::<span class="n">raw</span>::<span class="n">c_char</span><span class="p">;</span><span class="w"></span>
-<a name="rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-4"></a>
-<a name="rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-5"></a><span class="cp">#[repr(C)]</span><span class="w"></span>
-<a name="rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-6"></a><span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">RStruct</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a name="rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-7"></a><span class="w">    </span><span class="n">name</span>: <span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">c_char</span><span class="p">,</span><span class="w"></span>
-<a name="rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-8"></a><span class="w">    </span><span class="n">value</span>: <span class="nc">Value</span><span class="p">,</span><span class="w"></span>
-<a name="rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-9"></a><span class="p">}</span><span class="w"></span>
-<a name="rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-10"></a>
-<a name="rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-11"></a><span class="cp">#[repr(C)]</span><span class="w"></span>
-<a name="rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-12"></a><span class="k">pub</span><span class="w"> </span><span class="k">enum</span> <span class="nc">Value</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a name="rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-13"></a><span class="w">    </span><span class="n">_Int</span><span class="p">(</span><span class="kt">i32</span><span class="p">),</span><span class="w"></span>
-<a name="rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-14"></a><span class="w">    </span><span class="n">_Float</span><span class="p">(</span><span class="kt">f64</span><span class="p">),</span><span class="w"></span>
-<a name="rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-15"></a><span class="p">}</span><span class="w"></span>
-<a name="rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-16"></a>
-<a name="rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-17"></a><span class="cp">#[no_mangle]</span><span class="w"></span>
-<a name="rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-18"></a><span class="k">pub</span><span class="w"> </span><span class="k">extern</span><span class="w"> </span><span class="s">"C"</span><span class="w"> </span><span class="k">fn</span> <span class="nf">data_new</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="o">*</span><span class="k">mut</span><span class="w"> </span><span class="n">RStruct</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a name="rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-19"></a><span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span><span class="w"> </span><span class="s">"Inside data_new()."</span><span class="p">.</span><span class="n">to_string</span><span class="p">());</span><span class="w"></span>
-<a name="rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-20"></a>
-<a name="rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-21"></a><span class="w">    </span><span class="nb">Box</span>::<span class="n">into_raw</span><span class="p">(</span><span class="nb">Box</span>::<span class="n">new</span><span class="p">(</span><span class="n">RStruct</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a name="rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-22"></a><span class="w">        </span><span class="n">name</span>: <span class="nc">CString</span>::<span class="n">new</span><span class="p">(</span><span class="s">"my_rstruct"</span><span class="p">)</span><span class="w"></span>
-<a name="rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-23"></a><span class="w">            </span><span class="p">.</span><span class="n">expect</span><span class="p">(</span><span class="s">"Error: CString::new()"</span><span class="p">)</span><span class="w"></span>
-<a name="rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-24"></a><span class="w">            </span><span class="p">.</span><span class="n">into_raw</span><span class="p">(),</span><span class="w"></span>
-<a name="rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-25"></a><span class="w">        </span><span class="n">value</span>: <span class="nc">Value</span>::<span class="n">_Int</span><span class="p">(</span><span class="mi">42</span><span class="p">),</span><span class="w"></span>
-<a name="rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-26"></a><span class="w">    </span><span class="p">}))</span><span class="w"></span>
-<a name="rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-27"></a><span class="p">}</span><span class="w"></span>
-<a name="rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-28"></a>
-<a name="rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-29"></a><span class="cp">#[no_mangle]</span><span class="w"></span>
-<a name="rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-30"></a><span class="k">pub</span><span class="w"> </span><span class="k">extern</span><span class="w"> </span><span class="s">"C"</span><span class="w"> </span><span class="k">fn</span> <span class="nf">data_free</span><span class="p">(</span><span class="n">ptr</span>: <span class="o">*</span><span class="k">mut</span><span class="w"> </span><span class="n">RStruct</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a name="rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-31"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">ptr</span><span class="p">.</span><span class="n">is_null</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a name="rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-32"></a><span class="w">        </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
-<a name="rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-33"></a><span class="w">    </span><span class="p">}</span><span class="w"></span>
-<a name="rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-34"></a><span class="w">    </span><span class="k">unsafe</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a name="rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-35"></a><span class="w">        </span><span class="nb">Box</span>::<span class="n">from_raw</span><span class="p">(</span><span class="n">ptr</span><span class="p">);</span><span class="w"></span>
-<a name="rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-36"></a><span class="w">    </span><span class="p">}</span><span class="w"></span>
-<a name="rest_code_22b3bcab083f4d3eb2b99ef5318fbf45-37"></a><span class="p">}</span><span class="w"></span>
+<td class="linenos"><div class="linenodiv"><pre><a href="#rest_code_d724c2d6c3244a979b169b4a559585b7-1"> 1</a>
+<a href="#rest_code_d724c2d6c3244a979b169b4a559585b7-2"> 2</a>
+<a href="#rest_code_d724c2d6c3244a979b169b4a559585b7-3"> 3</a>
+<a href="#rest_code_d724c2d6c3244a979b169b4a559585b7-4"> 4</a>
+<a href="#rest_code_d724c2d6c3244a979b169b4a559585b7-5"> 5</a>
+<a href="#rest_code_d724c2d6c3244a979b169b4a559585b7-6"> 6</a>
+<a href="#rest_code_d724c2d6c3244a979b169b4a559585b7-7"> 7</a>
+<a href="#rest_code_d724c2d6c3244a979b169b4a559585b7-8"> 8</a>
+<a href="#rest_code_d724c2d6c3244a979b169b4a559585b7-9"> 9</a>
+<a href="#rest_code_d724c2d6c3244a979b169b4a559585b7-10">10</a>
+<a href="#rest_code_d724c2d6c3244a979b169b4a559585b7-11">11</a>
+<a href="#rest_code_d724c2d6c3244a979b169b4a559585b7-12">12</a>
+<a href="#rest_code_d724c2d6c3244a979b169b4a559585b7-13">13</a>
+<a href="#rest_code_d724c2d6c3244a979b169b4a559585b7-14">14</a>
+<a href="#rest_code_d724c2d6c3244a979b169b4a559585b7-15">15</a>
+<a href="#rest_code_d724c2d6c3244a979b169b4a559585b7-16">16</a>
+<a href="#rest_code_d724c2d6c3244a979b169b4a559585b7-17">17</a>
+<a href="#rest_code_d724c2d6c3244a979b169b4a559585b7-18">18</a>
+<a href="#rest_code_d724c2d6c3244a979b169b4a559585b7-19">19</a>
+<a href="#rest_code_d724c2d6c3244a979b169b4a559585b7-20">20</a>
+<a href="#rest_code_d724c2d6c3244a979b169b4a559585b7-21">21</a>
+<a href="#rest_code_d724c2d6c3244a979b169b4a559585b7-22">22</a>
+<a href="#rest_code_d724c2d6c3244a979b169b4a559585b7-23">23</a>
+<a href="#rest_code_d724c2d6c3244a979b169b4a559585b7-24">24</a>
+<a href="#rest_code_d724c2d6c3244a979b169b4a559585b7-25">25</a>
+<a href="#rest_code_d724c2d6c3244a979b169b4a559585b7-26">26</a>
+<a href="#rest_code_d724c2d6c3244a979b169b4a559585b7-27">27</a>
+<a href="#rest_code_d724c2d6c3244a979b169b4a559585b7-28">28</a>
+<a href="#rest_code_d724c2d6c3244a979b169b4a559585b7-29">29</a>
+<a href="#rest_code_d724c2d6c3244a979b169b4a559585b7-30">30</a>
+<a href="#rest_code_d724c2d6c3244a979b169b4a559585b7-31">31</a>
+<a href="#rest_code_d724c2d6c3244a979b169b4a559585b7-32">32</a>
+<a href="#rest_code_d724c2d6c3244a979b169b4a559585b7-33">33</a>
+<a href="#rest_code_d724c2d6c3244a979b169b4a559585b7-34">34</a>
+<a href="#rest_code_d724c2d6c3244a979b169b4a559585b7-35">35</a>
+<a href="#rest_code_d724c2d6c3244a979b169b4a559585b7-36">36</a>
+<a href="#rest_code_d724c2d6c3244a979b169b4a559585b7-37">37</a></pre></div></td>
+<td class="code"><pre class="code rust"><a name="rest_code_d724c2d6c3244a979b169b4a559585b7-1"></a><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">boxed</span>::<span class="nb">Box</span><span class="p">;</span><span class="w"></span>
+<a name="rest_code_d724c2d6c3244a979b169b4a559585b7-2"></a><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">ffi</span>::<span class="n">CString</span><span class="p">;</span><span class="w"></span>
+<a name="rest_code_d724c2d6c3244a979b169b4a559585b7-3"></a><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">os</span>::<span class="n">raw</span>::<span class="n">c_char</span><span class="p">;</span><span class="w"></span>
+<a name="rest_code_d724c2d6c3244a979b169b4a559585b7-4"></a>
+<a name="rest_code_d724c2d6c3244a979b169b4a559585b7-5"></a><span class="cp">#[repr(C)]</span><span class="w"></span>
+<a name="rest_code_d724c2d6c3244a979b169b4a559585b7-6"></a><span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">RStruct</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_d724c2d6c3244a979b169b4a559585b7-7"></a><span class="w">    </span><span class="n">name</span>: <span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">c_char</span><span class="p">,</span><span class="w"></span>
+<a name="rest_code_d724c2d6c3244a979b169b4a559585b7-8"></a><span class="w">    </span><span class="n">value</span>: <span class="nc">Value</span><span class="p">,</span><span class="w"></span>
+<a name="rest_code_d724c2d6c3244a979b169b4a559585b7-9"></a><span class="p">}</span><span class="w"></span>
+<a name="rest_code_d724c2d6c3244a979b169b4a559585b7-10"></a>
+<a name="rest_code_d724c2d6c3244a979b169b4a559585b7-11"></a><span class="cp">#[repr(C)]</span><span class="w"></span>
+<a name="rest_code_d724c2d6c3244a979b169b4a559585b7-12"></a><span class="k">pub</span><span class="w"> </span><span class="k">enum</span> <span class="nc">Value</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_d724c2d6c3244a979b169b4a559585b7-13"></a><span class="w">    </span><span class="n">_Int</span><span class="p">(</span><span class="kt">i32</span><span class="p">),</span><span class="w"></span>
+<a name="rest_code_d724c2d6c3244a979b169b4a559585b7-14"></a><span class="w">    </span><span class="n">_Float</span><span class="p">(</span><span class="kt">f64</span><span class="p">),</span><span class="w"></span>
+<a name="rest_code_d724c2d6c3244a979b169b4a559585b7-15"></a><span class="p">}</span><span class="w"></span>
+<a name="rest_code_d724c2d6c3244a979b169b4a559585b7-16"></a>
+<a name="rest_code_d724c2d6c3244a979b169b4a559585b7-17"></a><span class="cp">#[no_mangle]</span><span class="w"></span>
+<a name="rest_code_d724c2d6c3244a979b169b4a559585b7-18"></a><span class="k">pub</span><span class="w"> </span><span class="k">extern</span><span class="w"> </span><span class="s">"C"</span><span class="w"> </span><span class="k">fn</span> <span class="nf">data_new</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="o">*</span><span class="k">mut</span><span class="w"> </span><span class="n">RStruct</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_d724c2d6c3244a979b169b4a559585b7-19"></a><span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span><span class="w"> </span><span class="s">"Inside data_new()."</span><span class="p">.</span><span class="n">to_string</span><span class="p">());</span><span class="w"></span>
+<a name="rest_code_d724c2d6c3244a979b169b4a559585b7-20"></a>
+<a name="rest_code_d724c2d6c3244a979b169b4a559585b7-21"></a><span class="w">    </span><span class="nb">Box</span>::<span class="n">into_raw</span><span class="p">(</span><span class="nb">Box</span>::<span class="n">new</span><span class="p">(</span><span class="n">RStruct</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_d724c2d6c3244a979b169b4a559585b7-22"></a><span class="w">        </span><span class="n">name</span>: <span class="nc">CString</span>::<span class="n">new</span><span class="p">(</span><span class="s">"my_rstruct"</span><span class="p">)</span><span class="w"></span>
+<a name="rest_code_d724c2d6c3244a979b169b4a559585b7-23"></a><span class="w">            </span><span class="p">.</span><span class="n">expect</span><span class="p">(</span><span class="s">"Error: CString::new()"</span><span class="p">)</span><span class="w"></span>
+<a name="rest_code_d724c2d6c3244a979b169b4a559585b7-24"></a><span class="w">            </span><span class="p">.</span><span class="n">into_raw</span><span class="p">(),</span><span class="w"></span>
+<a name="rest_code_d724c2d6c3244a979b169b4a559585b7-25"></a><span class="w">        </span><span class="n">value</span>: <span class="nc">Value</span>::<span class="n">_Int</span><span class="p">(</span><span class="mi">42</span><span class="p">),</span><span class="w"></span>
+<a name="rest_code_d724c2d6c3244a979b169b4a559585b7-26"></a><span class="w">    </span><span class="p">}))</span><span class="w"></span>
+<a name="rest_code_d724c2d6c3244a979b169b4a559585b7-27"></a><span class="p">}</span><span class="w"></span>
+<a name="rest_code_d724c2d6c3244a979b169b4a559585b7-28"></a>
+<a name="rest_code_d724c2d6c3244a979b169b4a559585b7-29"></a><span class="cp">#[no_mangle]</span><span class="w"></span>
+<a name="rest_code_d724c2d6c3244a979b169b4a559585b7-30"></a><span class="k">pub</span><span class="w"> </span><span class="k">extern</span><span class="w"> </span><span class="s">"C"</span><span class="w"> </span><span class="k">fn</span> <span class="nf">data_free</span><span class="p">(</span><span class="n">ptr</span>: <span class="o">*</span><span class="k">mut</span><span class="w"> </span><span class="n">RStruct</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_d724c2d6c3244a979b169b4a559585b7-31"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">ptr</span><span class="p">.</span><span class="n">is_null</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_d724c2d6c3244a979b169b4a559585b7-32"></a><span class="w">        </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
+<a name="rest_code_d724c2d6c3244a979b169b4a559585b7-33"></a><span class="w">    </span><span class="p">}</span><span class="w"></span>
+<a name="rest_code_d724c2d6c3244a979b169b4a559585b7-34"></a><span class="w">    </span><span class="k">unsafe</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_d724c2d6c3244a979b169b4a559585b7-35"></a><span class="w">        </span><span class="nb">Box</span>::<span class="n">from_raw</span><span class="p">(</span><span class="n">ptr</span><span class="p">);</span><span class="w"></span>
+<a name="rest_code_d724c2d6c3244a979b169b4a559585b7-36"></a><span class="w">    </span><span class="p">}</span><span class="w"></span>
+<a name="rest_code_d724c2d6c3244a979b169b4a559585b7-37"></a><span class="p">}</span><span class="w"></span>
 </pre></td>
 </tr></table>
 <p>Roughly speaking, this simple library does two things. First, it defines two data types, a struct
@@ -226,11 +226,11 @@ exposes two functions that may be used to access instances of these data types f
 <div class="section" id="defining-structs-and-enums-for-use-in-c">
 <h2>Defining structs and enums for use in C</h2>
 <p>I want to expose instances of the RStruct type to C code. The definition of <tt class="docutils literal">RStruct</tt> is</p>
-<pre class="code rust"><a name="rest_code_06910cbadcad4842870e5d9055bd1d8d-1"></a><span class="cp">#[repr(C)]</span><span class="w"></span>
-<a name="rest_code_06910cbadcad4842870e5d9055bd1d8d-2"></a><span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">RStruct</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a name="rest_code_06910cbadcad4842870e5d9055bd1d8d-3"></a><span class="w">    </span><span class="n">name</span>: <span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">c_char</span><span class="p">,</span><span class="w"></span>
-<a name="rest_code_06910cbadcad4842870e5d9055bd1d8d-4"></a><span class="w">    </span><span class="n">value</span>: <span class="nc">Value</span><span class="p">,</span><span class="w"></span>
-<a name="rest_code_06910cbadcad4842870e5d9055bd1d8d-5"></a><span class="p">}</span><span class="w"></span>
+<pre class="code rust"><a name="rest_code_1b6b309db3de40e3b9da5e9c3a097dbf-1"></a><span class="cp">#[repr(C)]</span><span class="w"></span>
+<a name="rest_code_1b6b309db3de40e3b9da5e9c3a097dbf-2"></a><span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">RStruct</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_1b6b309db3de40e3b9da5e9c3a097dbf-3"></a><span class="w">    </span><span class="n">name</span>: <span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">c_char</span><span class="p">,</span><span class="w"></span>
+<a name="rest_code_1b6b309db3de40e3b9da5e9c3a097dbf-4"></a><span class="w">    </span><span class="n">value</span>: <span class="nc">Value</span><span class="p">,</span><span class="w"></span>
+<a name="rest_code_1b6b309db3de40e3b9da5e9c3a097dbf-5"></a><span class="p">}</span><span class="w"></span>
 </pre>
 <p>The first line here is <tt class="docutils literal">[repr(C)]</tt>. This is an attribute that modifies the layout of the struct
 in memory to "do what C does." As described in the <a class="reference external" href="https://doc.rust-lang.org/nomicon/other-reprs.html">Rustonomicon</a>,</p>
@@ -244,11 +244,11 @@ c_char</tt>. The Rust data types <tt class="docutils literal">String</tt> and <t
 define the data type as a <a class="reference external" href="https://doc.rust-lang.org/std/primitive.pointer.html">raw pointer</a> to a <tt class="docutils literal">c_char</tt>. (In this case, <tt class="docutils literal">*</tt> is not dereferencing
 the pointer but is <a class="reference external" href="https://doc.rust-lang.org/beta/book/ch19-01-unsafe-rust.html#dereferencing-a-raw-pointer">part of the type name</a> <tt class="docutils literal">*const T</tt>.)</p>
 <p>The second field is an enum whose definition follows:</p>
-<pre class="code rust"><a name="rest_code_4ad95aa3e646467cad1c3d4fe8701333-1"></a><span class="cp">#[repr(C)]</span><span class="w"></span>
-<a name="rest_code_4ad95aa3e646467cad1c3d4fe8701333-2"></a><span class="k">pub</span><span class="w"> </span><span class="k">enum</span> <span class="nc">Value</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a name="rest_code_4ad95aa3e646467cad1c3d4fe8701333-3"></a><span class="w">    </span><span class="n">_Int</span><span class="p">(</span><span class="kt">i32</span><span class="p">),</span><span class="w"></span>
-<a name="rest_code_4ad95aa3e646467cad1c3d4fe8701333-4"></a><span class="w">    </span><span class="n">_Float</span><span class="p">(</span><span class="kt">f64</span><span class="p">),</span><span class="w"></span>
-<a name="rest_code_4ad95aa3e646467cad1c3d4fe8701333-5"></a><span class="p">}</span><span class="w"></span>
+<pre class="code rust"><a name="rest_code_50968308faa5491b9ed28adbef50b95c-1"></a><span class="cp">#[repr(C)]</span><span class="w"></span>
+<a name="rest_code_50968308faa5491b9ed28adbef50b95c-2"></a><span class="k">pub</span><span class="w"> </span><span class="k">enum</span> <span class="nc">Value</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_50968308faa5491b9ed28adbef50b95c-3"></a><span class="w">    </span><span class="n">_Int</span><span class="p">(</span><span class="kt">i32</span><span class="p">),</span><span class="w"></span>
+<a name="rest_code_50968308faa5491b9ed28adbef50b95c-4"></a><span class="w">    </span><span class="n">_Float</span><span class="p">(</span><span class="kt">f64</span><span class="p">),</span><span class="w"></span>
+<a name="rest_code_50968308faa5491b9ed28adbef50b95c-5"></a><span class="p">}</span><span class="w"></span>
 </pre>
 <p>Again we use <tt class="docutils literal">#[repr(C)]</tt> to indicate that we want the enum to be laid out in memory in the same
 manner as in C. The enum <tt class="docutils literal">Value</tt> has two variants, <tt class="docutils literal">_Int</tt> and <tt class="docutils literal">_Float</tt>, that each contain a
@@ -262,17 +262,17 @@ is no need to do anything special with them.</p>
 <p>Following the data type definitions, there are two functions that are exposed through the FFI
 boundary, one for instantiating an <tt class="docutils literal">RStruct</tt> and one for freeing the memory associated with an
 <tt class="docutils literal">RStruct</tt>. The method for instantiation is first:</p>
-<pre class="code rust"><a name="rest_code_8e2ded3a7ea74b65b1076641652145af-1"></a><span class="cp">#[no_mangle]</span><span class="w"></span>
-<a name="rest_code_8e2ded3a7ea74b65b1076641652145af-2"></a><span class="k">pub</span><span class="w"> </span><span class="k">extern</span><span class="w"> </span><span class="s">"C"</span><span class="w"> </span><span class="k">fn</span> <span class="nf">data_new</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="o">*</span><span class="k">mut</span><span class="w"> </span><span class="n">RStruct</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a name="rest_code_8e2ded3a7ea74b65b1076641652145af-3"></a><span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span><span class="w"> </span><span class="s">"Inside data_new()."</span><span class="p">.</span><span class="n">to_string</span><span class="p">());</span><span class="w"></span>
-<a name="rest_code_8e2ded3a7ea74b65b1076641652145af-4"></a>
-<a name="rest_code_8e2ded3a7ea74b65b1076641652145af-5"></a><span class="w">    </span><span class="nb">Box</span>::<span class="n">into_raw</span><span class="p">(</span><span class="nb">Box</span>::<span class="n">new</span><span class="p">(</span><span class="n">RStruct</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a name="rest_code_8e2ded3a7ea74b65b1076641652145af-6"></a><span class="w">        </span><span class="n">name</span>: <span class="nc">CString</span>::<span class="n">new</span><span class="p">(</span><span class="s">"my_rstruct"</span><span class="p">)</span><span class="w"></span>
-<a name="rest_code_8e2ded3a7ea74b65b1076641652145af-7"></a><span class="w">            </span><span class="p">.</span><span class="n">expect</span><span class="p">(</span><span class="s">"Error: CString::new()"</span><span class="p">)</span><span class="w"></span>
-<a name="rest_code_8e2ded3a7ea74b65b1076641652145af-8"></a><span class="w">            </span><span class="p">.</span><span class="n">into_raw</span><span class="p">(),</span><span class="w"></span>
-<a name="rest_code_8e2ded3a7ea74b65b1076641652145af-9"></a><span class="w">        </span><span class="n">value</span>: <span class="nc">Value</span>::<span class="n">_Int</span><span class="p">(</span><span class="mi">42</span><span class="p">),</span><span class="w"></span>
-<a name="rest_code_8e2ded3a7ea74b65b1076641652145af-10"></a><span class="w">    </span><span class="p">}))</span><span class="w"></span>
-<a name="rest_code_8e2ded3a7ea74b65b1076641652145af-11"></a><span class="p">}</span><span class="w"></span>
+<pre class="code rust"><a name="rest_code_c5c45d679080471fa4e88d3ba112337f-1"></a><span class="cp">#[no_mangle]</span><span class="w"></span>
+<a name="rest_code_c5c45d679080471fa4e88d3ba112337f-2"></a><span class="k">pub</span><span class="w"> </span><span class="k">extern</span><span class="w"> </span><span class="s">"C"</span><span class="w"> </span><span class="k">fn</span> <span class="nf">data_new</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="o">*</span><span class="k">mut</span><span class="w"> </span><span class="n">RStruct</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_c5c45d679080471fa4e88d3ba112337f-3"></a><span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span><span class="w"> </span><span class="s">"Inside data_new()."</span><span class="p">.</span><span class="n">to_string</span><span class="p">());</span><span class="w"></span>
+<a name="rest_code_c5c45d679080471fa4e88d3ba112337f-4"></a>
+<a name="rest_code_c5c45d679080471fa4e88d3ba112337f-5"></a><span class="w">    </span><span class="nb">Box</span>::<span class="n">into_raw</span><span class="p">(</span><span class="nb">Box</span>::<span class="n">new</span><span class="p">(</span><span class="n">RStruct</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_c5c45d679080471fa4e88d3ba112337f-6"></a><span class="w">        </span><span class="n">name</span>: <span class="nc">CString</span>::<span class="n">new</span><span class="p">(</span><span class="s">"my_rstruct"</span><span class="p">)</span><span class="w"></span>
+<a name="rest_code_c5c45d679080471fa4e88d3ba112337f-7"></a><span class="w">            </span><span class="p">.</span><span class="n">expect</span><span class="p">(</span><span class="s">"Error: CString::new()"</span><span class="p">)</span><span class="w"></span>
+<a name="rest_code_c5c45d679080471fa4e88d3ba112337f-8"></a><span class="w">            </span><span class="p">.</span><span class="n">into_raw</span><span class="p">(),</span><span class="w"></span>
+<a name="rest_code_c5c45d679080471fa4e88d3ba112337f-9"></a><span class="w">        </span><span class="n">value</span>: <span class="nc">Value</span>::<span class="n">_Int</span><span class="p">(</span><span class="mi">42</span><span class="p">),</span><span class="w"></span>
+<a name="rest_code_c5c45d679080471fa4e88d3ba112337f-10"></a><span class="w">    </span><span class="p">}))</span><span class="w"></span>
+<a name="rest_code_c5c45d679080471fa4e88d3ba112337f-11"></a><span class="p">}</span><span class="w"></span>
 </pre>
 <p>The first line contains an attribute called <tt class="docutils literal">#[no_mangle]</tt>. As defined in <a class="reference external" href="https://doc.rust-lang.org/book/ch19-01-unsafe-rust.html#calling-rust-functions-from-other-languages">the Book</a>:</p>
 <blockquote>
@@ -299,12 +299,12 @@ from C</a>.</li>
 <p>The purpose of this function is to create a <tt class="docutils literal">RStruct</tt> instance and return a pointer to it. The
 <tt class="docutils literal">RStruct</tt> is created just as we would any other struct in Rust, with the exception of the
 <tt class="docutils literal">name</tt> field:</p>
-<pre class="code rust"><a name="rest_code_d41334f37aba4d2381f1124ccfb5096f-1"></a><span class="n">RStruct</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a name="rest_code_d41334f37aba4d2381f1124ccfb5096f-2"></a><span class="w">    </span><span class="n">name</span>: <span class="nc">CString</span>::<span class="n">new</span><span class="p">(</span><span class="s">"my_rstruct"</span><span class="p">)</span><span class="w"></span>
-<a name="rest_code_d41334f37aba4d2381f1124ccfb5096f-3"></a><span class="w">        </span><span class="p">.</span><span class="n">expect</span><span class="p">(</span><span class="s">"Error: CString::new()"</span><span class="p">)</span><span class="w"></span>
-<a name="rest_code_d41334f37aba4d2381f1124ccfb5096f-4"></a><span class="w">        </span><span class="p">.</span><span class="n">into_raw</span><span class="p">(),</span><span class="w"></span>
-<a name="rest_code_d41334f37aba4d2381f1124ccfb5096f-5"></a><span class="w">    </span><span class="n">value</span>: <span class="nc">Value</span>::<span class="n">_Int</span><span class="p">(</span><span class="mi">42</span><span class="p">),</span><span class="w"></span>
-<a name="rest_code_d41334f37aba4d2381f1124ccfb5096f-6"></a><span class="p">}</span><span class="w"></span>
+<pre class="code rust"><a name="rest_code_db22fa28688d448aa57c1b463f3b296e-1"></a><span class="n">RStruct</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_db22fa28688d448aa57c1b463f3b296e-2"></a><span class="w">    </span><span class="n">name</span>: <span class="nc">CString</span>::<span class="n">new</span><span class="p">(</span><span class="s">"my_rstruct"</span><span class="p">)</span><span class="w"></span>
+<a name="rest_code_db22fa28688d448aa57c1b463f3b296e-3"></a><span class="w">        </span><span class="p">.</span><span class="n">expect</span><span class="p">(</span><span class="s">"Error: CString::new()"</span><span class="p">)</span><span class="w"></span>
+<a name="rest_code_db22fa28688d448aa57c1b463f3b296e-4"></a><span class="w">        </span><span class="p">.</span><span class="n">into_raw</span><span class="p">(),</span><span class="w"></span>
+<a name="rest_code_db22fa28688d448aa57c1b463f3b296e-5"></a><span class="w">    </span><span class="n">value</span>: <span class="nc">Value</span>::<span class="n">_Int</span><span class="p">(</span><span class="mi">42</span><span class="p">),</span><span class="w"></span>
+<a name="rest_code_db22fa28688d448aa57c1b463f3b296e-6"></a><span class="p">}</span><span class="w"></span>
 </pre>
 <p>The <tt class="docutils literal">CString</tt> is first created with the <tt class="docutils literal">new()</tt> constructor and contains the value
 <tt class="docutils literal">"my_rstruct"</tt>. After unpacking the result with <tt class="docutils literal">expect()</tt>, I call the <tt class="docutils literal">into_raw()</tt> method to
@@ -313,7 +313,7 @@ code</a>. (If I had used <tt class="docutils literal">as_ptr()</tt> instead, the
 the function call because the <tt class="docutils literal">CString</tt> <a class="reference external" href="https://doc.rust-lang.org/std/ffi/struct.CString.html#method.as_ptr">would have been deallocated</a>.) The <tt class="docutils literal">value</tt> field is
 instantiated as it would be in normal Rust.</p>
 <p>What is perhaps new in this method is the <tt class="docutils literal">Box</tt> type that wraps the <tt class="docutils literal">RStruct</tt> instance.</p>
-<pre class="code rust"><a name="rest_code_c562001477a84285a9a4c1aef543277a-1"></a><span class="nb">Box</span>::<span class="n">into_raw</span><span class="p">(</span><span class="nb">Box</span>::<span class="n">new</span><span class="p">(</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">))</span><span class="w"></span>
+<pre class="code rust"><a name="rest_code_23022038f17b42e8a9a6086151a67fda-1"></a><span class="nb">Box</span>::<span class="n">into_raw</span><span class="p">(</span><span class="nb">Box</span>::<span class="n">new</span><span class="p">(</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">))</span><span class="w"></span>
 </pre>
 <p>A <tt class="docutils literal">Box</tt> is one of Rust's smart pointers that is used to <a class="reference external" href="https://doc.rust-lang.org/book/ch15-01-box.html">allocate memory for a data type on the
 heap</a>. When <tt class="docutils literal"><span class="pre">Box::new()</span></tt> is called it creates a pointer to the newly created <tt class="docutils literal">RStruct</tt>
@@ -324,15 +324,15 @@ calling code so that the memory is not deallocated.</p>
 <p>There is a rule-of-thumb that memory allocated by Rust should be freed by Rust. For this reason, we
 provide the <tt class="docutils literal">data_free()</tt> method that C code may use to deallocate the memory that is allocated
 by <tt class="docutils literal">data_new()</tt>.</p>
-<pre class="code rust"><a name="rest_code_f51ddcc41abb44568146182d4f60b9bc-1"></a><span class="cp">#[no_mangle]</span><span class="w"></span>
-<a name="rest_code_f51ddcc41abb44568146182d4f60b9bc-2"></a><span class="k">pub</span><span class="w"> </span><span class="k">extern</span><span class="w"> </span><span class="s">"C"</span><span class="w"> </span><span class="k">fn</span> <span class="nf">data_free</span><span class="p">(</span><span class="n">ptr</span>: <span class="o">*</span><span class="k">mut</span><span class="w"> </span><span class="n">RStruct</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a name="rest_code_f51ddcc41abb44568146182d4f60b9bc-3"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">ptr</span><span class="p">.</span><span class="n">is_null</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a name="rest_code_f51ddcc41abb44568146182d4f60b9bc-4"></a><span class="w">        </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
-<a name="rest_code_f51ddcc41abb44568146182d4f60b9bc-5"></a><span class="w">    </span><span class="p">}</span><span class="w"></span>
-<a name="rest_code_f51ddcc41abb44568146182d4f60b9bc-6"></a><span class="w">    </span><span class="k">unsafe</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a name="rest_code_f51ddcc41abb44568146182d4f60b9bc-7"></a><span class="w">        </span><span class="nb">Box</span>::<span class="n">from_raw</span><span class="p">(</span><span class="n">ptr</span><span class="p">);</span><span class="w"></span>
-<a name="rest_code_f51ddcc41abb44568146182d4f60b9bc-8"></a><span class="w">    </span><span class="p">}</span><span class="w"></span>
-<a name="rest_code_f51ddcc41abb44568146182d4f60b9bc-9"></a><span class="p">}</span><span class="w"></span>
+<pre class="code rust"><a name="rest_code_1afd7c46e2284749bb2edc66c6b7c732-1"></a><span class="cp">#[no_mangle]</span><span class="w"></span>
+<a name="rest_code_1afd7c46e2284749bb2edc66c6b7c732-2"></a><span class="k">pub</span><span class="w"> </span><span class="k">extern</span><span class="w"> </span><span class="s">"C"</span><span class="w"> </span><span class="k">fn</span> <span class="nf">data_free</span><span class="p">(</span><span class="n">ptr</span>: <span class="o">*</span><span class="k">mut</span><span class="w"> </span><span class="n">RStruct</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_1afd7c46e2284749bb2edc66c6b7c732-3"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">ptr</span><span class="p">.</span><span class="n">is_null</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_1afd7c46e2284749bb2edc66c6b7c732-4"></a><span class="w">        </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
+<a name="rest_code_1afd7c46e2284749bb2edc66c6b7c732-5"></a><span class="w">    </span><span class="p">}</span><span class="w"></span>
+<a name="rest_code_1afd7c46e2284749bb2edc66c6b7c732-6"></a><span class="w">    </span><span class="k">unsafe</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a name="rest_code_1afd7c46e2284749bb2edc66c6b7c732-7"></a><span class="w">        </span><span class="nb">Box</span>::<span class="n">from_raw</span><span class="p">(</span><span class="n">ptr</span><span class="p">);</span><span class="w"></span>
+<a name="rest_code_1afd7c46e2284749bb2edc66c6b7c732-8"></a><span class="w">    </span><span class="p">}</span><span class="w"></span>
+<a name="rest_code_1afd7c46e2284749bb2edc66c6b7c732-9"></a><span class="p">}</span><span class="w"></span>
 </pre>
 <p>This function accepts a mutable pointer to an RStruct. First, it checks whether the pointer is null
 and if it is, the function returns without doing anything. Assuming that the pointer is not null,
@@ -343,11 +343,11 @@ it will automatically be dropped when the function returns.</p>
 library itself will be found at <tt class="docutils literal">target/release/librstruct.so</tt>. On Linux, one can verify that it
 contains the <tt class="docutils literal">data_new()</tt> and <tt class="docutils literal">data_free()</tt> methods by displaying its symbols with the <tt class="docutils literal">nm
 <span class="pre">-g</span></tt> command:</p>
-<pre class="code console"><a name="rest_code_70986a1bf0ad46e78440d517f3f22a84-1"></a><span class="gp">$</span> nm -g target/release/librstruct.so
-<a name="rest_code_70986a1bf0ad46e78440d517f3f22a84-2"></a><span class="gp">#</span> snip
-<a name="rest_code_70986a1bf0ad46e78440d517f3f22a84-3"></a><span class="go">00000000000046c0 T data_free</span>
-<a name="rest_code_70986a1bf0ad46e78440d517f3f22a84-4"></a><span class="go">00000000000044e0 T data_new</span>
-<a name="rest_code_70986a1bf0ad46e78440d517f3f22a84-5"></a><span class="gp">#</span> snip
+<pre class="code console"><a name="rest_code_a6e2baa52ded42a6a1932c5ec125de45-1"></a><span class="gp">$</span> nm -g target/release/librstruct.so
+<a name="rest_code_a6e2baa52ded42a6a1932c5ec125de45-2"></a><span class="gp">#</span> snip
+<a name="rest_code_a6e2baa52ded42a6a1932c5ec125de45-3"></a><span class="go">00000000000046c0 T data_free</span>
+<a name="rest_code_a6e2baa52ded42a6a1932c5ec125de45-4"></a><span class="go">00000000000044e0 T data_new</span>
+<a name="rest_code_a6e2baa52ded42a6a1932c5ec125de45-5"></a><span class="gp">#</span> snip
 </pre>
 </div>
 <div class="section" id="generating-the-header-for-the-library">
@@ -358,96 +358,96 @@ code. Moreover, generating the header can help in understanding how Rust transla
 to C.</p>
 <p>I will use <a class="reference external" href="https://github.com/eqrion/cbindgen">cbindgen</a> to automatically generate the header. <tt class="docutils literal">cbindgen</tt> is installed with the
 command</p>
-<pre class="code console"><a name="rest_code_9234f5eef7d24a3a88f67e620ac2721a-1"></a><span class="gp">$</span> cargo install cbindgen
+<pre class="code console"><a name="rest_code_ac72fd56120b497b9d8d1c1be7dbf49e-1"></a><span class="gp">$</span> cargo install cbindgen
 </pre>
 <p><tt class="docutils literal">cbindgen</tt> is highly configurable, but for the project described here I only need its most basic
 functionality. Assuming that I am in the root directory of my Rust project, I generate the header
 <tt class="docutils literal">rstruct.h</tt> with the following</p>
-<pre class="code console"><a name="rest_code_a2cbc999ca9d42a69bdb87cf8bad6d15-1"></a><span class="gp">$</span> cbindgen --lang C -o rstruct.h .
+<pre class="code console"><a name="rest_code_dabad64b9038496cba08a30fc4e7f836-1"></a><span class="gp">$</span> cbindgen --lang C -o rstruct.h .
 </pre>
 <p>After running <tt class="docutils literal">cbindgen</tt> there is a new file called <tt class="docutils literal">rstruct.h</tt> in the project folder. Here are
 its contents:</p>
 <table class="codetable"><tr>
-<td class="linenos"><div class="linenodiv"><pre><a href="#rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-1"> 1</a>
-<a href="#rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-2"> 2</a>
-<a href="#rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-3"> 3</a>
-<a href="#rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-4"> 4</a>
-<a href="#rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-5"> 5</a>
-<a href="#rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-6"> 6</a>
-<a href="#rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-7"> 7</a>
-<a href="#rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-8"> 8</a>
-<a href="#rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-9"> 9</a>
-<a href="#rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-10">10</a>
-<a href="#rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-11">11</a>
-<a href="#rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-12">12</a>
-<a href="#rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-13">13</a>
-<a href="#rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-14">14</a>
-<a href="#rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-15">15</a>
-<a href="#rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-16">16</a>
-<a href="#rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-17">17</a>
-<a href="#rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-18">18</a>
-<a href="#rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-19">19</a>
-<a href="#rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-20">20</a>
-<a href="#rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-21">21</a>
-<a href="#rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-22">22</a>
-<a href="#rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-23">23</a>
-<a href="#rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-24">24</a>
-<a href="#rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-25">25</a>
-<a href="#rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-26">26</a>
-<a href="#rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-27">27</a>
-<a href="#rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-28">28</a>
-<a href="#rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-29">29</a>
-<a href="#rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-30">30</a>
-<a href="#rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-31">31</a>
-<a href="#rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-32">32</a>
-<a href="#rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-33">33</a>
-<a href="#rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-34">34</a></pre></div></td>
-<td class="code"><pre class="code c"><a name="rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-1"></a><span class="cp">#include</span> <span class="cpf">&lt;stdarg.h&gt;</span><span class="cp"></span>
-<a name="rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-2"></a><span class="cp">#include</span> <span class="cpf">&lt;stdbool.h&gt;</span><span class="cp"></span>
-<a name="rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-3"></a><span class="cp">#include</span> <span class="cpf">&lt;stdint.h&gt;</span><span class="cp"></span>
-<a name="rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-4"></a><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp"></span>
-<a name="rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-5"></a>
-<a name="rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-6"></a><span class="k">typedef</span> <span class="k">enum</span> <span class="p">{</span>
-<a name="rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-7"></a>  <span class="n">_Int</span><span class="p">,</span>
-<a name="rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-8"></a>  <span class="n">_Float</span><span class="p">,</span>
-<a name="rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-9"></a><span class="p">}</span> <span class="n">Value_Tag</span><span class="p">;</span>
-<a name="rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-10"></a>
-<a name="rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-11"></a><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
-<a name="rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-12"></a>  <span class="kt">int32_t</span> <span class="n">_0</span><span class="p">;</span>
-<a name="rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-13"></a><span class="p">}</span> <span class="n">_Int_Body</span><span class="p">;</span>
-<a name="rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-14"></a>
-<a name="rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-15"></a><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
-<a name="rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-16"></a>  <span class="kt">double</span> <span class="n">_0</span><span class="p">;</span>
-<a name="rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-17"></a><span class="p">}</span> <span class="n">_Float_Body</span><span class="p">;</span>
-<a name="rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-18"></a>
-<a name="rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-19"></a><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
-<a name="rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-20"></a>  <span class="n">Value_Tag</span> <span class="n">tag</span><span class="p">;</span>
-<a name="rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-21"></a>  <span class="k">union</span> <span class="p">{</span>
-<a name="rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-22"></a>    <span class="n">_Int_Body</span> <span class="n">_int</span><span class="p">;</span>
-<a name="rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-23"></a>    <span class="n">_Float_Body</span> <span class="n">_float</span><span class="p">;</span>
-<a name="rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-24"></a>  <span class="p">};</span>
-<a name="rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-25"></a><span class="p">}</span> <span class="n">Value</span><span class="p">;</span>
-<a name="rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-26"></a>
-<a name="rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-27"></a><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
-<a name="rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-28"></a>  <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span>
-<a name="rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-29"></a>  <span class="n">Value</span> <span class="n">value</span><span class="p">;</span>
-<a name="rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-30"></a><span class="p">}</span> <span class="n">RStruct</span><span class="p">;</span>
-<a name="rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-31"></a>
-<a name="rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-32"></a><span class="kt">void</span> <span class="nf">data_free</span><span class="p">(</span><span class="n">RStruct</span> <span class="o">*</span><span class="n">ptr</span><span class="p">);</span>
-<a name="rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-33"></a>
-<a name="rest_code_22a86a3755654c1cbfdcd5cf3be39e3f-34"></a><span class="n">RStruct</span> <span class="o">*</span><span class="nf">data_new</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<td class="linenos"><div class="linenodiv"><pre><a href="#rest_code_b88b49909bea49c7a9bf9730597ecdd9-1"> 1</a>
+<a href="#rest_code_b88b49909bea49c7a9bf9730597ecdd9-2"> 2</a>
+<a href="#rest_code_b88b49909bea49c7a9bf9730597ecdd9-3"> 3</a>
+<a href="#rest_code_b88b49909bea49c7a9bf9730597ecdd9-4"> 4</a>
+<a href="#rest_code_b88b49909bea49c7a9bf9730597ecdd9-5"> 5</a>
+<a href="#rest_code_b88b49909bea49c7a9bf9730597ecdd9-6"> 6</a>
+<a href="#rest_code_b88b49909bea49c7a9bf9730597ecdd9-7"> 7</a>
+<a href="#rest_code_b88b49909bea49c7a9bf9730597ecdd9-8"> 8</a>
+<a href="#rest_code_b88b49909bea49c7a9bf9730597ecdd9-9"> 9</a>
+<a href="#rest_code_b88b49909bea49c7a9bf9730597ecdd9-10">10</a>
+<a href="#rest_code_b88b49909bea49c7a9bf9730597ecdd9-11">11</a>
+<a href="#rest_code_b88b49909bea49c7a9bf9730597ecdd9-12">12</a>
+<a href="#rest_code_b88b49909bea49c7a9bf9730597ecdd9-13">13</a>
+<a href="#rest_code_b88b49909bea49c7a9bf9730597ecdd9-14">14</a>
+<a href="#rest_code_b88b49909bea49c7a9bf9730597ecdd9-15">15</a>
+<a href="#rest_code_b88b49909bea49c7a9bf9730597ecdd9-16">16</a>
+<a href="#rest_code_b88b49909bea49c7a9bf9730597ecdd9-17">17</a>
+<a href="#rest_code_b88b49909bea49c7a9bf9730597ecdd9-18">18</a>
+<a href="#rest_code_b88b49909bea49c7a9bf9730597ecdd9-19">19</a>
+<a href="#rest_code_b88b49909bea49c7a9bf9730597ecdd9-20">20</a>
+<a href="#rest_code_b88b49909bea49c7a9bf9730597ecdd9-21">21</a>
+<a href="#rest_code_b88b49909bea49c7a9bf9730597ecdd9-22">22</a>
+<a href="#rest_code_b88b49909bea49c7a9bf9730597ecdd9-23">23</a>
+<a href="#rest_code_b88b49909bea49c7a9bf9730597ecdd9-24">24</a>
+<a href="#rest_code_b88b49909bea49c7a9bf9730597ecdd9-25">25</a>
+<a href="#rest_code_b88b49909bea49c7a9bf9730597ecdd9-26">26</a>
+<a href="#rest_code_b88b49909bea49c7a9bf9730597ecdd9-27">27</a>
+<a href="#rest_code_b88b49909bea49c7a9bf9730597ecdd9-28">28</a>
+<a href="#rest_code_b88b49909bea49c7a9bf9730597ecdd9-29">29</a>
+<a href="#rest_code_b88b49909bea49c7a9bf9730597ecdd9-30">30</a>
+<a href="#rest_code_b88b49909bea49c7a9bf9730597ecdd9-31">31</a>
+<a href="#rest_code_b88b49909bea49c7a9bf9730597ecdd9-32">32</a>
+<a href="#rest_code_b88b49909bea49c7a9bf9730597ecdd9-33">33</a>
+<a href="#rest_code_b88b49909bea49c7a9bf9730597ecdd9-34">34</a></pre></div></td>
+<td class="code"><pre class="code c"><a name="rest_code_b88b49909bea49c7a9bf9730597ecdd9-1"></a><span class="cp">#include</span> <span class="cpf">&lt;stdarg.h&gt;</span><span class="cp"></span>
+<a name="rest_code_b88b49909bea49c7a9bf9730597ecdd9-2"></a><span class="cp">#include</span> <span class="cpf">&lt;stdbool.h&gt;</span><span class="cp"></span>
+<a name="rest_code_b88b49909bea49c7a9bf9730597ecdd9-3"></a><span class="cp">#include</span> <span class="cpf">&lt;stdint.h&gt;</span><span class="cp"></span>
+<a name="rest_code_b88b49909bea49c7a9bf9730597ecdd9-4"></a><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp"></span>
+<a name="rest_code_b88b49909bea49c7a9bf9730597ecdd9-5"></a>
+<a name="rest_code_b88b49909bea49c7a9bf9730597ecdd9-6"></a><span class="k">typedef</span> <span class="k">enum</span> <span class="p">{</span>
+<a name="rest_code_b88b49909bea49c7a9bf9730597ecdd9-7"></a>  <span class="n">_Int</span><span class="p">,</span>
+<a name="rest_code_b88b49909bea49c7a9bf9730597ecdd9-8"></a>  <span class="n">_Float</span><span class="p">,</span>
+<a name="rest_code_b88b49909bea49c7a9bf9730597ecdd9-9"></a><span class="p">}</span> <span class="n">Value_Tag</span><span class="p">;</span>
+<a name="rest_code_b88b49909bea49c7a9bf9730597ecdd9-10"></a>
+<a name="rest_code_b88b49909bea49c7a9bf9730597ecdd9-11"></a><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+<a name="rest_code_b88b49909bea49c7a9bf9730597ecdd9-12"></a>  <span class="kt">int32_t</span> <span class="n">_0</span><span class="p">;</span>
+<a name="rest_code_b88b49909bea49c7a9bf9730597ecdd9-13"></a><span class="p">}</span> <span class="n">_Int_Body</span><span class="p">;</span>
+<a name="rest_code_b88b49909bea49c7a9bf9730597ecdd9-14"></a>
+<a name="rest_code_b88b49909bea49c7a9bf9730597ecdd9-15"></a><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+<a name="rest_code_b88b49909bea49c7a9bf9730597ecdd9-16"></a>  <span class="kt">double</span> <span class="n">_0</span><span class="p">;</span>
+<a name="rest_code_b88b49909bea49c7a9bf9730597ecdd9-17"></a><span class="p">}</span> <span class="n">_Float_Body</span><span class="p">;</span>
+<a name="rest_code_b88b49909bea49c7a9bf9730597ecdd9-18"></a>
+<a name="rest_code_b88b49909bea49c7a9bf9730597ecdd9-19"></a><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+<a name="rest_code_b88b49909bea49c7a9bf9730597ecdd9-20"></a>  <span class="n">Value_Tag</span> <span class="n">tag</span><span class="p">;</span>
+<a name="rest_code_b88b49909bea49c7a9bf9730597ecdd9-21"></a>  <span class="k">union</span> <span class="p">{</span>
+<a name="rest_code_b88b49909bea49c7a9bf9730597ecdd9-22"></a>    <span class="n">_Int_Body</span> <span class="n">_int</span><span class="p">;</span>
+<a name="rest_code_b88b49909bea49c7a9bf9730597ecdd9-23"></a>    <span class="n">_Float_Body</span> <span class="n">_float</span><span class="p">;</span>
+<a name="rest_code_b88b49909bea49c7a9bf9730597ecdd9-24"></a>  <span class="p">};</span>
+<a name="rest_code_b88b49909bea49c7a9bf9730597ecdd9-25"></a><span class="p">}</span> <span class="n">Value</span><span class="p">;</span>
+<a name="rest_code_b88b49909bea49c7a9bf9730597ecdd9-26"></a>
+<a name="rest_code_b88b49909bea49c7a9bf9730597ecdd9-27"></a><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+<a name="rest_code_b88b49909bea49c7a9bf9730597ecdd9-28"></a>  <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span>
+<a name="rest_code_b88b49909bea49c7a9bf9730597ecdd9-29"></a>  <span class="n">Value</span> <span class="n">value</span><span class="p">;</span>
+<a name="rest_code_b88b49909bea49c7a9bf9730597ecdd9-30"></a><span class="p">}</span> <span class="n">RStruct</span><span class="p">;</span>
+<a name="rest_code_b88b49909bea49c7a9bf9730597ecdd9-31"></a>
+<a name="rest_code_b88b49909bea49c7a9bf9730597ecdd9-32"></a><span class="kt">void</span> <span class="nf">data_free</span><span class="p">(</span><span class="n">RStruct</span> <span class="o">*</span><span class="n">ptr</span><span class="p">);</span>
+<a name="rest_code_b88b49909bea49c7a9bf9730597ecdd9-33"></a>
+<a name="rest_code_b88b49909bea49c7a9bf9730597ecdd9-34"></a><span class="n">RStruct</span> <span class="o">*</span><span class="nf">data_new</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
 </pre></td>
 </tr></table>
 <p>First, you can see the <tt class="docutils literal">enum</tt> that contains the variations of the <tt class="docutils literal">Value</tt> data type that is
 stored in the <tt class="docutils literal">RStruct</tt> and that was defined in Rust. The name of this new type is <tt class="docutils literal">Value_Tag</tt>,
 and it is used to define the current type of a value.</p>
-<pre class="code c"><a name="rest_code_63dfbe81a51d48c68426fbb466fd024c-1"></a><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
-<a name="rest_code_63dfbe81a51d48c68426fbb466fd024c-2"></a>  <span class="n">Value_Tag</span> <span class="n">tag</span><span class="p">;</span>
-<a name="rest_code_63dfbe81a51d48c68426fbb466fd024c-3"></a>  <span class="k">union</span> <span class="p">{</span>
-<a name="rest_code_63dfbe81a51d48c68426fbb466fd024c-4"></a>    <span class="n">_Int_Body</span> <span class="n">_int</span><span class="p">;</span>
-<a name="rest_code_63dfbe81a51d48c68426fbb466fd024c-5"></a>    <span class="n">_Float_Body</span> <span class="n">_float</span><span class="p">;</span>
-<a name="rest_code_63dfbe81a51d48c68426fbb466fd024c-6"></a>  <span class="p">};</span>
-<a name="rest_code_63dfbe81a51d48c68426fbb466fd024c-7"></a><span class="p">}</span> <span class="n">Value</span><span class="p">;</span>
+<pre class="code c"><a name="rest_code_1aaaccaac05d4839adbe9f7cff192874-1"></a><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+<a name="rest_code_1aaaccaac05d4839adbe9f7cff192874-2"></a>  <span class="n">Value_Tag</span> <span class="n">tag</span><span class="p">;</span>
+<a name="rest_code_1aaaccaac05d4839adbe9f7cff192874-3"></a>  <span class="k">union</span> <span class="p">{</span>
+<a name="rest_code_1aaaccaac05d4839adbe9f7cff192874-4"></a>    <span class="n">_Int_Body</span> <span class="n">_int</span><span class="p">;</span>
+<a name="rest_code_1aaaccaac05d4839adbe9f7cff192874-5"></a>    <span class="n">_Float_Body</span> <span class="n">_float</span><span class="p">;</span>
+<a name="rest_code_1aaaccaac05d4839adbe9f7cff192874-6"></a>  <span class="p">};</span>
+<a name="rest_code_1aaaccaac05d4839adbe9f7cff192874-7"></a><span class="p">}</span> <span class="n">Value</span><span class="p">;</span>
 </pre>
 <p>A <tt class="docutils literal">Value</tt> is just another struct that contains a <tt class="docutils literal">Value_Tag</tt> field to identify which variant of
 the <tt class="docutils literal">enum</tt> it is holding and a <tt class="docutils literal">union</tt> field that holds the actual value.</p>
@@ -461,131 +461,131 @@ represent complex Rust data structures. In particular, Rust <tt class="docutils 
 <p>With everything in place, it's now time to write the C program. My example C program looks like the
 following:</p>
 <table class="codetable"><tr>
-<td class="linenos"><div class="linenodiv"><pre><a href="#rest_code_9cd17db9457f405687e5b612be4278b9-1"> 1</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-2"> 2</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-3"> 3</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-4"> 4</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-5"> 5</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-6"> 6</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-7"> 7</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-8"> 8</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-9"> 9</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-10">10</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-11">11</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-12">12</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-13">13</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-14">14</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-15">15</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-16">16</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-17">17</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-18">18</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-19">19</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-20">20</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-21">21</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-22">22</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-23">23</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-24">24</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-25">25</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-26">26</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-27">27</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-28">28</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-29">29</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-30">30</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-31">31</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-32">32</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-33">33</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-34">34</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-35">35</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-36">36</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-37">37</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-38">38</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-39">39</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-40">40</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-41">41</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-42">42</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-43">43</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-44">44</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-45">45</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-46">46</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-47">47</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-48">48</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-49">49</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-50">50</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-51">51</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-52">52</a>
-<a href="#rest_code_9cd17db9457f405687e5b612be4278b9-53">53</a></pre></div></td>
-<td class="code"><pre class="code c"><a name="rest_code_9cd17db9457f405687e5b612be4278b9-1"></a><span class="cp">#include</span> <span class="cpf">&lt;dlfcn.h&gt;</span><span class="cp"></span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-2"></a><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-3"></a><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp"></span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-4"></a>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-5"></a><span class="cp">#include</span> <span class="cpf">"rstruct.h"</span><span class="cp"></span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-6"></a>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-7"></a><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-8"></a>  <span class="kt">void</span><span class="o">*</span> <span class="n">handle</span><span class="p">;</span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-9"></a>  <span class="n">RStruct</span><span class="o">*</span> <span class="p">(</span><span class="o">*</span><span class="n">data_new</span><span class="p">)(</span><span class="kt">void</span><span class="p">);</span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-10"></a>  <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">data_free</span><span class="p">)(</span><span class="n">RStruct</span><span class="o">*</span><span class="p">);</span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-11"></a>  <span class="kt">char</span><span class="o">*</span> <span class="n">error</span><span class="p">;</span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-12"></a>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-13"></a>  <span class="n">printf</span><span class="p">(</span><span class="s">"Loading librstruct.so...</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-14"></a>  <span class="n">handle</span> <span class="o">=</span> <span class="n">dlopen</span><span class="p">(</span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-15"></a>    <span class="s">"librstruct.so"</span><span class="p">,</span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-16"></a>    <span class="n">RTLD_LAZY</span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-17"></a>  <span class="p">);</span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-18"></a>  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">handle</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-19"></a>    <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">"%s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">dlerror</span><span class="p">());</span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-20"></a>    <span class="n">exit</span><span class="p">(</span><span class="n">EXIT_FAILURE</span><span class="p">);</span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-21"></a>  <span class="p">}</span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-22"></a>  <span class="n">printf</span><span class="p">(</span><span class="s">"Done.</span><span class="se">\n\n</span><span class="s">"</span><span class="p">);</span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-23"></a>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-24"></a>  <span class="n">dlerror</span><span class="p">();</span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-25"></a>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-26"></a>  <span class="n">data_new</span> <span class="o">=</span> <span class="p">(</span><span class="n">RStruct</span><span class="o">*</span> <span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span> <span class="n">dlsym</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="s">"data_new"</span><span class="p">);</span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-27"></a>  <span class="n">error</span> <span class="o">=</span> <span class="n">dlerror</span><span class="p">();</span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-28"></a>  <span class="k">if</span> <span class="p">(</span><span class="n">error</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-29"></a>    <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">"%s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">error</span><span class="p">);</span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-30"></a>    <span class="n">exit</span><span class="p">(</span><span class="n">EXIT_FAILURE</span><span class="p">);</span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-31"></a>  <span class="p">}</span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-32"></a>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-33"></a>  <span class="n">dlerror</span><span class="p">();</span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-34"></a>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-35"></a>  <span class="n">data_free</span> <span class="o">=</span> <span class="p">(</span><span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="n">RStruct</span><span class="o">*</span><span class="p">))</span> <span class="n">dlsym</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="s">"data_free"</span><span class="p">);</span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-36"></a>  <span class="n">error</span> <span class="o">=</span> <span class="n">dlerror</span><span class="p">();</span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-37"></a>  <span class="k">if</span> <span class="p">(</span><span class="n">error</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-38"></a>    <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">"%s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">error</span><span class="p">);</span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-39"></a>    <span class="n">exit</span><span class="p">(</span><span class="n">EXIT_FAILURE</span><span class="p">);</span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-40"></a>  <span class="p">}</span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-41"></a>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-42"></a>  <span class="n">printf</span><span class="p">(</span><span class="s">"Calling data_new() from main.c...</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-43"></a>  <span class="n">RStruct</span><span class="o">*</span> <span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">data_new</span><span class="p">)();</span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-44"></a>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-45"></a>  <span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Back inside main.c. Printing results...</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-46"></a>  <span class="n">printf</span><span class="p">(</span><span class="s">"Name: %s</span><span class="se">\n</span><span class="s">Value: %d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">data</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">.</span><span class="n">_int</span><span class="p">.</span><span class="n">_0</span><span class="p">);</span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-47"></a>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-48"></a>  <span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Freeing the RStruct data...</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-49"></a>  <span class="p">(</span><span class="o">*</span><span class="n">data_free</span><span class="p">)(</span><span class="n">data</span><span class="p">);</span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-50"></a>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-51"></a>  <span class="n">dlclose</span><span class="p">(</span><span class="n">handle</span><span class="p">);</span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-52"></a>  <span class="k">return</span> <span class="n">EXIT_SUCCESS</span><span class="p">;</span>
-<a name="rest_code_9cd17db9457f405687e5b612be4278b9-53"></a><span class="p">}</span>
+<td class="linenos"><div class="linenodiv"><pre><a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-1"> 1</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-2"> 2</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-3"> 3</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-4"> 4</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-5"> 5</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-6"> 6</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-7"> 7</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-8"> 8</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-9"> 9</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-10">10</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-11">11</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-12">12</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-13">13</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-14">14</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-15">15</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-16">16</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-17">17</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-18">18</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-19">19</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-20">20</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-21">21</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-22">22</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-23">23</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-24">24</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-25">25</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-26">26</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-27">27</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-28">28</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-29">29</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-30">30</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-31">31</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-32">32</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-33">33</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-34">34</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-35">35</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-36">36</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-37">37</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-38">38</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-39">39</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-40">40</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-41">41</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-42">42</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-43">43</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-44">44</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-45">45</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-46">46</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-47">47</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-48">48</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-49">49</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-50">50</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-51">51</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-52">52</a>
+<a href="#rest_code_8334087a10e5400082a4f596ff8b5e4e-53">53</a></pre></div></td>
+<td class="code"><pre class="code c"><a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-1"></a><span class="cp">#include</span> <span class="cpf">&lt;dlfcn.h&gt;</span><span class="cp"></span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-2"></a><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-3"></a><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp"></span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-4"></a>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-5"></a><span class="cp">#include</span> <span class="cpf">"rstruct.h"</span><span class="cp"></span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-6"></a>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-7"></a><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-8"></a>  <span class="kt">void</span><span class="o">*</span> <span class="n">handle</span><span class="p">;</span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-9"></a>  <span class="n">RStruct</span><span class="o">*</span> <span class="p">(</span><span class="o">*</span><span class="n">data_new</span><span class="p">)(</span><span class="kt">void</span><span class="p">);</span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-10"></a>  <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">data_free</span><span class="p">)(</span><span class="n">RStruct</span><span class="o">*</span><span class="p">);</span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-11"></a>  <span class="kt">char</span><span class="o">*</span> <span class="n">error</span><span class="p">;</span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-12"></a>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-13"></a>  <span class="n">printf</span><span class="p">(</span><span class="s">"Loading librstruct.so...</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-14"></a>  <span class="n">handle</span> <span class="o">=</span> <span class="n">dlopen</span><span class="p">(</span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-15"></a>    <span class="s">"librstruct.so"</span><span class="p">,</span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-16"></a>    <span class="n">RTLD_LAZY</span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-17"></a>  <span class="p">);</span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-18"></a>  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">handle</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-19"></a>    <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">"%s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">dlerror</span><span class="p">());</span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-20"></a>    <span class="n">exit</span><span class="p">(</span><span class="n">EXIT_FAILURE</span><span class="p">);</span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-21"></a>  <span class="p">}</span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-22"></a>  <span class="n">printf</span><span class="p">(</span><span class="s">"Done.</span><span class="se">\n\n</span><span class="s">"</span><span class="p">);</span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-23"></a>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-24"></a>  <span class="n">dlerror</span><span class="p">();</span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-25"></a>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-26"></a>  <span class="n">data_new</span> <span class="o">=</span> <span class="p">(</span><span class="n">RStruct</span><span class="o">*</span> <span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span> <span class="n">dlsym</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="s">"data_new"</span><span class="p">);</span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-27"></a>  <span class="n">error</span> <span class="o">=</span> <span class="n">dlerror</span><span class="p">();</span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-28"></a>  <span class="k">if</span> <span class="p">(</span><span class="n">error</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-29"></a>    <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">"%s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">error</span><span class="p">);</span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-30"></a>    <span class="n">exit</span><span class="p">(</span><span class="n">EXIT_FAILURE</span><span class="p">);</span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-31"></a>  <span class="p">}</span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-32"></a>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-33"></a>  <span class="n">dlerror</span><span class="p">();</span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-34"></a>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-35"></a>  <span class="n">data_free</span> <span class="o">=</span> <span class="p">(</span><span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="n">RStruct</span><span class="o">*</span><span class="p">))</span> <span class="n">dlsym</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="s">"data_free"</span><span class="p">);</span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-36"></a>  <span class="n">error</span> <span class="o">=</span> <span class="n">dlerror</span><span class="p">();</span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-37"></a>  <span class="k">if</span> <span class="p">(</span><span class="n">error</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-38"></a>    <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">"%s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">error</span><span class="p">);</span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-39"></a>    <span class="n">exit</span><span class="p">(</span><span class="n">EXIT_FAILURE</span><span class="p">);</span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-40"></a>  <span class="p">}</span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-41"></a>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-42"></a>  <span class="n">printf</span><span class="p">(</span><span class="s">"Calling data_new() from main.c...</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-43"></a>  <span class="n">RStruct</span><span class="o">*</span> <span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">data_new</span><span class="p">)();</span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-44"></a>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-45"></a>  <span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Back inside main.c. Printing results...</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-46"></a>  <span class="n">printf</span><span class="p">(</span><span class="s">"Name: %s</span><span class="se">\n</span><span class="s">Value: %d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">data</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">.</span><span class="n">_int</span><span class="p">.</span><span class="n">_0</span><span class="p">);</span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-47"></a>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-48"></a>  <span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Freeing the RStruct data...</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-49"></a>  <span class="p">(</span><span class="o">*</span><span class="n">data_free</span><span class="p">)(</span><span class="n">data</span><span class="p">);</span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-50"></a>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-51"></a>  <span class="n">dlclose</span><span class="p">(</span><span class="n">handle</span><span class="p">);</span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-52"></a>  <span class="k">return</span> <span class="n">EXIT_SUCCESS</span><span class="p">;</span>
+<a name="rest_code_8334087a10e5400082a4f596ff8b5e4e-53"></a><span class="p">}</span>
 </pre></td>
 </tr></table>
 <p>This code is based on the example in the <tt class="docutils literal">dlopen()</tt> <a class="reference external" href="https://linux.die.net/man/3/dlopen">man pages</a>. In particular, the library file
 is opened and a handle attached to it here:</p>
-<pre class="code c"><a name="rest_code_de063c320d9f49019e410d8cec6288ab-1"></a><span class="n">handle</span> <span class="o">=</span> <span class="n">dlopen</span><span class="p">(</span>
-<a name="rest_code_de063c320d9f49019e410d8cec6288ab-2"></a>  <span class="s">"librstruct.so"</span><span class="p">,</span>
-<a name="rest_code_de063c320d9f49019e410d8cec6288ab-3"></a>  <span class="n">RTLD_LAZY</span>
-<a name="rest_code_de063c320d9f49019e410d8cec6288ab-4"></a><span class="p">);</span>
+<pre class="code c"><a name="rest_code_75b6eb5344ab4584ba11de255bdcc2c9-1"></a><span class="n">handle</span> <span class="o">=</span> <span class="n">dlopen</span><span class="p">(</span>
+<a name="rest_code_75b6eb5344ab4584ba11de255bdcc2c9-2"></a>  <span class="s">"librstruct.so"</span><span class="p">,</span>
+<a name="rest_code_75b6eb5344ab4584ba11de255bdcc2c9-3"></a>  <span class="n">RTLD_LAZY</span>
+<a name="rest_code_75b6eb5344ab4584ba11de255bdcc2c9-4"></a><span class="p">);</span>
 </pre>
 <p>A function pointer to <tt class="docutils literal">data_new()</tt> is created with <tt class="docutils literal">dlsym()</tt>, and we use the function to create
 the new <tt class="docutils literal">RStruct</tt> instance with the lines</p>
-<pre class="code c"><a name="rest_code_e048c43fc4a742d78e3846a7f8f6b826-1"></a><span class="n">data_new</span> <span class="o">=</span> <span class="p">(</span><span class="n">RStruct</span><span class="o">*</span> <span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span> <span class="n">dlsym</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="s">"data_new"</span><span class="p">);</span>
-<a name="rest_code_e048c43fc4a742d78e3846a7f8f6b826-2"></a><span class="c1">// snip</span>
-<a name="rest_code_e048c43fc4a742d78e3846a7f8f6b826-3"></a><span class="n">RStruct</span><span class="o">*</span> <span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">data_new</span><span class="p">)();</span>
+<pre class="code c"><a name="rest_code_9d098eaff0ac46999a9dc26da0977ae6-1"></a><span class="n">data_new</span> <span class="o">=</span> <span class="p">(</span><span class="n">RStruct</span><span class="o">*</span> <span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span> <span class="n">dlsym</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="s">"data_new"</span><span class="p">);</span>
+<a name="rest_code_9d098eaff0ac46999a9dc26da0977ae6-2"></a><span class="c1">// snip</span>
+<a name="rest_code_9d098eaff0ac46999a9dc26da0977ae6-3"></a><span class="n">RStruct</span><span class="o">*</span> <span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">data_new</span><span class="p">)();</span>
 </pre>
 <p>Finally, the data is freed by creating another function pointer to <tt class="docutils literal">data_free()</tt> and calling it.</p>
-<pre class="code c"><a name="rest_code_3e5e9cc7e36b47c982f62d36918a4162-1"></a><span class="n">data_free</span> <span class="o">=</span> <span class="p">(</span><span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="n">RStruct</span><span class="o">*</span><span class="p">))</span> <span class="n">dlsym</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="s">"data_free"</span><span class="p">);</span>
-<a name="rest_code_3e5e9cc7e36b47c982f62d36918a4162-2"></a><span class="c1">// snip</span>
-<a name="rest_code_3e5e9cc7e36b47c982f62d36918a4162-3"></a><span class="p">(</span><span class="o">*</span><span class="n">data_free</span><span class="p">)(</span><span class="n">data</span><span class="p">);</span>
+<pre class="code c"><a name="rest_code_cfc11c485be44561b409afeea33674f4-1"></a><span class="n">data_free</span> <span class="o">=</span> <span class="p">(</span><span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="n">RStruct</span><span class="o">*</span><span class="p">))</span> <span class="n">dlsym</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="s">"data_free"</span><span class="p">);</span>
+<a name="rest_code_cfc11c485be44561b409afeea33674f4-2"></a><span class="c1">// snip</span>
+<a name="rest_code_cfc11c485be44561b409afeea33674f4-3"></a><span class="p">(</span><span class="o">*</span><span class="n">data_free</span><span class="p">)(</span><span class="n">data</span><span class="p">);</span>
 </pre>
 <div class="section" id="running-the-program">
 <h3>Running the program</h3>
@@ -594,35 +594,35 @@ post. I won't include it here because it distracts from the main message about t
 FFI. Instead, I will describe how to compile the program from the command line.</p>
 <p>I first placed the <tt class="docutils literal">librstruct.so</tt>, <tt class="docutils literal">rstruct.h</tt>, and <tt class="docutils literal">main.c</tt> programs into the following
 directory structure:</p>
-<pre class="code console"><a name="rest_code_24a83d01d0c44df286a09f8e6fba7415-1"></a><span class="gp">$</span> tree
-<a name="rest_code_24a83d01d0c44df286a09f8e6fba7415-2"></a><span class="go">.</span>
-<a name="rest_code_24a83d01d0c44df286a09f8e6fba7415-3"></a><span class="go">├── include</span>
-<a name="rest_code_24a83d01d0c44df286a09f8e6fba7415-4"></a><span class="go">│   └── rstruct.h</span>
-<a name="rest_code_24a83d01d0c44df286a09f8e6fba7415-5"></a><span class="go">├── lib</span>
-<a name="rest_code_24a83d01d0c44df286a09f8e6fba7415-6"></a><span class="go">│   └── librstruct.so</span>
-<a name="rest_code_24a83d01d0c44df286a09f8e6fba7415-7"></a><span class="go">└── src</span>
-<a name="rest_code_24a83d01d0c44df286a09f8e6fba7415-8"></a><span class="go">    └── main.c</span>
+<pre class="code console"><a name="rest_code_b9fe2fa483ec4a63910b11cc01c136b4-1"></a><span class="gp">$</span> tree
+<a name="rest_code_b9fe2fa483ec4a63910b11cc01c136b4-2"></a><span class="go">.</span>
+<a name="rest_code_b9fe2fa483ec4a63910b11cc01c136b4-3"></a><span class="go">├── include</span>
+<a name="rest_code_b9fe2fa483ec4a63910b11cc01c136b4-4"></a><span class="go">│   └── rstruct.h</span>
+<a name="rest_code_b9fe2fa483ec4a63910b11cc01c136b4-5"></a><span class="go">├── lib</span>
+<a name="rest_code_b9fe2fa483ec4a63910b11cc01c136b4-6"></a><span class="go">│   └── librstruct.so</span>
+<a name="rest_code_b9fe2fa483ec4a63910b11cc01c136b4-7"></a><span class="go">└── src</span>
+<a name="rest_code_b9fe2fa483ec4a63910b11cc01c136b4-8"></a><span class="go">    └── main.c</span>
 </pre>
 <p>Next, I compiled the <tt class="docutils literal">main</tt> binary with gcc.</p>
-<pre class="code console"><a name="rest_code_d77777893cd34b1ab9115374c53bf5d7-1"></a><span class="gp">$</span> gcc -Wall -g -Iinclude -c -o main.o main.c
-<a name="rest_code_d77777893cd34b1ab9115374c53bf5d7-2"></a><span class="gp">$</span> gcc -Wall -g -o main main.o -ldl
+<pre class="code console"><a name="rest_code_352cf378f2f64574baa4bb2b8fe8a162-1"></a><span class="gp">$</span> gcc -Wall -g -Iinclude -c -o main.o main.c
+<a name="rest_code_352cf378f2f64574baa4bb2b8fe8a162-2"></a><span class="gp">$</span> gcc -Wall -g -o main main.o -ldl
 </pre>
 <p>(<tt class="docutils literal"><span class="pre">-ldl</span></tt> is used to link against libdl for dynamically loading the library from C.) After
 compilation I run the <tt class="docutils literal">main</tt> binary. To make it work, I set the <tt class="docutils literal">LD_LIBRARY_PATH</tt> environment
 variable so that the program knows to look inside the <tt class="docutils literal">lib</tt> directory for the <tt class="docutils literal">librstruct.so</tt>
 library.</p>
-<pre class="code console"><a name="rest_code_151eb6d4054b4744a5da6ec9ca8ca3a8-1"></a><span class="gp">$</span> <span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span>lib ./main
-<a name="rest_code_151eb6d4054b4744a5da6ec9ca8ca3a8-2"></a><span class="go">Loading librstruct.so...</span>
-<a name="rest_code_151eb6d4054b4744a5da6ec9ca8ca3a8-3"></a><span class="go">Done.</span>
-<a name="rest_code_151eb6d4054b4744a5da6ec9ca8ca3a8-4"></a>
-<a name="rest_code_151eb6d4054b4744a5da6ec9ca8ca3a8-5"></a><span class="go">Calling data_new() from main.c...</span>
-<a name="rest_code_151eb6d4054b4744a5da6ec9ca8ca3a8-6"></a><span class="go">Inside data_new().</span>
-<a name="rest_code_151eb6d4054b4744a5da6ec9ca8ca3a8-7"></a>
-<a name="rest_code_151eb6d4054b4744a5da6ec9ca8ca3a8-8"></a><span class="go">Back inside main.c. Printing results...</span>
-<a name="rest_code_151eb6d4054b4744a5da6ec9ca8ca3a8-9"></a><span class="go">Name: my_rstruct</span>
-<a name="rest_code_151eb6d4054b4744a5da6ec9ca8ca3a8-10"></a><span class="go">Value: 42</span>
-<a name="rest_code_151eb6d4054b4744a5da6ec9ca8ca3a8-11"></a>
-<a name="rest_code_151eb6d4054b4744a5da6ec9ca8ca3a8-12"></a><span class="go">Freeing the RStruct data...</span>
+<pre class="code console"><a name="rest_code_be0943b0540b421ea0a59802a0f60cb7-1"></a><span class="gp">$</span> <span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span>lib ./main
+<a name="rest_code_be0943b0540b421ea0a59802a0f60cb7-2"></a><span class="go">Loading librstruct.so...</span>
+<a name="rest_code_be0943b0540b421ea0a59802a0f60cb7-3"></a><span class="go">Done.</span>
+<a name="rest_code_be0943b0540b421ea0a59802a0f60cb7-4"></a>
+<a name="rest_code_be0943b0540b421ea0a59802a0f60cb7-5"></a><span class="go">Calling data_new() from main.c...</span>
+<a name="rest_code_be0943b0540b421ea0a59802a0f60cb7-6"></a><span class="go">Inside data_new().</span>
+<a name="rest_code_be0943b0540b421ea0a59802a0f60cb7-7"></a>
+<a name="rest_code_be0943b0540b421ea0a59802a0f60cb7-8"></a><span class="go">Back inside main.c. Printing results...</span>
+<a name="rest_code_be0943b0540b421ea0a59802a0f60cb7-9"></a><span class="go">Name: my_rstruct</span>
+<a name="rest_code_be0943b0540b421ea0a59802a0f60cb7-10"></a><span class="go">Value: 42</span>
+<a name="rest_code_be0943b0540b421ea0a59802a0f60cb7-11"></a>
+<a name="rest_code_be0943b0540b421ea0a59802a0f60cb7-12"></a><span class="go">Freeing the RStruct data...</span>
 </pre>
 <p>Nice! From the output you can see the print statements that I placed inside both the Rust and C
 code to indicate where the program was as it was running. In summary, the program performs the

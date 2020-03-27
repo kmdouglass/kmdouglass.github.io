@@ -78,7 +78,7 @@
 <article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Sending arguments to Python decorators</a></h1>
 
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+            <p class="byline author vcard p-author h-card"><span class="byline-name fn p-name" itemprop="author">
                     Kyle M. Douglass
             </span></p>
             <p class="dateline">
@@ -106,19 +106,19 @@ decorate a function, we send it to a wrapper that returns another function. It's
 <p>I was having trouble understanding exactly to which function, the original or the decorated one,
 the arguments are sent in a Python decorated function call. I wrote the following script to better
 understand this process (I use Python 3.4):</p>
-<pre class="code python"><a name="rest_code_de9edf5015c9417485ea2ac195ab97a8-1"></a><span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">inFunction</span><span class="p">):</span>
-<a name="rest_code_de9edf5015c9417485ea2ac195ab97a8-2"></a>    <span class="k">def</span> <span class="nf">outFunction</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<a name="rest_code_de9edf5015c9417485ea2ac195ab97a8-3"></a>        <span class="k">print</span><span class="p">(</span><span class="s1">'The input arguments were:'</span><span class="p">)</span>
-<a name="rest_code_de9edf5015c9417485ea2ac195ab97a8-4"></a>        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-<a name="rest_code_de9edf5015c9417485ea2ac195ab97a8-5"></a>            <span class="k">print</span><span class="p">(</span><span class="s1">'</span><span class="si">%r</span><span class="s1"> : </span><span class="si">%r</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
-<a name="rest_code_de9edf5015c9417485ea2ac195ab97a8-6"></a>
-<a name="rest_code_de9edf5015c9417485ea2ac195ab97a8-7"></a>        <span class="c1"># Return the original function</span>
-<a name="rest_code_de9edf5015c9417485ea2ac195ab97a8-8"></a>        <span class="k">return</span> <span class="n">inFunction</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<a name="rest_code_de9edf5015c9417485ea2ac195ab97a8-9"></a>
-<a name="rest_code_de9edf5015c9417485ea2ac195ab97a8-10"></a>    <span class="k">return</span> <span class="n">outFunction</span>
-<a name="rest_code_de9edf5015c9417485ea2ac195ab97a8-11"></a>
-<a name="rest_code_de9edf5015c9417485ea2ac195ab97a8-12"></a><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
-<a name="rest_code_de9edf5015c9417485ea2ac195ab97a8-13"></a>    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+<pre class="code python"><a name="rest_code_db7e926b3a794d22801632f194920b42-1"></a><span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">inFunction</span><span class="p">):</span>
+<a name="rest_code_db7e926b3a794d22801632f194920b42-2"></a>    <span class="k">def</span> <span class="nf">outFunction</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<a name="rest_code_db7e926b3a794d22801632f194920b42-3"></a>        <span class="k">print</span><span class="p">(</span><span class="s1">'The input arguments were:'</span><span class="p">)</span>
+<a name="rest_code_db7e926b3a794d22801632f194920b42-4"></a>        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<a name="rest_code_db7e926b3a794d22801632f194920b42-5"></a>            <span class="k">print</span><span class="p">(</span><span class="s1">'</span><span class="si">%r</span><span class="s1"> : </span><span class="si">%r</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+<a name="rest_code_db7e926b3a794d22801632f194920b42-6"></a>
+<a name="rest_code_db7e926b3a794d22801632f194920b42-7"></a>        <span class="c1"># Return the original function</span>
+<a name="rest_code_db7e926b3a794d22801632f194920b42-8"></a>        <span class="k">return</span> <span class="n">inFunction</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<a name="rest_code_db7e926b3a794d22801632f194920b42-9"></a>
+<a name="rest_code_db7e926b3a794d22801632f194920b42-10"></a>    <span class="k">return</span> <span class="n">outFunction</span>
+<a name="rest_code_db7e926b3a794d22801632f194920b42-11"></a>
+<a name="rest_code_db7e926b3a794d22801632f194920b42-12"></a><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
+<a name="rest_code_db7e926b3a794d22801632f194920b42-13"></a>    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
 </pre>
 <p><cite>wrapper(inFunction)</cite> is a function that accepts another function as an argument. It returns a
 function that simply prints the keyword arguments of <cite>inFunction()</cite>, and calls <cite>inFunction()</cite> like
@@ -126,12 +126,12 @@ normal.</p>
 <p>To decorate the function <cite>add(x = 1, y = 2)</cite> so that its arguments are printed without recoding it,
 we normally would place <cite>@wrapper</cite> before its definition. However, let's make the decorator in a
 way that's closer to how <cite>@</cite> works under the hood:</p>
-<pre class="code shell"><a name="rest_code_405cb4c5b82340ae92e6d2cafdfea0c3-1"></a>In <span class="o">[</span><span class="m">22</span><span class="o">]</span>: <span class="nv">decoratedAdd</span> <span class="o">=</span> wrapper<span class="o">(</span>add<span class="o">)</span>
-<a name="rest_code_405cb4c5b82340ae92e6d2cafdfea0c3-2"></a>In <span class="o">[</span><span class="m">23</span><span class="o">]</span>: decoratedAdd<span class="o">(</span><span class="nv">x</span> <span class="o">=</span> <span class="m">1</span>, <span class="nv">y</span> <span class="o">=</span> <span class="m">24</span><span class="o">)</span>
-<a name="rest_code_405cb4c5b82340ae92e6d2cafdfea0c3-3"></a>The input arguments were:
-<a name="rest_code_405cb4c5b82340ae92e6d2cafdfea0c3-4"></a><span class="s1">'y'</span> : <span class="m">24</span>
-<a name="rest_code_405cb4c5b82340ae92e6d2cafdfea0c3-5"></a><span class="s1">'x'</span> : <span class="m">1</span>
-<a name="rest_code_405cb4c5b82340ae92e6d2cafdfea0c3-6"></a>Out<span class="o">[</span><span class="m">23</span><span class="o">]</span>: <span class="m">25</span>
+<pre class="code shell"><a name="rest_code_b7bf98935d58463d9240a7357e074015-1"></a>In <span class="o">[</span><span class="m">22</span><span class="o">]</span>: <span class="nv">decoratedAdd</span> <span class="o">=</span> wrapper<span class="o">(</span>add<span class="o">)</span>
+<a name="rest_code_b7bf98935d58463d9240a7357e074015-2"></a>In <span class="o">[</span><span class="m">23</span><span class="o">]</span>: decoratedAdd<span class="o">(</span><span class="nv">x</span> <span class="o">=</span> <span class="m">1</span>, <span class="nv">y</span> <span class="o">=</span> <span class="m">24</span><span class="o">)</span>
+<a name="rest_code_b7bf98935d58463d9240a7357e074015-3"></a>The input arguments were:
+<a name="rest_code_b7bf98935d58463d9240a7357e074015-4"></a><span class="s1">'y'</span> : <span class="m">24</span>
+<a name="rest_code_b7bf98935d58463d9240a7357e074015-5"></a><span class="s1">'x'</span> : <span class="m">1</span>
+<a name="rest_code_b7bf98935d58463d9240a7357e074015-6"></a>Out<span class="o">[</span><span class="m">23</span><span class="o">]</span>: <span class="m">25</span>
 </pre>
 <p>When we call <cite>decoratedAdd(x = 1, y = 24)</cite>, the arguments are printed to the screen and we still
 get the same functionality of <cite>add()</cite>. What I wanted to know was this: are the keyword arguments x
@@ -142,11 +142,11 @@ function?</em></p>
 returns the decorated function, and then the arguments are passed into the decorated function. If
 this order of operations were flipped, <cite>wrapper()</cite> should know that I set x to 1 and y to 24, but
 really it doesn't know these details at all.</p>
-<pre class="code shell"><a name="rest_code_ffcd63f6db9d4e399d43adb78649c5d6-1"></a>In <span class="o">[</span><span class="m">24</span><span class="o">]</span>: wrapper<span class="o">(</span>add<span class="o">)(</span><span class="nv">x</span> <span class="o">=</span> <span class="m">1</span>, <span class="nv">y</span> <span class="o">=</span> <span class="m">24</span><span class="o">)</span>
-<a name="rest_code_ffcd63f6db9d4e399d43adb78649c5d6-2"></a>The input arguments were:
-<a name="rest_code_ffcd63f6db9d4e399d43adb78649c5d6-3"></a><span class="s1">'y'</span> : <span class="m">24</span>
-<a name="rest_code_ffcd63f6db9d4e399d43adb78649c5d6-4"></a><span class="s1">'x'</span> : <span class="m">1</span>
-<a name="rest_code_ffcd63f6db9d4e399d43adb78649c5d6-5"></a>Out<span class="o">[</span><span class="m">24</span><span class="o">]</span>: <span class="m">25</span>
+<pre class="code shell"><a name="rest_code_b0f9c0cbc0c94212a947b5d8beca8d8a-1"></a>In <span class="o">[</span><span class="m">24</span><span class="o">]</span>: wrapper<span class="o">(</span>add<span class="o">)(</span><span class="nv">x</span> <span class="o">=</span> <span class="m">1</span>, <span class="nv">y</span> <span class="o">=</span> <span class="m">24</span><span class="o">)</span>
+<a name="rest_code_b0f9c0cbc0c94212a947b5d8beca8d8a-2"></a>The input arguments were:
+<a name="rest_code_b0f9c0cbc0c94212a947b5d8beca8d8a-3"></a><span class="s1">'y'</span> : <span class="m">24</span>
+<a name="rest_code_b0f9c0cbc0c94212a947b5d8beca8d8a-4"></a><span class="s1">'x'</span> : <span class="m">1</span>
+<a name="rest_code_b0f9c0cbc0c94212a947b5d8beca8d8a-5"></a>Out<span class="o">[</span><span class="m">24</span><span class="o">]</span>: <span class="m">25</span>
 </pre>
 <p>So, when I call <cite>wrapper(add)(x = 1, y = 24)</cite>, first <cite>wrapper(add)</cite> is called, which returns
 <cite>outFunction()</cite>, and then these arguments are passed to <cite>outFunction()</cite>.</p>

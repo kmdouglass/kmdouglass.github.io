@@ -78,7 +78,7 @@
 <article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">The basics of virtualenv</a></h1>
 
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+            <p class="byline author vcard p-author h-card"><span class="byline-name fn p-name" itemprop="author">
                     Kyle M. Douglass
             </span></p>
             <p class="dateline">
@@ -104,8 +104,8 @@ like its implementation of generators, maps, and filters. However, much of the s
 Debian Wheezy system depends on Python 2.7 to run, such as <a class="reference external" href="http://www.mendeley.com/">Mendeley</a>. (It used to run just fine with Python 3.4, until I ran an automatic
 update and that was the end of that.)</p>
 <p>To run some Python 2.7 programs, I used to do the following:</p>
-<pre class="code shell"><a name="rest_code_4b15bc731cee456c8f7c2a78ccdac434-1"></a>sudo rm /usr/bin/python
-<a name="rest_code_4b15bc731cee456c8f7c2a78ccdac434-2"></a>sudo ln -s /usr/bin/python2.7 /usr/bin/python
+<pre class="code shell"><a name="rest_code_58f9d67abc5c436aadb877bcfb3a8958-1"></a>sudo rm /usr/bin/python
+<a name="rest_code_58f9d67abc5c436aadb877bcfb3a8958-2"></a>sudo ln -s /usr/bin/python2.7 /usr/bin/python
 </pre>
 <p>I know. Ouch. Every single time I needed to run a program that depended on python2.7, I would
 delete the symlink in /usr/bin, make a new link to python2.7, and then run my program. When I
@@ -123,21 +123,21 @@ said</a> into my own words.</p>
 them installed at the system level, but I already have done this so I will start from there. I
 first installed pip for Python 2.7 since I only had pip3 on my system to start. I did this because
 I want to keep Python 2.7 as my system's default Python environment.</p>
-<pre class="code shell"><a name="rest_code_0d0bb8adb8724540a7a038aacde91047-1"></a>sudo apt-get update
-<a name="rest_code_0d0bb8adb8724540a7a038aacde91047-2"></a>sudo apt-get install python-pip
+<pre class="code shell"><a name="rest_code_a7719550883a4d218c65254c4d3e6533-1"></a>sudo apt-get update
+<a name="rest_code_a7719550883a4d218c65254c4d3e6533-2"></a>sudo apt-get install python-pip
 </pre>
 <p>Once installed, I used it to install virtualenv and <a class="reference external" href="https://virtualenvwrapper.readthedocs.org/en/latest">virtualenvwrapper</a>. The latter provides some nice features for
 working with virtualenv.</p>
-<pre class="code shell"><a name="rest_code_65551ba7b4c248afb9dae562c0dd5c18-1"></a>sudo pip install virtualenv
-<a name="rest_code_65551ba7b4c248afb9dae562c0dd5c18-2"></a>sudo pip install virtualenvwrapper
+<pre class="code shell"><a name="rest_code_32e7e27d7883481d8fe0442aae1379a0-1"></a>sudo pip install virtualenv
+<a name="rest_code_32e7e27d7883481d8fe0442aae1379a0-2"></a>sudo pip install virtualenvwrapper
 </pre>
 <p>Now, virtualenvwrapper requires an environment variable to tell it where to store the folders for
 each virtual environment. This environment variable is called WORKON_HOME. First, I created the
 folder it will point to:</p>
-<pre class="code shell"><a name="rest_code_07c44c9a08c84e47b628739c1dd394df-1"></a>mkdir ~/Envs
+<pre class="code shell"><a name="rest_code_e066c870b6fb4248a6e63957e54e09b9-1"></a>mkdir ~/Envs
 </pre>
 <p>Next, I edited my ~/.bashrc and added the following line:</p>
-<pre class="code shell"><a name="rest_code_dd3027e3678f47a7ae6e499129cc9fce-1"></a><span class="nb">export</span> <span class="nv">WORKON_HOME</span><span class="o">=</span>~/Envs
+<pre class="code shell"><a name="rest_code_60c32b883672413cba0ebdcc3212542b-1"></a><span class="nb">export</span> <span class="nv">WORKON_HOME</span><span class="o">=</span>~/Envs
 </pre>
 <p>All of my virtual environment files (except for the Python intepreters) will be stored in this
 folder. Finally, I restarted my terminal window so that the environment variable was assigned. You
@@ -145,12 +145,12 @@ can check this by typing =echo $WORKON_HOME= in your new terminal window. If it 
 your new environments folder, then you should be fine.</p>
 <p>Next, I ran the virtualwrapper setup script. Note that I did not need sudo (in fact, sudo could not
 find a command called <cite>source</cite>) and that no output is returned when the script is run.</p>
-<pre class="code shell"><a name="rest_code_9ee6c009875749858181e79c91313ae5-1"></a><span class="nb">source</span> /usr/local/bin/virtualenvwrapper.sh
+<pre class="code shell"><a name="rest_code_9fa8d9c70b574ce8b6af86873f9755d1-1"></a><span class="nb">source</span> /usr/local/bin/virtualenvwrapper.sh
 </pre>
 <p>Now virtualenvwrapper should be installed, so let's make a virtual environment. We can do this
 using the <cite>mkvirtualenv</cite> command, followed by a name for the environment. I will use the name venv
 in this example, like Kenneth Reitz did in his guide that I linked above.</p>
-<pre class="code shell"><a name="rest_code_0e78be6ec0db48088e9b1ee7cb3ecfd7-1"></a>mkvirtualenv venv
+<pre class="code shell"><a name="rest_code_93bdba33a43746f8814bac67d1dfd17a-1"></a>mkvirtualenv venv
 </pre>
 <p>To start the new virtual environment, type <cite>workon venv</cite> and note that change in the prompt,
 indicating which environment you are in. You now have a fresh Python environment to which you can
@@ -159,7 +159,7 @@ add any library you wish. To leave the environment, type <cite>deactivate</cite>
 the Python interpreter from inside your environment and try importing a module that you know is in
 your system-wide site packages but not in your virtual environment. For example, inside venv I type
 =python= at the terminal prompt and tried importing numpy, which I had not yet installed in venv:</p>
-<pre class="code python"><a name="rest_code_0f7dea140dac4759bf100696b3f2e6c0-1"></a><span class="kn">import</span> <span class="nn">numpy</span>
+<pre class="code python"><a name="rest_code_5939bd7f8cd74562be406f16343ba3fb-1"></a><span class="kn">import</span> <span class="nn">numpy</span>
 </pre>
 <p>This returned an <cite>ImportError: No module named numpy</cite>. Since I do have numpy installed on my system
 but not in this environment, it tells me that the environment is likely clean.</p>
@@ -168,7 +168,7 @@ environment in ~/Env. To delete a virtual environment entirely, use <cite>rmvirt
 <p>Now, how can I specify that I want the virtual environment to use the python3.4 interpreter in a
 virtual environment named python3-general? Doing so would solve my original problem. Simply
 make a new virtual environment like so:</p>
-<pre class="code python"><a name="rest_code_d359756627014999990c65c574237ef1-1"></a><span class="n">mkvirtualenv</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python3</span><span class="o">.</span><span class="mi">4</span> <span class="n">python3</span><span class="o">-</span><span class="n">general</span>
+<pre class="code python"><a name="rest_code_bf8b0f6c45494210aaa938d7507974ac-1"></a><span class="n">mkvirtualenv</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python3</span><span class="o">.</span><span class="mi">4</span> <span class="n">python3</span><span class="o">-</span><span class="n">general</span>
 </pre>
 <p>Voilà. C'est tout. I hope this helps you get up and running with this great tool!</p>
 </div>
